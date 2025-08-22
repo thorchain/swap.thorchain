@@ -9,13 +9,30 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@confio/ics23": "^0.6.8",
+    "@ethereumjs/util": "^10.0.0",
+    "@keplr-wallet/types": "^0.12.263",
+    "@noble/secp256k1": "^2.3.0",
+    "@radix-ui/react-dialog": "^1.1.14",
+    "@radix-ui/react-dropdown-menu": "^2.1.15",
+    "@radix-ui/react-slot": "^1.2.3",
+    "@radix-ui/react-tooltip": "^1.2.7",
+    "@tanstack/react-query": "^5.85.5",
+    "bitcoinjs-lib": "^6.1.7",
+    "cashaddrjs": "^0.4.4",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
+    "ethers": "^6.15.0",
     "lucide-react": "^0.539.0",
     "next": "15.4.6",
+    "next-themes": "^0.4.6",
     "react": "19.1.0",
     "react-dom": "19.1.0",
-    "tailwind-merge": "^3.3.1"
+    "react-number-format": "^5.4.4",
+    "sonner": "^2.0.7",
+    "tailwind-merge": "^3.3.1",
+    "viem": "^2.33.3",
+    "xrpl": "^4.4.0"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
