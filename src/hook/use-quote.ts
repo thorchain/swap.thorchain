@@ -1,7 +1,8 @@
 import { useQuery } from '@tanstack/react-query'
 import { getQuote } from '@/lib/api'
+import { AxiosError } from 'axios'
 
-export interface UseQuoteParams {
+interface UseQuoteParams {
   amount: string
   fromAsset: string
   toAsset: string
@@ -13,8 +14,38 @@ export interface UseQuoteParams {
   liquidityToleranceBps: number
 }
 
-export const useQuote = (params: UseQuoteParams) => {
-  const { data: quote, isLoading } = useQuery({
+export interface UseQuote {
+  dust_threshold: string
+  expected_amount_out: string
+  expiry: number
+  fees: {
+    asset: string
+    liquidity: string
+    outbound: string
+    slippage_bps: number
+    total: string
+    total_bps: number
+  }
+  gas_rate_units: string
+  inbound_address: string
+  inbound_confirmation_blocks: number
+  inbound_confirmation_seconds: number
+  max_streaming_quantity: number
+  memo: string
+  notes: string
+  outbound_delay_blocks: number
+  outbound_delay_seconds: number
+  recommended_gas_rate: string
+  recommended_min_amount_in: string
+  router?: string
+  streaming_swap_blocks: number
+  streaming_swap_seconds: number
+  total_swap_seconds: number
+  warning: string
+}
+
+export const useQuote = (params: UseQuoteParams): { quote?: UseQuote; isLoading: boolean; error?: string } => {
+  const { data, isLoading, error } = useQuery({
     queryKey: ['quote', params],
     queryFn: () =>
       getQuote({
@@ -30,5 +61,14 @@ export const useQuote = (params: UseQuoteParams) => {
       })
   })
 
-  return { quote, isLoading }
+  let errorMessage = null
+  if (error instanceof AxiosError) {
+    errorMessage = error.response?.data?.message || error.message
+  }
+
+  return {
+    isLoading,
+    quote: data,
+    error: errorMessage
+  }
 }

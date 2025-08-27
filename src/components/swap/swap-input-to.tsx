@@ -2,12 +2,13 @@ import { useState } from 'react'
 import { ChevronDown, Wallet } from 'lucide-react'
 import { SwapSelectCoin } from '@/components/swap/swap-select-coin'
 import { useSwapContext } from '@/context/swap-provider'
-import { Network } from 'rujira.js'
-import { useAccounts } from '@/context/accounts-provider'
 import { DecimalInput } from '@/components/decimal-input'
+import { Network, networkLabel } from 'rujira.js'
+import { useAccounts } from '@/context/accounts-provider'
+import { UseQuote } from '@/hook/use-quote'
 
 interface SwapInputProps {
-  quote?: any
+  quote?: UseQuote
 }
 
 export const SwapInputTo = ({ quote }: SwapInputProps) => {
@@ -38,7 +39,7 @@ export const SwapInputTo = ({ quote }: SwapInputProps) => {
           </div>
           <div className="flex flex-col items-start">
             <span className="text-lg font-semibold text-white">{toAsset?.metadata.symbol}</span>
-            <span className="text-sm text-neutral-400">{toAsset?.type}</span>
+            <span className="text-sm text-neutral-400">{toAsset?.chain ? networkLabel(toAsset.chain) : ''}</span>
           </div>
           <ChevronDown className="h-4 w-4 text-white" />
         </div>

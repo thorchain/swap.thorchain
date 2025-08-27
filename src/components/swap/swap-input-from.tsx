@@ -1,8 +1,9 @@
-import { SwapSelectCoin } from '@/components/swap/swap-select-coin'
 import { useState } from 'react'
 import { ChevronDown, Wallet } from 'lucide-react'
-import { useSwapContext } from '@/context/swap-provider'
 import { DecimalInput } from '@/components/decimal-input'
+import { SwapSelectCoin } from '@/components/swap/swap-select-coin'
+import { useSwapContext } from '@/context/swap-provider'
+import { networkLabel } from 'rujira.js'
 
 export const SwapInputFrom = () => {
   const [open, setOpen] = useState(false)
@@ -26,13 +27,12 @@ export const SwapInputFrom = () => {
           </div>
           <div className="flex flex-col items-start">
             <span className="text-lg font-semibold text-white">{fromAsset?.metadata.symbol}</span>
-            <span className="text-sm text-neutral-400">{fromAsset?.type}</span>
+            <span className="text-sm text-neutral-400">{fromAsset?.chain ? networkLabel(fromAsset.chain) : ''}</span>
           </div>
           <ChevronDown className="h-4 w-4 text-white" />
         </div>
       </div>
 
-      {/* Percentage Buttons */}
       <div className="mt-4 flex gap-2">
         <button className="rounded bg-gray-700 px-3 py-1 text-sm text-gray-300 transition-colors hover:bg-gray-600">
           Clear
