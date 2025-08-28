@@ -1,31 +1,51 @@
 'use client'
 
+import Image from 'next/image'
 import { useState } from 'react'
-import { LogOut, Wallet } from 'lucide-react'
+import { Clock3, Plus } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { WalletConnectDialog, WalletProps } from '@/components/wallet-connect/wallet-connect-dialog'
-import { AccountProvider } from 'rujira.js'
+import { WalletDrawer } from '@/components/wallet-connect/wallet-drawer'
 import { Provider } from '@/wallets'
+import { useAccounts } from '@/context/accounts-provider'
 
-type WalletButtonProps<T> = {
-  className?: string
-  accountProvider: AccountProvider<T>
-  wallets: WalletProps<T>[]
-}
-
-export const WalletConnectButton = <T,>({ className, accountProvider, wallets }: WalletButtonProps<T>) => {
+export const WalletConnectButton = () => {
   const [showModal, setShowModal] = useState(false)
+  const [drawer, setDrawer] = useState<{ open: boolean; provider?: Provider }>({
+    open: false
+  })
+
+  const accountProvider = useAccounts()
+  const connectedProviders = [...new Set(accountProvider.accounts?.map(a => a.provider))]
 
   return (
     <div>
       <div className="flex items-center gap-2">
-        <Button className={className} onClick={() => setShowModal(true)}>
-          <Wallet className="h-4 w-4" /> Connect Wallet
+        <Button className="rounded-xl" variant="outline" disabled>
+          <Clock3 /> History
         </Button>
-        <LogOut className="cursor-pointer" onClick={() => accountProvider.disconnectAll()} />
+        <Button className="rounded-xl" variant="outline" onClick={() => setShowModal(true)}>
+          <Plus />
+        </Button>
+        {connectedProviders.map(provider => (
+          <Button
+            variant="outline"
+            key={provider}
+            className="rounded-lg border-1 border-emerald-500 px-0"
+            onClick={() => setDrawer({ open: true, provider })}
+          >
+            <Image width="32" height="32" src={`/wallets/${provider}.png`} alt={provider} />
+          </Button>
+        ))}
       </div>
 
-      <WalletConnectDialog open={showModal} onOpenChange={setShowModal} provider={accountProvider} wallets={wallets} />
+      <WalletDrawer
+        open={drawer.open}
+        provider={drawer.provider}
+        onOpenChange={bool => setDrawer({ ...drawer, open: bool })}
+      />
+
+      <WalletConnectDialog open={showModal} onOpenChange={setShowModal} provider={accountProvider} wallets={WALLETS} />
     </div>
   )
 }
