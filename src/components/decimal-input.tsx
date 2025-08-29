@@ -10,7 +10,7 @@ const separators = () => {
 }
 const { decimal, group } = separators()
 
-const parseFixed = (v: string, decimals: number): bigint => {
+export const parseFixed = (v: string, decimals: number): bigint => {
   const [int, dec] = v.replaceAll(',', '').split('.')
   const intVal = BigInt(int) * 10n ** BigInt(decimals)
   const trimmed = dec?.slice(0, decimals)

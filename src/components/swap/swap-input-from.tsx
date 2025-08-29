@@ -1,13 +1,24 @@
+import Decimal from 'decimal.js'
 import { useState } from 'react'
 import { ChevronDown, Wallet } from 'lucide-react'
-import { DecimalInput } from '@/components/decimal-input'
+import { DecimalInput, parseFixed } from '@/components/decimal-input'
 import { SwapSelectCoin } from '@/components/swap/swap-select-coin'
 import { useSwapContext } from '@/context/swap-provider'
+import { useBalances } from '@/context/balances-provider'
 import { networkLabel } from 'rujira.js'
 
 export const SwapInputFrom = () => {
   const [open, setOpen] = useState(false)
   const { fromAsset, setSwap, fromAmount, setFromAmount } = useSwapContext()
+  const { balances } = useBalances()
+
+  const handleSetPercent = (percent: number) => {
+    const balance = new Decimal(balances[fromAsset?.asset || ''] || 0)
+    if (balance.isZero()) return
+    const value = percent > 0 ? balance.mul(percent).toString() : ''
+    const intValue = parseFixed(value, 8)
+    setFromAmount(intValue)
+  }
 
   return (
     <div className="rounded-xl bg-gray-800 p-4">
@@ -34,13 +45,22 @@ export const SwapInputFrom = () => {
       </div>
 
       <div className="mt-4 flex gap-2">
-        <button className="rounded bg-gray-700 px-3 py-1 text-sm text-gray-300 transition-colors hover:bg-gray-600">
+        <button
+          className="rounded bg-gray-700 px-3 py-1 text-sm text-gray-300 transition-colors hover:bg-gray-600"
+          onClick={() => handleSetPercent(0)}
+        >
           Clear
         </button>
-        <button className="rounded bg-gray-600 px-3 py-1 text-sm text-white transition-colors hover:bg-gray-500">
+        <button
+          className="rounded bg-gray-600 px-3 py-1 text-sm text-white transition-colors hover:bg-gray-500"
+          onClick={() => handleSetPercent(0.5)}
+        >
           50%
         </button>
-        <button className="rounded bg-gray-700 px-3 py-1 text-sm text-gray-300 transition-colors hover:bg-gray-600">
+        <button
+          className="rounded bg-gray-700 px-3 py-1 text-sm text-gray-300 transition-colors hover:bg-gray-600"
+          onClick={() => handleSetPercent(1)}
+        >
           100%
         </button>
       </div>

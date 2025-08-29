@@ -22,11 +22,18 @@ const ERROR = () => {
   throw new Error('AccountProvider Context not defined')
 }
 
+interface WalletContext {
+  account: Account
+  context: any
+}
+
 interface AccountContext extends AccountProvider {
   context?: any
+  wallets: WalletContext[]
 }
 
 const Context = createContext<AccountContext>({
+  wallets: [],
   accounts: undefined,
   select: ERROR,
   connect: ERROR,
@@ -46,11 +53,6 @@ const storedSelected = loadSelected()
 // on a page refresh, where possible without triggering annoying modal prompts from the wallets
 // If a connection is refused, it should be removed from the list of stored providers
 const connectedProviders: Provider[] = loadProviders()
-
-/**
- * Storage for the returned Context's for account connections
- */
-type WalletContext = { account: Account; context: any }
 
 export const AccountsProvider: FC<PropsWithChildren> = ({ children }) => {
   const [provider, setProvider] = useState<Provider | undefined>(storedSelected?.provider)
@@ -166,6 +168,7 @@ export const AccountsProvider: FC<PropsWithChildren> = ({ children }) => {
   return (
     <Context.Provider
       value={{
+        wallets: accounts || [],
         accounts: accounts?.map(a => a.account),
         selected: selected?.account,
         context: selected?.context,
