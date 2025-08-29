@@ -33,7 +33,7 @@ export const WalletConnectDialog = <T,>({
   const [connecting, setConnecting] = useState(false)
 
   const chosenSize = Array.from(chosen.values()).filter(i => i).length
-  const networks = Object.values(Network)
+  const networks = Object.values(Network).filter(i => i !== Network.Terra && i !== Network.Terra2 && i !== Network.Gaia)
 
   const installedWallets = wallets.filter(w => isAvaialable(w.provider))
   const hardwareWallets = wallets.filter(w => w.isHardware)
@@ -74,9 +74,7 @@ export const WalletConnectDialog = <T,>({
           })
         }}
       >
-        <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-purple-600">
-          <span className="text-lg text-white">👻</span>
-        </div>
+        <Image src={`/wallets/${wallet.provider}.png`} alt="" width="32" height="32" />
         <div className="flex-1">
           <div className="font-medium text-white">{wallet.label}</div>
           <div className="text-sm text-gray-400">{isConnected ? 'Connected' : 'Disconnected'}</div>
@@ -103,24 +101,24 @@ export const WalletConnectDialog = <T,>({
               </div>
 
               <div>
-                <h3 className="mb-4 text-sm font-medium text-gray-400">Hardware and Instant Wallets</h3>
-                {hardwareWallets.map(wallet => walletItem(wallet))}
+                <h3 className="mt-4 text-sm font-medium text-gray-400">Hardware and Instant Wallets</h3>
+                <div className="space-y-3">{hardwareWallets.map(wallet => walletItem(wallet))}</div>
               </div>
 
               <div>
-                <h3 className="mb-4 text-sm font-medium text-gray-400">Other browser wallets</h3>
-                {otherWallets.map(wallet => walletItem(wallet))}
+                <h3 className="my-4 text-sm font-medium text-gray-400">Other browser wallets</h3>
+                <div className="space-y-3">{otherWallets.map(wallet => walletItem(wallet))}</div>
               </div>
             </div>
           </div>
 
           <div className="flex flex-col justify-between">
             <div>
-              <h3 className="mb-4 text-sm font-medium text-gray-400">Supported Networks</h3>
+              <h3 className="my-4 text-sm font-medium text-gray-400">Supported Networks</h3>
               <div className="grid grid-cols-4 gap-3">
                 {networks.map(network => (
                   <div key={network} className="flex h-12 w-12 items-center justify-center rounded-xl">
-                    <Image src={`/networks/${network}.png`} alt="" width="32" height="32" />
+                    <Image src={`/networks/${network}.png`} alt={network} width="32" height="32" />
                   </div>
                 ))}
               </div>

@@ -50,7 +50,8 @@ export const WalletConnectButton = () => {
         onOpenChange={setShowModal}
         provider={accountProvider}
         connectedProviders={connectedProviders}
-        wallets={WALLETS} />
+        wallets={WALLETS}
+      />
     </div>
   )
 }
@@ -76,17 +77,17 @@ export const WALLETS: WalletProps<Provider>[] = [
     label: 'Metamask',
     provider: 'Metamask'
   },
-  {
-    key: 'okx',
-    label: 'OKX',
-    provider: 'Okx',
-    isHardware: true
-  },
-  {
-    key: 'trust-extenion',
-    label: 'Trust Extension',
-    provider: 'Trust'
-  },
+  // {
+  //   key: 'okx',
+  //   label: 'OKX',
+  //   provider: 'Okx',
+  //   isHardware: true
+  // },
+  // {
+  //   key: 'trust-extenion',
+  //   label: 'Trust Extension',
+  //   provider: 'Trust'
+  // },
   {
     key: 'vultisig',
     label: 'Vultisig',
