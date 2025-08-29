@@ -3,7 +3,7 @@ import { useState } from 'react'
 import { AccountProvider, Network } from 'rujira.js'
 import { Button } from '@/components/ui/button'
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog'
-import { loadProviders } from '@/wallets'
+import { Provider } from '@/wallets'
 import { cn } from '@/lib/utils'
 
 export interface WalletProps<T> {
@@ -18,15 +18,21 @@ interface WalletConnectDialogProps<T> {
   onOpenChange: (open: boolean) => void
   provider: AccountProvider<T>
   wallets: WalletProps<T>[]
+  connectedProviders: Provider[]
 }
 
-export const WalletConnectDialog = <T,>({ open, onOpenChange, provider, wallets }: WalletConnectDialogProps<T>) => {
+export const WalletConnectDialog = <T,>({
+  open,
+  onOpenChange,
+  provider,
+  wallets,
+  connectedProviders
+}: WalletConnectDialogProps<T>) => {
   const { connect, isAvaialable } = provider
   const [chosen, setChosen] = useState<Map<T, boolean>>(new Map())
   const [connecting, setConnecting] = useState(false)
 
   const chosenSize = Array.from(chosen.values()).filter(i => i).length
-  const connectedProviders = loadProviders()
   const networks = Object.values(Network)
 
   const installedWallets = wallets.filter(w => isAvaialable(w.provider))

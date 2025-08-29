@@ -45,7 +45,12 @@ export const WalletConnectButton = () => {
         onOpenChange={bool => setDrawer({ ...drawer, open: bool })}
       />
 
-      <WalletConnectDialog open={showModal} onOpenChange={setShowModal} provider={accountProvider} wallets={WALLETS} />
+      <WalletConnectDialog
+        open={showModal}
+        onOpenChange={setShowModal}
+        provider={accountProvider}
+        connectedProviders={connectedProviders}
+        wallets={WALLETS} />
     </div>
   )
 }
