@@ -1,15 +1,16 @@
 'use client'
 
 import { useMemo } from 'react'
-import { ArrowUpDown, LoaderCircle, SlidersHorizontal } from 'lucide-react'
+import { Msg, MsgSwap, Simulation } from 'rujira.js'
+import { ArrowDown, LoaderCircle, SlidersHorizontal } from 'lucide-react'
 import { SwapAddress } from '@/components/swap/swap-address'
 import { SwapButton } from '@/components/swap/swap-button'
 import { useAccounts } from '@/context/accounts-provider'
-import { useSwapContext } from '@/context/swap-provider'
+import { Separator } from '@/components/ui/separator'
 import { SwapInputFrom } from '@/components/swap/swap-input-from'
 import { SwapInputTo } from '@/components/swap/swap-input-to'
 import { SwapDetails } from '@/components/swap/swap-details'
-import { Msg, MsgSwap, Simulation } from 'rujira.js'
+import { useSwapContext } from '@/context/swap-provider'
 import { useQuote } from '@/hook/use-quote'
 import { wallets } from '@/wallets'
 
@@ -56,35 +57,36 @@ export const Swap = () => {
   }, [fromAmount, fromAsset, quote?.memo])
 
   return (
-    <div className="flex min-h-screen flex-col items-center justify-center bg-black p-4">
+    <div className="flex min-h-screen flex-col items-center justify-center p-4">
       <div className="w-full max-w-md">
-        <div className="mb-8 flex items-center justify-between">
+        <div className="mb-4 flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <h1 className="text-2xl font-semibold text-white">Swap</h1>
+            <h1 className="text-2xl font-medium text-white">Swap</h1>
             {isLoading && <LoaderCircle className="animate-spin" />}
           </div>
-          <button className="rounded-full bg-gray-800 px-2 py-2">
+          <button className="bg-bran rounded-full px-2 py-2">
             <SlidersHorizontal className="h-4 w-4" />
           </button>
         </div>
 
-        <div className="space-y-4 rounded-2xl bg-gray-900 p-6">
-          <div className="space-y-4">
+        <div className="bg-deep-black border-blade rounded-3xl border-1">
+          <div className="border-b-1 p-4">
             <SwapAddress asset={fromAsset} account={selected} onSelect={select} />
-            <SwapInputFrom />
           </div>
 
-          <div className="flex justify-center">
-            <button
-              className="group rounded-lg bg-gray-800 p-2 transition-colors hover:bg-gray-700"
-              onClick={() => setSwap(toAsset, fromAsset)}
-            >
-              <ArrowUpDown className="h-5 w-5 text-gray-400 transition-colors group-hover:text-white" />
-            </button>
+          <SwapInputFrom />
+
+          <div className="relative flex items-center justify-center overflow-hidden">
+            <Separator />
+            <div className="bg-blade rounded-full p-2">
+              <ArrowDown className="text-gray h-4 w-4" onClick={() => setSwap(toAsset, fromAsset)} />
+            </div>
+            <Separator />
           </div>
 
-          <div className="space-y-4">
-            <SwapInputTo quote={quote} />
+          <SwapInputTo quote={quote} />
+
+          <div className="border-t-1 p-4">
             <SwapAddress asset={toAsset} account={destination} onSelect={setDestination} />
           </div>
         </div>
