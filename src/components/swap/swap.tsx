@@ -8,6 +8,7 @@ import { useAccounts } from '@/context/accounts-provider'
 import { useSwapContext } from '@/context/swap-provider'
 import { SwapInputFrom } from '@/components/swap/swap-input-from'
 import { SwapInputTo } from '@/components/swap/swap-input-to'
+import { SwapDetails } from '@/components/swap/swap-details'
 import { Msg, MsgSwap, Simulation } from 'rujira.js'
 import { useQuote } from '@/hook/use-quote'
 import { wallets } from '@/wallets'
@@ -93,6 +94,7 @@ export const Swap = () => {
           </div>
         )}
 
+        <SwapDetails quote={quote} />
         <SwapButton msg={msg} signer={{ simulate, signAndBroadcast }} />
       </div>
     </div>

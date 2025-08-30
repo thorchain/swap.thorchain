@@ -20,10 +20,11 @@ export interface UseQuote {
   expiry: number
   fees: {
     asset: string
-    liquidity: string
+    affiliate: string
     outbound: string
-    slippage_bps: number
+    liquidity: string
     total: string
+    slippage_bps: number
     total_bps: number
   }
   gas_rate_units: string
