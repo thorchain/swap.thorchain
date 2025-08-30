@@ -1,6 +1,7 @@
 import axios from 'axios'
 import { ethers } from 'ethers'
 import { gasToken, Network } from 'rujira.js'
+import { sleep } from '@/lib/utils'
 
 interface BalanceProviderProps {
   network: Network
@@ -14,18 +15,18 @@ const networkUrls: Record<Network, string> = {
   [Network.Avalanche]: process.env.NEXT_PUBLIC_AVAX_RPC || '',
   [Network.Base]: process.env.NEXT_PUBLIC_BASE_RPC || '',
   [Network.Bitcoin]: 'https://blockstream.info/api',
-  [Network.BitcoinCash]: 'https://rest.bitcoin.com/v2',
-  [Network.Litecoin]: 'https://sochain.com/api/v2',
-  [Network.Dogecoin]: 'https://sochain.com/api/v2',
+  [Network.BitcoinCash]: 'https://api.fullstack.cash/v5/electrumx/balance',
+  [Network.Litecoin]: 'https://api.blockchair.com',
+  [Network.Dogecoin]: 'https://dogechain.info',
   [Network.Osmo]: 'https://lcd-osmosis.blockapsis.com',
-  [Network.Gaia]: 'https://lcd-cosmoshub.blockapsis.com',
-  [Network.Kujira]: 'https://lcd-kujira.blockapsis.com',
+  [Network.Gaia]: 'https://cosmos-api.polkachu.com',
+  [Network.Kujira]: 'https://kujira-api.polkachu.com',
   [Network.Thorchain]: 'https://thornode.ninerealms.com',
-  [Network.Noble]: 'https://lcd-noble.blockapsis.com',
-  [Network.Xrp]: 'https://data.ripple.com/v2/accounts',
+  [Network.Noble]: 'https://noble-api.polkachu.com',
+  [Network.Xrp]: 'https://data.ripple.com',
   [Network.Tron]: 'https://api.trongrid.io',
-  [Network.Terra]: 'https://lcd-terra.classic.money',
-  [Network.Terra2]: 'https://lcd-terra2.classic.money'
+  [Network.Terra]: 'https://terra-classic-lcd.publicnode.com',
+  [Network.Terra2]: 'https://phoenix-lcd.terra.dev'
 }
 
 class BalanceProvider {
@@ -52,19 +53,27 @@ class BalanceProvider {
           const res = await axios.get(`${this.url}/address/${address}`)
           return (res.data.chain_stats.funded_txo_sum / 1e8).toString()
         }
-        case Network.Litecoin:
+        case Network.Litecoin: {
+          const res = await axios.get(`${this.url}/litecoin/dashboards/address//${address}`)
+          return parseFloat(res.data.data.confirmed_balance).toString()
+        }
         case Network.Dogecoin: {
-          const res = await axios.get(`https://sochain.com/api/v2/get_address_balance/${this.network}/${address}`)
+          const res = await axios.get(`${this.url}/api/v1/address/balance/${address}`)
           return parseFloat(res.data.data.confirmed_balance).toString()
         }
         case Network.BitcoinCash: {
-          const res = await axios.get(`${this.url}/address/details/${address}`)
-          return res.data.balance.toString()
+          const res = await axios.get(`${this.url}/${address}`)
+          return res.data.balance.confirmed.toString()
         }
         case Network.Xrp: {
-          const res = await axios.get(`${this.url}/${address}/balances`)
+          const res = await axios.get(`${this.url}/v1/accounts/${address}/balances`)
           const balance = res.data.balances.find((b: any) => b.currency === 'XRP')
           return balance ? balance.value : '0'
+        }
+        case Network.Tron: {
+          const res = await axios.get(`${this.url}/${address}`)
+          const balance = res.data[0].balance
+          return (balance / 1e6).toString()
         }
         case Network.Osmo:
         case Network.Gaia:
@@ -121,6 +130,8 @@ class BalanceProvider {
       } else {
         balances[item] = await this.getTokenBalance(address, contract)
       }
+
+      await sleep(250)
     }
 
     return balances

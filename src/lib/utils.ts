@@ -17,3 +17,7 @@ export function truncate(text: string, maxLength: number = 15) {
 
   return text.substring(0, frontChars) + separator + text.substring(text.length - backChars)
 }
+
+export const sleep = (ms: number): Promise<void> => {
+  return new Promise(resolve => setTimeout(resolve, ms))
+}
