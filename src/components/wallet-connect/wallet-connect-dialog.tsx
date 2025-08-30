@@ -32,21 +32,21 @@ export const WalletConnectDialog = <T,>({
   const [chosen, setChosen] = useState<Map<T, boolean>>(new Map())
   const [connecting, setConnecting] = useState(false)
 
+  const networks = Object.values(Network).filter(i => i !== Network.Terra && i !== Network.Terra2)
   const chosenSize = Array.from(chosen.values()).filter(i => i).length
-  const networks = Object.values(Network).filter(i => i !== Network.Terra && i !== Network.Terra2 && i !== Network.Gaia)
-
-  const installedWallets = wallets.filter(w => isAvaialable(w.provider))
-  const hardwareWallets = wallets.filter(w => w.isHardware)
-  const otherWallets = wallets.filter(w => !isAvaialable(w.provider) && !w.isHardware)
 
   const handleConnect = async () => {
     const chosenList = Array.from(chosen.entries()).filter(([, value]) => value)
+    if (!chosenList.length) return
 
     setConnecting(true)
 
-    Promise.all(chosenList.map(([provider]) => connect(provider)))
+    withTimeout(Promise.all(chosenList.map(([provider]) => connect(provider))), 20_000)
       .then(() => {
         console.log('connected')
+      })
+      .catch(err => {
+        console.log(err.message)
       })
       .finally(() => {
         setChosen(new Map())
@@ -54,38 +54,9 @@ export const WalletConnectDialog = <T,>({
       })
   }
 
-  const walletItem = (wallet: WalletProps<T>) => {
-    const isChosen = chosen.get(wallet.provider)
-    const isConnected = connectedProviders.find(i => i === wallet.provider)
-
-    return (
-      <div
-        key={wallet.key}
-        className={cn('flex cursor-pointer items-center space-x-3 rounded-lg border-1 border-transparent p-3', {
-          'border-emerald-500': isChosen,
-          'bg-emerald-500/10': isConnected
-        })}
-        onClick={() => {
-          if (isConnected) return
-          setChosen(prevChosen => {
-            const newChosen = new Map(prevChosen)
-            newChosen.set(wallet.provider, !isChosen)
-            return newChosen
-          })
-        }}
-      >
-        <Image src={`/wallets/${wallet.provider}.png`} alt="" width="32" height="32" />
-        <div className="flex-1">
-          <div className="font-medium text-white">{wallet.label}</div>
-          <div className="text-sm text-gray-400">{isConnected ? 'Connected' : 'Disconnected'}</div>
-        </div>
-      </div>
-    )
-  }
-
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="mx-4 w-full max-w-3xl min-w-2xl overflow-hidden border-gray-700 bg-gray-900 p-0 text-white">
+      <DialogContent className="bg-deep-black mx-4 w-full max-w-3xl min-w-2xl overflow-hidden p-0">
         <DialogHeader className="p-6 pb-0">
           <div className="flex items-center justify-between">
             <DialogTitle className="text-2xl font-semibold text-white">Connect Wallet</DialogTitle>
@@ -93,28 +64,51 @@ export const WalletConnectDialog = <T,>({
         </DialogHeader>
 
         <div className="grid grid-cols-2 gap-8 px-6 pb-6">
-          <div className="space-y-8 border-r-1 pe-3">
+          <div className="border-r-1 pe-3">
+            <div className="text-gray mb-3 text-base font-semibold">Wallets</div>
             <div className="h-full max-h-[400px] overflow-y-auto">
-              <div>
-                <h3 className="mb-4 text-sm font-medium text-gray-400">Installed in your browser</h3>
-                <div className="space-y-3">{installedWallets.map(wallet => walletItem(wallet))}</div>
-              </div>
+              <div className="space-y-1">
+                {wallets.map(wallet => {
+                  const isChosen = chosen.get(wallet.provider)
+                  const isConnected = connectedProviders.find(i => i === wallet.provider)
+                  const isInstalled = isAvaialable(wallet.provider)
 
-              <div>
-                <h3 className="mt-4 text-sm font-medium text-gray-400">Hardware and Instant Wallets</h3>
-                <div className="space-y-3">{hardwareWallets.map(wallet => walletItem(wallet))}</div>
-              </div>
-
-              <div>
-                <h3 className="my-4 text-sm font-medium text-gray-400">Other browser wallets</h3>
-                <div className="space-y-3">{otherWallets.map(wallet => walletItem(wallet))}</div>
+                  return (
+                    <div
+                      key={wallet.key}
+                      className={cn(
+                        'flex cursor-pointer items-center space-x-3 rounded-lg border-1 border-transparent p-3',
+                        {
+                          'border-runes-blue': isChosen,
+                          'bg-emerald-500/10': isConnected
+                        }
+                      )}
+                      onClick={() => {
+                        if (isConnected) return
+                        setChosen(prevChosen => {
+                          const newChosen = new Map(prevChosen)
+                          newChosen.set(wallet.provider, !isChosen)
+                          return newChosen
+                        })
+                      }}
+                    >
+                      <Image src={`/wallets/${wallet.provider}.png`} alt="" width="32" height="32" />
+                      <div className="flex-1">
+                        <div className="font-medium text-white">{wallet.label}</div>
+                        <div className="text-sm text-gray-400">
+                          {isInstalled ? (isConnected ? 'Connected' : 'Disconnected') : 'Install'}
+                        </div>
+                      </div>
+                    </div>
+                  )
+                })}
               </div>
             </div>
           </div>
 
           <div className="flex flex-col justify-between">
             <div>
-              <h3 className="my-4 text-sm font-medium text-gray-400">Supported Networks</h3>
+              <h3 className="text-gray mb-3 text-base font-semibold">Supported Networks</h3>
               <div className="grid grid-cols-4 gap-3">
                 {networks.map(network => (
                   <div key={network} className="flex h-12 w-12 items-center justify-center rounded-xl">
@@ -138,4 +132,19 @@ export const WalletConnectDialog = <T,>({
       </DialogContent>
     </Dialog>
   )
+}
+
+function withTimeout<T>(promise: Promise<T>, ms: number): Promise<T> {
+  return new Promise((resolve, reject) => {
+    const id = setTimeout(() => reject(new Error('Connection timeout')), ms)
+    promise
+      .then(res => {
+        clearTimeout(id)
+        resolve(res)
+      })
+      .catch(err => {
+        clearTimeout(id)
+        reject(err)
+      })
+  })
 }

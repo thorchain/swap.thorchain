@@ -56,7 +56,7 @@ export const WalletConnectButton = () => {
   )
 }
 
-export const WALLETS: WalletProps<Provider>[] = [
+const WALLETS: WalletProps<Provider>[] = [
   {
     key: 'ctrl',
     label: 'Ctrl',
