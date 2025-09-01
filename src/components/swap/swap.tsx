@@ -12,12 +12,14 @@ import { SwapInputTo } from '@/components/swap/swap-input-to'
 import { SwapDetails } from '@/components/swap/swap-details'
 import { useAccounts } from '@/context/accounts-provider'
 import { useSwapContext } from '@/context/swap-provider'
+import { useTransactions } from '@/hook/use-transactions'
 import { useQuote } from '@/hook/use-quote'
 import { wallets } from '@/wallets'
 
 export const Swap = () => {
   const { selected, context } = useAccounts()
   const { fromAsset, fromAmount, destination, setSwap, toAsset, slippageLimit } = useSwapContext()
+  const { setTransaction } = useTransactions()
 
   const params = useMemo(
     () => ({
@@ -49,7 +51,21 @@ export const Swap = () => {
   const signAndBroadcast = selected
     ? async (simulation: Simulation, msg: Msg) => {
         const func = wallets.signAndBroadcast(context, selected, inboundAddress)
-        return func(simulation, msg)
+        const res = await func(simulation, msg)
+
+        if (res.deposited) {
+          setTransaction({
+            hash: res.txHash,
+            timestamp: new Date(),
+            fromAsset: fromAsset,
+            fromAmount: fromAmount.toString(),
+            toAmount: quote?.expected_amount_out,
+            toAsset: toAsset,
+            status: 'pending'
+          })
+        }
+
+        return res
       }
     : undefined
 

@@ -5,12 +5,14 @@ import { useState } from 'react'
 import { Clock3, Plus } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { WalletConnectDialog, WalletProps } from '@/components/wallet-connect/wallet-connect-dialog'
+import { HistoryDialog } from '@/components/history-dialog'
 import { WalletDrawer } from '@/components/wallet-connect/wallet-drawer'
 import { Provider } from '@/wallets'
 import { useAccounts } from '@/context/accounts-provider'
 
 export const WalletConnectButton = () => {
-  const [showModal, setShowModal] = useState(false)
+  const [showHistory, setShowHistory] = useState(false)
+  const [addWallet, setAddWallet] = useState(false)
   const [drawer, setDrawer] = useState<{ open: boolean; provider?: Provider }>({
     open: false
   })
@@ -21,10 +23,10 @@ export const WalletConnectButton = () => {
   return (
     <div>
       <div className="flex items-center gap-2">
-        <Button className="rounded-xl" variant="outline" disabled>
+        <Button className="rounded-xl" variant="outline" onClick={() => setShowHistory(true)}>
           <Clock3 /> History
         </Button>
-        <Button className="rounded-xl" variant="outline" onClick={() => setShowModal(true)}>
+        <Button className="rounded-xl" variant="outline" onClick={() => setAddWallet(true)}>
           <Plus />
         </Button>
         {connectedProviders.map(provider => (
@@ -46,12 +48,14 @@ export const WalletConnectButton = () => {
       />
 
       <WalletConnectDialog
-        open={showModal}
-        onOpenChange={setShowModal}
+        open={addWallet}
+        onOpenChange={setAddWallet}
         provider={accountProvider}
         connectedProviders={connectedProviders}
         wallets={WALLETS}
       />
+
+      <HistoryDialog open={showHistory} onOpenChange={setShowHistory} />
     </div>
   )
 }
