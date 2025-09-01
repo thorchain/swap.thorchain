@@ -1,10 +1,16 @@
 'use client'
 
-import { ArrowRight, LoaderCircle, X } from 'lucide-react'
+import { format } from 'date-fns'
+import { ArrowRight, Globe, LoaderCircle, X } from 'lucide-react'
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog'
 import { useTransactions } from '@/hook/use-transactions'
 import { DecimalText } from '@/components/decimal-text'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
+import { Button } from '@/components/ui/button'
+import Decimal from 'decimal.js'
+import { usePoolsRates } from '@/hook/use-pools-rates'
+import { DecimalFiat } from '@/components/decimal-fiat'
+import { CopyButton } from '@/components/button-copy'
 
 interface HistoryDialogProps {
   open: boolean
@@ -12,7 +18,9 @@ interface HistoryDialogProps {
 }
 
 export const HistoryDialog = ({ open, onOpenChange }: HistoryDialogProps) => {
+  const { rates } = usePoolsRates()
   const { transactions, syncPending } = useTransactions()
+  const [expandTx, setExpandTx] = useState<string | null>(null)
 
   useEffect(() => {
     const interval = setInterval(syncPending, 5000) // every 5s
@@ -30,44 +38,122 @@ export const HistoryDialog = ({ open, onOpenChange }: HistoryDialogProps) => {
         </DialogHeader>
 
         <div className="mt-4">
-          {transactions.map(tx => {
+          {transactions.map((tx, i) => {
             const details = tx.details
-            const fromAmount = details?.tx?.coins?.[0]?.amount || tx.fromAmount || 0
+            const fromTx = details?.tx
+            const fromAmount = BigInt(fromTx?.coins?.[0]?.amount || tx.fromAmount || 0)
+            const fromValue = new Decimal(fromAmount || 0)
+              .div(10 ** 8)
+              .mul(tx.fromAsset?.price || rates[tx.fromAsset?.asset || ''] || 1)
+              .toString()
+
             const outTxs = details?.out_txs || []
-            const toAmount = outTxs[outTxs.length - 1]?.coins?.[0]?.amount || tx.toAmount || 0
+            const toTx = outTxs[outTxs.length - 1]
+            const toAmount = BigInt(toTx?.coins?.[0]?.amount || tx.toAmount || 0)
+            const toValue = new Decimal(toAmount)
+              .div(10 ** 8)
+              .mul(tx.toAsset?.price || rates[tx.toAsset?.asset || ''] || 1)
+              .toString()
+
+            const isExpanded = expandTx === tx.hash
 
             return (
-              <div key={tx.hash} className="flex items-center justify-between border-t border-gray-800 py-3">
-                <div className="flex items-center gap-2">
-                  <div className="flex h-7 w-7 items-center justify-center rounded-full bg-orange-500">
-                    <span className="text-sm font-bold"></span>
+              <div key={i}>
+                <div
+                  className="flex cursor-pointer items-center justify-between border-t py-3"
+                  onClick={() => setExpandTx(isExpanded ? null : tx.hash)}
+                >
+                  <div className="flex items-center gap-2">
+                    <div className="flex h-7 w-7 items-center justify-center rounded-full bg-orange-500">
+                      <span className="text-sm font-bold"></span>
+                    </div>
+                    <div>
+                      <p className="text-sm font-medium">
+                        <DecimalText className="text-leah text-xs" amount={fromAmount} />
+                      </p>
+                      <p className="text-xs text-gray-400">{tx.fromAsset?.metadata.symbol}</p>
+                    </div>
                   </div>
-                  <div>
-                    <p className="text-sm font-medium">
-                      <DecimalText className="text-leah text-xs" amount={BigInt(fromAmount)} />
-                    </p>
-                    <p className="text-xs text-gray-400">{tx.fromAsset?.metadata.symbol}</p>
+                  <div className="flex flex-col items-center text-xs text-gray-400">
+                    {tx.status === 'pending' ? (
+                      <LoaderCircle className="animate-spin" />
+                    ) : (
+                      <ArrowRight className="mb-1 h-4 w-4" />
+                    )}
+                    {tx.status}
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <div className="text-right">
+                      <p className="text-sm font-medium">
+                        <DecimalText className="text-leah text-xs" amount={toAmount} />
+                      </p>
+                      <p className="text-xs text-gray-400">{tx.toAsset?.metadata?.symbol}</p>
+                    </div>
+                    <div className="flex h-7 w-7 items-center justify-center rounded-full bg-emerald-500">
+                      <span className="text-sm font-bold"></span>
+                    </div>
                   </div>
                 </div>
-                <div className="flex flex-col items-center text-xs text-gray-400">
-                  {tx.status === 'pending' ? (
-                    <LoaderCircle className="animate-spin" />
-                  ) : (
-                    <ArrowRight className="mb-1 h-4 w-4" />
-                  )}
-                  {tx.status}
-                </div>
-                <div className="flex items-center gap-2">
-                  <div className="text-right">
-                    <p className="text-sm font-medium">
-                      <DecimalText className="text-leah text-xs" amount={BigInt(toAmount)} />
-                    </p>
-                    <p className="text-xs text-gray-400">{tx.toAsset?.metadata?.symbol}</p>
+                {isExpanded && (
+                  <div className="my-2 space-y-4">
+                    <hr className="border-muted/40" />
+
+                    <div className="flex justify-between">
+                      <span className="text-muted-foreground text-sm">You Deposited</span>
+                      <span className="font-medium">
+                        <DecimalText amount={fromAmount} symbol={tx.fromAsset?.metadata.symbol} />
+                        <span className="text-muted-foreground">
+                          (<DecimalFiat amount={fromValue} />)
+                        </span>
+                      </span>
+                    </div>
+
+                    <div className="flex justify-between">
+                      <span className="text-muted-foreground text-sm">Min. payout</span>
+                      <span className="font-medium">
+                        <DecimalText amount={toAmount} symbol={tx.toAsset?.metadata?.symbol} />
+                        <span className="text-muted-foreground">
+                          (<DecimalFiat amount={toValue} />)
+                        </span>
+                      </span>
+                    </div>
+
+                    <hr className="border-muted/40" />
+
+                    {fromTx?.from_address && (
+                      <div className="flex items-center justify-between gap-1">
+                        <span className="text-muted-foreground text-sm">From Address</span>
+                        <div className="flex items-center gap-1">
+                          <span className="font-mono text-xs">{fromTx.from_address}</span>
+                          <CopyButton className="h-4 w-4 cursor-pointer" text={fromTx.from_address} />
+                        </div>
+                      </div>
+                    )}
+
+                    {toTx?.to_address && (
+                      <div className="flex items-center justify-between gap-1">
+                        <span className="text-muted-foreground text-sm">Destination Address</span>
+                        <div className="flex items-center gap-1">
+                          <span className="font-mono text-xs">{toTx.to_address}</span>
+                          <CopyButton className="h-4 w-4 cursor-pointer" text={toTx.to_address} />
+                        </div>
+                      </div>
+                    )}
+
+                    <div className="text-center">
+                      <span className="text-gray text-xs">{format(tx.timestamp, 'Pp')}</span>
+                    </div>
+                    <hr className="border-muted/40" />
+
+                    <div className="mb-4 flex justify-center">
+                      <a href={`https://thorchain.net/tx/${tx.hash}`} rel="noopener noreferrer" target="_blank">
+                        <Button variant="outline" className="gap-2 rounded-xl">
+                          <Globe size={16} /> Thorscan
+                        </Button>
+                      </a>
+                    </div>
                   </div>
-                  <div className="flex h-7 w-7 items-center justify-center rounded-full bg-emerald-500">
-                    <span className="text-sm font-bold"></span>
-                  </div>
-                </div>
+                )}
               </div>
             )
           })}

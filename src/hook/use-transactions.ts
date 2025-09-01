@@ -6,8 +6,12 @@ import { Asset } from '@/components/swap/asset'
 export interface Transaction {
   hash: string
   timestamp: Date
-  fromAsset?: Asset
-  toAsset?: Asset
+  fromAsset?: Asset & {
+    price?: string | null | undefined
+  }
+  toAsset?: Asset & {
+    price?: string | null | undefined
+  }
   fromAmount?: string
   toAmount?: string
   status?: 'pending' | 'succeeded' | 'failed' | 'refunded'
