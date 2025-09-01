@@ -53,17 +53,15 @@ export const Swap = () => {
         const func = wallets.signAndBroadcast(context, selected, inboundAddress)
         const res = await func(simulation, msg)
 
-        if (res.deposited) {
-          setTransaction({
-            hash: res.txHash,
-            timestamp: new Date(),
-            fromAsset: fromAsset,
-            fromAmount: fromAmount.toString(),
-            toAmount: quote?.expected_amount_out,
-            toAsset: toAsset,
-            status: 'pending'
-          })
-        }
+        setTransaction({
+          hash: res.txHash,
+          timestamp: new Date(),
+          fromAsset: fromAsset,
+          fromAmount: fromAmount.toString(),
+          toAmount: quote?.expected_amount_out,
+          toAsset: toAsset,
+          status: 'pending'
+        })
 
         return res
       }
