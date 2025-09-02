@@ -1,3 +1,4 @@
+import Image from 'next/image'
 import Decimal from 'decimal.js'
 import { useState } from 'react'
 import { networkLabel } from 'rujira.js'
@@ -8,8 +9,8 @@ import { SwapSelectCoin } from '@/components/swap/swap-select-coin'
 import { Button } from '@/components/ui/button'
 import { useBalances } from '@/context/balances-provider'
 import { useAccounts } from '@/context/accounts-provider'
+import { DecimalText } from '@/components/decimal-text'
 import { useSwap } from '@/hook/use-swap'
-import Image from 'next/image'
 
 export const SwapInputFrom = () => {
   const [open, setOpen] = useState(false)
@@ -57,28 +58,33 @@ export const SwapInputFrom = () => {
         </div>
       </div>
 
-      <div className="mt-4 flex gap-2">
-        <Button
-          className="text-leah bg-blade rounded-full px-3 py-1 text-sm hover:bg-zinc-800"
-          onClick={() => handleSetPercent(0)}
-          disabled={balance.isZero()}
-        >
-          Clear
-        </Button>
-        <Button
-          className="text-leah bg-blade rounded-full px-3 py-1 text-sm hover:bg-zinc-800"
-          onClick={() => handleSetPercent(0.5)}
-          disabled={balance.isZero()}
-        >
-          50%
-        </Button>
-        <Button
-          className="text-leah bg-blade rounded-full px-3 py-1 text-sm hover:bg-zinc-800"
-          onClick={() => handleSetPercent(1)}
-          disabled={balance.isZero()}
-        >
-          100%
-        </Button>
+      <div className="mt-4 flex items-end justify-between gap-2">
+        <div>
+          <Button
+            className="text-leah bg-blade rounded-full px-3 py-1 text-sm hover:bg-zinc-800"
+            onClick={() => handleSetPercent(0)}
+            disabled={balance.isZero()}
+          >
+            Clear
+          </Button>
+          <Button
+            className="text-leah bg-blade rounded-full px-3 py-1 text-sm hover:bg-zinc-800"
+            onClick={() => handleSetPercent(0.5)}
+            disabled={balance.isZero()}
+          >
+            50%
+          </Button>
+          <Button
+            className="text-leah bg-blade rounded-full px-3 py-1 text-sm hover:bg-zinc-800"
+            onClick={() => handleSetPercent(1)}
+            disabled={balance.isZero()}
+          >
+            100%
+          </Button>
+        </div>
+        <div className="text-gray text-xs">
+          Balance: <DecimalText amount={parseFixed(balance.toString(), 8)} />
+        </div>
       </div>
 
       <SwapSelectCoin
