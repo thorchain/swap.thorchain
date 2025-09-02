@@ -1,4 +1,3 @@
-import Image from 'next/image'
 import Decimal from 'decimal.js'
 import { useState } from 'react'
 import { networkLabel } from 'rujira.js'
@@ -11,6 +10,8 @@ import { useBalances } from '@/context/balances-provider'
 import { useAccounts } from '@/context/accounts-provider'
 import { DecimalText } from '@/components/decimal-text'
 import { useSwap } from '@/hook/use-swap'
+import { AssetIcon } from '@/components/asset-icon'
+import { Skeleton } from '@/components/ui/skeleton'
 
 export const SwapInputFrom = () => {
   const [open, setOpen] = useState(false)
@@ -47,12 +48,14 @@ export const SwapInputFrom = () => {
           </div>
         </div>
         <div className="flex items-center gap-3" onClick={() => setOpen(true)}>
-          <div className="flex rounded-full">
-            <Image src={`/coins/${fromAsset?.metadata.symbol.toLowerCase()}.svg`} alt="" width="40" height="40" />
-          </div>
+          <AssetIcon url={fromAsset ? `/coins/${fromAsset.metadata.symbol.toLowerCase()}.svg` : null} />
           <div className="flex flex-col items-start">
-            <span className="text-leah text-lg font-semibold">{fromAsset?.metadata.symbol}</span>
-            <span className="text-gray text-sm">{fromAsset?.chain ? networkLabel(fromAsset.chain) : ''}</span>
+            <span className="text-leah text-lg font-semibold">
+              {fromAsset ? fromAsset.metadata.symbol : <Skeleton className="mb-0.5 h-6 w-12" />}
+            </span>
+            <span className="text-gray text-sm">
+              {fromAsset?.chain ? networkLabel(fromAsset.chain) : <Skeleton className="mt-0.5 h-3 w-16" />}
+            </span>
           </div>
           <ChevronDown className="h-4 w-4 text-white" />
         </div>
