@@ -2,13 +2,15 @@
 
 import Image from 'next/image'
 import { useState } from 'react'
-import { Clock3, Plus } from 'lucide-react'
+import { Clock3, LoaderCircle, Plus } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { WalletConnectDialog, WalletProps } from '@/components/wallet-connect/wallet-connect-dialog'
+import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip'
 import { HistoryDialog } from '@/components/history-dialog'
 import { WalletDrawer } from '@/components/wallet-connect/wallet-drawer'
 import { Provider } from '@/wallets'
 import { useAccounts } from '@/context/accounts-provider'
+import { useTransactions } from '@/hook/use-transactions'
 
 export const WalletConnectButton = () => {
   const [showHistory, setShowHistory] = useState(false)
@@ -17,15 +19,38 @@ export const WalletConnectButton = () => {
     open: false
   })
 
+  const { showPendingAlert, setPendingAlert, transactions } = useTransactions()
+  const pendingTx = transactions.find(t => t.status === 'pending')
+
   const accountProvider = useAccounts()
   const connectedProviders = [...new Set(accountProvider.accounts?.map(a => a.provider))]
+  const onClickHistory = () => {
+    setShowHistory(true)
+    if (showPendingAlert) setPendingAlert(false)
+  }
 
   return (
     <div>
       <div className="flex items-center gap-2">
-        <Button className="rounded-xl" variant="outline" onClick={() => setShowHistory(true)}>
-          <Clock3 /> History
-        </Button>
+        <Tooltip open={showPendingAlert}>
+          <TooltipTrigger asChild>
+            <Button className="rounded-xl" variant="outline" onClick={onClickHistory}>
+              <Clock3 /> History
+            </Button>
+          </TooltipTrigger>
+          <TooltipContent className="bg-blade rounded-xl p-3 text-white" arrowClassName="bg-blade fill-blade">
+            <div className="flex items-center gap-2">
+              {pendingTx ? (
+                <div>
+                  {pendingTx?.fromAsset?.metadata?.symbol} to {pendingTx?.toAsset?.metadata?.symbol}
+                </div>
+              ) : (
+                'Pending transactions'
+              )}
+              <LoaderCircle size={16} className="animate-spin" />
+            </div>
+          </TooltipContent>
+        </Tooltip>
         <Button className="rounded-xl" variant="outline" onClick={() => setAddWallet(true)}>
           <Plus />
         </Button>

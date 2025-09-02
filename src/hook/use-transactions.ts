@@ -25,6 +25,8 @@ interface TransactionStore {
   clearTransactions: () => void
   syncTransaction: (hash: string) => Promise<void>
   syncPending: () => Promise<void>
+  showPendingAlert: boolean
+  setPendingAlert: (show: boolean) => void
 }
 
 export const useTransactions = create<TransactionStore>()(
@@ -33,11 +35,14 @@ export const useTransactions = create<TransactionStore>()(
       transactions: [],
 
       setTransaction: transaction => {
-        set((state): { transactions: Transaction[] } => {
+        set(state => {
           const exists = state.transactions.find(d => d.hash === transaction.hash)
           if (exists) return state
 
-          return { transactions: [...state.transactions, transaction] }
+          return {
+            transactions: [...state.transactions, transaction],
+            showPendingAlert: true
+          }
         })
       },
 
@@ -77,7 +82,15 @@ export const useTransactions = create<TransactionStore>()(
         const { transactions, syncTransaction } = get()
         const pending = transactions.filter(d => d.status === 'pending')
         await Promise.all(pending.map(d => syncTransaction(d.hash)))
-      }
+      },
+
+      showPendingAlert: true,
+
+      setPendingAlert: (show: boolean) =>
+        set(state => ({
+          ...state,
+          showPendingAlert: show
+        }))
     }),
     {
       name: 'thorswap-transactions'
