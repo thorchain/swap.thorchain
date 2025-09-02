@@ -44,7 +44,7 @@ export function SwapDetails({ quote }: SwapDetailsProps) {
         <div className="flex items-center gap-2 text-sm">
           <span className="text-gray">Fee</span>
           <div className="text-leah">
-            <DecimalFiat className="text-sm" amount={feeInUsd} symbol="$" />
+            <DecimalFiat className="text-sm" amount={feeInUsd} symbol="$" decimals={3} />
           </div>
           {showMore ? (
             <ChevronUp className="text-gray h-4 w-4" onClick={() => setShowMore(false)} />
@@ -73,7 +73,6 @@ export function SwapDetails({ quote }: SwapDetailsProps) {
             <DecimalText
               className="text-leah text-xs"
               amount={BigInt(quote?.fees.liquidity || 0)}
-              round={2}
               symbol={toAsset?.metadata.symbol}
             />
           </div>
@@ -86,7 +85,6 @@ export function SwapDetails({ quote }: SwapDetailsProps) {
             <DecimalText
               className="text-leah text-xs"
               amount={BigInt(quote?.fees.outbound || 0)}
-              round={2}
               symbol={toAsset?.metadata.symbol}
             />
           </div>
@@ -99,7 +97,6 @@ export function SwapDetails({ quote }: SwapDetailsProps) {
             <DecimalText
               className="text-leah text-xs"
               amount={BigInt(quote?.fees.affiliate || 0)}
-              round={2}
               symbol={toAsset?.metadata.symbol}
             />
           </div>
