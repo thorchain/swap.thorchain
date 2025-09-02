@@ -60,7 +60,8 @@ export const useQuote = (params: UseQuoteParams): { quote?: UseQuote; isLoading:
         streaming_quantity: params.streamingQuantity,
         liquidity_tolerance_bps: params.liquidityToleranceBps
       }),
-    enabled: !!(params.amount && params.fromAsset && params.toAsset)
+    enabled: !!(params.amount && params.fromAsset && params.toAsset),
+    retry: false
   })
 
   let errorMessage = null
