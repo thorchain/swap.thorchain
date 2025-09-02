@@ -61,8 +61,8 @@ export const SwapInputFrom = () => {
         </div>
       </div>
 
-      <div className="mt-4 flex items-end justify-between gap-2">
-        <div>
+      <div className="mt-4 flex items-end justify-between">
+        <div className="flex gap-2">
           <Button
             className="text-leah bg-blade rounded-full px-3 py-1 text-sm hover:bg-zinc-800"
             onClick={() => handleSetPercent(0)}
