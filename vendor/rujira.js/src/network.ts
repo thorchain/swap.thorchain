@@ -129,7 +129,7 @@ export const networkLabel = (n: Network): string => {
     case Network.Thorchain:
       return 'Thorchain'
     case Network.Xrp:
-      return 'XRPL'
+      return 'XRP'
     case Network.Terra:
       return 'Terra Classic'
     case Network.Terra2:

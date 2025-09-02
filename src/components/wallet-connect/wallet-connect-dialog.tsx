@@ -5,6 +5,7 @@ import { Button } from '@/components/ui/button'
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog'
 import { Provider } from '@/wallets'
 import { cn } from '@/lib/utils'
+import { usePools } from '@/hook/use-pools'
 
 export interface WalletProps<T> {
   key: string
@@ -31,8 +32,9 @@ export const WalletConnectDialog = <T,>({
   const { connect, isAvaialable } = provider
   const [chosen, setChosen] = useState<Map<T, boolean>>(new Map())
   const [connecting, setConnecting] = useState(false)
+  const { pools } = usePools()
 
-  const networks = Object.values(Network).filter(i => i !== Network.Terra && i !== Network.Terra2)
+  const networks: Network[] = [...new Set((pools || []).map(p => p.chain))]
   const chosenSize = Array.from(chosen.values()).filter(i => i).length
 
   const handleConnect = async () => {
