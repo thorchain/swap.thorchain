@@ -9,8 +9,8 @@ import { cn } from '@/lib/utils'
 export interface WalletProps<T> {
   key: string
   label: string
-  isHardware?: boolean
   provider: T
+  link: string
 }
 
 interface WalletConnectDialogProps<T> {
@@ -74,15 +74,13 @@ export const WalletConnectDialog = <T,>({
                   return (
                     <div
                       key={wallet.key}
-                      className={cn(
-                        'flex cursor-pointer items-center space-x-3 rounded-lg border-1 border-transparent p-3',
-                        {
-                          'border-runes-blue': isChosen,
-                          'bg-emerald-500/10': isConnected
-                        }
-                      )}
+                      className={cn('flex items-center space-x-3 rounded-lg border-1 border-transparent p-3', {
+                        'border-runes-blue': isChosen,
+                        'bg-emerald-500/10': isConnected,
+                        'cursor-pointer': isInstalled
+                      })}
                       onClick={() => {
-                        if (isConnected) return
+                        if (isConnected || !isInstalled) return
                         setChosen(prevChosen => {
                           const newChosen = new Map(prevChosen)
                           newChosen.set(wallet.provider, !isChosen)
@@ -93,8 +91,14 @@ export const WalletConnectDialog = <T,>({
                       <Image src={`/wallets/${wallet.key}.svg`} alt="" width="32" height="32" />
                       <div className="flex-1">
                         <div className="font-medium text-white">{wallet.label}</div>
-                        <div className="text-sm text-gray-400">
-                          {isInstalled ? (isConnected ? 'Connected' : 'Disconnected') : 'Install'}
+                        <div className="text-sm">
+                          {isInstalled ? (
+                            <span>{isConnected ? 'Connected' : 'Disconnected'}</span>
+                          ) : (
+                            <a href={wallet.link} className="text-jacob" rel="noopener noreferrer" target="_blank">
+                              Install
+                            </a>
+                          )}
                         </div>
                       </div>
                     </div>

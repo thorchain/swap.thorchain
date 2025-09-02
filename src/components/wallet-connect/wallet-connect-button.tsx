@@ -89,7 +89,8 @@ const WALLETS: WalletProps<Provider>[] = [
   {
     key: 'ctrl',
     label: 'Ctrl',
-    provider: 'Ctrl'
+    provider: 'Ctrl',
+    link: 'https://ctrl.xyz'
   },
   // {
   //   key: 'keplr',
@@ -104,7 +105,8 @@ const WALLETS: WalletProps<Provider>[] = [
   {
     key: 'metamask',
     label: 'Metamask',
-    provider: 'Metamask'
+    provider: 'Metamask',
+    link: 'https://metamask.io'
   },
   // {
   //   key: 'okx',
@@ -120,11 +122,13 @@ const WALLETS: WalletProps<Provider>[] = [
   {
     key: 'vultisig',
     label: 'Vultisig',
-    provider: 'Vultisig'
+    provider: 'Vultisig',
+    link: 'https://vultisig.com'
   },
   {
     key: 'tronlink',
     label: 'TronLink',
-    provider: 'Tronlink'
+    provider: 'Tronlink',
+    link: 'https://www.tronlink.org'
   }
 ]
