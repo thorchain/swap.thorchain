@@ -114,7 +114,7 @@ export const WalletConnectDialog = <T,>({
               <div className="grid grid-cols-4 gap-3">
                 {networks.map(network => (
                   <div key={network} className="flex h-12 w-12 items-center justify-center rounded-xl">
-                    <Image src={`/networks/${network}.svg`} alt={network} width="32" height="32" />
+                    <Image src={`/networks/${network.toLowerCase()}.svg`} alt={network} width="32" height="32" />
                   </div>
                 ))}
               </div>

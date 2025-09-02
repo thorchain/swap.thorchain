@@ -44,7 +44,7 @@ export const SwapInputTo = ({ quote }: SwapInputProps) => {
         </div>
         <div className="flex items-center gap-3" onClick={() => setOpen(true)}>
           <div className="flex rounded-full">
-            <Image src={`/coins/${toAsset?.metadata.symbol}.svg`} alt="" width="40" height="40" />
+            <Image src={`/coins/${toAsset?.metadata.symbol.toLowerCase()}.svg`} alt="" width="40" height="40" />
           </div>
           <div className="flex flex-col items-start">
             <span className="text-leah text-lg font-semibold">{toAsset?.metadata.symbol}</span>

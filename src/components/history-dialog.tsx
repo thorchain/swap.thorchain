@@ -66,7 +66,7 @@ export const HistoryDialog = ({ open, onOpenChange }: HistoryDialogProps) => {
                 >
                   <div className="flex items-center gap-2">
                     <div className="flex h-8 w-8 rounded-full">
-                      <Image src={`/coins/${tx.fromAsset?.metadata.symbol}.svg`} alt="" width="32" height="32" />
+                      <Image src={`/coins/${tx.fromAsset?.metadata.symbol.toLowerCase()}.svg`} alt="" width="32" height="32" />
                     </div>
                     <div>
                       <p className="text-sm font-medium">
@@ -91,7 +91,7 @@ export const HistoryDialog = ({ open, onOpenChange }: HistoryDialogProps) => {
                       <p className="text-xs text-gray-400">{tx.toAsset?.metadata?.symbol}</p>
                     </div>
                     <div className="flex h-8 w-8 rounded-full">
-                      <Image src={`/coins/${tx.toAsset?.metadata.symbol}.svg`} alt="" width="32" height="32" />
+                      <Image src={`/coins/${tx.toAsset?.metadata.symbol.toLowerCase()}.svg`} alt="" width="32" height="32" />
                     </div>
                   </div>
                 </div>

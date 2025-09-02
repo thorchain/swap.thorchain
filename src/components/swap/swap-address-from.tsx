@@ -23,7 +23,7 @@ export const SwapAddressFrom = ({ asset }: SwapAddressFromProps) => {
     <div className="flex items-center justify-between">
       <div className="flex items-center gap-2">
         {selected ? (
-          <Image src={`/wallets/${selected.provider}.png`} alt="" width="24" height="24" />
+          <Image src={`/wallets/${selected.provider.toLowerCase()}.svg`} alt="" width="24" height="24" />
         ) : (
           <Wallet className="text-gray h-6 w-6" />
         )}
@@ -51,7 +51,7 @@ export const SwapAddressFrom = ({ asset }: SwapAddressFromProps) => {
                 className="group flex cursor-pointer items-center gap-4 rounded-none px-2 py-2 ps-5 focus:bg-neutral-900/60"
                 onSelect={() => select(account)}
               >
-                <Image src={`/wallets/${account.provider}.png`} alt="" width="24" height="24" />
+                <Image src={`/wallets/${account.provider.toLowerCase()}.svg`} alt="" width="24" height="24" />
                 <span className="text-gray text-sm">{account.provider}</span>
                 <span className={cn('ms-5 text-sm', { 'text-runes-blue': account === selected })}>
                   {truncate(account.address)}
