@@ -2,13 +2,13 @@
 
 import { useMemo } from 'react'
 import { Msg, MsgSwap, Simulation } from 'rujira.js'
-import { ArrowDown, LoaderCircle } from 'lucide-react'
+import { LoaderCircle } from 'lucide-react'
 import { SwapButton } from '@/components/swap/swap-button'
 import { SwapAddressFrom } from '@/components/swap/swap-address-from'
 import { SwapAddressTo } from '@/components/swap/swap-address-to'
-import { Separator } from '@/components/ui/separator'
 import { SwapSlippage } from '@/components/swap/swap-slippage'
 import { SwapInputFrom } from '@/components/swap/swap-input-from'
+import { SwapToggleAssets } from '@/components/swap/swap-toggle-assets'
 import { SwapInputTo } from '@/components/swap/swap-input-to'
 import { SwapDetails } from '@/components/swap/swap-details'
 import { useAccounts } from '@/context/accounts-provider'
@@ -19,7 +19,7 @@ import { useSwap } from '@/hook/use-swap'
 
 export const Swap = () => {
   const { selected, context } = useAccounts()
-  const { fromAsset, fromAmount, destination, setSwap, toAsset, slippageLimit } = useSwap()
+  const { fromAsset, fromAmount, destination, toAsset, slippageLimit } = useSwap()
   const { setTransaction } = useTransactions()
 
   const params = useMemo(
@@ -89,15 +89,7 @@ export const Swap = () => {
           </div>
 
           <SwapInputFrom />
-
-          <div className="relative flex items-center justify-center overflow-hidden">
-            <Separator />
-            <div className="bg-blade rounded-full p-2">
-              <ArrowDown className="text-gray h-4 w-4" onClick={() => setSwap(toAsset, fromAsset)} />
-            </div>
-            <Separator />
-          </div>
-
+          <SwapToggleAssets />
           <SwapInputTo quote={quote} />
 
           <div className="border-t-1 p-4">
