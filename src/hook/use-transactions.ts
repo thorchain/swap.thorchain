@@ -84,7 +84,7 @@ export const useTransactions = create<TransactionStore>()(
         await Promise.all(pending.map(d => syncTransaction(d.hash)))
       },
 
-      showPendingAlert: true,
+      showPendingAlert: false,
 
       setPendingAlert: (show: boolean) =>
         set(state => ({
