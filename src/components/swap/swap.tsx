@@ -8,8 +8,9 @@ import { SwapAddressFrom } from '@/components/swap/swap-address-from'
 import { SwapAddressTo } from '@/components/swap/swap-address-to'
 import { SwapSlippage } from '@/components/swap/swap-slippage'
 import { SwapInputFrom } from '@/components/swap/swap-input-from'
-import { SwapToggleAssets } from '@/components/swap/swap-toggle-assets'
 import { SwapInputTo } from '@/components/swap/swap-input-to'
+import { SwapToggleAssets } from '@/components/swap/swap-toggle-assets'
+import { SwapWarning } from '@/components/swap/swap-warning'
 import { SwapDetails } from '@/components/swap/swap-details'
 import { useAccounts } from '@/context/accounts-provider'
 import { useTransactions } from '@/hook/use-transactions'
@@ -97,7 +98,8 @@ export const Swap = () => {
           </div>
         </div>
 
-        <SwapDetails quote={quote} isLoading={isLoading} error={error} />
+        <SwapWarning error={error} />
+        <SwapDetails quote={quote} />
         <SwapButton msg={msg} signer={{ simulate, signAndBroadcast }} />
       </div>
     </div>

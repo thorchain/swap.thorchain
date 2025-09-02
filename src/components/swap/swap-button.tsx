@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useState } from 'react'
-import { Msg, Signer, Simulation, translateError } from 'rujira.js'
+import { Msg, Signer, Simulation } from 'rujira.js'
+import { SwapWarning } from '@/components/swap/swap-warning'
 import { Button } from '@/components/ui/button'
 import { toast } from 'sonner'
 
@@ -64,9 +65,7 @@ export const SwapButton = ({ msg, signer }: SwapButtonProps) => {
 
   return (
     <div className="mt-6">
-      {simulationError?.message && (
-        <div className="mt-3 px-3 text-red-500">{translateError(simulationError.message)}</div>
-      )}
+      <SwapWarning error={simulationError?.message} />
 
       <Button
         className="w-full rounded-2xl bg-gray-200 py-4 font-medium text-black transition-colors hover:bg-white"
