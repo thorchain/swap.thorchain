@@ -1,6 +1,6 @@
 'use client'
 
-import { useMemo, useState } from 'react'
+import { useMemo } from 'react'
 import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
 import { Asset } from '@/components/swap/asset'
@@ -80,10 +80,10 @@ export const useDestination = () => useSwapStore(state => state.destination)
 export const useSetDestination = () => useSwapStore(state => state.setDestination)
 
 export const useSwap = () => {
-  const [destination, setDestination] = useState<Account | undefined>()
   const { pools } = usePoolsRates()
   const {
     slippageLimit,
+    destination,
     setSlippageLimit,
     fromAmount,
     setFromAmount,
@@ -101,14 +101,13 @@ export const useSwap = () => {
   return {
     slippageLimit: BigInt(slippageLimit),
     setSlippageLimit,
+    destination,
     fromAsset,
     toAsset,
     fromAmount: BigInt(fromAmount),
     setFromAmount,
     setSwap,
     feeWarning: BigInt(feeWarning),
-    destination,
-    setDestination,
     swapAssets,
     reset
   }
