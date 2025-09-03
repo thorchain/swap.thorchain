@@ -3,6 +3,7 @@
 import Image from 'next/image'
 import { useState } from 'react'
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog'
+import { ScrollArea } from '@/components/ui/scroll-area'
 import { Input } from '@/components/ui/input'
 import { Search } from 'lucide-react'
 import { Network, networkLabel } from 'rujira.js'
@@ -65,7 +66,7 @@ export function SwapSelectCoin({ isOpen, onClose, selected, onSelectAsset, isInp
         <div className="flex flex-col md:flex-row">
           <div className="flex-1 border-b p-6 sm:pt-4 md:border-r md:border-b-0 md:pt-0">
             <h3 className="text-gray mb-4 text-sm font-medium">Chains</h3>
-            <div className="h-full max-h-[30vh] space-y-1 overflow-y-auto md:max-h-[60vh]">
+            <ScrollArea className="h-full max-h-[30vh] space-y-1 md:max-h-[60vh]">
               {networks.map((network, index) => (
                 <button
                   key={index}
@@ -82,7 +83,7 @@ export function SwapSelectCoin({ isOpen, onClose, selected, onSelectAsset, isInp
                   </div>
                 </button>
               ))}
-            </div>
+            </ScrollArea>
           </div>
 
           <div className="flex-1 p-6 sm:pt-4 md:pt-0">
@@ -98,7 +99,7 @@ export function SwapSelectCoin({ isOpen, onClose, selected, onSelectAsset, isInp
               />
             </div>
 
-            <div className="h-full max-h-[30vh] space-y-1 overflow-y-auto md:max-h-[60vh]">
+            <ScrollArea className="h-full max-h-[30vh] space-y-1 md:max-h-[50vh]">
               {chainAssets.map((item, index) => (
                 <button
                   key={index}
@@ -126,7 +127,7 @@ export function SwapSelectCoin({ isOpen, onClose, selected, onSelectAsset, isInp
                   )}
                 </button>
               ))}
-            </div>
+            </ScrollArea>
           </div>
         </div>
       </DialogContent>
