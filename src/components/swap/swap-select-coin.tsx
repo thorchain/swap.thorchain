@@ -68,7 +68,7 @@ export function SwapSelectCoin({ isOpen, onClose, selected, onSelectAsset, isInp
             <h3 className="text-gray mb-4 text-sm font-medium">Chains</h3>
             <ScrollArea className="h-full max-h-[30vh] space-y-1 md:max-h-[60vh]">
               {networks.map((network, index) => (
-                <button
+                <div
                   key={index}
                   onClick={() => handleChainSelect(network)}
                   className={`flex w-full items-center gap-3 rounded-lg border p-3 hover:bg-neutral-900 ${
@@ -81,7 +81,7 @@ export function SwapSelectCoin({ isOpen, onClose, selected, onSelectAsset, isInp
                   <div className="flex h-8 w-full items-center text-sm font-bold text-white">
                     {networkLabel(network)}
                   </div>
-                </button>
+                </div>
               ))}
             </ScrollArea>
           </div>
@@ -101,7 +101,7 @@ export function SwapSelectCoin({ isOpen, onClose, selected, onSelectAsset, isInp
 
             <ScrollArea className="h-full max-h-[30vh] space-y-1 md:max-h-[50vh]">
               {chainAssets.map((item, index) => (
-                <button
+                <div
                   key={index}
                   onClick={() => handleAssetSelect(item)}
                   className="flex w-full items-center justify-between border border-transparent p-3 transition-all hover:bg-neutral-900"
@@ -125,7 +125,7 @@ export function SwapSelectCoin({ isOpen, onClose, selected, onSelectAsset, isInp
                       {isInput ? 'INPUT' : 'OUTPUT'}
                     </div>
                   )}
-                </button>
+                </div>
               ))}
             </ScrollArea>
           </div>
