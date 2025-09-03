@@ -60,7 +60,8 @@ export const useSwapStore = create<SwapState>()(
         const { from, to } = get()
         set({
           from: to,
-          to: from
+          to: from,
+          fromAmount: '0'
         })
       },
 
