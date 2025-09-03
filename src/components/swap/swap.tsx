@@ -84,7 +84,7 @@ export const Swap = () => {
           <SwapSlippage />
         </div>
 
-        <div className="bg-deep-black border-blade rounded-3xl border-1">
+        <div className="bg-lawrence border-blade rounded-3xl border-1">
           <div className="border-b-1 p-4">
             <SwapAddressFrom asset={fromAsset} />
           </div>

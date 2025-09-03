@@ -30,7 +30,7 @@ export const HistoryDialog = ({ open, onOpenChange }: HistoryDialogProps) => {
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-md rounded-2xl bg-black p-6 text-white" showCloseButton={false}>
+      <DialogContent className="max-w-md rounded-2xl bg-lawrence p-6 text-white" showCloseButton={false}>
         <DialogHeader className="flex flex-row items-center justify-between">
           <DialogTitle className="text-lg font-semibold">History</DialogTitle>
           <button onClick={() => onOpenChange(false)}>

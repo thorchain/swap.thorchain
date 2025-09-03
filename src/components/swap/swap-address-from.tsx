@@ -36,7 +36,7 @@ export const SwapAddressFrom = ({ asset }: SwapAddressFromProps) => {
             <ChevronDown className="ms-2 inline h-4 w-4" />
           </div>
         </DropdownMenuTrigger>
-        <DropdownMenuContent align="start" className="bg-deep-black rounded-2xl p-0">
+        <DropdownMenuContent align="start" className="bg-lawrence rounded-2xl p-0">
           <div className="border-b p-4">
             <div className="flex items-center gap-3">
               <Wallet className="text-gray h-6 w-6" />

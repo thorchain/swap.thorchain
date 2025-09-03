@@ -58,7 +58,7 @@ export function SwapSelectCoin({ isOpen, onClose, selected, onSelectAsset, isInp
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="bg-deep-black w-full max-w-3xl gap-0 p-0 md:h-auto md:max-h-[90vh] md:min-w-2xl">
+      <DialogContent className="bg-lawrence w-full max-w-3xl gap-0 p-0 md:h-auto md:max-h-[90vh] md:min-w-2xl">
         <DialogHeader className="hidden p-6 pb-4 md:block">
           <DialogTitle className="text-2xl font-medium text-white">Select Coin</DialogTitle>
         </DialogHeader>

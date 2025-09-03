@@ -58,8 +58,8 @@ export const WalletConnectDialog = <T,>({
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="bg-deep-black mx-0 w-full max-w-3xl p-0 md:mx-4 md:h-auto md:max-h-[90vh] md:min-w-2xl">
-        <DialogHeader className="bg-deep-black sticky top-0 z-10 p-6 pb-0">
+      <DialogContent className="bg-lawrence mx-0 w-full max-w-3xl p-0 md:mx-4 md:h-auto md:max-h-[90vh] md:min-w-2xl">
+        <DialogHeader className="bg-lawrence sticky top-0 z-10 p-6 pb-0">
           <DialogTitle className="text-2xl font-semibold text-white">Connect Wallet</DialogTitle>
         </DialogHeader>
 
