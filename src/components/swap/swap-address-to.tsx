@@ -36,7 +36,7 @@ export const SwapAddressTo = ({ asset }: SwapSelectToProps) => {
       </div>
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
-          <div className="text-leah text-sm">
+          <div className="text-leah cursor-pointer text-sm">
             <span>{destination?.address ? truncate(destination.address) : ''}</span>
             <ChevronDown className="ms-2 inline h-4 w-4" />
           </div>

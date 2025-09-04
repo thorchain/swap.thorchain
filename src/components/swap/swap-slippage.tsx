@@ -11,9 +11,9 @@ export const SwapSlippage = () => {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <button className="bg-bran rounded-full px-2 py-2">
+        <div className="bg-bran rounded-full px-2 py-2">
           <SlidersHorizontal className="h-4 w-4 cursor-pointer" />
-        </button>
+        </div>
       </DropdownMenuTrigger>
       <DropdownMenuContent>
         <div className="flex gap-2 p-2">

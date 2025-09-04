@@ -53,7 +53,7 @@ export const SwapInputFrom = () => {
             <DecimalFiat amount={valueFrom} />
           </div>
         </div>
-        <div className="flex items-center gap-3" onClick={() => setOpen(true)}>
+        <div className="flex cursor-pointer items-center gap-3" onClick={() => setOpen(true)}>
           <AssetIcon url={fromAsset ? `/coins/${fromAsset.metadata.symbol.toLowerCase()}.svg` : null} />
           <div className="flex flex-col items-start">
             <span className="text-leah text-lg font-semibold">
