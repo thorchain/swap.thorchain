@@ -1,9 +1,6 @@
 'use client'
 
-import { useMemo } from 'react'
-import { Msg, MsgSwap, Simulation } from 'rujira.js'
-import { LoaderCircle } from 'lucide-react'
-import { SwapButton } from '@/components/swap/swap-button'
+import { networkLabel } from 'rujira.js'
 import { SwapAddressFrom } from '@/components/swap/swap-address-from'
 import { SwapAddressTo } from '@/components/swap/swap-address-to'
 import { SwapSlippage } from '@/components/swap/swap-slippage'
@@ -14,46 +11,39 @@ import { SwapWarning } from '@/components/swap/swap-warning'
 import { SwapDetails } from '@/components/swap/swap-details'
 import { useAccounts } from '@/context/accounts-provider'
 import { useTransactions } from '@/hooks/use-transactions'
-import { useQuote } from '@/hooks/use-quote'
-import { wallets } from '@/wallets'
 import { useSwap } from '@/hooks/use-swap'
+import { useQuote } from '@/hooks/use-quote'
+import { Button } from '@/components/ui/button'
+import { wallets } from '@/wallets'
+import { useSimulation } from '@/hooks/use-simulation'
+import { toast } from 'sonner'
 
 export const Swap = () => {
   const { selected, context } = useAccounts()
   const { fromAsset, fromAmount, destination, toAsset, slippageLimit } = useSwap()
+  const { isLoading: isQuoting, quote, error: quoteError } = useQuote()
+  const { isLoading: isSimulating, simulationData, error: simulationError } = useSimulation()
   const { setTransaction } = useTransactions()
 
-  const params = useMemo(
-    () => ({
-      amount: fromAmount > 0n ? fromAmount.toString() : undefined,
-      fromAsset: fromAsset?.asset,
-      toAsset: toAsset?.asset,
-      affiliate: [],
-      affiliateBps: [],
-      destination: destination?.address,
-      streamingInterval: 1,
-      streamingQuantity: '0',
-      liquidityToleranceBps: Number(slippageLimit)
-    }),
-    [fromAmount, fromAsset, toAsset, destination, slippageLimit]
-  )
+  const getButtonTitle = () => {
+    if (!fromAsset || !toAsset) return 'Loading...'
+    if (!selected) return `Connect ${networkLabel(fromAsset.chain)} Wallet`
+    if (!destination) return `Connect ${networkLabel(toAsset.chain)} Wallet`
+    if (!fromAmount) return 'Enter Amount'
+    if (isQuoting) return 'Quoting...'
+    if (isSimulating) return 'Simulating...'
+    return 'Swap'
+  }
 
-  const { quote, isLoading, error } = useQuote(params)
+  const onSwap = async () => {
+    if (!simulationData || !selected) {
+      return
+    }
 
-  const inboundAddress = quote
-    ? {
-        address: quote.inbound_address,
-        dustThreshold: BigInt(quote.dust_threshold || '0'),
-        gasRate: BigInt(quote.recommended_gas_rate || '0'),
-        router: quote.router || undefined
-      }
-    : undefined
-
-  const simulate = selected && wallets.simulate(context, selected, inboundAddress)
-  const signAndBroadcast = selected
-    ? async (simulation: Simulation, msg: Msg) => {
-        const func = wallets.signAndBroadcast(context, selected, inboundAddress)
-        const res = await func(simulation, msg)
+    const func = wallets.signAndBroadcast(context, selected, simulationData.inboundAddress)
+    const broadcast = func(simulationData.simulation, simulationData.msg)
+      .then(res => {
+        console.log('res', res)
 
         setTransaction({
           hash: res.txHash,
@@ -66,12 +56,21 @@ export const Swap = () => {
         })
 
         return res
-      }
-    : undefined
+      })
+      .catch(err => {
+        console.error(err)
+        throw err
+      })
 
-  const msg = useMemo(() => {
-    return quote?.memo && fromAsset && fromAmount > 0n ? new MsgSwap(fromAsset, fromAmount, quote.memo) : null
-  }, [fromAmount, fromAsset, quote?.memo])
+    toast.promise(broadcast, {
+      loading: 'Submitting Transaction',
+      success: () => 'Transaction Succeeded',
+      error: (err: any) => {
+        console.error(err)
+        return 'Error Submitting Transaction'
+      }
+    })
+  }
 
   return (
     <div className="flex flex-col items-center justify-center p-4">
@@ -79,7 +78,6 @@ export const Swap = () => {
         <div className="mb-4 flex items-center justify-between">
           <div className="flex items-center gap-2">
             <h1 className="text-2xl font-medium text-white">Swap</h1>
-            {isLoading && <LoaderCircle className="animate-spin" />}
           </div>
           <SwapSlippage />
         </div>
@@ -98,9 +96,17 @@ export const Swap = () => {
           </div>
         </div>
 
-        <SwapWarning error={error} />
+        <SwapWarning error={quoteError || simulationError} />
         <SwapDetails quote={quote} />
-        <SwapButton msg={msg} signer={{ simulate, signAndBroadcast }} />
+
+        <Button
+          className="mt-6 w-full rounded-2xl bg-gray-200 py-4 font-medium text-black transition-colors hover:bg-white"
+          onClick={onSwap}
+          disabled={!simulationData}
+          size="lg"
+        >
+          {getButtonTitle()}
+        </Button>
       </div>
     </div>
   )

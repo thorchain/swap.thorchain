@@ -1,20 +1,10 @@
 import { useQuery } from '@tanstack/react-query'
 import { getQuote } from '@/lib/api'
+import { useSwap } from '@/hooks/use-swap'
+import { useMemo } from 'react'
 import { AxiosError } from 'axios'
 
-interface UseQuoteParams {
-  amount?: string
-  fromAsset?: string
-  toAsset?: string
-  affiliate: never[]
-  affiliateBps: never[]
-  destination: string | undefined
-  streamingInterval: number
-  streamingQuantity: string
-  liquidityToleranceBps: number
-}
-
-export interface UseQuote {
+export interface Quote {
   dust_threshold: string
   expected_amount_out: string
   expiry: number
@@ -45,8 +35,29 @@ export interface UseQuote {
   warning: string
 }
 
-export const useQuote = (params: UseQuoteParams): { quote?: UseQuote; isLoading: boolean; error?: string } => {
-  const { data, isLoading, error } = useQuery({
+export const useQuote = (): { isLoading: boolean; quote?: Quote; error?: string } => {
+  const { fromAsset, fromAmount, destination, toAsset, slippageLimit } = useSwap()
+
+  const params = useMemo(
+    () => ({
+      amount: fromAmount > 0n ? fromAmount.toString() : undefined,
+      fromAsset: fromAsset?.asset,
+      toAsset: toAsset?.asset,
+      affiliate: [],
+      affiliateBps: [],
+      destination: destination?.address,
+      streamingInterval: 1,
+      streamingQuantity: '0',
+      liquidityToleranceBps: Number(slippageLimit)
+    }),
+    [fromAmount, fromAsset, toAsset, destination, slippageLimit]
+  )
+
+  const {
+    data: quote,
+    isLoading,
+    error
+  } = useQuery({
     queryKey: ['quote', params],
     queryFn: () =>
       getQuote({
@@ -64,14 +75,14 @@ export const useQuote = (params: UseQuoteParams): { quote?: UseQuote; isLoading:
     retry: false
   })
 
-  let errorMessage = null
+  let errorMessage = undefined
   if (error instanceof AxiosError) {
     errorMessage = error.response?.data?.message || error.message
   }
 
   return {
     isLoading,
-    quote: data,
+    quote,
     error: errorMessage
   }
 }
