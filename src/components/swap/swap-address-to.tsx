@@ -1,3 +1,5 @@
+'use client'
+
 import Image from 'next/image'
 import { ChevronDown, Pencil, Wallet } from 'lucide-react'
 import {
@@ -10,7 +12,9 @@ import {
 import { Asset } from '@/components/swap/asset'
 import { useAccounts } from '@/context/accounts-provider'
 import { useDestination, useSetDestination } from '@/hooks/use-swap'
+import { SwapAddressConfig } from '@/components/swap/swap-address-config'
 import { cn, truncate } from '@/lib/utils'
+import { useState } from 'react'
 
 interface SwapSelectToProps {
   asset?: Asset
@@ -18,6 +22,8 @@ interface SwapSelectToProps {
 
 export const SwapAddressTo = ({ asset }: SwapSelectToProps) => {
   const { accounts } = useAccounts()
+  const [isOpen, setIsOpen] = useState(false)
+
   const destination = useDestination()
   const setDestination = useSetDestination()
   const options = accounts?.filter(a => a.network === asset?.chain)
@@ -25,14 +31,14 @@ export const SwapAddressTo = ({ asset }: SwapSelectToProps) => {
   return (
     <div className="flex items-center justify-between">
       <div className="flex items-center gap-2">
-        {destination ? (
+        {(destination && destination.provider) ? (
           <Image src={`/wallets/${destination.provider.toLowerCase()}.svg`} alt="" width="24" height="24" />
         ) : (
           <Wallet className="text-gray h-6 w-6" />
         )}
         <span className="text-gray text-sm">{destination?.provider || 'Destination Wallet'}</span>
       </div>
-      <DropdownMenu>
+      <DropdownMenu modal={false}>
         <DropdownMenuTrigger asChild>
           <div className="text-leah cursor-pointer text-sm">
             <span>{destination?.address ? truncate(destination.address) : ''}</span>
@@ -66,7 +72,10 @@ export const SwapAddressTo = ({ asset }: SwapSelectToProps) => {
 
             <DropdownMenuItem
               className="flex cursor-pointer items-center gap-3 rounded-none px-3 py-2 focus:bg-neutral-800"
-              disabled
+              onClick={e => {
+                e.preventDefault()
+                setIsOpen(true)
+              }}
             >
               <Pencil size={24} className="text-green ms-1 flex-shrink-0" />
               <span className="text-green ps-1 text-sm">Custom Address</span>
@@ -74,6 +83,8 @@ export const SwapAddressTo = ({ asset }: SwapSelectToProps) => {
           </div>
         </DropdownMenuContent>
       </DropdownMenu>
+
+      <SwapAddressConfig isOpen={isOpen} setOpen={setIsOpen} />
     </div>
   )
 }

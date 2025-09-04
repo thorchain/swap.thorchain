@@ -2,19 +2,26 @@ import { useMemo } from 'react'
 import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
 import { Asset } from '@/components/swap/asset'
-import { Account } from '@/wallets'
 import { AssetRate, usePoolsRates } from '@/hooks/use-pools-rates'
+import { Network } from 'rujira.js'
+import { Provider } from '@/wallets'
+
+interface Destination<P> {
+  address: string
+  network: Network
+  provider?: P
+}
 
 interface SwapState {
   slippageLimit: string
-  destination?: Account
+  destination?: Destination<Provider>
   fromAmount: string
   feeWarning: string
   from?: string
   to?: string
 
   setSlippageLimit: (limit: bigint) => void
-  setDestination: (destination?: Account) => void
+  setDestination: (destination?: Destination<Provider>) => void
   setFromAmount: (amount: bigint) => void
   setSwap: (fromAsset?: Asset, toAsset?: Asset) => void
   swapAssets: () => void
