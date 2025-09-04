@@ -73,7 +73,13 @@ export const useSwapStore = create<SwapState>()(
       reset: () => set(initialState)
     }),
     {
-      name: 'swap-store'
+      name: 'swap-store',
+      partialize: state => {
+        return {
+          ...state,
+          destination: undefined
+        }
+      }
     }
   )
 )
