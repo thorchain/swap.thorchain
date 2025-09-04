@@ -35,7 +35,7 @@ const storedSelected = storage.loadSelected()
 const connectedProviders: Provider[] = storage.loadProviders()
 
 export const AccountsProvider: FC<PropsWithChildren> = ({ children }) => {
-  const { fromAsset } = useSwap()
+  const { fromAsset, destination, setDestination } = useSwap()
   const [provider, setProvider] = useState<Provider | undefined>(storedSelected?.provider)
   const [network, setNetwork] = useState<Network | undefined>(storedSelected?.network)
   const [address, setAddress] = useState<string | undefined>(storedSelected?.address)
@@ -136,6 +136,9 @@ export const AccountsProvider: FC<PropsWithChildren> = ({ children }) => {
       }
       return filtered
     })
+    if (destination?.provider === p) {
+      setDestination(undefined)
+    }
   }
 
   const disconnectAll = () => {
@@ -143,6 +146,7 @@ export const AccountsProvider: FC<PropsWithChildren> = ({ children }) => {
     storage.clearProviders()
     storage.clearSelected()
     setAccounts([])
+    setDestination(undefined)
   }
 
   return (

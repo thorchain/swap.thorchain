@@ -83,6 +83,7 @@ export const useSwap = () => {
   const {
     slippageLimit,
     destination,
+    setDestination,
     setSlippageLimit,
     fromAmount,
     setFromAmount,
@@ -101,6 +102,7 @@ export const useSwap = () => {
     slippageLimit: BigInt(slippageLimit),
     setSlippageLimit,
     destination,
+    setDestination,
     fromAsset,
     toAsset,
     fromAmount: BigInt(fromAmount),
