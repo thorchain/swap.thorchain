@@ -5,7 +5,7 @@ import { ChevronDown, Loader } from 'lucide-react'
 import { DecimalInput } from '@/components/decimal-input'
 import { balanceKey, useBalance, useSyncBalance, useSyncing } from '@/hook/use-balance'
 import { DecimalFiat } from '@/components/decimal-fiat'
-import { SwapSelectCoin } from '@/components/swap/swap-select-coin'
+import { SwapSelectAsset } from '@/components/swap/swap-select-asset'
 import { Button } from '@/components/ui/button'
 import { useAccounts } from '@/context/accounts-provider'
 import { DecimalText } from '@/components/decimal-text'
@@ -98,12 +98,10 @@ export const SwapInputFrom = () => {
         </div>
       </div>
 
-      <SwapSelectCoin
-        key="select-from"
+      <SwapSelectAsset
         isOpen={open}
+        setOpen={setOpen}
         selected={fromAsset}
-        isInput={true}
-        onClose={() => setOpen(false)}
         onSelectAsset={asset => {
           setSwap(asset)
           const toSelect = accounts?.find(a => a.network === asset?.chain)

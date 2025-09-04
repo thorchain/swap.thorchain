@@ -1,7 +1,7 @@
 import Decimal from 'decimal.js'
 import { useState } from 'react'
 import { ChevronDown } from 'lucide-react'
-import { SwapSelectCoin } from '@/components/swap/swap-select-coin'
+import { SwapSelectAsset } from '@/components/swap/swap-select-asset'
 import { DecimalInput } from '@/components/decimal-input'
 import { AssetIcon } from '@/components/asset-icon'
 import { Skeleton } from '@/components/ui/skeleton'
@@ -59,12 +59,10 @@ export const SwapInputTo = ({ quote }: SwapInputProps) => {
         </div>
       </div>
 
-      <SwapSelectCoin
-        key="select-to"
+      <SwapSelectAsset
         isOpen={open}
+        setOpen={setOpen}
         selected={toAsset}
-        isInput={false}
-        onClose={() => setOpen(false)}
         onSelectAsset={asset => {
           if (destination?.network !== asset.chain) {
             setDestination(accounts?.find(x => x.network === asset.chain))
