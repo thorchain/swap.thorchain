@@ -1,13 +1,13 @@
 'use client'
 
 import Image from 'next/image'
-import { useState } from 'react'
-import { Clock3, LoaderCircle, Plus } from 'lucide-react'
+import { useMemo, useState } from 'react'
+import { Clock3, LoaderCircle, LogOut, Plus } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { WalletConnectDialog, WalletProps } from '@/components/wallet-connect/wallet-connect-dialog'
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu'
 import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip'
 import { HistoryDialog } from '@/components/history-dialog'
-import { WalletDrawer } from '@/components/wallet-connect/wallet-drawer'
 import { Provider } from '@/wallets'
 import { useAccounts } from '@/context/accounts-provider'
 import { useTransactions } from '@/hooks/use-transactions'
@@ -15,15 +15,16 @@ import { useTransactions } from '@/hooks/use-transactions'
 export const WalletConnectButton = () => {
   const [showHistory, setShowHistory] = useState(false)
   const [addWallet, setAddWallet] = useState(false)
-  const [drawer, setDrawer] = useState<{ open: boolean; provider?: Provider }>({
-    open: false
-  })
 
   const { showPendingAlert, setPendingAlert, transactions } = useTransactions()
-  const pendingTx = transactions.find(t => t.status === 'pending')
 
-  const accountProvider = useAccounts()
-  const connectedProviders = [...new Set(accountProvider.accounts?.map(a => a.provider))]
+  const accProvider = useAccounts()
+  const pendingTx = transactions.find(t => t.status === 'pending')
+  const connectedProviders = useMemo(
+    () => [...new Set(accProvider.accounts?.map(a => a.provider))],
+    [accProvider.accounts]
+  )
+
   const onClickHistory = () => {
     setShowHistory(true)
     if (showPendingAlert) setPendingAlert(false)
@@ -54,28 +55,29 @@ export const WalletConnectButton = () => {
         <Button className="rounded-xl" variant="outline" onClick={() => setAddWallet(true)}>
           <Plus />
         </Button>
-        {connectedProviders.map(provider => (
-          <Button
-            variant="outline"
-            key={provider}
-            className="rounded-lg border-1 border-emerald-500 px-0"
-            onClick={() => setDrawer({ open: true, provider })}
-          >
-            <Image width="32" height="32" src={`/wallets/${provider.toLowerCase()}.svg`} alt={provider} />
-          </Button>
+        {connectedProviders.map((provider, i) => (
+          <DropdownMenu key={i}>
+            <DropdownMenuTrigger asChild>
+              <Button variant="outline" className="rounded-lg border-1 px-0">
+                <Image width="32" height="32" src={`/wallets/${provider.toLowerCase()}.svg`} alt={provider} />
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent className="p-0">
+              <DropdownMenuItem className="flex cursor-pointer items-center justify-between gap-3 rounded-none px-3 py-2 focus:bg-neutral-800">
+                <div className="flex items-center gap-3" onClick={() => accProvider.disconnect(provider)}>
+                  <LogOut className="h-5 w-5" />
+                  <span className="text-gray text-sm">Disconnect</span>
+                </div>
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
         ))}
       </div>
-
-      <WalletDrawer
-        open={drawer.open}
-        provider={drawer.provider}
-        onOpenChange={bool => setDrawer({ ...drawer, open: bool })}
-      />
 
       <WalletConnectDialog
         open={addWallet}
         onOpenChange={setAddWallet}
-        provider={accountProvider}
+        provider={accProvider}
         connectedProviders={connectedProviders}
         wallets={WALLETS}
       />
