@@ -18,7 +18,10 @@ export const SwapToggleAssets = () => {
     <div className="relative flex cursor-pointer items-center justify-center overflow-hidden">
       <Separator />
       <div className="bg-blade rounded-full p-2">
-        <ArrowDown className="text-gray h-4 w-4" onClick={onSwapAssets} />
+        <ArrowDown
+          className="text-gray h-4 w-4 transition-transform duration-300 hover:rotate-180"
+          onClick={onSwapAssets}
+        />
       </div>
       <Separator />
     </div>
