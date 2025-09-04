@@ -3,7 +3,7 @@ import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
 import { Asset } from '@/components/swap/asset'
 import { Account } from '@/wallets'
-import { AssetRate, usePoolsRates } from '@/hook/use-pools-rates'
+import { AssetRate, usePoolsRates } from '@/hooks/use-pools-rates'
 
 interface SwapState {
   slippageLimit: string

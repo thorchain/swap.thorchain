@@ -6,8 +6,8 @@ import { Search } from 'lucide-react'
 import { Network, networkLabel } from 'rujira.js'
 import { Asset } from '@/components/swap/asset'
 import { Input } from '@/components/ui/input'
-import { useIsMobile } from '@/hook/use-mobile'
-import { usePools } from '@/hook/use-pools'
+import { useIsMobile } from '@/hooks/use-mobile'
+import { usePools } from '@/hooks/use-pools'
 import { cn } from '@/lib/utils'
 
 interface SwapSelectAssetProps {

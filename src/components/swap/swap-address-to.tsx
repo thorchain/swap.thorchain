@@ -11,7 +11,7 @@ import { Asset } from '@/components/swap/asset'
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
 import { useAccounts } from '@/context/accounts-provider'
-import { useDestination, useSetDestination } from '@/hook/use-swap'
+import { useDestination, useSetDestination } from '@/hooks/use-swap'
 import { cn, truncate } from '@/lib/utils'
 
 interface SwapSelectToProps {

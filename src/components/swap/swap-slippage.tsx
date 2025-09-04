@@ -1,6 +1,6 @@
 import { SlidersHorizontal } from 'lucide-react'
 import { DropdownMenu, DropdownMenuContent, DropdownMenuTrigger } from '@/components/ui/dropdown-menu'
-import { useSetSlippageLimit, useSlippageLimit } from '@/hook/use-swap'
+import { useSetSlippageLimit, useSlippageLimit } from '@/hooks/use-swap'
 import { Button } from '@/components/ui/button'
 import { cn } from '@/lib/utils'
 

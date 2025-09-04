@@ -6,8 +6,8 @@ import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/comp
 import { Separator } from '@/components/ui/separator'
 import { DecimalText } from '@/components/decimal-text'
 import { DecimalFiat } from '@/components/decimal-fiat'
-import { UseQuote } from '@/hook/use-quote'
-import { useSwap } from '@/hook/use-swap'
+import { UseQuote } from '@/hooks/use-quote'
+import { useSwap } from '@/hooks/use-swap'
 
 interface SwapDetailsProps {
   quote?: UseQuote

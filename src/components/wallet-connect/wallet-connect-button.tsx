@@ -10,7 +10,7 @@ import { HistoryDialog } from '@/components/history-dialog'
 import { WalletDrawer } from '@/components/wallet-connect/wallet-drawer'
 import { Provider } from '@/wallets'
 import { useAccounts } from '@/context/accounts-provider'
-import { useTransactions } from '@/hook/use-transactions'
+import { useTransactions } from '@/hooks/use-transactions'
 
 export const WalletConnectButton = () => {
   const [showHistory, setShowHistory] = useState(false)

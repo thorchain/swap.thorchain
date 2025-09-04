@@ -1,5 +1,5 @@
 import { Asset } from '@/components/swap/asset'
-import { usePools } from '@/hook/use-pools'
+import { usePools } from '@/hooks/use-pools'
 import { useQuery } from '@tanstack/react-query'
 import { getPoolsRates } from '@/lib/api'
 

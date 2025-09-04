@@ -2,7 +2,7 @@
 
 import { createContext, FC, PropsWithChildren, useContext, useEffect, useState } from 'react'
 import { Account, AccountProvider, Provider, wallets } from '@/wallets'
-import { useSwap } from '@/hook/use-swap'
+import { useSwap } from '@/hooks/use-swap'
 import { Network } from 'rujira.js'
 import { toast } from 'sonner'
 import * as storage from '@/wallets/storage'

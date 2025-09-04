@@ -8,8 +8,8 @@ import { Skeleton } from '@/components/ui/skeleton'
 import { networkLabel } from 'rujira.js'
 import { DecimalFiat } from '@/components/decimal-fiat'
 import { useAccounts } from '@/context/accounts-provider'
-import { UseQuote } from '@/hook/use-quote'
-import { useDestination, useSetDestination, useSwap } from '@/hook/use-swap'
+import { UseQuote } from '@/hooks/use-quote'
+import { useDestination, useSetDestination, useSwap } from '@/hooks/use-swap'
 
 interface SwapInputProps {
   quote?: UseQuote

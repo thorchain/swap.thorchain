@@ -1,7 +1,7 @@
 import { ArrowDown } from 'lucide-react'
 import { Separator } from '@/components/ui/separator'
 import { useAccounts } from '@/context/accounts-provider'
-import { useSwap } from '@/hook/use-swap'
+import { useSwap } from '@/hooks/use-swap'
 
 export const SwapToggleAssets = () => {
   const { accounts, select } = useAccounts()

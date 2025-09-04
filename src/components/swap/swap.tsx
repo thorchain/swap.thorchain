@@ -13,10 +13,10 @@ import { SwapToggleAssets } from '@/components/swap/swap-toggle-assets'
 import { SwapWarning } from '@/components/swap/swap-warning'
 import { SwapDetails } from '@/components/swap/swap-details'
 import { useAccounts } from '@/context/accounts-provider'
-import { useTransactions } from '@/hook/use-transactions'
-import { useQuote } from '@/hook/use-quote'
+import { useTransactions } from '@/hooks/use-transactions'
+import { useQuote } from '@/hooks/use-quote'
 import { wallets } from '@/wallets'
-import { useSwap } from '@/hook/use-swap'
+import { useSwap } from '@/hooks/use-swap'
 
 export const Swap = () => {
   const { selected, context } = useAccounts()

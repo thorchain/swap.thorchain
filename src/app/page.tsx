@@ -1,6 +1,6 @@
 import { Header } from '@/components/header'
 import { Swap } from '@/components/swap/swap'
-import { getQueryClient } from '@/hook/react-query-client'
+import { getQueryClient } from '@/hooks/react-query-client'
 import { getPools } from '@/lib/api'
 
 export default async function Home() {

@@ -5,7 +5,7 @@ import { Button } from '@/components/ui/button'
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog'
 import { Provider } from '@/wallets'
 import { cn } from '@/lib/utils'
-import { usePools } from '@/hook/use-pools'
+import { usePools } from '@/hooks/use-pools'
 
 export interface WalletProps<T> {
   key: string
