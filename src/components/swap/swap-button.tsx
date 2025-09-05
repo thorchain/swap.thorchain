@@ -22,7 +22,7 @@ interface ButtonState {
 export const SwapButton = ({ onSwap }: SwapButtonProps) => {
   const { selected, context } = useAccounts()
   const { fromAsset, fromAmount, destination, toAsset } = useSwap()
-  const { isLoading: isQuoting } = useQuote()
+  const { isLoading: isQuoting, refetch: refetchQuote } = useQuote()
   const { isLoading: isSimulating, simulationData, error: simulationError } = useSimulation()
 
   const onConnectSource = () => {
@@ -65,7 +65,7 @@ export const SwapButton = ({ onSwap }: SwapButtonProps) => {
               return broadcast(simulation, msg)
             })
             .then(res => {
-              onSwap()
+              refetchQuote()
               return res
             })
 

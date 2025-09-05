@@ -5,13 +5,19 @@ import { useQuote } from '@/hooks/use-quote'
 import { useAccounts } from '@/context/accounts-provider'
 import { wallets } from '@/wallets'
 
-export interface SimulationData {
+type SimulationData = {
   simulation: Simulation
   inboundAddress: InboundAddress
   msg: MsgSwap
 }
 
-export const useSimulation = (): { isLoading: boolean; simulationData?: SimulationData; error: Error | null } => {
+type UseSimulation = {
+  simulationData?: SimulationData
+  isLoading: boolean
+  error: Error | null
+}
+
+export const useSimulation = (): UseSimulation => {
   const { selected, context } = useAccounts()
   const { fromAsset, fromAmount } = useSwap()
   const { quote } = useQuote()
