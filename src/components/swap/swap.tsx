@@ -1,6 +1,5 @@
 'use client'
 
-import { networkLabel } from 'rujira.js'
 import { SwapAddressFrom } from '@/components/swap/swap-address-from'
 import { SwapAddressTo } from '@/components/swap/swap-address-to'
 import { SwapSlippage } from '@/components/swap/swap-slippage'
@@ -13,27 +12,17 @@ import { useAccounts } from '@/context/accounts-provider'
 import { useTransactions } from '@/hooks/use-transactions'
 import { useSwap } from '@/hooks/use-swap'
 import { useQuote } from '@/hooks/use-quote'
-import { Button } from '@/components/ui/button'
 import { wallets } from '@/wallets'
 import { useSimulation } from '@/hooks/use-simulation'
 import { toast } from 'sonner'
+import { SwapButton } from '@/components/swap/swap-button'
 
 export const Swap = () => {
   const { selected, context } = useAccounts()
-  const { fromAsset, fromAmount, destination, toAsset } = useSwap()
-  const { isLoading: isQuoting, quote, error: quoteError } = useQuote()
-  const { isLoading: isSimulating, simulationData, error: simulationError } = useSimulation()
+  const { fromAsset, fromAmount, toAsset } = useSwap()
+  const { quote, error: quoteError } = useQuote()
+  const { simulationData, error: simulationError } = useSimulation()
   const { setTransaction } = useTransactions()
-
-  const getButtonTitle = () => {
-    if (!fromAsset || !toAsset) return 'Loading...'
-    if (!selected) return `Connect ${networkLabel(fromAsset.chain)} Wallet`
-    if (!destination) return `Connect ${networkLabel(toAsset.chain)} Wallet`
-    if (!fromAmount) return 'Enter Amount'
-    if (isQuoting) return 'Quoting...'
-    if (isSimulating) return 'Simulating...'
-    return 'Swap'
-  }
 
   const onSwap = async () => {
     if (!simulationData || !selected) {
@@ -96,15 +85,7 @@ export const Swap = () => {
 
         <SwapWarning error={quoteError || simulationError} />
         <SwapDetails quote={quote} />
-
-        <Button
-          className="mt-6 w-full rounded-2xl bg-gray-200 py-4 font-medium text-black transition-colors hover:bg-white"
-          onClick={onSwap}
-          disabled={!simulationData}
-          size="lg"
-        >
-          {getButtonTitle()}
-        </Button>
+        <SwapButton onSwap={onSwap} />
       </div>
     </div>
   )
