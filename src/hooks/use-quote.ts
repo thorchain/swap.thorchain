@@ -35,7 +35,7 @@ export interface Quote {
   warning: string
 }
 
-export const useQuote = (): { isLoading: boolean; quote?: Quote; error?: string } => {
+export const useQuote = (): { isLoading: boolean; quote?: Quote; error: Error | null } => {
   const { fromAsset, fromAmount, destination, toAsset, slippageLimit } = useSwap()
 
   const params = useMemo(
@@ -75,14 +75,14 @@ export const useQuote = (): { isLoading: boolean; quote?: Quote; error?: string 
     retry: false
   })
 
-  let errorMessage = undefined
+  let newError = error
   if (error instanceof AxiosError) {
-    errorMessage = error.response?.data?.message || error.message
+    newError = new Error(error.response?.data?.message || error.message)
   }
 
   return {
     isLoading,
     quote,
-    error: errorMessage
+    error: newError
   }
 }

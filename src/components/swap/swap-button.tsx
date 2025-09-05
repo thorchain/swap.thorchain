@@ -1,10 +1,12 @@
 import { LoaderCircle } from 'lucide-react'
-import { networkLabel } from 'rujira.js'
+import { InsufficientAllowanceError, MsgErc20IncreaseAllowance, networkLabel } from 'rujira.js'
 import { useSwap } from '@/hooks/use-swap'
 import { useAccounts } from '@/context/accounts-provider'
 import { useQuote } from '@/hooks/use-quote'
 import { useSimulation } from '@/hooks/use-simulation'
 import { cn } from '@/lib/utils'
+import { wallets } from '@/wallets'
+import { toast } from 'sonner'
 
 interface SwapButtonProps {
   onSwap: () => void
@@ -18,10 +20,10 @@ interface ButtonState {
 }
 
 export const SwapButton = ({ onSwap }: SwapButtonProps) => {
-  const { selected } = useAccounts()
+  const { selected, context } = useAccounts()
   const { fromAsset, fromAmount, destination, toAsset } = useSwap()
   const { isLoading: isQuoting } = useQuote()
-  const { isLoading: isSimulating, simulationData } = useSimulation()
+  const { isLoading: isSimulating, simulationData, error: simulationError } = useSimulation()
 
   const onConnectSource = () => {
     console.log('On Connect Source')
@@ -49,6 +51,32 @@ export const SwapButton = ({ onSwap }: SwapButtonProps) => {
         accent: false,
         onClick: onConnectDestination
       }
+    if (simulationError instanceof InsufficientAllowanceError) {
+      return {
+        text: `Approve ${fromAsset.metadata.symbol}`,
+        spinner: false,
+        accent: false,
+        onClick: async () => {
+          const msg = new MsgErc20IncreaseAllowance(simulationError)
+          const simulateFunc = wallets.simulate(context, selected)
+          const promise = simulateFunc(msg)
+            .then(simulation => {
+              const broadcast = wallets.signAndBroadcast(context, selected)
+              return broadcast(simulation, msg)
+            })
+            .then(res => {
+              onSwap()
+              return res
+            })
+
+          toast.promise(promise, {
+            loading: 'Increasing Allowance',
+            success: 'Success',
+            error: (err: any) => err.message || 'Error Submitting Transaction'
+          })
+        }
+      }
+    }
     if (!simulationData) return { text: 'No Valid Quotes', spinner: false, accent: false }
     return { text: 'Swap', spinner: false, accent: true, onClick: onSwap }
   }

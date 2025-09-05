@@ -11,7 +11,7 @@ export interface SimulationData {
   msg: MsgSwap
 }
 
-export const useSimulation = (): { isLoading: boolean; simulationData?: SimulationData; error?: string } => {
+export const useSimulation = (): { isLoading: boolean; simulationData?: SimulationData; error: Error | null } => {
   const { selected, context } = useAccounts()
   const { fromAsset, fromAmount } = useSwap()
   const { quote } = useQuote()
@@ -48,6 +48,6 @@ export const useSimulation = (): { isLoading: boolean; simulationData?: Simulati
   return {
     isLoading,
     simulationData,
-    error: error?.message
+    error
   }
 }
