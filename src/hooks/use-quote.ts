@@ -1,8 +1,8 @@
-import { useQuery } from '@tanstack/react-query'
-import { getQuote } from '@/lib/api'
-import { useSwap } from '@/hooks/use-swap'
 import { useMemo } from 'react'
 import { AxiosError } from 'axios'
+import { useQuery, RefetchOptions } from '@tanstack/react-query'
+import { getQuote } from '@/lib/api'
+import { useSwap } from '@/hooks/use-swap'
 
 export interface Quote {
   dust_threshold: string
@@ -35,7 +35,14 @@ export interface Quote {
   warning: string
 }
 
-export const useQuote = (): { isLoading: boolean; quote?: Quote; error: Error | null } => {
+type UseQote = {
+  isLoading: boolean
+  refetch: (options?: RefetchOptions) => void
+  quote?: Quote
+  error: Error | null
+}
+
+export const useQuote = (): UseQote => {
   const { fromAsset, fromAmount, destination, toAsset, slippageLimit } = useSwap()
 
   const params = useMemo(
@@ -55,7 +62,9 @@ export const useQuote = (): { isLoading: boolean; quote?: Quote; error: Error | 
 
   const {
     data: quote,
+    refetch,
     isLoading,
+    isRefetching,
     error
   } = useQuery({
     queryKey: ['quote', params],
@@ -81,7 +90,8 @@ export const useQuote = (): { isLoading: boolean; quote?: Quote; error: Error | 
   }
 
   return {
-    isLoading,
+    isLoading: isLoading || isRefetching,
+    refetch,
     quote,
     error: newError
   }
