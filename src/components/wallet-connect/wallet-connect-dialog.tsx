@@ -1,11 +1,12 @@
 import Image from 'next/image'
 import { useState } from 'react'
-import { AccountProvider, Network } from 'rujira.js'
+import { AccountProvider, Network, networkLabel } from 'rujira.js'
+import { Credenza, CredenzaContent, CredenzaFooter, CredenzaHeader, CredenzaTitle } from '@/components/ui/credenza'
+import { ScrollArea } from '@/components/ui/scroll-area'
 import { Button } from '@/components/ui/button'
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog'
 import { Provider } from '@/wallets'
-import { cn } from '@/lib/utils'
 import { usePools } from '@/hooks/use-pools'
+import { cn } from '@/lib/utils'
 
 export interface WalletProps<T> {
   key: string
@@ -57,16 +58,16 @@ export const WalletConnectDialog = <T,>({
   }
 
   return (
-    <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="bg-lawrence mx-0 w-full max-w-3xl p-0 md:mx-4 md:h-auto md:max-h-[90vh] md:min-w-2xl">
-        <DialogHeader className="bg-lawrence sticky top-0 z-10 p-6 pb-0">
-          <DialogTitle className="text-2xl font-semibold text-white">Connect Wallet</DialogTitle>
-        </DialogHeader>
+    <Credenza open={open} onOpenChange={onOpenChange}>
+      <CredenzaContent className="bg-lawrence min-h-1/2 w-full p-6 md:min-w-2xl md:p-12">
+        <CredenzaHeader className="flex items-start">
+          <CredenzaTitle className="text-base font-semibold text-white md:text-2xl">Connect Wallet</CredenzaTitle>
+        </CredenzaHeader>
 
-        <div className="grid flex-1 grid-cols-1 gap-4 overflow-hidden px-6 pb-6 md:grid-cols-2">
-          <div className="border-b pe-3 pb-6 md:border-r md:border-b-0 md:pb-0">
-            <div className="text-gray mb-3 text-base font-semibold">Wallets</div>
-            <div className="h-full max-h-[40vh] overflow-y-auto md:max-h-[70vh]">
+        <div className="grid flex-1 grid-cols-1 gap-4 md:grid-cols-5">
+          <div className="col-span-2 border-0 pe-3 md:border-r">
+            <div className="text-gray mb-3 hidden text-base font-semibold md:block">Wallets</div>
+            <ScrollArea className="h-full max-h-[40vh] md:max-h-[60vh]">
               <div className="space-y-1">
                 {wallets.map(wallet => {
                   const isChosen = chosen.get(wallet.provider)
@@ -93,7 +94,7 @@ export const WalletConnectDialog = <T,>({
                       <Image src={`/wallets/${wallet.key}.svg`} alt="" width="32" height="32" />
                       <div className="flex-1">
                         <div className="font-medium text-white">{wallet.label}</div>
-                        <div className="text-sm">
+                        <div className="text-xs">
                           {isInstalled ? (
                             <span>{isConnected ? 'Connected' : 'Disconnected'}</span>
                           ) : (
@@ -107,34 +108,33 @@ export const WalletConnectDialog = <T,>({
                   )
                 })}
               </div>
-            </div>
+            </ScrollArea>
           </div>
-
-          <div className="flex flex-col justify-between">
-            <div>
-              <h3 className="text-gray mb-3 text-base font-semibold">Supported Networks</h3>
-              <div className="grid grid-cols-4 gap-3">
-                {networks.map(network => (
-                  <div key={network} className="flex h-12 w-12 items-center justify-center rounded-xl">
-                    <Image src={`/networks/${network.toLowerCase()}.svg`} alt={network} width="32" height="32" />
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            <div className="mt-6 flex justify-end md:mt-0">
-              <Button
-                className="border-0 bg-gradient-to-r from-green-400 to-blue-500 text-white hover:from-green-500 hover:to-blue-600"
-                disabled={chosenSize < 1 || connecting}
-                onClick={() => handleConnect()}
-              >
-                Connect {chosenSize || ''} Wallet
-              </Button>
+          <div className="col-span-3 hidden md:block">
+            <h3 className="text-gray mb-3 text-base font-semibold">Supported Networks</h3>
+            <div className="grid grid-cols-2 gap-2">
+              {networks.map(network => (
+                <div key={network} className="flex items-center gap-3 p-2">
+                  <Image src={`/networks/${network.toLowerCase()}.svg`} alt={network} width="24" height="24" />
+                  <div className="text-sm">{networkLabel(network)}</div>
+                </div>
+              ))}
             </div>
           </div>
         </div>
-      </DialogContent>
-    </Dialog>
+        <CredenzaFooter>
+          <div className="flex justify-end">
+            <Button
+              className="border-0 bg-gradient-to-r from-green-400 to-blue-500 text-white hover:from-green-500 hover:to-blue-600"
+              disabled={chosenSize < 1 || connecting}
+              onClick={() => handleConnect()}
+            >
+              Connect {chosenSize || ''} Wallet
+            </Button>
+          </div>
+        </CredenzaFooter>
+      </CredenzaContent>
+    </Credenza>
   )
 }
 

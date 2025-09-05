@@ -111,7 +111,7 @@ export const SwapSelectAsset = ({ isOpen, setOpen, selected, onSelectAsset }: Sw
   return (
     <Credenza open={isOpen} onOpenChange={setOpen}>
       <CredenzaContent className="bg-lawrence min-h-1/2 w-full px-4 pb-0 md:min-w-2xl">
-        <CredenzaHeader className="flex flex-row items-center justify-between">
+        <CredenzaHeader>
           <CredenzaTitle className="hidden text-2xl font-medium text-white md:block">Select coin</CredenzaTitle>
         </CredenzaHeader>
         <div className={cn('flex flex-col gap-0 md:flex-row md:gap-3', { 'h-full': isMobile })}>
