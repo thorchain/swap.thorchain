@@ -1,16 +1,17 @@
 import Image from 'next/image'
-import { useState } from 'react'
+import { useMemo, useState } from 'react'
+import { toast } from 'sonner'
 import { LoaderCircle } from 'lucide-react'
-import { AccountProvider, Network, networkLabel } from 'rujira.js'
+import { Network, networkLabel } from 'rujira.js'
 import { Credenza, CredenzaContent, CredenzaFooter, CredenzaHeader, CredenzaTitle } from '@/components/ui/credenza'
 import { ScrollArea } from '@/components/ui/scroll-area'
 import { Button } from '@/components/ui/button'
 import { Provider } from '@/wallets'
 import { usePools } from '@/hooks/use-pools'
+import { useAccounts } from '@/context/accounts-provider'
 import { cn } from '@/lib/utils'
-import { toast } from 'sonner'
 
-export interface WalletProps<T> {
+interface WalletProps<T> {
   key: string
   label: string
   provider: T
@@ -18,30 +19,22 @@ export interface WalletProps<T> {
   supportedChains: Network[]
 }
 
-interface WalletConnectDialogProps<T> {
+interface WalletConnectDialogProps {
   open: boolean
   onOpenChange: (open: boolean) => void
-  provider: AccountProvider<T>
-  wallets: WalletProps<T>[]
-  connectedProviders: Provider[]
 }
 
-export const WalletConnectDialog = <T,>({
-  open,
-  onOpenChange,
-  provider,
-  wallets,
-  connectedProviders
-}: WalletConnectDialogProps<T>) => {
-  const { connect, isAvaialable } = provider
+export const WalletConnectDialog = ({ open, onOpenChange }: WalletConnectDialogProps) => {
+  const { connect, isAvaialable, accounts } = useAccounts()
   const [connecting, setConnecting] = useState(false)
-  const [selectedWallets, setSelectedWallets] = useState<T[]>([])
+  const [selectedWallets, setSelectedWallets] = useState<Provider[]>([])
   const [hoveredChain, setHoveredChain] = useState<Network | null>(null)
 
   const { pools } = usePools()
   const networks: Network[] = [...new Set((pools || []).map(p => p.chain))]
+  const connectedProviders = useMemo(() => [...new Set(accounts?.map(a => a.provider))], [accounts])
 
-  const toggleSelection = (walletKey: T) => {
+  const toggleSelection = (walletKey: Provider) => {
     setSelectedWallets(prev =>
       prev.includes(walletKey) ? prev.filter(key => key !== walletKey) : [...prev, walletKey]
     )
@@ -49,7 +42,7 @@ export const WalletConnectDialog = <T,>({
 
   const getSelectedWalletsChains = () => {
     if (selectedWallets.length === 0) return []
-    return wallets.filter(wallet => selectedWallets.includes(wallet.provider)).flatMap(wallet => wallet.supportedChains)
+    return WALLETS.filter(wallet => selectedWallets.includes(wallet.provider)).flatMap(wallet => wallet.supportedChains)
   }
 
   const isChainHighlighted = (chain: Network) => {
@@ -60,9 +53,9 @@ export const WalletConnectDialog = <T,>({
     return false
   }
 
-  const isWalletHighlightedForChain = (provider: T) => {
+  const isWalletHighlightedForChain = (provider: Provider) => {
     if (!hoveredChain) return false
-    const wallet = wallets.find(w => w.provider === provider)
+    const wallet = WALLETS.find(w => w.provider === provider)
     return wallet?.supportedChains.includes(hoveredChain) || false
   }
 
@@ -94,7 +87,7 @@ export const WalletConnectDialog = <T,>({
             <div className="text-gray mb-3 hidden text-base font-semibold md:block">Wallets</div>
             <ScrollArea className="h-full max-h-[40vh] md:max-h-[60vh]">
               <div className="space-y-1">
-                {wallets.map(wallet => {
+                {WALLETS.map(wallet => {
                   const isConnected = connectedProviders.find(w => w === wallet.provider)
                   const isInstalled = isAvaialable(wallet.provider)
 
@@ -149,7 +142,7 @@ export const WalletConnectDialog = <T,>({
                     onMouseEnter={() => setHoveredChain(chain)}
                     onMouseLeave={() => setHoveredChain(null)}
                     onClick={() => {
-                      const walletsForChain = wallets.filter(wallet => wallet.supportedChains.includes(chain))
+                      const walletsForChain = WALLETS.filter(wallet => wallet.supportedChains.includes(chain))
                       if (walletsForChain.length) {
                         setSelectedWallets(walletsForChain.map(w => w.provider))
                       }
@@ -197,3 +190,80 @@ function withTimeout<T>(promise: Promise<T>, ms: number): Promise<T> {
       })
   })
 }
+
+const WALLETS: WalletProps<Provider>[] = [
+  {
+    key: 'ctrl',
+    label: 'Ctrl',
+    provider: 'Ctrl',
+    link: 'https://ctrl.xyz',
+    supportedChains: [
+      Network.Avalanche,
+      Network.Base,
+      Network.BitcoinCash,
+      Network.Bitcoin,
+      Network.Bsc,
+      Network.Dogecoin,
+      Network.Ethereum,
+      Network.Litecoin
+    ]
+  },
+  // {
+  //   key: 'keplr',
+  //   label: 'Keplr',
+  //   provider: 'Keplr',
+  //   link: 'https://ctrl.xyz',
+  //   supportedChains: [
+  //     Network.Base,
+  //     Network.Ethereum,
+  //     Network.Litecoin
+  //   ]
+  // },
+  // {
+  //   key: "ledger",
+  //   label: "Ledger",
+  //   provider: "Ledger",
+  // },
+  {
+    key: 'metamask',
+    label: 'Metamask',
+    provider: 'Metamask',
+    link: 'https://metamask.io',
+    supportedChains: [Network.Avalanche, Network.Base, Network.Bsc, Network.Ethereum, Network.Thorchain]
+  },
+  // {
+  //   key: 'okx',
+  //   label: 'OKX',
+  //   provider: 'Okx',
+  //   isHardware: true
+  // },
+  // {
+  //   key: 'trust-extenion',
+  //   label: 'Trust Extension',
+  //   provider: 'Trust'
+  // },
+  {
+    key: 'vultisig',
+    label: 'Vultisig',
+    provider: 'Vultisig',
+    link: 'https://vultisig.com',
+    supportedChains: [
+      Network.Avalanche,
+      Network.Base,
+      Network.BitcoinCash,
+      Network.Bitcoin,
+      Network.Bsc,
+      Network.Dogecoin,
+      Network.Ethereum,
+      Network.Litecoin,
+      Network.Osmo
+    ]
+  },
+  {
+    key: 'tronlink',
+    label: 'TronLink',
+    provider: 'Tronlink',
+    link: 'https://www.tronlink.org',
+    supportedChains: [Network.Tron, Network.Bsc, Network.Ethereum]
+  }
+]
