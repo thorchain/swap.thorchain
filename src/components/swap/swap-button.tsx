@@ -4,6 +4,7 @@ import { useSwap } from '@/hooks/use-swap'
 import { useAccounts } from '@/context/accounts-provider'
 import { useQuote } from '@/hooks/use-quote'
 import { useSimulation } from '@/hooks/use-simulation'
+import { useDialog } from '@/components/global-dialog'
 import { cn } from '@/lib/utils'
 import { wallets } from '@/wallets'
 import { toast } from 'sonner'
@@ -24,14 +25,7 @@ export const SwapButton = ({ onSwap }: SwapButtonProps) => {
   const { fromAsset, fromAmount, destination, toAsset } = useSwap()
   const { isLoading: isQuoting, refetch: refetchQuote } = useQuote()
   const { isLoading: isSimulating, simulationData, error: simulationError } = useSimulation()
-
-  const onConnectSource = () => {
-    console.log('On Connect Source')
-  }
-
-  const onConnectDestination = () => {
-    console.log('On Connect Destination')
-  }
+  const { openDialog } = useDialog()
 
   const getState = (): ButtonState => {
     if (!fromAsset || !toAsset) return { text: '', spinner: true, accent: false }
@@ -42,14 +36,14 @@ export const SwapButton = ({ onSwap }: SwapButtonProps) => {
         text: `Connect ${networkLabel(fromAsset.chain)} Wallet`,
         spinner: false,
         accent: false,
-        onClick: onConnectSource
+        onClick: () => openDialog('connect-wallet')
       }
     if (!destination)
       return {
-        text: `Connect ${networkLabel(toAsset.chain)} Wallet / Custom Address`,
+        text: `Connect or Set ${networkLabel(toAsset.chain)} Wallet`,
         spinner: false,
         accent: false,
-        onClick: onConnectDestination
+        onClick: () => openDialog('connect-wallet')
       }
     if (simulationError instanceof InsufficientAllowanceError) {
       return {
