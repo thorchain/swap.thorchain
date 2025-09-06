@@ -31,27 +31,29 @@ export const WalletConnectButton = () => {
   return (
     <div>
       <div className="flex items-center gap-2">
-        <Tooltip open={showPendingAlert && !!pendingTx}>
-          <TooltipTrigger asChild>
-            <Button className="rounded-xl" variant="outline" onClick={onClickHistory}>
-              <Clock3 /> History
-            </Button>
-          </TooltipTrigger>
-          <TooltipContent
-            className="bg-blade cursor-pointer rounded-xl p-3 text-white"
-            arrowClassName="bg-blade fill-blade"
-            onClick={onClickHistory}
-          >
-            <div className="flex items-center gap-2">
-              <div>
-                {pendingTx?.fromAsset?.metadata?.symbol} to {pendingTx?.toAsset?.metadata?.symbol}
+        {accProvider.accounts?.length ? (
+          <Tooltip open={showPendingAlert && !!pendingTx}>
+            <TooltipTrigger asChild>
+              <Button className="rounded-xl" variant="outline" onClick={onClickHistory}>
+                <Clock3 /> History
+              </Button>
+            </TooltipTrigger>
+            <TooltipContent
+              className="bg-blade cursor-pointer rounded-xl p-3 text-white"
+              arrowClassName="bg-blade fill-blade"
+              onClick={onClickHistory}
+            >
+              <div className="flex items-center gap-2">
+                <div>
+                  {pendingTx?.fromAsset?.metadata?.symbol} to {pendingTx?.toAsset?.metadata?.symbol}
+                </div>
+                <LoaderCircle size={16} className="animate-spin" />
               </div>
-              <LoaderCircle size={16} className="animate-spin" />
-            </div>
-          </TooltipContent>
-        </Tooltip>
+            </TooltipContent>
+          </Tooltip>
+        ) : null}
         <Button className="rounded-xl" variant="outline" onClick={() => openDialog(WalletConnectDialog, {})}>
-          <Plus />
+          {accProvider.accounts?.length ? <Plus /> : 'Connect'}
         </Button>
         {connectedProviders.map((provider, i) => (
           <DropdownMenu key={i}>
