@@ -1,8 +1,20 @@
 import axios from 'axios'
 import { poolsInfoMap } from '@/hooks/use-pools-rates'
 
-const midgard = axios.create({ baseURL: 'https://midgard.ninerealms.com' })
-const thornode = axios.create({ baseURL: 'https://thornode.ninerealms.com' })
+const midgard = axios.create({
+  baseURL: 'https://midgard.ninerealms.com',
+  headers: {
+    'x-client-id': process.env.NEXT_PUBLIC_XCLIENT_ID
+  }
+})
+
+const thornode = axios.create({
+  baseURL: 'https://thornode.ninerealms.com',
+  headers: {
+    'x-client-id': process.env.NEXT_PUBLIC_XCLIENT_ID
+  }
+})
+
 const coingecko = axios.create({ baseURL: 'https://api.coingecko.com/api/v3' })
 
 export const getPools = async () => {
