@@ -26,7 +26,8 @@ export function SwapDetails({ quote }: SwapDetailsProps) {
     Number(quote?.fees.liquidity || 0) + Number(quote?.fees.outbound || 0) + Number(quote?.fees.affiliate || 0)
   )
 
-  const feeInUsd = new Decimal(toAsset?.price || 0)
+  const price = new Decimal(toAsset?.price || 0)
+  const feeInUsd = price
     .mul(totalFee)
     .div(10n ** 8n)
     .toString()
@@ -63,21 +64,25 @@ export function SwapDetails({ quote }: SwapDetailsProps) {
         <div className="space-y-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center">
-              <span className="text-gray text-sm">Total Fee</span>
-            </div>
-            <DecimalText className="text-leah text-xs" amount={totalFee} round={6} symbol={toAsset?.metadata.symbol} />
-          </div>
-
-          <div className="flex items-center justify-between">
-            <div className="flex items-center">
               <span className="text-gray text-sm">Liquidity Fee</span>
               <InfoTooltip>Fee for liquidity providers on the route.</InfoTooltip>
             </div>
-            <DecimalText
-              className="text-leah text-xs"
-              amount={BigInt(quote?.fees.liquidity || 0)}
-              symbol={toAsset?.metadata.symbol}
-            />
+            <div className="flex items-center gap-1">
+              <DecimalText
+                className="text-gray text-sm"
+                amount={BigInt(quote?.fees.liquidity || 0)}
+                symbol={toAsset?.metadata.symbol}
+              />
+              <DecimalFiat
+                className="text-leah text-sm"
+                amount={price
+                  .mul(quote?.fees.liquidity || 0)
+                  .div(10 ** 8)
+                  .toString()}
+                symbol="$"
+                decimals={2}
+              />
+            </div>
           </div>
 
           <div className="flex items-center justify-between">
@@ -85,11 +90,22 @@ export function SwapDetails({ quote }: SwapDetailsProps) {
               <span className="text-gray text-sm">Outbound Fee</span>
               <InfoTooltip>Outbound Fee</InfoTooltip>
             </div>
-            <DecimalText
-              className="text-leah text-xs"
-              amount={BigInt(quote?.fees.outbound || 0)}
-              symbol={toAsset?.metadata.symbol}
-            />
+            <div className="flex items-center gap-1">
+              <DecimalText
+                className="text-gray text-sm"
+                amount={BigInt(quote?.fees.outbound || 0)}
+                symbol={toAsset?.metadata.symbol}
+              />
+              <DecimalFiat
+                className="text-leah text-sm"
+                amount={price
+                  .mul(quote?.fees.outbound || 0)
+                  .div(10 ** 8)
+                  .toString()}
+                symbol="$"
+                decimals={2}
+              />
+            </div>
           </div>
 
           <div className="flex items-center justify-between">
