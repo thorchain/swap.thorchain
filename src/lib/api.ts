@@ -9,7 +9,8 @@ export const getPools = async () => {
   return midgard
     .get('/v2/pools')
     .then(res => res.data)
-    .then((data: any) =>
+    .then(data => data.filter((item: any) => item.status === 'available'))
+    .then(data =>
       data.map((item: any) => {
         const [chain, asset] = item.asset.split('.')
         const [symbol] = asset.split('-')
