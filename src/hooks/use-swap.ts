@@ -1,7 +1,6 @@
-import { useMemo } from 'react'
+import { useEffect } from 'react'
 import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
-import { Asset } from '@/components/swap/asset'
 import { AssetRate, usePoolsRates } from '@/hooks/use-pools-rates'
 import { Network } from 'rujira.js'
 import { Provider } from '@/wallets'
@@ -17,37 +16,27 @@ interface SwapState {
   destination?: Destination<Provider>
   fromAmount: string
   feeWarning: string
-  from?: string
-  to?: string
+  from: string
+  to: string
+  fromAsset?: AssetRate
+  toAsset?: AssetRate
 
   setSlippageLimit: (limit: bigint) => void
   setDestination: (destination?: Destination<Provider>) => void
   setFromAmount: (amount: bigint) => void
-  setSwap: (fromAsset?: Asset, toAsset?: Asset) => void
+  setSwap: (fromAsset?: AssetRate, toAsset?: AssetRate) => void
   swapAssets: () => void
-  reset: () => void
-}
-
-const findAsset = (pools?: AssetRate[], id?: string): AssetRate | undefined => {
-  if (!id || !pools) {
-    return undefined
-  }
-  return pools.find(v => v.asset === id)
-}
-
-const initialState = {
-  slippageLimit: '100',
-  fromAmount: '100000000',
-  feeWarning: '500',
-  from: 'BTC.BTC',
-  to: 'THOR.RUNE',
-  destination: undefined
+  setInitialAssets: (pools: AssetRate[]) => void
 }
 
 export const useSwapStore = create<SwapState>()(
   persist(
     (set, get) => ({
-      ...initialState,
+      slippageLimit: '100',
+      fromAmount: '100000000',
+      feeWarning: '500',
+      from: 'BTC.BTC',
+      to: 'THOR.RUNE',
 
       setSlippageLimit: slippageLimit => set({ slippageLimit: slippageLimit.toString() }),
       setDestination: destination => set({ destination }),
@@ -56,30 +45,45 @@ export const useSwapStore = create<SwapState>()(
       setSwap: (fromAsset, toAsset) => {
         const state = get()
         set({
+          fromAsset: fromAsset || state.fromAsset,
+          toAsset: toAsset || state.toAsset,
           from: fromAsset?.asset || state.from,
           to: toAsset?.asset || state.to
         })
       },
 
       swapAssets: () => {
-        const { from, to } = get()
+        const { fromAsset, toAsset, from, to } = get()
         set({
           from: to,
           to: from,
+          fromAsset: toAsset,
+          toAsset: fromAsset,
           fromAmount: '0'
         })
       },
 
-      reset: () => set(initialState)
+      setInitialAssets: (pools: AssetRate[]) => {
+        const state = get()
+        if (state.fromAsset && state.toAsset) {
+          return
+        }
+
+        set({
+          fromAsset: pools.find(v => v.asset === state.from),
+          toAsset: pools.find(v => v.asset === state.to)
+        })
+      }
     }),
     {
       name: 'swap-store',
-      partialize: state => {
-        return {
-          ...state,
-          destination: undefined
-        }
-      }
+      partialize: state => ({
+        slippageLimit: state.slippageLimit,
+        fromAmount: state.fromAmount,
+        feeWarning: state.feeWarning,
+        from: state.from,
+        to: state.to
+      })
     }
   )
 )
@@ -102,14 +106,16 @@ export const useSwap = () => {
     setFromAmount,
     setSwap,
     feeWarning,
-    from,
-    to,
+    fromAsset,
+    toAsset,
     swapAssets,
-    reset
+    setInitialAssets
   } = useSwapStore()
 
-  const fromAsset = useMemo(() => findAsset(pools, from), [pools, from])
-  const toAsset = useMemo(() => findAsset(pools, to), [pools, to])
+  useEffect(() => {
+    if (!pools?.length) return
+    setInitialAssets(pools)
+  }, [pools, setInitialAssets])
 
   return {
     slippageLimit: BigInt(slippageLimit),
@@ -122,7 +128,6 @@ export const useSwap = () => {
     setFromAmount,
     setSwap,
     feeWarning: BigInt(feeWarning),
-    swapAssets,
-    reset
+    swapAssets
   }
 }
