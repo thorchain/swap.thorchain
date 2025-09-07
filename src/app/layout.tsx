@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import { Providers } from '@/components/providers'
+import { ReactQueryProvider } from '@/components/react-query/react-query-provider'
 import { Toaster } from '@/components/ui/sonner'
 import './globals.css'
 
@@ -12,7 +12,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
   return (
     <html lang="en" className="dark">
       <body className="antialiased">
-        <Providers>{children}</Providers>
+        <ReactQueryProvider>{children}</ReactQueryProvider>
         <Toaster />
       </body>
     </html>
