@@ -11,6 +11,7 @@ import {
   CredenzaHeader,
   CredenzaTitle
 } from '@/components/ui/credenza'
+import { VisuallyHidden } from '@radix-ui/react-visually-hidden'
 import { ScrollArea } from '@/components/ui/scroll-area'
 import { Button } from '@/components/ui/button'
 import { Provider } from '@/wallets'
@@ -87,7 +88,9 @@ export const WalletConnectDialog = ({ isOpen, onOpenChange }: WalletConnectDialo
       <CredenzaContent className="bg-lawrence min-h-1/2 w-full p-6 md:min-w-2xl md:p-12">
         <CredenzaHeader className="flex items-start">
           <CredenzaTitle className="text-base font-semibold text-white md:text-2xl">Connect Wallet</CredenzaTitle>
-          <CredenzaDescription>&nbsp;</CredenzaDescription>
+          <VisuallyHidden>
+            <CredenzaDescription>&nbsp;</CredenzaDescription>
+          </VisuallyHidden>
         </CredenzaHeader>
 
         <div className="grid flex-1 grid-cols-1 gap-4 md:grid-cols-5">

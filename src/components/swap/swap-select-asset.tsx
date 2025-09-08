@@ -1,6 +1,7 @@
 import Image from 'next/image'
 import { useMemo, useState } from 'react'
 import { Credenza, CredenzaContent, CredenzaDescription, CredenzaHeader, CredenzaTitle } from '@/components/ui/credenza'
+import { VisuallyHidden } from '@radix-ui/react-visually-hidden'
 import { ScrollArea, ScrollBar } from '@/components/ui/scroll-area'
 import { Search } from 'lucide-react'
 import { Network, networkLabel } from 'rujira.js'
@@ -113,7 +114,9 @@ export const SwapSelectAsset = ({ isOpen, onOpenChange, selected, onSelectAsset 
       <CredenzaContent className="bg-lawrence min-h-1/2 w-full px-4 pb-0 md:min-w-2xl">
         <CredenzaHeader>
           <CredenzaTitle className="hidden text-2xl font-medium text-white md:block">Select coin</CredenzaTitle>
-          <CredenzaDescription>&nbsp;</CredenzaDescription>
+          <VisuallyHidden>
+            <CredenzaDescription>&nbsp;</CredenzaDescription>
+          </VisuallyHidden>
         </CredenzaHeader>
         <div className={cn('flex flex-col gap-0 md:flex-row md:gap-3', { 'h-full': isMobile })}>
           <div className="min-w-[250px] shrink-0 border-b md:border-r md:border-b-0">
