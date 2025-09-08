@@ -216,20 +216,24 @@ const WALLETS: WalletProps<Provider>[] = [
       Network.Bsc,
       Network.Dogecoin,
       Network.Ethereum,
-      Network.Litecoin
+      Network.Litecoin,
+      Network.Thorchain
     ]
   },
-  // {
-  //   key: 'keplr',
-  //   label: 'Keplr',
-  //   provider: 'Keplr',
-  //   link: 'https://ctrl.xyz',
-  //   supportedChains: [
-  //     Network.Base,
-  //     Network.Ethereum,
-  //     Network.Litecoin
-  //   ]
-  // },
+  {
+    key: 'keplr',
+    label: 'Keplr',
+    provider: 'Keplr',
+    link: 'https://www.keplr.app',
+    supportedChains: [
+      Network.Avalanche,
+      Network.Base,
+      Network.Ethereum,
+      Network.Bitcoin,
+      Network.Gaia,
+      Network.Thorchain
+    ]
+  },
   // {
   //   key: "ledger",
   //   label: "Ledger",
@@ -242,17 +246,20 @@ const WALLETS: WalletProps<Provider>[] = [
     link: 'https://metamask.io',
     supportedChains: [Network.Avalanche, Network.Base, Network.Bsc, Network.Ethereum, Network.Thorchain]
   },
-  // {
-  //   key: 'okx',
-  //   label: 'OKX',
-  //   provider: 'Okx',
-  //   isHardware: true
-  // },
-  // {
-  //   key: 'trust-extenion',
-  //   label: 'Trust Extension',
-  //   provider: 'Trust'
-  // },
+  {
+    key: 'okx',
+    label: 'OKX',
+    provider: 'Okx',
+    link: 'https://web3.okx.com',
+    supportedChains: [
+      Network.Avalanche,
+      Network.Bsc,
+      Network.Ethereum,
+      Network.Thorchain,
+      Network.Bitcoin,
+      Network.Tron
+    ]
+  },
   {
     key: 'vultisig',
     label: 'Vultisig',
@@ -276,5 +283,12 @@ const WALLETS: WalletProps<Provider>[] = [
     provider: 'Tronlink',
     link: 'https://www.tronlink.org',
     supportedChains: [Network.Tron, Network.Bsc, Network.Ethereum]
+  },
+  {
+    key: 'brave',
+    label: 'Brave',
+    provider: 'Brave',
+    link: 'https://brave.com/wallet',
+    supportedChains: [Network.Avalanche, Network.Base, Network.Ethereum]
   }
 ]

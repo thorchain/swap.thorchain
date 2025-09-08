@@ -18,15 +18,10 @@ export type WalletProvider<C> = BaseWalletProvider<C, Provider>
 
 export type Providers = {
   Keplr: KeplrContext
-  Station: KeplrContext
-  Leap: KeplrContext
   Vultisig: VulticonnectContext
   Ctrl: CtrlContext
   Metamask: JsonRpcSigner
   Okx: OkxContext
-  Trust: JsonRpcSigner
-  Rabby: JsonRpcSigner
   Brave: JsonRpcSigner
-  Coinbase: JsonRpcSigner
   Tronlink: TronlinkContext
 }

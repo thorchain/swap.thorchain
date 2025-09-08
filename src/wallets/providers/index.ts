@@ -2,30 +2,20 @@ import { Account as BaseAccount, InboundAddress, Msg, Simulation, TxResult } fro
 import { Provider, Providers, WalletProvider } from './types'
 
 import brave from './brave'
-import coinbase from './coinbase'
 import ctrl from './ctrl'
 import keplr from './keplr'
-import leap from './leap'
 import metamask from './metamask'
 import okx from './okx'
-import rabby from './rabby'
-import station from './station'
-import trust from './trust'
 import vulticonnect from './vulticonnect'
 import tronlink from './tronlink'
 
 const providers: Record<Provider, () => WalletProvider<any>> = {
   Keplr: keplr,
-  Station: station,
-  Leap: leap,
   Vultisig: vulticonnect,
   Ctrl: ctrl,
   Metamask: metamask,
   Okx: okx,
-  Trust: trust,
-  Rabby: rabby,
   Brave: brave,
-  Coinbase: coinbase,
   Tronlink: tronlink
 }
 
