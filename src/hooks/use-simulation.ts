@@ -12,7 +12,7 @@ type SimulationData = {
 }
 
 type UseSimulation = {
-  simulationData?: SimulationData
+  simulationData?: SimulationData | null
   isLoading: boolean
   error: Error | null
 }
@@ -29,8 +29,8 @@ export const useSimulation = (): UseSimulation => {
   } = useQuery({
     queryKey: ['simulation', quote],
     queryFn: async () => {
-      if (!quote || !selected || !fromAsset || fromAmount == 0n) {
-        return
+      if (!quote || !quote.memo || !selected || !fromAsset || fromAmount == 0n) {
+        return null
       }
 
       const inboundAddress = {
