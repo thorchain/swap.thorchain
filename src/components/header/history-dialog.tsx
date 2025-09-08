@@ -5,7 +5,7 @@ import Decimal from 'decimal.js'
 import { format } from 'date-fns'
 import { useEffect, useState } from 'react'
 import { ArrowRight, Globe, LoaderCircle, X } from 'lucide-react'
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog'
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from '@/components/ui/dialog'
 import { DecimalText } from '@/components/decimal/decimal-text'
 import { Button } from '@/components/ui/button'
 import { DecimalFiat } from '@/components/decimal/decimal-fiat'
@@ -30,9 +30,10 @@ export const HistoryDialog = ({ isOpen, onOpenChange }: HistoryDialogProps) => {
 
   return (
     <Dialog open={isOpen} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-md rounded-2xl bg-lawrence p-6 text-white" showCloseButton={false}>
+      <DialogContent className="bg-lawrence max-w-md rounded-2xl p-6 text-white" showCloseButton={false}>
         <DialogHeader className="flex flex-row items-center justify-between">
           <DialogTitle className="text-lg font-semibold">History</DialogTitle>
+          <DialogDescription />
           <button onClick={() => onOpenChange(false)}>
             <X className="h-5 w-5 text-gray-400" />
           </button>

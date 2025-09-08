@@ -3,7 +3,14 @@ import { useMemo, useState } from 'react'
 import { toast } from 'sonner'
 import { LoaderCircle } from 'lucide-react'
 import { Network, networkLabel } from 'rujira.js'
-import { Credenza, CredenzaContent, CredenzaFooter, CredenzaHeader, CredenzaTitle } from '@/components/ui/credenza'
+import {
+  Credenza,
+  CredenzaContent,
+  CredenzaDescription,
+  CredenzaFooter,
+  CredenzaHeader,
+  CredenzaTitle
+} from '@/components/ui/credenza'
 import { ScrollArea } from '@/components/ui/scroll-area'
 import { Button } from '@/components/ui/button'
 import { Provider } from '@/wallets'
@@ -80,6 +87,7 @@ export const WalletConnectDialog = ({ isOpen, onOpenChange }: WalletConnectDialo
       <CredenzaContent className="bg-lawrence min-h-1/2 w-full p-6 md:min-w-2xl md:p-12">
         <CredenzaHeader className="flex items-start">
           <CredenzaTitle className="text-base font-semibold text-white md:text-2xl">Connect Wallet</CredenzaTitle>
+          <CredenzaDescription>&nbsp;</CredenzaDescription>
         </CredenzaHeader>
 
         <div className="grid flex-1 grid-cols-1 gap-4 md:grid-cols-5">
