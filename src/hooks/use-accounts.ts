@@ -102,10 +102,13 @@ export const useAccountsStore = create<AccountsState>()(
       getContext: () => {
         const { selected, wallets } = get()
         if (!selected) return undefined
-        const found = wallets.find(
-          a => a.account.provider === selected.provider && a.account.address === selected.address
+        const wallet = wallets.find(
+          a =>
+            a.account.provider === selected.provider &&
+            a.account.network === selected.network &&
+            (!selected.address || a.account.address === selected.address)
         )
-        return found?.context
+        return wallet?.context
       },
 
       isAvaialable: provider => isAvaialable(provider)
