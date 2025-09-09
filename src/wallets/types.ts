@@ -23,4 +23,5 @@ export type Providers = {
   Metamask: JsonRpcSigner
   Okx: OkxContext
   Tronlink: TronlinkContext
+  Phantom: JsonRpcSigner
 }

@@ -204,6 +204,37 @@ function withTimeout<T>(promise: Promise<T>, ms: number): Promise<T> {
 
 const WALLETS: WalletProps<Provider>[] = [
   {
+    key: 'metamask',
+    label: 'Metamask',
+    provider: 'Metamask',
+    link: 'https://metamask.io',
+    supportedChains: [Network.Avalanche, Network.Base, Network.Bsc, Network.Ethereum, Network.Thorchain]
+  },
+  {
+    key: 'vultisig',
+    label: 'Vultisig',
+    provider: 'Vultisig',
+    link: 'https://vultisig.com',
+    supportedChains: [
+      Network.Avalanche,
+      Network.Base,
+      Network.BitcoinCash,
+      Network.Bitcoin,
+      Network.Bsc,
+      Network.Dogecoin,
+      Network.Ethereum,
+      Network.Litecoin,
+      Network.Osmo
+    ]
+  },
+  {
+    key: 'phantom',
+    label: 'Phantom',
+    provider: 'Phantom',
+    link: 'https://phantom.app',
+    supportedChains: [Network.Avalanche, Network.Base, Network.Bsc, Network.Ethereum, Network.Thorchain]
+  },
+  {
     key: 'ctrl',
     label: 'Ctrl',
     provider: 'Ctrl',
@@ -240,13 +271,6 @@ const WALLETS: WalletProps<Provider>[] = [
   //   provider: "Ledger",
   // },
   {
-    key: 'metamask',
-    label: 'Metamask',
-    provider: 'Metamask',
-    link: 'https://metamask.io',
-    supportedChains: [Network.Avalanche, Network.Base, Network.Bsc, Network.Ethereum, Network.Thorchain]
-  },
-  {
     key: 'okx',
     label: 'OKX',
     provider: 'Okx',
@@ -258,23 +282,6 @@ const WALLETS: WalletProps<Provider>[] = [
       Network.Thorchain,
       Network.Bitcoin,
       Network.Tron
-    ]
-  },
-  {
-    key: 'vultisig',
-    label: 'Vultisig',
-    provider: 'Vultisig',
-    link: 'https://vultisig.com',
-    supportedChains: [
-      Network.Avalanche,
-      Network.Base,
-      Network.BitcoinCash,
-      Network.Bitcoin,
-      Network.Bsc,
-      Network.Dogecoin,
-      Network.Ethereum,
-      Network.Litecoin,
-      Network.Osmo
     ]
   },
   {

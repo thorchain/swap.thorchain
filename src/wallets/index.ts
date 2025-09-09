@@ -7,6 +7,7 @@ import metamask from './providers/metamask'
 import okx from './providers/okx'
 import vulticonnect from './providers/vulticonnect'
 import tronlink from './providers/tronlink'
+import phantom from './providers/phantom'
 
 export type * from './types'
 
@@ -16,7 +17,8 @@ const providers: Record<Provider, () => WalletProvider<any>> = {
   Ctrl: ctrl,
   Metamask: metamask,
   Okx: okx,
-  Tronlink: tronlink
+  Tronlink: tronlink,
+  Phantom: phantom
 }
 
 const isClient = () => typeof window !== 'undefined'
