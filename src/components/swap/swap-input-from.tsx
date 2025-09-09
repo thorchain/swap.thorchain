@@ -1,9 +1,7 @@
 import Decimal from 'decimal.js'
-import { useEffect } from 'react'
 import { networkLabel } from 'rujira.js'
 import { ChevronDown, Loader } from 'lucide-react'
 import { DecimalInput } from '@/components/decimal/decimal-input'
-import { balanceKey, useBalance, useSyncBalance, useSyncing } from '@/hooks/use-balance'
 import { DecimalFiat } from '@/components/decimal/decimal-fiat'
 import { SwapSelectAsset } from '@/components/swap/swap-select-asset'
 import { Button } from '@/components/ui/button'
@@ -13,26 +11,18 @@ import { useSwap } from '@/hooks/use-swap'
 import { AssetIcon } from '@/components/asset-icon'
 import { Skeleton } from '@/components/ui/skeleton'
 import { useDialog } from '@/components/global-dialog'
+import { useBalance } from '@/hooks/use-balance'
 
 export const SwapInputFrom = () => {
   const { openDialog } = useDialog()
-  const { accounts, selected, select } = useAccounts()
+  const { accounts, select } = useAccounts()
   const { fromAsset, setSwap, fromAmount, setFromAmount } = useSwap()
 
-  const key = balanceKey(fromAsset?.chain, selected?.address, fromAsset?.asset)
-  const syncBalance = useSyncBalance()
-  const balanceSyncing = useSyncing(key)
-  const balance = useBalance(key)
-
-  useEffect(() => {
-    if (fromAsset?.chain && selected?.address && fromAsset?.asset) {
-      syncBalance(fromAsset?.chain, selected?.address, fromAsset?.asset, true)
-    }
-  }, [fromAsset?.asset, fromAsset?.chain, key, selected?.address, syncBalance])
+  const { balance, isLoading: isBalanceLoading } = useBalance()
 
   const handleSetPercent = (percent: bigint) => {
     if (!balance) return
-    setFromAmount((balance * percent) / 100n)
+    setFromAmount((balance.spendable * percent) / 100n)
   }
 
   const valueFrom = new Decimal(fromAmount || 0)
@@ -104,9 +94,9 @@ export const SwapInputFrom = () => {
           </Button>
         </div>
         <div className="text-gray flex gap-1 text-xs">
-          {balanceSyncing && <Loader className="animate-spin" size="18" />}
+          {isBalanceLoading && <Loader className="animate-spin" size="18" />}
           <span>Balance:</span>
-          <DecimalText amount={balance || 0n} />
+          <DecimalText amount={balance?.spendable || 0n} />
         </div>
       </div>
     </div>

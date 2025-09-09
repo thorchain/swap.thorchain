@@ -60,3 +60,7 @@ export const getTxStatus = async (hash: string) => {
   const txId = hash.replace('0x', '').toUpperCase()
   return thornode.get(`/thorchain/tx/status/${txId}`).then(res => res.data)
 }
+
+export const getInboundAddresses = async () => {
+  return thornode.get('/thorchain/inbound_addresses').then(res => res.data)
+}
