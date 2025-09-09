@@ -1,37 +1,43 @@
-import { Asset } from '@/components/swap/asset'
 import { usePools } from '@/hooks/use-pools'
 import { useQuery } from '@tanstack/react-query'
 import { getPoolsRates } from '@/lib/api'
 
-export interface AssetRate extends Asset {
-  price?: string | null | undefined
-}
-
-interface PoolsRates {
-  pools: AssetRate[] | undefined
-  isLoading: boolean
-  rates: Record<string, string | null>
-}
-
-export const usePoolsRates = (): PoolsRates => {
-  const { pools, isLoading } = usePools()
-
-  const { data: rates } = useQuery({
+export const useRates = (): { rates: Record<string, string | null>; isLoading: boolean } => {
+  const { pools, isLoading: isPoolsLoading } = usePools()
+  const { data, isLoading: isRatesLoading } = useQuery({
     queryKey: ['pools-rates', pools?.length],
-    queryFn: () => (pools ? getPoolsRates(pools.map(i => i.asset)) : []),
+    queryFn: (): Record<string, any> => {
+      if (!pools?.length) {
+        return {}
+      }
+
+      const ids = pools.map(i => poolsInfoMap[i.asset]?.geckoId)
+
+      return getPoolsRates(ids.join(',')).then(data =>
+        pools.reduce((acc, cur) => {
+          const geckoId = poolsInfoMap[cur.asset]?.geckoId
+          if (!geckoId) return acc
+          const price = data[geckoId]?.usd
+
+          return { ...acc, [cur.asset]: price ? String(price) : null }
+        }, {})
+      )
+    },
     enabled: !!pools
   })
 
-  const ratesMap: Record<string, string | null> = {}
-  const poolsRates: AssetRate[] | undefined = pools?.map(p => {
-    const geckoId = poolsInfoMap[p.asset]?.geckoId
-    const price = geckoId ? rates?.[geckoId]?.usd || null : null
+  return {
+    rates: data || {},
+    isLoading: isRatesLoading || isPoolsLoading
+  }
+}
 
-    ratesMap[p.asset] = price
-    return { ...p, price }
-  })
+export const useRate = (asset?: string) => {
+  const { rates } = useRates()
 
-  return { pools: poolsRates, rates: ratesMap, isLoading: isLoading }
+  return {
+    rate: rates && asset ? rates[asset] : null
+  }
 }
 
 export const poolsInfoMap: Record<string, { geckoId?: string; decimals: number }> = {

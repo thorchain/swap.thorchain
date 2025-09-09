@@ -1,9 +1,10 @@
 import { useEffect } from 'react'
 import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
-import { AssetRate, usePoolsRates } from '@/hooks/use-pools-rates'
+import { Asset } from '@/components/swap/asset'
 import { Network } from 'rujira.js'
 import { Provider } from '@/wallets'
+import { usePools } from '@/hooks/use-pools'
 
 interface Destination<P> {
   address: string
@@ -18,15 +19,15 @@ interface SwapState {
   feeWarning: string
   from: string
   to: string
-  fromAsset?: AssetRate
-  toAsset?: AssetRate
+  fromAsset?: Asset
+  toAsset?: Asset
 
   setSlippageLimit: (limit: bigint) => void
   setDestination: (destination?: Destination<Provider>) => void
   setFromAmount: (amount: bigint) => void
-  setSwap: (fromAsset?: AssetRate, toAsset?: AssetRate) => void
+  setSwap: (fromAsset?: Asset, toAsset?: Asset) => void
   swapAssets: () => void
-  setInitialAssets: (pools: AssetRate[]) => void
+  setInitialAssets: (pools: Asset[]) => void
 }
 
 export const useSwapStore = create<SwapState>()(
@@ -63,7 +64,7 @@ export const useSwapStore = create<SwapState>()(
         })
       },
 
-      setInitialAssets: (pools: AssetRate[]) => {
+      setInitialAssets: (pools: Asset[]) => {
         const state = get()
         if (state.fromAsset && state.toAsset) {
           return
@@ -96,7 +97,7 @@ export const useDestination = () => useSwapStore(state => state.destination)
 export const useSetDestination = () => useSwapStore(state => state.setDestination)
 
 export const useSwap = () => {
-  const { pools } = usePoolsRates()
+  const { pools } = usePools()
   const {
     slippageLimit,
     destination,

@@ -10,8 +10,8 @@ import { DecimalText } from '@/components/decimal/decimal-text'
 import { Button } from '@/components/ui/button'
 import { DecimalFiat } from '@/components/decimal/decimal-fiat'
 import { CopyButton } from '@/components/button-copy'
-import { usePoolsRates } from '@/hooks/use-pools-rates'
 import { useTransactions } from '@/hooks/use-transactions'
+import { useRates } from '@/hooks/use-rates'
 
 interface HistoryDialogProps {
   isOpen: boolean
@@ -19,7 +19,7 @@ interface HistoryDialogProps {
 }
 
 export const HistoryDialog = ({ isOpen, onOpenChange }: HistoryDialogProps) => {
-  const { rates } = usePoolsRates()
+  const { rates } = useRates()
   const { transactions, syncPending } = useTransactions()
   const [expandTx, setExpandTx] = useState<string | null>(null)
 
@@ -46,7 +46,7 @@ export const HistoryDialog = ({ isOpen, onOpenChange }: HistoryDialogProps) => {
             const fromAmount = BigInt(fromTx?.coins?.[0]?.amount || tx.fromAmount || 0)
             const fromValue = new Decimal(fromAmount || 0)
               .div(10 ** 8)
-              .mul(tx.fromAsset?.price || rates[tx.fromAsset?.asset || ''] || 1)
+              .mul(rates[tx.fromAsset?.asset || ''] || 1)
               .toString()
 
             const outTxs = details?.out_txs || []
@@ -54,7 +54,7 @@ export const HistoryDialog = ({ isOpen, onOpenChange }: HistoryDialogProps) => {
             const toAmount = BigInt(toTx?.coins?.[0]?.amount || tx.toAmount || 0)
             const toValue = new Decimal(toAmount)
               .div(10 ** 8)
-              .mul(tx.toAsset?.price || rates[tx.toAsset?.asset || ''] || 1)
+              .mul(rates[tx.toAsset?.asset || ''] || 1)
               .toString()
 
             const isExpanded = expandTx === tx.hash

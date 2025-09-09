@@ -12,11 +12,13 @@ import { AssetIcon } from '@/components/asset-icon'
 import { Skeleton } from '@/components/ui/skeleton'
 import { useDialog } from '@/components/global-dialog'
 import { useBalance } from '@/hooks/use-balance'
+import { useRate } from '@/hooks/use-rates'
 
 export const SwapInputFrom = () => {
   const { openDialog } = useDialog()
   const { accounts, select } = useAccounts()
   const { fromAsset, setSwap, fromAmount, setFromAmount } = useSwap()
+  const { rate } = useRate(fromAsset?.asset)
 
   const { balance, isLoading: isBalanceLoading } = useBalance()
 
@@ -27,7 +29,7 @@ export const SwapInputFrom = () => {
 
   const valueFrom = new Decimal(fromAmount || 0)
     .div(10 ** 8)
-    .mul(fromAsset?.price || 1)
+    .mul(rate || 1)
     .toString()
 
   const onClick = () => {

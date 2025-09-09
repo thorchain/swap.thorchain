@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { poolsInfoMap } from '@/hooks/use-pools-rates'
+import { poolsInfoMap } from '@/hooks/use-rates'
 
 const midgard = axios.create({
   baseURL: 'https://midgard.ninerealms.com',
@@ -40,15 +40,8 @@ export const getPools = async () => {
     )
 }
 
-export const getPoolsRates = async (assets: string[]) => {
-  const ids = assets
-    .map(asset => poolsInfoMap[asset]?.geckoId)
-    .filter(Boolean)
-    .join(',')
-
-  if (!ids) return {}
-
-  return coingecko.get(`/simple/price?ids=${ids}&vs_currencies=usd`).then(res => res.data)
+export const getPoolsRates = async (assets: string) => {
+  return coingecko.get(`/simple/price?ids=${assets}&vs_currencies=usd`).then(res => res.data)
 }
 
 export const getQuote = async (params: Record<string, any>) => {
