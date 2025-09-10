@@ -83,9 +83,9 @@ export const Swap = () => {
           </div>
         </div>
 
-        <SwapWarning error={quoteError || simulationError} />
         <SwapDetails quote={quote} />
         <SwapButton onSwap={onSwap} />
+        <SwapWarning error={quoteError || simulationError} />
       </div>
     </div>
   )

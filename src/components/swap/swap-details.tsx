@@ -20,7 +20,24 @@ export function SwapDetails({ quote }: SwapDetailsProps) {
   const { rate: toAssetRate } = useRate(toAsset?.asset)
 
   if (!quote) {
-    return null
+    return (
+      <div className="p-5 pb-0">
+        <div className="flex justify-between">
+          <div className="text-gray">
+            <div className="flex items-center gap-1">
+              <span className="text-sm">Price</span>
+            </div>
+          </div>
+
+          <div className="flex items-center gap-2 text-sm">
+            <span className="text-gray">Fee</span>
+            <div className="text-leah">
+              <DecimalFiat className="text-sm" amount="0" symbol="$" decimals={2} />
+            </div>
+          </div>
+        </div>
+      </div>
+    )
   }
 
   const rate = (quote && (BigInt(quote.expected_amount_out) * 10n ** 12n) / fromAmount) || 0n
