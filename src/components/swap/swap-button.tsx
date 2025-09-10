@@ -5,10 +5,11 @@ import { getSelectedContext, useAccounts } from '@/hooks/use-accounts'
 import { useQuote } from '@/hooks/use-quote'
 import { useSimulation } from '@/hooks/use-simulation'
 import { WalletConnectDialog } from '@/components/header/wallet-connect-dialog'
+import { signAndBroadcast, simulate } from '@/wallets'
+import { useBalance } from '@/hooks/use-balance'
 import { useDialog } from '@/components/global-dialog'
-import { cn } from '@/lib/utils'
-import { simulate, signAndBroadcast } from '@/wallets'
 import { toast } from 'sonner'
+import { cn } from '@/lib/utils'
 
 interface SwapButtonProps {
   onSwap: () => void
@@ -26,11 +27,20 @@ export const SwapButton = ({ onSwap }: SwapButtonProps) => {
   const { fromAsset, fromAmount, destination, toAsset } = useSwap()
   const { isLoading: isQuoting, refetch: refetchQuote } = useQuote()
   const { isLoading: isSimulating, simulationData, error: simulationError } = useSimulation()
+  const { balance, isLoading: isBalanceLoading } = useBalance()
+
   const { openDialog } = useDialog()
 
   const getState = (): ButtonState => {
     if (!fromAsset || !toAsset) return { text: '', spinner: true, accent: false }
     if (!fromAmount) return { text: 'Enter Amount', spinner: false, accent: false }
+    if (!isBalanceLoading && balance?.amount && balance.amount < fromAmount) {
+      return {
+        text: 'Insufficient balance',
+        spinner: false,
+        accent: false
+      }
+    }
     if (isQuoting || isSimulating) return { text: 'Quoting...', spinner: true, accent: false }
     if (!selected)
       return {
@@ -41,7 +51,7 @@ export const SwapButton = ({ onSwap }: SwapButtonProps) => {
       }
     if (!destination)
       return {
-        text: `Connect or Set ${networkLabel(toAsset.chain)} Wallet`,
+        text: `Connect ${networkLabel(toAsset.chain)} Wallet`,
         spinner: false,
         accent: false,
         onClick: () => openDialog(WalletConnectDialog, {})

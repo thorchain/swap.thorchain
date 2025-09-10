@@ -51,7 +51,7 @@ export const Swap = () => {
 
     toast.promise(broadcast, {
       loading: 'Submitting Transaction',
-      success: () => 'Transaction Succeeded',
+      success: () => 'Transaction submitted',
       error: (err: any) => {
         console.error(err)
         return 'Error Submitting Transaction'
