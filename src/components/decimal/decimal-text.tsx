@@ -7,21 +7,20 @@ interface DecimalPropsProps {
   className?: string
 }
 
-export const DecimalText = ({ className, amount, decimals = 8, round = 6, symbol, subscript }: DecimalPropsProps) => {
+export const DecimalText = ({ className, amount, decimals = 8, round = 8, symbol, subscript }: DecimalPropsProps) => {
   const dec = amount % BigInt(10 ** decimals)
   const int = BigInt(Math.round(Number(amount - dec) / 10 ** decimals))
   const padded = dec.toString().padStart(decimals, '0')
-  const truncated = subscript ? compress(padded) : padded
-
-  const trimmed = truncated.substring(0, round)
+  const trimmed = padded.substring(0, round).replace(/0+$/, '')
+  const subscripted = subscript ? compress(trimmed) : trimmed
 
   return (
     <span className={className}>
       <span>
         {(int || '0').toLocaleString()}
-        {round > 0 && whatDecimalSeparator()}
+        {subscripted && whatDecimalSeparator()}
       </span>
-      {dec.toString().length && round > 0 && <span>{trimmed}</span>}
+      {dec.toString().length && <span>{subscripted}</span>}
       {symbol && <span className="ms-1">{symbol}</span>}
     </span>
   )

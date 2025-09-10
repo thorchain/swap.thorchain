@@ -98,7 +98,7 @@ export const SwapInputFrom = () => {
         <div className="text-gray flex gap-1 text-xs">
           {isBalanceLoading && <Loader className="animate-spin" size="18" />}
           <span>Balance:</span>
-          <DecimalText amount={balance?.spendable || 0n} />
+          <DecimalText amount={balance?.spendable || 0n} symbol={fromAsset?.metadata.symbol} subscript />
         </div>
       </div>
     </div>
