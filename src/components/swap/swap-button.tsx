@@ -1,6 +1,6 @@
 import { LoaderCircle } from 'lucide-react'
 import { InsufficientAllowanceError, MsgErc20IncreaseAllowance, networkLabel } from 'rujira.js'
-import { useSwap } from '@/hooks/use-swap'
+import { useAssetFrom, useAssetTo, useSwap } from '@/hooks/use-swap'
 import { getSelectedContext, useAccounts } from '@/hooks/use-accounts'
 import { useQuote } from '@/hooks/use-quote'
 import { useSimulation } from '@/hooks/use-simulation'
@@ -23,8 +23,10 @@ interface ButtonState {
 }
 
 export const SwapButton = ({ onSwap }: SwapButtonProps) => {
+  const assetFrom = useAssetFrom()
+  const assetTo = useAssetTo()
   const { selected } = useAccounts()
-  const { fromAsset, fromAmount, destination, toAsset } = useSwap()
+  const { fromAmount, destination } = useSwap()
   const { isLoading: isQuoting, refetch: refetchQuote } = useQuote()
   const { isLoading: isSimulating, simulationData, error: simulationError } = useSimulation()
   const { balance, isLoading: isBalanceLoading } = useBalance()
@@ -32,7 +34,7 @@ export const SwapButton = ({ onSwap }: SwapButtonProps) => {
   const { openDialog } = useDialog()
 
   const getState = (): ButtonState => {
-    if (!fromAsset || !toAsset) return { text: '', spinner: true, accent: false }
+    if (!assetFrom || !assetTo) return { text: '', spinner: true, accent: false }
     if (!fromAmount) return { text: 'Enter Amount', spinner: false, accent: false }
     if (!isBalanceLoading && balance?.amount && balance.amount < fromAmount) {
       return {
@@ -44,21 +46,21 @@ export const SwapButton = ({ onSwap }: SwapButtonProps) => {
     if (isQuoting || isSimulating) return { text: 'Quoting...', spinner: true, accent: false }
     if (!selected)
       return {
-        text: `Connect ${networkLabel(fromAsset.chain)} Wallet`,
+        text: `Connect ${networkLabel(assetFrom.chain)} Wallet`,
         spinner: false,
         accent: false,
         onClick: () => openDialog(WalletConnectDialog, {})
       }
     if (!destination)
       return {
-        text: `Connect ${networkLabel(toAsset.chain)} Wallet`,
+        text: `Connect ${networkLabel(assetTo.chain)} Wallet`,
         spinner: false,
         accent: false,
         onClick: () => openDialog(WalletConnectDialog, {})
       }
     if (simulationError instanceof InsufficientAllowanceError) {
       return {
-        text: `Approve ${fromAsset.metadata.symbol}`,
+        text: `Approve ${assetFrom.metadata.symbol}`,
         spinner: false,
         accent: false,
         onClick: async () => {

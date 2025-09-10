@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query'
-import { useSwap } from '@/hooks/use-swap'
+import { useAssetFrom, useSwap } from '@/hooks/use-swap'
 import { InboundAddress, MsgSwap, Simulation } from 'rujira.js'
 import { useQuote } from '@/hooks/use-quote'
 import { getSelectedContext, useAccounts } from '@/hooks/use-accounts'
@@ -19,8 +19,9 @@ type UseSimulation = {
 
 export const useSimulation = (): UseSimulation => {
   const { selected } = useAccounts()
-  const { fromAsset, fromAmount } = useSwap()
+  const { fromAmount } = useSwap()
   const { quote } = useQuote()
+  const assetFrom = useAssetFrom()
 
   const {
     data: simulationData,
@@ -29,7 +30,7 @@ export const useSimulation = (): UseSimulation => {
   } = useQuery({
     queryKey: ['simulation', quote],
     queryFn: async () => {
-      if (!quote || !quote.memo || !selected || !fromAsset || fromAmount == 0n) {
+      if (!quote || !quote.memo || !selected || !assetFrom || fromAmount == 0n) {
         return null
       }
 
@@ -40,14 +41,14 @@ export const useSimulation = (): UseSimulation => {
         router: quote.router || undefined
       }
 
-      const msg = new MsgSwap(fromAsset, fromAmount, quote.memo)
+      const msg = new MsgSwap(assetFrom, fromAmount, quote.memo)
 
       const simulateFunc = simulate(getSelectedContext(), selected, inboundAddress)
       const simulation = await simulateFunc(msg)
 
       return { simulation: simulation, inboundAddress, msg }
     },
-    enabled: !!(selected && quote && fromAsset && fromAmount > 0n),
+    enabled: !!(selected && quote && assetFrom && fromAmount > 0n),
     retry: false
   })
 

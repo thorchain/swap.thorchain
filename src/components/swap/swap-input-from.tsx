@@ -7,7 +7,7 @@ import { SwapSelectAsset } from '@/components/swap/swap-select-asset'
 import { Button } from '@/components/ui/button'
 import { useAccounts } from '@/hooks/use-accounts'
 import { DecimalText } from '@/components/decimal/decimal-text'
-import { useSwap } from '@/hooks/use-swap'
+import { useAssetFrom, useSetAssetFrom, useSwap } from '@/hooks/use-swap'
 import { AssetIcon } from '@/components/asset-icon'
 import { Skeleton } from '@/components/ui/skeleton'
 import { useDialog } from '@/components/global-dialog'
@@ -15,10 +15,12 @@ import { useBalance } from '@/hooks/use-balance'
 import { useRate } from '@/hooks/use-rates'
 
 export const SwapInputFrom = () => {
+  const assetFrom = useAssetFrom()
+  const setAssetFrom = useSetAssetFrom()
   const { openDialog } = useDialog()
   const { accounts, select } = useAccounts()
-  const { fromAsset, setAssetFrom, fromAmount, setFromAmount } = useSwap()
-  const { rate } = useRate(fromAsset?.asset)
+  const { fromAmount, setFromAmount } = useSwap()
+  const { rate } = useRate(assetFrom?.asset)
 
   const { balance, isLoading: isBalanceLoading } = useBalance()
 
@@ -34,7 +36,7 @@ export const SwapInputFrom = () => {
 
   const onClick = () => {
     openDialog(SwapSelectAsset, {
-      selected: fromAsset,
+      selected: assetFrom,
       onSelectAsset: asset => {
         setAssetFrom(asset)
         const toSelect = accounts?.find(a => a.network === asset?.chain)
@@ -58,13 +60,13 @@ export const SwapInputFrom = () => {
           </div>
         </div>
         <div className="flex cursor-pointer items-center gap-3" onClick={onClick}>
-          <AssetIcon url={fromAsset ? `/coins/${fromAsset.metadata.symbol.toLowerCase()}.svg` : null} />
+          <AssetIcon url={assetFrom ? `/coins/${assetFrom.metadata.symbol.toLowerCase()}.svg` : null} />
           <div className="flex flex-col items-start">
             <span className="text-leah text-lg font-semibold">
-              {fromAsset ? fromAsset.metadata.symbol : <Skeleton className="mb-0.5 h-6 w-12" />}
+              {assetFrom ? assetFrom.metadata.symbol : <Skeleton className="mb-0.5 h-6 w-12" />}
             </span>
             <span className="text-gray text-sm">
-              {fromAsset?.chain ? networkLabel(fromAsset.chain) : <Skeleton className="mt-0.5 h-3 w-16" />}
+              {assetFrom?.chain ? networkLabel(assetFrom.chain) : <Skeleton className="mt-0.5 h-3 w-16" />}
             </span>
           </div>
           <ChevronDown className="h-4 w-4 text-white" />
@@ -98,7 +100,7 @@ export const SwapInputFrom = () => {
         <div className="text-gray flex gap-1 text-xs">
           {isBalanceLoading && <Loader className="animate-spin" size="18" />}
           <span>Balance:</span>
-          <DecimalText amount={balance?.spendable || 0n} symbol={fromAsset?.metadata.symbol} subscript />
+          <DecimalText amount={balance?.spendable || 0n} symbol={assetFrom?.metadata.symbol} subscript />
         </div>
       </div>
     </div>

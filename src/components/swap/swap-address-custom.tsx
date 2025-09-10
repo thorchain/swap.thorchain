@@ -10,7 +10,7 @@ import {
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
 import { useState } from 'react'
-import { useSetDestination, useSwap } from '@/hooks/use-swap'
+import { useAssetTo, useSetDestination } from '@/hooks/use-swap'
 import { networkLabel, validateAddress } from 'rujira.js'
 import { Alert, AlertDescription } from '@/components/ui/alert'
 import { OctagonAlertIcon } from 'lucide-react'
@@ -21,20 +21,20 @@ interface SwapAddressProps {
 }
 
 export const SwapAddressCustom = ({ isOpen, onOpenChange }: SwapAddressProps) => {
-  const { toAsset } = useSwap()
-  const [address, setAddress] = useState<string>('')
+  const assetTo = useAssetTo()
   const setDestination = useSetDestination()
+  const [address, setAddress] = useState<string>('')
 
   const onSave = async () => {
-    if (!toAsset) {
+    if (!assetTo) {
       return
     }
 
-    setDestination({ address, network: toAsset.chain })
+    setDestination({ address, network: assetTo.chain })
     onOpenChange(false)
   }
 
-  const isValid = address.length && toAsset ? validateAddress(toAsset?.chain, address) : true
+  const isValid = address.length && assetTo ? validateAddress(assetTo?.chain, address) : true
 
   return (
     <Dialog open={isOpen} onOpenChange={onOpenChange}>
@@ -58,7 +58,7 @@ export const SwapAddressCustom = ({ isOpen, onOpenChange }: SwapAddressProps) =>
           <Alert variant="destructive">
             <OctagonAlertIcon className="h-4 w-4" />
             <AlertDescription>
-              {toAsset ? `Invalid address for ${networkLabel(toAsset.chain)}` : 'Invalid address'}
+              {assetTo ? `Invalid address for ${networkLabel(assetTo.chain)}` : 'Invalid address'}
             </AlertDescription>
           </Alert>
         )}

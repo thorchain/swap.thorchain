@@ -13,13 +13,15 @@ import { getSelectedContext, useAccounts } from '@/hooks/use-accounts'
 import { useTransactions } from '@/hooks/use-transactions'
 import { useSimulation } from '@/hooks/use-simulation'
 import { useQuote } from '@/hooks/use-quote'
-import { useSwap } from '@/hooks/use-swap'
+import { useAssetFrom, useAssetTo, useSwap } from '@/hooks/use-swap'
 import { signAndBroadcast } from '@/wallets'
 import { toast } from 'sonner'
 
 export const Swap = () => {
+  const assetFrom = useAssetFrom()
+  const assetTo = useAssetTo()
   const { selected } = useAccounts()
-  const { fromAsset, fromAmount, toAsset } = useSwap()
+  const { fromAmount } = useSwap()
   const { quote, error: quoteError } = useQuote()
   const { simulationData, error: simulationError } = useSimulation()
   const { setTransaction } = useTransactions()
@@ -35,10 +37,10 @@ export const Swap = () => {
         setTransaction({
           hash: res.txHash,
           timestamp: new Date(),
-          fromAsset: fromAsset,
+          fromAsset: assetFrom,
           fromAmount: fromAmount.toString(),
           toAmount: quote?.expected_amount_out,
-          toAsset: toAsset,
+          toAsset: assetTo,
           status: 'pending'
         })
 

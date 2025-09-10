@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query'
-import { useSwap } from '@/hooks/use-swap'
+import { useAssetFrom } from '@/hooks/use-swap'
 import { getSelectedContext, useAccounts } from '@/hooks/use-accounts'
 import { BalanceFetcher } from '@/wallets/balances'
 import { gasToken, MsgSwap } from 'rujira.js'
@@ -19,7 +19,7 @@ type UseBalance = {
 
 export const useBalance = (): UseBalance => {
   const { selected } = useAccounts()
-  const { fromAsset } = useSwap()
+  const assetFrom = useAssetFrom()
   const { data: inboundAddresses } = useInboundAddresses()
 
   const {
@@ -28,24 +28,24 @@ export const useBalance = (): UseBalance => {
     isLoading,
     error
   } = useQuery({
-    queryKey: ['balance', fromAsset?.asset, fromAsset?.chain, selected?.address],
+    queryKey: ['balance', assetFrom?.asset, assetFrom?.chain, selected?.address],
     queryFn: async () => {
-      if (!selected || !fromAsset || !inboundAddresses) {
+      if (!selected || !assetFrom || !inboundAddresses) {
         return null
       }
 
       const amount = await BalanceFetcher.fetch({
-        network: fromAsset.chain,
+        network: assetFrom.chain,
         address: selected.address,
-        asset: fromAsset.asset
+        asset: assetFrom.asset
       })
 
       let fee = 0n
 
-      const [, assetId] = fromAsset.asset.split('.')
+      const [, assetId] = assetFrom.asset.split('.')
 
-      if (assetId.toUpperCase() === gasToken(fromAsset.chain).symbol && amount > 0n) {
-        const address = inboundAddresses.find((a: any) => a.chain === fromAsset.chain)
+      if (assetId.toUpperCase() === gasToken(assetFrom.chain).symbol && amount > 0n) {
+        const address = inboundAddresses.find((a: any) => a.chain === assetFrom.chain)
 
         if (!address) {
           return null
@@ -69,7 +69,7 @@ export const useBalance = (): UseBalance => {
         }
 
         const msg = new MsgSwap(
-          fromAsset,
+          assetFrom,
           estimateAmount,
           '================================================================================'
         ) // todo
@@ -85,7 +85,7 @@ export const useBalance = (): UseBalance => {
 
       return { amount, spendable }
     },
-    enabled: !!(selected && fromAsset && inboundAddresses),
+    enabled: !!(selected && assetFrom && inboundAddresses),
     retry: false
   })
 

@@ -7,7 +7,7 @@ import { Separator } from '@/components/ui/separator'
 import { DecimalText } from '@/components/decimal/decimal-text'
 import { DecimalFiat } from '@/components/decimal/decimal-fiat'
 import { Quote } from '@/hooks/use-quote'
-import { useSwap } from '@/hooks/use-swap'
+import { useAssetFrom, useAssetTo, useSwap } from '@/hooks/use-swap'
 import { useRate } from '@/hooks/use-rates'
 
 interface SwapDetailsProps {
@@ -15,9 +15,11 @@ interface SwapDetailsProps {
 }
 
 export function SwapDetails({ quote }: SwapDetailsProps) {
+  const assetFrom = useAssetFrom()
+  const assetTo = useAssetTo()
   const [showMore, setShowMore] = useState(false)
-  const { fromAmount, fromAsset, toAsset } = useSwap()
-  const { rate: toAssetRate } = useRate(toAsset?.asset)
+  const { fromAmount } = useSwap()
+  const { rate: toAssetRate } = useRate(assetTo?.asset)
 
   if (!quote) {
     return (
@@ -56,10 +58,10 @@ export function SwapDetails({ quote }: SwapDetailsProps) {
       <div className="flex justify-between">
         <div className="text-gray">
           <div className="flex items-center gap-1">
-            <span className="text-sm">1 {fromAsset?.metadata.symbol}</span>
+            <span className="text-sm">1 {assetFrom?.metadata.symbol}</span>
             <ArrowRightLeft className="h-3 w-3" />
             <div className="text-sm">
-              <DecimalText amount={rate} symbol={toAsset?.metadata.symbol} decimals={12} />
+              <DecimalText amount={rate} symbol={assetTo?.metadata.symbol} decimals={12} />
             </div>
           </div>
         </div>
@@ -90,7 +92,7 @@ export function SwapDetails({ quote }: SwapDetailsProps) {
               <DecimalText
                 className="text-gray text-sm"
                 amount={BigInt(quote?.fees.liquidity || 0)}
-                symbol={toAsset?.metadata.symbol}
+                symbol={assetTo?.metadata.symbol}
               />
               <DecimalFiat
                 className="text-leah text-sm"
@@ -113,7 +115,7 @@ export function SwapDetails({ quote }: SwapDetailsProps) {
               <DecimalText
                 className="text-gray text-sm"
                 amount={BigInt(quote?.fees.outbound || 0)}
-                symbol={toAsset?.metadata.symbol}
+                symbol={assetTo?.metadata.symbol}
               />
               <DecimalFiat
                 className="text-leah text-sm"

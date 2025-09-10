@@ -10,27 +10,27 @@ import {
 } from '@/components/ui/dropdown-menu'
 import { useAccounts } from '@/hooks/use-accounts'
 import { cn, truncate } from '@/lib/utils'
-import { useSwap } from '@/hooks/use-swap'
+import { useAssetFrom } from '@/hooks/use-swap'
 
 export const SwapAddressFrom = () => {
   const { accounts, selected, select } = useAccounts()
-  const { fromAsset } = useSwap()
+  const assetFrom = useAssetFrom()
 
-  const options = accounts?.filter(a => a.network === fromAsset?.chain)
+  const options = accounts?.filter(a => a.network === assetFrom?.chain)
 
   useEffect(() => {
-    if (fromAsset && !selected) {
-      const fromAssetAccount = accounts?.find(x => x.network === fromAsset?.chain)
+    if (assetFrom && !selected) {
+      const fromAssetAccount = accounts?.find(x => x.network === assetFrom?.chain)
       if (fromAssetAccount) {
         select(fromAssetAccount)
       }
     }
-  }, [accounts, fromAsset, select, selected])
+  }, [accounts, assetFrom, select, selected])
 
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <div className="border-b-1 p-4 cursor-pointer">
+        <div className="cursor-pointer border-b-1 p-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
               {selected ? (

@@ -11,7 +11,7 @@ import {
   DropdownMenuTrigger
 } from '@/components/ui/dropdown-menu'
 import { SwapAddressCustom } from '@/components/swap/swap-address-custom'
-import { useDestination, useSetDestination, useSwap } from '@/hooks/use-swap'
+import { useAssetTo, useDestination, useSetDestination } from '@/hooks/use-swap'
 import { useAccounts } from '@/hooks/use-accounts'
 import { useDialog } from '@/components/global-dialog'
 import { cn, truncate } from '@/lib/utils'
@@ -19,20 +19,20 @@ import { cn, truncate } from '@/lib/utils'
 export const SwapAddressTo = () => {
   const { openDialog } = useDialog()
   const { accounts } = useAccounts()
-  const { toAsset } = useSwap()
+  const assetTo = useAssetTo()
   const destination = useDestination()
   const setDestination = useSetDestination()
 
-  const options = accounts?.filter(a => a.network === toAsset?.chain)
+  const options = accounts?.filter(a => a.network === assetTo?.chain)
 
   useEffect(() => {
-    if (toAsset && !destination) {
-      const toAssetAccount = accounts?.find(x => x.network === toAsset?.chain)
+    if (assetTo && !destination) {
+      const toAssetAccount = accounts?.find(x => x.network === assetTo?.chain)
       if (toAssetAccount) {
         setDestination(toAssetAccount)
       }
     }
-  }, [accounts, destination, setDestination, toAsset])
+  }, [accounts, destination, setDestination, assetTo])
 
   return (
     <DropdownMenu modal={false}>

@@ -2,7 +2,7 @@ import { useMemo } from 'react'
 import { AxiosError } from 'axios'
 import { useQuery, RefetchOptions } from '@tanstack/react-query'
 import { getQuote } from '@/lib/api'
-import { useSwap } from '@/hooks/use-swap'
+import { useAssetFrom, useAssetTo, useSwap } from '@/hooks/use-swap'
 
 export interface Quote {
   dust_threshold: string
@@ -43,13 +43,15 @@ type UseQote = {
 }
 
 export const useQuote = (): UseQote => {
-  const { fromAsset, fromAmount, destination, toAsset, slippageLimit } = useSwap()
+  const { fromAmount, destination, slippageLimit } = useSwap()
+  const assetFrom = useAssetFrom()
+  const assetTo = useAssetTo()
 
   const params = useMemo(
     () => ({
       amount: fromAmount > 0n ? fromAmount.toString() : undefined,
-      fromAsset: fromAsset?.asset,
-      toAsset: toAsset?.asset,
+      fromAsset: assetFrom?.asset,
+      toAsset: assetTo?.asset,
       affiliate: [],
       affiliateBps: [],
       destination: destination?.address,
@@ -57,7 +59,7 @@ export const useQuote = (): UseQote => {
       streamingQuantity: '0',
       liquidityToleranceBps: Number(slippageLimit)
     }),
-    [fromAmount, fromAsset, toAsset, destination, slippageLimit]
+    [fromAmount, assetFrom, assetTo, destination, slippageLimit]
   )
 
   const {
