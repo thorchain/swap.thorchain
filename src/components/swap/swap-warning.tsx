@@ -1,5 +1,6 @@
 import { InsufficientAllowanceError, translateError } from 'rujira.js'
 import { OctagonAlert } from 'lucide-react'
+import { Alert, AlertDescription } from '@/components/ui/alert'
 
 export const SwapWarning = ({ error }: { error: Error | null }) => {
   if (error instanceof InsufficientAllowanceError) {
@@ -8,10 +9,10 @@ export const SwapWarning = ({ error }: { error: Error | null }) => {
 
   if (error) {
     return (
-      <div className="my-2 flex items-center gap-2 px-5 text-red-500">
+      <Alert className="mt-4 rounded-2xl border-0 px-4" variant="destructive">
         <OctagonAlert size={16} min={16} className="flex-shrink-0" />
-        <span className="overflow-hidden">{translateError(error?.message || 'Unknown Error')}</span>
-      </div>
+        <AlertDescription>{translateError(error?.message || 'Unknown Error')}</AlertDescription>
+      </Alert>
     )
   }
 
