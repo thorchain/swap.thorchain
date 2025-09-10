@@ -18,7 +18,7 @@ interface SwapInputProps {
 
 export const SwapInputTo = ({ quote }: SwapInputProps) => {
   const { openDialog } = useDialog()
-  const { toAsset, setSwap } = useSwap()
+  const { toAsset, setAssetTo } = useSwap()
   const { rate: toAssetRate } = useRate(toAsset?.asset)
   const { accounts } = useAccounts()
   const destination = useDestination()
@@ -38,7 +38,7 @@ export const SwapInputTo = ({ quote }: SwapInputProps) => {
           setDestination(accounts?.find(x => x.network === asset.chain))
         }
 
-        setSwap(undefined, asset)
+        setAssetTo(asset)
       }
     })
 

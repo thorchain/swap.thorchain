@@ -25,7 +25,8 @@ interface SwapState {
   setSlippageLimit: (limit: bigint) => void
   setDestination: (destination?: Destination<Provider>) => void
   setFromAmount: (amount: bigint) => void
-  setSwap: (fromAsset?: Asset, toAsset?: Asset) => void
+  setAssetFrom: (asset: Asset) => void
+  setAssetTo: (asset: Asset) => void
   swapAssets: () => void
   setInitialAssets: (pools: Asset[]) => void
 }
@@ -43,13 +44,27 @@ export const useSwapStore = create<SwapState>()(
       setDestination: destination => set({ destination }),
       setFromAmount: fromAmount => set({ fromAmount: fromAmount.toString() }),
 
-      setSwap: (fromAsset, toAsset) => {
+      setAssetFrom: asset => {
         const state = get()
+        const toAsset = state.toAsset === asset ? state.fromAsset : state.toAsset
+
         set({
-          fromAsset: fromAsset || state.fromAsset,
-          toAsset: toAsset || state.toAsset,
-          from: fromAsset?.asset || state.from,
-          to: toAsset?.asset || state.to
+          fromAsset: asset,
+          from: asset.asset,
+          toAsset: toAsset,
+          to: toAsset?.asset
+        })
+      },
+
+      setAssetTo: asset => {
+        const state = get()
+        const fromAsset = state.fromAsset === asset ? state.toAsset : state.fromAsset
+
+        set({
+          fromAsset: fromAsset,
+          from: fromAsset?.asset,
+          toAsset: asset,
+          to: asset.asset
         })
       },
 
@@ -105,7 +120,8 @@ export const useSwap = () => {
     setSlippageLimit,
     fromAmount,
     setFromAmount,
-    setSwap,
+    setAssetFrom,
+    setAssetTo,
     feeWarning,
     fromAsset,
     toAsset,
@@ -127,7 +143,8 @@ export const useSwap = () => {
     toAsset,
     fromAmount: BigInt(fromAmount),
     setFromAmount,
-    setSwap,
+    setAssetFrom,
+    setAssetTo,
     feeWarning: BigInt(feeWarning),
     swapAssets
   }

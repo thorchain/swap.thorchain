@@ -17,7 +17,7 @@ import { useRate } from '@/hooks/use-rates'
 export const SwapInputFrom = () => {
   const { openDialog } = useDialog()
   const { accounts, select } = useAccounts()
-  const { fromAsset, setSwap, fromAmount, setFromAmount } = useSwap()
+  const { fromAsset, setAssetFrom, fromAmount, setFromAmount } = useSwap()
   const { rate } = useRate(fromAsset?.asset)
 
   const { balance, isLoading: isBalanceLoading } = useBalance()
@@ -36,7 +36,7 @@ export const SwapInputFrom = () => {
     openDialog(SwapSelectAsset, {
       selected: fromAsset,
       onSelectAsset: asset => {
-        setSwap(asset)
+        setAssetFrom(asset)
         const toSelect = accounts?.find(a => a.network === asset?.chain)
         select(toSelect || null)
       }
