@@ -13,7 +13,7 @@ interface AccountsState extends AccountProvider {
   wallets: WalletContext[]
   providers: Provider[]
   resolveSource: () => void
-  getContext: () => any | undefined
+  selectedWallet?: WalletContext
 }
 
 export const useAccountStore = create<AccountsState>()(
@@ -22,6 +22,7 @@ export const useAccountStore = create<AccountsState>()(
       wallets: [],
       accounts: [],
       selected: undefined,
+      selectedWallet: undefined,
       providers: [],
 
       select: account => {
@@ -37,7 +38,7 @@ export const useAccountStore = create<AccountsState>()(
               (!account.address || a.account.address === account.address)
           )
 
-          return { selected: found?.account }
+          return { selected: found?.account, selectedWallet: found }
         })
       },
 
@@ -56,6 +57,7 @@ export const useAccountStore = create<AccountsState>()(
               wallets,
               accounts: wallets.map(a => a.account),
               selected: toSelect?.account,
+              selectedWallet: toSelect,
               providers: Array.from(new Set([...state.providers, provider]))
             }
           })
@@ -79,6 +81,7 @@ export const useAccountStore = create<AccountsState>()(
             wallets: wallets,
             accounts,
             selected: toSelect?.account,
+            selectedWallet: toSelect,
             providers: state.providers.filter(p => p !== provider)
           }
         })
@@ -92,32 +95,22 @@ export const useAccountStore = create<AccountsState>()(
           wallets: [],
           accounts: [],
           selected: undefined,
+          selectedWallet: undefined,
           providers: []
         })
 
         useSwapStore.getState().resolveDestination()
       },
 
-      getContext: () => {
-        const { selected, wallets } = get()
-        if (!selected) return undefined
-        const wallet = wallets.find(
-          a =>
-            a.account.provider === selected.provider &&
-            a.account.network === selected.network &&
-            (!selected.address || a.account.address === selected.address)
-        )
-        return wallet?.context
-      },
-
       resolveSource: async () => {
-        const { accounts } = get()
+        const { wallets } = get()
         const { assetFrom } = useSwapStore.getState()
 
-        const account = accounts?.find(a => a.network === assetFrom?.chain)
+        const wallet = wallets?.find(w => w.account.network === assetFrom?.chain)
 
         set({
-          selected: account
+          selected: wallet?.account,
+          selectedWallet: wallet
         })
       },
 
@@ -136,6 +129,8 @@ export const useAccountStore = create<AccountsState>()(
           return
         }
 
+        const { selected } = state
+
         Promise.allSettled(
           state.providers.map(p => {
             return getAccounts(p)
@@ -144,9 +139,17 @@ export const useAccountStore = create<AccountsState>()(
           const wallets = x.reduce((a: WalletContext[], v) => (v.status === 'fulfilled' ? [...v.value, ...a] : a), [])
           const accounts = wallets.map(a => a.account)
 
+          const wallet = wallets.find(
+            a =>
+              a.account.provider === selected?.provider &&
+              a.account.network === selected?.network &&
+              (!selected.address || a.account.address === selected.address)
+          )
           useAccountStore.setState({
             wallets,
             accounts,
+            selected: wallet?.account,
+            selectedWallet: wallet,
             providers: Array.from(new Set(accounts.map(w => w.provider)))
           })
 
@@ -176,6 +179,7 @@ useAccountStore.subscribe((currState, prevState) => {
           wallets,
           accounts: wallets.map(a => a.account),
           selected: toSelect?.account,
+          selectedWallet: toSelect,
           providers: Array.from(new Set([...state.providers, currProvider]))
         }
       })

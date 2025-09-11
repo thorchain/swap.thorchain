@@ -60,6 +60,10 @@ export const useBalance = (): UseBalance => {
 
         const context = getSelectedContext()
 
+        if (!context) {
+          return null
+        }
+
         let estimateAmount = amount
 
         if (context instanceof JsonRpcSigner) {

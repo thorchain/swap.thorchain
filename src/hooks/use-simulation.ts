@@ -43,7 +43,13 @@ export const useSimulation = (): UseSimulation => {
 
       const msg = new MsgSwap(assetFrom, amountFrom, quote.memo)
 
-      const simulateFunc = simulate(getSelectedContext(), selected, inboundAddress)
+      const context = getSelectedContext()
+
+      if (!context) {
+        return null
+      }
+
+      const simulateFunc = simulate(context, selected, inboundAddress)
       const simulation = await simulateFunc(msg)
 
       return { simulation: simulation, inboundAddress, msg }

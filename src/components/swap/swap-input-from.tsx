@@ -1,18 +1,18 @@
 import Decimal from 'decimal.js'
 import { networkLabel } from 'rujira.js'
-import { ChevronDown, Loader } from 'lucide-react'
+import { ChevronDown } from 'lucide-react'
 import { DecimalInput } from '@/components/decimal/decimal-input'
 import { DecimalFiat } from '@/components/decimal/decimal-fiat'
 import { SwapSelectAsset } from '@/components/swap/swap-select-asset'
 import { Button } from '@/components/ui/button'
 import { useAccounts } from '@/hooks/use-accounts'
-import { DecimalText } from '@/components/decimal/decimal-text'
 import { useAssetFrom, useSetAssetFrom, useSwap } from '@/hooks/use-swap'
 import { AssetIcon } from '@/components/asset-icon'
 import { Skeleton } from '@/components/ui/skeleton'
 import { useDialog } from '@/components/global-dialog'
 import { useBalance } from '@/hooks/use-balance'
 import { useRate } from '@/hooks/use-rates'
+import { SwapBalance } from '@/components/swap/swap-balance'
 
 export const SwapInputFrom = () => {
   const assetFrom = useAssetFrom()
@@ -21,8 +21,7 @@ export const SwapInputFrom = () => {
   const { accounts, select } = useAccounts()
   const { amountFrom, setAmountFrom } = useSwap()
   const { rate } = useRate(assetFrom?.asset)
-
-  const { balance, isLoading: isBalanceLoading } = useBalance()
+  const { balance } = useBalance()
 
   const handleSetPercent = (percent: bigint) => {
     if (!balance) return
@@ -97,11 +96,8 @@ export const SwapInputFrom = () => {
             100%
           </Button>
         </div>
-        <div className="text-gray flex gap-1 text-xs">
-          {isBalanceLoading && <Loader className="animate-spin" size="18" />}
-          <span>Balance:</span>
-          <DecimalText amount={balance?.spendable || 0n} symbol={assetFrom?.metadata.symbol} subscript />
-        </div>
+
+        <SwapBalance />
       </div>
     </div>
   )

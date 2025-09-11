@@ -2,7 +2,7 @@
 
 import { useAccountStore } from '@/store/account-store'
 
-export const getSelectedContext = () => useAccountStore.getState().getContext()
+export const getSelectedContext = () => useAccountStore.getState().selectedWallet?.context
 
 export const useAccounts = () => {
   const accounts = useAccountStore(s => s.accounts)

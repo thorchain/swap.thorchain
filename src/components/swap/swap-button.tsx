@@ -65,10 +65,14 @@ export const SwapButton = ({ onSwap }: SwapButtonProps) => {
         accent: false,
         onClick: async () => {
           const msg = new MsgErc20IncreaseAllowance(simulationError)
-          const simulateFunc = simulate(getSelectedContext(), selected)
+          const context = getSelectedContext()
+
+          if (!context) return
+
+          const simulateFunc = simulate(context, selected)
           const promise = simulateFunc(msg)
             .then(simulation => {
-              const broadcast = signAndBroadcast(getSelectedContext(), selected)
+              const broadcast = signAndBroadcast(context, selected)
               return broadcast(simulation, msg)
             })
             .then(res => {
