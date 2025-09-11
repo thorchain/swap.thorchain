@@ -21,7 +21,7 @@ export const Swap = () => {
   const assetFrom = useAssetFrom()
   const assetTo = useAssetTo()
   const { selected } = useAccounts()
-  const { fromAmount } = useSwap()
+  const { amountFrom } = useSwap()
   const { quote, error: quoteError } = useQuote()
   const { simulationData, error: simulationError } = useSimulation()
   const { setTransaction } = transactionStore()
@@ -38,7 +38,7 @@ export const Swap = () => {
           hash: res.txHash,
           timestamp: new Date(),
           fromAsset: assetFrom,
-          fromAmount: fromAmount.toString(),
+          fromAmount: amountFrom.toString(),
           toAmount: quote?.expected_amount_out,
           toAsset: assetTo,
           status: 'pending'

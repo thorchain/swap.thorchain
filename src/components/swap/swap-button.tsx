@@ -26,7 +26,7 @@ export const SwapButton = ({ onSwap }: SwapButtonProps) => {
   const assetFrom = useAssetFrom()
   const assetTo = useAssetTo()
   const { selected } = useAccounts()
-  const { fromAmount, destination } = useSwap()
+  const { amountFrom, destination } = useSwap()
   const { isLoading: isQuoting, refetch: refetchQuote } = useQuote()
   const { isLoading: isSimulating, simulationData, error: simulationError } = useSimulation()
   const { balance, isLoading: isBalanceLoading } = useBalance()
@@ -35,8 +35,8 @@ export const SwapButton = ({ onSwap }: SwapButtonProps) => {
 
   const getState = (): ButtonState => {
     if (!assetFrom || !assetTo) return { text: '', spinner: true, accent: false }
-    if (!fromAmount) return { text: 'Enter Amount', spinner: false, accent: false }
-    if (!isBalanceLoading && balance?.amount && balance.amount < fromAmount) {
+    if (!amountFrom) return { text: 'Enter Amount', spinner: false, accent: false }
+    if (!isBalanceLoading && balance?.amount && balance.amount < amountFrom) {
       return {
         text: 'Insufficient balance',
         spinner: false,

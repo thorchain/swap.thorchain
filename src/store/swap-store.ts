@@ -5,6 +5,10 @@ import { Network } from 'rujira.js'
 import { Provider } from '@/wallets'
 import { useAccountStore } from '@/store/account-store'
 
+const INITIAL_ASSET_FROM = 'BTC.BTC'
+const INITIAL_ASSET_TO = 'THOR.RUNE'
+const INITIAL_AMOUNT_FROM = 50_000_000n
+
 interface Destination<P> {
   address: string
   network: Network
@@ -18,6 +22,7 @@ interface SwapState {
   destination?: Destination<Provider>
   slippageLimit: string
   feeWarning: string
+  hasHydrated: boolean
 
   setSlippageLimit: (limit: bigint) => void
   setDestination: (destination?: Destination<Provider>) => void
@@ -27,14 +32,16 @@ interface SwapState {
   setAssetTo: (asset: Asset) => void
   swapAssets: () => void
   setInitialAssets: (pools: Asset[]) => void
+  setHasHydrated: (state: boolean) => void
 }
 
 export const useSwapStore = create<SwapState>()(
   persist(
     (set, get) => ({
       slippageLimit: '100',
-      amountFrom: '100000000',
+      amountFrom: INITIAL_AMOUNT_FROM.toString(),
       feeWarning: '500',
+      hasHydrated: false,
 
       setSlippageLimit: slippageLimit => set({ slippageLimit: slippageLimit.toString() }),
       setDestination: destination => set({ destination }),
@@ -93,13 +100,18 @@ export const useSwapStore = create<SwapState>()(
         }
 
         set({
-          assetFrom: pools.find(v => v.asset === 'BTC.BTC'),
-          assetTo: pools.find(v => v.asset === 'THOR.RUNE')
+          assetFrom: pools.find(v => v.asset === INITIAL_ASSET_FROM),
+          assetTo: pools.find(v => v.asset === INITIAL_ASSET_TO)
         })
-      }
+      },
+
+      setHasHydrated: (state: boolean) => set({ hasHydrated: state })
     }),
     {
       name: 'swap-store',
+      onRehydrateStorage: () => state => {
+        state?.setHasHydrated(true)
+      },
       partialize: state => ({
         slippageLimit: state.slippageLimit,
         amountFrom: state.amountFrom,

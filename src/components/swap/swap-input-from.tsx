@@ -19,17 +19,17 @@ export const SwapInputFrom = () => {
   const setAssetFrom = useSetAssetFrom()
   const { openDialog } = useDialog()
   const { accounts, select } = useAccounts()
-  const { fromAmount, setFromAmount } = useSwap()
+  const { amountFrom, setAmountFrom } = useSwap()
   const { rate } = useRate(assetFrom?.asset)
 
   const { balance, isLoading: isBalanceLoading } = useBalance()
 
   const handleSetPercent = (percent: bigint) => {
     if (!balance) return
-    setFromAmount((balance.spendable * percent) / 100n)
+    setAmountFrom((balance.spendable * percent) / 100n)
   }
 
-  const valueFrom = new Decimal(fromAmount || 0)
+  const valueFrom = new Decimal(amountFrom || 0)
     .div(10 ** 8)
     .mul(rate || 1)
     .toString()
@@ -51,8 +51,8 @@ export const SwapInputFrom = () => {
         <div className="flex-1">
           <DecimalInput
             className="text-leah w-full bg-transparent text-2xl font-medium outline-none"
-            amount={fromAmount}
-            onAmountChange={e => setFromAmount(e)}
+            amount={amountFrom}
+            onAmountChange={e => setAmountFrom(e)}
             autoComplete="off"
           />
           <div className="text-gray mt-1 text-sm">
@@ -77,8 +77,8 @@ export const SwapInputFrom = () => {
         <div className="flex gap-2">
           <Button
             className="text-leah bg-blade rounded-full px-3 py-1 text-sm hover:bg-zinc-800"
-            onClick={() => setFromAmount(0n)}
-            disabled={fromAmount === 0n}
+            onClick={() => setAmountFrom(0n)}
+            disabled={amountFrom === 0n}
           >
             Clear
           </Button>

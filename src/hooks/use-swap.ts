@@ -40,6 +40,7 @@ export const useSwap = () => {
     setDestination,
     setSlippageLimit,
     amountFrom,
+    hasHydrated,
     setAmountFrom,
     setAssetTo,
     feeWarning,
@@ -56,8 +57,8 @@ export const useSwap = () => {
     setSlippageLimit,
     destination,
     setDestination,
-    fromAmount: BigInt(amountFrom),
-    setFromAmount: setAmountFrom,
+    amountFrom: hasHydrated ? BigInt(amountFrom) : 0n,
+    setAmountFrom: setAmountFrom,
     setAssetTo,
     feeWarning: BigInt(feeWarning)
   }

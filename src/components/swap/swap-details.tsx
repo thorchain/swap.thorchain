@@ -18,7 +18,7 @@ export function SwapDetails({ quote }: SwapDetailsProps) {
   const assetFrom = useAssetFrom()
   const assetTo = useAssetTo()
   const [showMore, setShowMore] = useState(false)
-  const { fromAmount } = useSwap()
+  const { amountFrom } = useSwap()
   const { rate: toAssetRate } = useRate(assetTo?.asset)
 
   if (!quote) {
@@ -42,7 +42,7 @@ export function SwapDetails({ quote }: SwapDetailsProps) {
     )
   }
 
-  const rate = (quote && (BigInt(quote.expected_amount_out) * 10n ** 12n) / fromAmount) || 0n
+  const rate = (quote && (BigInt(quote.expected_amount_out) * 10n ** 12n) / amountFrom) || 0n
   const totalFee = BigInt(
     Number(quote?.fees.liquidity || 0) + Number(quote?.fees.outbound || 0) + Number(quote?.fees.affiliate || 0)
   )

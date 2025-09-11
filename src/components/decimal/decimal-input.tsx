@@ -27,7 +27,7 @@ const format = (v: bigint, decimals: number): string => {
   // Manually split to prevent floating point issued eg (100000.92).toFixed(12) => 100000.919999999998
   const str = v.toString().padStart(decimals, '0')
   const lead = str.slice(0, -decimals)
-  return numericFormatter(`${lead.length ? lead : '0'}.${str}`, { decimalScale: decimals })
+  return numericFormatter(`${lead.length ? lead : '0'}.${str.slice(-decimals)}`, { decimalScale: decimals })
 }
 
 export const DecimalInput: FC<

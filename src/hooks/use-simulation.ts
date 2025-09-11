@@ -19,7 +19,7 @@ type UseSimulation = {
 
 export const useSimulation = (): UseSimulation => {
   const { selected } = useAccounts()
-  const { fromAmount } = useSwap()
+  const { amountFrom } = useSwap()
   const { quote } = useQuote()
   const assetFrom = useAssetFrom()
 
@@ -30,7 +30,7 @@ export const useSimulation = (): UseSimulation => {
   } = useQuery({
     queryKey: ['simulation', quote],
     queryFn: async () => {
-      if (!quote || !quote.memo || !selected || !assetFrom || fromAmount == 0n) {
+      if (!quote || !quote.memo || !selected || !assetFrom || amountFrom == 0n) {
         return null
       }
 
@@ -41,14 +41,14 @@ export const useSimulation = (): UseSimulation => {
         router: quote.router || undefined
       }
 
-      const msg = new MsgSwap(assetFrom, fromAmount, quote.memo)
+      const msg = new MsgSwap(assetFrom, amountFrom, quote.memo)
 
       const simulateFunc = simulate(getSelectedContext(), selected, inboundAddress)
       const simulation = await simulateFunc(msg)
 
       return { simulation: simulation, inboundAddress, msg }
     },
-    enabled: !!(selected && quote && assetFrom && fromAmount > 0n),
+    enabled: !!(selected && quote && assetFrom && amountFrom > 0n),
     retry: false
   })
 
