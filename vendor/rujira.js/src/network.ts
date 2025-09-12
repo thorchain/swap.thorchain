@@ -236,3 +236,53 @@ export const validateAddress = (n: Network, str: string): boolean => {
     return false
   }
 }
+
+export const getChainParams = (n: Network) => {
+  switch (n) {
+    case Network.Bsc:
+      return {
+        chainName: 'Binance Smart Chain',
+        chainId: '0x38',
+        blockExplorerUrls: ['https://bscscan.com'],
+        iconUrls: ['https://cryptologos.cc/logos/bnb-bnb-logo.svg'],
+        nativeCurrency: {
+          name: 'Binance Coin',
+          symbol: 'BNB',
+          decimals: 18
+        },
+        rpcUrls: [
+          'https://bsc-dataseed.binance.org/',
+          'https://bsc-dataseed1.defibit.io/',
+          'https://bsc-dataseed1.ninicoin.io/'
+        ]
+      }
+    case Network.Avalanche:
+      return {
+        chainName: 'Avalanche C-Chain',
+        chainId: '0xa86a',
+        blockExplorerUrls: ['https://snowtrace.io'],
+        iconUrls: ['https://cryptologos.cc/logos/avalanche-avax-logo.svg'],
+        nativeCurrency: {
+          name: 'Avalanche',
+          symbol: 'AVAX',
+          decimals: 18
+        },
+        rpcUrls: ['https://api.avax.network/ext/bc/C/rpc']
+      }
+    case Network.Base:
+      return {
+        chainName: 'Base Mainnet',
+        chainId: '0x2105',
+        blockExplorerUrls: ['https://basescan.org'],
+        iconUrls: ['https://cryptologos.cc/logos/base-base-logo.svg'],
+        nativeCurrency: {
+          name: 'Ether',
+          symbol: 'ETH',
+          decimals: 18
+        },
+        rpcUrls: ['https://mainnet.base.org']
+      }
+    default:
+      throw new Error(`Unsupported network ${n}`)
+  }
+}

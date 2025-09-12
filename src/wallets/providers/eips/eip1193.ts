@@ -3,6 +3,7 @@ import {
   Account,
   ERC20Allowance,
   gasToken,
+  getChainParams,
   InboundAddress,
   InsufficientAllowanceError,
   Msg,
@@ -88,7 +89,10 @@ export class Eip1193Adapter implements WalletProvider<Eip1193Context> {
 
     const currentChainId = await context.provider.send('eth_chainId', [])
     if (currentChainId.toLowerCase() !== chainId.toLowerCase()) {
-      await context.provider.send('wallet_switchEthereumChain', [{ chainId }])
+      // await context.provider.send('wallet_switchEthereumChain', [{ chainId }])
+      const provider = this.e()
+      if (!provider) throw new Error('No EIP-1193 provider found')
+      await this.ensureChain(provider, chainId, account.network)
     }
     if (erc20 && tx.to) await checkAllowance(context, erc20, tx.to.toString())
     try {
@@ -113,6 +117,25 @@ export class Eip1193Adapter implements WalletProvider<Eip1193Context> {
         throw new Error(`Insufficient funds for gas`)
       }
       throw error
+    }
+  }
+
+  async ensureChain(provider: any, chainId: string, network: Network) {
+    try {
+      await provider.request({
+        method: 'wallet_switchEthereumChain',
+        params: [{ chainId }]
+      })
+    } catch (error: any) {
+      if (error.code === 4902) {
+        const chainParams = getChainParams(network)
+        await provider.request({
+          method: 'wallet_addEthereumChain',
+          params: [chainParams]
+        })
+      } else {
+        throw error
+      }
     }
   }
 
