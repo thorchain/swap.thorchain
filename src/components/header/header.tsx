@@ -1,7 +1,7 @@
 'use client'
 
 import Image from 'next/image'
-import { ArrowRightLeft, LogOut, Plus } from 'lucide-react'
+import { LogOut, Plus } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu'
 import { WalletConnectDialog } from '@/components/header/wallet-connect-dialog'
@@ -20,10 +20,11 @@ export function Header() {
       <div className="container mx-auto px-4 py-4">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-r from-green-400 to-blue-500">
-              <ArrowRightLeft className="h-5 w-5 text-white" />
+            <Image src="/logo.svg" alt="THORChain Swap" width={32} height={32} priority />
+            <div className="flex items-center gap-2">
+              <div className="text-xl font-bold text-white">THORChain Swap</div>
+              <Image src="/beta.svg" alt="Beta" width={37} height={17} priority />
             </div>
-            <h1 className="text-xl font-bold text-white">THORChain Swap</h1>
           </div>
 
           <div className="flex items-center gap-2">
