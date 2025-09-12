@@ -79,7 +79,7 @@ export const Swap = () => {
           <SwapAddressTo />
         </div>
 
-        <SwapDetails quote={quote} />
+        <SwapDetails />
         <SwapButton onSwap={onSwap} />
         <SwapWarning error={quoteError || simulationError} />
       </div>
