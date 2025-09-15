@@ -30,7 +30,9 @@ export function SwapDetails() {
 
   const price = quote && (BigInt(quote.expected_amount_out) * 10n ** 12n) / amountFrom
 
-  const gasFee = simulationData && new Decimal(simulationData.simulation.amount.toString()).div(10n ** 8n)
+  const gasFee =
+    simulationData &&
+    new Decimal(simulationData.simulation.amount.toString()).div(10 ** simulationData.simulation.decimals)
   const swapFee = quote && new Decimal(quote.fees.total).div(10n ** 8n)
 
   const gasFeeInUsd = gasFee && rateGas && gasFee.mul(rateGas)
@@ -63,9 +65,7 @@ export function SwapDetails() {
               <LoaderCircle size={16} className="text-gray animate-spin" />
             ) : (
               <>
-                {simulationError ? (
-                  <span className="text-gray">n/a</span>
-                ) : (
+                {simulationData ? (
                   <>
                     {feeInUsd ? (
                       <div className="text-leah">
@@ -77,6 +77,8 @@ export function SwapDetails() {
                       </div>
                     )}
                   </>
+                ) : (
+                  <span className="text-gray">n/a</span>
                 )}
               </>
             )}
@@ -99,14 +101,13 @@ export function SwapDetails() {
                 <LoaderCircle size={16} className="text-gray animate-spin" />
               ) : (
                 <>
-                  {simulationError ? (
-                    <span className="text-gray text-sm">n/a</span>
-                  ) : (
+                  {simulationData ? (
                     <>
                       <DecimalText
                         className="text-gray text-sm"
-                        amount={BigInt(simulationData?.simulation.amount || 0)}
+                        amount={simulationData?.simulation.amount || 0n}
                         symbol={assetFrom && gasToken(assetFrom.chain).symbol}
+                        decimals={simulationData?.simulation.decimals}
                         subscript
                       />
 
@@ -119,6 +120,8 @@ export function SwapDetails() {
                         />
                       )}
                     </>
+                  ) : (
+                    <span className="text-gray text-sm">n/a</span>
                   )}
                 </>
               )}
