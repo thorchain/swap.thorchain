@@ -2,7 +2,7 @@ import { useQuery } from '@tanstack/react-query'
 import { useAssetFrom } from '@/hooks/use-swap'
 import { getSelectedContext, useAccounts } from '@/hooks/use-accounts'
 import { BalanceFetcher } from '@/wallets/balances'
-import { gasToken, MsgSwap } from 'rujira.js'
+import { gasToken, MsgSwap, Network } from 'rujira.js'
 import { simulate } from '@/wallets'
 import { JsonRpcSigner } from 'ethers'
 import { useInboundAddresses } from '@/hooks/use-inbound-addresses'
@@ -44,7 +44,11 @@ export const useBalance = (): UseBalance => {
 
       const [, assetId] = assetFrom.asset.split('.')
 
-      if (assetId.toUpperCase() === gasToken(assetFrom.chain).symbol && amount > 0n) {
+      if (assetFrom.chain === Network.Thorchain) {
+        fee = BigInt(0.2 * 10 ** 8)
+      } else if (assetFrom.chain === Network.Gaia) {
+        fee = BigInt(0.007 * 10 ** 6)
+      } else if (assetId.toUpperCase() === gasToken(assetFrom.chain).symbol && amount > 0n) {
         const address = inboundAddresses.find((a: any) => a.chain === assetFrom.chain)
 
         if (!address) {
