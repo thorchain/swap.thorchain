@@ -60,11 +60,11 @@ export const SwapInputFrom = () => {
         </div>
         <div className="flex cursor-pointer items-center gap-3" onClick={onClick}>
           <AssetIcon url={assetFrom ? `/coins/${assetFrom.metadata.symbol.toLowerCase()}.svg` : null} />
-          <div className="flex flex-col items-start">
-            <span className="text-leah text-lg font-semibold">
+          <div className="flex w-15 flex-col items-start">
+            <span className="text-leah inline-block w-full truncate text-lg font-semibold">
               {assetFrom ? assetFrom.metadata.symbol : <Skeleton className="mb-0.5 h-6 w-12" />}
             </span>
-            <span className="text-gray text-sm">
+            <span className="text-gray inline-block w-full truncate text-sm">
               {assetFrom?.chain ? networkLabel(assetFrom.chain) : <Skeleton className="mt-0.5 h-3 w-16" />}
             </span>
           </div>
