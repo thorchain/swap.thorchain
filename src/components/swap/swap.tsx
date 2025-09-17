@@ -9,6 +9,7 @@ import { SwapToggleAssets } from '@/components/swap/swap-toggle-assets'
 import { SwapWarning } from '@/components/swap/swap-warning'
 import { SwapDetails } from '@/components/swap/swap-details'
 import { SwapButton } from '@/components/swap/swap-button'
+import { SwapBetaAlert } from '@/components/swap/swap-beta-alert'
 import { getSelectedContext, useAccounts } from '@/hooks/use-accounts'
 import { transactionStore } from '@/store/transaction-store'
 import { useSimulation } from '@/hooks/use-simulation'
@@ -64,6 +65,8 @@ export const Swap = () => {
   return (
     <div className="flex flex-col items-center justify-center p-4">
       <div className="w-full max-w-md">
+        <SwapBetaAlert />
+
         <div className="mb-4 flex items-center justify-between">
           <div className="flex items-center gap-2">
             <h1 className="text-2xl font-medium text-white">Swap</h1>
