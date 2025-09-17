@@ -3,7 +3,7 @@
 import Image from 'next/image'
 import Decimal from 'decimal.js'
 import { Fragment, useState } from 'react'
-import { format, isSameDay, isToday, isYesterday, parseISO } from 'date-fns'
+import { format, isSameDay, isToday, isYesterday } from 'date-fns'
 import { Check, CircleCheck, Globe, LoaderCircle, X } from 'lucide-react'
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from '@/components/ui/dialog'
 import { ScrollArea } from '@/components/ui/scroll-area'
@@ -54,7 +54,7 @@ export const TransactionHistoryDialog = ({ isOpen, onOpenChange }: HistoryDialog
 
         <ScrollArea className="h-full max-h-[40vh] px-6 md:max-h-[60vh]">
           {transactions.map((tx, i) => {
-            const txDate = parseISO(tx.timestamp.toString())
+            const txDate = new Date(tx.timestamp)
             const shouldRenderHeader = !lastDate || !isSameDay(txDate, lastDate)
             lastDate = txDate
 
