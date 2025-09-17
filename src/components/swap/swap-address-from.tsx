@@ -10,15 +10,19 @@ import {
 import { useAccounts } from '@/hooks/use-accounts'
 import { cn, truncate } from '@/lib/utils'
 import { useAssetFrom } from '@/hooks/use-swap'
+import { WalletConnectDialog } from '@/components/header/wallet-connect-dialog'
+import { useDialog } from '@/components/global-dialog'
+import { Plus } from '@/components/icons'
 
 export const SwapAddressFrom = () => {
   const { accounts, selected, select } = useAccounts()
   const assetFrom = useAssetFrom()
+  const { openDialog } = useDialog()
 
   const options = accounts?.filter(a => a.network === assetFrom?.chain)
 
   return (
-    <DropdownMenu>
+    <DropdownMenu modal={false}>
       <DropdownMenuTrigger asChild>
         <div className="cursor-pointer border-b-1 p-4">
           <div className="flex items-center justify-between">
@@ -37,27 +41,27 @@ export const SwapAddressFrom = () => {
           </div>
         </div>
       </DropdownMenuTrigger>
-      <DropdownMenuContent align="end" className="bg-lawrence rounded-2xl p-0">
-        <div className="border-b p-3 py-2">
-          <div className="flex items-center gap-3">
+      <DropdownMenuContent align="end" className="bg-tyler rounded-2xl border-0 p-0">
+        <div className="border-b p-4">
+          <div className="flex items-center gap-4">
             <Wallet className="text-gray h-6 w-6" />
-            <DropdownMenuLabel className="text-gray p-0 text-sm">Source Wallet</DropdownMenuLabel>
+            <DropdownMenuLabel className="text-gray p-0 text-sm font-medium">Source Wallet</DropdownMenuLabel>
           </div>
         </div>
 
-        <div className="divide-y divide-neutral-800">
+        <div>
           {options?.map((account, index) => (
             <DropdownMenuItem
               key={index}
-              className="flex cursor-pointer items-center justify-between gap-3 rounded-none px-3 py-2 focus:bg-neutral-800"
+              className="focus:bg-blade flex cursor-pointer items-center justify-between gap-4 rounded-none p-4"
               onSelect={() => select(account)}
             >
-              <div className="flex items-center gap-3">
+              <div className="flex items-center gap-4">
                 <Image src={`/wallets/${account.provider.toLowerCase()}.svg`} alt="" width="24" height="24" />
-                <span className="text-gray text-sm">{account.provider}</span>
+                <span className="text-gray text-sm font-medium">{account.provider}</span>
               </div>
               <span
-                className={cn('ms-5 text-sm', {
+                className={cn('ms-5 text-sm font-semibold', {
                   'text-runes-blue': account.provider === selected?.provider && account.address === selected?.address
                 })}
               >
@@ -65,6 +69,16 @@ export const SwapAddressFrom = () => {
               </span>
             </DropdownMenuItem>
           ))}
+
+          <DropdownMenuItem
+            className="focus:bg-blade flex cursor-pointer rounded-none p-4"
+            onClick={() => openDialog(WalletConnectDialog, {})}
+          >
+            <div className="flex items-center gap-4">
+              <Plus className="text-storm-purple size-6" />
+              <span className="text-storm-purple text-sm font-medium">Connect Wallet</span>
+            </div>
+          </DropdownMenuItem>
         </div>
       </DropdownMenuContent>
     </DropdownMenu>

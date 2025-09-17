@@ -4,7 +4,7 @@ import { Button } from '@/components/ui/button'
 
 export const SwapBetaAlert = () => {
   return (
-    <Alert className="bg-lawrence mb-4 flex items-center justify-between rounded-4xl border-0 p-4 text-[#8257FD]">
+    <Alert className="bg-lawrence text-storm-purple mb-4 flex items-center justify-between rounded-4xl border-0 p-4">
       <div className="flex items-center gap-3">
         <OctagonAlert className="" size={24} min={24} />
         <div>
