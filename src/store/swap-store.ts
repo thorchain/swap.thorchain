@@ -1,7 +1,7 @@
 import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
 import { Asset } from '@/components/swap/asset'
-import { Network } from 'rujira.js'
+import { Network, validateAddress } from 'rujira.js'
 import { Provider } from '@/wallets'
 import { useAccountStore } from '@/store/account-store'
 
@@ -48,12 +48,21 @@ export const useSwapStore = create<SwapState>()(
       setAmountFrom: fromAmount => set({ amountFrom: fromAmount.toString() }),
 
       resolveDestination: async () => {
-        const { assetTo, setDestination } = get()
+        const { assetTo, destination: previous, setDestination } = get()
+
+        // Check if there is a custom address and it is suitable for a new assetTo
+        if (assetTo && previous && !previous.provider && validateAddress(assetTo.chain, previous.address)) {
+          setDestination({ address: previous.address, network: assetTo.chain })
+          return
+        }
 
         const accounts = useAccountStore.getState().accounts
-        const account = accounts?.find(a => a.network === assetTo?.chain)
 
-        setDestination(account)
+        const fromPrevious = accounts?.find(
+          a => a.provider === previous?.provider && a.address === previous?.address && a.network === assetTo?.chain
+        )
+
+        setDestination(fromPrevious ?? accounts?.find(a => a.network === assetTo?.chain))
       },
 
       setAssetFrom: asset => {
