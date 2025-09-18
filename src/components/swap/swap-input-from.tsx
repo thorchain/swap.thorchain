@@ -50,7 +50,7 @@ export const SwapInputFrom = () => {
             onAmountChange={e => setAmountFrom(e)}
             autoComplete="off"
           />
-          <div className="text-gray mt-1 text-sm">
+          <div className="text-thor-gray mt-1 text-sm">
             <DecimalFiat amount={valueFrom} />
           </div>
         </div>
@@ -60,7 +60,7 @@ export const SwapInputFrom = () => {
             <span className="text-leah inline-block w-full truncate text-lg font-semibold">
               {assetFrom ? assetFrom.metadata.symbol : <Skeleton className="mb-0.5 h-6 w-12" />}
             </span>
-            <span className="text-gray inline-block w-full truncate text-xs">
+            <span className="text-thor-gray inline-block w-full truncate text-xs">
               {assetFrom?.chain ? networkLabel(assetFrom.chain) : <Skeleton className="mt-0.5 h-3 w-16" />}
             </span>
           </div>

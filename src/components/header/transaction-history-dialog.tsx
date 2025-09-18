@@ -46,7 +46,7 @@ export const TransactionHistoryDialog = ({ isOpen, onOpenChange }: HistoryDialog
           <DialogTitle className="text-lg font-semibold">History</DialogTitle>
           <DialogDescription />
           <button onClick={() => onOpenChange(false)}>
-            <X className="h-5 w-5 text-gray-400" />
+            <X className="text-thor-gray-400 h-5 w-5" />
           </button>
         </DialogHeader>
 
@@ -100,7 +100,7 @@ export const TransactionHistoryDialog = ({ isOpen, onOpenChange }: HistoryDialog
                       </div>
                       <div className="flex flex-col">
                         <DecimalText className="text-leah font-base font-medium" amount={fromAmount} />
-                        <span className="text-gray text-sm">{tx.fromAsset?.metadata.symbol}</span>
+                        <span className="text-thor-gray text-sm">{tx.fromAsset?.metadata.symbol}</span>
                       </div>
                     </div>
                     <div className="flex flex-col items-center">
@@ -113,12 +113,12 @@ export const TransactionHistoryDialog = ({ isOpen, onOpenChange }: HistoryDialog
                           loadingCircle
                         )}
                       </span>
-                      <span className="text-gray text-xs">{tx.status}</span>
+                      <span className="text-thor-gray text-xs">{tx.status}</span>
                     </div>
                     <div className="flex items-center justify-end gap-2">
                       <div className="flex flex-col text-right">
                         <DecimalText className="text-leah text-base font-medium" amount={toAmount} />
-                        <span className="text-gray text-sm">{tx.toAsset?.metadata?.symbol}</span>
+                        <span className="text-thor-gray text-sm">{tx.toAsset?.metadata?.symbol}</span>
                       </div>
                       <div className="flex h-8 w-8 rounded-full">
                         <Image
@@ -133,20 +133,20 @@ export const TransactionHistoryDialog = ({ isOpen, onOpenChange }: HistoryDialog
                   {isExpanded && (
                     <div className="bg-blade my-2 space-y-4">
                       <div className="flex justify-between">
-                        <span className="text-gray text-sm">You Deposited</span>
+                        <span className="text-thor-gray text-sm">You Deposited</span>
                         <span className="font-medium">
                           <DecimalText amount={fromAmount} symbol={tx.fromAsset?.metadata.symbol} />
-                          <span className="text-gray">
+                          <span className="text-thor-gray">
                             (<DecimalFiat amount={fromValue} />)
                           </span>
                         </span>
                       </div>
 
                       <div className="flex justify-between">
-                        <span className="text-gray text-sm">Min. payout</span>
+                        <span className="text-thor-gray text-sm">Min. payout</span>
                         <span className="font-medium">
                           <DecimalText amount={toAmount} symbol={tx.toAsset?.metadata?.symbol} />
-                          <span className="text-gray">
+                          <span className="text-thor-gray">
                             (<DecimalFiat amount={toValue} />)
                           </span>
                         </span>
@@ -156,7 +156,7 @@ export const TransactionHistoryDialog = ({ isOpen, onOpenChange }: HistoryDialog
 
                       {fromTx?.from_address && (
                         <div className="flex items-center justify-between gap-1">
-                          <span className="text-gray text-sm">Source Address</span>
+                          <span className="text-thor-gray text-sm">Source Address</span>
                           <div className="flex items-center gap-1">
                             <span className="text-leah text-xs">{truncate(fromTx.from_address)}</span>
                             <CopyButton className="h-4 w-4 cursor-pointer" text={fromTx.from_address} />
@@ -166,7 +166,7 @@ export const TransactionHistoryDialog = ({ isOpen, onOpenChange }: HistoryDialog
 
                       {toTx?.to_address && (
                         <div className="flex items-center justify-between gap-1">
-                          <span className="text-gray text-sm">Destination Address</span>
+                          <span className="text-thor-gray text-sm">Destination Address</span>
                           <div className="flex items-center gap-1">
                             <span className="text-leah text-xs">{truncate(toTx.to_address)}</span>
                             <CopyButton className="h-4 w-4 cursor-pointer" text={toTx.to_address} />
@@ -176,7 +176,7 @@ export const TransactionHistoryDialog = ({ isOpen, onOpenChange }: HistoryDialog
 
                       <hr className="border-lawrence" />
 
-                      <div className="text-gray space-y-1 text-sm">
+                      <div className="text-thor-gray space-y-1 text-sm">
                         <div className="flex items-center gap-2">
                           {inCompleted ? <CircleCheck className="text-liquidity-green" size="16" /> : loadingCircle}
                           <div className="">

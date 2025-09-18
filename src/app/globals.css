@@ -74,8 +74,8 @@
     --rb-l: #0195a4;
     --sp-d: #8257fd;
     --sp-l: #5b2be5;
-    --tg-d: #00ffa3;
-    --tg-l: #00a76b;
+    --tg-d: #a1a1a1;
+    --tg-l: #4f4f4f;
   }
 
   :root {
@@ -91,6 +91,7 @@
     --liquidity-green: var(--lg-l);
     --runes-blue: var(--rb-l);
     --storm-purple: var(--sp-l);
+    --thor-gray: var(--tg-l);
 
     --radius: 0.625rem;
     --background: oklch(1 0 0);
@@ -139,6 +140,7 @@
     --liquidity-green: var(--lg-d);
     --runes-blue: var(--rb-d);
     --storm-purple: var(--sp-d);
+    --thor-gray: var(--tg-d);
 
     --background: black;
     --foreground: oklch(0.985 0 0);

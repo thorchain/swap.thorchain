@@ -30,9 +30,9 @@ export const SwapAddressFrom = () => {
               {selected ? (
                 <Image src={`/wallets/${selected.provider.toLowerCase()}.svg`} alt="" width="24" height="24" />
               ) : (
-                <Wallet className="text-gray h-6 w-6" />
+                <Wallet className="text-thor-gray h-6 w-6" />
               )}
-              <span className="text-gray text-sm">{selected?.provider || 'Source Wallet'}</span>
+              <span className="text-thor-gray text-sm">{selected?.provider || 'Source Wallet'}</span>
             </div>
             <div className="text-leah text-sm font-semibold">
               <span>{selected?.address ? truncate(selected.address) : ''}</span>
@@ -44,8 +44,8 @@ export const SwapAddressFrom = () => {
       <DropdownMenuContent align="end" className="bg-tyler rounded-2xl border-0 p-0">
         <div className="border-b p-4">
           <div className="flex items-center gap-4">
-            <Wallet className="text-gray h-6 w-6" />
-            <DropdownMenuLabel className="text-gray p-0 text-sm font-medium">Source Wallet</DropdownMenuLabel>
+            <Wallet className="text-thor-gray h-6 w-6" />
+            <DropdownMenuLabel className="text-thor-gray p-0 text-sm font-medium">Source Wallet</DropdownMenuLabel>
           </div>
         </div>
 
@@ -58,7 +58,7 @@ export const SwapAddressFrom = () => {
             >
               <div className="flex items-center gap-4">
                 <Image src={`/wallets/${account.provider.toLowerCase()}.svg`} alt="" width="24" height="24" />
-                <span className="text-gray text-sm font-medium">{account.provider}</span>
+                <span className="text-thor-gray text-sm font-medium">{account.provider}</span>
               </div>
               <span
                 className={cn('ms-5 text-sm font-semibold', {

@@ -46,7 +46,7 @@ export const SwapInputTo = ({ quote }: SwapInputProps) => {
             autoComplete="off"
             disabled
           />
-          <div className="text-gray mt-1 text-sm">
+          <div className="text-thor-gray mt-1 text-sm">
             <DecimalFiat amount={valueTo} />
           </div>
         </div>
@@ -56,7 +56,7 @@ export const SwapInputTo = ({ quote }: SwapInputProps) => {
             <span className="text-leah inline-block w-full truncate text-lg font-semibold">
               {assetTo ? assetTo.metadata.symbol : <Skeleton className="mb-0.5 h-6 w-12" />}
             </span>
-            <span className="text-gray inline-block w-full truncate text-xs">
+            <span className="text-thor-gray inline-block w-full truncate text-xs">
               {assetTo?.chain ? networkLabel(assetTo.chain) : <Skeleton className="mt-0.5 h-3 w-16" />}
             </span>
           </div>

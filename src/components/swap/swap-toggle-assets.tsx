@@ -10,7 +10,7 @@ export const SwapToggleAssets = () => {
       <Separator />
       <div className="bg-blade rounded-full">
         <ArrowDown
-          className="text-gray p-2 transition-transform duration-300 hover:rotate-180"
+          className="text-thor-gray p-2 transition-transform duration-300 hover:rotate-180"
           onClick={swapAssets}
           size={32}
         />

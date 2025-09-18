@@ -127,7 +127,7 @@ export const SwapSelectAsset = ({ isOpen, onOpenChange, selected, onSelectAsset 
           </div>
           <div className="flex-1">
             <div className="relative">
-              <Search className="text-gray absolute top-1/2 left-4 -translate-y-1/2 transform" size={24} />
+              <Search className="text-thor-gray absolute top-1/2 left-4 -translate-y-1/2 transform" size={24} />
               <Input
                 placeholder="Search"
                 value={searchQuery}
@@ -154,11 +154,13 @@ export const SwapSelectAsset = ({ isOpen, onOpenChange, selected, onSelectAsset 
                     </div>
                     <div className="text-left">
                       <div className="text-leah font-semibold">{item.metadata.symbol}</div>
-                      <div className="text-gray text-sm">{networkLabel(item.chain)}</div>
+                      <div className="text-thor-gray text-sm">{networkLabel(item.chain)}</div>
                     </div>
                   </div>
                   {item.asset === selected?.asset && (
-                    <div className={cn('border-gray text-gray rounded-full border px-1.5 py-0.5 text-xs font-medium')}>
+                    <div
+                      className={cn('border-gray text-thor-gray rounded-full border px-1.5 py-0.5 text-xs font-medium')}
+                    >
                       Selected
                     </div>
                   )}

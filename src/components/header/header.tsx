@@ -45,7 +45,7 @@ export function Header() {
                   <DropdownMenuItem className="flex cursor-pointer items-center justify-between gap-3 rounded-none px-3 py-2 focus:bg-neutral-800">
                     <div className="flex items-center gap-3" onClick={() => disconnectProvider(provider)}>
                       <LogOut className="h-5 w-5" />
-                      <span className="text-gray text-sm">Disconnect</span>
+                      <span className="text-thor-gray text-sm">Disconnect</span>
                     </div>
                   </DropdownMenuItem>
                 </DropdownMenuContent>

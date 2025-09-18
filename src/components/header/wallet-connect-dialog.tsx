@@ -109,7 +109,7 @@ export const WalletConnectDialog = ({ isOpen, onOpenChange }: WalletConnectDialo
 
         <div className="grid flex-1 grid-cols-1 gap-8 md:grid-cols-5">
           <div className="col-span-2 border-0 md:border-r">
-            <div className="text-gray mb-5 hidden text-base font-semibold md:block">Wallets</div>
+            <div className="text-thor-gray mb-5 hidden text-base font-semibold md:block">Wallets</div>
             <ScrollArea className="h-full max-h-[40vh] md:max-h-[50vh]">
               <div className="space-y-1">
                 {wallets.map(wallet => {
@@ -154,7 +154,7 @@ export const WalletConnectDialog = ({ isOpen, onOpenChange }: WalletConnectDialo
           </div>
 
           <div className="col-span-3 hidden md:block">
-            <h3 className="text-gray mb-5 text-base font-semibold">Chains</h3>
+            <h3 className="text-thor-gray mb-5 text-base font-semibold">Chains</h3>
             <div
               className="grid grid-flow-col gap-2"
               style={{

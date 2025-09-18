@@ -43,7 +43,7 @@ export function SwapDetails() {
     <>
       <div className="cursor-pointer p-4" onClick={() => setShowMore(!showMore)}>
         <div className="flex justify-between">
-          <div className="text-gray">
+          <div className="text-thor-gray">
             <div className="flex items-center gap-1">
               {price ? (
                 <>
@@ -60,9 +60,9 @@ export function SwapDetails() {
           </div>
 
           <div className="flex items-center gap-2 text-sm">
-            <span className="text-gray">Fees:</span>
+            <span className="text-thor-gray">Fees:</span>
             {isSimulating ? (
-              <LoaderCircle size={16} className="text-gray animate-spin" />
+              <LoaderCircle size={16} className="text-thor-gray animate-spin" />
             ) : (
               <>
                 {simulationData ? (
@@ -72,17 +72,21 @@ export function SwapDetails() {
                         <DecimalFiat className="text-sm" amount={feeInUsd.toString()} symbol="$" decimals={2} />
                       </div>
                     ) : (
-                      <div className="text-gray">
+                      <div className="text-thor-gray">
                         <DecimalFiat className="text-sm" amount="0" symbol="$" decimals={0} />
                       </div>
                     )}
                   </>
                 ) : (
-                  <span className="text-gray">n/a</span>
+                  <span className="text-thor-gray">n/a</span>
                 )}
               </>
             )}
-            {showMore ? <ChevronUp className="text-gray h-4 w-4" /> : <ChevronDown className="text-gray h-4 w-4" />}
+            {showMore ? (
+              <ChevronUp className="text-thor-gray h-4 w-4" />
+            ) : (
+              <ChevronDown className="text-thor-gray h-4 w-4" />
+            )}
           </div>
         </div>
       </div>
@@ -93,18 +97,18 @@ export function SwapDetails() {
         <div className="space-y-4 px-4 pt-2 pb-5">
           <div className="flex items-center justify-between">
             <div className="flex items-center">
-              <span className="text-gray text-sm">Gas Fee</span>
+              <span className="text-thor-gray text-sm">Gas Fee</span>
               <InfoTooltip>Fee for sending inbound transaction</InfoTooltip>
             </div>
             <div className="flex items-center gap-1">
               {isSimulating ? (
-                <LoaderCircle size={16} className="text-gray animate-spin" />
+                <LoaderCircle size={16} className="text-thor-gray animate-spin" />
               ) : (
                 <>
                   {simulationData ? (
                     <>
                       <DecimalText
-                        className="text-gray text-sm"
+                        className="text-thor-gray text-sm"
                         amount={simulationData?.simulation.amount || 0n}
                         symbol={assetFrom && gasToken(assetFrom.chain).symbol}
                         decimals={simulationData?.simulation.decimals}
@@ -121,7 +125,7 @@ export function SwapDetails() {
                       )}
                     </>
                   ) : (
-                    <span className="text-gray text-sm">n/a</span>
+                    <span className="text-thor-gray text-sm">n/a</span>
                   )}
                 </>
               )}
@@ -130,12 +134,12 @@ export function SwapDetails() {
 
           <div className="flex items-center justify-between">
             <div className="flex items-center">
-              <span className="text-gray text-sm">Liquidity Fee</span>
+              <span className="text-thor-gray text-sm">Liquidity Fee</span>
               <InfoTooltip>Fee for liquidity providers on the route</InfoTooltip>
             </div>
             <div className="flex items-center gap-1">
               <DecimalText
-                className="text-gray text-sm"
+                className="text-thor-gray text-sm"
                 amount={BigInt(quote?.fees.liquidity || 0)}
                 symbol={assetTo?.metadata.symbol}
                 subscript
@@ -157,12 +161,12 @@ export function SwapDetails() {
 
           <div className="flex items-center justify-between">
             <div className="flex items-center">
-              <span className="text-gray text-sm">Outbound Fee</span>
+              <span className="text-thor-gray text-sm">Outbound Fee</span>
               <InfoTooltip>Outbound Fee</InfoTooltip>
             </div>
             <div className="flex items-center gap-1">
               <DecimalText
-                className="text-gray text-sm"
+                className="text-thor-gray text-sm"
                 amount={BigInt(quote?.fees.outbound || 0)}
                 symbol={assetTo?.metadata.symbol}
                 subscript
@@ -184,10 +188,10 @@ export function SwapDetails() {
 
           <div className="flex items-center justify-between">
             <div className="flex items-center">
-              <span className="text-gray text-sm">Est. Time</span>
+              <span className="text-thor-gray text-sm">Est. Time</span>
             </div>
             <div className="flex items-center gap-2 text-sm font-medium text-zinc-200">
-              <Clock className="text-gray h-4 w-4" />
+              <Clock className="text-thor-gray h-4 w-4" />
 
               {quote && (
                 <span className="text-leah">
@@ -213,7 +217,7 @@ function InfoTooltip({ children }: { children: ReactNode }) {
     <TooltipProvider delayDuration={150}>
       <Tooltip>
         <TooltipTrigger asChild>
-          <Info className="text-gray ml-2 h-4 w-4" />
+          <Info className="text-thor-gray ml-2 h-4 w-4" />
         </TooltipTrigger>
         <TooltipContent side="top" className="max-w-xs text-xs">
           {children}
