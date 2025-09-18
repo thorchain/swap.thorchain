@@ -75,6 +75,15 @@ const ManageIcon = memo<IconProps>(props => (
   </SVG>
 ))
 
+const WarningIcon = memo<IconProps>(props => (
+  <SVG {...props}>
+    <path
+      d="M22 7.625V16.375L16.375 22H7.625L2 16.375V7.625L7.625 2H16.375L22 7.625ZM4 8.45312V15.5469L8.45312 20H15.5469L20 15.5469V8.45312L15.5469 4H8.45312L4 8.45312ZM13 17H11V15H13V17ZM13 13H11V7H13V13Z"
+      fill="currentColor"
+    />
+  </SVG>
+))
+
 // Icon name mapping
 const iconMap = {
   plus: PlusIcon,
@@ -82,7 +91,8 @@ const iconMap = {
   clock: ClockIcon,
   'light-mode': LightModeIcon,
   'dark-mode': DarkModeIcon,
-  manage: ManageIcon
+  manage: ManageIcon,
+  warning: WarningIcon
 } as const
 
 export type IconName = keyof typeof iconMap
