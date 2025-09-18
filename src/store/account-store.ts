@@ -1,6 +1,6 @@
 import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
-import { Account, AccountProvider, disconnect, getAccounts, isAvaialable, onChange, Provider } from '@/wallets'
+import { Account, AccountProvider, disconnect, getAccounts, isAvailable, onChange, Provider } from '@/wallets'
 import { useSwapStore } from '@/store/swap-store'
 import { toast } from 'sonner'
 
@@ -113,7 +113,7 @@ export const useAccountStore = create<AccountsState>()(
         })
       },
 
-      isAvaialable: provider => isAvaialable(provider)
+      isAvailable: provider => isAvailable(provider)
     }),
     {
       name: `thorswap-accounts-${process.env.NEXT_PUBLIC_MODE}`,

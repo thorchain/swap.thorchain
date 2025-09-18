@@ -1,81 +1,74 @@
-import { Msg } from "./msgs";
-import { Network } from "./network";
+import { Msg } from './msgs'
+import { Network } from './network'
 
 export interface AccountProvider<P> {
   /** undefined until loaded. null if loaded and not present */
-  accounts: Account<P>[] | undefined | null;
-  selected?: Account<P>;
+  accounts: Account<P>[] | undefined | null
+  selected?: Account<P>
   select: (
     account: {
-      provider: P;
-      network: Network;
-      address?: string;
+      provider: P
+      network: Network
+      address?: string
     } | null
-  ) => void;
-  connect: (provider: P) => ConnectionResponse;
-  disconnect: (provider: P) => void;
-  disconnectAll: () => void;
-  isAvaialable: (provider: P) => boolean;
-  isLoading?: boolean;
+  ) => void
+  connect: (provider: P) => ConnectionResponse
+  disconnect: (provider: P) => void
+  disconnectAll: () => void
+  isAvailable: (provider: P) => boolean
+  isLoading?: boolean
 }
 
 export interface Signer {
-  simulate?: (msg: Msg) => Promise<Simulation>;
-  signAndBroadcast?: (simulation: Simulation, msg: Msg) => Promise<TxResult>;
+  simulate?: (msg: Msg) => Promise<Simulation>
+  signAndBroadcast?: (simulation: Simulation, msg: Msg) => Promise<TxResult>
 }
 
 export interface Account<P> {
-  address: string;
-  provider: P;
-  network: Network;
+  address: string
+  provider: P
+  network: Network
 }
 
-export type ConnectionResponse = Promise<void>;
+export type ConnectionResponse = Promise<void>
 
 export type TxResult = {
-  network: Network;
-  address: string;
-  txHash: string;
+  network: Network
+  address: string
+  txHash: string
   deposited?: {
-    amount: bigint;
-    symbol: string;
-  };
-  label?: string;
-};
+    amount: bigint
+    symbol: string
+  }
+  label?: string
+}
 
 export interface Simulation {
-  symbol: string;
-  decimals: number;
-  amount: bigint;
-  gas: bigint;
+  symbol: string
+  decimals: number
+  amount: bigint
+  gas: bigint
 }
 
 export interface InboundAddress {
-  address: string;
-  dustThreshold: bigint;
-  router?: string;
-  gasRate: bigint;
+  address: string
+  dustThreshold: bigint
+  router?: string
+  gasRate: bigint
 }
 
 export interface WalletProvider<C, P> {
   /**
    * Retrieves the connected account(s) from the current provider
    */
-  getAccounts(): Promise<
-    { context: C; account: { address: string; network: Network } }[]
-  >;
+  getAccounts(): Promise<{ context: C; account: { address: string; network: Network } }[]>
   /**
    * Simulates a Rujira Network Tx for displaying gas fees etc
    * @param account The currently selected account
    * @param tx The Tx to be signed & broadcast
    * @returns Simulated gas amount
    */
-  simulate(
-    context: C,
-    account: Account<P>,
-    tx: Msg,
-    inboundAddress?: InboundAddress
-  ): Promise<Simulation>;
+  simulate(context: C, account: Account<P>, tx: Msg, inboundAddress?: InboundAddress): Promise<Simulation>
   /**
    * Signs and broadcasts the tx over the currently selected network.
    * The Rujira Network Tx is converted to a tx suitble for the currently selected network, signed and broacast
@@ -89,15 +82,15 @@ export interface WalletProvider<C, P> {
     simulation: Simulation,
     tx: Msg,
     inboundAddress?: InboundAddress
-  ): Promise<TxResult>;
+  ): Promise<TxResult>
 
   /**
    *
    * @param cb Provide a function to be called when an account change is detected in the provider
    */
-  onChange?: (cb: () => void) => void;
+  onChange?: (cb: () => void) => void
 
-  isAvailable: () => boolean;
+  isAvailable: () => boolean
 
-  disconnect?: () => void;
+  disconnect?: () => void
 }

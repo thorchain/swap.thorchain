@@ -33,13 +33,38 @@ interface WalletConnectDialogProps {
 }
 
 export const WalletConnectDialog = ({ isOpen, onOpenChange }: WalletConnectDialogProps) => {
-  const { connect, isAvaialable, accounts } = useAccounts()
+  const { connect, isAvailable, accounts } = useAccounts()
   const [connecting, setConnecting] = useState(false)
   const [selectedWallets, setSelectedWallets] = useState<Provider[]>([])
-
   const { pools } = usePools()
-  const networks: Network[] = [...new Set((pools || []).map(p => p.chain))]
+
   const connectedProviders = useMemo(() => [...new Set(accounts?.map(a => a.provider))], [accounts])
+
+  const networks = useMemo(() => {
+    return [...new Set((pools || []).map(p => p.chain))].sort((a, b) => {
+      return networkLabel(a).localeCompare(networkLabel(b))
+    })
+  }, [pools])
+
+  const wallets = useMemo(() => {
+    const sortByLabel = (a: WalletProps<Provider>, b: WalletProps<Provider>) => a.label.localeCompare(b.label)
+
+    const installed: WalletProps<Provider>[] = []
+    const others: WalletProps<Provider>[] = []
+
+    WALLETS.forEach(wallet => {
+      if (isAvailable(wallet.provider)) {
+        installed.push(wallet)
+      } else {
+        others.push(wallet)
+      }
+    })
+
+    installed.sort(sortByLabel)
+    others.sort(sortByLabel)
+
+    return [...installed, ...others]
+  }, [isAvailable])
 
   const toggleSelection = (walletKey: Provider) => {
     setSelectedWallets(prev =>
@@ -87,9 +112,9 @@ export const WalletConnectDialog = ({ isOpen, onOpenChange }: WalletConnectDialo
             <div className="text-gray mb-5 hidden text-base font-semibold md:block">Wallets</div>
             <ScrollArea className="h-full max-h-[40vh] md:max-h-[50vh]">
               <div className="space-y-1">
-                {WALLETS.map(wallet => {
+                {wallets.map(wallet => {
                   const isConnected = connectedProviders.find(w => w === wallet.provider)
-                  const isInstalled = isAvaialable(wallet.provider)
+                  const isInstalled = isAvailable(wallet.provider)
                   const isSelected = selectedWallets.includes(wallet.provider)
 
                   return (
@@ -130,7 +155,13 @@ export const WalletConnectDialog = ({ isOpen, onOpenChange }: WalletConnectDialo
 
           <div className="col-span-3 hidden md:block">
             <h3 className="text-gray mb-5 text-base font-semibold">Chains</h3>
-            <div className="grid grid-cols-2 gap-2">
+            <div
+              className="grid grid-flow-col gap-2"
+              style={{
+                gridTemplateRows: `repeat(${Math.ceil(networks.length / 2)}, minmax(0, 1fr))`,
+                gridTemplateColumns: 'repeat(2, 1fr)'
+              }}
+            >
               {networks.map(chain => {
                 const isHighlighted = isChainHighlighted(chain)
 
@@ -146,7 +177,7 @@ export const WalletConnectDialog = ({ isOpen, onOpenChange }: WalletConnectDialo
                     onClick={() => {
                       const walletsForChain = WALLETS.filter(wallet => {
                         const isConnected = connectedProviders.find(w => w === wallet.provider)
-                        const isInstalled = isAvaialable(wallet.provider)
+                        const isInstalled = isAvailable(wallet.provider)
 
                         return !isConnected && isInstalled && wallet.supportedChains.includes(chain)
                       })

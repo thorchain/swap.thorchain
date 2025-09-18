@@ -11,7 +11,7 @@ export const useAccounts = () => {
   const connect = useAccountStore(s => s.connect)
   const disconnect = useAccountStore(s => s.disconnect)
   const disconnectAll = useAccountStore(s => s.disconnectAll)
-  const isAvaialable = useAccountStore(s => s.isAvaialable)
+  const isAvailable = useAccountStore(s => s.isAvailable)
 
   return {
     accounts,
@@ -20,6 +20,6 @@ export const useAccounts = () => {
     connect,
     disconnect,
     disconnectAll,
-    isAvaialable
+    isAvailable
   }
 }

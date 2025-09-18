@@ -74,7 +74,7 @@ export const onChange = <T extends Provider>(provider: T, cb: () => void) => {
   return getWalletProvider(provider)?.onChange?.(cb)
 }
 
-export const isAvaialable = <T extends Provider>(provider: T): boolean => {
+export const isAvailable = <T extends Provider>(provider: T): boolean => {
   return getWalletProvider(provider)?.isAvailable?.() || false
 }
 

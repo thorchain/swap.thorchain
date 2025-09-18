@@ -103,7 +103,7 @@ export const networkTxLink = ({ network, txHash }: { network: Network; txHash: s
 export const networkLabel = (n: Network): string => {
   switch (n) {
     case Network.Avalanche:
-      return 'Avalanche C-Chain'
+      return 'Avalanche'
     case Network.Base:
       return 'Base'
     case Network.Bitcoin:

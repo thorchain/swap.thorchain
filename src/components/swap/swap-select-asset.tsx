@@ -56,7 +56,8 @@ export const SwapSelectAsset = ({ isOpen, onOpenChange, selected, onSelectAsset 
   const networks = useMemo(() => {
     return Array.from(chains.keys()).sort((a, b) => {
       if (a === Filter.All) return -1
-      return a.localeCompare(b)
+      if (b === Filter.All) return 1
+      return networkLabel(a).localeCompare(networkLabel(b))
     })
   }, [chains])
 
