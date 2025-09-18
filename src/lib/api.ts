@@ -14,6 +14,13 @@ const thornode = axios.create({
   }
 })
 
+const thornodeLiquify = axios.create({
+  baseURL: 'https://thornode.thorchain.liquify.com',
+  headers: {
+    'x-client-id': process.env.NEXT_PUBLIC_XCLIENT_ID
+  }
+})
+
 const coingecko = axios.create({ baseURL: 'https://api.coingecko.com/api/v3' })
 
 export const getPools = async () => {
@@ -31,7 +38,7 @@ export const getQuote = async (params: Record<string, any>) => {
 
 export const getTransaction = async (hash: string) => {
   const txId = hash.replace('0x', '').toUpperCase()
-  return thornode.get(`/thorchain/tx/status/${txId}`).then(res => res.data)
+  return thornodeLiquify.get(`/thorchain/tx/status/${txId}`).then(res => res.data)
 }
 
 export const getInboundAddresses = async () => {
