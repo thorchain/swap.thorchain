@@ -22,6 +22,8 @@ export function SwapDetails() {
   const { simulationData, isLoading: isSimulating } = useSimulation()
   const { rates } = useRates()
 
+  if (!quote) return null
+
   const _rateTo = assetTo && rates[assetTo.asset]
   const rateTo = _rateTo && new Decimal(_rateTo)
 
@@ -80,13 +82,13 @@ export function SwapDetails() {
         </div>
       </div>
 
-      {showMore && <Separator className="bg-blade" />}
+      {showMore && quote && <Separator className="bg-blade" />}
 
-      {showMore && (
+      {showMore && quote && (
         <div className="text-thor-gray space-y-4 px-4 pt-2 pb-5 text-sm font-semibold">
           <div className="flex items-center justify-between">
             <div className="flex items-center">
-              Gas Fee
+              Inbound Fee
               <InfoTooltip>Fee for sending inbound transaction</InfoTooltip>
             </div>
             <div className="flex items-center gap-2">
@@ -100,7 +102,6 @@ export function SwapDetails() {
                         amount={simulationData?.simulation.amount || 0n}
                         symbol={assetFrom && gasToken(assetFrom.chain).symbol}
                         decimals={simulationData?.simulation.decimals}
-                        subscript
                       />
 
                       {gasFeeInUsd && (
@@ -108,7 +109,7 @@ export function SwapDetails() {
                       )}
                     </>
                   ) : (
-                    <span>n/a</span>
+                    <span className="text-thor-gray">n/a</span>
                   )}
                 </>
               )}
@@ -121,7 +122,7 @@ export function SwapDetails() {
               <InfoTooltip>Fee for liquidity providers on the route</InfoTooltip>
             </div>
             <div className="flex items-center gap-2">
-              <DecimalText amount={BigInt(quote?.fees.liquidity || 0)} symbol={assetTo?.metadata.symbol} subscript />
+              {quote && <DecimalText amount={BigInt(quote.fees.liquidity || 0)} symbol={assetTo?.metadata.symbol} />}
 
               {quote && rateTo && (
                 <DecimalFiat
@@ -140,10 +141,10 @@ export function SwapDetails() {
           <div className="flex items-center justify-between">
             <div className="flex items-center">
               Outbound Fee
-              <InfoTooltip>Outbound Fee</InfoTooltip>
+              <InfoTooltip>Fee for sending outbound transaction</InfoTooltip>
             </div>
             <div className="flex items-center gap-2">
-              <DecimalText amount={BigInt(quote?.fees.outbound || 0)} symbol={assetTo?.metadata.symbol} subscript />
+              {quote && <DecimalText amount={BigInt(quote.fees.outbound || 0)} symbol={assetTo?.metadata.symbol} />}
 
               {quote && rateTo && (
                 <DecimalFiat
@@ -160,16 +161,14 @@ export function SwapDetails() {
           </div>
 
           <div className="flex items-center justify-between">
-            Est. Time
+            Estimated Time
             <div className="flex items-center gap-2">
-              <Icon name="clock" className="size-4" />
-
               {quote && (
                 <span className="text-leah">
                   {formatDuration(
                     intervalToDuration({
                       start: 0,
-                      end: (quote?.total_swap_seconds || 0) * 1000
+                      end: (quote.total_swap_seconds || 0) * 1000
                     }),
                     { format: ['hours', 'minutes', 'seconds'], zero: false }
                   )}

@@ -13,7 +13,7 @@ export const SwapBalance = () => {
     }
 
     if (balance) {
-      return <DecimalText amount={balance.spendable} symbol={assetFrom?.metadata.symbol} subscript />
+      return <DecimalText amount={balance.spendable} symbol={assetFrom?.metadata.symbol} />
     }
 
     return null

@@ -56,8 +56,8 @@ export const useQuote = (): UseQote => {
       affiliateBps: [],
       destination: destination?.address,
       streamingInterval: 1,
-      streamingQuantity: '0',
-      tolerance_bps: slippageLimit ? slippageLimit * 100 : undefined
+      streamingQuantity: 0,
+      liquidity_tolerance_bps: slippageLimit ? slippageLimit * 100 : undefined
     }),
     [amountFrom, assetFrom, assetTo, destination, slippageLimit]
   )
@@ -80,7 +80,7 @@ export const useQuote = (): UseQote => {
         destination: params.destination,
         streaming_interval: params.streamingInterval,
         streaming_quantity: params.streamingQuantity,
-        tolerance_bps: params.tolerance_bps
+        liquidity_tolerance_bps: params.liquidity_tolerance_bps
       }),
     enabled: !!(params.amount && params.fromAsset && params.toAsset),
     retry: false
@@ -94,7 +94,7 @@ export const useQuote = (): UseQote => {
   return {
     isLoading: isLoading || isRefetching,
     refetch,
-    quote,
+    quote: isLoading || isRefetching || error ? undefined : quote,
     error: newError
   }
 }

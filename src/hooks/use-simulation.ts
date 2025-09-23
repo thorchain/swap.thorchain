@@ -4,6 +4,7 @@ import { InboundAddress, MsgSwap, Network, Simulation } from 'rujira.js'
 import { useQuote } from '@/hooks/use-quote'
 import { getSelectedContext, useAccounts } from '@/hooks/use-accounts'
 import { simulate } from '@/wallets'
+import { useBalance } from '@/hooks/use-balance'
 
 type SimulationData = {
   simulation: Simulation
@@ -22,6 +23,7 @@ export const useSimulation = (): UseSimulation => {
   const { amountFrom } = useSwap()
   const { quote } = useQuote()
   const assetFrom = useAssetFrom()
+  const { balance } = useBalance()
 
   const {
     data: simulationData,
@@ -30,7 +32,7 @@ export const useSimulation = (): UseSimulation => {
   } = useQuery({
     queryKey: ['simulation', quote],
     queryFn: async () => {
-      if (!quote || !quote.memo || !selected || !assetFrom || amountFrom == 0n) {
+      if (!quote || !quote.memo || !selected || !assetFrom) {
         return null
       }
 
@@ -60,7 +62,14 @@ export const useSimulation = (): UseSimulation => {
 
       return { simulation: simulation, inboundAddress, msg }
     },
-    enabled: !!(selected && quote && assetFrom && amountFrom > 0n),
+    enabled: !!(
+      selected &&
+      quote &&
+      assetFrom &&
+      amountFrom > 0n &&
+      balance?.spendable &&
+      balance.spendable >= amountFrom
+    ),
     retry: false
   })
 

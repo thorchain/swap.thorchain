@@ -36,13 +36,6 @@ export const SwapButton = ({ onSwap }: SwapButtonProps) => {
   const getState = (): ButtonState => {
     if (!assetFrom || !assetTo) return { text: '', spinner: true, accent: false }
     if (!amountFrom) return { text: 'Enter Amount', spinner: false, accent: false }
-    if (!isBalanceLoading && balance?.amount && balance.amount < amountFrom) {
-      return {
-        text: 'Insufficient balance',
-        spinner: false,
-        accent: false
-      }
-    }
     if (isQuoting || isSimulating) return { text: 'Quoting...', spinner: true, accent: false }
     if (!selected)
       return {
@@ -58,6 +51,13 @@ export const SwapButton = ({ onSwap }: SwapButtonProps) => {
         accent: false,
         onClick: () => openDialog(WalletConnectDialog, {})
       }
+    if (!isBalanceLoading && balance && balance.spendable < amountFrom) {
+      return {
+        text: 'Insufficient Balance',
+        spinner: false,
+        accent: false
+      }
+    }
     if (simulationError instanceof InsufficientAllowanceError) {
       return {
         text: `Approve ${assetFrom.metadata.symbol}`,
@@ -97,7 +97,7 @@ export const SwapButton = ({ onSwap }: SwapButtonProps) => {
   return (
     <ThemeButton
       variant={state.accent ? 'primaryMedium' : 'secondaryMedium'}
-      className="w-full"
+      className="mt-3 w-full"
       onClick={state.onClick}
       disabled={!state.onClick}
     >
