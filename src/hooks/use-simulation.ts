@@ -45,8 +45,8 @@ export const useSimulation = (): UseSimulation => {
         selected.network === Network.Thorchain
           ? {
               address: process.env.NEXT_PUBLIC_THORCHAIN_MODULE_ADDRESS || '',
-              dustThreshold: BigInt('0'),
-              gasRate: BigInt('0'),
+              dustThreshold: 0n,
+              gasRate: 0n,
               router: undefined
             }
           : {
