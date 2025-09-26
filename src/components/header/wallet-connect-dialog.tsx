@@ -36,6 +36,7 @@ export const WalletConnectDialog = ({ isOpen, onOpenChange }: WalletConnectDialo
   const { connect, isAvailable, accounts } = useAccounts()
   const [connecting, setConnecting] = useState(false)
   const [selectedWallets, setSelectedWallets] = useState<Provider[]>([])
+  const [selectedNetworks, setSelectedNetworks] = useState<Network[]>([])
   const { pools } = usePools()
 
   const connectedProviders = useMemo(() => [...new Set(accounts?.map(a => a.provider))], [accounts])
@@ -66,10 +67,14 @@ export const WalletConnectDialog = ({ isOpen, onOpenChange }: WalletConnectDialo
     return [...installed, ...others]
   }, [isAvailable])
 
-  const toggleSelection = (walletKey: Provider) => {
+  const toggleWalletSelection = (provider: Provider) => {
     setSelectedWallets(prev =>
-      prev.includes(walletKey) ? prev.filter(key => key !== walletKey) : [...prev, walletKey]
+      prev.includes(provider) ? prev.filter(p => p !== provider) : [...prev, provider]
     )
+  }
+
+  const toggleNetworkSelection = (network: Network) => {
+    setSelectedNetworks(prev => (prev.includes(network) ? prev.filter(net => net !== network) : [...prev, network]))
   }
 
   const getSelectedWalletsChains = () => {
@@ -77,8 +82,20 @@ export const WalletConnectDialog = ({ isOpen, onOpenChange }: WalletConnectDialo
     return WALLETS.filter(wallet => selectedWallets.includes(wallet.provider)).flatMap(wallet => wallet.supportedChains)
   }
 
-  const isChainHighlighted = (chain: Network) => {
-    return selectedWallets.length > 0 && getSelectedWalletsChains().includes(chain)
+  const isNetworkHighlighted = (network: Network) => {
+    // Highlight if network is selected OR if any selected wallet supports it
+    return (
+      selectedNetworks.includes(network) || (selectedWallets.length > 0 && getSelectedWalletsChains().includes(network))
+    )
+  }
+
+  const isWalletHighlighted = (walletProvider: Provider) => {
+    // Highlight if wallet is selected OR if any selected network is supported by this wallet
+    const wallet = WALLETS.find(w => w.provider === walletProvider)
+    return (
+      selectedWallets.includes(walletProvider) ||
+      (selectedNetworks.length > 0 && wallet && wallet.supportedChains.some(chain => selectedNetworks.includes(chain)))
+    )
   }
 
   const handleConnect = async () => {
@@ -93,6 +110,7 @@ export const WalletConnectDialog = ({ isOpen, onOpenChange }: WalletConnectDialo
       })
       .finally(() => {
         setSelectedWallets([])
+        setSelectedNetworks([])
         setConnecting(false)
       })
   }
@@ -116,17 +134,19 @@ export const WalletConnectDialog = ({ isOpen, onOpenChange }: WalletConnectDialo
                   const isConnected = connectedProviders.find(w => w === wallet.provider)
                   const isInstalled = isAvailable(wallet.provider)
                   const isSelected = selectedWallets.includes(wallet.provider)
+                  const isHighlighted = isWalletHighlighted(wallet.provider)
 
                   return (
                     <div
                       key={wallet.key}
                       className={cn('mr-10 flex items-center space-x-3 rounded-lg border-1 border-transparent p-3', {
-                        'border-runes-blue': isSelected,
+                        'border-runes-blue bg-blade': isSelected,
+                        'opacity-25': selectedNetworks.length > 0 && !isHighlighted,
                         'hover:bg-blade cursor-pointer': isInstalled && !isConnected
                       })}
                       onClick={() => {
                         if (isConnected || !isInstalled) return
-                        toggleSelection(wallet.provider)
+                        toggleWalletSelection(wallet.provider)
                       }}
                     >
                       <Image src={`/wallets/${wallet.key}.svg`} alt="" width="32" height="32" />
@@ -162,33 +182,24 @@ export const WalletConnectDialog = ({ isOpen, onOpenChange }: WalletConnectDialo
                 gridTemplateColumns: 'repeat(2, 1fr)'
               }}
             >
-              {networks.map(chain => {
-                const isHighlighted = isChainHighlighted(chain)
+              {networks.map(network => {
+                const isSelected = selectedNetworks.includes(network)
+                const isHighlighted = isNetworkHighlighted(network)
 
                 return (
                   <div
-                    key={chain}
+                    key={network}
                     className={cn(
                       'hover:bg-blade flex cursor-pointer items-center gap-3 rounded-lg border-1 border-transparent px-4 py-3',
                       {
-                        'opacity-25': selectedWallets.length && !isHighlighted
+                        'bg-blade': isSelected || isHighlighted,
+                        'opacity-25': (selectedWallets.length > 0 || selectedNetworks.length > 0) && !isHighlighted
                       }
                     )}
-                    onClick={() => {
-                      const walletsForChain = WALLETS.filter(wallet => {
-                        const isConnected = connectedProviders.find(w => w === wallet.provider)
-                        const isInstalled = isAvailable(wallet.provider)
-
-                        return !isConnected && isInstalled && wallet.supportedChains.includes(chain)
-                      })
-
-                      if (walletsForChain.length) {
-                        setSelectedWallets(walletsForChain.map(w => w.provider))
-                      }
-                    }}
+                    onClick={() => toggleNetworkSelection(network)}
                   >
-                    <Image src={`/networks/${chain.toLowerCase()}.svg`} alt={chain} width="24" height="24" />
-                    <div className="text-sm">{networkLabel(chain)}</div>
+                    <Image src={`/networks/${network.toLowerCase()}.svg`} alt={network} width="24" height="24" />
+                    <div className="text-sm">{networkLabel(network)}</div>
                   </div>
                 )
               })}
