@@ -90,8 +90,8 @@ export const SwapSelectAsset = ({ isOpen, onOpenChange, selected, onSelectAsset 
           <CredenzaTitle>Select coin</CredenzaTitle>
         </CredenzaHeader>
 
-        <div className="flex flex-1 flex-col overflow-hidden border-b md:flex-row md:border-r md:border-b-0">
-          <ScrollArea className="md:mr-8 md:w-2/5 md:pl-8">
+        <div className="flex flex-1 flex-col overflow-hidden md:flex-row">
+          <ScrollArea className="border-b md:mr-8 md:w-2/5 md:border-r md:border-b-0 md:pl-8">
             <div className="mx-4 mb-4 flex w-max gap-2 md:mx-0 md:mb-8 md:block md:w-full">
               {networks.map((network, index) => (
                 <div
