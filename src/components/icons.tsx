@@ -151,6 +151,28 @@ const WalletInIcon = memo<IconProps>(props => (
   </SVG>
 ))
 
+const UnstoppableIcon = memo<IconProps>(props => (
+  <SVG {...props}>
+    <path
+      d="M16.7998 0.00195312C19.1719 0.00380117 20.4151 0.0324068 21.3789 0.523438C22.2821 0.98363 23.0164 1.71792 23.4766 2.62109C23.9997 3.64782 24 4.99172 24 7.67969V16.3203C24 19.0083 23.9997 20.3522 23.4766 21.3789C23.0164 22.2821 22.2821 23.0164 21.3789 23.4766C20.3522 23.9997 19.0083 24 16.3203 24H7.67969C4.99172 24 3.64782 23.9997 2.62109 23.4766C1.71792 23.0164 0.98363 22.2821 0.523438 21.3789C0.000334382 20.3522 7.85824e-10 19.0083 0 16.3203V7.67969C7.83777e-10 4.99172 0.000334024 3.64782 0.523438 2.62109C0.98363 1.71792 1.71792 0.98363 2.62109 0.523438C3.58487 0.0324065 4.8281 0.00380118 7.2002 0.00195312V12C7.2002 14.6509 9.34912 16.7997 12 16.7998C14.651 16.7998 16.7998 14.651 16.7998 12V0.00195312Z"
+      fill="currentColor"
+    />
+    <path
+      d="M12.7998 0V12C12.7998 12.4418 12.4418 12.7998 12 12.7998C11.5583 12.7997 11.2002 12.4418 11.2002 12V0H12.7998Z"
+      fill="currentColor"
+    />
+  </SVG>
+))
+
+const XIcon = memo<IconProps>(props => (
+  <SVG {...props}>
+    <path
+      d="M18.9617 1H22.6405L14.5631 10.3358L24 23H16.5945L10.7964 15.3041L4.15861 23H0.47984L9.03699 13.0148L0 1H7.58947L12.8277 8.03026L18.9617 1ZM17.6741 20.8081H19.7134L6.51783 3.1107H4.32656L17.6741 20.8081Z"
+      fill="currentColor"
+    />
+  </SVG>
+))
+
 // Icon name mapping
 const iconMap = {
   plus: PlusIcon,
@@ -167,7 +189,9 @@ const iconMap = {
   'arrow-m-down': ArrowMDownIcon,
   info: InfoIcon,
   'wallet-out': WalletOutIcon,
-  'wallet-in': WalletInIcon
+  'wallet-in': WalletInIcon,
+  unstoppable: UnstoppableIcon,
+  x: XIcon
 } as const
 
 export type IconName = keyof typeof iconMap
