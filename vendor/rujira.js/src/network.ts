@@ -15,6 +15,7 @@ export enum Network {
   Litecoin = 'LTC',
   Noble = 'NOBLE',
   Osmo = 'OSMO',
+  Solana = 'SOL',
   Thorchain = 'THOR',
   Xrp = 'XRP',
   Terra = 'TERRA',
@@ -48,6 +49,8 @@ export const gasToken = (n: Network): { symbol: string; decimals: number } => {
       return { symbol: 'USDC', decimals: 6 }
     case Network.Osmo:
       return { symbol: 'OSMO', decimals: 6 }
+    case Network.Solana:
+      return { symbol: 'SOL', decimals: 9 }
     case Network.Thorchain:
       return { symbol: 'RUNE', decimals: 8 }
     case Network.Terra:
@@ -87,6 +90,8 @@ export const networkTxLink = ({ network, txHash }: { network: Network; txHash: s
       return `https://www.mintscan.io/noble/tx/${txHash}`
     case Network.Osmo:
       return `https://www.mintscan.io/osmosis/tx/${txHash}`
+    case Network.Solana:
+      return `https://solscan.io/tx/${txHash}`
     case Network.Thorchain:
       return `https://thorchain.net/tx/${txHash}`
     case Network.Xrp:
@@ -126,6 +131,8 @@ export const networkLabel = (n: Network): string => {
       return 'Noble'
     case Network.Osmo:
       return 'Osmosis'
+    case Network.Solana:
+      return 'Solana'
     case Network.Thorchain:
       return 'THORChain'
     case Network.Xrp:
@@ -182,6 +189,8 @@ export const networkConfirmationTime = (n: Network): number => {
       return 6 + networkConfirmationTime(Network.Thorchain)
     case Network.Osmo:
       return 6 + networkConfirmationTime(Network.Thorchain)
+    case Network.Solana:
+      return 1 + networkConfirmationTime(Network.Thorchain)
     case Network.Xrp:
       return 6 + networkConfirmationTime(Network.Thorchain)
     case Network.Thorchain:
@@ -216,6 +225,8 @@ export const validateAddress = (n: Network, str: string): boolean => {
         return fromBech32(str).prefix === 'noble'
       case Network.Osmo:
         return fromBech32(str).prefix === 'osmo'
+      case Network.Solana:
+        return str.length >= 32 && str.length <= 44 && !!decodeBase58(str)
       case Network.Thorchain:
         return fromBech32(str).prefix === 'thor'
       case Network.Terra:
