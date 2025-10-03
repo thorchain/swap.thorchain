@@ -10,7 +10,9 @@ export function Footer() {
           <div className="text-thor-gray flex items-center gap-1 text-xs">
             <span>Built by</span>
             <Icon name="unstoppable" className="size-3" />
-            <span>Unstoppable Wallet</span>
+            <a className="underline" href="https://x.com/unstoppablebyhs" rel="noopener noreferrer" target="_blank">
+              Unstoppable Wallet
+            </a>
           </div>
 
           <div
