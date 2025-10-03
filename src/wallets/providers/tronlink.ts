@@ -31,7 +31,7 @@ class Tronlink implements WalletProvider<TronlinkContext> {
     const t = this.tron()
     if (!t) throw new Error(`TronLink not found`)
     await t.request({ method: 'tron_requestAccounts' })
-    if (!t.tronWeb.defaultAddress.base58) throw new Error(`No account found on TronLink`)
+    if (!t.tronWeb || !t.tronWeb.defaultAddress.base58) throw new Error(`No account found on TronLink`)
 
     return [
       {
