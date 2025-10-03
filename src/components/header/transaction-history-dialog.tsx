@@ -225,7 +225,7 @@ export const TransactionHistoryDialog = ({ isOpen, onOpenChange }: HistoryDialog
                                 window.open(`https://thorchain.net/tx/${tx.hash}`, '_blank')
                               }}
                             >
-                              <Globe size={16} /> THORCHain.net
+                              <Globe size={16} /> THORChain.net
                             </ThemeButton>
                           </div>
                         </>
