@@ -47,14 +47,7 @@ export function SwapDetails() {
       <div className="cursor-pointer p-4" onClick={() => setShowMore(!showMore)}>
         <div className="flex justify-between">
           <div className="text-thor-gray flex items-center gap-1 text-sm font-semibold">
-            {price ? (
-              <>
-                <span>1 {assetFrom?.metadata.symbol} = </span>
-                <DecimalText amount={price} symbol={assetTo?.metadata.symbol} decimals={12} />
-              </>
-            ) : (
-              <span>Price</span>
-            )}
+            <span>Total Fee</span>
           </div>
 
           <div className="text-thor-gray flex items-center gap-2 text-sm font-semibold">
@@ -86,6 +79,18 @@ export function SwapDetails() {
 
       {showMore && quote && (
         <div className="text-thor-gray space-y-4 px-4 pt-2 pb-5 text-sm font-semibold">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center">Price</div>
+            <div className="flex items-center gap-1">
+              {price ? (
+                <>
+                  <span>1 {assetFrom?.metadata.symbol} =</span>
+                  <DecimalText amount={price} symbol={assetTo?.metadata.symbol} decimals={12} />
+                </>
+              ) : null}
+            </div>
+          </div>
+
           <div className="flex items-center justify-between">
             <div className="flex items-center">
               Inbound Fee
