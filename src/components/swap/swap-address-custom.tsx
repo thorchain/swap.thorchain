@@ -50,7 +50,7 @@ export const SwapAddressCustom = ({ isOpen, onOpenChange }: SwapAddressProps) =>
             value={address}
             onChange={e => setAddress(e.target.value)}
             className={cn(
-              'text-leah placeholder:text-andy border-blade focus-visible:border-blade rounded-xl border-1 px-4 py-4 focus:ring-0 focus-visible:ring-0 md:text-base',
+              'text-leah placeholder:text-andy border-blade focus-visible:border-blade rounded-xl border-1 p-4 focus:ring-0 focus-visible:ring-0 md:text-base',
               {
                 'border-lucian focus-visible:border-lucian': !isValid
               }

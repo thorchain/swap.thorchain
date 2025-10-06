@@ -13,7 +13,7 @@ import { useAssetTo, useDestination, useSetDestination } from '@/hooks/use-swap'
 import { useAccounts } from '@/hooks/use-accounts'
 import { useDialog } from '@/components/global-dialog'
 import { cn, truncate } from '@/lib/utils'
-import { WalletConnectDialog } from '@/components/header/wallet-connect-dialog'
+import { ConnectWallet } from '@/components/connect-wallet/connect-wallet'
 import { Icon } from '@/components/icons'
 
 export const SwapAddressTo = () => {
@@ -89,7 +89,7 @@ export const SwapAddressTo = () => {
 
           <DropdownMenuItem
             className="focus:bg-blade flex cursor-pointer rounded-none p-4"
-            onClick={() => openDialog(WalletConnectDialog, {})}
+            onClick={() => openDialog(ConnectWallet, {})}
           >
             <div className="flex items-center gap-4">
               <Icon name="plus" className="text-storm-purple size-6" />

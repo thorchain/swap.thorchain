@@ -4,7 +4,7 @@ import { useAssetFrom, useAssetTo, useSwap } from '@/hooks/use-swap'
 import { getSelectedContext, useAccounts } from '@/hooks/use-accounts'
 import { useQuote } from '@/hooks/use-quote'
 import { useSimulation } from '@/hooks/use-simulation'
-import { WalletConnectDialog } from '@/components/header/wallet-connect-dialog'
+import { ConnectWallet } from '@/components/connect-wallet/connect-wallet'
 import { ThemeButton } from '@/components/theme-button'
 import { signAndBroadcast, simulate } from '@/wallets'
 import { useBalance } from '@/hooks/use-balance'
@@ -42,14 +42,14 @@ export const SwapButton = ({ onSwap }: SwapButtonProps) => {
         text: `Connect ${networkLabel(assetFrom.chain)} Wallet`,
         spinner: false,
         accent: false,
-        onClick: () => openDialog(WalletConnectDialog, {})
+        onClick: () => openDialog(ConnectWallet, {})
       }
     if (!destination)
       return {
         text: `Connect ${networkLabel(assetTo.chain)} Wallet`,
         spinner: false,
         accent: false,
-        onClick: () => openDialog(WalletConnectDialog, {})
+        onClick: () => openDialog(ConnectWallet, {})
       }
     if (!isBalanceLoading && balance && balance.spendable < amountFrom) {
       return {
