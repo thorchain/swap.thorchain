@@ -3,7 +3,7 @@ import { useMemo, useState } from 'react'
 import { Credenza, CredenzaContent, CredenzaHeader, CredenzaTitle } from '@/components/ui/credenza'
 import { ScrollArea, ScrollBar } from '@/components/ui/scroll-area'
 import { Search } from 'lucide-react'
-import { Network, networkLabel } from 'rujira.js'
+import { Chain, getChainConfig } from '@swapkit/helpers'
 import { Asset } from '@/components/swap/asset'
 import { Input } from '@/components/ui/input'
 import { useIsMobile } from '@/hooks/use-mobile'
@@ -22,7 +22,7 @@ enum Filter {
   All = 'All'
 }
 
-type FilterNetwork = Network | Filter
+type FilterNetwork = Chain | Filter
 
 export const SwapSelectAsset = ({ isOpen, onOpenChange, selected, onSelectAsset }: SwapSelectAssetProps) => {
   const isMobile = useIsMobile()
@@ -57,7 +57,7 @@ export const SwapSelectAsset = ({ isOpen, onOpenChange, selected, onSelectAsset 
     return Array.from(chains.keys()).sort((a, b) => {
       if (a === Filter.All) return -1
       if (b === Filter.All) return 1
-      return networkLabel(a).localeCompare(networkLabel(b))
+      return getChainConfig(a).name.localeCompare(getChainConfig(b).name)
     })
   }, [chains])
 
@@ -113,7 +113,7 @@ export const SwapSelectAsset = ({ isOpen, onOpenChange, selected, onSelectAsset 
                     />
                   </div>
                   <span className="text-leah text-sm">
-                    {network === Filter.All ? 'All Networks' : networkLabel(network as Network)}
+                    {network === Filter.All ? 'All Networks' : getChainConfig(network).name}
                   </span>
                 </div>
               ))}
@@ -145,7 +145,7 @@ export const SwapSelectAsset = ({ isOpen, onOpenChange, selected, onSelectAsset 
                         <AssetIcon asset={item} />
                         <div className="text-left">
                           <div className="text-leah font-semibold">{item.metadata.symbol}</div>
-                          <div className="text-thor-gray text-sm">{networkLabel(item.chain)}</div>
+                          <div className="text-thor-gray text-sm">{getChainConfig(item.chain).name}</div>
                         </div>
                       </div>
                       {item.asset === selected?.asset && (

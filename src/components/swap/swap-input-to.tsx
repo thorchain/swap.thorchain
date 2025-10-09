@@ -3,29 +3,23 @@ import { SwapSelectAsset } from '@/components/swap/swap-select-asset'
 import { DecimalInput } from '@/components/decimal/decimal-input'
 import { AssetIcon } from '@/components/asset-icon'
 import { Skeleton } from '@/components/ui/skeleton'
-import { networkLabel } from 'rujira.js'
+import { getChainConfig } from '@swapkit/helpers'
 import { DecimalFiat } from '@/components/decimal/decimal-fiat'
-import { Quote } from '@/hooks/use-quote'
+import { useQuote } from '@/hooks/use-quote'
 import { useAssetTo, useSetAssetTo } from '@/hooks/use-swap'
 import { useDialog } from '@/components/global-dialog'
 import { useRate } from '@/hooks/use-rates'
 import { Icon } from '@/components/icons'
 
-interface SwapInputProps {
-  quote?: Quote
-}
-
-export const SwapInputTo = ({ quote }: SwapInputProps) => {
+export const SwapInputTo = () => {
   const assetTo = useAssetTo()
   const setAssetTo = useSetAssetTo()
+  const { quote } = useQuote()
   const { openDialog } = useDialog()
   const { rate: toAssetRate } = useRate(assetTo?.asset)
 
-  const amount = assetTo ? BigInt(quote?.expected_amount_out || 0) : 0n
-  const valueTo = new Decimal(amount)
-    .div(10 ** 8)
-    .mul(toAssetRate || 1)
-    .toString()
+  const amount = new Decimal(quote?.expectedBuyAmount || 0)
+  const valueTo = amount.mul(toAssetRate || 1)
 
   const onClick = () =>
     openDialog(SwapSelectAsset, {
@@ -41,13 +35,13 @@ export const SwapInputTo = ({ quote }: SwapInputProps) => {
         <div className="flex-1">
           <DecimalInput
             className="text-leah w-full bg-transparent text-2xl font-medium outline-none"
-            amount={amount}
+            amount={assetTo ? BigInt(amount.mul(10 ** 8).floor().toString()) : 0n}
             onAmountChange={() => null}
             autoComplete="off"
             disabled
           />
           <div className="text-thor-gray mt-1 text-sm">
-            <DecimalFiat amount={valueTo} />
+            <DecimalFiat amount={valueTo.toString()} />
           </div>
         </div>
         <div className="flex cursor-pointer items-center gap-2" onClick={onClick}>
@@ -57,7 +51,7 @@ export const SwapInputTo = ({ quote }: SwapInputProps) => {
               {assetTo ? assetTo.metadata.symbol : <Skeleton className="mb-0.5 h-6 w-12" />}
             </span>
             <span className="text-thor-gray inline-block w-full truncate text-xs">
-              {assetTo?.chain ? networkLabel(assetTo.chain) : <Skeleton className="mt-0.5 h-3 w-16" />}
+              {assetTo?.chain ? getChainConfig(assetTo.chain).name : <Skeleton className="mt-0.5 h-3 w-16" />}
             </span>
           </div>
           <Icon name="arrow-s-down" className="text-thor-gray size-5" />

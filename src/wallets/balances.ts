@@ -1,19 +1,19 @@
 import axios from 'axios'
 import { ethers } from 'ethers'
-import { Network } from 'rujira.js'
+import { Chain } from '@swapkit/helpers'
 
 export class BalanceFetcher {
   static async fetch(asset: string, address: string): Promise<bigint> {
     const [chain, symbol] = asset.split('.')
     const [, id] = symbol.split('-')
 
-    const network = chain as Network
+    const network = chain as Chain
 
     switch (network) {
-      case Network.Ethereum:
-      case Network.Bsc:
-      case Network.Avalanche:
-      case Network.Base: {
+      case Chain.Ethereum:
+      case Chain.BinanceSmartChain:
+      case Chain.Avalanche:
+      case Chain.Base: {
         const url = evmRpcUrls[network]
         const provider = new ethers.JsonRpcProvider(url)
 
@@ -23,25 +23,25 @@ export class BalanceFetcher {
           return this.fetchEvmBalance(provider, address)
         }
       }
-      case Network.Bitcoin: {
+      case Chain.Bitcoin: {
         const res = await axios.get(`https://blockchain.info/balance?active=${address}`)
         return BigInt(res.data[address].final_balance)
       }
-      case Network.Litecoin:
+      case Chain.Litecoin:
         return this.fetchBlockchairBalance('litecoin', address)
 
-      case Network.Dogecoin:
+      case Chain.Dogecoin:
         return this.fetchBlockchairBalance('dogecoin', address)
 
-      case Network.BitcoinCash:
+      case Chain.BitcoinCash:
         return this.fetchBlockchairBalance('bitcoin-cash', address)
 
-      case Network.Xrp: {
+      case Chain.Ripple: {
         const res = await axios.get(`https://api.xrpscan.com/api/v1/account/${address}`)
         return BigInt(res.data.Balance) * 10n ** 2n
       }
-      case Network.Gaia:
-      case Network.Thorchain: {
+      case Chain.Cosmos:
+      case Chain.THORChain: {
         const res = await axios.get(`https://thornode.ninerealms.com/bank/balances/${address}`)
         const amount = res.data.result.find((i: any) => i.denom.toUpperCase() === symbol)?.amount
         return amount ? BigInt(amount) : 0n
@@ -78,9 +78,9 @@ export class BalanceFetcher {
   }
 }
 
-const evmRpcUrls: Partial<Record<Network, string>> = {
-  [Network.Ethereum]: `https://mainnet.infura.io/v3/${process.env.NEXT_PUBLIC_INFURA_PROJECT_ID}`,
-  [Network.Bsc]: 'https://bsc-dataseed.binance.org',
-  [Network.Avalanche]: 'https://api.avax.network/ext/bc/C/rpc',
-  [Network.Base]: 'https://mainnet.base.org'
+const evmRpcUrls: Partial<Record<Chain, string>> = {
+  [Chain.Ethereum]: `https://mainnet.infura.io/v3/${process.env.NEXT_PUBLIC_INFURA_PROJECT_ID}`,
+  [Chain.BinanceSmartChain]: 'https://bsc-dataseed.binance.org',
+  [Chain.Avalanche]: 'https://api.avax.network/ext/bc/C/rpc',
+  [Chain.Base]: 'https://mainnet.base.org'
 }

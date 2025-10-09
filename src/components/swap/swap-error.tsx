@@ -1,4 +1,4 @@
-import { InsufficientAllowanceError, translateError } from 'rujira.js'
+import { InsufficientAllowanceError, translateError } from '@/lib/errors'
 import { Icon } from '@/components/icons'
 
 export const SwapError = ({ error }: { error: Error | null }) => {

@@ -1,5 +1,5 @@
 import Decimal from 'decimal.js'
-import { networkLabel } from 'rujira.js'
+import { getChainConfig } from '@swapkit/helpers'
 import { DecimalInput } from '@/components/decimal/decimal-input'
 import { DecimalFiat } from '@/components/decimal/decimal-fiat'
 import { SwapSelectAsset } from '@/components/swap/swap-select-asset'
@@ -61,7 +61,7 @@ export const SwapInputFrom = () => {
               {assetFrom ? assetFrom.metadata.symbol : <Skeleton className="mb-0.5 h-6 w-12" />}
             </span>
             <span className="text-thor-gray inline-block w-full truncate text-xs">
-              {assetFrom?.chain ? networkLabel(assetFrom.chain) : <Skeleton className="mt-0.5 h-3 w-16" />}
+              {assetFrom?.chain ? getChainConfig(assetFrom.chain).name : <Skeleton className="mt-0.5 h-3 w-16" />}
             </span>
           </div>
           <Icon name="arrow-s-down" className="text-thor-gray size-5" />

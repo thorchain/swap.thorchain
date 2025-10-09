@@ -14,6 +14,13 @@ const thornode = axios.create({
   }
 })
 
+const swapkit = axios.create({
+  baseURL: 'https://api.swapkit.dev',
+  headers: {
+    'X-Version': 3
+  }
+})
+
 const coingecko = axios.create({ baseURL: 'https://api.coingecko.com/api/v3' })
 
 export const getPools = async () => {
@@ -27,6 +34,15 @@ export const getPoolsRates = async (assets: string) => {
 export const getQuote = async (params: Record<string, any>) => {
   const qs = new URLSearchParams(Object.entries(params).filter(i => i[1]))
   return thornode.get(`/thorchain/quote/swap?${qs.toString()}`).then(res => res.data)
+}
+
+export const getSwapkitQuote = async (data: Record<string, any>) => {
+  return swapkit
+    .post('/quote', data)
+    .then(res => res.data)
+    .then(data => {
+      return (data.routes || [])[0] || null
+    })
 }
 
 export const getTransaction = async (hash: string) => {

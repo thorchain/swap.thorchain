@@ -1,49 +1,22 @@
+import Decimal from 'decimal.js'
 import { useMemo } from 'react'
 import { AxiosError } from 'axios'
 import { RefetchOptions, useQuery } from '@tanstack/react-query'
-import { getQuote } from '@/lib/api'
+import { getSwapkitQuote } from '@/lib/api'
 import { useAssetFrom, useAssetTo, useSwap } from '@/hooks/use-swap'
-
-export interface Quote {
-  dust_threshold: string
-  expected_amount_out: string
-  expiry: number
-  fees: {
-    asset: string
-    affiliate: string
-    outbound: string
-    liquidity: string
-    total: string
-    slippage_bps: number
-    total_bps: number
-  }
-  gas_rate_units: string
-  inbound_address: string
-  inbound_confirmation_blocks: number
-  inbound_confirmation_seconds: number
-  max_streaming_quantity: number
-  memo: string
-  notes: string
-  outbound_delay_blocks: number
-  outbound_delay_seconds: number
-  recommended_gas_rate: string
-  recommended_min_amount_in: string
-  router?: string
-  streaming_swap_blocks: number
-  streaming_swap_seconds: number
-  total_swap_seconds: number
-  warning: string
-}
+import { useAccounts } from '@/hooks/use-wallets'
+import { QuoteResponseRoute } from '@swapkit/api'
 
 type UseQote = {
   isLoading: boolean
   refetch: (options?: RefetchOptions) => void
-  quote?: Quote
+  quote?: QuoteResponseRoute
   error: Error | null
 }
 
 export const useQuote = (): UseQote => {
   const { amountFrom, destination, slippage } = useSwap()
+  const { selected } = useAccounts()
   const assetFrom = useAssetFrom()
   const assetTo = useAssetTo()
 
@@ -54,12 +27,13 @@ export const useQuote = (): UseQote => {
       toAsset: assetTo?.asset,
       affiliate: ['sto'],
       affiliateBps: [0],
+      sourceAddress: selected?.address,
       destination: destination?.address,
       streamingInterval: 1,
       streamingQuantity: 0,
       liquidity_tolerance_bps: slippage ? slippage * 100 : undefined
     }),
-    [amountFrom, assetFrom, assetTo, destination, slippage]
+    [amountFrom, assetFrom?.asset, assetTo?.asset, destination?.address, selected?.address, slippage]
   )
 
   const {
@@ -70,25 +44,31 @@ export const useQuote = (): UseQote => {
     error
   } = useQuery({
     queryKey: ['quote', params],
-    queryFn: () =>
-      getQuote({
-        amount: params.amount,
-        from_asset: params.fromAsset,
-        to_asset: params.toAsset,
-        affiliate: params.affiliate,
-        affiliate_bps: params.affiliateBps,
-        destination: params.destination,
-        streaming_interval: params.streamingInterval,
-        streaming_quantity: params.streamingQuantity,
-        liquidity_tolerance_bps: params.liquidity_tolerance_bps
-      }),
+    queryFn: () => {
+      return getSwapkitQuote({
+        buyAsset: params.toAsset,
+        destinationAddress: params.destination,
+        sellAmount: new Decimal(params.amount || '0').div(10 ** 8).toString(),
+        sellAsset: params.fromAsset,
+        affiliate: 'sto',
+        affiliateFee: 0,
+        sourceAddress: params.sourceAddress,
+        includeTx: !!(params.destination && selected?.address),
+        slippage: slippage
+      })
+    },
     enabled: !!(params.amount && params.fromAsset && params.toAsset),
     retry: false
   })
 
   let newError = error
   if (error instanceof AxiosError) {
-    newError = new Error(error.response?.data?.message || error.message)
+    const errors = error.response?.data?.providerErrors
+    if (errors && errors[0]?.message) {
+      newError = new Error(errors[0]?.message)
+    } else {
+      newError = new Error(error.response?.data?.message || error.message)
+    }
   }
 
   return {

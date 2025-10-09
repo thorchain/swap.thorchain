@@ -6,7 +6,7 @@ import {
   DropdownMenuLabel,
   DropdownMenuTrigger
 } from '@/components/ui/dropdown-menu'
-import { useAccounts } from '@/hooks/use-accounts'
+import { useAccounts } from '@/hooks/use-wallets'
 import { cn, truncate } from '@/lib/utils'
 import { useAssetFrom } from '@/hooks/use-swap'
 import { WalletConnectDialog } from '@/components/header/wallet-connect-dialog'

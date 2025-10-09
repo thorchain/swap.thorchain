@@ -1,7 +1,6 @@
 import { useEffect } from 'react'
 import { usePools } from '@/hooks/use-pools'
 import { useSwapStore } from '@/store/swap-store'
-import { useAccounts } from '@/hooks/use-accounts'
 
 // Selectors
 
@@ -20,17 +19,6 @@ export const useSetDestination = () => useSwapStore(state => state.setDestinatio
 export const useSwapAssets = () => useSwapStore(state => state.swapAssets)
 
 // Hooks
-
-export const useSourceWallet = () => {
-  const { accounts } = useAccounts()
-  const assetFrom = useAssetFrom()
-  const setDestination = useSetDestination()
-
-  useEffect(() => {
-    const toAssetAccount = accounts?.find(a => a.network === assetFrom?.chain)
-    setDestination(toAssetAccount)
-  }, [accounts, assetFrom, setDestination])
-}
 
 export const useSwap = () => {
   const { pools } = usePools()

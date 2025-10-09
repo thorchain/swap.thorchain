@@ -10,7 +10,8 @@ import {
 } from '@/components/ui/credenza'
 import { useState } from 'react'
 import { useAssetTo, useSetDestination } from '@/hooks/use-swap'
-import { networkLabel, validateAddress } from 'rujira.js'
+import { getChainConfig } from '@swapkit/helpers'
+import { getAddressValidator } from '@swapkit/toolboxes'
 import { cn } from '@/lib/utils'
 
 interface SwapAddressProps {
@@ -22,6 +23,7 @@ export const SwapAddressCustom = ({ isOpen, onOpenChange }: SwapAddressProps) =>
   const assetTo = useAssetTo()
   const setDestination = useSetDestination()
   const [address, setAddress] = useState<string>('')
+  const [isValid, setIsValid] = useState(true)
 
   const onSave = async () => {
     if (!assetTo) {
@@ -32,7 +34,15 @@ export const SwapAddressCustom = ({ isOpen, onOpenChange }: SwapAddressProps) =>
     onOpenChange(false)
   }
 
-  const isValid = address.length && assetTo ? validateAddress(assetTo?.chain, address) : true
+  const onChange = async (value: string) => {
+    const validateAddress = await getAddressValidator()
+    setAddress(value)
+    if (assetTo?.chain) {
+      setIsValid(validateAddress({ address: value, chain: assetTo.chain }))
+    } else {
+      setIsValid(false)
+    }
+  }
 
   return (
     <Credenza open={isOpen} onOpenChange={onOpenChange}>
@@ -46,9 +56,9 @@ export const SwapAddressCustom = ({ isOpen, onOpenChange }: SwapAddressProps) =>
         </CredenzaHeader>
         <div className="relative mx-4 grid gap-2 md:mx-8">
           <Input
-            placeholder={assetTo ? `${networkLabel(assetTo.chain)} address` : 'Enter address'}
+            placeholder={assetTo ? `${getChainConfig(assetTo.chain).name} address` : 'Enter address'}
             value={address}
-            onChange={e => setAddress(e.target.value)}
+            onChange={e => onChange(e.target.value)}
             className={cn(
               'text-leah placeholder:text-andy border-blade focus-visible:border-blade rounded-xl border-1 px-4 py-4 focus:ring-0 focus-visible:ring-0 md:text-base',
               {

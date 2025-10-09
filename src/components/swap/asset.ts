@@ -1,24 +1,25 @@
-import { Asset as BaseAsset, Network } from 'rujira.js'
+import { Chain } from '@swapkit/core'
 
-type AssetType = 'LAYER_1' | 'SECURED' | 'NATIVE' | '%future added value'
+export type AssetType = 'LAYER_1' | 'SECURED' | 'NATIVE' | '%future added value'
+
+export interface BaseAsset<T extends string = string> {
+  type: T
+  chain: Chain
+  asset: string
+  metadata: {
+    decimals: number
+    symbol: string
+  }
+}
 
 export type Asset = BaseAsset<AssetType>
 
-const runeBase = {
+export const RUNE: Asset = {
   type: 'NATIVE' as AssetType,
-  chain: Network.Thorchain,
+  chain: Chain.THORChain,
   asset: 'THOR.RUNE',
   metadata: {
     decimals: 8,
     symbol: 'RUNE'
-  },
-  variants: null
-}
-
-export const RUNE: Asset = {
-  ...runeBase,
-  variants: {
-    layer1: runeBase,
-    native: { denom: 'rune' }
   }
 }

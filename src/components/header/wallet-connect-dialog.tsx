@@ -1,29 +1,28 @@
 import Image from 'next/image'
 import { useMemo, useState } from 'react'
-import { toast } from 'sonner'
 import { LoaderCircle } from 'lucide-react'
-import { Network, networkLabel } from 'rujira.js'
+import { Chain, WalletOption } from '@swapkit/helpers'
 import { ThemeButton } from '@/components/theme-button'
 import { Credenza, CredenzaContent, CredenzaHeader, CredenzaTitle } from '@/components/ui/credenza'
 import { WalletConnectLedger } from '@/components/header/wallet-connect-ledger'
 import { ScrollArea } from '@/components/ui/scroll-area'
-import { Provider } from '@/wallets'
-import { useDialog } from '@/components/global-dialog'
-import { useAccounts } from '@/hooks/use-accounts'
 import { cn } from '@/lib/utils'
+import { useDialog } from '@/components/global-dialog'
+import { useAccounts } from '@/hooks/use-wallets'
+import { supportedChains } from '@/lib/wallets'
 
 enum WalletType {
   browser,
   hardware
 }
 
-interface WalletProps<T> {
+interface WalletProps {
   key: string
   type: WalletType
   label: string
-  provider: T
+  option: WalletOption
   link: string
-  supportedChains: Network[]
+  supportedChains: Chain[]
 }
 
 interface WalletConnectDialogProps {
@@ -33,47 +32,25 @@ interface WalletConnectDialogProps {
 
 export const WalletConnectDialog = ({ isOpen, onOpenChange }: WalletConnectDialogProps) => {
   const [connecting, setConnecting] = useState(false)
-  const [selectedWallet, setSelectedWallet] = useState<WalletProps<Provider> | undefined>(undefined)
-  const [selectedNetwork, setSelectedNetwork] = useState<Network | undefined>(undefined)
-  const { connect, isAvailable, accounts } = useAccounts()
+  const [selectedWallet, setSelectedWallet] = useState<WalletProps | undefined>(undefined)
+  const [selectedChain, setSelectedChain] = useState<Chain | undefined>(undefined)
+  const { connect, connectedWallets } = useAccounts()
   const { openDialog } = useDialog()
 
-  const connectedProviders = useMemo(() => [...new Set(accounts?.map(a => a.provider))], [accounts])
-  const networks = useMemo(
-    () =>
-      [
-        Network.Avalanche,
-        Network.Base,
-        Network.Bitcoin,
-        Network.BitcoinCash,
-        Network.Bsc,
-        Network.Gaia,
-        Network.Dogecoin,
-        Network.Ethereum,
-        Network.Litecoin,
-        Network.Solana,
-        Network.Thorchain,
-        Network.Tron,
-        Network.Xrp
-      ].sort((a, b) => {
-        return networkLabel(a).localeCompare(networkLabel(b))
-      }),
-    []
-  )
-
+  const networks = AllChains
   const wallets = useMemo(() => {
-    const installed: WalletProps<Provider>[] = []
-    const others: WalletProps<Provider>[] = []
+    const installed: WalletProps[] = []
+    const others: WalletProps[] = []
 
     WALLETS.forEach(wallet => {
-      if (isAvailable(wallet.provider)) {
-        installed.push(wallet)
-      } else {
-        others.push(wallet)
-      }
+      installed.push(wallet)
+      // if (isAvailable(wallet.option)) {
+      // } else {
+      //   others.push(wallet)
+      // }
     })
 
-    const sortByLabel = (a: WalletProps<Provider>, b: WalletProps<Provider>) => a.label.localeCompare(b.label)
+    const sortByLabel = (a: WalletProps, b: WalletProps) => a.label.localeCompare(b.label)
 
     installed.sort(sortByLabel)
     others.sort(sortByLabel)
@@ -87,9 +64,9 @@ export const WalletConnectDialog = ({ isOpen, onOpenChange }: WalletConnectDialo
       [WalletType.browser]: getWalletsByType(WalletType.browser),
       [WalletType.hardware]: getWalletsByType(WalletType.hardware)
     }
-  }, [isAvailable])
+  }, [])
 
-  const onSelectWallet = (wallet: WalletProps<Provider>) => {
+  const onSelectWallet = (wallet: WalletProps) => {
     setSelectedWallet(prev => {
       if (prev === wallet) {
         return undefined
@@ -101,50 +78,40 @@ export const WalletConnectDialog = ({ isOpen, onOpenChange }: WalletConnectDialo
 
       return wallet
     })
-    setSelectedNetwork(undefined)
+    setSelectedChain(undefined)
   }
 
-  const onSelectNetwork = (network: Network) => {
-    setSelectedNetwork(prev => (prev === network ? undefined : network))
+  const onSelectChain = (chain: Chain) => {
+    setSelectedChain(prev => (prev === chain ? undefined : chain))
     setSelectedWallet(undefined)
   }
 
-  const isWalletHighlighted = (walletProvider: Provider) => {
-    if (!selectedNetwork) return true
+  const isWalletHighlighted = (walletOption: WalletOption) => {
+    if (!selectedChain) return true
 
-    const wallet = WALLETS.find(w => w.provider === walletProvider)
-    return wallet && wallet.supportedChains.includes(selectedNetwork)
+    const wallet = WALLETS.find(w => w.option === walletOption)
+    return wallet && wallet.supportedChains.includes(selectedChain)
   }
 
-  const isNetworkHighlighted = (network: Network) => {
+  const isChainHighlighted = (chain: Chain) => {
     if (!selectedWallet) return true
-
-    return selectedWallet.supportedChains.includes(network)
+    return selectedWallet.supportedChains.includes(chain)
   }
 
   const handleConnect = async () => {
     if (!selectedWallet) return
-
     setConnecting(true)
-
-    withTimeout(connect(selectedWallet.provider), 20_000)
-      .then(() => {
-        onOpenChange(false)
-      })
-      .catch(err => {
-        console.log(err.message)
-      })
-      .finally(() => {
-        setConnecting(false)
-      })
+    await connect(selectedWallet.option, selectedWallet.supportedChains).finally(() => {
+      setConnecting(false)
+    })
   }
 
-  const walletList = (wallets: WalletProps<Provider>[]) => {
+  const walletList = (wallets: WalletProps[]) => {
     return wallets.map((wallet, index) => {
-      const isConnected = connectedProviders.find(w => w === wallet.provider)
-      const isInstalled = isAvailable(wallet.provider)
+      const isConnected = connectedWallets.find(w => w === wallet.option)
+      const isInstalled = true // isAvailable(wallet.option)
       const isSelected = wallet === selectedWallet
-      const isHighlighted = isWalletHighlighted(wallet.provider)
+      const isHighlighted = isWalletHighlighted(wallet.option)
 
       return (
         <div
@@ -212,14 +179,14 @@ export const WalletConnectDialog = ({ isOpen, onOpenChange }: WalletConnectDialo
                     gridTemplateColumns: 'repeat(2, 1fr)'
                   }}
                 >
-                  {networks.map(network => {
-                    const isSelected = selectedNetwork === network
-                    const isHighlighted = isNetworkHighlighted(network)
-                    const isComingSoon = network === Network.Solana
+                  {networks.map(chain => {
+                    const isSelected = selectedChain === chain
+                    const isHighlighted = isChainHighlighted(chain)
+                    const isComingSoon = chain === Chain.Solana
 
                     return (
                       <div
-                        key={network}
+                        key={chain}
                         className={cn(
                           'flex items-center gap-3 rounded-2xl border-1 border-transparent px-4 py-3',
                           {
@@ -228,11 +195,11 @@ export const WalletConnectDialog = ({ isOpen, onOpenChange }: WalletConnectDialo
                             'cursor-pointer hover:bg-blade': !isComingSoon
                           }
                         )}
-                        onClick={() => !isComingSoon && onSelectNetwork(network)}
+                        onClick={() => onSelectChain(chain)}
                       >
-                        <Image src={`/networks/${network.toLowerCase()}.svg`} alt={network} width="24" height="24" />
+                        <Image src={`/networks/${chain.toLowerCase()}.svg`} alt={chain} width="24" height="24" />
                         <div className="flex items-center gap-3 text-sm">
-                          {networkLabel(network)}
+                          {chain}
                           {isComingSoon ? <Image src="/soon.svg" alt="Soon" width={37} height={17} /> : null}
                         </div>
                       </div>
@@ -260,130 +227,83 @@ export const WalletConnectDialog = ({ isOpen, onOpenChange }: WalletConnectDialo
   )
 }
 
-function withTimeout<T>(promise: Promise<T>, ms: number): Promise<T> {
-  return new Promise((resolve, reject) => {
-    const id = setTimeout(() => {
-      toast.error('Connection timed out. Please try logging in to your wallet again')
-      reject(new Error('Connection timeout'))
-    }, ms)
-    promise
-      .then(res => {
-        clearTimeout(id)
-        resolve(res)
-      })
-      .catch(err => {
-        clearTimeout(id)
-        reject(err)
-      })
-  })
-}
+const AllChains = [
+  Chain.Avalanche,
+  Chain.Base,
+  Chain.BinanceSmartChain,
+  Chain.Bitcoin,
+  Chain.BitcoinCash,
+  Chain.Cosmos,
+  Chain.Dogecoin,
+  Chain.Ethereum,
+  Chain.Litecoin,
+  Chain.Kujira,
+  Chain.THORChain
+]
 
-const WALLETS: WalletProps<Provider>[] = [
+const WALLETS: WalletProps[] = [
   {
     key: 'metamask',
+    label: 'MetaMask',
     type: WalletType.browser,
-    label: 'Metamask',
-    provider: 'Metamask',
+    option: WalletOption.METAMASK,
     link: 'https://metamask.io',
-    supportedChains: [Network.Avalanche, Network.Base, Network.Bsc, Network.Ethereum]
+    supportedChains: supportedChains[WalletOption.METAMASK]
   },
   {
     key: 'vultisig',
     type: WalletType.browser,
     label: 'Vultisig',
-    provider: 'Vultisig',
+    option: WalletOption.VULTISIG,
     link: 'https://vultisig.com',
-    supportedChains: [
-      Network.Avalanche,
-      Network.Base,
-      Network.BitcoinCash,
-      Network.Bitcoin,
-      Network.Bsc,
-      Network.Dogecoin,
-      Network.Ethereum,
-      Network.Litecoin,
-      Network.Osmo
-    ]
+    supportedChains: supportedChains[WalletOption.VULTISIG]
   },
   {
     key: 'phantom',
     type: WalletType.browser,
     label: 'Phantom',
-    provider: 'Phantom',
+    option: WalletOption.PHANTOM,
     link: 'https://phantom.app',
-    supportedChains: [Network.Base, Network.Bsc, Network.Ethereum]
+    supportedChains: supportedChains[WalletOption.PHANTOM]
   },
   {
     key: 'ctrl',
     type: WalletType.browser,
     label: 'Ctrl',
-    provider: 'Ctrl',
+    option: WalletOption.CTRL,
     link: 'https://ctrl.xyz',
-    supportedChains: [
-      Network.Avalanche,
-      Network.Base,
-      Network.BitcoinCash,
-      Network.Bitcoin,
-      Network.Bsc,
-      Network.Dogecoin,
-      Network.Ethereum,
-      Network.Litecoin,
-      Network.Thorchain
-    ]
+    supportedChains: supportedChains[WalletOption.CTRL]
   },
   {
     key: 'keplr',
     type: WalletType.browser,
     label: 'Keplr',
-    provider: 'Keplr',
+    option: WalletOption.KEPLR,
     link: 'https://www.keplr.app',
-    supportedChains: [
-      Network.Avalanche,
-      Network.Base,
-      Network.Ethereum,
-      Network.Bitcoin,
-      Network.Gaia,
-      Network.Thorchain
-    ]
+    supportedChains: supportedChains[WalletOption.KEPLR]
   },
   {
     key: 'okx',
     type: WalletType.browser,
     label: 'OKX',
-    provider: 'Okx',
+    option: WalletOption.OKX,
     link: 'https://web3.okx.com',
-    supportedChains: [
-      Network.Avalanche,
-      Network.Bsc,
-      Network.Ethereum,
-      Network.Thorchain,
-      Network.Bitcoin,
-      Network.Tron
-    ]
+    supportedChains: supportedChains[WalletOption.OKX]
   },
   {
     key: 'tronlink',
     type: WalletType.browser,
     label: 'TronLink',
-    provider: 'Tronlink',
+    option: WalletOption.TRONLINK,
     link: 'https://www.tronlink.org',
-    supportedChains: [Network.Tron, Network.Bsc, Network.Ethereum]
+    supportedChains: supportedChains[WalletOption.TRONLINK]
   },
   {
     key: 'ledger',
     type: WalletType.hardware,
     label: 'Ledger',
-    provider: 'Ledger',
+    option: WalletOption.LEDGER,
     link: 'https://www.ledger.com',
-    supportedChains: [
-      Network.Avalanche,
-      Network.Base,
-      Network.BitcoinCash,
-      Network.Bitcoin,
-      Network.Bsc,
-      Network.Ethereum,
-      Network.Litecoin,
-      Network.Thorchain
-    ]
+    supportedChains: supportedChains[WalletOption.LEDGER]
   }
 ]

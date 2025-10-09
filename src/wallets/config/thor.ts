@@ -47,6 +47,6 @@ export const stage = {
 export const main = {
   ...base('thor'),
   rpc: 'https://rpc.ninerealms.com',
-  rest: 'http://thornode.ninerealms.com',
+  rest: 'https://thornode.ninerealms.com',
   chainId: 'thorchain-1'
 }

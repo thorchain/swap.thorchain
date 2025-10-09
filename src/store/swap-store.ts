@@ -1,9 +1,9 @@
 import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
 import { Asset } from '@/components/swap/asset'
-import { Network, validateAddress } from 'rujira.js'
-import { Provider } from '@/wallets'
-import { useAccountStore } from '@/store/account-store'
+import { getAddressValidator } from '@swapkit/toolboxes'
+import { Chain, WalletOption } from '@swapkit/core'
+import { useWalletStore } from '@/store/wallets-store'
 
 const INITIAL_ASSET_FROM = 'BTC.BTC'
 const INITIAL_ASSET_TO = 'THOR.RUNE'
@@ -12,7 +12,7 @@ export const INITIAL_SLIPPAGE = 1
 
 interface Destination<P> {
   address: string
-  network: Network
+  network: Chain
   provider?: P
 }
 
@@ -20,13 +20,13 @@ interface SwapState {
   assetFrom?: Asset
   assetTo?: Asset
   amountFrom: string
-  destination?: Destination<Provider>
+  destination?: Destination<WalletOption>
   slippage?: number
   feeWarning: string
   hasHydrated: boolean
 
   setSlippage: (limit?: number) => void
-  setDestination: (destination?: Destination<Provider>) => void
+  setDestination: (destination?: Destination<WalletOption>) => void
   setAmountFrom: (amount: bigint) => void
   resolveDestination: () => void
   setAssetFrom: (asset: Asset) => void
@@ -50,14 +50,15 @@ export const useSwapStore = create<SwapState>()(
 
       resolveDestination: async () => {
         const { assetTo, destination: previous, setDestination } = get()
+        const validateAddress = await getAddressValidator()
 
         // Check if there is a custom address and it is suitable for a new assetTo
-        if (assetTo && previous && !previous.provider && validateAddress(assetTo.chain, previous.address)) {
+        if (assetTo && previous && !previous.provider && validateAddress({ address: previous.address, chain: assetTo.chain })) {
           setDestination({ address: previous.address, network: assetTo.chain })
           return
         }
 
-        const accounts = useAccountStore.getState().accounts
+        const accounts = useWalletStore.getState().accounts
 
         const fromPrevious = accounts?.find(
           a => a.provider === previous?.provider && a.address === previous?.address && a.network === assetTo?.chain
@@ -74,7 +75,7 @@ export const useSwapStore = create<SwapState>()(
           assetTo: assetTo?.asset === asset.asset ? assetFrom : assetTo
         })
 
-        useAccountStore.getState().resolveSource()
+        useWalletStore.getState().resolveSource()
         resolveDestination()
       },
 
@@ -86,7 +87,7 @@ export const useSwapStore = create<SwapState>()(
           assetTo: asset
         })
 
-        useAccountStore.getState().resolveSource()
+        useWalletStore.getState().resolveSource()
         resolveDestination()
       },
 
@@ -99,7 +100,7 @@ export const useSwapStore = create<SwapState>()(
           amountFrom: ''
         })
 
-        useAccountStore.getState().resolveSource()
+        useWalletStore.getState().resolveSource()
         resolveDestination()
       },
 

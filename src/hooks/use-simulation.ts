@@ -1,28 +1,32 @@
 import { useQuery } from '@tanstack/react-query'
 import { useAssetFrom, useSwap } from '@/hooks/use-swap'
-import { InboundAddress, MsgSwap, Network, Simulation } from 'rujira.js'
+import { AssetValue, Chain, CosmosChains, EVMChains, FeeOption, UTXOChains } from '@swapkit/core'
+import { type CosmosChain, type EVMChain, type UTXOChain } from '@swapkit/helpers'
+import { estimateTransactionFee as estimateCosmosTxFee } from '@swapkit/toolboxes/cosmos'
+import { EVMTransaction } from '@swapkit/api'
+import { InsufficientAllowanceError } from '@/lib/errors'
 import { useQuote } from '@/hooks/use-quote'
-import { getSelectedContext, useAccounts } from '@/hooks/use-accounts'
-import { simulate } from '@/wallets'
+import { useAccounts } from '@/hooks/use-wallets'
 import { useBalance } from '@/hooks/use-balance'
-
-type SimulationData = {
-  simulation: Simulation
-  inboundAddress: InboundAddress
-  msg: MsgSwap
-}
+import { getSwapKit } from '@/lib/wallets'
 
 type UseSimulation = {
-  simulationData?: SimulationData | null
+  simulationData?: {
+    symbol: string
+    decimals: number
+    amount: bigint
+    gas: bigint
+  } | null
   isLoading: boolean
   error: Error | null
 }
 
 export const useSimulation = (): UseSimulation => {
+  const swapkit = getSwapKit()
+  const assetFrom = useAssetFrom()
   const { selected } = useAccounts()
   const { amountFrom } = useSwap()
   const { quote } = useQuote()
-  const assetFrom = useAssetFrom()
   const { balance } = useBalance()
 
   const {
@@ -32,35 +36,80 @@ export const useSimulation = (): UseSimulation => {
   } = useQuery({
     queryKey: ['simulation', quote],
     queryFn: async () => {
-      if (!quote || !quote.memo || !selected || !assetFrom) {
+      if (!quote || !quote.targetAddress || !selected || !assetFrom) {
         return null
       }
 
-      const context = getSelectedContext()
-      if (!context) {
-        return null
+      const assetValue = await AssetValue.from({
+        asset: quote.sellAsset,
+        value: quote.sellAmount,
+        asyncTokenLookup: true
+      })
+
+      let estimation: AssetValue | undefined
+      if (EVMChains.includes(assetFrom.chain as EVMChain)) {
+        const wallet = swapkit.getWallet<EVMChain>(selected.provider)
+        if (!assetValue.isGasAsset && assetValue.address) {
+          const approved = await wallet?.isApproved({
+            assetAddress: assetValue.address,
+            spenderAddress: quote.targetAddress,
+            from: selected.address,
+            amount: assetValue.getValue('bigint')
+          })
+          if (!approved) {
+            throw new InsufficientAllowanceError(
+              assetValue.address,
+              quote.targetAddress,
+              assetValue.getValue('bigint')
+            )
+          }
+        }
+
+        const tx = quote.tx as EVMTransaction
+        estimation = await wallet?.estimateTransactionFee({
+          to: quote.targetAddress,
+          from: selected.address,
+          value: assetValue.bigIntValue,
+          data: tx?.data ?? '0x',
+          chain: assetFrom.chain as EVMChain,
+          feeOption: FeeOption.Fast
+        })
       }
 
-      const inboundAddress =
-        selected.network === Network.Thorchain
-          ? {
-              address: process.env.NEXT_PUBLIC_THORCHAIN_MODULE_ADDRESS || '',
-              dustThreshold: 0n,
-              gasRate: 0n,
-              router: undefined
-            }
-          : {
-              address: quote.inbound_address,
-              dustThreshold: BigInt(quote.dust_threshold || '0'),
-              gasRate: BigInt(quote.recommended_gas_rate || '0'),
-              router: quote.router || undefined
-            }
+      if (UTXOChains.includes(assetFrom.chain as UTXOChain)) {
+        const wallet = swapkit.getWallet<UTXOChain>(selected.provider)
+        estimation = await wallet?.estimateTransactionFee({
+          recipient: quote.targetAddress,
+          sender: selected.address,
+          assetValue: AssetValue.from({ chain: assetFrom.chain, value: amountFrom }),
+          feeOptionKey: FeeOption.Fast
+        })
+      }
 
-      const msg = new MsgSwap(assetFrom, amountFrom, quote.memo)
-      const simulateFunc = simulate(context, selected, inboundAddress)
-      const simulation = await simulateFunc(msg)
+      if (CosmosChains.includes(assetFrom.chain as CosmosChain)) {
+        estimation = estimateCosmosTxFee({ assetValue })
+      }
 
-      return { simulation: simulation, inboundAddress, msg }
+      if (assetFrom.chain === Chain.Tron) {
+        const wallet = swapkit.getWallet<Chain.Tron>(selected.provider)
+        estimation = await wallet?.estimateTransactionFee({
+          sender: selected.address,
+          recipient: quote.targetAddress,
+          assetValue,
+          feeOptionKey: FeeOption.Fast
+        })
+      }
+
+      if (estimation) {
+        return {
+          symbol: estimation.symbol,
+          decimals: estimation.decimal || 0,
+          amount: estimation.bigIntValue,
+          gas: 0n
+        }
+      }
+
+      return null
     },
     enabled: !!(
       selected &&

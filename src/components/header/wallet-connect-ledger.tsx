@@ -1,3 +1,4 @@
+import Image from 'next/image'
 import { ThemeButton } from '@/components/theme-button'
 import {
   Credenza,
@@ -9,11 +10,11 @@ import {
 } from '@/components/ui/credenza'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 import { Input } from '@/components/ui/input'
-import { Network, networkLabel } from 'rujira.js'
+import { getChainConfig } from '@swapkit/helpers'
 import { useMemo, useState } from 'react'
 import { Check, LoaderCircle } from 'lucide-react'
-import Image from 'next/image'
-import { useAccounts } from '@/hooks/use-accounts'
+import { useAccounts } from '@/hooks/use-wallets'
+import { Chain, WalletOption } from '@swapkit/core'
 
 type LedgerConfigProps = {
   isOpen: boolean
@@ -25,8 +26,8 @@ export const WalletConnectLedger = ({ isOpen, onOpenChange }: LedgerConfigProps)
   const [connecting, setConnecting] = useState(false)
   const [index, setIndex] = useState(0)
 
-  const networks = [Network.Bitcoin, Network.Litecoin, Network.BitcoinCash, Network.Thorchain, 'EMVs']
-  const [chain, setChain] = useState<string>(Network.Bitcoin)
+  const networks = [Chain.Bitcoin, Chain.Litecoin, Chain.BitcoinCash, Chain.THORChain, 'EVMs']
+  const [chain, setChain] = useState<Chain | string>(Chain.Bitcoin)
   const [path, setPath] = useState<string | undefined>()
 
   const bitcoin = useMemo(
@@ -54,21 +55,21 @@ export const WalletConnectLedger = ({ isOpen, onOpenChange }: LedgerConfigProps)
   )
 
   const pathOptions = useMemo(() => {
-    if (chain === Network.Bitcoin) return Object.keys(bitcoin)
-    if (chain === 'EMVs') return Object.keys(evms)
-    if (chain === Network.Thorchain) return Object.keys(thorchain)
+    if (chain === Chain.Bitcoin) return Object.keys(bitcoin)
+    if (chain === 'EVMs') return Object.keys(evms)
+    if (chain === Chain.THORChain) return Object.keys(thorchain)
     return null
   }, [bitcoin, chain, evms, thorchain])
 
   const onConnect = async () => {
     const paths: Record<string, number[]> = { ...bitcoin, ...evms, ...thorchain }
     const config = {
-      networks: chain === 'EMVs' ? [Network.Ethereum, Network.Bsc, Network.Base, Network.Avalanche] : [chain],
+      networks: chain === 'EVMs' ? [Chain.Ethereum, Chain.BinanceSmartChain, Chain.Base, Chain.Avalanche] : [chain],
       derivationPath: path ? paths[path] : undefined
     }
 
     setConnecting(true)
-    connect('Ledger', config)
+    connect(WalletOption.LEDGER, config.networks as Chain[], config.derivationPath)
       .then(() => {
         onOpenChange(false)
       })
@@ -99,12 +100,12 @@ export const WalletConnectLedger = ({ isOpen, onOpenChange }: LedgerConfigProps)
                 {chain === item && <Check className="size-4" />}
                 <Image
                   className="rounded-full"
-                  src={`/networks/${(item === 'EMVs' ? Network.Ethereum : item).toLowerCase()}.svg`}
+                  src={`/networks/${(item === 'EVMs' ? Chain.Ethereum : item).toLowerCase()}.svg`}
                   alt={chain}
                   width="24"
                   height="24"
                 />
-                {item === 'EMVs' ? 'EVMs' : networkLabel(item as Network)}
+                {item === 'EVMs' ? 'EVMs' : getChainConfig(item as Chain).name}
               </ThemeButton>
             ))}
           </div>

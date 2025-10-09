@@ -1,7 +1,7 @@
 import Image from 'next/image'
 import { useState } from 'react'
 import { Skeleton } from '@/components/ui/skeleton'
-import { Asset } from 'rujira.js'
+import { Asset } from '@/components/swap/asset'
 
 export function AssetIcon({ asset }: { asset: Asset | undefined }) {
   const [loading, setLoading] = useState(true)

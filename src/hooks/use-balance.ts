@@ -1,11 +1,21 @@
 import { useQuery } from '@tanstack/react-query'
-import { useAssetFrom } from '@/hooks/use-swap'
-import { getSelectedContext, useAccounts } from '@/hooks/use-accounts'
+import { useAssetFrom, useSwap } from '@/hooks/use-swap'
+import { useAccounts } from '@/hooks/use-wallets'
 import { BalanceFetcher } from '@/wallets/balances'
-import { gasToken, MsgSwap } from 'rujira.js'
-import { simulate } from '@/wallets'
-import { JsonRpcSigner } from 'ethers'
 import { useInboundAddresses } from '@/hooks/use-inbound-addresses'
+import {
+  AssetValue,
+  Chain,
+  type CosmosChain,
+  CosmosChains,
+  type EVMChain,
+  EVMChains,
+  FeeOption,
+  type UTXOChain,
+  UTXOChains
+} from '@swapkit/core'
+import { getSwapKit } from '@/lib/wallets'
+import { estimateTransactionFee } from '@swapkit/toolboxes/cosmos'
 
 type UseBalance = {
   balance?: {
@@ -18,8 +28,10 @@ type UseBalance = {
 }
 
 export const useBalance = (): UseBalance => {
-  const { selected } = useAccounts()
+  const swapkit = getSwapKit()
   const assetFrom = useAssetFrom()
+  const { amountFrom } = useSwap()
+  const { selected } = useAccounts()
   const { data: inboundAddresses } = useInboundAddresses()
 
   const {
@@ -35,59 +47,64 @@ export const useBalance = (): UseBalance => {
       }
 
       const amount = await BalanceFetcher.fetch(assetFrom.asset, selected.address)
+      const baseAsset = AssetValue.from({ chain: assetFrom.chain })
 
       let fee = 0n
-
-      const [, assetId] = assetFrom.asset.split('.')
-
-      if (assetFrom.asset === 'THOR.RUNE') {
-        fee = BigInt(0.2 * 10 ** 8)
-      } else if (assetFrom.asset === 'GAIA.ATOM') {
-        fee = BigInt(0.007 * 10 ** 6)
-      } else if (assetId.toUpperCase() === gasToken(assetFrom.chain).symbol && amount > 0n) {
-        const address = inboundAddresses.find((a: any) => a.chain === assetFrom.chain)
-
-        if (!address) {
+      if (baseAsset.isGasAsset && amount > 0n) {
+        const inbound = inboundAddresses.find((a: any) => a.chain === assetFrom.chain)
+        if (!inbound) {
           return null
         }
 
-        const inboundAddress = {
-          address: address.address,
-          dustThreshold: BigInt(address.dust_threshold || '0'),
-          gasRate: BigInt(address.gas_rate || '0'),
-          router: address.router || undefined
+        let estimation: AssetValue | undefined
+
+        if (CosmosChains.includes(assetFrom.chain as CosmosChain)) {
+          const estimate = estimateTransactionFee({ assetValue: baseAsset as any })
+          fee = estimate.bigIntValue * BigInt(10 ** (baseAsset.decimal || 0))
         }
 
-        const context = getSelectedContext()
-
-        if (!context) {
-          return null
+        if (EVMChains.includes(assetFrom.chain as EVMChain)) {
+          const wallet = swapkit.getWallet<EVMChain>(selected.provider)
+          estimation = await wallet?.estimateTransactionFee({
+            to: inbound.address,
+            from: selected.address,
+            value: amountFrom,
+            data: '0x',
+            chain: assetFrom.chain as EVMChain,
+            feeOption: FeeOption.Fast
+          })
         }
 
-        let estimateAmount = amount
-
-        if (context instanceof JsonRpcSigner) {
-          estimateAmount = 1n
-        } else if (typeof context === 'object' && 'chain' in context) {
-          // todo
+        if (UTXOChains.includes(assetFrom.chain as UTXOChain)) {
+          const wallet = swapkit.getWallet<UTXOChain>(selected.provider)
+          estimation = await wallet?.estimateTransactionFee({
+            recipient: inbound.address,
+            sender: selected.address,
+            assetValue: AssetValue.from({ chain: assetFrom.chain, value: amountFrom }),
+            feeOptionKey: FeeOption.Fast
+          })
         }
 
-        const msg = new MsgSwap(
-          assetFrom,
-          estimateAmount,
-          '================================================================================'
-        ) // todo
+        if (assetFrom.chain === Chain.Tron) {
+          const wallet = swapkit.getWallet<Chain.Tron>(selected.provider)
+          estimation = await wallet?.estimateTransactionFee({
+            sender: selected.address,
+            recipient: inbound.address,
+            assetValue: AssetValue.from({ chain: assetFrom.chain, value: amountFrom }),
+            feeOptionKey: FeeOption.Fast
+          })
+        }
 
-        const simulateFunc = simulate(context, selected, inboundAddress)
-        const simulation = await simulateFunc(msg)
-
-        const simulationFee = (simulation.amount * BigInt(1e8)) / BigInt(10 ** simulation.decimals)
-        fee = (simulationFee * 11n) / 10n // surcharge by 10%
+        if (estimation) {
+          const simulationFee = (estimation.bigIntValue * BigInt(1e8)) / BigInt(10 ** (estimation.decimal || 0))
+          fee = (simulationFee * 11n) / 10n // surcharge by 10%
+        }
       }
 
-      const spendable = amount - fee > 0n ? amount - fee : 0n
-
-      return { amount, spendable }
+      return {
+        amount,
+        spendable: amount - fee > 0n ? amount - fee : 0n
+      }
     },
     enabled: !!(selected && assetFrom && inboundAddresses),
     retry: false

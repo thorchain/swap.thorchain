@@ -1,15 +1,17 @@
 import { LoaderCircle } from 'lucide-react'
-import { InsufficientAllowanceError, MsgErc20IncreaseAllowance, networkLabel } from 'rujira.js'
+import { InsufficientAllowanceError } from '@/lib/errors'
+import { getChainConfig } from '@swapkit/helpers'
 import { useAssetFrom, useAssetTo, useSwap } from '@/hooks/use-swap'
-import { getSelectedContext, useAccounts } from '@/hooks/use-accounts'
+import { useAccounts } from '@/hooks/use-wallets'
 import { useQuote } from '@/hooks/use-quote'
 import { useSimulation } from '@/hooks/use-simulation'
 import { WalletConnectDialog } from '@/components/header/wallet-connect-dialog'
 import { ThemeButton } from '@/components/theme-button'
-import { signAndBroadcast, simulate } from '@/wallets'
 import { useBalance } from '@/hooks/use-balance'
 import { useDialog } from '@/components/global-dialog'
 import { toast } from 'sonner'
+import { getSwapKit } from '@/lib/wallets'
+import { EVMChain } from '@swapkit/core'
 
 interface SwapButtonProps {
   onSwap: () => void
@@ -25,6 +27,7 @@ interface ButtonState {
 export const SwapButton = ({ onSwap }: SwapButtonProps) => {
   const assetFrom = useAssetFrom()
   const assetTo = useAssetTo()
+  const swapkit = getSwapKit()
   const { selected } = useAccounts()
   const { amountFrom, destination } = useSwap()
   const { isLoading: isQuoting, refetch: refetchQuote } = useQuote()
@@ -39,14 +42,14 @@ export const SwapButton = ({ onSwap }: SwapButtonProps) => {
     if (isQuoting || isSimulating) return { text: 'Quoting...', spinner: true, accent: false }
     if (!selected)
       return {
-        text: `Connect ${networkLabel(assetFrom.chain)} Wallet`,
+        text: `Connect ${getChainConfig(assetFrom.chain).chain} Wallet`,
         spinner: false,
         accent: false,
         onClick: () => openDialog(WalletConnectDialog, {})
       }
     if (!destination)
       return {
-        text: `Connect ${networkLabel(assetTo.chain)} Wallet`,
+        text: `Connect ${getChainConfig(assetTo.chain).name} Wallet`,
         spinner: false,
         accent: false,
         onClick: () => openDialog(WalletConnectDialog, {})
@@ -64,20 +67,16 @@ export const SwapButton = ({ onSwap }: SwapButtonProps) => {
         spinner: false,
         accent: false,
         onClick: async () => {
-          const msg = new MsgErc20IncreaseAllowance(simulationError)
-          const context = getSelectedContext()
-
-          if (!context) return
-
-          const simulateFunc = simulate(context, selected)
-          const promise = simulateFunc(msg)
-            .then(simulation => {
-              const broadcast = signAndBroadcast(context, selected)
-              return broadcast(simulation, msg)
+          const wallet = swapkit.getWallet<EVMChain>(selected.provider)
+          if (!wallet) return
+          const promise = wallet
+            .approve({
+              assetAddress: simulationError.contract,
+              spenderAddress: simulationError.spender,
+              amount: simulationError.amount
             })
-            .then(res => {
+            .then(() => {
               refetchQuote()
-              return res
             })
 
           toast.promise(promise, {

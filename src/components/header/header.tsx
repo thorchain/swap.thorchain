@@ -3,7 +3,7 @@
 import Image from 'next/image'
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu'
 import { WalletConnectDialog } from '@/components/header/wallet-connect-dialog'
-import { useConnectedProviders, useDisconnect } from '@/store/account-store'
+import { useConnectedWallets, useDisconnect } from '@/store/wallets-store'
 import { useDialog } from '@/components/global-dialog'
 import { TransactionHistoryButton } from '@/components/header/transaction-history-button'
 import { ThemeButton } from '@/components/theme-button'
@@ -15,7 +15,7 @@ import { cn } from '@/lib/utils'
 export function Header() {
   const { openDialog } = useDialog()
 
-  const connectedProviders = useConnectedProviders()
+  const connectedProviders = useConnectedWallets()
   const disconnectProvider = useDisconnect()
 
   const [isScrolled, setIsScrolled] = useState(false)

@@ -10,13 +10,14 @@ import { SwapError } from '@/components/swap/swap-error'
 import { SwapDetails } from '@/components/swap/swap-details'
 import { SwapButton } from '@/components/swap/swap-button'
 import { SwapBetaAlert } from '@/components/swap/swap-beta-alert'
-import { getSelectedContext, useAccounts } from '@/hooks/use-accounts'
+import { useAccounts } from '@/hooks/use-wallets'
 import { transactionStore } from '@/store/transaction-store'
 import { useSimulation } from '@/hooks/use-simulation'
 import { useQuote } from '@/hooks/use-quote'
 import { useAssetFrom, useAssetTo, useSwap } from '@/hooks/use-swap'
-import { signAndBroadcast } from '@/wallets'
 import { toast } from 'sonner'
+import { FeeOption } from '@swapkit/core'
+import { getSwapKit } from '@/lib/wallets'
 
 export const Swap = () => {
   const assetFrom = useAssetFrom()
@@ -26,31 +27,38 @@ export const Swap = () => {
   const { quote, error: quoteError } = useQuote()
   const { simulationData, error: simulationError } = useSimulation()
   const { setTransaction } = transactionStore()
+  const swapkit = getSwapKit()
 
   const onSwap = async () => {
-    if (!simulationData || !selected) {
+    if (!simulationData || !selected || !quote) {
       return
     }
 
-    const func = signAndBroadcast(getSelectedContext(), selected, simulationData.inboundAddress)
-    const broadcast = func(simulationData.simulation, simulationData.msg)
-      .then(res => {
-        setTransaction({
-          hash: res.txHash,
-          timestamp: new Date(),
-          fromAsset: assetFrom,
-          fromAmount: amountFrom.toString(),
-          toAmount: quote?.expected_amount_out,
-          toAsset: assetTo,
-          status: 'pending'
-        })
+    const broadcast = swapkit.swap({
+      route: quote as any,
+      feeOptionKey: FeeOption.Fast
+    })
 
-        return res
-      })
-      .catch(err => {
-        console.error(err)
-        throw err
-      })
+    // todo
+    // const func = signAndBroadcast(getSelectedContext(), selected, simulationData.inboundAddress)
+    // const broadcast = func(simulationData.simulation, simulationData.msg)
+    //   .then(res => {
+    //     setTransaction({
+    //       hash: res.txHash,
+    //       timestamp: new Date(),
+    //       fromAsset: assetFrom,
+    //       fromAmount: amountFrom.toString(),
+    //       toAmount: quote?.expectedBuyAmount,
+    //       toAsset: assetTo,
+    //       status: 'pending'
+    //     })
+    //
+    //     return res
+    //   })
+    //   .catch(err => {
+    //     console.error(err)
+    //     throw err
+    //   })
 
     toast.promise(broadcast, {
       loading: 'Submitting Transaction',
@@ -78,7 +86,7 @@ export const Swap = () => {
           <SwapAddressFrom />
           <SwapInputFrom />
           <SwapToggleAssets />
-          <SwapInputTo quote={quote} />
+          <SwapInputTo />
           <SwapAddressTo />
         </div>
 
