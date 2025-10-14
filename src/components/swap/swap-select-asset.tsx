@@ -9,7 +9,7 @@ import { useIsMobile } from '@/hooks/use-mobile'
 import { usePools } from '@/hooks/use-pools'
 import { cn } from '@/lib/utils'
 import { AssetIcon } from '@/components/asset-icon'
-import { Chain } from '@swapkit/core'
+import { AssetValue, Chain } from '@swapkit/core'
 import { chainLabel } from '@/components/connect-wallet/config'
 
 interface SwapSelectAssetProps {
@@ -67,6 +67,14 @@ export const SwapSelectAsset = ({ isOpen, onOpenChange, selected, onSelectAsset 
     const filteredAssets = !searchQuery
       ? assets
       : assets.filter(asset => {
+          const assetValue = AssetValue.from({
+            asset: asset.asset
+          })
+
+          if (assetValue.isGasAsset && chainLabel(asset.chain).toLowerCase().includes(searchQuery.toLowerCase())) {
+            return true
+          }
+
           return asset.metadata.symbol.toLowerCase().includes(searchQuery.toLowerCase())
         })
 

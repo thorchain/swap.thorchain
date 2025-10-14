@@ -69,7 +69,7 @@ export const Swap = () => {
   }
 
   return (
-    <div className="flex flex-col items-center justify-center p-4 pt-20 pb-20">
+    <div className="flex flex-col items-center justify-center p-4 pt-0">
       <div className="w-full max-w-md">
         <SwapBetaAlert />
 

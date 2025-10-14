@@ -50,8 +50,9 @@ export const SwapAddressCustom = ({ isOpen, onOpenChange }: SwapAddressProps) =>
         <CredenzaHeader>
           <CredenzaTitle>Destination</CredenzaTitle>
           <CredenzaDescription>
-            Enter the destination address for the swap. Make sure it is correct, as sending to an incorrect address may
-            result in loss of funds.
+            Enter the destination address for the swap. Ensure that the address is accurate. Sending to an incorrect
+            address, an <b>exchange wallet</b> (e.g., Binance, Coinbase), or a <b>smart contract</b> address may result
+            in the permanent loss of funds.
           </CredenzaDescription>
         </CredenzaHeader>
         <div className="relative mx-4 grid gap-2 md:mx-8">
