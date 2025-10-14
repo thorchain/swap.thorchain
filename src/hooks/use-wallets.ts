@@ -1,4 +1,5 @@
 import { useWalletStore } from '@/store/wallets-store'
+import { WalletOption } from '@swapkit/core'
 
 export const getSelectedContext = (): any => 1
 
@@ -19,6 +20,6 @@ export const useAccounts = () => {
     select,
     connect,
     disconnect,
-    isAvailable: (provider: any) => true // todo
+    isAvailable: (option: WalletOption) => true // todo
   }
 }

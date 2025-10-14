@@ -1,17 +1,17 @@
 import { LoaderCircle } from 'lucide-react'
 import { InsufficientAllowanceError } from '@/lib/errors'
-import { getChainConfig } from '@swapkit/helpers'
 import { useAssetFrom, useAssetTo, useSwap } from '@/hooks/use-swap'
 import { useAccounts } from '@/hooks/use-wallets'
 import { useQuote } from '@/hooks/use-quote'
 import { useSimulation } from '@/hooks/use-simulation'
-import { WalletConnectDialog } from '@/components/header/wallet-connect-dialog'
+import { ConnectWallet } from '@/components/connect-wallet/connect-wallet'
 import { ThemeButton } from '@/components/theme-button'
 import { useBalance } from '@/hooks/use-balance'
 import { useDialog } from '@/components/global-dialog'
 import { toast } from 'sonner'
 import { getSwapKit } from '@/lib/wallets'
 import { EVMChain } from '@swapkit/core'
+import { chainLabel } from '@/components/connect-wallet/config'
 
 interface SwapButtonProps {
   onSwap: () => void
@@ -42,17 +42,17 @@ export const SwapButton = ({ onSwap }: SwapButtonProps) => {
     if (isQuoting || isSimulating) return { text: 'Quoting...', spinner: true, accent: false }
     if (!selected)
       return {
-        text: `Connect ${getChainConfig(assetFrom.chain).chain} Wallet`,
+        text: `Connect ${chainLabel(assetFrom.chain)} Wallet`,
         spinner: false,
         accent: false,
-        onClick: () => openDialog(WalletConnectDialog, {})
+        onClick: () => openDialog(ConnectWallet, {})
       }
     if (!destination)
       return {
-        text: `Connect ${getChainConfig(assetTo.chain).name} Wallet`,
+        text: `Connect ${chainLabel(assetTo.chain)} Wallet`,
         spinner: false,
         accent: false,
-        onClick: () => openDialog(WalletConnectDialog, {})
+        onClick: () => openDialog(ConnectWallet, {})
       }
     if (!isBalanceLoading && balance && balance.spendable < amountFrom) {
       return {

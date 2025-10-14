@@ -3,13 +3,13 @@ import { SwapSelectAsset } from '@/components/swap/swap-select-asset'
 import { DecimalInput } from '@/components/decimal/decimal-input'
 import { AssetIcon } from '@/components/asset-icon'
 import { Skeleton } from '@/components/ui/skeleton'
-import { getChainConfig } from '@swapkit/helpers'
 import { DecimalFiat } from '@/components/decimal/decimal-fiat'
 import { useQuote } from '@/hooks/use-quote'
 import { useAssetTo, useSetAssetTo } from '@/hooks/use-swap'
 import { useDialog } from '@/components/global-dialog'
 import { useRate } from '@/hooks/use-rates'
 import { Icon } from '@/components/icons'
+import { chainLabel } from '@/components/connect-wallet/config'
 
 export const SwapInputTo = () => {
   const assetTo = useAssetTo()
@@ -35,7 +35,16 @@ export const SwapInputTo = () => {
         <div className="flex-1">
           <DecimalInput
             className="text-leah w-full bg-transparent text-2xl font-medium outline-none"
-            amount={assetTo ? BigInt(amount.mul(10 ** 8).floor().toString()) : 0n}
+            amount={
+              assetTo
+                ? BigInt(
+                    amount
+                      .mul(10 ** 8)
+                      .floor()
+                      .toString()
+                  )
+                : 0n
+            }
             onAmountChange={() => null}
             autoComplete="off"
             disabled
@@ -51,7 +60,7 @@ export const SwapInputTo = () => {
               {assetTo ? assetTo.metadata.symbol : <Skeleton className="mb-0.5 h-6 w-12" />}
             </span>
             <span className="text-thor-gray inline-block w-full truncate text-xs">
-              {assetTo?.chain ? getChainConfig(assetTo.chain).name : <Skeleton className="mt-0.5 h-3 w-16" />}
+              {assetTo?.chain ? chainLabel(assetTo.chain) : <Skeleton className="mt-0.5 h-3 w-16" />}
             </span>
           </div>
           <Icon name="arrow-s-down" className="text-thor-gray size-5" />

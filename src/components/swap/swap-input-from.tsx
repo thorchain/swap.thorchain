@@ -1,5 +1,4 @@
 import Decimal from 'decimal.js'
-import { getChainConfig } from '@swapkit/helpers'
 import { DecimalInput } from '@/components/decimal/decimal-input'
 import { DecimalFiat } from '@/components/decimal/decimal-fiat'
 import { SwapSelectAsset } from '@/components/swap/swap-select-asset'
@@ -12,6 +11,7 @@ import { useRate } from '@/hooks/use-rates'
 import { SwapBalance } from '@/components/swap/swap-balance'
 import { ThemeButton } from '@/components/theme-button'
 import { Icon } from '@/components/icons'
+import { chainLabel } from '@/components/connect-wallet/config'
 
 export const SwapInputFrom = () => {
   const assetFrom = useAssetFrom()
@@ -61,7 +61,7 @@ export const SwapInputFrom = () => {
               {assetFrom ? assetFrom.metadata.symbol : <Skeleton className="mb-0.5 h-6 w-12" />}
             </span>
             <span className="text-thor-gray inline-block w-full truncate text-xs">
-              {assetFrom?.chain ? getChainConfig(assetFrom.chain).name : <Skeleton className="mt-0.5 h-3 w-16" />}
+              {assetFrom?.chain ? chainLabel(assetFrom.chain) : <Skeleton className="mt-0.5 h-3 w-16" />}
             </span>
           </div>
           <Icon name="arrow-s-down" className="text-thor-gray size-5" />

@@ -10,9 +10,9 @@ import {
 } from '@/components/ui/credenza'
 import { useState } from 'react'
 import { useAssetTo, useSetDestination } from '@/hooks/use-swap'
-import { getChainConfig } from '@swapkit/helpers'
 import { getAddressValidator } from '@swapkit/toolboxes'
 import { cn } from '@/lib/utils'
+import { chainLabel } from '@/components/connect-wallet/config'
 
 interface SwapAddressProps {
   isOpen: boolean
@@ -56,11 +56,11 @@ export const SwapAddressCustom = ({ isOpen, onOpenChange }: SwapAddressProps) =>
         </CredenzaHeader>
         <div className="relative mx-4 grid gap-2 md:mx-8">
           <Input
-            placeholder={assetTo ? `${getChainConfig(assetTo.chain).name} address` : 'Enter address'}
+            placeholder={assetTo ? `${chainLabel(assetTo.chain)} address` : 'Enter address'}
             value={address}
             onChange={e => onChange(e.target.value)}
             className={cn(
-              'text-leah placeholder:text-andy border-blade focus-visible:border-blade rounded-xl border-1 px-4 py-4 focus:ring-0 focus-visible:ring-0 md:text-base',
+              'text-leah placeholder:text-andy border-blade focus-visible:border-blade rounded-xl border-1 p-4 focus:ring-0 focus-visible:ring-0 md:text-base',
               {
                 'border-lucian focus-visible:border-lucian': !isValid
               }

@@ -2,7 +2,7 @@
 
 import Image from 'next/image'
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu'
-import { WalletConnectDialog } from '@/components/header/wallet-connect-dialog'
+import { ConnectWallet } from '@/components/connect-wallet/connect-wallet'
 import { useConnectedWallets, useDisconnect } from '@/store/wallets-store'
 import { useDialog } from '@/components/global-dialog'
 import { TransactionHistoryButton } from '@/components/header/transaction-history-button'
@@ -50,7 +50,7 @@ export function Header() {
           <ThemeButton
             variant="secondarySmall"
             className="hidden md:flex"
-            onClick={() => openDialog(WalletConnectDialog, {})}
+            onClick={() => openDialog(ConnectWallet, {})}
           >
             Connect Wallet
           </ThemeButton>
@@ -58,7 +58,7 @@ export function Header() {
             variant="circleSmall"
             className="flex md:hidden"
             onClick={() => {
-              openDialog(WalletConnectDialog, {})
+              openDialog(ConnectWallet, {})
             }}
           >
             <Icon name="plus" />

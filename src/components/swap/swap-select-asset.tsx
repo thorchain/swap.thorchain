@@ -3,13 +3,14 @@ import { useMemo, useState } from 'react'
 import { Credenza, CredenzaContent, CredenzaHeader, CredenzaTitle } from '@/components/ui/credenza'
 import { ScrollArea, ScrollBar } from '@/components/ui/scroll-area'
 import { Search } from 'lucide-react'
-import { Chain, getChainConfig } from '@swapkit/helpers'
 import { Asset } from '@/components/swap/asset'
 import { Input } from '@/components/ui/input'
 import { useIsMobile } from '@/hooks/use-mobile'
 import { usePools } from '@/hooks/use-pools'
 import { cn } from '@/lib/utils'
 import { AssetIcon } from '@/components/asset-icon'
+import { Chain } from '@swapkit/core'
+import { chainLabel } from '@/components/connect-wallet/config'
 
 interface SwapSelectAssetProps {
   isOpen: boolean
@@ -22,47 +23,47 @@ enum Filter {
   All = 'All'
 }
 
-type FilterNetwork = Chain | Filter
+type FilterChain = Chain | Filter
 
 export const SwapSelectAsset = ({ isOpen, onOpenChange, selected, onSelectAsset }: SwapSelectAssetProps) => {
   const isMobile = useIsMobile()
-  const [selectedChain, setSelectedChain] = useState<FilterNetwork>(Filter.All)
+  const [selectedChain, setSelectedChain] = useState<FilterChain>(Filter.All)
   const [searchQuery, setSearchQuery] = useState('')
 
   const { pools } = usePools()
 
-  const chains: Map<FilterNetwork, Asset[]> = useMemo(() => {
+  const chainMap: Map<FilterChain, Asset[]> = useMemo(() => {
     if (!pools?.length) return new Map()
 
-    const chainsMap: Map<FilterNetwork, Asset[]> = new Map()
+    const chainMap: Map<FilterChain, Asset[]> = new Map()
     const allAssets: Asset[] = []
 
     for (const asset of pools) {
       allAssets.push(asset)
 
-      const chainAssets = chainsMap.get(asset.chain)
+      const chainAssets = chainMap.get(asset.chain)
       if (chainAssets) {
         chainAssets.push(asset)
       } else {
-        chainsMap.set(asset.chain, [asset])
+        chainMap.set(asset.chain, [asset])
       }
     }
 
-    chainsMap.set(Filter.All, allAssets)
+    chainMap.set(Filter.All, allAssets)
 
-    return chainsMap
+    return chainMap
   }, [pools])
 
-  const networks = useMemo(() => {
-    return Array.from(chains.keys()).sort((a, b) => {
+  const chains = useMemo(() => {
+    return Array.from(chainMap.keys()).sort((a, b) => {
       if (a === Filter.All) return -1
       if (b === Filter.All) return 1
-      return getChainConfig(a).name.localeCompare(getChainConfig(b).name)
+      return chainLabel(a).localeCompare(chainLabel(b))
     })
-  }, [chains])
+  }, [chainMap])
 
   const chainAssets = useMemo(() => {
-    const assets = chains.get(selectedChain) || []
+    const assets = chainMap.get(selectedChain) || []
     const filteredAssets = !searchQuery
       ? assets
       : assets.filter(asset => {
@@ -72,9 +73,9 @@ export const SwapSelectAsset = ({ isOpen, onOpenChange, selected, onSelectAsset 
     return filteredAssets.sort((a, b) => {
       return a.metadata.symbol.toUpperCase().localeCompare(b.metadata.symbol.toUpperCase())
     })
-  }, [chains, selectedChain, searchQuery])
+  }, [chainMap, selectedChain, searchQuery])
 
-  const handleChainSelect = (chain: FilterNetwork) => {
+  const handleChainSelect = (chain: FilterChain) => {
     setSelectedChain(chain)
   }
 
@@ -93,28 +94,26 @@ export const SwapSelectAsset = ({ isOpen, onOpenChange, selected, onSelectAsset 
         <div className="flex flex-1 flex-col overflow-hidden md:flex-row">
           <ScrollArea className="border-b md:mr-8 md:w-2/5 md:border-r md:border-b-0 md:pl-8">
             <div className="mx-4 mb-4 flex w-max gap-2 md:mx-0 md:mb-8 md:block md:w-full">
-              {networks.map((network, index) => (
+              {chains.map((chain, index) => (
                 <div
                   key={index}
-                  onClick={() => handleChainSelect(network)}
+                  onClick={() => handleChainSelect(chain)}
                   className={cn(
                     'hover:bg-blade m-0 flex cursor-pointer items-center gap-3 rounded-lg border border-transparent px-4 py-2 md:mr-10 md:mb-2 md:py-3',
                     {
-                      'border-runes-blue': selectedChain === network
+                      'border-runes-blue': selectedChain === chain
                     }
                   )}
                 >
                   <div className="flex h-6 w-6 items-center justify-center rounded-full">
                     <Image
-                      src={network === Filter.All ? '/icons/windows.svg' : `/networks/${network.toLowerCase()}.svg`}
+                      src={chain === Filter.All ? '/icons/windows.svg' : `/networks/${chain.toLowerCase()}.svg`}
                       alt=""
                       width="24"
                       height="24"
                     />
                   </div>
-                  <span className="text-leah text-sm">
-                    {network === Filter.All ? 'All Networks' : getChainConfig(network).name}
-                  </span>
+                  <span className="text-leah text-sm">{chain === Filter.All ? 'All Chains' : chainLabel(chain)}</span>
                 </div>
               ))}
             </div>
@@ -145,7 +144,7 @@ export const SwapSelectAsset = ({ isOpen, onOpenChange, selected, onSelectAsset 
                         <AssetIcon asset={item} />
                         <div className="text-left">
                           <div className="text-leah font-semibold">{item.metadata.symbol}</div>
-                          <div className="text-thor-gray text-sm">{getChainConfig(item.chain).name}</div>
+                          <div className="text-thor-gray text-sm">{chainLabel(item.chain)}</div>
                         </div>
                       </div>
                       {item.asset === selected?.asset && (
