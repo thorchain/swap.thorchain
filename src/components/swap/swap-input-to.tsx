@@ -22,10 +22,12 @@ export const SwapInputTo = ({ quote }: SwapInputProps) => {
   const { rate: toAssetRate } = useRate(assetTo?.asset)
 
   const amount = assetTo ? BigInt(quote?.expected_amount_out || 0) : 0n
-  const valueTo = new Decimal(amount)
-    .div(10 ** 8)
-    .mul(toAssetRate || 1)
-    .toString()
+  const valueTo =
+    toAssetRate &&
+    new Decimal(amount)
+      .div(10 ** 8)
+      .mul(toAssetRate)
+      .toString()
 
   const onClick = () =>
     openDialog(SwapSelectAsset, {
@@ -46,9 +48,11 @@ export const SwapInputTo = ({ quote }: SwapInputProps) => {
             autoComplete="off"
             disabled
           />
-          <div className="text-thor-gray mt-1 text-sm">
-            <DecimalFiat amount={valueTo} />
-          </div>
+          {valueTo && (
+            <div className="text-thor-gray mt-1 text-sm">
+              <DecimalFiat amount={valueTo} />
+            </div>
+          )}
         </div>
         <div className="flex cursor-pointer items-center gap-2" onClick={onClick}>
           <AssetIcon asset={assetTo} />
