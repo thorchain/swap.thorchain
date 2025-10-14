@@ -18,13 +18,15 @@ import { useAssetFrom, useAssetTo, useSwap } from '@/hooks/use-swap'
 import { toast } from 'sonner'
 import { FeeOption } from '@swapkit/core'
 import { getSwapKit } from '@/lib/wallets'
+import { useBalance } from '@/hooks/use-balance'
 
 export const Swap = () => {
   const swapkit = getSwapKit()
   const assetFrom = useAssetFrom()
   const assetTo = useAssetTo()
   const { selected } = useAccounts()
-  const { amountFrom } = useSwap()
+  const { amountFrom, setAmountFrom } = useSwap()
+  const { refetch: refetchBalance } = useBalance()
   const { quote, error: quoteError } = useQuote()
   const { setTransaction } = transactionStore()
 
@@ -52,6 +54,9 @@ export const Swap = () => {
           toAsset: assetTo,
           status: 'pending'
         })
+
+        setAmountFrom(0n)
+        refetchBalance()
       })
       .catch((err: any) => {
         console.log(err)
@@ -69,7 +74,7 @@ export const Swap = () => {
   }
 
   return (
-    <div className="flex flex-col items-center justify-center p-4 pt-0">
+    <div className="flex flex-col items-center justify-center px-4 pb-4 md:pb-20">
       <div className="w-full max-w-md">
         <SwapBetaAlert />
 
