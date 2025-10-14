@@ -3,7 +3,7 @@ import { useMemo, useState } from 'react'
 import { Credenza, CredenzaContent, CredenzaHeader, CredenzaTitle } from '@/components/ui/credenza'
 import { ScrollArea, ScrollBar } from '@/components/ui/scroll-area'
 import { Search } from 'lucide-react'
-import { Network, networkLabel } from 'rujira.js'
+import { gasToken, Network, networkLabel } from 'rujira.js'
 import { Asset } from '@/components/swap/asset'
 import { Input } from '@/components/ui/input'
 import { useIsMobile } from '@/hooks/use-mobile'
@@ -66,6 +66,13 @@ export const SwapSelectAsset = ({ isOpen, onOpenChange, selected, onSelectAsset 
     const filteredAssets = !searchQuery
       ? assets
       : assets.filter(asset => {
+          if (
+            asset.metadata.symbol.toUpperCase() === gasToken(asset.chain).symbol &&
+            networkLabel(asset.chain).toLowerCase().includes(searchQuery.toLowerCase())
+          ) {
+            return true
+          }
+
           return asset.metadata.symbol.toLowerCase().includes(searchQuery.toLowerCase())
         })
 
