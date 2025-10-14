@@ -95,6 +95,10 @@ export const poolsInfoMap: Record<string, { geckoId?: string; decimals: number }
   'THOR.RUJI': { geckoId: 'rujira', decimals: 8 },
   'THOR.TCY': { geckoId: 'tcy', decimals: 8 },
 
+  // TRON
+  'TRON.TRX': { geckoId: 'tron', decimals: 6 },
+  'TRON.USDT-TR7NHQJEKQXGTCI8Q8ZY4PL8OTSZGJLJ6T': { geckoId: 'tether', decimals: 6 },
+
   // Ripple
   'XRP.XRP': { geckoId: 'ripple', decimals: 6 }
 }
