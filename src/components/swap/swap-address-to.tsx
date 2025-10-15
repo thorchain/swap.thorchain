@@ -1,7 +1,13 @@
 'use client'
 
 import Image from 'next/image'
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuTrigger } from '@/components/ui/dropdown-menu'
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuTrigger
+} from '@/components/ui/dropdown-menu'
 import { SwapAddressCustom } from '@/components/swap/swap-address-custom'
 import { useAssetTo, useDestination, useSetDestination } from '@/hooks/use-swap'
 import { useAccounts } from '@/hooks/use-wallets'
