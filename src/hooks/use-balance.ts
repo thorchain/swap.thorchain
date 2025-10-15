@@ -47,7 +47,7 @@ export const useBalance = (): UseBalance => {
       }
 
       const amount = await BalanceFetcher.fetch(assetFrom.asset, selected.address)
-      const baseAsset = AssetValue.from({ chain: assetFrom.chain })
+      const baseAsset = AssetValue.from({ asset: assetFrom.asset })
 
       let fee = 0n
       if (baseAsset.isGasAsset && amount > 0n) {
