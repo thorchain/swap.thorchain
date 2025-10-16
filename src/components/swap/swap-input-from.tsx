@@ -1,5 +1,4 @@
 import Decimal from 'decimal.js'
-import { DecimalInput } from '@/components/decimal/decimal-input'
 import { DecimalFiat } from '@/components/decimal/decimal-fiat'
 import { SwapSelectAsset } from '@/components/swap/swap-select-asset'
 import { useAssetFrom, useSetAssetFrom, useSwap } from '@/hooks/use-swap'
@@ -12,24 +11,22 @@ import { SwapBalance } from '@/components/swap/swap-balance'
 import { ThemeButton } from '@/components/theme-button'
 import { Icon } from '@/components/icons'
 import { chainLabel } from '@/components/connect-wallet/config'
+import { DecimalInput } from '@/components/decimal/decimal-input'
 
 export const SwapInputFrom = () => {
   const assetFrom = useAssetFrom()
   const setAssetFrom = useSetAssetFrom()
   const { openDialog } = useDialog()
-  const { amountFrom, setAmountFrom } = useSwap()
+  const { amountFrom, setAmountFrom, valueFrom, setValueFrom } = useSwap()
   const { rate } = useRate(assetFrom?.asset)
   const { balance } = useBalance()
 
-  const handleSetPercent = (percent: bigint) => {
+  const handleSetPercent = (percent: number) => {
     if (!balance) return
-    setAmountFrom((balance.spendable * percent) / 100n)
+    setValueFrom(balance.spendable.mul(percent / 100))
   }
 
-  const valueFrom = new Decimal(amountFrom || 0)
-    .div(10 ** 8)
-    .mul(rate || 1)
-    .toString()
+  const fiatValueFrom = new Decimal(valueFrom.toSignificant()).mul(rate || 0)
 
   const onClick = () => {
     openDialog(SwapSelectAsset, {
@@ -51,7 +48,7 @@ export const SwapInputFrom = () => {
             autoComplete="off"
           />
           <div className="text-thor-gray mt-1 text-sm">
-            <DecimalFiat amount={valueFrom} />
+            <DecimalFiat amount={fiatValueFrom.toString()} />
           </div>
         </div>
         <div className="flex cursor-pointer items-center gap-2" onClick={onClick}>
@@ -70,20 +67,20 @@ export const SwapInputFrom = () => {
 
       <div className="mt-4 flex items-end justify-between">
         <div className="flex gap-2">
-          <ThemeButton variant="secondarySmall" onClick={() => setAmountFrom(0n)} disabled={amountFrom === 0n}>
+          <ThemeButton variant="secondarySmall" onClick={() => setAmountFrom('')} disabled={amountFrom === ''}>
             Clear
           </ThemeButton>
           <ThemeButton
             variant="secondarySmall"
-            onClick={() => handleSetPercent(50n)}
-            disabled={!balance || balance.spendable === 0n}
+            onClick={() => handleSetPercent(50)}
+            disabled={!balance || balance.spendable.eqValue(0)}
           >
             50%
           </ThemeButton>
           <ThemeButton
             variant="secondarySmall"
-            onClick={() => handleSetPercent(100n)}
-            disabled={!balance || balance.spendable === 0n}
+            onClick={() => handleSetPercent(100)}
+            disabled={!balance || balance.spendable.eqValue(0)}
           >
             100%
           </ThemeButton>

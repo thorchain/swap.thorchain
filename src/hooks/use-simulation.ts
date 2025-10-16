@@ -21,7 +21,7 @@ export const useSimulation = (): UseSimulation => {
   const swapkit = getSwapKit()
   const assetFrom = useAssetFrom()
   const { selected } = useWallets()
-  const { amountFrom } = useSwap()
+  const { valueFrom } = useSwap()
   const { quote } = useQuote()
   const { balance } = useBalance()
 
@@ -70,9 +70,9 @@ export const useSimulation = (): UseSimulation => {
       selected &&
       quote &&
       assetFrom &&
-      amountFrom > 0n &&
+      !valueFrom.eqValue(0) &&
       balance?.spendable &&
-      balance.spendable >= amountFrom
+      balance.spendable.gte(valueFrom)
     ),
     retry: false
   })

@@ -7,7 +7,7 @@ import { useWalletStore } from '@/store/wallets-store'
 
 const INITIAL_ASSET_FROM = 'BTC.BTC'
 const INITIAL_ASSET_TO = 'THOR.RUNE'
-const INITIAL_AMOUNT_FROM = 50_000_000n
+const INITIAL_AMOUNT_FROM = 0.5
 export const INITIAL_SLIPPAGE = 1
 
 interface Destination<P> {
@@ -27,7 +27,7 @@ interface SwapState {
 
   setSlippage: (limit?: number) => void
   setDestination: (destination?: Destination<WalletOption>) => void
-  setAmountFrom: (amount: bigint) => void
+  setAmountFrom: (amount: string) => void
   resolveDestination: () => void
   setAssetFrom: (asset: Asset) => void
   setAssetTo: (asset: Asset) => void
@@ -46,14 +46,19 @@ export const useSwapStore = create<SwapState>()(
 
       setSlippage: slippage => set({ slippage: slippage }),
       setDestination: destination => set({ destination }),
-      setAmountFrom: fromAmount => set({ amountFrom: fromAmount.toString() }),
+      setAmountFrom: fromAmount => set({ amountFrom: fromAmount }),
 
       resolveDestination: async () => {
         const { assetTo, destination: previous, setDestination } = get()
         const validateAddress = await getAddressValidator()
 
         // Check if there is a custom address and it is suitable for a new assetTo
-        if (assetTo && previous && !previous.provider && validateAddress({ address: previous.address, chain: assetTo.chain })) {
+        if (
+          assetTo &&
+          previous &&
+          !previous.provider &&
+          validateAddress({ address: previous.address, chain: assetTo.chain })
+        ) {
           setDestination({ address: previous.address, network: assetTo.chain })
           return
         }

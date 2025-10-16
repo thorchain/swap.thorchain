@@ -1,4 +1,3 @@
-import Decimal from 'decimal.js'
 import { useMemo } from 'react'
 import { AxiosError } from 'axios'
 import { RefetchOptions, useQuery } from '@tanstack/react-query'
@@ -15,14 +14,14 @@ type UseQote = {
 }
 
 export const useQuote = (): UseQote => {
-  const { amountFrom, destination, slippage } = useSwap()
+  const { valueFrom, destination, slippage } = useSwap()
   const { selected } = useWallets()
   const assetFrom = useAssetFrom()
   const assetTo = useAssetTo()
 
   const params = useMemo(
     () => ({
-      amount: amountFrom > 0n ? amountFrom.toString() : undefined,
+      amount: valueFrom.eqValue(0) ? undefined : valueFrom.toSignificant(),
       fromAsset: assetFrom?.asset,
       toAsset: assetTo?.asset,
       affiliate: ['sto'],
@@ -33,7 +32,7 @@ export const useQuote = (): UseQote => {
       streamingQuantity: 0,
       liquidity_tolerance_bps: slippage ? slippage * 100 : undefined
     }),
-    [amountFrom, assetFrom?.asset, assetTo?.asset, destination?.address, selected?.address, slippage]
+    [valueFrom, assetFrom?.asset, assetTo?.asset, destination?.address, selected?.address, slippage]
   )
 
   const {
@@ -48,12 +47,13 @@ export const useQuote = (): UseQote => {
       return getSwapkitQuote({
         buyAsset: params.toAsset,
         destinationAddress: params.destination,
-        sellAmount: new Decimal(params.amount || '0').div(10 ** 8).toString(),
+        sellAmount: params.amount,
         sellAsset: params.fromAsset,
         affiliate: 'sto',
         affiliateFee: 0,
         sourceAddress: params.sourceAddress,
-        includeTx: !!(params.destination && selected?.address),
+        // includeTx: !!(params.destination && selected?.address),
+        includeTx: false,
         slippage: slippage
       })
     },

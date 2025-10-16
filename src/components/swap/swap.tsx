@@ -25,7 +25,7 @@ export const Swap = () => {
   const assetFrom = useAssetFrom()
   const assetTo = useAssetTo()
   const { selected } = useWallets()
-  const { amountFrom, setAmountFrom } = useSwap()
+  const { valueFrom, setAmountFrom } = useSwap()
   const { refetch: refetchBalance } = useBalance()
   const { quote, error: quoteError } = useQuote()
   const { setTransaction } = transactionStore()
@@ -46,7 +46,7 @@ export const Swap = () => {
           hash: hash,
           timestamp: new Date(),
           fromAsset: assetFrom,
-          fromAmount: amountFrom.toString(),
+          fromAmount: valueFrom.getBaseValue('string'),
           toAmount: toAmount
             .mul(10 ** 8)
             .floor()
@@ -55,7 +55,7 @@ export const Swap = () => {
           status: 'pending'
         })
 
-        setAmountFrom(0n)
+        setAmountFrom('')
         refetchBalance()
       })
       .catch((err: any) => {

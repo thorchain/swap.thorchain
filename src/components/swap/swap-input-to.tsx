@@ -10,6 +10,7 @@ import { useDialog } from '@/components/global-dialog'
 import { useRate } from '@/hooks/use-rates'
 import { Icon } from '@/components/icons'
 import { chainLabel } from '@/components/connect-wallet/config'
+import { BigIntArithmetics } from '@swapkit/core'
 
 export const SwapInputTo = () => {
   const assetTo = useAssetTo()
@@ -18,8 +19,8 @@ export const SwapInputTo = () => {
   const { openDialog } = useDialog()
   const { rate: toAssetRate } = useRate(assetTo?.asset)
 
-  const amount = new Decimal(quote?.expectedBuyAmount || 0)
-  const valueTo = toAssetRate && amount.mul(toAssetRate)
+  const value = quote && new BigIntArithmetics(quote.expectedBuyAmount)
+  const fiatValueTo = (toAssetRate && value && new Decimal(value.toSignificant()).mul(toAssetRate)) || new Decimal(0)
 
   const onClick = () =>
     openDialog(SwapSelectAsset, {
@@ -35,25 +36,14 @@ export const SwapInputTo = () => {
         <div className="flex-1">
           <DecimalInput
             className="text-leah w-full bg-transparent text-2xl font-medium outline-none"
-            amount={
-              assetTo
-                ? BigInt(
-                    amount
-                      .mul(10 ** 8)
-                      .floor()
-                      .toString()
-                  )
-                : 0n
-            }
+            amount={value ? value.toSignificant() : ''}
             onAmountChange={() => null}
             autoComplete="off"
             disabled
           />
-          {valueTo && (
-            <div className="text-thor-gray mt-1 text-sm">
-              <DecimalFiat amount={valueTo.toString()} />
-            </div>
-          )}
+          <div className="text-thor-gray mt-1 text-sm">
+            <DecimalFiat amount={fiatValueTo.toString()} />
+          </div>
         </div>
         <div className="flex cursor-pointer items-center gap-2" onClick={onClick}>
           <AssetIcon asset={assetTo} />

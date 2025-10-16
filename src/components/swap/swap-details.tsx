@@ -7,6 +7,7 @@ import { useAssetFrom, useAssetTo, useSwap } from '@/hooks/use-swap'
 import { Icon } from '@/components/icons'
 import { DecimalFiat } from '@/components/decimal/decimal-fiat'
 import { formatDuration, intervalToDuration } from 'date-fns'
+import { BigIntArithmetics } from '@swapkit/core'
 
 interface FeeData {
   amount: Decimal
@@ -18,14 +19,12 @@ export function SwapDetails() {
   const assetFrom = useAssetFrom()
   const assetTo = useAssetTo()
   const [showMore, setShowMore] = useState(false)
-  const { amountFrom } = useSwap()
+  const { valueFrom } = useSwap()
   const { quote } = useQuote()
 
   if (!quote) return null
 
-  const price = new Decimal(quote.expectedBuyAmount)
-    .div(new Decimal(amountFrom.toString()).div(10 ** 8))
-    .toDecimalPlaces(8)
+  const price = new BigIntArithmetics(quote.expectedBuyAmount).div(valueFrom)
 
   const feeData = (type: string): FeeData | undefined => {
     const fee = quote.fees.find(f => f.type === type)
@@ -106,12 +105,8 @@ export function SwapDetails() {
           <div className="flex items-center justify-between">
             <div className="flex items-center">Price</div>
             <div className="text-leah flex items-center gap-1">
-              {price ? (
-                <>
-                  <span>1 {assetFrom?.metadata.symbol} =</span>
-                  {price.toString()} {assetTo?.metadata.symbol}
-                </>
-              ) : null}
+              <span>1 {assetFrom?.metadata.symbol} =</span>
+              {price.toSignificant()} {assetTo?.metadata.symbol}
             </div>
           </div>
 

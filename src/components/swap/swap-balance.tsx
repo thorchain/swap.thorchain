@@ -1,11 +1,10 @@
 import { Loader } from 'lucide-react'
-import { DecimalText } from '@/components/decimal/decimal-text'
 import { useAssetFrom } from '@/hooks/use-swap'
 import { useBalance } from '@/hooks/use-balance'
 
 export const SwapBalance = () => {
   const assetFrom = useAssetFrom()
-  const { balance, isLoading: isBalanceLoading, error } = useBalance()
+  const { balance, isLoading: isBalanceLoading } = useBalance()
 
   const renderBalance = () => {
     if (isBalanceLoading) {
@@ -13,7 +12,11 @@ export const SwapBalance = () => {
     }
 
     if (balance) {
-      return <DecimalText amount={balance.spendable} symbol={assetFrom?.metadata.symbol} />
+      return (
+        <span>
+          {balance.spendable.toSignificant()} {assetFrom?.metadata.symbol}
+        </span>
+      )
     }
 
     return null
