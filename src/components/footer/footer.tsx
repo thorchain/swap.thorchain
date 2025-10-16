@@ -19,7 +19,7 @@ export function Footer() {
               <a href="mailto:swap@horizontalsystems.io">
                 <Icon width={20} height={20} viewBox="0 0 20 20" name="email" />
               </a>
-              <a href="https://discord.gg/UnZvkVUa" rel="noopener noreferrer" target="_blank">
+              <a href="https://discord.gg/eGrrwNE95w" rel="noopener noreferrer" target="_blank">
                 <Icon width={20} height={20} viewBox="0 0 20 20" name="discord" />
               </a>
               <a href="https://t.me/thorchain_org" rel="noopener noreferrer" target="_blank">
