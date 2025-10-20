@@ -1,4 +1,3 @@
-import Decimal from 'decimal.js'
 import { SwapSelectAsset } from '@/components/swap/swap-select-asset'
 import { DecimalInput } from '@/components/decimal/decimal-input'
 import { AssetIcon } from '@/components/asset-icon'
@@ -10,17 +9,19 @@ import { useDialog } from '@/components/global-dialog'
 import { useRate } from '@/hooks/use-rates'
 import { Icon } from '@/components/icons'
 import { chainLabel } from '@/components/connect-wallet/config'
-import { BigIntArithmetics } from '@swapkit/core'
+import { SwapKitNumber } from '@swapkit/core'
 
 export const SwapInputTo = () => {
   const assetTo = useAssetTo()
   const setAssetTo = useSetAssetTo()
   const { quote } = useQuote()
   const { openDialog } = useDialog()
-  const { rate: toAssetRate } = useRate(assetTo?.asset)
+  const { rate } = useRate(assetTo?.asset)
 
-  const value = quote && new BigIntArithmetics(quote.expectedBuyAmount)
-  const fiatValueTo = (toAssetRate && value && new Decimal(value.toSignificant()).mul(toAssetRate)) || new Decimal(0)
+  const value = quote && new SwapKitNumber(quote.expectedBuyAmount)
+
+  const rateTo = rate && new SwapKitNumber(rate)
+  const fiatValueTo = (rateTo && value && value.mul(rateTo)) || new SwapKitNumber(0)
 
   const onClick = () =>
     openDialog(SwapSelectAsset, {
@@ -42,7 +43,7 @@ export const SwapInputTo = () => {
             disabled
           />
           <div className="text-thor-gray mt-1 text-sm">
-            <DecimalFiat amount={fiatValueTo.toString()} />
+            <DecimalFiat amount={fiatValueTo.toCurrency()} />
           </div>
         </div>
         <div className="flex cursor-pointer items-center gap-2" onClick={onClick}>

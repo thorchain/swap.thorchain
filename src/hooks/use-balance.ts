@@ -4,7 +4,6 @@ import { useWallets } from '@/hooks/use-wallets'
 import { useInboundAddresses } from '@/hooks/use-inbound-addresses'
 import {
   AssetValue,
-  BigIntArithmetics,
   Chain,
   CosmosChain,
   CosmosChains,
@@ -12,6 +11,7 @@ import {
   EVMChains,
   FeeOption,
   isGasAsset,
+  SwapKitNumber,
   UTXOChain,
   UTXOChains
 } from '@swapkit/core'
@@ -20,8 +20,8 @@ import { estimateTransactionFee } from '@swapkit/toolboxes/cosmos'
 
 type UseBalance = {
   balance?: {
-    total: BigIntArithmetics
-    spendable: BigIntArithmetics
+    total: SwapKitNumber
+    spendable: SwapKitNumber
   } | null
   refetch: () => void
   isLoading: boolean
@@ -63,49 +63,53 @@ export const useBalance = (): UseBalance => {
         }
       }
 
-      let fee = new BigIntArithmetics(0)
+      let fee = new SwapKitNumber(0)
 
-      if (isGasAsset({ chain: assetFrom.chain, symbol: assetFrom.metadata.symbol }) && value.gt(0)) {
-        const inbound = inboundAddresses.find((a: any) => a.chain === assetFrom.chain)
+      try {
+        if (isGasAsset({ chain: assetFrom.chain, symbol: assetFrom.metadata.symbol }) && value.gt(0)) {
+          const inbound = inboundAddresses.find((a: any) => a.chain === assetFrom.chain)
 
-        if (!inbound) {
-          return null
+          if (!inbound) {
+            return null
+          }
+
+          if (EVMChains.includes(assetFrom.chain as EVMChain)) {
+            const evmWallet = swapKit.getWallet<EVMChain>(selected.provider, selected.network as EVMChain)
+            fee = await evmWallet.estimateTransactionFee({
+              to: inbound.address,
+              from: selected.address,
+              value: value.getBaseValue('bigint'),
+              data: '0x',
+              chain: assetFrom.chain as EVMChain,
+              feeOption: FeeOption.Fast
+            })
+          } else if (UTXOChains.includes(assetFrom.chain as UTXOChain)) {
+            const utxoWallet = swapKit.getWallet<UTXOChain>(selected.provider, selected.network as UTXOChain)
+            fee = await utxoWallet.estimateTransactionFee({
+              recipient: inbound.address,
+              sender: selected.address,
+              assetValue: value,
+              feeOptionKey: FeeOption.Fast
+            })
+          } else if (CosmosChains.includes(assetFrom.chain as CosmosChain)) {
+            fee = estimateTransactionFee({ assetValue: value })
+          } else if (assetFrom.chain === Chain.Tron) {
+            const tronWallet = swapKit.getWallet<Chain.Tron>(selected.provider, selected.network as Chain.Tron)
+            fee = await tronWallet.estimateTransactionFee({
+              sender: selected.address,
+              recipient: inbound.address,
+              assetValue: value,
+              feeOptionKey: FeeOption.Fast
+            })
+          }
         }
-
-        if (EVMChains.includes(assetFrom.chain as EVMChain)) {
-          const wallet = swapKit.getWallet<EVMChain>(selected.provider, selected.network as EVMChain)
-          fee = await wallet.estimateTransactionFee({
-            to: inbound.address,
-            from: selected.address,
-            value: value.getBaseValue('bigint'),
-            data: '0x',
-            chain: assetFrom.chain as EVMChain,
-            feeOption: FeeOption.Fast
-          })
-        } else if (UTXOChains.includes(assetFrom.chain as UTXOChain)) {
-          const wallet = swapKit.getWallet<UTXOChain>(selected.provider, selected.network as UTXOChain)
-          fee = await wallet.estimateTransactionFee({
-            recipient: inbound.address,
-            sender: selected.address,
-            assetValue: value,
-            feeOptionKey: FeeOption.Fast
-          })
-        } else if (CosmosChains.includes(assetFrom.chain as CosmosChain)) {
-          fee = estimateTransactionFee({ assetValue: value })
-        } else if (assetFrom.chain === Chain.Tron) {
-          const wallet = swapKit.getWallet<Chain.Tron>(selected.provider, selected.network as Chain.Tron)
-          fee = await wallet.estimateTransactionFee({
-            sender: selected.address,
-            recipient: inbound.address,
-            assetValue: value,
-            feeOptionKey: FeeOption.Fast
-          })
-        }
+      } catch (e) {
+        console.log({ e })
       }
 
       return {
         total: value,
-        spendable: value.gt(fee) ? value.sub(fee) : new BigIntArithmetics(0)
+        spendable: value.gt(fee) ? value.sub(fee) : new SwapKitNumber(0)
       }
     },
     enabled: !!(selected && assetFrom && inboundAddresses),

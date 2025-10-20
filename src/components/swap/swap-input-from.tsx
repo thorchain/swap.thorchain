@@ -1,4 +1,3 @@
-import Decimal from 'decimal.js'
 import { DecimalFiat } from '@/components/decimal/decimal-fiat'
 import { SwapSelectAsset } from '@/components/swap/swap-select-asset'
 import { useAssetFrom, useSetAssetFrom, useSwap } from '@/hooks/use-swap'
@@ -12,6 +11,7 @@ import { ThemeButton } from '@/components/theme-button'
 import { Icon } from '@/components/icons'
 import { chainLabel } from '@/components/connect-wallet/config'
 import { DecimalInput } from '@/components/decimal/decimal-input'
+import { SwapKitNumber } from '@swapkit/core'
 
 export const SwapInputFrom = () => {
   const assetFrom = useAssetFrom()
@@ -26,7 +26,8 @@ export const SwapInputFrom = () => {
     setValueFrom(balance.spendable.mul(percent / 100))
   }
 
-  const fiatValueFrom = new Decimal(valueFrom.toSignificant()).mul(rate || 0)
+  const rateFrom = new SwapKitNumber(rate || 0)
+  const fiatValueFrom = valueFrom.mul(rateFrom)
 
   const onClick = () => {
     openDialog(SwapSelectAsset, {
@@ -48,7 +49,7 @@ export const SwapInputFrom = () => {
             autoComplete="off"
           />
           <div className="text-thor-gray mt-1 text-sm">
-            <DecimalFiat amount={fiatValueFrom.toString()} />
+            <DecimalFiat amount={fiatValueFrom.toCurrency()} />
           </div>
         </div>
         <div className="flex cursor-pointer items-center gap-2" onClick={onClick}>

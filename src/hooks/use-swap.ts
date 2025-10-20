@@ -1,7 +1,7 @@
 import { useEffect, useMemo } from 'react'
 import { usePools } from '@/hooks/use-pools'
 import { useSwapStore } from '@/store/swap-store'
-import { BigIntArithmetics, NumberPrimitives } from '@swapkit/core'
+import { NumberPrimitives, SwapKitNumber } from '@swapkit/core'
 
 // Selectors
 
@@ -50,9 +50,9 @@ export const useSwap = () => {
     setDestination,
     amountFrom: amount,
     setAmountFrom,
-    valueFrom: useMemo(() => new BigIntArithmetics(amount), [amount]),
-    setValueFrom: (value: BigIntArithmetics | NumberPrimitives) => {
-      setAmountFrom(new BigIntArithmetics(value).toSignificant())
+    valueFrom: useMemo(() => new SwapKitNumber(amount), [amount]),
+    setValueFrom: (value: SwapKitNumber | NumberPrimitives) => {
+      setAmountFrom(new SwapKitNumber(value).toSignificant())
     },
     setAssetTo,
     feeWarning: BigInt(feeWarning)

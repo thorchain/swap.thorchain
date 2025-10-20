@@ -7,7 +7,7 @@ import { useAssetFrom, useAssetTo, useSwap } from '@/hooks/use-swap'
 import { Icon } from '@/components/icons'
 import { DecimalFiat } from '@/components/decimal/decimal-fiat'
 import { formatDuration, intervalToDuration } from 'date-fns'
-import { BigIntArithmetics } from '@swapkit/core'
+import { SwapKitNumber } from '@swapkit/core'
 
 interface FeeData {
   amount: Decimal
@@ -24,7 +24,7 @@ export function SwapDetails() {
 
   if (!quote) return null
 
-  const price = new BigIntArithmetics(quote.expectedBuyAmount).div(valueFrom)
+  const price = new SwapKitNumber(quote.expectedBuyAmount).div(valueFrom)
 
   const feeData = (type: string): FeeData | undefined => {
     const fee = quote.fees.find(f => f.type === type)
