@@ -45,9 +45,8 @@ export const getSwapkitQuote = async (data: Record<string, any>) => {
     })
 }
 
-export const getTransaction = async (hash: string) => {
-  const txId = hash.replace('0x', '').toUpperCase()
-  return thornode.get(`/thorchain/tx/status/${txId}`).then(res => res.data)
+export const getSwapKitTrack = async (data: Record<string, any>) => {
+  return swapkit.post('/track', data).then(res => res.data)
 }
 
 export const getInboundAddresses = async () => {

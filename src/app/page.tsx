@@ -5,7 +5,7 @@ import { getQueryClient } from '@/components/react-query/react-query-client'
 import { getPools } from '@/lib/api'
 import { Footer } from '@/components/footer/footer'
 
-export default async function Home() {
+export default async function Page() {
   const queryClient = getQueryClient()
   await queryClient.prefetchQuery({
     queryKey: ['pools'],

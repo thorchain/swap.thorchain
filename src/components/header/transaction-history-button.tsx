@@ -9,6 +9,7 @@ import { useConnectedWallets } from '@/store/wallets-store'
 import { useSyncTransactions } from '@/hooks/use-sync-transactions'
 import { ThemeButton } from '@/components/theme-button'
 import { Icon } from '@/components/icons'
+import { useMigrateTransactions } from '@/hooks/use-migrate-transactions'
 
 export const TransactionHistoryButton = () => {
   const { openDialog } = useDialog()
@@ -18,6 +19,7 @@ export const TransactionHistoryButton = () => {
   const setPendingAlert = useSetPendingAlert()
   const connectedProviders = useConnectedWallets()
 
+  useMigrateTransactions()
   useSyncTransactions()
 
   if (!connectedProviders.length) {
@@ -48,7 +50,7 @@ export const TransactionHistoryButton = () => {
       >
         <div className="flex items-center gap-2">
           <div>
-            {pendingTx?.fromAsset?.metadata?.symbol} to {pendingTx?.toAsset?.metadata?.symbol}
+            {pendingTx?.assetFrom?.metadata?.symbol} to {pendingTx?.assetTo?.metadata?.symbol}
           </div>
           <LoaderCircle size={16} className="animate-spin" />
         </div>

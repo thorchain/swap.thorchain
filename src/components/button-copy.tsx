@@ -1,13 +1,12 @@
 import { useState } from 'react'
-import { Copy, CopyCheck } from 'lucide-react'
+import { Icon } from '@/components/icons'
 
 interface CopyButtonProps {
   text: string
-  className?: string
   delay?: number
 }
 
-export const CopyButton = ({ className, text, delay = 1000 }: CopyButtonProps) => {
+export const CopyButton = ({ text, delay = 1000 }: CopyButtonProps) => {
   const [isCopied, setIsCopied] = useState(false)
 
   const handleCopy = async () => {
@@ -23,8 +22,8 @@ export const CopyButton = ({ className, text, delay = 1000 }: CopyButtonProps) =
   }
 
   return isCopied ? (
-    <CopyCheck size={14} className={className} />
+    <Icon name="check" className="text-thor-gray size-5 cursor-pointer" />
   ) : (
-    <Copy size={14} className={className} onClick={handleCopy} />
+    <Icon name="copy" className="text-thor-gray size-5 cursor-pointer" onClick={handleCopy} />
   )
 }

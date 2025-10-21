@@ -52,8 +52,8 @@ export const useQuote = (): UseQote => {
         affiliate: 'sto',
         affiliateFee: 0,
         sourceAddress: params.sourceAddress,
-        // includeTx: !!(params.destination && selected?.address),
-        includeTx: false,
+        includeTx: !!(params.destination && selected?.address),
+        // includeTx: false,
         slippage: slippage
       })
     },

@@ -1,21 +1,37 @@
 import { useQueries } from '@tanstack/react-query'
-import { usePendingTxs, useSetTxDetails } from '@/store/transaction-store'
-import { getTransaction } from '@/lib/api'
+import { usePendingTxs, useSetTxDetails, useSetTxUnknown } from '@/store/transaction-store'
+import { getSwapKitTrack } from '@/lib/api'
+import { getChainConfig } from '@swapkit/core'
+import { AxiosError } from 'axios'
 
 export const useSyncTransactions = () => {
   const pendingTxs = usePendingTxs()
   const setTransactionDetails = useSetTxDetails()
+  const setTransactionUnknown = useSetTxUnknown()
 
   const queries = pendingTxs.map(item => {
     return {
       queryKey: ['transaction', item.hash],
-      enabled: item.status === 'pending',
-      refetchInterval: 5_000, // every 5s
+      enabled: item.status != 'unknown' && (!item.details || item.status === 'pending'),
+      retry: true,
+      retryDelay: 5_000,
       queryFn: () =>
-        getTransaction(item.hash).then(data => {
-          setTransactionDetails(item.hash, data)
-          return data
+        getSwapKitTrack({
+          hash: item.hash,
+          chainId: getChainConfig(item.assetFrom.chain).chainId
         })
+          .then(data => {
+            setTransactionDetails(item.hash, data)
+            return data
+          })
+          .catch(error => {
+            if (error instanceof AxiosError && error.response?.data?.error === 'txLogsParsingError') {
+              setTransactionUnknown(item.hash)
+              return null
+            }
+
+            throw error
+          })
     }
   })
 

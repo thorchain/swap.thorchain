@@ -1,6 +1,5 @@
 'use client'
 
-import Decimal from 'decimal.js'
 import { SwapAddressFrom } from '@/components/swap/swap-address-from'
 import { SwapAddressTo } from '@/components/swap/swap-address-to'
 import { SwapSettings } from '@/components/swap/swap-settings'
@@ -16,7 +15,7 @@ import { transactionStore } from '@/store/transaction-store'
 import { useQuote } from '@/hooks/use-quote'
 import { useAssetFrom, useAssetTo, useSwap } from '@/hooks/use-swap'
 import { toast } from 'sonner'
-import { FeeOption } from '@swapkit/core'
+import { FeeOption, getChainConfig, SwapKitNumber } from '@swapkit/core'
 import { getSwapKit } from '@/lib/wallets'
 import { useBalance } from '@/hooks/use-balance'
 
@@ -31,7 +30,7 @@ export const Swap = () => {
   const { setTransaction } = transactionStore()
 
   const onSwap = async () => {
-    if (!selected || !quote) {
+    if (!selected || !quote || !assetFrom || !assetTo) {
       return
     }
 
@@ -41,17 +40,14 @@ export const Swap = () => {
         feeOptionKey: FeeOption.Fast
       })
       .then((hash: string) => {
-        const toAmount = new Decimal(quote?.expectedBuyAmount || 0)
         setTransaction({
+          chainId: getChainConfig(assetFrom.chain).chainId,
           hash: hash,
           timestamp: new Date(),
-          fromAsset: assetFrom,
-          fromAmount: valueFrom.getBaseValue('string'),
-          toAmount: toAmount
-            .mul(10 ** 8)
-            .floor()
-            .toString(),
-          toAsset: assetTo,
+          assetFrom: assetFrom,
+          assetTo: assetTo,
+          amountFrom: valueFrom.toSignificant(),
+          amountTo: new SwapKitNumber(quote.expectedBuyAmount).toSignificant(),
           status: 'pending'
         })
 

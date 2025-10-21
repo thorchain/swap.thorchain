@@ -1,12 +1,9 @@
 'use client'
 
-import Decimal from 'decimal.js'
 import { Fragment, useState } from 'react'
 import { format, isSameDay, isToday, isYesterday } from 'date-fns'
-import { Check, CircleCheck, Globe, LoaderCircle, X } from 'lucide-react'
+import { Check, CircleAlert, CircleCheck, ClockFading, LoaderCircle, Undo2, X } from 'lucide-react'
 import { ScrollArea } from '@/components/ui/scroll-area'
-import { DecimalText } from '@/components/decimal/decimal-text'
-import { DecimalFiat } from '@/components/decimal/decimal-fiat'
 import { CopyButton } from '@/components/button-copy'
 import { useTransactions } from '@/store/transaction-store'
 import { useRates } from '@/hooks/use-rates'
@@ -14,7 +11,14 @@ import { cn, truncate } from '@/lib/utils'
 import { AssetIcon } from '@/components/asset-icon'
 import { Credenza, CredenzaContent, CredenzaHeader, CredenzaTitle } from '@/components/ui/credenza'
 import { Icon } from '@/components/icons'
-import { ThemeButton } from '@/components/theme-button'
+import {
+  assetFromString,
+  ChainId,
+  ChainIdToChain,
+  getChainConfig,
+  getExplorerTxUrl,
+  SwapKitNumber
+} from '@swapkit/core'
 
 interface HistoryDialogProps {
   isOpen: boolean
@@ -38,6 +42,45 @@ export const TransactionHistoryDialog = ({ isOpen, onOpenChange }: HistoryDialog
     return format(date, 'd MMMM')
   }
 
+  const leg = (tx: any, legTx: any) => {
+    const from = assetFromString(legTx.fromAsset)
+    const to = assetFromString(legTx.toAsset)
+
+    const text =
+      legTx.fromAsset === legTx.toAsset
+        ? legTx.fromAsset.toLowerCase() === tx.assetFrom.asset.toLowerCase()
+          ? `Deposit ${from.ticker}`
+          : `Send ${to.ticker}`
+        : `Swap ${from.ticker} to ${to.ticker}`
+
+    const chain = ChainIdToChain[legTx.chainId as ChainId]
+    const chainConfig = getChainConfig(chain)
+    const explorerUrl = getExplorerTxUrl({ chain: chain, txHash: legTx.hash })
+
+    return (
+      <div className="text-thor-gray flex justify-between text-sm">
+        <div className="flex items-center gap-2">
+          {legTx.status === 'completed' ? (
+            <CircleCheck className="text-liquidity-green" size={16} />
+          ) : (
+            <LoaderCircle className="animate-spin" size={16} />
+          )}
+          <span>{text}</span>
+        </div>
+        <div className="flex items-center gap-2">
+          <span>{chainConfig.name}</span>
+          <Icon
+            name="globe"
+            className="size-5 cursor-pointer"
+            onClick={() => {
+              window.open(explorerUrl, '_blank')
+            }}
+          />
+        </div>
+      </div>
+    )
+  }
+
   return (
     <Credenza open={isOpen} onOpenChange={onOpenChange}>
       <CredenzaContent>
@@ -54,28 +97,19 @@ export const TransactionHistoryDialog = ({ isOpen, onOpenChange }: HistoryDialog
                 lastDate = txDate
 
                 const details = tx.details
-                const fromTx = details?.tx
-                const fromAmount = BigInt(fromTx?.coins?.[0]?.amount || tx.fromAmount || 0)
-                const fromValue = new Decimal(fromAmount || 0)
-                  .div(10 ** 8)
-                  .mul(rates[tx.fromAsset?.asset || ''] || 1)
-                  .toString()
+                const status = tx.status
 
-                const outTxs = details?.out_txs || []
-                const toTx = outTxs[outTxs.length - 1]
-                const toAmount = BigInt(toTx?.coins?.[0]?.amount || tx.toAmount || 0)
-                const toValue = new Decimal(toAmount)
-                  .div(10 ** 8)
-                  .mul(rates[tx.toAsset?.asset || ''] || 1)
-                  .toString()
+                const amountFrom = new SwapKitNumber(tx.amountFrom)
+                const rawRateFrom = rates[tx.assetFrom.asset]
+                const rateFrom = rawRateFrom && new SwapKitNumber(rawRateFrom)
+                const fiatFrom = rateFrom && rateFrom.mul(amountFrom)
 
-                const stages = details?.stages
-                const inCompleted = stages?.inbound_finalised?.completed
-                const swapCompleted = stages?.swap_finalised?.completed
-                const outCompleted = stages?.outbound_signed?.completed
+                const amountTo = new SwapKitNumber(tx.amountTo)
+                const rawRateTo = rates[tx.assetTo.asset]
+                const rateTo = rawRateTo && new SwapKitNumber(rawRateTo)
+                const fiatTo = rateTo && rateTo.mul(amountTo)
 
                 const isExpanded = expandTx === tx.hash
-                const loadingCircle = <LoaderCircle className="animate-spin" size={16} />
 
                 return (
                   <Fragment key={i}>
@@ -94,30 +128,36 @@ export const TransactionHistoryDialog = ({ isOpen, onOpenChange }: HistoryDialog
                         onClick={() => setExpandTx(isExpanded ? null : tx.hash)}
                       >
                         <div className="flex items-center gap-3">
-                          {tx.fromAsset && <AssetIcon asset={tx.fromAsset} />}
+                          {tx.assetFrom && <AssetIcon asset={tx.assetFrom} />}
                           <div className="flex flex-col">
-                            <DecimalText className="text-leah font-base font-semibold" amount={fromAmount} />
-                            <span className="text-thor-gray text-sm">{tx.fromAsset?.metadata.symbol}</span>
+                            <span className="text-leah text-base font-semibold">{amountFrom.toSignificant()}</span>
+                            <span className="text-thor-gray text-sm">{tx.assetFrom?.metadata.symbol}</span>
                           </div>
                         </div>
                         <div className="flex flex-col items-center justify-center">
                           <span className="pb-2">
-                            {tx.status === 'failed' ? (
-                              <X className="text-lucian" size={16} />
-                            ) : tx.status === 'completed' ? (
+                            {status === 'not_started' ? (
+                              <ClockFading className="text-thor-gray" size={16} />
+                            ) : status === 'pending' || status === 'swapping' ? (
+                              <LoaderCircle className="animate-spin" size={16} />
+                            ) : status === 'completed' ? (
                               <Check className="text-liquidity-green" size={16} />
+                            ) : status === 'failed' ? (
+                              <X className="text-lucian" size={16} />
+                            ) : status === 'refunded' ? (
+                              <Undo2 className="text-thor-gray" size={16} />
                             ) : (
-                              loadingCircle
+                              <CircleAlert className="text-thor-gray" size={16} />
                             )}
                           </span>
-                          <span className="text-thor-gray text-[10px]">{tx.status}</span>
+                          <span className="text-thor-gray text-[10px] capitalize">{status.replace('_', ' ')}</span>
                         </div>
                         <div className="flex items-center justify-end gap-3">
                           <div className="flex flex-col text-right">
-                            <DecimalText className="text-leah text-base font-semibold" amount={toAmount} />
-                            <span className="text-thor-gray text-sm">{tx.toAsset?.metadata?.symbol}</span>
+                            <span className="text-leah text-base font-semibold">{amountTo.toSignificant()}</span>
+                            <span className="text-thor-gray text-sm">{tx.assetTo?.metadata?.symbol}</span>
                           </div>
-                          {tx.toAsset && <AssetIcon asset={tx.toAsset} />}
+                          {tx.assetTo && <AssetIcon asset={tx.assetTo} />}
                         </div>
                       </div>
                       {isExpanded && (
@@ -126,108 +166,51 @@ export const TransactionHistoryDialog = ({ isOpen, onOpenChange }: HistoryDialog
                             <div className="text-thor-gray flex justify-between text-sm">
                               <span>You Deposited</span>
                               <div className="flex gap-2">
-                                <DecimalText
-                                  className="text-leah font-semibold"
-                                  amount={fromAmount}
-                                  symbol={tx.fromAsset?.metadata.symbol}
-                                />
-                                <span>
-                                  (<DecimalFiat amount={fromValue} />)
+                                <span className="text-leah font-semibold">
+                                  {amountFrom.toSignificant()} {tx.assetFrom?.metadata.symbol}
                                 </span>
+                                {fiatFrom && <span className="font-medium">({fiatFrom.toCurrency()})</span>}
                               </div>
                             </div>
 
                             <div className="text-thor-gray flex justify-between text-sm">
                               <span>Min. payout</span>
                               <div className="flex gap-2">
-                                <DecimalText
-                                  className="text-leah font-semibold"
-                                  amount={toAmount}
-                                  symbol={tx.toAsset?.metadata?.symbol}
-                                />
-                                <span>
-                                  (<DecimalFiat amount={toValue} />)
+                                <span className="text-leah font-semibold">
+                                  {amountTo.toSignificant()} {tx.assetTo?.metadata.symbol}
                                 </span>
+                                {fiatTo && <span className="font-medium">({fiatTo.toCurrency()})</span>}
                               </div>
                             </div>
                           </div>
 
-                          <div className="space-y-4 border-t p-4">
-                            {fromTx?.from_address && (
-                              <div className="text-thor-gray flex justify-between text-sm">
-                                <span>Source Address</span>
-                                <div className="flex items-center gap-2">
-                                  <span className="text-leah font-semibold">{truncate(fromTx.from_address)}</span>
-                                  <CopyButton className="h-4 w-4 cursor-pointer" text={fromTx.from_address} />
+                          {details && (
+                            <>
+                              <div className="space-y-4 border-t p-4">
+                                <div className="text-thor-gray flex justify-between text-sm">
+                                  <span>Source Address</span>
+                                  <div className="flex items-center gap-2">
+                                    <span className="text-leah font-semibold">{truncate(details.fromAddress)}</span>
+                                    <CopyButton text={details.fromAddress} />
+                                  </div>
+                                </div>
+
+                                <div className="text-thor-gray flex justify-between text-sm">
+                                  <span>Destination Address</span>
+                                  <div className="flex items-center gap-2">
+                                    <span className="text-leah font-semibold">{truncate(details.toAddress)}</span>
+                                    <CopyButton text={details.toAddress} />
+                                  </div>
                                 </div>
                               </div>
-                            )}
 
-                            {toTx?.to_address && (
-                              <div className="text-thor-gray flex justify-between text-sm">
-                                <span>Destination Address</span>
-                                <div className="flex items-center gap-2">
-                                  <span className="text-leah font-semibold">{truncate(toTx.to_address)}</span>
-                                  <CopyButton className="h-4 w-4 cursor-pointer" text={toTx.to_address} />
-                                </div>
+                              <div className="space-y-4 border-t p-4">
+                                {details.legs.map((legTx: any, i: number) => {
+                                  return <div key={i}>{legTx.status !== 'not_started' && leg(tx, legTx)}</div>
+                                })}
                               </div>
-                            )}
-                          </div>
-
-                          <div className="space-y-4 border-t p-4">
-                            <div className="text-thor-gray flex justify-between text-sm">
-                              <div className="flex items-center gap-2">
-                                {inCompleted ? (
-                                  <CircleCheck className="text-liquidity-green" size="16" />
-                                ) : (
-                                  loadingCircle
-                                )}
-                                <div className="">
-                                  {tx.fromAsset?.metadata.symbol} {inCompleted ? 'Deposited' : 'Depositing'}
-                                </div>
-                              </div>
-                              {/*todo: who time*/}
-                            </div>
-
-                            <div className="text-thor-gray flex justify-between text-sm">
-                              <div className="flex items-center gap-2">
-                                {swapCompleted ? (
-                                  <CircleCheck className="text-liquidity-green" size="16" />
-                                ) : (
-                                  loadingCircle
-                                )}
-                                <div className="">
-                                  Swap {tx.fromAsset?.metadata.symbol} to {tx.toAsset?.metadata.symbol}
-                                </div>
-                              </div>
-                              {/*todo: who time*/}
-                            </div>
-
-                            <div className="text-thor-gray flex justify-between text-sm">
-                              <div className="flex items-center gap-2">
-                                {outCompleted ? (
-                                  <CircleCheck className="text-liquidity-green" size="16" />
-                                ) : (
-                                  loadingCircle
-                                )}
-                                <div className="">
-                                  {outCompleted ? 'Sent' : 'Sending'} {tx.toAsset?.metadata.symbol}
-                                </div>
-                              </div>
-                              {/*todo: who time*/}
-                            </div>
-                          </div>
-
-                          <div className="flex items-center justify-end px-4 py-3">
-                            <ThemeButton
-                              variant="secondarySmall"
-                              onClick={() => {
-                                window.open(`https://thorchain.net/tx/${tx.hash}`, '_blank')
-                              }}
-                            >
-                              <Globe size={16} /> THORChain.net
-                            </ThemeButton>
-                          </div>
+                            </>
+                          )}
                         </>
                       )}
                     </div>
