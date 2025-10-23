@@ -53,8 +53,7 @@ export const SwapButton = ({ onSwap }: SwapButtonProps) => {
         accent: false,
         onClick: () => openDialog(ConnectWallet, {})
       }
-
-    if (!isBalanceLoading && balance && balance.spendable.lt(valueFrom)) {
+    if (isBalanceLoading || !balance || balance.spendable.lt(valueFrom)) {
       return {
         text: 'Insufficient Balance',
         spinner: false,

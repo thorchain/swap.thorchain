@@ -2,7 +2,6 @@ import { AxiosError } from 'axios'
 import { RefetchOptions, useQuery } from '@tanstack/react-query'
 import { getSwapkitQuote } from '@/lib/api'
 import { useAssetFrom, useAssetTo, useSwap } from '@/hooks/use-swap'
-import { useWallets } from '@/hooks/use-wallets'
 import { QuoteResponseRoute } from '@swapkit/api'
 
 type UseQuote = {
@@ -13,8 +12,7 @@ type UseQuote = {
 }
 
 export const useQuote = (): UseQuote => {
-  const { valueFrom, destination, slippage } = useSwap()
-  const { selected } = useWallets()
+  const { valueFrom, slippage } = useSwap()
   const assetFrom = useAssetFrom()
   const assetTo = useAssetTo()
 
@@ -23,12 +21,8 @@ export const useQuote = (): UseQuote => {
     valueFrom.toSignificant(),
     assetFrom?.asset,
     assetTo?.asset,
-    destination?.address,
-    selected?.address,
     assetFrom?.chain,
-    selected?.network,
     assetTo?.chain,
-    destination?.network,
     slippage
   ]
   const {
@@ -41,31 +35,19 @@ export const useQuote = (): UseQuote => {
     queryKey: queryKey,
     queryFn: () => {
       if (valueFrom.eqValue(0)) return
-      if (!assetFrom?.asset || !assetTo?.asset || !selected?.address || !destination?.address) return
-      if (assetFrom?.chain !== selected?.network) return
-      if (assetTo?.chain !== destination?.network) return
+      if (!assetFrom?.asset || !assetTo?.asset) return
 
       return getSwapkitQuote({
         buyAsset: assetTo.asset,
-        destinationAddress: destination.address,
         sellAmount: valueFrom.toSignificant(),
         sellAsset: assetFrom.asset,
         affiliate: process.env.NEXT_PUBLIC_AFFILIATE,
         affiliateFee: Number(process.env.NEXT_PUBLIC_AFFILIATE_FEE),
-        sourceAddress: selected.address,
         includeTx: false,
         slippage: slippage
       })
     },
-    enabled: !!(
-      !valueFrom.eqValue(0) &&
-      assetFrom?.asset &&
-      assetTo?.asset &&
-      selected?.address &&
-      destination?.address &&
-      assetFrom?.chain === selected?.network &&
-      assetTo?.chain === destination?.network
-    ),
+    enabled: !!(!valueFrom.eqValue(0) && assetFrom?.asset && assetTo?.asset),
     retry: false,
     refetchOnMount: false
   })
