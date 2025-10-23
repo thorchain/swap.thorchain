@@ -74,7 +74,8 @@ export const useSimulation = (): UseSimulation => {
       balance?.spendable &&
       balance.spendable.gte(valueFrom)
     ),
-    retry: false
+    retry: false,
+    refetchOnMount: false
   })
 
   return {

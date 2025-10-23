@@ -113,7 +113,8 @@ export const useBalance = (): UseBalance => {
       }
     },
     enabled: !!(selected && assetFrom && inboundAddresses),
-    retry: false
+    retry: false,
+    refetchOnMount: false
   })
 
   return {

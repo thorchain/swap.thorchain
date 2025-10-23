@@ -25,7 +25,8 @@ export const usePools = (): { pools: Asset[] | undefined; isLoading: boolean } =
           })
         )
         .then(data => [...data, RUNE])
-    }
+    },
+    refetchOnMount: false
   })
 
   return { pools: data, isLoading }

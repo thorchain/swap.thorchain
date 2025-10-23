@@ -23,7 +23,8 @@ export const useRates = (): { rates: Record<string, string | null>; isLoading: b
         }, {})
       )
     },
-    enabled: !!pools
+    enabled: !!pools,
+    refetchOnMount: false
   })
 
   return {

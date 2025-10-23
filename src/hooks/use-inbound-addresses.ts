@@ -21,7 +21,8 @@ type InboundAddress = {
 export const useInboundAddresses = (): { data: InboundAddress[] | undefined; isLoading: boolean } => {
   const { data, isLoading } = useQuery({
     queryKey: ['inbound-addresses'],
-    queryFn: () => getInboundAddresses()
+    queryFn: () => getInboundAddresses(),
+    refetchOnMount: false
   })
 
   return { data, isLoading }
