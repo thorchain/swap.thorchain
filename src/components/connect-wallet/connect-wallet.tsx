@@ -21,11 +21,12 @@ import { Chain, WalletOption } from '@swapkit/core'
 interface ConnectWalletProps {
   isOpen: boolean
   onOpenChange: (open: boolean) => void
+  chain?: Chain
 }
 
-export const ConnectWallet = ({ isOpen, onOpenChange }: ConnectWalletProps) => {
+export const ConnectWallet = ({ isOpen, onOpenChange, chain }: ConnectWalletProps) => {
   const [selectedWallet, setSelectedWallet] = useState<WalletParams | undefined>(undefined)
-  const [selectedChain, setSelectedChain] = useState<Chain | undefined>(undefined)
+  const [selectedChain, setSelectedChain] = useState<Chain | undefined>(chain)
   const { isAvailable, connectedWallets } = useWallets()
 
   const chains = useMemo(

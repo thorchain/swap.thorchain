@@ -44,14 +44,14 @@ export const SwapButton = ({ onSwap }: SwapButtonProps) => {
         text: `Connect ${chainLabel(assetFrom.chain)} Wallet`,
         spinner: false,
         accent: false,
-        onClick: () => openDialog(ConnectWallet, {})
+        onClick: () => openDialog(ConnectWallet, { chain: assetFrom.chain })
       }
     if (!destination)
       return {
         text: `Connect ${chainLabel(assetTo.chain)} Wallet`,
         spinner: false,
         accent: false,
-        onClick: () => openDialog(ConnectWallet, {})
+        onClick: () => openDialog(ConnectWallet, { chain: assetTo.chain })
       }
     if (isBalanceLoading || !balance || balance.spendable.lt(valueFrom)) {
       return {
