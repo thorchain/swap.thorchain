@@ -7,9 +7,12 @@ import { Eip6963Adapter } from './eips/eip6963'
 import { Providers, WalletProvider } from '../types'
 import { UtxoContext } from './utxo'
 
+// todo: correctly extend from event emitter
 interface BitcoinProvider {
   connect: () => Promise<{ address: string; publicKey: string }>
   signPsbt: (psbtHex: string, options?: { autofinalized?: boolean }) => Promise<string>
+  off: any
+  on: any
 }
 
 declare global {
@@ -24,7 +27,22 @@ declare global {
 export type OkxContext = JsonRpcSigner | CosmosContext | UtxoContext
 
 class OkxAdapter implements WalletProvider<OkxContext> {
-  onChange?: ((cb: () => void) => void) | undefined
+  private currentListener?: (...args: unknown[]) => void
+
+  onChange = (cb: () => void) => {
+    const b = this.b
+    if (!b) return
+
+    if (this.currentListener) {
+      b.off?.('accountsChanged', this.currentListener)
+      b.off?.('chainChanged', this.currentListener)
+    }
+
+    this.currentListener = () => cb()
+
+    b.on?.('accountsChanged', this.currentListener)
+    b.on?.('chainChanged', this.currentListener)
+  }
 
   constructor(
     private e: Eip6963Adapter,
