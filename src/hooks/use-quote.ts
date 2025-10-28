@@ -2,7 +2,7 @@ import { AxiosError } from 'axios'
 import { RefetchOptions, useQuery } from '@tanstack/react-query'
 import { getSwapKitQuote } from '@/lib/api'
 import { useAssetFrom, useAssetTo, useSwap } from '@/hooks/use-swap'
-import { QuoteResponseRoute } from '@swapkit/api'
+import { QuoteResponseRoute } from '@swapkit/helpers/api'
 
 type UseQuote = {
   isLoading: boolean

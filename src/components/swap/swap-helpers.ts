@@ -1,5 +1,5 @@
 import { assetFromString, SwapKitNumber } from '@swapkit/core'
-import { QuoteResponseRoute } from '@swapkit/api'
+import { QuoteResponseRoute } from '@swapkit/helpers/api'
 
 export type FeeData = {
   amount: SwapKitNumber
