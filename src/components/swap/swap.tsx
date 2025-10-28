@@ -38,7 +38,10 @@ export const Swap = () => {
           <SwapAddressTo />
         </div>
 
-        <SwapError error={quoteError} />
+        <div className="px-4">
+          <SwapError error={quoteError} />
+        </div>
+
         <SwapButton
           onSwap={() => {
             openDialog(SwapConfirm, {})

@@ -13,7 +13,7 @@ import {
   WalletType
 } from '@/components/connect-wallet/config'
 import { BrowserWallet } from '@/components/connect-wallet/browser-wallet'
-import { Keystore } from '@/components/connect-wallet/keystore'
+import { Keystore } from '@/components/connect-wallet/keystore/keystore'
 import { Ledger } from '@/components/connect-wallet/ledger'
 import { Icon } from '@/components/icons'
 import { Chain, WalletOption } from '@swapkit/core'

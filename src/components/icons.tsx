@@ -239,33 +239,53 @@ const CheckIcon = memo<IconProps>(props => (
   </SVG>
 ))
 
+const CloudInIcon = memo<IconProps>(props => (
+  <SVG {...props}>
+    <path
+      d="M16 16L14.5859 17.4141L13 15.8281V22H11V15.8281L9.41406 17.4141L8 16L12 12L16 16ZM9.5 3C12.951 3 15.9109 5.05643 17.2422 8.00586C20.4436 8.13297 23 10.7674 23 14C23 16.9729 20.8376 19.4388 18 19.915V17.874C19.7252 17.43 21 15.8638 21 14C21 11.7909 19.2091 10 17 10H15.8594L15.624 9.33301C14.7309 6.80609 12.3275 5 9.5 5C5.91015 5 3 7.91015 3 11.5C3 13.8005 4.19675 15.8194 6 16.9746V19.2451C3.05211 17.9109 1 14.9462 1 11.5C1 6.80558 4.80558 3 9.5 3Z"
+      fill="currentColor"
+    />
+  </SVG>
+))
+
+const TrashIcon = memo<IconProps>(props => (
+  <SVG {...props}>
+    <path
+      d="M17 2.01367L18 6.01367L21 6V8H19.5L18 22H6L4.5 8H3V6H6L7 2L17 2.01367ZM7.84082 20H16.1973L17.4893 8H6.50684L7.84082 20ZM11 17H9V11H11V17ZM15 17H13V11H15V17ZM8.06152 6L15.9385 6.01367L15.4385 4.01367L8.56152 4L8.06152 6Z"
+      fill="currentColor"
+    />
+  </SVG>
+))
+
 // Icon name mapping
 const iconMap = {
-  plus: PlusIcon,
-  pencil: PencilIcon,
-  clock: ClockIcon,
-  'light-mode': LightModeIcon,
-  'dark-mode': DarkModeIcon,
-  manage: ManageIcon,
-  warning: WarningIcon,
-  'warning-filled': WarningFilledIcon,
-  disconnect: DisconnectIcon,
-  'arrow-s-down': ArrowSDownIcon,
-  'arrow-s-up': ArrowSUpIcon,
   'arrow-m-down': ArrowMDownIcon,
   'arrow-m-left': ArrowMLeftIcon,
   'arrow-m-right': ArrowMRightIcon,
-  info: InfoIcon,
-  'wallet-out': WalletOutIcon,
-  'wallet-in': WalletInIcon,
-  unstoppable: UnstoppableIcon,
-  x: XIcon,
-  email: EmailIcon,
-  discord: DiscordIcon,
-  telegram: TelegramIcon,
+  'arrow-s-down': ArrowSDownIcon,
+  'arrow-s-up': ArrowSUpIcon,
+  check: CheckIcon,
+  clock: ClockIcon,
+  'cloud-in': CloudInIcon,
   copy: CopyIcon,
+  'dark-mode': DarkModeIcon,
+  disconnect: DisconnectIcon,
+  discord: DiscordIcon,
+  email: EmailIcon,
   globe: GlobeIcon,
-  check: CheckIcon
+  info: InfoIcon,
+  'light-mode': LightModeIcon,
+  manage: ManageIcon,
+  pencil: PencilIcon,
+  plus: PlusIcon,
+  telegram: TelegramIcon,
+  trash: TrashIcon,
+  unstoppable: UnstoppableIcon,
+  'wallet-in': WalletInIcon,
+  'wallet-out': WalletOutIcon,
+  warning: WarningIcon,
+  'warning-filled': WarningFilledIcon,
+  x: XIcon
 } as const
 
 export type IconName = keyof typeof iconMap
