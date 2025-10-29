@@ -192,7 +192,7 @@ export const ConnectWallet = ({ isOpen, onOpenChange, chain }: ConnectWalletProp
                               'border-runes-blue': isSelected,
                               'hover:bg-blade cursor-pointer': !isComingSoon
                             })}
-                            onClick={() => !isComingSoon && onSelectChain(chain)}
+                            onClick={() => !isComingSoon && onSelectChain(chain as Chain)}
                           >
                             <Image src={`/networks/${chain.toLowerCase()}.svg`} alt={chain} width="24" height="24" />
                             <div className="text-sm">{chainLabel(chain)}</div>

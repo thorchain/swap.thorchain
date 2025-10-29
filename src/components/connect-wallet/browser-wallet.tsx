@@ -14,13 +14,13 @@ export const BrowserWallet = ({
   onConnect
 }: {
   wallet: WalletParams
-  chains: Chain[]
+  chains: (Chain | string)[]
   onConnect: () => void
 }) => {
-  const availableChains = wallet.supportedChains.filter(c => ALL_CHAINS.includes(c))
+  const availableChains: (Chain | string)[] = wallet.supportedChains.filter(c => ALL_CHAINS.includes(c))
 
   const [connecting, setConnecting] = useState(false)
-  const [selectedChains, setSelectedChains] = useState<Chain[]>(availableChains)
+  const [selectedChains, setSelectedChains] = useState<(Chain | string)[]>(availableChains)
   const { connect } = useWallets()
 
   const onSelectChain = (chain: Chain) => {
@@ -30,7 +30,10 @@ export const BrowserWallet = ({
   const handleConnect = async () => {
     setConnecting(true)
 
-    connect(wallet.option, selectedChains)
+    connect(
+      wallet.option,
+      selectedChains.map(c => c as Chain)
+    )
       .then(() => {
         onConnect()
       })
@@ -68,7 +71,7 @@ export const BrowserWallet = ({
                     'opacity-25': !isAvailable,
                     'hover:bg-blade cursor-pointer': isAvailable
                   })}
-                  onClick={() => isAvailable && onSelectChain(chain)}
+                  onClick={() => isAvailable && onSelectChain(chain as Chain)}
                 >
                   <Image src={`/networks/${chain.toLowerCase()}.svg`} alt={chain} width="24" height="24" />
                   <div className="text-sm">{chainLabel(chain)}</div>

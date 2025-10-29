@@ -30,7 +30,7 @@ export const ALL_CHAINS = [
   Chain.THORChain
 ]
 
-export const COMING_SOON_CHAINS = [Chain.Solana]
+export const COMING_SOON_CHAINS = [Chain.Solana, 'XMR']
 
 export const WALLETS: WalletParams[] = [
   {
@@ -104,15 +104,17 @@ export const WALLETS: WalletParams[] = [
     option: WalletOption.KEYSTORE,
     link: 'https://www.keystore.com',
     supportedChains: supportedChains[WalletOption.KEYSTORE]
-  },
+  }
 ]
 
-export const chainLabel = (c: Chain): string => {
+export const chainLabel = (c: Chain | string): string => {
   switch (c) {
     case Chain.BinanceSmartChain:
       return 'BNB Chain'
+    case 'XMR':
+      return 'Monero'
     default:
-      return getChainConfig(c).name
+      return getChainConfig(c as Chain).name
   }
 }
 
