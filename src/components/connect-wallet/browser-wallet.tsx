@@ -47,7 +47,15 @@ export const BrowserWallet = ({
 
   return (
     <>
-      <div className="text-thor-gray mb-3 hidden px-8 text-base font-semibold md:block">Chains</div>
+      <div className="mb-3 flex items-center justify-between px-4 md:px-8">
+        <div className="text-thor-gray text-base font-semibold">Chains</div>
+        <div
+          className="text-leah cursor-pointer text-xs"
+          onClick={() => setSelectedChains(selectedChains.length ? [] : availableChains)}
+        >
+          {selectedChains.length ? 'Deselect All' : 'Select All'}
+        </div>
+      </div>
 
       <div className="flex flex-1 overflow-hidden">
         <ScrollArea className="flex-1 px-4 md:mb-4 md:px-8">
