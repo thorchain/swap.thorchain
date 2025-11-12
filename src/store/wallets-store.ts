@@ -109,10 +109,3 @@ export const useWalletStore = create<WalletState>()(
 useWalletStore.subscribe(state => {
   // todo
 })
-
-export const useAccounts = () => useWalletStore(state => state.accounts)
-export const useConnectWallet = () => useWalletStore(state => state.connect)
-export const useHasHydrated = () => useWalletStore(state => state.hasHydrated)
-export const useDisconnect = () => useWalletStore(state => state.disconnect)
-export const useConnectedWallets = () => useWalletStore(state => state.connectedWallets)
-export const useSelectedAccount = () => useWalletStore(state => state.selected)

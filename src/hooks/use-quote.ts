@@ -1,7 +1,7 @@
 import { AxiosError } from 'axios'
 import { RefetchOptions, useQuery } from '@tanstack/react-query'
-import { getSwapKitQuote } from '@/lib/api'
-import { useAssetFrom, useAssetTo, useSwap } from '@/hooks/use-swap'
+import { getQuotes } from '@/lib/api'
+import { useAssetFrom, useAssetTo, useSlippage, useSwap } from '@/hooks/use-swap'
 import { QuoteResponseRoute } from '@swapkit/helpers/api'
 
 type UseQuote = {
@@ -12,7 +12,8 @@ type UseQuote = {
 }
 
 export const useQuote = (): UseQuote => {
-  const { valueFrom, slippage } = useSwap()
+  const { valueFrom } = useSwap()
+  const slippage = useSlippage()
   const assetFrom = useAssetFrom()
   const assetTo = useAssetTo()
 
@@ -38,7 +39,7 @@ export const useQuote = (): UseQuote => {
       if (valueFrom.eqValue(0)) return
       if (!assetFrom?.identifier || !assetTo?.identifier) return
 
-      return getSwapKitQuote(
+      return getQuotes(
         {
           buyAsset: assetTo.identifier,
           sellAmount: valueFrom.toSignificant(),
@@ -49,7 +50,13 @@ export const useQuote = (): UseQuote => {
           slippage: slippage
         },
         signal
-      )
+      ).then(quotes => {
+        return (
+          quotes.find((q: any) => q.providers[0] === 'THORCHAIN_STREAMING') ||
+          quotes.find((q: any) => q.providers[0] === 'THORCHAIN') ||
+          quotes[0]
+        )
+      })
     },
     enabled: !!(!valueFrom.eqValue(0) && assetFrom?.identifier && assetTo?.identifier),
     retry: false,

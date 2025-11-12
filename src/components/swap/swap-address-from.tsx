@@ -1,82 +1,53 @@
 import Image from 'next/image'
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuTrigger
-} from '@/components/ui/dropdown-menu'
-import { useWallets } from '@/hooks/use-wallets'
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu'
+import { useAccounts, useSelectAccount, useSelectedAccount } from '@/hooks/use-wallets'
 import { cn, truncate } from '@/lib/utils'
 import { useAssetFrom } from '@/hooks/use-swap'
-import { ConnectWallet } from '@/components/connect-wallet/connect-wallet'
-import { useDialog } from '@/components/global-dialog'
 import { Icon } from '@/components/icons'
 import { wallet } from '@/components/connect-wallet/config'
+import { ThemeButton } from '@/components/theme-button'
 
 export const SwapAddressFrom = () => {
-  const { accounts, selected, select } = useWallets()
+  const accounts = useAccounts()
+  const selectedAccount = useSelectedAccount()
+  const selectAccount = useSelectAccount()
   const assetFrom = useAssetFrom()
-  const { openDialog } = useDialog()
 
-  const options = accounts?.filter(a => a.network === assetFrom?.chain)
+  const options = accounts.filter(a => a.network === assetFrom?.chain)
+
+  if (!selectedAccount || options.length < 2) return null
 
   return (
     <DropdownMenu modal={false}>
       <DropdownMenuTrigger asChild>
-        <div className="text-thor-gray flex cursor-pointer items-center justify-between border-b-1 p-4 text-sm">
-          <div className="flex items-center gap-4">
-            {selected ? (
-              <Image src={`/wallets/${selected.provider.toLowerCase()}.svg`} alt="" width="24" height="24" />
-            ) : (
-              <Icon name="wallet-out" className="size-6" />
-            )}
-            <span>{(selected && wallet(selected.provider)?.label) || 'Source Wallet'}</span>
-          </div>
-          <div className="flex items-center gap-2">
-            <span className="text-leah font-semibold">{selected?.address ? truncate(selected.address) : ''}</span>
-            <Icon name="arrow-s-down" className="size-5" />
-          </div>
-        </div>
+        <ThemeButton variant="secondarySmall" className="gap-2 pr-2">
+          <Image src={`/wallets/${selectedAccount.provider.toLowerCase()}.svg`} alt="" width="16" height="16" />{' '}
+          {truncate(selectedAccount.address)}
+          <Icon name="arrow-s-down" className="size-4" />
+        </ThemeButton>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="bg-tyler rounded-2xl border-0 p-0">
-        <div className="border-b p-4">
-          <div className="text-thor-gray flex items-center gap-4">
-            <Icon name="wallet-out" className="size-6" />
-            <DropdownMenuLabel className="p-0 text-sm">Source Wallet</DropdownMenuLabel>
-          </div>
-        </div>
-
         <div>
           {options?.map((account, index) => (
             <DropdownMenuItem
               key={index}
-              className="focus:bg-blade flex cursor-pointer items-center justify-between gap-4 rounded-none p-4"
-              onSelect={() => select(account)}
+              className="focus:bg-blade flex cursor-pointer items-center justify-between gap-4 rounded-none px-4 py-3"
+              onSelect={() => selectAccount(account)}
             >
               <div className="flex items-center gap-4">
-                <Image src={`/wallets/${account.provider.toLowerCase()}.svg`} alt="" width="24" height="24" />
-                <span className="text-thor-gray text-sm font-medium">{wallet(account.provider)?.label}</span>
+                <Image src={`/wallets/${account.provider.toLowerCase()}.svg`} alt="" width="20" height="20" />
+                <span className="text-thor-gray text-xs font-semibold">{wallet(account.provider)?.label}</span>
               </div>
               <span
-                className={cn('ms-5 text-sm font-semibold', {
-                  'text-runes-blue': account.provider === selected?.provider && account.address === selected?.address
+                className={cn('ms-5 text-xs font-semibold', {
+                  'text-runes-blue':
+                    account.provider === selectedAccount?.provider && account.address === selectedAccount?.address
                 })}
               >
                 {truncate(account.address)}
               </span>
             </DropdownMenuItem>
           ))}
-
-          <DropdownMenuItem
-            className="focus:bg-blade flex cursor-pointer rounded-none p-4"
-            onClick={() => openDialog(ConnectWallet, {})}
-          >
-            <div className="flex items-center gap-4">
-              <Icon name="plus" className="text-storm-purple size-6" />
-              <span className="text-storm-purple text-sm font-medium">Connect Wallet</span>
-            </div>
-          </DropdownMenuItem>
         </div>
       </DropdownMenuContent>
     </DropdownMenu>

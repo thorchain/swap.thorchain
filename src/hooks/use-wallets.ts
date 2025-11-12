@@ -1,5 +1,10 @@
 import { useWalletStore } from '@/store/wallets-store'
-import { WalletOption } from '@swapkit/core'
+
+export const useAccounts = () => useWalletStore(state => state.accounts)
+export const useDisconnect = () => useWalletStore(state => state.disconnect)
+export const useConnectedWallets = () => useWalletStore(state => state.connectedWallets)
+export const useSelectedAccount = () => useWalletStore(state => state.selected)
+export const useSelectAccount = () => useWalletStore(state => state.select)
 
 export const useWallets = () => {
   const accounts = useWalletStore(s => s.accounts)

@@ -14,27 +14,13 @@ export const useSetAssetTo = () => useSwapStore(state => state.setAssetTo)
 export const useSlippage = () => useSwapStore(state => state.slippage)
 export const useSetSlippage = () => useSwapStore(state => state.setSlippage)
 
-export const useDestination = () => useSwapStore(state => state.destination)
-export const useSetDestination = () => useSwapStore(state => state.setDestination)
-
 export const useSwapAssets = () => useSwapStore(state => state.swapAssets)
 
 // Hooks
 
 export const useSwap = () => {
   const { assets } = useAssets()
-  const {
-    slippage,
-    destination,
-    setDestination,
-    setSlippage,
-    amountFrom,
-    hasHydrated,
-    setAmountFrom,
-    setAssetTo,
-    feeWarning,
-    setInitialAssets
-  } = useSwapStore()
+  const { amountFrom, hasHydrated, setAmountFrom, setAssetTo, feeWarning, setInitialAssets } = useSwapStore()
 
   useEffect(() => {
     if (!assets?.length) return
@@ -44,10 +30,6 @@ export const useSwap = () => {
   const amount = hasHydrated ? amountFrom : ''
 
   return {
-    slippage,
-    setSlippage,
-    destination,
-    setDestination,
     amountFrom: amount,
     setAmountFrom,
     valueFrom: useMemo(() => new SwapKitNumber(amount), [amount]),

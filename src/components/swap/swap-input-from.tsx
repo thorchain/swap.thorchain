@@ -38,8 +38,10 @@ export const SwapInputFrom = () => {
   }
 
   return (
-    <div className="px-6 py-8">
-      <div className="flex items-start justify-between">
+    <div className="px-6 pt-6 pb-2">
+      <div className="text-thor-gray mb-3 font-semibold">Sell</div>
+
+      <div className="flex items-center justify-between">
         <div className="flex-1">
           <DecimalInput
             className="text-leah w-full bg-transparent text-2xl font-medium outline-none"
@@ -47,12 +49,12 @@ export const SwapInputFrom = () => {
             onAmountChange={e => setAmountFrom(e)}
             autoComplete="off"
           />
-          <div className="text-thor-gray mt-1 text-sm">{fiatValueFrom.toCurrency()}</div>
+          <div className="text-thor-gray text-sm font-medium">{fiatValueFrom.toCurrency()}</div>
         </div>
         <div className="flex cursor-pointer items-center gap-2" onClick={onClick}>
           <AssetIcon asset={assetFrom} />
           <div className="flex w-16 flex-col items-start">
-            <span className="text-leah inline-block w-full truncate text-lg font-semibold">
+            <span className="text-leah inline-block w-full truncate text-base font-semibold">
               {assetFrom ? assetFrom.ticker : <Skeleton className="mb-0.5 h-6 w-12" />}
             </span>
             <span className="text-thor-gray inline-block w-full truncate text-xs">
@@ -63,7 +65,7 @@ export const SwapInputFrom = () => {
         </div>
       </div>
 
-      <div className="mt-4 flex items-end justify-between">
+      <div className="mt-2 flex items-end justify-between">
         <div className="flex gap-2">
           <ThemeButton variant="secondarySmall" onClick={() => setAmountFrom('')} disabled={amountFrom === ''}>
             Clear

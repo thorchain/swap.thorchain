@@ -1,6 +1,6 @@
 import { LoaderCircle } from 'lucide-react'
 import { useAssetFrom, useAssetTo, useSwap } from '@/hooks/use-swap'
-import { useWallets } from '@/hooks/use-wallets'
+import { useSelectedAccount } from '@/hooks/use-wallets'
 import { useQuote } from '@/hooks/use-quote'
 import { useSimulation } from '@/hooks/use-simulation'
 import { ConnectWallet } from '@/components/connect-wallet/connect-wallet'
@@ -11,9 +11,14 @@ import { toast } from 'sonner'
 import { getSwapKit } from '@/lib/wallets'
 import { EVMChain } from '@swapkit/core'
 import { chainLabel } from '@/components/connect-wallet/config'
+import { SwapDialog } from '@/components/swap/swap-dialog'
+import { SwapMemolessDialog } from '@/components/swap/swap-memoless-dialog'
+import { QuoteResponseRoute } from '@swapkit/helpers/api'
+import { MemolessAsset } from '@/hooks/use-memoless-assets'
 
 interface SwapButtonProps {
-  onSwap: () => void
+  memolessAsset: MemolessAsset | undefined
+  memolessError: Error | undefined
 }
 
 interface ButtonState {
@@ -23,37 +28,50 @@ interface ButtonState {
   onClick?: () => void
 }
 
-export const SwapButton = ({ onSwap }: SwapButtonProps) => {
+export const SwapButton = ({ memolessAsset, memolessError }: SwapButtonProps) => {
   const assetFrom = useAssetFrom()
   const assetTo = useAssetTo()
   const swapKit = getSwapKit()
-  const { selected } = useWallets()
-  const { valueFrom, destination } = useSwap()
+  const selectedAccount = useSelectedAccount()
+  const { valueFrom } = useSwap()
   const { quote, isLoading: isQuoting, refetch: refetchQuote } = useQuote()
   const { isLoading: isSimulating, approveData } = useSimulation()
   const { balance, isLoading: isBalanceLoading } = useBalance()
 
   const { openDialog } = useDialog()
 
+  const onSwap = (quote: QuoteResponseRoute) => {
+    openDialog(SwapDialog, { provider: quote.providers[0] })
+  }
+
+  const onMemolessSwap = (quote: QuoteResponseRoute) => {
+    openDialog(SwapMemolessDialog, { provider: quote.providers[0] })
+  }
+
   const getState = (): ButtonState => {
     if (!assetFrom || !assetTo) return { text: '', spinner: true, accent: false }
+
     if (valueFrom.eqValue(0)) return { text: 'Enter Amount', spinner: false, accent: false }
+
     if (isQuoting || isSimulating) return { text: 'Quoting...', spinner: true, accent: false }
+
     if (!quote) return { text: 'No Valid Quotes', spinner: false, accent: false }
-    if (!selected)
-      return {
-        text: `Connect ${chainLabel(assetFrom.chain)} Wallet`,
-        spinner: false,
-        accent: false,
-        onClick: () => openDialog(ConnectWallet, { chain: assetFrom.chain })
+
+    if (!selectedAccount) {
+      if (memolessAsset) {
+        if (memolessError) return { text: 'Swap', spinner: false, accent: false }
+
+        return { text: 'Swap', spinner: false, accent: true, onClick: () => onMemolessSwap(quote) }
+      } else {
+        return {
+          text: `Connect ${chainLabel(assetFrom.chain)} Wallet`,
+          spinner: false,
+          accent: false,
+          onClick: () => openDialog(ConnectWallet, { chain: assetFrom.chain })
+        }
       }
-    if (!destination)
-      return {
-        text: `Connect ${chainLabel(assetTo.chain)} Wallet`,
-        spinner: false,
-        accent: false,
-        onClick: () => openDialog(ConnectWallet, { chain: assetTo.chain })
-      }
+    }
+
     if (isBalanceLoading || !balance || balance.spendable.lt(valueFrom)) {
       return {
         text: 'Insufficient Balance',
@@ -61,13 +79,14 @@ export const SwapButton = ({ onSwap }: SwapButtonProps) => {
         accent: false
       }
     }
+
     if (approveData) {
       return {
         text: `Approve ${assetFrom.ticker}`,
         spinner: false,
         accent: false,
         onClick: async () => {
-          const wallet = swapKit.getWallet<EVMChain>(selected.provider, selected.network as EVMChain)
+          const wallet = swapKit.getWallet<EVMChain>(selectedAccount.provider, selectedAccount.network as EVMChain)
           if (!wallet) return
           const promise = wallet
             .approve({
@@ -88,7 +107,8 @@ export const SwapButton = ({ onSwap }: SwapButtonProps) => {
         }
       }
     }
-    return { text: 'Swap', spinner: false, accent: true, onClick: quote && onSwap }
+
+    return { text: 'Swap', spinner: false, accent: true, onClick: () => onSwap(quote) }
   }
 
   const state = getState()

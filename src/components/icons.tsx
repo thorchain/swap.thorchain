@@ -257,6 +257,24 @@ const TrashIcon = memo<IconProps>(props => (
   </SVG>
 ))
 
+const QrIcon = memo<IconProps>(props => (
+  <SVG {...props}>
+    <path
+      d="M9 21H3V15H9V21ZM13 21H11V19H13V21ZM21 21H15V19H21V21ZM5 19H7V17H5V19ZM13 17H11V15H13V17ZM17 17H15V15H17V17ZM21 17H19V15H21V17ZM5 13H3V11H5V13ZM13 13H7V11H13V13ZM21 13H15V11H21V13ZM9 9H3V3H9V9ZM13 9H11V7H13V9ZM21 3V9H15V3H21ZM5 7H7V5H5V7ZM17 5V7H19V5H17ZM13 5H11V3H13V5Z"
+      fill="currentColor"
+    />
+  </SVG>
+))
+
+const DoneEIcon = memo<IconProps>(props => (
+  <SVG {...props}>
+    <path
+      d="M12 2C17.5228 2 22 6.47715 22 12C22 17.5228 17.5228 22 12 22C6.47715 22 2 17.5228 2 12C2 6.47715 6.47715 2 12 2ZM10.5 14.1719L6.91406 10.5859L5.5 12L10.5 17L18.5 9L17.0859 7.58594L10.5 14.1719Z"
+      fill="currentColor"
+    />
+  </SVG>
+))
+
 // Icon name mapping
 const iconMap = {
   'arrow-m-down': ArrowMDownIcon,
@@ -271,6 +289,7 @@ const iconMap = {
   'dark-mode': DarkModeIcon,
   disconnect: DisconnectIcon,
   discord: DiscordIcon,
+  'done-e': DoneEIcon,
   email: EmailIcon,
   globe: GlobeIcon,
   info: InfoIcon,
@@ -278,6 +297,7 @@ const iconMap = {
   manage: ManageIcon,
   pencil: PencilIcon,
   plus: PlusIcon,
+  qr: QrIcon,
   telegram: TelegramIcon,
   trash: TrashIcon,
   unstoppable: UnstoppableIcon,

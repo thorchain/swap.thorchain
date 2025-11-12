@@ -1,14 +1,7 @@
 import axios from 'axios'
 
-const midgard = axios.create({
-  baseURL: 'https://midgard.ninerealms.com',
-  headers: {
-    'x-client-id': process.env.NEXT_PUBLIC_XCLIENT_ID
-  }
-})
-
 const thornode = axios.create({
-  baseURL: 'https://thornode.ninerealms.com',
+  baseURL: process.env.NEXT_PUBLIC_THORCHAIN_API,
   headers: {
     'x-client-id': process.env.NEXT_PUBLIC_XCLIENT_ID
   }
@@ -21,7 +14,27 @@ const swapKit = axios.create({
   }
 })
 
+const memoless = axios.create({
+  baseURL: `${process.env.NEXT_PUBLIC_MEMOLESS_API}/api/v1`
+})
+
+const us = axios.create({
+  baseURL: 'https://swap-api.unstoppable.money'
+})
+
 const coingecko = axios.create({ baseURL: 'https://api.coingecko.com/api/v3' })
+
+export const getMemolessAssets = async () => {
+  return memoless.get('/assets').then(res => res.data)
+}
+
+export const registerMemoless = async (data: any) => {
+  return memoless.post('/register', data).then(res => res.data)
+}
+
+export const preflightMemoless = async (data: any) => {
+  return memoless.post('/preflight', data).then(res => res.data)
+}
 
 export const getAssetRates = async (ids: string) => {
   return coingecko.get(`/simple/price?ids=${ids}&vs_currencies=usd`).then(res => res.data)
@@ -31,15 +44,13 @@ export const getTokenList = async (provider: string) => {
   return swapKit.get(`/tokens?provider=${provider}`).then(res => res.data)
 }
 
-export const getSwapKitQuote = async (data: Record<string, any>, signal?: AbortSignal) => {
+export const getQuotes = async (data: Record<string, any>, signal?: AbortSignal) => {
   return swapKit
     .post('/quote', data, {
       signal
     })
     .then(res => res.data)
-    .then(data => {
-      return (data.routes || [])[0] || null
-    })
+    .then(data => data.routes || [])
 }
 
 export const getSwapKitTrack = async (data: Record<string, any>) => {

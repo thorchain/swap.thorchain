@@ -31,8 +31,10 @@ export const SwapInputTo = () => {
     })
 
   return (
-    <div className="px-6 py-8">
-      <div className="flex items-start justify-between">
+    <div className="px-6 pt-2 pb-6">
+      <div className="text-thor-gray mb-3 font-semibold">Buy</div>
+
+      <div className="flex items-center justify-between">
         <div className="flex-1">
           <DecimalInput
             className="text-leah w-full bg-transparent text-2xl font-medium outline-none"
@@ -41,12 +43,12 @@ export const SwapInputTo = () => {
             autoComplete="off"
             disabled
           />
-          <div className="text-thor-gray mt-1 text-sm">{fiatValueTo.toCurrency()}</div>
+          <div className="text-thor-gray text-sm font-medium">{fiatValueTo.toCurrency()}</div>
         </div>
         <div className="flex cursor-pointer items-center gap-2" onClick={onClick}>
           <AssetIcon asset={assetTo} />
           <div className="flex w-16 flex-col items-start">
-            <span className="text-leah inline-block w-full truncate text-lg font-semibold">
+            <span className="text-leah inline-block w-full truncate text-base font-semibold">
               {assetTo ? assetTo.ticker : <Skeleton className="mb-0.5 h-6 w-12" />}
             </span>
             <span className="text-thor-gray inline-block w-full truncate text-xs">

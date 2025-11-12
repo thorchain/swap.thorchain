@@ -3,7 +3,7 @@
 import Image from 'next/image'
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu'
 import { ConnectWallet } from '@/components/connect-wallet/connect-wallet'
-import { useConnectedWallets, useDisconnect } from '@/store/wallets-store'
+import { useConnectedWallets, useDisconnect } from '@/hooks/use-wallets'
 import { useDialog } from '@/components/global-dialog'
 import { TransactionHistoryButton } from '@/components/header/transaction-history-button'
 import { ThemeButton } from '@/components/theme-button'

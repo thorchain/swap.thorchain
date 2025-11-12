@@ -5,7 +5,7 @@ import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip
 import { LoaderCircle } from 'lucide-react'
 import { TransactionHistoryDialog } from '@/components/header/transaction-history-dialog'
 import { useDialog } from '@/components/global-dialog'
-import { useConnectedWallets } from '@/store/wallets-store'
+import { useConnectedWallets } from '@/hooks/use-wallets'
 import { useSyncTransactions } from '@/hooks/use-sync-transactions'
 import { ThemeButton } from '@/components/theme-button'
 import { Icon } from '@/components/icons'
