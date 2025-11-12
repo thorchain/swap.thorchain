@@ -1,3 +1,4 @@
+import { AssetRateMap } from '@/hooks/use-rates'
 import { assetFromString, SwapKitNumber } from '@swapkit/core'
 import { QuoteResponseRoute } from '@swapkit/helpers/api'
 
@@ -7,20 +8,20 @@ export type FeeData = {
   symbol: string
 }
 
-export const resolveFees = (quote: QuoteResponseRoute) => {
+export const resolveFees = (quote: QuoteResponseRoute, rates: AssetRateMap) => {
   const feeData = (type: string): FeeData | undefined => {
     const fee = quote.fees.find(f => f.type === type)
 
     if (!fee) return undefined
 
     const amount = new SwapKitNumber(fee.amount)
-    const meta = quote.meta.assets?.find(f => f.asset === fee.asset)
+    const rate = rates[fee.asset]
 
     const asset = assetFromString(fee.asset)
 
     return {
       amount: amount,
-      usd: meta ? amount.mul(new SwapKitNumber(meta.price)) : new SwapKitNumber(0),
+      usd: rate ? amount.mul(new SwapKitNumber(rate)) : new SwapKitNumber(0),
       symbol: asset.ticker || asset.symbol
     }
   }

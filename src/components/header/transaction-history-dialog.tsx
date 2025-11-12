@@ -1,6 +1,6 @@
 'use client'
 
-import { Fragment, useState } from 'react'
+import { Fragment, useMemo, useState } from 'react'
 import { format, isSameDay, isToday, isYesterday } from 'date-fns'
 import { Check, CircleAlert, CircleCheck, ClockFading, LoaderCircle, Undo2, X } from 'lucide-react'
 import { ScrollArea } from '@/components/ui/scroll-area'
@@ -20,9 +20,14 @@ interface HistoryDialogProps {
 }
 
 export const TransactionHistoryDialog = ({ isOpen, onOpenChange }: HistoryDialogProps) => {
-  const { rates } = useRates()
   const [expandTx, setExpandTx] = useState<string | null>(null)
   const transactions = useTransactions()
+  const identifiers = useMemo(
+    () => transactions.flatMap(t => [t.assetFrom.identifier, t.assetTo.identifier]),
+    [transactions]
+  )
+
+  const { rates } = useRates(identifiers)
 
   let lastDate: Date | null = null
 

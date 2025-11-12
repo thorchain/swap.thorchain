@@ -1,4 +1,4 @@
-import { ReactNode, useState } from 'react'
+import { ReactNode, useMemo, useState } from 'react'
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip'
 import { Separator } from '@/components/ui/separator'
 import { useQuote } from '@/hooks/use-quote'
@@ -7,6 +7,7 @@ import { Icon } from '@/components/icons'
 import { formatDuration, intervalToDuration } from 'date-fns'
 import { SwapKitNumber } from '@swapkit/core'
 import { FeeData, resolveFees } from '@/components/swap/swap-helpers'
+import { useRate } from '@/hooks/use-rates'
 
 export function SwapDetails() {
   const assetFrom = useAssetFrom()
@@ -15,11 +16,14 @@ export function SwapDetails() {
   const { valueFrom } = useSwap()
   const { quote } = useQuote()
 
+  const identifiers = useMemo(() => quote?.fees.map(t => t.asset).sort(), [quote?.fees])
+  const { rates } = useRate(identifiers)
+
   if (!quote) return null
 
   const price = new SwapKitNumber(quote.expectedBuyAmount).div(valueFrom)
 
-  const { inbound, outbound, liquidity, affiliate, total } = resolveFees(quote)
+  const { inbound, outbound, liquidity, affiliate, total } = resolveFees(quote, rates)
 
   const feeSection = (title: string, info: string, fee?: FeeData) => {
     return (

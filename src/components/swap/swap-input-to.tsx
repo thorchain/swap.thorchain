@@ -5,7 +5,7 @@ import { Skeleton } from '@/components/ui/skeleton'
 import { useQuote } from '@/hooks/use-quote'
 import { useAssetTo, useSetAssetTo } from '@/hooks/use-swap'
 import { useDialog } from '@/components/global-dialog'
-import { useRate } from '@/hooks/use-rates'
+import { useSwapRates } from '@/hooks/use-rates'
 import { Icon } from '@/components/icons'
 import { chainLabel } from '@/components/connect-wallet/config'
 import { SwapKitNumber } from '@swapkit/core'
@@ -15,7 +15,7 @@ export const SwapInputTo = () => {
   const setAssetTo = useSetAssetTo()
   const { quote } = useQuote()
   const { openDialog } = useDialog()
-  const { rate } = useRate(assetTo?.identifier)
+  const { rate } = useSwapRates(assetTo?.identifier)
 
   const value = quote && new SwapKitNumber(quote.expectedBuyAmount)
 

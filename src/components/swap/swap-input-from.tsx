@@ -4,7 +4,7 @@ import { AssetIcon } from '@/components/asset-icon'
 import { Skeleton } from '@/components/ui/skeleton'
 import { useDialog } from '@/components/global-dialog'
 import { useBalance } from '@/hooks/use-balance'
-import { useRate } from '@/hooks/use-rates'
+import { useSwapRates } from '@/hooks/use-rates'
 import { SwapBalance } from '@/components/swap/swap-balance'
 import { ThemeButton } from '@/components/theme-button'
 import { Icon } from '@/components/icons'
@@ -17,7 +17,7 @@ export const SwapInputFrom = () => {
   const setAssetFrom = useSetAssetFrom()
   const { openDialog } = useDialog()
   const { amountFrom, setAmountFrom, valueFrom, setValueFrom } = useSwap()
-  const { rate } = useRate(assetFrom?.identifier)
+  const { rate } = useSwapRates(assetFrom?.identifier)
   const { balance } = useBalance()
 
   const handleSetPercent = (percent: number) => {

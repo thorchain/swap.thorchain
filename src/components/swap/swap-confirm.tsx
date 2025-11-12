@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { Credenza, CredenzaContent, CredenzaHeader, CredenzaTitle } from '@/components/ui/credenza'
 import { ThemeButton } from '@/components/theme-button'
 import { getSwapKitQuote } from '@/lib/api'
@@ -21,6 +21,7 @@ import { getSwapKit } from '@/lib/wallets'
 import { transactionStore } from '@/store/transaction-store'
 import { useBalance } from '@/hooks/use-balance'
 import { chainLabel } from '@/components/connect-wallet/config'
+import { useRate } from '@/hooks/use-rates'
 
 interface SwapConfirmProps {
   isOpen: boolean
@@ -43,6 +44,9 @@ export const SwapConfirm = ({ isOpen, onOpenChange }: SwapConfirmProps) => {
   useEffect(() => {
     getQuote()
   }, [])
+
+  const identifiers = useMemo(() => quote?.fees.map(t => t.asset).sort(), [quote?.fees])
+  const { rates } = useRate(identifiers)
 
   const getQuote = () => {
     if (!assetFrom || !assetTo || !selected || !destination) return
@@ -129,13 +133,10 @@ export const SwapConfirm = ({ isOpen, onOpenChange }: SwapConfirmProps) => {
     const expectedBuyAmount = new SwapKitNumber(quote.expectedBuyAmount)
     const expectedBuyAmountMaxSlippage = new SwapKitNumber(quote.expectedBuyAmountMaxSlippage)
 
-    const rawPriceFrom = quote.meta.assets?.find(a => a.asset.toLowerCase() === assetFrom.identifier.toLowerCase())?.price
-    const priceFrom = rawPriceFrom && new SwapKitNumber(rawPriceFrom)
+    const priceFrom = rates[assetFrom.identifier]
+    const priceTo = rates[assetTo.identifier]
 
-    const rawPriceTo = quote.meta.assets?.find(a => a.asset.toLowerCase() === assetTo.identifier.toLowerCase())?.price
-    const priceTo = rawPriceTo && new SwapKitNumber(rawPriceTo)
-
-    const { total: totalFee } = resolveFees(quote)
+    const { total: totalFee } = resolveFees(quote, rates)
 
     const slippage = new SwapKitNumber(quote.totalSlippageBps).div(-100)
 
