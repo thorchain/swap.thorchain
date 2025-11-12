@@ -7,6 +7,10 @@ const thornode = axios.create({
   }
 })
 
+const uKit = axios.create({
+  baseURL: 'https://swap-api.unstoppable.money'
+})
+
 const swapKit = axios.create({
   baseURL: 'https://api.swapkit.dev',
   headers: {
@@ -16,10 +20,6 @@ const swapKit = axios.create({
 
 const memoless = axios.create({
   baseURL: `${process.env.NEXT_PUBLIC_MEMOLESS_API}/api/v1`
-})
-
-const us = axios.create({
-  baseURL: 'https://swap-api.unstoppable.money'
 })
 
 const coingecko = axios.create({ baseURL: 'https://api.coingecko.com/api/v3' })
@@ -41,11 +41,11 @@ export const getAssetRates = async (ids: string) => {
 }
 
 export const getTokenList = async (provider: string) => {
-  return swapKit.get(`/tokens?provider=${provider}`).then(res => res.data)
+  return uKit.get(`/tokens?provider=${provider}`).then(res => res.data)
 }
 
 export const getQuotes = async (data: Record<string, any>, signal?: AbortSignal) => {
-  return swapKit
+  return uKit
     .post('/quote', data, {
       signal
     })
