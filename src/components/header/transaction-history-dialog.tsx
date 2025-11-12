@@ -47,7 +47,7 @@ export const TransactionHistoryDialog = ({ isOpen, onOpenChange }: HistoryDialog
 
     const text =
       legTx.fromAsset === legTx.toAsset
-        ? legTx.fromAsset.toLowerCase() === tx.assetFrom.asset.toLowerCase()
+        ? legTx.fromAsset.toLowerCase() === tx.assetFrom.identifier.toLowerCase()
           ? `Deposit ${from.ticker}`
           : `Send ${to.ticker}`
         : `Swap ${from.ticker} to ${to.ticker}`
