@@ -35,7 +35,12 @@ export const SwapConfirm = ({ quote }: SwapConfirmProps) => {
 
   const { total: totalFee } = resolveFees(quote, rates)
 
-  const slippage = new SwapKitNumber(quote.totalSlippageBps).div(-100)
+  const buyAmountInUsd = priceFrom && expectedBuyAmount.mul(priceTo)
+  const sellAmountInUsd = priceTo && sellAmount.mul(priceFrom)
+
+  const hundredPercent = new SwapKitNumber(100)
+  const toPriceRatio = buyAmountInUsd && sellAmountInUsd && buyAmountInUsd.mul(hundredPercent).div(sellAmountInUsd)
+  const slippage = toPriceRatio && toPriceRatio.sub(hundredPercent)
 
   return (
     <>
@@ -137,10 +142,12 @@ export const SwapConfirm = ({ quote }: SwapConfirmProps) => {
             </div>
           )}
 
-          <div className="text-thor-gray flex justify-between text-sm">
-            <span>Slippage</span>
-            <span className="text-leah font-semibold">{slippage.toSignificant(3)}%</span>
-          </div>
+          {slippage && (
+            <div className="text-thor-gray flex justify-between text-sm">
+              <span>Slippage</span>
+              <span className="text-leah font-semibold">{slippage.toSignificant(3)}%</span>
+            </div>
+          )}
         </div>
       </ScrollArea>
     </>
