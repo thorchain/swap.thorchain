@@ -38,8 +38,12 @@ export const Swap = () => {
   }, [assetFrom, memolessAssets, quote])
 
   const memolessError: Error | undefined = useMemo(() => {
-    if (selectedAccount || !memolessAsset) return
-    if (valueFrom.lt(new SwapKitNumber(10 ** -(memolessAsset.decimals - 5)))) return new Error('Min amount error')
+    if (selectedAccount || !memolessAsset || !assetFrom) return
+    let minAmount = new SwapKitNumber(10 ** -(memolessAsset.decimals - 5))
+    if (valueFrom.lt(minAmount))
+      return new Error(
+        `Minimum swap amount without a connected wallet is ${minAmount.toSignificant()} ${assetFrom.ticker}`
+      )
   }, [memolessAsset, selectedAccount, valueFrom])
 
   return (
