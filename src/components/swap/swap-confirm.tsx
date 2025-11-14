@@ -101,7 +101,7 @@ export const SwapConfirm = ({ quote }: SwapConfirmProps) => {
           </div>
 
           <div className="space-y-4 border-t p-4">
-            {quote.sourceAddress !== '{sourceAddress}' && (
+            {quote.sourceAddress && quote.sourceAddress !== '{sourceAddress}' && (
               <div className="text-thor-gray flex justify-between text-sm">
                 <span>Source Address</span>
                 <div className="flex items-center gap-2">

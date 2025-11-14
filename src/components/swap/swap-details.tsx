@@ -1,5 +1,4 @@
-import { ReactNode, useMemo, useState } from 'react'
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip'
+import { useMemo, useState } from 'react'
 import { Separator } from '@/components/ui/separator'
 import { useQuote } from '@/hooks/use-quote'
 import { useAssetFrom, useAssetTo, useSwap } from '@/hooks/use-swap'
@@ -8,6 +7,7 @@ import { formatDuration, intervalToDuration } from 'date-fns'
 import { SwapKitNumber } from '@swapkit/core'
 import { FeeData, resolveFees } from '@/components/swap/swap-helpers'
 import { useRate } from '@/hooks/use-rates'
+import { InfoTooltip } from '@/components/info-tooltip'
 
 export function SwapDetails() {
   const assetFrom = useAssetFrom()
@@ -103,20 +103,5 @@ export function SwapDetails() {
         </div>
       )}
     </>
-  )
-}
-
-function InfoTooltip({ children }: { children: ReactNode }) {
-  return (
-    <TooltipProvider delayDuration={150}>
-      <Tooltip>
-        <TooltipTrigger asChild>
-          <Icon name="info" className="text-thor-gray ml-1 size-4" />
-        </TooltipTrigger>
-        <TooltipContent side="top" className="max-w-xs text-xs">
-          {children}
-        </TooltipContent>
-      </Tooltip>
-    </TooltipProvider>
   )
 }

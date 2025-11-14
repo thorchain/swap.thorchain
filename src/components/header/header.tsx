@@ -70,7 +70,7 @@ export function Header() {
                   <Image width="24" height="24" src={`/wallets/${provider.toLowerCase()}.svg`} alt={provider} />
                 </ThemeButton>
               </DropdownMenuTrigger>
-              <DropdownMenuContent className="rounded-2xl border-0 p-0">
+              <DropdownMenuContent>
                 <DropdownMenuItem
                   className="text-thor-gray flex cursor-pointer gap-4 p-4"
                   onClick={() => disconnectProvider(provider)}

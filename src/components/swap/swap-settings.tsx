@@ -5,6 +5,10 @@ import { Icon } from '@/components/icons'
 import { useState } from 'react'
 import { Slider } from '@/components/ui/slider'
 import { INITIAL_SLIPPAGE } from '@/store/swap-store'
+import { cn } from '@/lib/utils'
+import { InfoTooltip } from '@/components/info-tooltip'
+
+const slippageValues = [0.1, 0.2, 0.3, 0.4, 0.5, 0.75, 1, 1.25, 1.5, 1.75, 2, 2.5, 3, 3.5, 4, 4.5, 5, 6, 7, 8, 9, 10]
 
 export const SwapSettings = () => {
   const slippage = useSlippage()
@@ -12,9 +16,9 @@ export const SwapSettings = () => {
   const [dropdownOpen, setDropdownOpen] = useState(false)
   const [sliderValue, setSliderValue] = useState([toSliderValue(slippage)])
 
-  const enabledSteps = [...Array(20).keys(), 25]
-  const ramExpansions = [toSlippageValue(0), 'No Protection']
-  const currentSlippage = toSlippageValue(sliderValue[0])
+  const enabledSteps = [...Array(22).keys(), 25]
+  const ramExpansions = [slippageValues[0], 'No Protection']
+  const currentSlippage = slippageValues[sliderValue[0]]
 
   const handleValueChange = (newValue: [number]) => {
     const targetValue = newValue[0]
@@ -49,19 +53,35 @@ export const SwapSettings = () => {
           <Icon name="manage" />
         </ThemeButton>
       </DropdownMenuTrigger>
-      <DropdownMenuContent className="bg-lawrence max-w-sm rounded-2xl border-0 p-8">
+      <DropdownMenuContent className="max-w-sm p-8">
         <div className="flex flex-col gap-6">
           <div className="flex flex-col gap-3">
-            <span className="font-semibold">
-              Price Protection - {currentSlippage ? `${currentSlippage}%` : 'No Protection'}
-            </span>
+            <div className="flex justify-between text-sm font-semibold">
+              <div className="flex items-center">
+                <span>Slippage Tolerance</span>
+                <InfoTooltip>
+                  Due to market volatility, prices may change before completion. This setting ensures you receive at
+                  least your minimum amount.
+                </InfoTooltip>
+              </div>
+              <span>{currentSlippage ? `${currentSlippage}%` : 'No Protection'}</span>
+            </div>
             <span className="text-thor-gray text-xs">
-              Your deposit will be refunded if the price changes unfavourable above this percentage.
+              Maximum acceptable price change. Transaction will fail if the price moves unfavorably beyond this amount.
             </span>
           </div>
           <div className="">
             <div className="w-full">
-              <Slider max={25} value={sliderValue} onValueChange={handleValueChange} />
+              <Slider
+                max={25}
+                value={sliderValue}
+                onValueChange={handleValueChange}
+                classNameRange={cn({
+                  'bg-liquidity-green': currentSlippage && currentSlippage <= 3,
+                  'bg-jacob': currentSlippage && currentSlippage > 3,
+                  'bg-lucian': !currentSlippage
+                })}
+              />
               <div className="text-thor-gray mt-3 flex items-center justify-between text-[10px] font-semibold">
                 {ramExpansions.map(expansion => (
                   <span key={expansion}>{expansion}</span>
@@ -87,7 +107,7 @@ export const SwapSettings = () => {
               variant="primarySmall"
               className="flex-1"
               onClick={() => {
-                setSlippage(toSlippageValue(sliderValue[0]))
+                setSlippage(slippageValues[sliderValue[0]])
                 setDropdownOpen(false)
               }}
               disabled={currentSlippage === slippage}
@@ -103,16 +123,9 @@ export const SwapSettings = () => {
 
 function toSliderValue(slippage?: number) {
   if (slippage) {
-    return slippage / 0.5 - 1
-  } else {
-    return 25
+    const index = slippageValues.indexOf(slippage)
+    if (index !== -1) return index
   }
-}
 
-function toSlippageValue(value: number) {
-  if (value === 25) {
-    return undefined
-  } else {
-    return (value + 1) * 0.5
-  }
+  return 25
 }

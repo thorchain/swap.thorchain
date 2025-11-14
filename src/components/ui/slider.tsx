@@ -7,12 +7,13 @@ import { cn } from '@/lib/utils'
 
 function Slider({
   className,
+  classNameRange,
   defaultValue,
   value,
   min = 0,
   max = 100,
   ...props
-}: React.ComponentProps<typeof SliderPrimitive.Root>) {
+}: React.ComponentProps<typeof SliderPrimitive.Root> & { classNameRange?: string }) {
   const _values = React.useMemo(
     () => (Array.isArray(value) ? value : Array.isArray(defaultValue) ? defaultValue : [min, max]),
     [value, defaultValue, min, max]
@@ -40,7 +41,8 @@ function Slider({
         <SliderPrimitive.Range
           data-slot="slider-range"
           className={cn(
-            'bg-runes-blue absolute data-[orientation=horizontal]:h-full data-[orientation=vertical]:w-full'
+            'absolute data-[orientation=horizontal]:h-full data-[orientation=vertical]:w-full',
+            classNameRange
           )}
         />
       </SliderPrimitive.Track>
@@ -51,7 +53,7 @@ function Slider({
           className="border-blade ring-ring/50 block size-6 shrink-0 cursor-pointer rounded-full border bg-white shadow-sm transition-[color,box-shadow] hover:ring-1 focus-visible:ring-1 focus-visible:outline-hidden disabled:pointer-events-none disabled:opacity-50"
         >
           <span className="flex h-full w-full items-center justify-center">
-            <span className="bg-storm-purple h-2 w-2 rounded-full" />
+            <span className="bg-leah h-2 w-2 rounded-full" />
           </span>
         </SliderPrimitive.Thumb>
       ))}

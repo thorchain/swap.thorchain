@@ -26,12 +26,12 @@ export const SwapAddressFrom = () => {
           <Icon name="arrow-s-down" className="size-4" />
         </ThemeButton>
       </DropdownMenuTrigger>
-      <DropdownMenuContent align="end" className="bg-tyler rounded-2xl border-0 p-0">
+      <DropdownMenuContent align="end">
         <div>
           {options?.map((account, index) => (
             <DropdownMenuItem
               key={index}
-              className="focus:bg-blade flex cursor-pointer items-center justify-between gap-4 rounded-none px-4 py-3"
+              className="focus:bg-blade/50 flex cursor-pointer items-center justify-between gap-4 rounded-none px-4 py-3"
               onSelect={() => selectAccount(account)}
             >
               <div className="flex items-center gap-4">
