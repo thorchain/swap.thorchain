@@ -139,16 +139,17 @@ export const ConnectWallet = ({ isOpen, onOpenChange, chain }: ConnectWalletProp
 
   return (
     <Credenza open={isOpen} onOpenChange={onOpenChange}>
-      <CredenzaContent>
+      <CredenzaContent className="flex h-auto max-h-5/6 flex-col">
         <CredenzaHeader>
           <CredenzaTitle>Connect Wallet</CredenzaTitle>
         </CredenzaHeader>
 
-        <div className="flex flex-1 flex-col overflow-hidden md:flex-row">
+        <div className="flex min-h-0 flex-col md:flex-row">
           <ScrollArea
-            className={cn('overflow-hidden md:mb-0 md:w-2/5 md:border-r md:pr-8 md:pl-8', {
-              'hidden md:block': selectedWallet
+            className={cn('flex md:mb-0 md:w-2/5 md:border-r md:pr-8 md:pl-8', {
+              'hidden md:flex': selectedWallet
             })}
+            classNameViewport="flex-1 h-auto"
           >
             <div className="mx-4 block gap-2 md:mx-0 md:block md:w-full">{walletList(wallets)}</div>
           </ScrollArea>
@@ -166,17 +167,17 @@ export const ConnectWallet = ({ isOpen, onOpenChange, chain }: ConnectWalletProp
             </div>
           )}
 
-          <div className="flex flex-1 flex-col overflow-hidden">
+          <div className="flex flex-1 flex-col">
             {selectedWallet ? (
               renderSelectedWallet(selectedWallet)
             ) : (
               <>
                 <div className="text-thor-gray mb-3 hidden px-8 text-base font-semibold md:block">Chains</div>
 
-                <div className="hidden flex-1 overflow-hidden md:flex">
-                  <ScrollArea className="mb-4 flex-1 px-8">
+                <div className="hidden min-h-0 flex-1 md:flex">
+                  <ScrollArea className="flex px-8" classNameViewport="flex-1 h-auto">
                     <div
-                      className="grid flex-1 grid-flow-col gap-2"
+                      className="grid flex-1 grid-flow-col gap-2 pb-4 md:pb-8"
                       style={{
                         gridTemplateRows: `repeat(${Math.ceil(chains.length / 2)}, minmax(0, 1fr))`,
                         gridTemplateColumns: 'repeat(2, 1fr)'

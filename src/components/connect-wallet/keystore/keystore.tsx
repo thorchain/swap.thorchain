@@ -25,7 +25,7 @@ export const Keystore = ({ onConnect }: { wallet: WalletParams; onConnect: () =>
   }
 
   return (
-    <div className="flex flex-1 flex-col items-center justify-center gap-3 px-8 md:px-16">
+    <div className="mb-8 flex flex-1 flex-col items-center justify-center gap-3 px-8 md:mb-0 md:px-16">
       <ThemeButton className="w-full" variant="primaryMedium" onClick={() => setWalletType('create')}>
         Create New Wallet
       </ThemeButton>

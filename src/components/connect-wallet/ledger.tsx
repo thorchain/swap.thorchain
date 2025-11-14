@@ -149,7 +149,7 @@ export const Ledger = ({ wallet, onConnect }: { wallet: WalletParams; onConnect:
       </div>
 
       {pathOptions && (
-        <div className="mb-3 grid grid-cols-5 gap-3 px-8 md:mb-6">
+        <div className="mt-4 mb-3 grid grid-cols-5 gap-3 px-8 md:mb-6">
           <div className="col-span-4">
             <div className="text-thor-gray mb-2 font-semibold">Derivation Path</div>
             <Select value={path} onValueChange={setPath} disabled={connecting}>
