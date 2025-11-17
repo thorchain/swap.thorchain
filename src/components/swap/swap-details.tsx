@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react'
+import { useLayoutEffect, useMemo, useRef, useState } from 'react'
 import { Separator } from '@/components/ui/separator'
 import { useQuote } from '@/hooks/use-quote'
 import { useAssetFrom, useAssetTo, useSwap } from '@/hooks/use-swap'
@@ -8,6 +8,7 @@ import { SwapKitNumber } from '@swapkit/core'
 import { FeeData, resolveFees } from '@/components/swap/swap-helpers'
 import { useRate } from '@/hooks/use-rates'
 import { InfoTooltip } from '@/components/info-tooltip'
+import { animated, useSpring } from '@react-spring/web'
 
 export function SwapDetails() {
   const assetFrom = useAssetFrom()
@@ -15,9 +16,28 @@ export function SwapDetails() {
   const [showMore, setShowMore] = useState(false)
   const { valueFrom } = useSwap()
   const { quote } = useQuote()
+  const contentRef = useRef<HTMLDivElement>(null)
+  const [contentHeight, setContentHeight] = useState(0)
 
   const identifiers = useMemo(() => quote?.fees.map(t => t.asset).sort(), [quote?.fees])
   const { rates } = useRate(identifiers)
+
+  useLayoutEffect(() => {
+    if (contentRef.current && quote) {
+      setContentHeight(contentRef.current.scrollHeight)
+    }
+  }, [quote])
+
+  const arrowSpring = useSpring({
+    transform: showMore ? 'rotate(180deg)' : 'rotate(0deg)',
+    config: { tension: 250, friction: 20 }
+  })
+
+  const contentSpring = useSpring({
+    height: showMore ? contentHeight : 0,
+    opacity: showMore ? 1 : 0,
+    config: { tension: 400, friction: 30 }
+  })
 
   if (!quote) return null
 
@@ -60,15 +80,17 @@ export function SwapDetails() {
 
           <div className="text-leah flex items-center gap-2 text-sm font-semibold">
             <span className="text-leah">{total.toCurrency()}</span>
-            <Icon name={showMore ? 'arrow-s-up' : 'arrow-s-down'} className="size-5" />
+            <animated.div style={arrowSpring}>
+              <Icon name="arrow-s-down" className="size-5" />
+            </animated.div>
           </div>
         </div>
       </div>
 
-      {showMore && quote && <Separator className="bg-blade" />}
+      <animated.div style={contentSpring} className="overflow-hidden">
+        <Separator className="bg-blade" />
 
-      {showMore && quote && (
-        <div className="text-thor-gray space-y-4 px-4 pt-2 pb-5 text-sm font-semibold">
+        <div ref={contentRef} className="text-thor-gray space-y-4 px-4 pt-2 pb-5 text-sm font-semibold">
           <div className="flex items-center justify-between">
             <div className="flex items-center">Price</div>
             <div className="text-leah flex items-center gap-1">
@@ -101,7 +123,7 @@ export function SwapDetails() {
             </div>
           </div>
         </div>
-      )}
+      </animated.div>
     </>
   )
 }

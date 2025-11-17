@@ -24,6 +24,7 @@
     "@radix-ui/react-slider": "^1.3.6",
     "@radix-ui/react-slot": "^1.2.3",
     "@radix-ui/react-tooltip": "^1.2.8",
+    "@react-spring/web": "^10.0.3",
     "@swapkit/core": "^4.0.40",
     "@swapkit/helpers": "^4.4.1",
     "@swapkit/plugin-evm": "^1.4.20",
