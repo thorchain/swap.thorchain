@@ -69,8 +69,8 @@ export const useBalance = (): UseBalance => {
             const gasLimit = 300_000n
             const evmWallet = swapKit.getWallet<EVMChain>(selected.provider, selected.network as EVMChain)
 
-            // @ts-ignore
-            const gasPrices = await evmWallet.estimateGasPrices()
+            const estimateFn = evmWallet.estimateGasPrices
+            const gasPrices = await (typeof estimateFn === 'function' ? estimateFn() : estimateFn)
             const { gasPrice, maxFeePerGas, maxPriorityFeePerGas } = gasPrices[FeeOption.Fast]
 
             if (gasPrice) {
