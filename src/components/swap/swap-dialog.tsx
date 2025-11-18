@@ -50,7 +50,7 @@ export const SwapDialog = ({ provider, isOpen, onOpenChange }: SwapDialogProps) 
           amountTo: new SwapKitNumber(quote.expectedBuyAmount).toSignificant(),
           addressFrom: quote.sourceAddress,
           addressTo: quote.destinationAddress,
-          addressDeposit: quote.inboundAddress!,
+          addressDeposit: quote.inboundAddress,
           status: 'pending'
         })
 

@@ -13,7 +13,7 @@ interface Transaction {
   amountTo: string
   addressFrom: string
   addressTo: string
-  addressDeposit: string
+  addressDeposit?: string
   status: 'not_started' | 'pending' | 'swapping' | 'completed' | 'failed' | 'refunded' | 'unknown'
   details?: any
 }
