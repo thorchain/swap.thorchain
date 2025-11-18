@@ -54,8 +54,11 @@ export const useBalance = (): UseBalance => {
 
       if ('getBalance' in wallet) {
         const balances = await wallet.getBalance(wallet.address, true)
+
         const balance = balances.find(
-          b => `${b.chain}.${b.ticker}`.toLowerCase() === assetFrom.identifier.toLowerCase()
+          b =>
+            `${b.chain}.${b.isSynthetic || b.isTradeAsset ? b.ticker : b.symbol}`.toLowerCase() ===
+            assetFrom.identifier.toLowerCase()
         )
 
         if (balance) {
