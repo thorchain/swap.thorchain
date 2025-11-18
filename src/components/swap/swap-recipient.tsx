@@ -1,6 +1,6 @@
 import { ThemeButton } from '@/components/theme-button'
 import { CredenzaHeader, CredenzaTitle } from '@/components/ui/credenza'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { ScrollArea } from '@/components/ui/scroll-area'
 import { Icon } from '@/components/icons'
 import { LoaderCircle } from 'lucide-react'
@@ -39,11 +39,13 @@ export const SwapRecipient = ({ provider, onFetchQuote }: SwapRecipientProps) =>
 
   const options = accounts.filter(a => a.network === assetTo.chain)
 
-  const onChange = async (value: string) => {
-    const validateAddress = await getAddressValidator()
-    setAddress(value)
-    setIsValid(value.length === 0 || validateAddress({ address: value, chain: assetTo.chain }))
-  }
+  useEffect(() => {
+    if (address.length === 0) return setIsValid(true)
+
+    getAddressValidator()
+      .then(validateAddress => setIsValid(validateAddress({ address: address, chain: assetTo.chain })))
+      .catch(() => setIsValid(false))
+  }, [address])
 
   const fetchQuote = () => {
     setQuoting(true)
@@ -81,62 +83,19 @@ export const SwapRecipient = ({ provider, onFetchQuote }: SwapRecipientProps) =>
   return (
     <>
       <CredenzaHeader>
-        <CredenzaTitle>Enter Recipient Address</CredenzaTitle>
+        <CredenzaTitle>{options.length ? 'Choose Receiving Address' : 'Enter Receiving Address'}</CredenzaTitle>
       </CredenzaHeader>
 
       <ScrollArea className="flex min-h-0 flex-1 px-4 md:px-8" classNameViewport="flex-1 h-auto">
         <div className="flex flex-col gap-6">
-          <div className="flex flex-col gap-5">
-            <div className="border-jacob flex flex-col gap-3 rounded-xl border p-4 text-sm">
-              <div className="flex gap-3">
-                <Icon name="warning" className="text-jacob size-6 shrink-0" />
-                <div className="text-leah font-semibold">Use only personal wallet address</div>
-              </div>
-              <div className="text-thor-gray">Do not use contract or exchange addresses — funds may be lost.</div>
-            </div>
-
-            <div className="relative grid gap-2">
-              <Input
-                placeholder={`${chainLabel(assetTo.chain)} address`}
-                value={address}
-                onChange={e => onChange(e.target.value)}
-                className={cn(
-                  'text-leah placeholder:text-andy border-blade focus-visible:border-blade rounded-xl border-1 p-4 focus:ring-0 focus-visible:ring-0 md:text-base',
-                  {
-                    'border-lucian focus-visible:border-lucian': !isValid
-                  }
-                )}
-              />
-
-              {!address.length && (
-                <ThemeButton
-                  variant="secondarySmall"
-                  className="absolute end-4 top-1/2 -translate-y-1/2"
-                  onClick={() => {
-                    navigator.clipboard.readText().then(text => {
-                      onChange(text)
-                    })
-                  }}
-                >
-                  Paste
-                </ThemeButton>
-              )}
-
-              {!isValid && (
-                <div className="text-lucian text-xs font-semibold">Invalid {chainLabel(assetTo.chain)} address</div>
-              )}
-            </div>
-          </div>
-
           {options.length > 0 && (
             <div className="flex flex-col gap-2">
-              <div className="text-thor-gray text-sm font-semibold">Or use address from connected wallets</div>
               <div className="border-blade flex flex-col gap-2 overflow-hidden rounded-xl border">
                 {options.map((account, index) => (
                   <div
                     key={index}
                     className="hover:bg-blade/30 flex cursor-pointer items-center justify-between p-4"
-                    onClick={() => onChange(account.address)}
+                    onClick={() => setAddress(account.address)}
                   >
                     <div className="flex items-center gap-4">
                       <Image src={`/wallets/${account.provider.toLowerCase()}.svg`} alt="" width="24" height="24" />
@@ -152,11 +111,66 @@ export const SwapRecipient = ({ provider, onFetchQuote }: SwapRecipientProps) =>
             </div>
           )}
 
+          <div className="flex flex-col gap-5">
+            <div className="flex flex-col gap-2">
+              {options.length > 0 && (
+                <div className="text-thor-gray text-sm font-semibold">Or use address from external wallet:</div>
+              )}
+
+              <div className="relative">
+                <Input
+                  placeholder={`${chainLabel(assetTo.chain)} address`}
+                  value={address}
+                  onChange={e => setAddress(e.target.value)}
+                  className={cn({
+                    'border-lucian focus-visible:border-lucian': !isValid
+                  })}
+                />
+
+                {address.length ? (
+                  <ThemeButton
+                    variant="circleSmall"
+                    className="absolute end-4 top-1/2 -translate-y-1/2"
+                    onClick={() => {
+                      setAddress('')
+                    }}
+                  >
+                    <Icon name="trash" />
+                  </ThemeButton>
+                ) : (
+                  <ThemeButton
+                    variant="secondarySmall"
+                    className="absolute end-4 top-1/2 -translate-y-1/2"
+                    onClick={() => {
+                      navigator.clipboard.readText().then(text => {
+                        setAddress(text)
+                      })
+                    }}
+                  >
+                    Paste
+                  </ThemeButton>
+                )}
+              </div>
+
+              {!isValid && (
+                <div className="text-lucian text-xs font-semibold">Invalid {chainLabel(assetTo.chain)} address</div>
+              )}
+            </div>
+
+            <div className="border-jacob flex flex-col gap-3 rounded-xl border p-4 text-sm">
+              <div className="flex gap-3">
+                <Icon name="warning" className="text-jacob size-6 shrink-0" />
+                <div className="text-leah font-semibold">Use only personal wallet address</div>
+              </div>
+              <div className="text-thor-gray">Do not use contract or exchange addresses — funds may be lost.</div>
+            </div>
+          </div>
+
           {quoteError && <SwapError error={quoteError} />}
         </div>
       </ScrollArea>
 
-      <div className="p-4 pt-6 md:p-8">
+      <div className="p-4 pt-6 md:p-8 md:pt-6">
         <ThemeButton
           variant="primaryMedium"
           className="w-full"

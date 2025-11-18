@@ -14,7 +14,7 @@ export const SwapBalance = () => {
     if (balance) {
       return (
         <span>
-          {balance.spendable.toSignificant()} {assetFrom?.ticker}
+          {balance.spendable.toSignificant(3)} {assetFrom?.ticker}
         </span>
       )
     }

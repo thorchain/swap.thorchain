@@ -131,25 +131,15 @@ export function SetupPassword({
         </p>
 
         <div className="space-y-4">
-          <Input
-            placeholder="Enter Password"
-            type="password"
-            onChange={e => setPassword1(e.target.value)}
-            className={cn(
-              'text-leah placeholder:text-andy border-blade focus-visible:border-blade rounded-xl border-1 p-4 text-base focus:ring-0 focus-visible:ring-0'
-            )}
-          />
+          <Input placeholder="Enter Password" type="password" onChange={e => setPassword1(e.target.value)} />
           <div>
             <Input
               placeholder="Confirm Password"
               type="password"
               onChange={e => setPassword2(e.target.value)}
-              className={cn(
-                'text-leah placeholder:text-andy border-blade focus-visible:border-blade none rounded-xl border-1 p-4 text-base focus:ring-0 focus-visible:ring-0',
-                {
-                  'border-lucian focus-visible:border-lucian': password2 && password1 !== password2
-                }
-              )}
+              className={cn({
+                'border-lucian focus-visible:border-lucian': password2 && password1 !== password2
+              })}
             />
             {password2 && password1 !== password2 && <span className="text-lucian text-xs">Password must match</span>}
           </div>

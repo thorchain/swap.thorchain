@@ -174,12 +174,7 @@ export const Ledger = ({ wallet, onConnect }: { wallet: WalletParams; onConnect:
           </div>
           <div className="col-span-1">
             <div className="text-thor-gray mb-2 font-semibold">Index</div>
-            <Input
-              className="border-blade rounded-xl border-1 p-4 text-base font-medium"
-              placeholder="0"
-              onChange={v => setIndex(parseInt(v.target.value || '0'))}
-              disabled={connecting}
-            />
+            <Input placeholder="0" onChange={v => setIndex(parseInt(v.target.value || '0'))} disabled={connecting} />
           </div>
         </div>
       )}

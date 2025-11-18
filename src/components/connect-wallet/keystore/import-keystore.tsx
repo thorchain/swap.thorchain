@@ -144,9 +144,6 @@ export function ImportKeystore({ onBack, onConnect }: { onBack: () => void; onCo
             placeholder="Password"
             onChange={e => setPassword(e.target.value)}
             disabled={connecting}
-            className={cn(
-              'text-leah placeholder:text-andy border-blade focus-visible:border-blade rounded-xl border-1 p-4 text-base focus:ring-0 focus-visible:ring-0'
-            )}
           />
         </div>
 
