@@ -181,6 +181,13 @@ export const SwapConfirm = ({ quote }: SwapConfirmProps) => {
               <span className="text-leah font-semibold">{totalFee.toCurrency()}</span>
             </div>
           </div>
+
+          {quote.memo && (
+            <div className="text-thor-gray flex items-center justify-between gap-6 border-t p-4 text-sm">
+              <span>Memo</span>
+              <p className="text-leah text-right font-semibold text-balance break-all">{quote.memo}</p>
+            </div>
+          )}
         </div>
       </ScrollArea>
     </>
