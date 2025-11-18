@@ -161,7 +161,7 @@ export const SwapConfirm = ({ quote }: SwapConfirmProps) => {
               </div>
             )}
 
-            {quote.estimatedTime && (
+            {quote.estimatedTime && quote.estimatedTime.total > 0 && (
               <div className="text-thor-gray flex justify-between text-sm">
                 <span>Estimated Time</span>
                 <span className="text-leah font-semibold">

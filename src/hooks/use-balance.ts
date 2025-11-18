@@ -1,7 +1,6 @@
 import { useQuery } from '@tanstack/react-query'
 import { useAssetFrom } from '@/hooks/use-swap'
 import { useWallets } from '@/hooks/use-wallets'
-import { useInboundAddresses } from '@/hooks/use-inbound-addresses'
 import {
   AssetValue,
   Chain,
@@ -32,7 +31,6 @@ export const useBalance = (): UseBalance => {
   const swapKit = getSwapKit()
   const assetFrom = useAssetFrom()
   const { selected } = useWallets()
-  const { data: inboundAddresses } = useInboundAddresses()
 
   const {
     data: balance,
@@ -42,7 +40,7 @@ export const useBalance = (): UseBalance => {
   } = useQuery({
     queryKey: ['balance', assetFrom?.identifier, selected?.provider],
     queryFn: async () => {
-      if (!selected || !assetFrom || !inboundAddresses) {
+      if (!selected || !assetFrom) {
         return null
       }
 
@@ -57,7 +55,7 @@ export const useBalance = (): UseBalance => {
       if ('getBalance' in wallet) {
         const balances = await wallet.getBalance(wallet.address, true)
         const balance = balances.find(
-          b => `${b.chain}.${b.symbol}`.toLowerCase() === assetFrom.identifier.toLowerCase()
+          b => `${b.chain}.${b.ticker}`.toLowerCase() === assetFrom.identifier.toLowerCase()
         )
 
         if (balance) {
@@ -65,56 +63,57 @@ export const useBalance = (): UseBalance => {
         }
       }
 
-      let fee = new SwapKitNumber(0)
-
-      try {
-        if (isGasAsset({ chain: assetFrom.chain, symbol: assetFrom.ticker }) && value.gt(0)) {
-          const inbound = inboundAddresses.find((a: any) => a.chain === assetFrom.chain)
-
-          if (!inbound) {
-            return null
-          }
-
+      const estimateFee = async () => {
+        try {
           if (EVMChains.includes(assetFrom.chain as EVMChain)) {
+            const gasLimit = 300_000n
             const evmWallet = swapKit.getWallet<EVMChain>(selected.provider, selected.network as EVMChain)
-            fee = await evmWallet.estimateTransactionFee({
-              to: inbound.address,
-              from: selected.address,
-              value: value.getBaseValue('bigint'),
-              data: '0x',
-              chain: assetFrom.chain as EVMChain,
-              feeOption: FeeOption.Fast
-            })
+
+            // @ts-ignore
+            const gasPrices = await evmWallet.estimateGasPrices()
+            const { gasPrice, maxFeePerGas, maxPriorityFeePerGas } = gasPrices[FeeOption.Fast]
+
+            if (gasPrice) {
+              return SwapKitNumber.fromBigInt(gasPrice * gasLimit, assetFrom.decimals)
+            }
+
+            if (maxFeePerGas && maxPriorityFeePerGas) {
+              const fee = (maxFeePerGas + maxPriorityFeePerGas) * gasLimit
+              return SwapKitNumber.fromBigInt(fee, assetFrom.decimals)
+            }
+
+            return new SwapKitNumber(0)
           } else if (UTXOChains.includes(assetFrom.chain as UTXOChain)) {
             const utxoWallet = swapKit.getWallet<UTXOChain>(selected.provider, selected.network as UTXOChain)
-            fee = await utxoWallet.estimateTransactionFee({
-              recipient: inbound.address,
+            return await utxoWallet.estimateTransactionFee({
+              recipient: selected.address,
               sender: selected.address,
               assetValue: value,
               feeOptionKey: FeeOption.Fast
             })
           } else if (CosmosChains.includes(assetFrom.chain as CosmosChain)) {
-            fee = estimateTransactionFee({ assetValue: value })
+            return estimateTransactionFee({ assetValue: value })
           } else if (assetFrom.chain === Chain.Tron) {
-            const tronWallet = swapKit.getWallet<Chain.Tron>(selected.provider, selected.network as Chain.Tron)
-            fee = await tronWallet.estimateTransactionFee({
-              sender: selected.address,
-              recipient: inbound.address,
-              assetValue: value,
-              feeOptionKey: FeeOption.Fast
-            })
+            return new SwapKitNumber(1)
           }
+        } catch (e) {
+          console.log({ e })
         }
-      } catch (e) {
-        console.log({ e })
+
+        return new SwapKitNumber(0)
       }
+
+      const fee =
+        isGasAsset({ chain: assetFrom.chain, symbol: assetFrom.ticker }) && value.gt(0)
+          ? await estimateFee()
+          : new SwapKitNumber(0)
 
       return {
         total: value,
         spendable: value.gt(fee) ? value.sub(fee) : new SwapKitNumber(0)
       }
     },
-    enabled: !!(selected && assetFrom && inboundAddresses),
+    enabled: !!(selected && assetFrom),
     retry: false,
     refetchOnMount: false
   })

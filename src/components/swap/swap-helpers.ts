@@ -5,7 +5,7 @@ import { QuoteResponseRoute } from '@swapkit/helpers/api'
 export type FeeData = {
   amount: SwapKitNumber
   usd: SwapKitNumber
-  symbol: string
+  ticker: string
 }
 
 export const resolveFees = (quote: QuoteResponseRoute, rates: AssetRateMap) => {
@@ -22,7 +22,7 @@ export const resolveFees = (quote: QuoteResponseRoute, rates: AssetRateMap) => {
     return {
       amount: amount,
       usd: rate ? amount.mul(new SwapKitNumber(rate)) : new SwapKitNumber(0),
-      symbol: asset.ticker || asset.symbol
+      ticker: asset.ticker || asset.symbol
     }
   }
 

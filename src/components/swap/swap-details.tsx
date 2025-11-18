@@ -56,7 +56,7 @@ export function SwapDetails() {
             <>
               {fee.amount.gt(0) && (
                 <span className="text-thor-gray">
-                  {fee.amount.toSignificant()} {fee.symbol}
+                  {fee.amount.toSignificant()} {fee.ticker}
                 </span>
               )}
 
@@ -107,7 +107,7 @@ export function SwapDetails() {
           <div className="flex items-center justify-between">
             Estimated Time
             <div className="flex items-center gap-2">
-              {quote.estimatedTime ? (
+              {quote.estimatedTime && quote.estimatedTime.total > 0 ? (
                 <span className="text-leah">
                   {formatDuration(
                     intervalToDuration({
