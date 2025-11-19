@@ -71,9 +71,7 @@ export const useSwapRates = (identifier?: string) => {
   const assetFrom = useAssetFrom()
   const assetTo = useAssetTo()
   const identifiers = [assetFrom?.identifier, assetTo?.identifier].filter(Boolean).sort() as string[]
-  console.log({ identifiers })
   const { rates } = useRates(identifiers)
-  console.log({ rates })
 
   return { rate: identifier ? rates[identifier] : undefined }
 }
