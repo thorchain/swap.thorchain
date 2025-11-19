@@ -26,9 +26,10 @@ export const ALL_CHAINS = [
   Chain.Dogecoin,
   Chain.Ethereum,
   Chain.Litecoin,
-  Chain.Tron,
+  Chain.Near,
+  Chain.Solana,
   Chain.THORChain,
-  Chain.Near
+  Chain.Tron
 ]
 
 export const COMING_SOON_CHAINS = ['XMR']
