@@ -30,7 +30,7 @@ export const ALL_CHAINS = [
   Chain.THORChain
 ]
 
-export const COMING_SOON_CHAINS = [Chain.Solana, 'XMR']
+export const COMING_SOON_CHAINS = ['XMR']
 
 export const WALLETS: WalletParams[] = [
   {
