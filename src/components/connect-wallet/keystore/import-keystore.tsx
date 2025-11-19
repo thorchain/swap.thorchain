@@ -8,6 +8,7 @@ import { LoaderCircle } from 'lucide-react'
 import { Input } from '@/components/ui/input'
 import { cn } from '@/lib/utils'
 import { SwapError } from '@/components/swap/swap-error'
+import { ScrollArea } from '@/components/ui/scroll-area'
 
 export function ImportKeystore({ onBack, onConnect }: { onBack: () => void; onConnect: () => void }) {
   const fileInputRef = useRef<HTMLInputElement>(null)
@@ -91,67 +92,73 @@ export function ImportKeystore({ onBack, onConnect }: { onBack: () => void; onCo
   }
 
   return (
-    <div className="flex flex-1 flex-col">
-      <div className="flex-1 px-4 md:px-8">
-        <div className="mb-4 text-base font-semibold">Import Keystore</div>
+    <>
+      <div className="flex min-h-0 flex-1">
+        <ScrollArea className="flex-1 px-4 md:mb-4 md:px-8">
+          <div className="flex flex-col">
+            <div className="mb-4 text-base font-semibold">Import Keystore</div>
 
-        <div
-          onDragOver={handleDragOver}
-          onDragLeave={handleDragLeave}
-          onDrop={handleDrop}
-          onClick={() => {
-            if (!file) fileInputRef.current?.click()
-          }}
-          className={cn(
-            'border-blade flex h-40 flex-col items-center justify-center gap-2 rounded-3xl border-2 border-dashed px-8 text-center transition-all duration-200 ease-in-out',
-            { 'hover:bg-blade/50 cursor-pointer': !file },
-            { 'bg-blade/50': isDragging }
-          )}
-        >
-          <Input
-            ref={fileInputRef}
-            type="file"
-            accept=".txt,.json"
-            hidden
-            disabled={connecting}
-            onChange={e => {
-              if (e.target.files?.[0]) handleFile(e.target.files?.[0])
-            }}
-          />
-
-          {file ? (
             <div
-              className="bg-liquidity-green/10 border-liquidity-green text-leah hover:bg-lucian/10 hover:text-lucian hover:border-lucian flex cursor-pointer items-center gap-3 rounded-2xl border px-4 py-3 font-semibold"
+              onDragOver={handleDragOver}
+              onDragLeave={handleDragLeave}
+              onDrop={handleDrop}
               onClick={() => {
-                setFile(undefined)
+                if (!file) fileInputRef.current?.click()
               }}
+              className={cn(
+                'border-blade flex h-40 flex-col items-center justify-center gap-2 rounded-3xl border-2 border-dashed px-8 text-center transition-all duration-200 ease-in-out',
+                { 'hover:bg-blade/50 cursor-pointer': !file },
+                { 'bg-blade/50': isDragging }
+              )}
             >
-              {file.name}
-              <Icon name="trash" className="size-5 shrink-0" />
+              <Input
+                ref={fileInputRef}
+                type="file"
+                accept=".txt,.json"
+                hidden
+                disabled={connecting}
+                onChange={e => {
+                  if (e.target.files?.[0]) handleFile(e.target.files?.[0])
+                }}
+              />
+
+              {file ? (
+                <div
+                  className="bg-liquidity-green/10 border-liquidity-green text-leah hover:bg-lucian/10 hover:text-lucian hover:border-lucian flex cursor-pointer items-center gap-3 rounded-2xl border px-4 py-3 font-semibold"
+                  onClick={() => {
+                    setFile(undefined)
+                  }}
+                >
+                  {file.name}
+                  <Icon name="trash" className="size-5 shrink-0" />
+                </div>
+              ) : (
+                <>
+                  <Icon name="cloud-in" className="text-thor-gray size-12 shrink-0" />
+                  <span className="text-leah text-sm font-semibold">
+                    Select or drag your keystore file to upload it
+                  </span>
+                </>
+              )}
             </div>
-          ) : (
-            <>
-              <Icon name="cloud-in" className="text-thor-gray size-12 shrink-0" />
-              <span className="text-leah text-sm font-semibold">Select or drag your keystore file to upload it</span>
-            </>
-          )}
-        </div>
 
-        <div className="mt-5 flex flex-col gap-2">
-          <div className="text-thor-gray text-base font-semibold">Decryption Password</div>
-          <Input
-            type="password"
-            placeholder="Password"
-            onChange={e => setPassword(e.target.value)}
-            disabled={connecting}
-          />
-        </div>
+            <div className="mt-5 flex flex-col gap-2">
+              <div className="text-thor-gray text-base font-semibold">Decryption Password</div>
+              <Input
+                type="password"
+                placeholder="Password"
+                onChange={e => setPassword(e.target.value)}
+                disabled={connecting}
+              />
+            </div>
 
-        {error && (
-          <div className="pt-4">
-            <SwapError error={error} />
+            {error && (
+              <div className="pt-4">
+                <SwapError error={error} />
+              </div>
+            )}
           </div>
-        )}
+        </ScrollArea>
       </div>
 
       <div className="flex gap-3 p-4 md:justify-end md:gap-6 md:px-8 md:pt-0 md:pb-8">
@@ -168,6 +175,6 @@ export function ImportKeystore({ onBack, onConnect }: { onBack: () => void; onCo
           {connecting && <LoaderCircle size={20} className="animate-spin" />} Import
         </ThemeButton>
       </div>
-    </div>
+    </>
   )
 }

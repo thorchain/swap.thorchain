@@ -57,7 +57,7 @@ export const BrowserWallet = ({
         </div>
       </div>
 
-      <div className="flex flex-1 overflow-hidden">
+      <div className="flex min-h-0 flex-1">
         <ScrollArea className="flex-1 px-4 md:mb-4 md:px-8">
           <div
             className="grid flex-1 grid-flow-col gap-2"

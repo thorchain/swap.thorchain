@@ -8,6 +8,7 @@ import { encryptToKeyStore, generatePhrase } from '@swapkit/wallets/keystore'
 import { LoaderCircle } from 'lucide-react'
 import { Input } from '@/components/ui/input'
 import { cn } from '@/lib/utils'
+import { ScrollArea } from '@/components/ui/scroll-area'
 
 export function CreateWallet({ onBack, onConnect }: { onBack: () => void; onConnect: () => void }) {
   const [showPassword, setShowPassword] = useState(false)
@@ -56,41 +57,45 @@ export function CreateWallet({ onBack, onConnect }: { onBack: () => void; onConn
   }
 
   return (
-    <div className="flex flex-1 flex-col">
-      <div className="flex-1 px-4 md:px-8">
-        <div className="text-leah mb-3 text-base font-semibold">Create New Wallet</div>
+    <>
+      <div className="flex min-h-0 flex-1">
+        <ScrollArea className="flex-1 px-4 md:mb-4 md:px-8">
+          <div className="flex flex-col">
+            <div className="text-leah mb-3 text-base font-semibold">Create New Wallet</div>
 
-        <p className="text-thor-gray mb-5 text-sm">
-          Write these 12 words down and store them securely offline. This 12 word phrase is used to recover your wallet
-          private keys.
-        </p>
+            <p className="text-thor-gray mb-5 text-sm">
+              Write these 12 words down and store them securely offline. This 12 word phrase is used to recover your
+              wallet private keys.
+            </p>
 
-        <div className="mb-2 flex flex-col items-center gap-6 rounded-xl bg-black p-4 pb-4">
-          <div className="grid w-full grid-cols-3">
-            {seedWords.map((word, index) => (
-              <div key={index} className="flex items-center gap-1 p-2 text-sm font-semibold">
-                <span className="text-gray">{index + 1}</span>
-                <span className="text-white">{word}</span>
+            <div className="mb-2 flex flex-col items-center gap-6 rounded-xl bg-black p-4 pb-4">
+              <div className="grid w-full grid-cols-3">
+                {seedWords.map((word, index) => (
+                  <div key={index} className="flex items-center gap-1 p-2 text-sm font-semibold">
+                    <span className="text-gray">{index + 1}</span>
+                    <span className="text-white">{word}</span>
+                  </div>
+                ))}
               </div>
-            ))}
+
+              <ThemeButton variant="secondarySmall" onClick={handleCopy}>
+                Copy Phrase
+              </ThemeButton>
+            </div>
+
+            <div className="flex cursor-pointer items-center gap-4 py-4" onClick={() => setAccepted(!accepted)}>
+              {accepted ? (
+                <Icon name="check" className="text-lawrence bg-runes-blue size-6 shrink-0 rounded-full p-1" />
+              ) : (
+                <div className="bg-blade size-6 shrink-0 rounded-full" />
+              )}
+
+              <span className="text-thor-gray text-sm">
+                I confirm I have securely saved the passphrase to recover my account in the future.
+              </span>
+            </div>
           </div>
-
-          <ThemeButton variant="secondarySmall" onClick={handleCopy}>
-            Copy Phrase
-          </ThemeButton>
-        </div>
-
-        <div className="flex cursor-pointer items-center gap-4 py-4" onClick={() => setAccepted(!accepted)}>
-          {accepted ? (
-            <Icon name="check" className="text-lawrence bg-runes-blue size-6 shrink-0 rounded-full p-1" />
-          ) : (
-            <div className="bg-blade size-6 shrink-0 rounded-full" />
-          )}
-
-          <span className="text-thor-gray text-sm">
-            I confirm I have securely saved the passphrase to recover my account in the future.
-          </span>
-        </div>
+        </ScrollArea>
       </div>
 
       <div className="flex gap-6 p-4 md:justify-end md:px-8 md:pt-0 md:pb-8">
@@ -106,7 +111,7 @@ export function CreateWallet({ onBack, onConnect }: { onBack: () => void; onConn
           {connecting && <LoaderCircle size={20} className="animate-spin" />} Next
         </ThemeButton>
       </div>
-    </div>
+    </>
   )
 }
 
@@ -123,27 +128,33 @@ export function SetupPassword({
   const [password2, setPassword2] = useState('')
 
   return (
-    <div className="flex flex-1 flex-col">
-      <div className="flex-1 px-4 md:px-8">
-        <div className="text-leah mb-3 text-base font-semibold">Setup Decryption Password</div>
-        <p className="text-thor-gray mb-5 text-sm">
-          Enter a strong password to encrypt your created wallet. This is how you will access your wallet.
-        </p>
+    <>
+      <div className="flex min-h-0 flex-1">
+        <ScrollArea className="flex-1 px-4 md:mb-4 md:px-8">
+          <div className="flex flex-col">
+            <div className="text-leah mb-3 text-base font-semibold">Setup Decryption Password</div>
+            <p className="text-thor-gray mb-5 text-sm">
+              Enter a strong password to encrypt your created wallet. This is how you will access your wallet.
+            </p>
 
-        <div className="space-y-4">
-          <Input placeholder="Enter Password" type="password" onChange={e => setPassword1(e.target.value)} />
-          <div>
-            <Input
-              placeholder="Confirm Password"
-              type="password"
-              onChange={e => setPassword2(e.target.value)}
-              className={cn({
-                'border-lucian focus-visible:border-lucian': password2 && password1 !== password2
-              })}
-            />
-            {password2 && password1 !== password2 && <span className="text-lucian text-xs">Password must match</span>}
+            <div className="space-y-4">
+              <Input placeholder="Enter Password" type="password" onChange={e => setPassword1(e.target.value)} />
+              <div>
+                <Input
+                  placeholder="Confirm Password"
+                  type="password"
+                  onChange={e => setPassword2(e.target.value)}
+                  className={cn({
+                    'border-lucian focus-visible:border-lucian': password2 && password1 !== password2
+                  })}
+                />
+                {password2 && password1 !== password2 && (
+                  <span className="text-lucian text-xs">Password must match</span>
+                )}
+              </div>
+            </div>
           </div>
-        </div>
+        </ScrollArea>
       </div>
 
       <div className="flex gap-3 p-4 md:justify-end md:gap-6 md:px-8 md:pt-0 md:pb-8">
@@ -159,6 +170,6 @@ export function SetupPassword({
           {connecting && <LoaderCircle size={20} className="animate-spin" />} Create
         </ThemeButton>
       </div>
-    </div>
+    </>
   )
 }

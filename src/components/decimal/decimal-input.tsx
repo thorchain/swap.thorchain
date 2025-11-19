@@ -29,6 +29,7 @@ export const DecimalInput: FC<
       placeholder="0"
       value={amount}
       onValueChange={onValueChange}
+      inputMode="decimal"
       {...rest}
     />
   )

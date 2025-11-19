@@ -146,7 +146,7 @@ export const ConnectWallet = ({ isOpen, onOpenChange, chain }: ConnectWalletProp
 
         <div className="flex min-h-0 flex-col md:flex-row">
           <ScrollArea
-            className={cn('flex md:mb-0 md:w-2/5 md:border-r md:pr-8 md:pl-8', {
+            className={cn('flex min-h-0 flex-1 md:mb-0 md:w-2/5 md:flex-none md:border-r md:pr-8 md:pl-8', {
               'hidden md:flex': selectedWallet
             })}
             classNameViewport="flex-1 h-auto"
@@ -167,51 +167,49 @@ export const ConnectWallet = ({ isOpen, onOpenChange, chain }: ConnectWalletProp
             </div>
           )}
 
-          <div className="flex flex-1 flex-col">
-            {selectedWallet ? (
-              renderSelectedWallet(selectedWallet)
-            ) : (
-              <>
-                <div className="text-thor-gray mb-3 hidden px-8 text-base font-semibold md:block">Chains</div>
+          {selectedWallet ? (
+            <div className="flex min-h-0 flex-1 flex-col">{renderSelectedWallet(selectedWallet)}</div>
+          ) : (
+            <div className="hidden flex-1 flex-col md:flex">
+              <div className="text-thor-gray mb-3 px-8 text-base font-semibold">Chains</div>
 
-                <div className="hidden min-h-0 flex-1 md:flex">
-                  <ScrollArea className="flex px-8" classNameViewport="flex-1 h-auto">
-                    <div
-                      className="grid flex-1 grid-flow-col gap-2 pb-4 md:pb-8"
-                      style={{
-                        gridTemplateRows: `repeat(${Math.ceil(chains.length / 2)}, minmax(0, 1fr))`,
-                        gridTemplateColumns: 'repeat(2, 1fr)'
-                      }}
-                    >
-                      {chains.map(chain => {
-                        const isSelected = selectedChain === chain
-                        const isComingSoon = COMING_SOON_CHAINS.includes(chain)
+              <div className="hidden min-h-0 flex-1 md:flex">
+                <ScrollArea className="flex px-8" classNameViewport="flex-1 h-auto">
+                  <div
+                    className="grid flex-1 grid-flow-col gap-2 pb-4 md:pb-8"
+                    style={{
+                      gridTemplateRows: `repeat(${Math.ceil(chains.length / 2)}, minmax(0, 1fr))`,
+                      gridTemplateColumns: 'repeat(2, 1fr)'
+                    }}
+                  >
+                    {chains.map(chain => {
+                      const isSelected = selectedChain === chain
+                      const isComingSoon = COMING_SOON_CHAINS.includes(chain)
 
-                        return (
-                          <div
-                            key={chain}
-                            className={cn('flex items-center gap-3 rounded-2xl border-1 border-transparent px-4 py-3', {
-                              'border-runes-blue': isSelected,
-                              'hover:bg-blade/50 cursor-pointer': !isComingSoon
-                            })}
-                            onClick={() => !isComingSoon && onSelectChain(chain as Chain)}
-                          >
-                            <Image src={`/networks/${chain.toLowerCase()}.svg`} alt={chain} width="24" height="24" />
-                            <div className="text-sm">{chainLabel(chain)}</div>
-                            {isComingSoon && (
-                              <div className="text-gray border-gray rounded-full border px-1.5 text-[10px] font-semibold">
-                                Soon
-                              </div>
-                            )}
-                          </div>
-                        )
-                      })}
-                    </div>
-                  </ScrollArea>
-                </div>
-              </>
-            )}
-          </div>
+                      return (
+                        <div
+                          key={chain}
+                          className={cn('flex items-center gap-3 rounded-2xl border-1 border-transparent px-4 py-3', {
+                            'border-runes-blue': isSelected,
+                            'hover:bg-blade/50 cursor-pointer': !isComingSoon
+                          })}
+                          onClick={() => !isComingSoon && onSelectChain(chain as Chain)}
+                        >
+                          <Image src={`/networks/${chain.toLowerCase()}.svg`} alt={chain} width="24" height="24" />
+                          <div className="text-sm">{chainLabel(chain)}</div>
+                          {isComingSoon && (
+                            <div className="text-gray border-gray rounded-full border px-1.5 text-[10px] font-semibold">
+                              Soon
+                            </div>
+                          )}
+                        </div>
+                      )
+                    })}
+                  </div>
+                </ScrollArea>
+              </div>
+            </div>
+          )}
         </div>
       </CredenzaContent>
     </Credenza>
