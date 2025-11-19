@@ -29,7 +29,8 @@ export const ALL_CHAINS = [
   Chain.Near,
   Chain.Solana,
   Chain.THORChain,
-  Chain.Tron
+  Chain.Tron,
+  Chain.Polygon
 ]
 
 export const COMING_SOON_CHAINS = ['XMR']
