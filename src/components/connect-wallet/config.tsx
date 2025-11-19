@@ -17,6 +17,7 @@ export type WalletParams = {
 }
 
 export const ALL_CHAINS = [
+  Chain.Arbitrum,
   Chain.Avalanche,
   Chain.Base,
   Chain.BinanceSmartChain,
