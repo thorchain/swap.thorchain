@@ -15,6 +15,7 @@
     "@cosmjs/proto-signing": "^0.36.2",
     "@ethereumjs/util": "^10.0.0",
     "@keplr-wallet/types": "^0.12.282",
+    "@next/third-parties": "^16.0.3",
     "@noble/secp256k1": "^3.0.0",
     "@radix-ui/react-dialog": "^1.1.15",
     "@radix-ui/react-dropdown-menu": "^2.1.16",

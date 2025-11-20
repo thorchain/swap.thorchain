@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import { GoogleTagManager } from '@next/third-parties/google'
 import { ReactQueryProvider } from '@/components/react-query/react-query-provider'
 import { Toaster } from '@/components/ui/sonner'
 import { Manrope } from 'next/font/google'
@@ -18,6 +19,7 @@ const manrope = Manrope({
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en" suppressHydrationWarning>
+      {process.env.NEXT_PUBLIC_GTAG && <GoogleTagManager gtmId={process.env.NEXT_PUBLIC_GTAG} />}
       <body className={`${manrope.className} bg-tyler antialiased`}>
         <ReactQueryProvider>
           <ThemeProvider defaultTheme="light" attribute="class">
