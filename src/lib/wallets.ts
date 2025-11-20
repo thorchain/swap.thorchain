@@ -81,7 +81,7 @@ export function getSwapKit() {
         swapKit: process.env.NEXT_PUBLIC_UKIT_API_KEY
       },
       rpcUrls: {
-        [Chain.Ethereum]: ['https://eth.drpc.org', 'https://eth.llamarpc.com', 'https://ethereum-rpc.publicnode.com']
+        [Chain.Ethereum]: ['https://eth.llamarpc.com', 'https://ethereum-rpc.publicnode.com']
       },
       envs: {
         apiUrl: process.env.NEXT_PUBLIC_UKIT_API_URL
