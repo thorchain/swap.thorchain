@@ -14,6 +14,7 @@ import {
   UTXOChain,
   UTXOChains
 } from '@swapkit/core'
+import { getBalance } from '@/lib/api'
 import { getSwapKit } from '@/lib/wallets'
 import { estimateTransactionFee } from '@swapkit/toolboxes/cosmos'
 
@@ -52,18 +53,20 @@ export const useBalance = (): UseBalance => {
 
       let value = AssetValue.from({ chain: assetFrom.chain, value: 0 })
 
-      if ('getBalance' in wallet) {
+      const finder = (b: AssetValue) =>
+        `${b.chain}.${b.isSynthetic || b.isTradeAsset ? b.ticker : b.symbol}`.toLowerCase() ===
+        assetFrom.identifier.toLowerCase()
+
+      if (assetFrom.chain === Chain.Near) {
+        const balances = await getBalance(assetFrom.chain, wallet.address, assetFrom.identifier)
+        const balance = balances.find(finder)
+
+        if (balance) value = balance
+      } else if ('getBalance' in wallet) {
         const balances = await wallet.getBalance(wallet.address, true)
+        const balance = balances.find(finder)
 
-        const balance = balances.find(
-          b =>
-            `${b.chain}.${b.isSynthetic || b.isTradeAsset ? b.ticker : b.symbol}`.toLowerCase() ===
-            assetFrom.identifier.toLowerCase()
-        )
-
-        if (balance) {
-          value = balance
-        }
+        if (balance) value = balance
       }
 
       const estimateFee = async () => {

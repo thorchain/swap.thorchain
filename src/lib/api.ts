@@ -1,5 +1,6 @@
 import axios from 'axios'
-import { SwapKitNumber } from '@swapkit/core'
+import { AssetValue, Chain, getChainConfig, SwapKitNumber } from '@swapkit/core'
+import { BalanceResponse } from '@swapkit/helpers/api'
 import { Asset } from '@/components/swap/asset'
 
 const uKit = axios.create({
@@ -33,6 +34,18 @@ export const getAssetRates = async (ids: string) => {
 
 export const getTokenList = async (provider: string) => {
   return uKit.get(`/tokens?provider=${provider}`).then(res => res.data)
+}
+
+export const getBalance = async (chain: Chain, address: string, identifier: string) => {
+  return uKit
+    .get(`/balance?chain=${chain}&address=${address}&identifier=${identifier}`)
+    .then(res => res.data)
+    .then((data: BalanceResponse) => {
+      const { baseDecimal } = getChainConfig(chain)
+      return data.map(({ identifier, value, decimal }) => {
+        return new AssetValue({ decimal: decimal || baseDecimal, identifier, value })
+      })
+    })
 }
 
 export const getQuotes = async (
