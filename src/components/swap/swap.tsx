@@ -9,11 +9,11 @@ import { SwapButton } from '@/components/swap/swap-button'
 import { useQuote } from '@/hooks/use-quote'
 import { useResolveSource } from '@/hooks/use-resolve-source'
 import { useSelectedAccount } from '@/hooks/use-wallets'
-import { useMemo } from 'react'
+import { useEffect, useMemo } from 'react'
 import { MemolessAsset, useMemolessAssets } from '@/hooks/use-memoless-assets'
 import { useAssetFrom, useSwap } from '@/hooks/use-swap'
 import { SwapError } from '@/components/swap/swap-error'
-import { SwapKitNumber } from '@swapkit/core'
+import { AssetValue, SwapKitNumber } from '@swapkit/core'
 import { SwapAddressFrom } from '@/components/swap/swap-address-from'
 
 export const Swap = () => {
@@ -24,6 +24,10 @@ export const Swap = () => {
   const { assets: memolessAssets } = useMemolessAssets()
 
   useResolveSource()
+
+  useEffect(() => {
+    AssetValue.loadStaticAssets()
+  }, [])
 
   const memolessAsset: MemolessAsset | undefined = useMemo(() => {
     if (
