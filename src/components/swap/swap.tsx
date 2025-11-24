@@ -15,6 +15,7 @@ import { useAssetFrom, useSwap } from '@/hooks/use-swap'
 import { SwapError } from '@/components/swap/swap-error'
 import { AssetValue, SwapKitNumber } from '@swapkit/core'
 import { SwapAddressFrom } from '@/components/swap/swap-address-from'
+import { QuoteTimer } from '@/components/swap/quote-timer'
 
 export const Swap = () => {
   const assetFrom = useAssetFrom()
@@ -55,7 +56,8 @@ export const Swap = () => {
       <div className="w-full max-w-md">
         <div className="mb-3 flex items-center justify-between">
           <h1 className="text-leah text-xl font-medium">Swap</h1>
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-4">
+            <QuoteTimer />
             <SwapAddressFrom />
             <SwapSettings />
           </div>
