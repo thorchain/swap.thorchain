@@ -18,7 +18,7 @@ const apps: Record<AppKey, App> = {
   unstoppable: {
     title: 'Unstoppable Swap',
     description: 'Unstoppable Swap',
-    logo: '/logo-unstoppable.png',
+    logo: '/logo-unstoppable.svg',
     LogoText: HeaderUnstoppable
   },
   thorchain: {
