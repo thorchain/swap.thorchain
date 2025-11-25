@@ -3,12 +3,12 @@
 import Image from 'next/image'
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu'
 import { ConnectWallet } from '@/components/connect-wallet/connect-wallet'
-import { HeaderThorchain } from '@/components/header/header-thorchain'
 import { useConnectedWallets, useDisconnect } from '@/hooks/use-wallets'
 import { useDialog } from '@/components/global-dialog'
 import { TransactionHistoryButton } from '@/components/header/transaction-history-button'
 import { ThemeButton } from '@/components/theme-button'
 import { ThemeSwitchButton } from '@/components/header/theme-switch-button'
+import { AppConfig } from '@/config'
 import { Icon } from '@/components/icons'
 import { useEffect, useState } from 'react'
 import { cn } from '@/lib/utils'
@@ -44,8 +44,8 @@ export function Header() {
           rel="noopener noreferrer"
           target={homeLink ? '_blank' : '_self'}
         >
-          <Image src="/logo.svg" alt="THORChain Swap" width={32} height={32} priority />
-          <HeaderThorchain />
+          <Image src={AppConfig.logo} alt={AppConfig.title} width={32} height={32} priority />
+          <AppConfig.LogoText />
         </a>
 
         <div className="flex flex-1 flex-wrap items-center justify-end gap-2">

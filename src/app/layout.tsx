@@ -5,11 +5,12 @@ import { ReactQueryProvider } from '@/components/react-query/react-query-provide
 import { Toaster } from '@/components/ui/sonner'
 import { Manrope } from 'next/font/google'
 import { ThemeProvider } from 'next-themes'
+import { AppConfig } from '@/config'
 import './globals.css'
 
 export const metadata: Metadata = {
-  title: 'THORChain Swap',
-  description: 'THORChain Swap'
+  title: AppConfig.title,
+  description: AppConfig.description
 }
 
 const manrope = Manrope({
