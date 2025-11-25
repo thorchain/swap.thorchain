@@ -85,7 +85,7 @@ export function CreateWallet({ onBack, onConnect }: { onBack: () => void; onConn
 
             <div className="flex cursor-pointer items-center gap-4 py-4" onClick={() => setAccepted(!accepted)}>
               {accepted ? (
-                <Icon name="check" className="text-lawrence bg-runes-blue size-6 shrink-0 rounded-full p-1" />
+                <Icon name="check" className="text-lawrence bg-brand-second size-6 shrink-0 rounded-full p-1" />
               ) : (
                 <div className="bg-blade size-6 shrink-0 rounded-full" />
               )}

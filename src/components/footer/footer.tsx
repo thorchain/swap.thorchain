@@ -1,4 +1,5 @@
 import { Icon } from '@/components/icons'
+import { AppConfig } from '@/config'
 
 const SUPPORT_EMAIL = 'swap@horizontalsystems.io'
 
@@ -27,15 +28,21 @@ export function Footer() {
                 <Icon width={20} height={20} viewBox="0 0 20 20" name="email" />
               </a>
             </div>
-            <div className="flex items-center gap-2">
-              <span>Got questions?</span>
-              <a href="https://discord.gg/eGrrwNE95w" rel="noopener noreferrer" target="_blank">
-                <Icon width={20} height={20} viewBox="0 0 20 20" name="discord" />
-              </a>
-              <a href="https://t.me/thorchain_org" rel="noopener noreferrer" target="_blank">
-                <Icon width={20} height={20} viewBox="0 0 20 20" name="telegram" />
-              </a>
-            </div>
+            {(AppConfig.discordLink || AppConfig.telegramLink) && (
+              <div className="flex items-center gap-2">
+                <span>Got questions?</span>
+                {AppConfig.discordLink && (
+                  <a href={AppConfig.discordLink} rel="noopener noreferrer" target="_blank">
+                    <Icon width={20} height={20} viewBox="0 0 20 20" name="discord" />
+                  </a>
+                )}
+                {AppConfig.telegramLink && (
+                  <a href={AppConfig.telegramLink} rel="noopener noreferrer" target="_blank">
+                    <Icon width={20} height={20} viewBox="0 0 20 20" name="telegram" />
+                  </a>
+                )}
+              </div>
+            )}
           </div>
         </div>
       </div>

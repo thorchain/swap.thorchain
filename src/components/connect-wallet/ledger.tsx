@@ -109,7 +109,7 @@ export const Ledger = ({ wallet, onConnect }: { wallet: WalletParams; onConnect:
                   className={cn(
                     'hover:bg-blade/50 flex cursor-pointer items-center gap-3 rounded-2xl border-1 border-transparent px-4 py-3',
                     {
-                      'border-runes-blue': isSelected
+                      'border-brand-second': isSelected
                     }
                   )}
                   onClick={() => {

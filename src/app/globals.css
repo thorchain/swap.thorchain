@@ -15,8 +15,9 @@
   --color-jacob: var(--jacob);
   --color-lucian: var(--lucian);
   --color-liquidity-green: var(--liquidity-green);
-  --color-runes-blue: var(--runes-blue);
-  --color-storm-purple: var(--storm-purple);
+  --color-brand-first: var(--brand-first);
+  --color-brand-second: var(--brand-second);
+  --color-brand-third: var(--brand-third);
   --color-thor-gray: var(--thor-gray);
 
   --color-background: var(--background);
@@ -77,9 +78,7 @@
     --sp-l: #5b2be5;
     --tg-d: #a1a1a1;
     --tg-l: #4f4f4f;
-  }
 
-  :root {
     --tyler: var(--bright);
     --lawrence: var(--white);
     --blade: var(--light);
@@ -88,10 +87,11 @@
     --leah: var(--dark);
     --jacob: var(--yellow-l);
     --lucian: var(--red-l);
-
     --liquidity-green: var(--lg-l);
-    --runes-blue: var(--rb-l);
-    --storm-purple: var(--sp-l);
+
+    --brand-first: var(--yellow-l);
+    --brand-second: var(--yellow-l);
+    --brand-third: var(--yellow-l);
     --thor-gray: var(--tg-l);
 
     --radius: 0.625rem;
@@ -137,10 +137,11 @@
     --leah: var(--bright);
     --jacob: var(--yellow-d);
     --lucian: var(--red-d);
-
     --liquidity-green: var(--lg-d);
-    --runes-blue: var(--rb-d);
-    --storm-purple: var(--sp-d);
+
+    --brand-first: var(--yellow-d);
+    --brand-second: var(--yellow-d);
+    --brand-third: var(--yellow-d);
     --thor-gray: var(--tg-d);
 
     --background: black;
@@ -174,6 +175,18 @@
     --sidebar-accent-foreground: oklch(0.985 0 0);
     --sidebar-border: oklch(1 0 0 / 10%);
     --sidebar-ring: oklch(0.556 0 0);
+  }
+
+  [data-brand="thorchain"] {
+    --brand-first: var(--lg-l);
+    --brand-second: var(--rb-l);
+    --brand-third: var(--sp-l);
+  }
+
+  [data-brand="thorchain"].dark {
+    --brand-first: var(--lg-d);
+    --brand-second: var(--rb-d);
+    --brand-third: var(--sp-d);
   }
 }
 

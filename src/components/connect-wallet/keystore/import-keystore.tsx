@@ -124,7 +124,7 @@ export function ImportKeystore({ onBack, onConnect }: { onBack: () => void; onCo
 
               {file ? (
                 <div
-                  className="bg-liquidity-green/10 border-liquidity-green text-leah hover:bg-lucian/10 hover:text-lucian hover:border-lucian flex cursor-pointer items-center gap-3 rounded-2xl border px-4 py-3 font-semibold"
+                  className="bg-brand-first/10 border-brand-first text-leah hover:bg-lucian/10 hover:text-lucian hover:border-lucian flex cursor-pointer items-center gap-3 rounded-2xl border px-4 py-3 font-semibold"
                   onClick={() => {
                     setFile(undefined)
                   }}

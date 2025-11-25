@@ -105,7 +105,7 @@ export const SwapRecipient = ({ provider, onFetchQuote }: SwapRecipientProps) =>
                     </div>
                     <div className="flex items-center gap-2">
                       <span className="text-xs font-semibold">{truncate(account.address)}</span>
-                      {account.address === address && <Icon name="done-e" className="text-liquidity-green size-5" />}
+                      {account.address === address && <Icon name="done-e" className="text-brand-first size-5" />}
                     </div>
                   </div>
                 ))}

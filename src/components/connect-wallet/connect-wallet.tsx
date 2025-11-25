@@ -85,7 +85,7 @@ export const ConnectWallet = ({ isOpen, onOpenChange, chain }: ConnectWalletProp
         <div
           key={index}
           className={cn('mb-1 flex items-center space-x-3 rounded-2xl border-1 border-transparent p-3', {
-            'border-runes-blue': isSelected,
+            'border-brand-second': isSelected,
             'opacity-25': !isHighlighted,
             'hover:bg-blade/50 cursor-pointer': isInstalled && !isConnected && isHighlighted,
             'mb-4 md:mb-8': index === wallets.length - 1
@@ -101,7 +101,7 @@ export const ConnectWallet = ({ isOpen, onOpenChange, chain }: ConnectWalletProp
             <div className="text-xs">
               {isInstalled ? (
                 isConnected ? (
-                  <span className="text-liquidity-green">Connected</span>
+                  <span className="text-brand-first">Connected</span>
                 ) : (
                   <span>Disconnected</span>
                 )
@@ -190,7 +190,7 @@ export const ConnectWallet = ({ isOpen, onOpenChange, chain }: ConnectWalletProp
                         <div
                           key={chain}
                           className={cn('flex items-center gap-3 rounded-2xl border-1 border-transparent px-4 py-3', {
-                            'border-runes-blue': isSelected,
+                            'border-brand-second': isSelected,
                             'hover:bg-blade/50 cursor-pointer': !isComingSoon
                           })}
                           onClick={() => !isComingSoon && onSelectChain(chain as Chain)}

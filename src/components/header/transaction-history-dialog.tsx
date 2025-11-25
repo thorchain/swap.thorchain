@@ -59,7 +59,7 @@ export const TransactionHistoryDialog = ({ isOpen, onOpenChange }: HistoryDialog
       <div className="text-thor-gray flex justify-between text-sm">
         <div className="flex items-center gap-2">
           {legTx.status === 'completed' ? (
-            <CircleCheck className="text-liquidity-green" size={16} />
+            <CircleCheck className="text-brand-first" size={16} />
           ) : (
             <LoaderCircle className="animate-spin" size={16} />
           )}
@@ -137,7 +137,7 @@ export const TransactionHistoryDialog = ({ isOpen, onOpenChange }: HistoryDialog
                             ) : status === 'pending' || status === 'swapping' ? (
                               <LoaderCircle className="animate-spin" size={16} />
                             ) : status === 'completed' ? (
-                              <Check className="text-liquidity-green" size={16} />
+                              <Check className="text-brand-first" size={16} />
                             ) : status === 'failed' ? (
                               <X className="text-lucian" size={16} />
                             ) : status === 'refunded' ? (

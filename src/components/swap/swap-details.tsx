@@ -9,6 +9,7 @@ import { FeeData, resolveFees } from '@/components/swap/swap-helpers'
 import { useRates } from '@/hooks/use-rates'
 import { InfoTooltip } from '@/components/info-tooltip'
 import { animated, useSpring } from '@react-spring/web'
+import { AppConfig } from '@/config'
 
 export function SwapDetails() {
   const assetFrom = useAssetFrom()
@@ -102,7 +103,7 @@ export function SwapDetails() {
           {feeSection('Inbound Fee', 'Fee for sending inbound transaction', inbound)}
           {feeSection('Outbound Fee', 'Fee for sending outbound transaction', outbound)}
           {feeSection('Liquidity Fee', 'Fee for liquidity providers on the route', liquidity)}
-          {feeSection('Exchange Fee', 'Fee charged by THORChain Swap', affiliate)}
+          {feeSection('Exchange Fee', `Fee charged by ${AppConfig.title}`, affiliate)}
 
           <div className="flex items-center justify-between">
             Estimated Time

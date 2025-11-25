@@ -23,7 +23,7 @@ const manrope = Manrope({
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="en" data-brand={AppConfig.id} suppressHydrationWarning>
       {AppConfig.gtag && <GoogleTagManager gtmId={AppConfig.gtag} />}
       {AppConfig.pixelId && (
         <Script

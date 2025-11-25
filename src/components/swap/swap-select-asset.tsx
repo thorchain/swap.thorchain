@@ -196,7 +196,7 @@ export const SwapSelectAsset = ({ isOpen, onOpenChange, selected, onSelectAsset 
                   className={cn(
                     'hover:bg-blade/50 m-0 flex cursor-pointer items-center gap-3 rounded-lg border border-transparent px-4 py-2 md:mr-10 md:mb-2 md:py-3',
                     {
-                      'border-runes-blue': selectedChain === chain
+                      'border-brand-second': selectedChain === chain
                     }
                   )}
                 >

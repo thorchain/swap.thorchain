@@ -9,8 +9,8 @@ const buttonVariants = cva(
   {
     variants: {
       variant: {
-        primaryMedium: 'text-lawrence bg-liquidity-green text-base px-10 py-4',
-        primarySmall: 'text-lawrence bg-liquidity-green text-xs px-4 h-8',
+        primaryMedium: 'text-lawrence bg-brand-first text-base px-10 py-4',
+        primarySmall: 'text-lawrence bg-brand-first text-xs px-4 h-8',
         secondaryMedium: 'text-lawrence bg-leah text-base px-10 py-4',
         secondarySmall: 'text-leah bg-blade text-xs px-4 h-8',
         circleSmall: 'text-leah bg-blade text-base w-8 h-8'

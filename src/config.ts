@@ -4,6 +4,7 @@ import { HeaderThorchain } from '@/components/header/header-thorchain'
 
 type AppKey = 'thorchain' | 'unstoppable'
 type App = {
+  id: AppKey
   title: string
   description: string
   favicon: string
@@ -13,10 +14,13 @@ type App = {
   gtag?: string
   pixelId?: string
   pixelEvent?: string
+  discordLink?: string
+  telegramLink?: string
 }
 
 const apps: Record<AppKey, App> = {
   unstoppable: {
+    id: 'unstoppable',
     title: 'Unstoppable Swap',
     description: 'Unstoppable Swap',
     favicon: '/favicon.ico',
@@ -24,6 +28,7 @@ const apps: Record<AppKey, App> = {
     LogoText: HeaderUnstoppable
   },
   thorchain: {
+    id: 'thorchain',
     title: 'THORChain Swap',
     description: 'THORChain Swap',
     favicon: '/favicon-thorchain.ico',
@@ -32,7 +37,9 @@ const apps: Record<AppKey, App> = {
     logoLink: 'https://www.thorchain.org',
     gtag: 'G-VZ0FQ1WC7G',
     pixelId: 'qki4a',
-    pixelEvent: 'tw-qki4a-qop3i'
+    pixelEvent: 'tw-qki4a-qop3i',
+    discordLink: 'https://discord.gg/eGrrwNE95w',
+    telegramLink: 'https://t.me/thorchain_org'
   }
 }
 

@@ -75,7 +75,7 @@ export const BrowserWallet = ({
                 <div
                   key={chain}
                   className={cn('flex items-center gap-3 rounded-2xl border-1 border-transparent px-4 py-3', {
-                    'border-runes-blue': isSelected,
+                    'border-brand-second': isSelected,
                     'opacity-25': !isAvailable,
                     'hover:bg-blade/50 cursor-pointer': isAvailable
                   })}

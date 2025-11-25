@@ -40,7 +40,7 @@ export const SwapAddressFrom = () => {
               </div>
               <span
                 className={cn('ms-5 text-xs font-semibold', {
-                  'text-runes-blue':
+                  'text-brand-second':
                     account.provider === selectedAccount?.provider && account.address === selectedAccount?.address
                 })}
               >
