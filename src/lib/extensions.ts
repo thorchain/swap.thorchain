@@ -1,3 +1,9 @@
+/**
+ * Based on code from SwapKit (https://github.com/swapkit/SwapKit),
+ * licensed under the Apache License 2.0.
+ * Modifications © 2025 Horizontal Systems.
+ */
+
 import { BigIntArithmetics } from '@swapkit/helpers'
 
 BigIntArithmetics.prototype.toSignificant = function (significantDigits: number | undefined = 6): string {
