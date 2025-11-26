@@ -13,6 +13,7 @@ import { chainLabel } from '@/components/connect-wallet/config'
 import { useRates, useSwapRates } from '@/hooks/use-rates'
 import { useMemo } from 'react'
 import { InfoTooltip } from '@/components/info-tooltip'
+import { SwapProvider } from '@/components/swap/swap-provider'
 
 interface SwapConfirmProps {
   quote: QuoteResponseRoute
@@ -160,6 +161,11 @@ export const SwapConfirm = ({ quote }: SwapConfirmProps) => {
               </div>
             )}
 
+            <div className="text-thor-gray flex justify-between text-sm">
+              <span>Fee</span>
+              <span className="text-leah font-semibold">{totalFee.toCurrency()}</span>
+            </div>
+
             {quote.estimatedTime && quote.estimatedTime.total > 0 && (
               <div className="text-thor-gray flex justify-between text-sm">
                 <span>Estimated Time</span>
@@ -175,9 +181,9 @@ export const SwapConfirm = ({ quote }: SwapConfirmProps) => {
               </div>
             )}
 
-            <div className="text-thor-gray flex justify-between text-sm">
-              <span>Fee</span>
-              <span className="text-leah font-semibold">{totalFee.toCurrency()}</span>
+            <div className="text-thor-gray flex justify-between text-sm font-semibold">
+              <span className="font-normal">Provider</span>
+              <SwapProvider provider={quote.providers[0]} />
             </div>
           </div>
 

@@ -10,6 +10,7 @@ import { useRates } from '@/hooks/use-rates'
 import { InfoTooltip } from '@/components/info-tooltip'
 import { animated, useSpring } from '@react-spring/web'
 import { AppConfig } from '@/config'
+import { SwapProvider } from '@/components/swap/swap-provider'
 
 export function SwapDetails() {
   const assetFrom = useAssetFrom()
@@ -100,6 +101,11 @@ export function SwapDetails() {
         <Separator className="bg-blade" />
 
         <div ref={contentRef} className="text-thor-gray space-y-4 px-4 pt-2 pb-5 text-sm font-semibold">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center">Provider</div>
+            <SwapProvider provider={quote.providers[0]} />
+          </div>
+
           <div className="flex items-center justify-between">
             <div className="flex items-center">Price</div>
             <div className="text-leah flex items-center gap-1">
