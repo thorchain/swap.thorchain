@@ -51,6 +51,8 @@ export const Swap = () => {
       )
   }, [memolessAsset, selectedAccount, valueFrom])
 
+  const instantSwapSupported = !!memolessAsset || quote?.providers[0] === 'NEAR'
+
   return (
     <div className="flex flex-col items-center justify-center px-4 pt-4 pb-4 md:pb-20">
       <div className="w-full max-w-md">
@@ -75,7 +77,7 @@ export const Swap = () => {
           </div>
         )}
 
-        <SwapButton memolessAsset={memolessAsset} memolessError={memolessError} />
+        <SwapButton instantSwapSupported={instantSwapSupported} instantSwapAvailable={!memolessError} />
         <SwapDetails />
       </div>
     </div>

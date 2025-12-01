@@ -55,7 +55,8 @@ export const getQuotes = async (
     sellAmount: SwapKitNumber
     sourceAddress?: string
     destinationAddress?: string
-    includeTx: boolean
+    refundAddress?: string
+    dry?: boolean
     slippage: number | undefined
     providers?: string[]
   },
@@ -70,7 +71,8 @@ export const getQuotes = async (
         sellAmount: data.sellAmount.toSignificant(),
         sourceAddress: data.sourceAddress,
         destinationAddress: data.destinationAddress,
-        includeTx: data.includeTx,
+        refundAddress: data.refundAddress,
+        dry: data.dry,
         slippage: data.slippage ?? 99,
         providers: data.providers
       },

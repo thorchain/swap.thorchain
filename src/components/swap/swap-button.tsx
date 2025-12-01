@@ -12,13 +12,12 @@ import { getSwapKit } from '@/lib/wallets'
 import { EVMChain } from '@swapkit/core'
 import { chainLabel } from '@/components/connect-wallet/config'
 import { SwapDialog } from '@/components/swap/swap-dialog'
-import { SwapMemolessDialog } from '@/components/swap/swap-memoless-dialog'
+import { InstantSwapDialog } from '@/components/swap/instant-swap-dialog'
 import { QuoteResponseRoute } from '@swapkit/helpers/api'
-import { MemolessAsset } from '@/hooks/use-memoless-assets'
 
 interface SwapButtonProps {
-  memolessAsset: MemolessAsset | undefined
-  memolessError: Error | undefined
+  instantSwapSupported: boolean
+  instantSwapAvailable: boolean
 }
 
 interface ButtonState {
@@ -28,7 +27,7 @@ interface ButtonState {
   onClick?: () => void
 }
 
-export const SwapButton = ({ memolessAsset, memolessError }: SwapButtonProps) => {
+export const SwapButton = ({ instantSwapSupported, instantSwapAvailable }: SwapButtonProps) => {
   const assetFrom = useAssetFrom()
   const assetTo = useAssetTo()
   const swapKit = getSwapKit()
@@ -44,8 +43,8 @@ export const SwapButton = ({ memolessAsset, memolessError }: SwapButtonProps) =>
     openDialog(SwapDialog, { provider: quote.providers[0] })
   }
 
-  const onMemolessSwap = (quote: QuoteResponseRoute) => {
-    openDialog(SwapMemolessDialog, { provider: quote.providers[0] })
+  const onInstantSwap = (quote: QuoteResponseRoute) => {
+    openDialog(InstantSwapDialog, { provider: quote.providers[0] })
   }
 
   const getState = (): ButtonState => {
@@ -58,10 +57,10 @@ export const SwapButton = ({ memolessAsset, memolessError }: SwapButtonProps) =>
     if (!quote) return { text: 'No Valid Quotes', spinner: false, accent: false }
 
     if (!selectedAccount) {
-      if (memolessAsset) {
-        if (memolessError) return { text: 'Swap', spinner: false, accent: false }
+      if (instantSwapSupported) {
+        if (!instantSwapAvailable) return { text: 'Swap', spinner: false, accent: false }
 
-        return { text: 'Swap', spinner: false, accent: true, onClick: () => onMemolessSwap(quote) }
+        return { text: 'Swap', spinner: false, accent: true, onClick: () => onInstantSwap(quote) }
       } else {
         return {
           text: `Connect ${chainLabel(assetFrom.chain)} Wallet`,

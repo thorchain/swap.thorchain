@@ -8,34 +8,46 @@ import { LoaderCircle } from 'lucide-react'
 import { preflightMemoless, registerMemoless } from '@/lib/api'
 import { AxiosError } from 'axios'
 import { useAssetFrom, useSwap } from '@/hooks/use-swap'
-import { SwapMemolessChannel } from '@/components/swap/swap-memoless-channel'
+import { InstantSwap } from '@/components/swap/instant-swap'
 import { SwapError } from '@/components/swap/swap-error'
+import { ProviderName } from '@swapkit/helpers'
 
-interface SwapMemolessDialogProps {
-  provider: string
+interface InstantSwapDialogProps {
+  provider: ProviderName
   isOpen: boolean
   onOpenChange: (isOpen: boolean) => void
 }
 
-export type Channel = {
+export interface DepositChannel {
   qrCodeData: string
   address: string
   value: string
-  secondsRemaining: number
+  secondsRemaining?: number
 }
 
-export const SwapMemolessDialog = ({ provider, isOpen, onOpenChange }: SwapMemolessDialogProps) => {
+export const InstantSwapDialog = ({ provider, isOpen, onOpenChange }: InstantSwapDialogProps) => {
   const assetFrom = useAssetFrom()
   const { valueFrom } = useSwap()
-  const [quote, setQuote] = useState<QuoteResponseRoute | undefined>(undefined)
-  const [channel, setChannel] = useState<Channel | undefined>(undefined)
+  const [quote, setQuote] = useState<(QuoteResponseRoute & { qrCodeDataURL?: string }) | undefined>(undefined)
+  const [channel, setChannel] = useState<DepositChannel | undefined>(undefined)
   const [creatingChannel, setCreatingChannel] = useState(false)
   const [error, setError] = useState<Error | undefined>()
 
   if (!assetFrom) return null
 
   const onConfirm = () => {
-    if (!quote || !assetFrom) {
+    if (!quote || !assetFrom) return
+
+    if (provider === 'NEAR') {
+      if (!quote.inboundAddress || !quote.qrCodeDataURL) return
+
+      setChannel({
+        qrCodeData: quote.qrCodeDataURL,
+        address: quote.inboundAddress,
+        value: quote.sellAmount,
+        secondsRemaining: quote.expiration ? Number(quote.expiration) - new Date().getTime() / 1000 : undefined
+      })
+
       return
     }
 
@@ -81,7 +93,7 @@ export const SwapMemolessDialog = ({ provider, isOpen, onOpenChange }: SwapMemol
     <Credenza open={isOpen} onOpenChange={onOpenChange}>
       <CredenzaContent className="flex h-auto max-h-5/6 flex-col md:max-w-lg">
         {channel ? (
-          <SwapMemolessChannel channel={channel} asset={assetFrom} />
+          <InstantSwap asset={assetFrom} channel={channel} />
         ) : quote ? (
           <>
             <SwapConfirm quote={quote} />

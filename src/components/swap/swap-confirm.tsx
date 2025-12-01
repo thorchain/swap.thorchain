@@ -16,7 +16,9 @@ import { InfoTooltip } from '@/components/info-tooltip'
 import { SwapProvider } from '@/components/swap/swap-provider'
 
 interface SwapConfirmProps {
-  quote: QuoteResponseRoute
+  quote: QuoteResponseRoute & {
+    refundAddress?: string
+  }
 }
 
 export const SwapConfirm = ({ quote }: SwapConfirmProps) => {
@@ -51,7 +53,7 @@ export const SwapConfirm = ({ quote }: SwapConfirmProps) => {
       </CredenzaHeader>
 
       <ScrollArea className="relative flex min-h-0 flex-1 px-4 md:px-8" classNameViewport="flex-1 h-auto">
-        <div className="border-blade rounded-xl border-1 mb-4">
+        <div className="border-blade mb-4 rounded-xl border-1">
           <div className="relative flex flex-col">
             <div className="text-thor-gray flex justify-between p-4 text-sm">
               <div className="flex items-center gap-4">
@@ -139,6 +141,16 @@ export const SwapConfirm = ({ quote }: SwapConfirmProps) => {
                 <CopyButton text={quote.destinationAddress} />
               </div>
             </div>
+
+            {quote.refundAddress && quote.sourceAddress != quote.refundAddress && (
+              <div className="text-thor-gray flex justify-between text-sm">
+                <span>Refund Address</span>
+                <div className="flex items-center gap-2">
+                  <span className="text-leah font-semibold">{truncate(quote.refundAddress)}</span>
+                  <CopyButton text={quote.refundAddress} />
+                </div>
+              </div>
+            )}
 
             {priceImpact && (
               <div className="text-thor-gray flex justify-between text-sm">

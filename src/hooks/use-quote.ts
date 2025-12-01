@@ -46,7 +46,6 @@ export const useQuote = (): UseQuote => {
           buyAsset: assetTo,
           sellAsset: assetFrom,
           sellAmount: valueFrom,
-          includeTx: false,
           slippage: slippage
         },
         signal

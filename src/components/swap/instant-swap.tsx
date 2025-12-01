@@ -5,15 +5,15 @@ import { ScrollArea } from '@/components/ui/scroll-area'
 import { Icon } from '@/components/icons'
 import { formatDuration, intervalToDuration } from 'date-fns'
 import { chainLabel } from '@/components/connect-wallet/config'
-import { Channel } from '@/components/swap/swap-memoless-dialog'
 import { Asset } from '@/components/swap/asset'
+import { DepositChannel } from '@/components/swap/instant-swap-dialog'
 
 interface SwapMemolessChannelProps {
-  channel: Channel
   asset: Asset
+  channel: DepositChannel
 }
 
-export const SwapMemolessChannel = ({ channel, asset }: SwapMemolessChannelProps) => {
+export const InstantSwap = ({ asset, channel }: SwapMemolessChannelProps) => {
   return (
     <>
       <CredenzaHeader>
