@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 import { useQuote } from '@/hooks/use-quote'
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip'
+import { Tooltip } from '@/components/tooltip'
 
 const QUOTE_EXPIRATION_MS = 60000
 
@@ -75,33 +75,26 @@ export const QuoteTimer = () => {
   const strokeDashoffset = strokeDasharray - (strokeDasharray * progress) / 100
 
   return (
-    <TooltipProvider delayDuration={150}>
-      <Tooltip>
-        <TooltipTrigger asChild>
-          <div className="relative cursor-pointer" onClick={() => refetch()}>
-            <svg width="32" height="32" viewBox="0 0 28 28" className="-rotate-90">
-              <circle cx="14" cy="14" r="12" fill="none" strokeWidth="2" className="stroke-blade" />
-              <circle
-                cx="14"
-                cy="14"
-                r="12"
-                fill="none"
-                strokeWidth="2"
-                strokeDasharray={strokeDasharray}
-                strokeDashoffset={strokeDashoffset}
-                strokeLinecap="round"
-                className="stroke-thor-gray transition-all duration-100"
-              />
-            </svg>
-            <span className="text-leah absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 transform text-[12px] font-semibold">
-              {seconds}
-            </span>
-          </div>
-        </TooltipTrigger>
-        <TooltipContent side="top" className="max-w-xs">
-          Refresh
-        </TooltipContent>
-      </Tooltip>
-    </TooltipProvider>
+    <Tooltip content="Refresh">
+      <div className="relative cursor-pointer" onClick={() => refetch()}>
+        <svg width="32" height="32" viewBox="0 0 28 28" className="-rotate-90">
+          <circle cx="14" cy="14" r="12" fill="none" strokeWidth="2" className="stroke-blade" />
+          <circle
+            cx="14"
+            cy="14"
+            r="12"
+            fill="none"
+            strokeWidth="2"
+            strokeDasharray={strokeDasharray}
+            strokeDashoffset={strokeDashoffset}
+            strokeLinecap="round"
+            className="stroke-thor-gray transition-all duration-100"
+          />
+        </svg>
+        <span className="text-leah absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 transform text-[12px] font-semibold">
+          {seconds}
+        </span>
+      </div>
+    </Tooltip>
   )
 }

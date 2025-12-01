@@ -12,7 +12,7 @@ import { SwapKitNumber } from '@swapkit/core'
 import { chainLabel } from '@/components/connect-wallet/config'
 import { useRates, useSwapRates } from '@/hooks/use-rates'
 import { useMemo } from 'react'
-import { InfoTooltip } from '@/components/info-tooltip'
+import { InfoTooltip } from '@/components/tooltip'
 import { SwapProvider } from '@/components/swap/swap-provider'
 
 interface SwapConfirmProps {

@@ -6,7 +6,7 @@ import { useState } from 'react'
 import { Slider } from '@/components/ui/slider'
 import { INITIAL_SLIPPAGE } from '@/store/swap-store'
 import { cn } from '@/lib/utils'
-import { InfoTooltip } from '@/components/info-tooltip'
+import { InfoTooltip } from '@/components/tooltip'
 
 const slippageValues = [0.1, 0.2, 0.3, 0.4, 0.5, 0.75, 1, 1.25, 1.5, 1.75, 2, 2.5, 3, 3.5, 4, 4.5, 5, 6, 7, 8, 9, 10]
 

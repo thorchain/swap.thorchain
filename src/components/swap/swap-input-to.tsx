@@ -10,6 +10,7 @@ import { Icon } from '@/components/icons'
 import { chainLabel } from '@/components/connect-wallet/config'
 import { SwapKitNumber } from '@swapkit/core'
 import { cn } from '@/lib/utils'
+import { Tooltip } from '@/components/tooltip'
 
 export const SwapInputTo = () => {
   const assetTo = useAssetTo()
@@ -53,15 +54,17 @@ export const SwapInputTo = () => {
             <span className="text-thor-gray">{fiatValueTo.toCurrency()}</span>
 
             {priceImpact && (
-              <span
-                className={cn({
-                  'text-leah': priceImpact.lte(10),
-                  'text-jacob': priceImpact.gt(10) && priceImpact.lte(20),
-                  'text-lucian': priceImpact.gt(20)
-                })}
-              >
-                (-{priceImpact.toSignificant(2)}%)
-              </span>
+              <Tooltip content="Price Impact">
+                <span
+                  className={cn({
+                    'text-leah': priceImpact.lte(10),
+                    'text-jacob': priceImpact.gt(10) && priceImpact.lte(20),
+                    'text-lucian': priceImpact.gt(20)
+                  })}
+                >
+                  (-{priceImpact.toSignificant(2)}%)
+                </span>
+              </Tooltip>
             )}
           </div>
         </div>
