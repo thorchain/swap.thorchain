@@ -17,7 +17,7 @@ export const InstantSwap = ({ asset, channel }: SwapMemolessChannelProps) => {
   return (
     <>
       <CredenzaHeader>
-        <CredenzaTitle>Deposit Address</CredenzaTitle>
+        <CredenzaTitle>External Wallet Instructions</CredenzaTitle>
       </CredenzaHeader>
 
       <ScrollArea className="flex min-h-0 flex-1 px-4 md:px-8" classNameViewport="flex-1 h-auto">
@@ -41,10 +41,6 @@ export const InstantSwap = ({ asset, channel }: SwapMemolessChannelProps) => {
               <CopyButton text={channel.value} />
             </div>
 
-            <div className="size-[200px] overflow-hidden rounded-4xl bg-white p-3">
-              <Image src={channel.qrCodeData} alt="QR Code" className="h-full w-full" width={200} height={200} />
-            </div>
-
             <div className="flex flex-col items-center gap-2">
               <div className="flex items-center gap-2">
                 <div className="text-thor-gray text-sm font-semibold break-all">{channel.address}</div>
@@ -54,6 +50,10 @@ export const InstantSwap = ({ asset, channel }: SwapMemolessChannelProps) => {
               <div className="text-gray border-gray rounded-full border px-1.5 text-[10px] font-semibold">
                 {chainLabel(asset.chain)}
               </div>
+            </div>
+
+            <div className="size-[200px] overflow-hidden rounded-4xl bg-white p-3">
+              <Image src={channel.qrCodeData} alt="QR Code" className="h-full w-full" width={200} height={200} />
             </div>
 
             <div className="text-jacob text-xs font-semibold">
