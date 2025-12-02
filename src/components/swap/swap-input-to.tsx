@@ -9,25 +9,18 @@ import { useSwapRates } from '@/hooks/use-rates'
 import { Icon } from '@/components/icons'
 import { chainLabel } from '@/components/connect-wallet/config'
 import { SwapKitNumber } from '@swapkit/core'
-import { cn } from '@/lib/utils'
 import { Tooltip } from '@/components/tooltip'
+import { PriceImpact } from '@/components/swap/price-impact'
 
-export const SwapInputTo = () => {
+export const SwapInputTo = ({ priceImpact }: { priceImpact?: SwapKitNumber }) => {
   const assetTo = useAssetTo()
   const setAssetTo = useSetAssetTo()
   const { quote } = useQuote()
   const { openDialog } = useDialog()
-  const { rateFrom, rateTo } = useSwapRates()
+  const { rateTo } = useSwapRates()
 
   const value = quote && new SwapKitNumber(quote.expectedBuyAmount)
   const fiatValueTo = (rateTo && value && value.mul(rateTo)) || new SwapKitNumber(0)
-
-  const sellAmountInUsd = quote && rateFrom && new SwapKitNumber(quote.sellAmount).mul(rateFrom)
-  const buyAmountInUsd = quote && rateTo && new SwapKitNumber(quote.expectedBuyAmount).mul(rateTo)
-
-  const hundredPercent = new SwapKitNumber(100)
-  const toPriceRatio = buyAmountInUsd && sellAmountInUsd && buyAmountInUsd.mul(hundredPercent).div(sellAmountInUsd)
-  const priceImpact = toPriceRatio && toPriceRatio.lte(hundredPercent) && hundredPercent.sub(toPriceRatio)
 
   const onClick = () =>
     openDialog(SwapSelectAsset, {
@@ -52,17 +45,10 @@ export const SwapInputTo = () => {
           />
           <div className="flex gap-2 text-sm font-medium">
             <span className="text-thor-gray">{fiatValueTo.toCurrency()}</span>
-
             {priceImpact && (
               <Tooltip content="Price Impact">
-                <span
-                  className={cn({
-                    'text-leah': priceImpact.lte(10),
-                    'text-jacob': priceImpact.gt(10) && priceImpact.lte(20),
-                    'text-lucian': priceImpact.gt(20)
-                  })}
-                >
-                  (-{priceImpact.toSignificant(2)}%)
+                <span>
+                  (<PriceImpact priceImpact={priceImpact} />)
                 </span>
               </Tooltip>
             )}

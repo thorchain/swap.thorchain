@@ -32,18 +32,30 @@ export const resolveFees = (quote: QuoteResponseRoute, rates: AssetRateMap) => {
   const affiliate = feeData('affiliate')
   const service = feeData('service')
 
-  const total = (inbound?.usd || new SwapKitNumber(0))
-    .add(outbound?.usd || new SwapKitNumber(0))
+  const platform: FeeData | undefined = (affiliate || service) && {
+    amount: (affiliate?.amount || new SwapKitNumber(0)).add(service?.amount || new SwapKitNumber(0)),
+    usd: (affiliate?.usd || new SwapKitNumber(0)).add(service?.usd || new SwapKitNumber(0)),
+    ticker: affiliate?.ticker || service?.ticker || ''
+  }
+
+  const included = (outbound?.usd || new SwapKitNumber(0))
     .add(liquidity?.usd || new SwapKitNumber(0))
-    .add(affiliate?.usd || new SwapKitNumber(0))
-    .add(service?.usd || new SwapKitNumber(0))
+    .add(platform?.usd || new SwapKitNumber(0))
 
   return {
     inbound,
     outbound,
     liquidity,
-    affiliate,
-    service,
-    total
+    platform,
+    included
   }
+}
+
+export const resolvePriceImpact = (quote?: QuoteResponseRoute, rateFrom?: SwapKitNumber, rateTo?: SwapKitNumber) => {
+  const sellAmountInUsd = quote && rateFrom && new SwapKitNumber(quote.sellAmount).mul(rateFrom)
+  const buyAmountInUsd = quote && rateTo && new SwapKitNumber(quote.expectedBuyAmount).mul(rateTo)
+
+  const hundredPercent = new SwapKitNumber(100)
+  const toPriceRatio = buyAmountInUsd && sellAmountInUsd && buyAmountInUsd.mul(hundredPercent).div(sellAmountInUsd)
+  return toPriceRatio && toPriceRatio.lte(hundredPercent) ? hundredPercent.sub(toPriceRatio) : undefined
 }

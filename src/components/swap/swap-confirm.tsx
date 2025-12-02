@@ -4,7 +4,7 @@ import { QuoteResponseRoute } from '@swapkit/helpers/api'
 import { cn, truncate } from '@/lib/utils'
 import { AssetIcon } from '@/components/asset-icon'
 import { CopyButton } from '@/components/button-copy'
-import { resolveFees } from '@/components/swap/swap-helpers'
+import { resolveFees, resolvePriceImpact } from '@/components/swap/swap-helpers'
 import { formatDuration, intervalToDuration } from 'date-fns'
 import { ScrollArea } from '@/components/ui/scroll-area'
 import { Icon } from '@/components/icons'
@@ -14,6 +14,7 @@ import { useRates, useSwapRates } from '@/hooks/use-rates'
 import { useMemo } from 'react'
 import { InfoTooltip } from '@/components/tooltip'
 import { SwapProvider } from '@/components/swap/swap-provider'
+import { PriceImpact } from '@/components/swap/price-impact'
 
 interface SwapConfirmProps {
   quote: QuoteResponseRoute & {
@@ -36,15 +37,9 @@ export const SwapConfirm = ({ quote }: SwapConfirmProps) => {
   const expectedBuyAmount = new SwapKitNumber(quote.expectedBuyAmount)
   const expectedBuyAmountMaxSlippage = new SwapKitNumber(quote.expectedBuyAmountMaxSlippage)
 
-  const { total: totalFee } = resolveFees(quote, rates)
+  const { inbound } = resolveFees(quote, rates)
 
-  const sellAmountInUsd = rateFrom && sellAmount.mul(rateFrom)
-  const buyAmountInUsd = rateTo && expectedBuyAmount.mul(rateTo)
-
-  const hundredPercent = new SwapKitNumber(100)
-  const toPriceRatio = buyAmountInUsd && sellAmountInUsd && buyAmountInUsd.mul(hundredPercent).div(sellAmountInUsd)
-  const priceImpact =
-    toPriceRatio && (toPriceRatio.gt(hundredPercent) ? new SwapKitNumber(0) : hundredPercent.sub(toPriceRatio))
+  const priceImpact = resolvePriceImpact(quote, rateFrom, rateTo)
 
   return (
     <>
@@ -161,22 +156,16 @@ export const SwapConfirm = ({ quote }: SwapConfirmProps) => {
                     typically have higher price impact.
                   </InfoTooltip>
                 </div>
-                <span
-                  className={cn('font-semibold', {
-                    'text-leah': priceImpact.lte(10),
-                    'text-jacob': priceImpact.gt(10) && priceImpact.lte(20),
-                    'text-lucian': priceImpact.gt(20)
-                  })}
-                >
-                  {priceImpact.toSignificant(2)}%
-                </span>
+                <PriceImpact priceImpact={priceImpact} className="font-semibold" />
               </div>
             )}
 
-            <div className="text-thor-gray flex justify-between text-sm">
-              <span>Fee</span>
-              <span className="text-leah font-semibold">{totalFee.toCurrency()}</span>
-            </div>
+            {inbound && (
+              <div className="text-thor-gray flex justify-between text-sm">
+                <span>Tx Fee</span>
+                <span className="text-leah font-semibold">{inbound.usd.toCurrency()}</span>
+              </div>
+            )}
 
             {quote.estimatedTime && quote.estimatedTime.total > 0 && (
               <div className="text-thor-gray flex justify-between text-sm">

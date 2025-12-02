@@ -11,9 +11,10 @@ import { getSwapKit } from '@/lib/wallets'
 import { useAssetFrom, useAssetTo, useSwap } from '@/hooks/use-swap'
 import { useBalance } from '@/hooks/use-balance'
 import { transactionStore } from '@/store/transaction-store'
+import { ProviderName } from '@swapkit/helpers'
 
 interface SwapDialogProps {
-  provider: string
+  provider: ProviderName
   isOpen: boolean
   onOpenChange: (isOpen: boolean) => void
 }

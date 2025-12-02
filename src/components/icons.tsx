@@ -275,6 +275,15 @@ const DoneEIcon = memo<IconProps>(props => (
   </SVG>
 ))
 
+const EyeIcon = memo<IconProps>(props => (
+  <SVG {...props}>
+    <path
+      d="M12.001 5C16.5243 5.00018 20.4748 7.58301 23 11.46V12.54C20.4748 16.417 16.5243 18.9998 12.001 19C7.47743 19 3.52531 16.4175 1 12.54V11.46C3.52531 7.5825 7.47743 5.00001 12.001 5ZM12.001 7C8.51258 7.00001 5.30941 8.88382 3.07812 12C5.30941 15.1162 8.51258 17 12.001 17C15.4888 16.9998 18.6897 15.1157 20.9209 12C18.6897 8.88432 15.4888 7.00017 12.001 7ZM12.0156 9C13.6725 9 15.0156 10.3431 15.0156 12C15.0156 13.6569 13.6725 15 12.0156 15C10.3588 15 9.01562 13.6569 9.01562 12C9.01562 10.3431 10.3588 9 12.0156 9Z"
+      fill="currentColor"
+    />
+  </SVG>
+))
+
 // Icon name mapping
 const iconMap = {
   'arrow-m-down': ArrowMDownIcon,
@@ -291,6 +300,7 @@ const iconMap = {
   discord: DiscordIcon,
   'done-e': DoneEIcon,
   email: EmailIcon,
+  eye: EyeIcon,
   globe: GlobeIcon,
   info: InfoIcon,
   'light-mode': LightModeIcon,

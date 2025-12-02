@@ -16,6 +16,8 @@ import { SwapError } from '@/components/swap/swap-error'
 import { AssetValue, SwapKitNumber } from '@swapkit/core'
 import { SwapAddressFrom } from '@/components/swap/swap-address-from'
 import { QuoteTimer } from '@/components/swap/quote-timer'
+import { resolvePriceImpact } from '@/components/swap/swap-helpers'
+import { useSwapRates } from '@/hooks/use-rates'
 
 export const Swap = () => {
   const assetFrom = useAssetFrom()
@@ -23,6 +25,7 @@ export const Swap = () => {
   const { quote } = useQuote()
   const selectedAccount = useSelectedAccount()
   const { assets: memolessAssets } = useMemolessAssets()
+  const { rateFrom, rateTo } = useSwapRates()
 
   useResolveSource()
 
@@ -53,6 +56,10 @@ export const Swap = () => {
 
   const instantSwapSupported = !!memolessAsset || quote?.providers[0] === 'NEAR'
 
+  const priceImpact = useMemo(() => {
+    return resolvePriceImpact(quote, rateFrom, rateTo)
+  }, [quote, rateFrom, rateTo])
+
   return (
     <div className="flex flex-col items-center justify-center px-4 pt-4 pb-4 md:pb-20">
       <div className="w-full max-w-md">
@@ -68,7 +75,7 @@ export const Swap = () => {
         <div className="bg-lawrence border-blade rounded-3xl border-1">
           <SwapInputFrom />
           <SwapToggleAssets />
-          <SwapInputTo />
+          <SwapInputTo priceImpact={priceImpact} />
         </div>
 
         {memolessError && (
@@ -78,7 +85,7 @@ export const Swap = () => {
         )}
 
         <SwapButton instantSwapSupported={instantSwapSupported} instantSwapAvailable={!memolessError} />
-        <SwapDetails />
+        <SwapDetails priceImpact={priceImpact} />
       </div>
     </div>
   )
