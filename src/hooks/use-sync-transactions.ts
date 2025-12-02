@@ -1,7 +1,7 @@
 import { useQueries } from '@tanstack/react-query'
 import { isTxPending, usePendingTxs, useSetTxDetails, useSetTxUnknown } from '@/store/transaction-store'
 import { getSwapKitTrack } from '@/lib/api'
-import { getChainConfig } from '@swapkit/core'
+import { getChainConfig } from '@uswap/core'
 import { AxiosError } from 'axios'
 
 export const useSyncTransactions = () => {

@@ -1,6 +1,6 @@
 import { useQuery, useQueryClient } from '@tanstack/react-query'
 import { getAssetRates } from '@/lib/api'
-import { assetFromString, getCommonAssetInfo, SwapKitNumber } from '@swapkit/core'
+import { assetFromString, getCommonAssetInfo, SwapKitNumber } from '@uswap/core'
 import { useAssets } from '@/hooks/use-assets'
 import { useAssetFrom, useAssetTo } from '@/hooks/use-swap'
 import { useEffect } from 'react'

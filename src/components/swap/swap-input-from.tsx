@@ -10,7 +10,7 @@ import { ThemeButton } from '@/components/theme-button'
 import { Icon } from '@/components/icons'
 import { chainLabel } from '@/components/connect-wallet/config'
 import { DecimalInput } from '@/components/decimal/decimal-input'
-import { SwapKitNumber } from '@swapkit/core'
+import { SwapKitNumber } from '@uswap/core'
 
 export const SwapInputFrom = () => {
   const assetFrom = useAssetFrom()

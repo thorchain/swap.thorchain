@@ -1,4 +1,4 @@
-import { decryptFromKeystore, Keystore } from '@swapkit/wallets/keystore'
+import { decryptFromKeystore, Keystore } from '@uswap/wallets/keystore'
 
 interface DecryptMessage {
   keystoreData: Keystore

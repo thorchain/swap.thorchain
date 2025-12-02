@@ -8,7 +8,7 @@ import { useDialog } from '@/components/global-dialog'
 import { useSwapRates } from '@/hooks/use-rates'
 import { Icon } from '@/components/icons'
 import { chainLabel } from '@/components/connect-wallet/config'
-import { SwapKitNumber } from '@swapkit/core'
+import { SwapKitNumber } from '@uswap/core'
 import { Tooltip } from '@/components/tooltip'
 import { PriceImpact } from '@/components/swap/price-impact'
 

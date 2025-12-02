@@ -1,6 +1,6 @@
 import axios from 'axios'
-import { AssetValue, Chain, getChainConfig, SwapKitNumber } from '@swapkit/core'
-import { BalanceResponse } from '@swapkit/helpers/api'
+import { AssetValue, Chain, getChainConfig, SwapKitNumber } from '@uswap/core'
+import { BalanceResponse } from '@uswap/helpers/api'
 import { Asset } from '@/components/swap/asset'
 
 const uKit = axios.create({

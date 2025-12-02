@@ -11,7 +11,7 @@ import { cn, truncate } from '@/lib/utils'
 import { AssetIcon } from '@/components/asset-icon'
 import { Credenza, CredenzaContent, CredenzaHeader, CredenzaTitle } from '@/components/ui/credenza'
 import { Icon } from '@/components/icons'
-import { assetFromString, ChainId, ChainIdToChain, getExplorerTxUrl, SwapKitNumber } from '@swapkit/core'
+import { assetFromString, ChainId, ChainIdToChain, getExplorerTxUrl, SwapKitNumber } from '@uswap/core'
 import { chainLabel } from '@/components/connect-wallet/config'
 
 interface HistoryDialogProps {

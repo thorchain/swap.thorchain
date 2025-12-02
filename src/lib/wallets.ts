@@ -1,34 +1,35 @@
-import { Chain, getEIP6963Wallets, NetworkDerivationPath, WalletOption } from '@swapkit/core'
-import { EVMPlugin } from '@swapkit/plugins/evm'
-import { NearPlugin } from '@swapkit/plugins/near'
-import { RadixPlugin } from '@swapkit/plugins/radix'
-import { SolanaPlugin } from '@swapkit/plugins/solana'
-import { MayachainPlugin, ThorchainPlugin } from '@swapkit/plugins/thorchain'
+import { Chain, getEIP6963Wallets, NetworkDerivationPath, WalletOption, USwap } from '@uswap/core'
+import { EVMPlugin } from '@uswap/plugins/evm'
+import { NearPlugin } from '@uswap/plugins/near'
+import { RadixPlugin } from '@uswap/plugins/radix'
+import { SolanaPlugin } from '@uswap/plugins/solana'
+import { MayachainPlugin, ThorchainPlugin } from '@uswap/plugins/thorchain'
 
-import { bitgetWallet } from '@swapkit/wallets/bitget'
-import { coinbaseWallet } from '@swapkit/wallets/coinbase'
-import { ctrlWallet } from '@swapkit/wallets/ctrl'
-import { evmWallet } from '@swapkit/wallets/evm-extensions'
-import { exodusWallet } from '@swapkit/wallets/exodus'
-import { keepkeyWallet } from '@swapkit/wallets/keepkey'
-import { keepkeyBexWallet } from '@swapkit/wallets/keepkey-bex'
-import { keplrWallet } from '@swapkit/wallets/keplr'
-import { keystoreWallet } from '@swapkit/wallets/keystore'
-import { ledgerWallet } from '@swapkit/wallets/ledger'
-import { okxWallet } from '@swapkit/wallets/okx'
-import { onekeyWallet } from '@swapkit/wallets/onekey'
-import { phantomWallet } from '@swapkit/wallets/phantom'
-import { polkadotWallet } from '@swapkit/wallets/polkadotjs'
-import { radixWallet } from '@swapkit/wallets/radix'
-import { talismanWallet } from '@swapkit/wallets/talisman'
-import { trezorWallet } from '@swapkit/wallets/trezor'
-import { tronlinkWallet } from '@swapkit/wallets/tronlink'
-import { vultisigWallet } from '@swapkit/wallets/vultisig'
-import { walletconnectWallet } from '@swapkit/wallets/walletconnect'
-import { walletSelectorWallet } from '@swapkit/wallets/near-wallet-selector'
-import { xamanWallet } from '@swapkit/wallets/xaman'
-import { cosmostationWallet } from '@swapkit/wallets/cosmostation'
-import { SwapKit } from '@/lib/swapkit'
+import { bitgetWallet } from '@uswap/wallets/bitget'
+import { coinbaseWallet } from '@uswap/wallets/coinbase'
+import { ctrlWallet } from '@uswap/wallets/ctrl'
+import { evmWallet } from '@uswap/wallets/evm-extensions'
+import { keepkeyWallet } from '@uswap/wallets/keepkey'
+import { keepkeyBexWallet } from '@uswap/wallets/keepkey-bex'
+import { keplrWallet } from '@uswap/wallets/keplr'
+import { keystoreWallet } from '@uswap/wallets/keystore'
+import { ledgerWallet } from '@uswap/wallets/ledger'
+import { okxWallet } from '@uswap/wallets/okx'
+import { onekeyWallet } from '@uswap/wallets/onekey'
+import { passkeysWallet } from '@uswap/wallets/passkeys'
+import { phantomWallet } from '@uswap/wallets/phantom'
+import { polkadotWallet } from '@uswap/wallets/polkadotjs'
+import { radixWallet } from '@uswap/wallets/radix'
+import { talismanWallet } from '@uswap/wallets/talisman'
+import { trezorWallet } from '@uswap/wallets/trezor'
+import { tronlinkWallet } from '@uswap/wallets/tronlink'
+import { vultisigWallet } from '@uswap/wallets/vultisig'
+import { walletconnectWallet } from '@uswap/wallets/walletconnect'
+import { walletSelectorWallet } from '@uswap/wallets/near-wallet-selector'
+import { xamanWallet } from '@uswap/wallets/xaman'
+import { cosmostationWallet } from '@uswap/wallets/cosmostation'
+
+import { useWalletStore } from '@/store/wallets-store'
 
 const defaultPlugins = {
   ...EVMPlugin,
@@ -38,6 +39,8 @@ const defaultPlugins = {
   ...SolanaPlugin,
   ...NearPlugin
 }
+
+const exodusWallet = { ...passkeysWallet, connectExodusWallet: passkeysWallet.connectPasskeys }
 
 const defaultWallets = {
   ...bitgetWallet,
@@ -55,6 +58,7 @@ const defaultWallets = {
   ...onekeyWallet,
   ...phantomWallet,
   ...polkadotWallet,
+  ...passkeysWallet,
   ...radixWallet,
   ...talismanWallet,
   ...trezorWallet,
@@ -65,8 +69,13 @@ const defaultWallets = {
   ...xamanWallet
 }
 
-function createSwapKit(config: Parameters<typeof SwapKit>[0] = {}) {
-  return SwapKit({ ...config, plugins: defaultPlugins, wallets: defaultWallets })
+function createSwapKit(config: Parameters<typeof USwap>[0] = {}) {
+  return USwap({
+    ...config,
+    plugins: defaultPlugins,
+    wallets: defaultWallets,
+    getActiveWallet: () => useWalletStore.getState().selected?.provider
+  })
 }
 
 let instance: ReturnType<typeof createSwapKit> | undefined = undefined
@@ -201,6 +210,7 @@ export const supportedChains: Record<WalletOption, Chain[]> = {
   [WalletOption.ONEKEY]: onekeyWallet.connectOnekeyWallet.supportedChains,
   [WalletOption.PHANTOM]: phantomWallet.connectPhantom.supportedChains,
   [WalletOption.POLKADOT_JS]: polkadotWallet.connectPolkadotJs.supportedChains,
+  [WalletOption.PASSKEYS]: passkeysWallet.connectPasskeys.supportedChains,
   [WalletOption.RADIX_WALLET]: radixWallet.connectRadixWallet.supportedChains,
   [WalletOption.TALISMAN]: talismanWallet.connectTalisman.supportedChains,
   [WalletOption.TREZOR]: trezorWallet.connectTrezor.supportedChains,

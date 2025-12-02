@@ -1,6 +1,6 @@
 import { AssetRateMap } from '@/hooks/use-rates'
-import { assetFromString, SwapKitNumber } from '@swapkit/core'
-import { QuoteResponseRoute } from '@swapkit/helpers/api'
+import { assetFromString, SwapKitNumber } from '@uswap/core'
+import { QuoteResponseRoute } from '@uswap/helpers/api'
 
 export type FeeData = {
   amount: SwapKitNumber

@@ -17,7 +17,7 @@ import { BrowserWallet } from '@/components/connect-wallet/browser-wallet'
 import { Keystore } from '@/components/connect-wallet/keystore/keystore'
 import { Ledger } from '@/components/connect-wallet/ledger'
 import { Icon } from '@/components/icons'
-import { Chain, WalletOption } from '@swapkit/core'
+import { Chain, WalletOption } from '@uswap/core'
 
 interface ConnectWalletProps {
   isOpen: boolean

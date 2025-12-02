@@ -2,7 +2,7 @@ import { Separator } from '@/components/ui/separator'
 import { useSwapAssets } from '@/hooks/use-swap'
 import { Icon } from '@/components/icons'
 import { useQuote } from '@/hooks/use-quote'
-import { SwapKitNumber } from '@swapkit/core'
+import { SwapKitNumber } from '@uswap/core'
 
 export const SwapToggleAssets = () => {
   const swapAssets = useSwapAssets()

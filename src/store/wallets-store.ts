@@ -1,6 +1,6 @@
 import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
-import { Chain, WalletOption } from '@swapkit/core'
+import { Chain, WalletOption } from '@uswap/core'
 import { getAccounts, getSwapKit, supportedChains } from '@/lib/wallets'
 import { toast } from 'sonner'
 

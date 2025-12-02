@@ -1,4 +1,4 @@
-import { Chain } from '@swapkit/core'
+import { Chain } from '@uswap/core'
 
 export interface Asset {
   address?: string

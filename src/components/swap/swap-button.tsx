@@ -9,11 +9,11 @@ import { useBalance } from '@/hooks/use-balance'
 import { useDialog } from '@/components/global-dialog'
 import { toast } from 'sonner'
 import { getSwapKit } from '@/lib/wallets'
-import { EVMChain } from '@swapkit/core'
+import { EVMChain } from '@uswap/core'
 import { chainLabel } from '@/components/connect-wallet/config'
 import { SwapDialog } from '@/components/swap/swap-dialog'
 import { InstantSwapDialog } from '@/components/swap/instant-swap-dialog'
-import { QuoteResponseRoute } from '@swapkit/helpers/api'
+import { QuoteResponseRoute } from '@uswap/helpers/api'
 
 interface SwapButtonProps {
   instantSwapSupported: boolean
