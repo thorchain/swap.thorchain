@@ -1,16 +1,19 @@
 import { Credenza, CredenzaContent } from '@/components/ui/credenza'
 import { SwapRecipient } from '@/components/swap/swap-recipient'
 import { useState } from 'react'
-import { QuoteResponseRoute } from '@swapkit/helpers/api'
+import { QuoteResponseRoute } from '@uswap/helpers/api'
 import { SwapConfirm } from '@/components/swap/swap-confirm'
 import { ThemeButton } from '@/components/theme-button'
 import { LoaderCircle } from 'lucide-react'
 import { preflightMemoless, registerMemoless } from '@/lib/api'
 import { AxiosError } from 'axios'
-import { useAssetFrom, useSwap } from '@/hooks/use-swap'
+import { useAssetFrom, useAssetTo, useSwap } from '@/hooks/use-swap'
 import { InstantSwap } from '@/components/swap/instant-swap'
 import { SwapError } from '@/components/swap/swap-error'
-import { ProviderName } from '@swapkit/helpers'
+import { ProviderName } from '@uswap/helpers'
+import { useSetTransaction } from '@/store/transaction-store'
+import { generateId } from '@/components/swap/swap-helpers'
+import { getChainConfig, SwapKitNumber } from '@uswap/core'
 
 interface InstantSwapDialogProps {
   provider: ProviderName
@@ -22,18 +25,52 @@ export interface DepositChannel {
   qrCodeData: string
   address: string
   value: string
-  secondsRemaining?: number
+  expiration?: number
 }
 
 export const InstantSwapDialog = ({ provider, isOpen, onOpenChange }: InstantSwapDialogProps) => {
   const assetFrom = useAssetFrom()
+  const assetTo = useAssetTo()
   const { valueFrom } = useSwap()
+  const setTransaction = useSetTransaction()
+
   const [quote, setQuote] = useState<(QuoteResponseRoute & { qrCodeDataURL?: string }) | undefined>(undefined)
   const [channel, setChannel] = useState<DepositChannel | undefined>(undefined)
   const [creatingChannel, setCreatingChannel] = useState(false)
   const [error, setError] = useState<Error | undefined>()
 
-  if (!assetFrom) return null
+  if (!assetFrom || !assetTo) return null
+
+  const createChannel = (
+    quote: QuoteResponseRoute,
+    qrCodeData: string,
+    address: string,
+    value: string,
+    expiration?: number
+  ) => {
+    setChannel({
+      qrCodeData,
+      address,
+      value,
+      expiration
+    })
+
+    setTransaction({
+      uid: generateId(),
+      provider,
+      chainId: getChainConfig(assetFrom.chain).chainId,
+      timestamp: new Date(),
+      assetFrom,
+      assetTo,
+      amountFrom: value,
+      amountTo: new SwapKitNumber(quote.expectedBuyAmount).toSignificant(),
+      addressTo: quote.destinationAddress,
+      addressDeposit: address,
+      status: 'not_started',
+      qrCodeData,
+      expiration
+    })
+  }
 
   const onConfirm = () => {
     if (!quote || !assetFrom) return
@@ -41,12 +78,13 @@ export const InstantSwapDialog = ({ provider, isOpen, onOpenChange }: InstantSwa
     if (provider === 'NEAR') {
       if (!quote.inboundAddress || !quote.qrCodeDataURL) return
 
-      setChannel({
-        qrCodeData: quote.qrCodeDataURL,
-        address: quote.inboundAddress,
-        value: quote.sellAmount,
-        secondsRemaining: quote.expiration ? Number(quote.expiration) - new Date().getTime() / 1000 : undefined
-      })
+      createChannel(
+        quote,
+        quote.qrCodeDataURL,
+        quote.inboundAddress,
+        quote.sellAmount,
+        quote.expiration ? Number(quote.expiration) : undefined
+      )
 
       return
     }
@@ -70,12 +108,13 @@ export const InstantSwapDialog = ({ provider, isOpen, onOpenChange }: InstantSwa
         }))
       })
       .then(data => {
-        setChannel({
-          qrCodeData: data.data.qr_code_data_url,
-          address: data.data.inbound_address,
-          value: data.suggested_in_asset_amount,
-          secondsRemaining: data.data.seconds_remaining
-        })
+        createChannel(
+          quote,
+          data.data.qr_code_data_url,
+          data.data.inbound_address,
+          data.suggested_in_asset_amount,
+          data.data.seconds_remaining ? new Date().getTime() / 1000 + data.data.seconds_remaining : undefined
+        )
       })
       .catch(err => {
         if (err instanceof AxiosError) {

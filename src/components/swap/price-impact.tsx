@@ -1,4 +1,4 @@
-import { SwapKitNumber } from '@swapkit/core'
+import { SwapKitNumber } from '@uswap/core'
 import { cn } from '@/lib/utils'
 
 export const PriceImpact = ({ priceImpact, className }: { priceImpact: SwapKitNumber; className?: string }) => {

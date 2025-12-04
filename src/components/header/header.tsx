@@ -33,7 +33,7 @@ export function Header() {
   return (
     <header
       className={cn('bg-tyler sticky inset-x-0 top-0 z-50 container mx-auto p-4 transition-all duration-200', {
-        'border-blade border-b': isScrolled
+        'border-b': isScrolled
       })}
     >
       <div className="flex items-start justify-between gap-4">

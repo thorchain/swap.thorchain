@@ -33,7 +33,7 @@ export const InstantSwap = ({ asset, channel }: SwapMemolessChannelProps) => {
             </div>
           </div>
 
-          <div className="border-blade flex flex-col items-center space-y-4 rounded-xl border-1 p-4 md:p-6">
+          <div className="flex flex-col items-center space-y-4 rounded-xl border-1 p-4 md:p-6">
             <div className="flex items-center gap-2">
               <span className="text-leah text-xl font-semibold">
                 {channel.value} {asset.ticker}
@@ -56,16 +56,18 @@ export const InstantSwap = ({ asset, channel }: SwapMemolessChannelProps) => {
               <Image src={channel.qrCodeData} alt="QR Code" className="h-full w-full" width={200} height={200} />
             </div>
 
-            <div className="text-jacob text-xs font-semibold">
-              Expires in &nbsp;
-              {formatDuration(
-                intervalToDuration({
-                  start: 0,
-                  end: (channel.secondsRemaining || 0) * 1000
-                }),
-                { format: ['hours', 'minutes'], zero: false }
-              )}
-            </div>
+            {channel.expiration && (
+              <div className="text-jacob text-xs font-semibold">
+                Expires in &nbsp;
+                {formatDuration(
+                  intervalToDuration({
+                    start: new Date().getTime(),
+                    end: channel.expiration * 1000
+                  }),
+                  { format: ['hours', 'minutes', 'seconds'], zero: false }
+                )}
+              </div>
+            )}
           </div>
         </div>
       </ScrollArea>

@@ -158,10 +158,7 @@ export const Ledger = ({ wallet, onConnect }: { wallet: WalletParams; onConnect:
               <SelectTrigger className="w-full">
                 <SelectValue placeholder="Select account type" />
               </SelectTrigger>
-              <SelectContent
-                position="item-aligned"
-                className="text-leah placeholder:text-andy border-blade rounded-xl border-1"
-              >
+              <SelectContent position="item-aligned" className="text-leah placeholder:text-andy rounded-xl border-1">
                 {pathOptions.map(item => {
                   const derivationPath = DERIVATION_PATHS[item as keyof typeof DERIVATION_PATHS]
 

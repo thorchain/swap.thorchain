@@ -84,6 +84,6 @@ export const getQuotes = async (
     .then(data => data.routes || [])
 }
 
-export const getSwapKitTrack = async (data: Record<string, any>) => {
+export const getTrack = async (data: Record<string, any>) => {
   return uKit.post('/track', data).then(res => res.data)
 }

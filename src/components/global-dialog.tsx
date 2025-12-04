@@ -2,6 +2,7 @@
 
 import { create } from 'zustand'
 import { ComponentType } from 'react'
+import { generateId } from '@/components/swap/swap-helpers'
 
 interface DialogProps {
   isOpen: boolean
@@ -9,34 +10,45 @@ interface DialogProps {
 }
 
 interface DialogPayload<P = object> {
+  id: string
   Component: ComponentType<P & DialogProps>
   props: P
 }
 
 interface DialogStore {
-  isOpen: boolean
-  payload: DialogPayload<any> | null
+  dialogs: DialogPayload<any>[]
   openDialog: <P>(Component: ComponentType<P & DialogProps>, props: Omit<P, 'isOpen' | 'onOpenChange'>) => void
   closeDialog: () => void
 }
 
 export const useDialog = create<DialogStore>(set => ({
-  isOpen: false,
-  payload: null,
+  dialogs: [],
   openDialog: (Component, props) => {
-    set({ isOpen: true, payload: { Component, props } })
+    set(state => ({
+      dialogs: [...state.dialogs, { Component, props, id: generateId() }]
+    }))
   },
   closeDialog: () => {
-    set({ isOpen: false, payload: null })
+    set(state => ({
+      dialogs: state.dialogs.slice(0, -1)
+    }))
   }
 }))
 
 export const GlobalDialog = () => {
-  const { isOpen, payload, closeDialog } = useDialog()
-  if (!isOpen || !payload) {
-    return null
-  }
+  const { dialogs, closeDialog } = useDialog()
 
-  const { Component, props } = payload
-  return <Component isOpen={isOpen} onOpenChange={closeDialog} {...props} />
+  return dialogs.map(payload => {
+    const { Component, props, id } = payload
+    return (
+      <Component
+        key={id}
+        isOpen={true}
+        onOpenChange={(open: any) => {
+          if (!open) closeDialog()
+        }}
+        {...props}
+      />
+    )
+  })
 }

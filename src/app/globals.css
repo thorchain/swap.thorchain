@@ -37,7 +37,7 @@
   --color-chart-1: var(--chart-1);
   --color-ring: var(--ring);
   --color-input: var(--input);
-  --color-border: var(--border);
+  --color-border: var(--blade);
   --color-destructive: var(--destructive);
   --color-accent-foreground: var(--accent-foreground);
   --color-accent: var(--accent);
@@ -66,7 +66,7 @@
     --white: #ffffff;
 
     --yellow-d: #ffb700;
-    --yellow-l: #ff9d00;
+    --yellow-l: #f58b00;
     --red-d: #ff1539;
     --red-l: #ff1500;
 

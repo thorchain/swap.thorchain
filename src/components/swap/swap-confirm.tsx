@@ -48,7 +48,7 @@ export const SwapConfirm = ({ quote }: SwapConfirmProps) => {
       </CredenzaHeader>
 
       <ScrollArea className="relative flex min-h-0 flex-1 px-4 md:px-8" classNameViewport="flex-1 h-auto">
-        <div className="border-blade mb-4 rounded-xl border-1">
+        <div className="mb-4 rounded-xl border-1">
           <div className="relative flex flex-col">
             <div className="text-thor-gray flex justify-between p-4 text-sm">
               <div className="flex items-center gap-4">

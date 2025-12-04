@@ -1,7 +1,7 @@
 'use client'
 
 import { Fragment, useMemo, useState } from 'react'
-import { format, isSameDay, isToday, isYesterday } from 'date-fns'
+import { format, formatDuration, intervalToDuration, isSameDay, isToday, isYesterday } from 'date-fns'
 import { Check, CircleAlert, CircleCheck, ClockFading, LoaderCircle, Undo2, X } from 'lucide-react'
 import { ScrollArea } from '@/components/ui/scroll-area'
 import { CopyButton } from '@/components/button-copy'
@@ -13,6 +13,11 @@ import { Credenza, CredenzaContent, CredenzaHeader, CredenzaTitle } from '@/comp
 import { Icon } from '@/components/icons'
 import { assetFromString, ChainId, ChainIdToChain, getExplorerTxUrl, SwapKitNumber } from '@uswap/core'
 import { chainLabel } from '@/components/connect-wallet/config'
+import { ThemeButton } from '@/components/theme-button'
+import { useDialog } from '@/components/global-dialog'
+import { InstantSwapChannelDialog } from '@/components/swap/instant-swap-channel-dialog'
+import { DepositChannel } from '@/components/swap/instant-swap-dialog'
+import { useSyncTransactions } from '@/hooks/use-sync-transactions'
 
 interface HistoryDialogProps {
   isOpen: boolean
@@ -22,12 +27,15 @@ interface HistoryDialogProps {
 export const TransactionHistoryDialog = ({ isOpen, onOpenChange }: HistoryDialogProps) => {
   const [expandTx, setExpandTx] = useState<string | null>(null)
   const transactions = useTransactions()
+  const { openDialog } = useDialog()
   const identifiers = useMemo(
     () => transactions.flatMap(t => [t.assetFrom.identifier, t.assetTo.identifier]),
     [transactions]
   )
 
   const { rates } = useRates(identifiers)
+
+  useSyncTransactions()
 
   let lastDate: Date | null = null
 
@@ -53,13 +61,15 @@ export const TransactionHistoryDialog = ({ isOpen, onOpenChange }: HistoryDialog
         : `Swap ${from.ticker} to ${to.ticker}`
 
     const chain = ChainIdToChain[legTx.chainId as ChainId]
-    const explorerUrl = getExplorerTxUrl({ chain: chain, txHash: legTx.hash })
+    const explorerUrl = legTx.hash && getExplorerTxUrl({ chain: chain, txHash: legTx.hash })
 
     return (
-      <div className="text-thor-gray flex justify-between text-sm">
+      <div className="text-thor-gray flex justify-between">
         <div className="flex items-center gap-2">
           {legTx.status === 'completed' ? (
             <CircleCheck className="text-brand-first" size={16} />
+          ) : legTx.status === 'not_started' ? (
+            <ClockFading size={16} />
           ) : (
             <LoaderCircle className="animate-spin" size={16} />
           )}
@@ -67,13 +77,16 @@ export const TransactionHistoryDialog = ({ isOpen, onOpenChange }: HistoryDialog
         </div>
         <div className="flex items-center gap-2">
           <span>{chainLabel(chain)}</span>
-          <Icon
-            name="globe"
-            className="size-5 cursor-pointer"
-            onClick={() => {
-              window.open(explorerUrl, '_blank')
-            }}
-          />
+
+          {explorerUrl && (
+            <Icon
+              name="globe"
+              className="size-5 cursor-pointer"
+              onClick={() => {
+                window.open(explorerUrl, '_blank')
+              }}
+            />
+          )}
         </div>
       </div>
     )
@@ -81,146 +94,169 @@ export const TransactionHistoryDialog = ({ isOpen, onOpenChange }: HistoryDialog
 
   return (
     <Credenza open={isOpen} onOpenChange={onOpenChange}>
-      <CredenzaContent>
+      <CredenzaContent className="flex h-auto max-h-5/6 flex-col md:max-w-xl">
         <CredenzaHeader>
           <CredenzaTitle className="text-leah text-base font-semibold md:text-2xl">History</CredenzaTitle>
         </CredenzaHeader>
 
-        {transactions.length ? (
-          <div className="flex-1 overflow-hidden">
-            <ScrollArea className="h-full px-4 md:px-8">
-              {transactions.map((tx, i) => {
-                const txDate = new Date(tx.timestamp)
-                const shouldRenderHeader = !lastDate || !isSameDay(txDate, lastDate)
-                lastDate = txDate
+        <ScrollArea className="flex min-h-0 flex-1 px-4 md:px-8" classNameViewport="flex-1 h-auto">
+          <div className="pb-4">
+            {transactions.map((tx, i) => {
+              const txDate = new Date(tx.timestamp)
+              const shouldRenderHeader = !lastDate || !isSameDay(txDate, lastDate)
+              lastDate = txDate
 
-                const details = tx.details
-                const status = tx.status
+              const details = tx.details
+              const status = tx.status
 
-                const amountFrom = new SwapKitNumber(tx.amountFrom)
-                const rateFrom = rates[tx.assetFrom.identifier]
-                const fiatFrom = rateFrom && rateFrom.mul(amountFrom)
+              const amountFrom = new SwapKitNumber(tx.amountFrom)
+              const rateFrom = rates[tx.assetFrom.identifier]
+              const fiatFrom = rateFrom && rateFrom.mul(amountFrom)
 
-                const amountTo = new SwapKitNumber(tx.amountTo)
-                const rateTo = rates[tx.assetTo.identifier]
-                const fiatTo = rateTo && rateTo.mul(amountTo)
+              const amountTo = new SwapKitNumber(tx.amountTo)
+              const rateTo = rates[tx.assetTo.identifier]
+              const fiatTo = rateTo && rateTo.mul(amountTo)
 
-                const isExpanded = expandTx === tx.hash
+              const isExpanded = expandTx === tx.uid
 
-                return (
-                  <Fragment key={i}>
-                    {shouldRenderHeader && (
-                      <div className={cn('text-andy px-4 pb-3 text-sm font-semibold', { 'pt-3': i !== 0 })}>
-                        {formatDate(txDate)}
+              let statusTitle = status.replace('_', ' ')
+
+              if (status === 'not_started') {
+                statusTitle = 'Deposit Pending'
+              }
+
+              const showQrCode = () => {
+                if (!tx.qrCodeData || !tx.addressDeposit) return
+
+                const channel: DepositChannel = {
+                  qrCodeData: tx.qrCodeData,
+                  address: tx.addressDeposit,
+                  value: tx.amountFrom,
+                  expiration: tx.expiration
+                }
+
+                openDialog(InstantSwapChannelDialog, { assetFrom: tx.assetFrom, channel: channel })
+              }
+
+              return (
+                <Fragment key={i}>
+                  {shouldRenderHeader && (
+                    <div className={cn('text-andy px-4 pb-3 text-sm font-semibold', { 'pt-3': i !== 0 })}>
+                      {formatDate(txDate)}
+                    </div>
+                  )}
+                  <div className="bg-blade/25 mb-3 rounded-xl border-1">
+                    <div
+                      className="flex cursor-pointer px-4 py-3"
+                      onClick={() => setExpandTx(isExpanded ? null : tx.uid)}
+                    >
+                      <div className="flex flex-1 items-center gap-3">
+                        {tx.assetFrom && <AssetIcon asset={tx.assetFrom} />}
+                        <div className="flex flex-col gap-1">
+                          <span className="text-leah text-sm font-semibold">
+                            <span className="break-all">{amountFrom.toSignificant()}</span> {tx.assetFrom?.ticker}
+                          </span>
+                          <span className="text-thor-gray text-xs font-medium">{fiatFrom?.toCurrency()}</span>
+                        </div>
+                      </div>
+                      <div className="flex flex-col items-center justify-center px-1">
+                        <span className="pb-2">
+                          {status === 'not_started' ? (
+                            <ClockFading className="text-thor-gray" size={16} />
+                          ) : status === 'pending' || status === 'swapping' ? (
+                            <LoaderCircle className="animate-spin" size={16} />
+                          ) : status === 'completed' ? (
+                            <Check className="text-brand-first" size={16} />
+                          ) : status === 'failed' ? (
+                            <X className="text-lucian" size={16} />
+                          ) : status === 'expired' ? (
+                            <ClockFading className="text-lucian" size={16} />
+                          ) : status === 'refunded' ? (
+                            <Undo2 className="text-thor-gray" size={16} />
+                          ) : (
+                            <CircleAlert className="text-thor-gray" size={16} />
+                          )}
+                        </span>
+                        <span
+                          className={cn('text-thor-gray text-[10px] font-semibold capitalize', {
+                            'text-lucian': status === 'expired'
+                          })}
+                        >
+                          {statusTitle}
+                        </span>
+                      </div>
+                      <div className="flex flex-1 items-center justify-end gap-3">
+                        <div className="flex flex-col gap-1 text-right">
+                          <span className="text-leah text-sm font-semibold">
+                            <span className="break-all">{amountTo.toSignificant()}</span> {tx.assetTo?.ticker}
+                          </span>
+                          <span className="text-thor-gray text-xs font-medium">{fiatTo?.toCurrency()}</span>
+                        </div>
+                        {tx.assetTo && <AssetIcon asset={tx.assetTo} />}
+                      </div>
+                    </div>
+
+                    {!tx.hash && status !== 'expired' && (
+                      <div className="flex items-center justify-between border-t py-1 pl-4">
+                        <div className="text-thor-gray text-xs font-semibold">
+                          {tx.expiration && (
+                            <span>
+                              Expires in &nbsp;
+                              {formatDuration(
+                                intervalToDuration({
+                                  start: new Date().getTime(),
+                                  end: tx.expiration * 1000
+                                }),
+                                { format: ['hours', 'minutes', 'seconds'], zero: false }
+                              )}
+                            </span>
+                          )}
+                        </div>
+                        <ThemeButton variant="primarySmallTransparent" onClick={showQrCode}>
+                          <span className="">Show QR</span>
+                        </ThemeButton>
                       </div>
                     )}
-                    <div
-                      className={cn('border-blade mb-3 rounded-xl border-1', {
-                        'mb-4 md:mb-8': i === transactions.length - 1
-                      })}
-                    >
-                      <div
-                        className="grid cursor-pointer grid-cols-3 px-4 py-3"
-                        onClick={() => setExpandTx(isExpanded ? null : tx.hash)}
-                      >
-                        <div className="flex items-center gap-3">
-                          {tx.assetFrom && <AssetIcon asset={tx.assetFrom} />}
-                          <div className="flex flex-col">
-                            <span className="text-leah text-base font-semibold">{amountFrom.toSignificant()}</span>
-                            <span className="text-thor-gray text-sm">{tx.assetFrom?.ticker}</span>
-                          </div>
-                        </div>
-                        <div className="flex flex-col items-center justify-center">
-                          <span className="pb-2">
-                            {status === 'not_started' ? (
-                              <ClockFading className="text-thor-gray" size={16} />
-                            ) : status === 'pending' || status === 'swapping' ? (
-                              <LoaderCircle className="animate-spin" size={16} />
-                            ) : status === 'completed' ? (
-                              <Check className="text-brand-first" size={16} />
-                            ) : status === 'failed' ? (
-                              <X className="text-lucian" size={16} />
-                            ) : status === 'refunded' ? (
-                              <Undo2 className="text-thor-gray" size={16} />
-                            ) : (
-                              <CircleAlert className="text-thor-gray" size={16} />
-                            )}
-                          </span>
-                          <span className="text-thor-gray text-[10px] capitalize">{status.replace('_', ' ')}</span>
-                        </div>
-                        <div className="flex items-center justify-end gap-3">
-                          <div className="flex flex-col text-right">
-                            <span className="text-leah text-base font-semibold">{amountTo.toSignificant()}</span>
-                            <span className="text-thor-gray text-sm">{tx.assetTo?.ticker}</span>
-                          </div>
-                          {tx.assetTo && <AssetIcon asset={tx.assetTo} />}
-                        </div>
-                      </div>
-                      {isExpanded && (
-                        <>
-                          <div className="space-y-4 border-t p-4">
-                            <div className="text-thor-gray flex justify-between text-sm">
-                              <span>Deposit</span>
-                              <div className="flex gap-2">
-                                <span className="text-leah font-semibold">
-                                  {amountFrom.toSignificant()} {tx.assetFrom?.ticker}
-                                </span>
-                                {fiatFrom && <span className="font-medium">({fiatFrom.toCurrency()})</span>}
-                              </div>
-                            </div>
 
-                            <div className="text-thor-gray flex justify-between text-sm">
-                              <span>Receive</span>
-                              <div className="flex gap-2">
-                                <span className="text-leah font-semibold">
-                                  {amountTo.toSignificant()} {tx.assetTo?.ticker}
-                                </span>
-                                {fiatTo && <span className="font-medium">({fiatTo.toCurrency()})</span>}
-                              </div>
-                            </div>
-                          </div>
-
-                          {details && (
-                            <>
-                              <div className="space-y-4 border-t p-4">
-                                <div className="text-thor-gray flex justify-between text-sm">
+                    {isExpanded && (
+                      <>
+                        {details && (
+                          <>
+                            <div className="space-y-4 border-t p-4 text-xs font-semibold">
+                              {details.fromAddress && (
+                                <div className="text-thor-gray flex items-center justify-between">
                                   <span>Source Address</span>
                                   <div className="flex items-center gap-2">
-                                    <span className="text-leah font-semibold">{truncate(details.fromAddress)}</span>
+                                    <span className="text-leah">{truncate(details.fromAddress)}</span>
                                     <CopyButton text={details.fromAddress} />
                                   </div>
                                 </div>
+                              )}
 
-                                <div className="text-thor-gray flex justify-between text-sm">
-                                  <span>Destination Address</span>
-                                  <div className="flex items-center gap-2">
-                                    <span className="text-leah font-semibold">{truncate(details.toAddress)}</span>
-                                    <CopyButton text={details.toAddress} />
-                                  </div>
+                              <div className="text-thor-gray flex items-center justify-between">
+                                <span>Destination Address</span>
+                                <div className="flex items-center gap-2">
+                                  <span className="text-leah">{truncate(details.toAddress)}</span>
+                                  <CopyButton text={details.toAddress} />
                                 </div>
                               </div>
+                            </div>
 
-                              <div className="space-y-4 border-t p-4">
-                                {details.legs.map((legTx: any, i: number) => {
-                                  return <div key={i}>{legTx.status !== 'not_started' && leg(tx, legTx)}</div>
-                                })}
-                              </div>
-                            </>
-                          )}
-                        </>
-                      )}
-                    </div>
-                  </Fragment>
-                )
-              })}
-            </ScrollArea>
+                            <div className="space-y-4 border-t p-4 text-xs font-semibold">
+                              {details.legs.map((legTx: any, i: number) => {
+                                return <div key={i}>{leg(tx, legTx)}</div>
+                              })}
+                            </div>
+                          </>
+                        )}
+                      </>
+                    )}
+                  </div>
+                </Fragment>
+              )
+            })}
           </div>
-        ) : (
-          <div className="text-thor-gray flex flex-1 flex-col items-center justify-center gap-8">
-            <Icon name="warning-filled" className="size-18" />
-            <span className="text-sm font-medium">No transactions yet</span>
-          </div>
-        )}
+        </ScrollArea>
       </CredenzaContent>
     </Credenza>
   )

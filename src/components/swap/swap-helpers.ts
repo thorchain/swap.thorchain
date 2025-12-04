@@ -59,3 +59,7 @@ export const resolvePriceImpact = (quote?: QuoteResponseRoute, rateFrom?: SwapKi
   const toPriceRatio = buyAmountInUsd && sellAmountInUsd && buyAmountInUsd.mul(hundredPercent).div(sellAmountInUsd)
   return toPriceRatio && toPriceRatio.lte(hundredPercent) ? hundredPercent.sub(toPriceRatio) : undefined
 }
+
+export const generateId = () => {
+  return Date.now().toString(36) + Math.random().toString(36).substring(2)
+}

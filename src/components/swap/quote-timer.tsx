@@ -88,10 +88,10 @@ export const QuoteTimer = () => {
             strokeDasharray={strokeDasharray}
             strokeDashoffset={strokeDashoffset}
             strokeLinecap="round"
-            className="stroke-thor-gray transition-all duration-100"
+            className="stroke-andy transition-all duration-100"
           />
         </svg>
-        <span className="text-leah absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 transform text-[12px] font-semibold">
+        <span className="text-thor-gray absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 transform text-[12px] font-semibold">
           {seconds}
         </span>
       </div>

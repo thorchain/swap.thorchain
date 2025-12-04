@@ -2,30 +2,42 @@ import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
 import { useShallow } from 'zustand/react/shallow'
 import { Asset } from '@/components/swap/asset'
+import { ProviderName } from '@uswap/helpers'
+
+export type TxStatus =
+  | 'not_started'
+  | 'pending'
+  | 'swapping'
+  | 'completed'
+  | 'failed'
+  | 'expired'
+  | 'refunded'
+  | 'unknown'
 
 interface Transaction {
+  uid: string
+  provider: ProviderName
   chainId: string
-  hash: string
+  hash?: string
   timestamp: Date
   assetFrom: Asset
   assetTo: Asset
   amountFrom: string
   amountTo: string
-  addressFrom: string
+  addressFrom?: string
   addressTo: string
   addressDeposit?: string
-  status: 'not_started' | 'pending' | 'swapping' | 'completed' | 'failed' | 'refunded' | 'unknown'
+  status: TxStatus
   details?: any
+  qrCodeData?: string
+  expiration?: number
 }
 
 interface TransactionStore {
   transactions: Transaction[]
   setTransaction: (tx: Transaction) => void
-  setTransactions: (txs: Transaction[]) => void
-  setTransactionDetails: (hash: string, data: any) => void
-  setTransactionUnknown: (hash: string) => void
-  showPendingAlert: boolean
-  setPendingAlert: (show: boolean) => void
+  setTransactionDetails: (uid: string, data: any) => void
+  setTransactionStatus: (uid: string, status: TxStatus) => void
 }
 
 export const transactionStore = create<TransactionStore>()(
@@ -35,7 +47,7 @@ export const transactionStore = create<TransactionStore>()(
 
       setTransaction: transaction => {
         set(state => {
-          const exists = state.transactions.find(d => d.hash === transaction.hash)
+          const exists = state.transactions.find(d => d.uid === transaction.uid)
           if (exists) return state
 
           return {
@@ -45,23 +57,11 @@ export const transactionStore = create<TransactionStore>()(
         })
       },
 
-      setTransactions: transactions => {
-        set(state => {
-          const newTransactions = transactions.filter(tx => !state.transactions.find(d => d.hash === tx.hash))
-          if (!newTransactions.length) return state
-
-          return {
-            ...state,
-            transactions: [...state.transactions, ...newTransactions]
-          }
-        })
-      },
-
-      setTransactionDetails: (hash, data: any) => {
+      setTransactionDetails: (uid, data: any) => {
         set(state => {
           return {
             transactions: state.transactions.map(item => {
-              if (item.hash !== hash) {
+              if (item.uid !== uid) {
                 return item
               }
 
@@ -82,30 +82,26 @@ export const transactionStore = create<TransactionStore>()(
         })
       },
 
-      setTransactionUnknown: hash => {
+      setTransactionStatus: (uid, status) => {
         set(state => {
           return {
             transactions: state.transactions.map(item => {
-              if (item.hash !== hash) {
+              if (item.uid !== uid) {
                 return item
               }
 
               return {
                 ...item,
-                status: 'unknown'
+                status: status
               }
             })
           }
         })
-      },
-
-      showPendingAlert: false,
-
-      setPendingAlert: (show: boolean) => set(state => ({ ...state, showPendingAlert: show }))
+      }
     }),
     {
       name: 'transactions',
-      version: 2
+      version: 3
     }
   )
 )
@@ -113,14 +109,12 @@ export const transactionStore = create<TransactionStore>()(
 const sortedTransactions = (state: TransactionStore) =>
   state.transactions.sort((a, b) => new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime())
 
-export const useShowPendingAlert = () => transactionStore(state => state.showPendingAlert)
-export const useSetPendingAlert = () => transactionStore(state => state.setPendingAlert)
-export const useSetTxDetails = () => transactionStore(state => state.setTransactionDetails)
-export const useSetTxUnknown = () => transactionStore(state => state.setTransactionUnknown)
+export const useSetTransaction = () => transactionStore(state => state.setTransaction)
+export const useSetTransactionDetails = () => transactionStore(state => state.setTransactionDetails)
+export const useSetTransactionStatus = () => transactionStore(state => state.setTransactionStatus)
 export const useTransactions = () => transactionStore(sortedTransactions)
+export const useHasTransactions = () => transactionStore(state => state.transactions.length > 0)
 
 export const isTxPending = (status: string) => status === 'not_started' || status === 'swapping' || status === 'pending'
-export const usePendingTxs = () =>
+export const usePendingTransactions = () =>
   transactionStore(useShallow(state => state.transactions.filter(t => !t.details || isTxPending(t.status))))
-export const useLastPendingTx = () =>
-  transactionStore(state => sortedTransactions(state).find(t => isTxPending(t.status)))

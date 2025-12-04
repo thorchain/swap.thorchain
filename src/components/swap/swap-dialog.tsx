@@ -10,8 +10,9 @@ import { toast } from 'sonner'
 import { getUSwap } from '@/lib/wallets'
 import { useAssetFrom, useAssetTo, useSwap } from '@/hooks/use-swap'
 import { useBalance } from '@/hooks/use-balance'
-import { transactionStore } from '@/store/transaction-store'
+import { useSetTransaction } from '@/store/transaction-store'
 import { ProviderName } from '@uswap/helpers'
+import { generateId } from '@/components/swap/swap-helpers'
 
 interface SwapDialogProps {
   provider: ProviderName
@@ -26,7 +27,7 @@ export const SwapDialog = ({ provider, isOpen, onOpenChange }: SwapDialogProps) 
   const { valueFrom, setAmountFrom } = useSwap()
   const { refetch: refetchBalance } = useBalance()
   const [submitting, setSubmitting] = useState(false)
-  const { setTransaction } = transactionStore()
+  const setTransaction = useSetTransaction()
 
   const [quote, setQuote] = useState<QuoteResponseRoute | undefined>(undefined)
 
@@ -42,6 +43,8 @@ export const SwapDialog = ({ provider, isOpen, onOpenChange }: SwapDialogProps) 
       })
       .then((hash: string) => {
         setTransaction({
+          uid: generateId(),
+          provider: provider,
           chainId: getChainConfig(assetFrom.chain).chainId,
           hash: hash,
           timestamp: new Date(),

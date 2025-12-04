@@ -106,7 +106,7 @@ export function ImportKeystore({ onBack, onConnect }: { onBack: () => void; onCo
                 if (!file) fileInputRef.current?.click()
               }}
               className={cn(
-                'border-blade flex h-40 flex-col items-center justify-center gap-2 rounded-3xl border-2 border-dashed px-8 text-center transition-all duration-200 ease-in-out',
+                'flex h-40 flex-col items-center justify-center gap-2 rounded-3xl border-2 border-dashed px-8 text-center transition-all duration-200 ease-in-out',
                 { 'hover:bg-blade/50 cursor-pointer': !file },
                 { 'bg-blade/50': isDragging }
               )}

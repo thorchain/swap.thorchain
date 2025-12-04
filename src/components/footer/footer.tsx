@@ -6,7 +6,7 @@ const SUPPORT_EMAIL = 'swap@horizontalsystems.io'
 export function Footer() {
   return (
     <footer className="bg-tyler fixed inset-x-0 bottom-0 mx-auto hidden md:block">
-      <div className="border-blade container mx-auto border-t p-4">
+      <div className="container mx-auto border-t p-4">
         <div className="flex items-center justify-between gap-4">
           <div className="text-thor-gray flex items-center gap-1 text-xs">
             <span>Built by</span>
