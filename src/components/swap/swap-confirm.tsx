@@ -8,7 +8,7 @@ import { resolveFees, resolvePriceImpact } from '@/components/swap/swap-helpers'
 import { formatDuration, intervalToDuration } from 'date-fns'
 import { ScrollArea } from '@/components/ui/scroll-area'
 import { Icon } from '@/components/icons'
-import { SwapKitNumber } from '@uswap/core'
+import { USwapNumber } from '@uswap/core'
 import { chainLabel } from '@/components/connect-wallet/config'
 import { useRates, useSwapRates } from '@/hooks/use-rates'
 import { useMemo } from 'react'
@@ -33,9 +33,9 @@ export const SwapConfirm = ({ quote }: SwapConfirmProps) => {
   const { rates } = useRates(identifiers)
   const { rateFrom, rateTo } = useSwapRates()
 
-  const sellAmount = new SwapKitNumber(quote.sellAmount)
-  const expectedBuyAmount = new SwapKitNumber(quote.expectedBuyAmount)
-  const expectedBuyAmountMaxSlippage = new SwapKitNumber(quote.expectedBuyAmountMaxSlippage)
+  const sellAmount = new USwapNumber(quote.sellAmount)
+  const expectedBuyAmount = new USwapNumber(quote.expectedBuyAmount)
+  const expectedBuyAmountMaxSlippage = new USwapNumber(quote.expectedBuyAmountMaxSlippage)
 
   const { inbound } = resolveFees(quote, rates)
 
@@ -164,7 +164,7 @@ export const SwapConfirm = ({ quote }: SwapConfirmProps) => {
               <div className="text-thor-gray flex justify-between text-sm">
                 <span>Tx Fee</span>
                 <span className="text-leah font-semibold">
-                  {inbound.usd.lt(0.01) ? `< ${new SwapKitNumber(0.01).toCurrency()}` : inbound.usd.toCurrency()}
+                  {inbound.usd.lt(0.01) ? `< ${new USwapNumber(0.01).toCurrency()}` : inbound.usd.toCurrency()}
                 </span>
               </div>
             )}

@@ -8,19 +8,19 @@ import { useDialog } from '@/components/global-dialog'
 import { useSwapRates } from '@/hooks/use-rates'
 import { Icon } from '@/components/icons'
 import { chainLabel } from '@/components/connect-wallet/config'
-import { SwapKitNumber } from '@uswap/core'
+import { USwapNumber } from '@uswap/core'
 import { Tooltip } from '@/components/tooltip'
 import { PriceImpact } from '@/components/swap/price-impact'
 
-export const SwapInputTo = ({ priceImpact }: { priceImpact?: SwapKitNumber }) => {
+export const SwapInputTo = ({ priceImpact }: { priceImpact?: USwapNumber }) => {
   const assetTo = useAssetTo()
   const setAssetTo = useSetAssetTo()
   const { quote } = useQuote()
   const { openDialog } = useDialog()
   const { rateTo } = useSwapRates()
 
-  const value = quote && new SwapKitNumber(quote.expectedBuyAmount)
-  const fiatValueTo = (rateTo && value && value.mul(rateTo)) || new SwapKitNumber(0)
+  const value = quote && new USwapNumber(quote.expectedBuyAmount)
+  const fiatValueTo = (rateTo && value && value.mul(rateTo)) || new USwapNumber(0)
 
   const onClick = () =>
     openDialog(SwapSelectAsset, {

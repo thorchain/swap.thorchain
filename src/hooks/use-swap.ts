@@ -1,7 +1,7 @@
 import { useEffect, useMemo } from 'react'
 import { useAssets } from '@/hooks/use-assets'
 import { useSwapStore } from '@/store/swap-store'
-import { NumberPrimitives, SwapKitNumber } from '@uswap/core'
+import { NumberPrimitives, USwapNumber } from '@uswap/core'
 
 // Selectors
 
@@ -32,9 +32,9 @@ export const useSwap = () => {
   return {
     amountFrom: amount,
     setAmountFrom,
-    valueFrom: useMemo(() => new SwapKitNumber(amount), [amount]),
-    setValueFrom: (value: SwapKitNumber | NumberPrimitives) => {
-      setAmountFrom(new SwapKitNumber(value).toSignificant())
+    valueFrom: useMemo(() => new USwapNumber(amount), [amount]),
+    setValueFrom: (value: USwapNumber | NumberPrimitives) => {
+      setAmountFrom(new USwapNumber(value).toSignificant())
     },
     setAssetTo,
     feeWarning: BigInt(feeWarning)

@@ -5,7 +5,7 @@ import { QuoteResponseRoute } from '@uswap/helpers/api'
 import { SwapConfirm } from '@/components/swap/swap-confirm'
 import { ThemeButton } from '@/components/theme-button'
 import { LoaderCircle } from 'lucide-react'
-import { FeeOption, getChainConfig, SwapKitNumber } from '@uswap/core'
+import { FeeOption, getChainConfig, USwapNumber } from '@uswap/core'
 import { toast } from 'sonner'
 import { getUSwap } from '@/lib/wallets'
 import { useAssetFrom, useAssetTo, useSwap } from '@/hooks/use-swap'
@@ -51,7 +51,7 @@ export const SwapDialog = ({ provider, isOpen, onOpenChange }: SwapDialogProps) 
           assetFrom: assetFrom,
           assetTo: assetTo,
           amountFrom: valueFrom.toSignificant(),
-          amountTo: new SwapKitNumber(quote.expectedBuyAmount).toSignificant(),
+          amountTo: new USwapNumber(quote.expectedBuyAmount).toSignificant(),
           addressFrom: quote.sourceAddress,
           addressTo: quote.destinationAddress,
           addressDeposit: quote.inboundAddress,

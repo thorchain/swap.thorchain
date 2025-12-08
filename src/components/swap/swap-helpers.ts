@@ -1,10 +1,10 @@
 import { AssetRateMap } from '@/hooks/use-rates'
-import { assetFromString, SwapKitNumber } from '@uswap/core'
+import { assetFromString, USwapNumber } from '@uswap/core'
 import { QuoteResponseRoute } from '@uswap/helpers/api'
 
 export type FeeData = {
-  amount: SwapKitNumber
-  usd: SwapKitNumber
+  amount: USwapNumber
+  usd: USwapNumber
   ticker: string
 }
 
@@ -14,14 +14,14 @@ export const resolveFees = (quote: QuoteResponseRoute, rates: AssetRateMap) => {
 
     if (!fee) return undefined
 
-    const amount = new SwapKitNumber(fee.amount)
+    const amount = new USwapNumber(fee.amount)
     const rate = rates[fee.asset]
 
     const asset = assetFromString(fee.asset)
 
     return {
       amount: amount,
-      usd: rate ? amount.mul(new SwapKitNumber(rate)) : new SwapKitNumber(0),
+      usd: rate ? amount.mul(new USwapNumber(rate)) : new USwapNumber(0),
       ticker: asset.ticker || asset.symbol
     }
   }
@@ -33,14 +33,14 @@ export const resolveFees = (quote: QuoteResponseRoute, rates: AssetRateMap) => {
   const service = feeData('service')
 
   const platform: FeeData | undefined = (affiliate || service) && {
-    amount: (affiliate?.amount || new SwapKitNumber(0)).add(service?.amount || new SwapKitNumber(0)),
-    usd: (affiliate?.usd || new SwapKitNumber(0)).add(service?.usd || new SwapKitNumber(0)),
+    amount: (affiliate?.amount || new USwapNumber(0)).add(service?.amount || new USwapNumber(0)),
+    usd: (affiliate?.usd || new USwapNumber(0)).add(service?.usd || new USwapNumber(0)),
     ticker: affiliate?.ticker || service?.ticker || ''
   }
 
-  const included = (outbound?.usd || new SwapKitNumber(0))
-    .add(liquidity?.usd || new SwapKitNumber(0))
-    .add(platform?.usd || new SwapKitNumber(0))
+  const included = (outbound?.usd || new USwapNumber(0))
+    .add(liquidity?.usd || new USwapNumber(0))
+    .add(platform?.usd || new USwapNumber(0))
 
   return {
     inbound,
@@ -51,11 +51,11 @@ export const resolveFees = (quote: QuoteResponseRoute, rates: AssetRateMap) => {
   }
 }
 
-export const resolvePriceImpact = (quote?: QuoteResponseRoute, rateFrom?: SwapKitNumber, rateTo?: SwapKitNumber) => {
-  const sellAmountInUsd = quote && rateFrom && new SwapKitNumber(quote.sellAmount).mul(rateFrom)
-  const buyAmountInUsd = quote && rateTo && new SwapKitNumber(quote.expectedBuyAmount).mul(rateTo)
+export const resolvePriceImpact = (quote?: QuoteResponseRoute, rateFrom?: USwapNumber, rateTo?: USwapNumber) => {
+  const sellAmountInUsd = quote && rateFrom && new USwapNumber(quote.sellAmount).mul(rateFrom)
+  const buyAmountInUsd = quote && rateTo && new USwapNumber(quote.expectedBuyAmount).mul(rateTo)
 
-  const hundredPercent = new SwapKitNumber(100)
+  const hundredPercent = new USwapNumber(100)
   const toPriceRatio = buyAmountInUsd && sellAmountInUsd && buyAmountInUsd.mul(hundredPercent).div(sellAmountInUsd)
   return toPriceRatio && toPriceRatio.lte(hundredPercent) ? hundredPercent.sub(toPriceRatio) : undefined
 }

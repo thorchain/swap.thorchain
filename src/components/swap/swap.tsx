@@ -13,7 +13,7 @@ import { useEffect, useMemo } from 'react'
 import { MemolessAsset, useMemolessAssets } from '@/hooks/use-memoless-assets'
 import { useAssetFrom, useSwap } from '@/hooks/use-swap'
 import { SwapError } from '@/components/swap/swap-error'
-import { AssetValue, SwapKitNumber } from '@uswap/core'
+import { AssetValue, USwapNumber } from '@uswap/core'
 import { SwapAddressFrom } from '@/components/swap/swap-address-from'
 import { QuoteTimer } from '@/components/swap/quote-timer'
 import { resolvePriceImpact } from '@/components/swap/swap-helpers'
@@ -47,7 +47,7 @@ export const Swap = () => {
 
   const memolessError: Error | undefined = useMemo(() => {
     if (selectedAccount || !memolessAsset || !assetFrom) return
-    let minAmount = new SwapKitNumber(10 ** -(memolessAsset.decimals - 5))
+    let minAmount = new USwapNumber(10 ** -(memolessAsset.decimals - 5))
     if (valueFrom.lt(minAmount))
       return new Error(
         `Minimum swap amount without a connected wallet is ${minAmount.toSignificant()} ${assetFrom.ticker}`

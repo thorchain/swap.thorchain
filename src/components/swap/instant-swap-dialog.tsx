@@ -13,7 +13,7 @@ import { SwapError } from '@/components/swap/swap-error'
 import { ProviderName } from '@uswap/helpers'
 import { useSetTransaction } from '@/store/transaction-store'
 import { generateId } from '@/components/swap/swap-helpers'
-import { getChainConfig, SwapKitNumber } from '@uswap/core'
+import { getChainConfig, USwapNumber } from '@uswap/core'
 
 interface InstantSwapDialogProps {
   provider: ProviderName
@@ -63,7 +63,7 @@ export const InstantSwapDialog = ({ provider, isOpen, onOpenChange }: InstantSwa
       assetFrom,
       assetTo,
       amountFrom: value,
-      amountTo: new SwapKitNumber(quote.expectedBuyAmount).toSignificant(),
+      amountTo: new USwapNumber(quote.expectedBuyAmount).toSignificant(),
       addressTo: quote.destinationAddress,
       addressDeposit: address,
       status: 'not_started',

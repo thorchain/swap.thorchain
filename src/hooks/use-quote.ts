@@ -4,7 +4,7 @@ import { getQuotes } from '@/lib/api'
 import { useAssetFrom, useAssetTo, useSlippage, useSwap } from '@/hooks/use-swap'
 import { QuoteResponseRoute } from '@uswap/helpers/api'
 import { AppConfig } from '@/config'
-import { SwapKitNumber } from '@uswap/core'
+import { USwapNumber } from '@uswap/core'
 
 type UseQuote = {
   isLoading: boolean
@@ -61,7 +61,7 @@ export const useQuote = (): UseQuote => {
         }
 
         return quotes.reduce((best: any, current: any) =>
-          new SwapKitNumber(current.expectedBuyAmount).gt(new SwapKitNumber(best.expectedBuyAmount)) ? current : best
+          new USwapNumber(current.expectedBuyAmount).gt(new USwapNumber(best.expectedBuyAmount)) ? current : best
         )
       })
     },

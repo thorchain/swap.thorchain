@@ -11,7 +11,7 @@ import { cn, truncate } from '@/lib/utils'
 import { AssetIcon } from '@/components/asset-icon'
 import { Credenza, CredenzaContent, CredenzaHeader, CredenzaTitle } from '@/components/ui/credenza'
 import { Icon } from '@/components/icons'
-import { assetFromString, ChainId, ChainIdToChain, getExplorerTxUrl, SwapKitNumber } from '@uswap/core'
+import { assetFromString, ChainId, ChainIdToChain, getExplorerTxUrl, USwapNumber } from '@uswap/core'
 import { chainLabel } from '@/components/connect-wallet/config'
 import { ThemeButton } from '@/components/theme-button'
 import { useDialog } from '@/components/global-dialog'
@@ -109,11 +109,11 @@ export const TransactionHistoryDialog = ({ isOpen, onOpenChange }: HistoryDialog
               const details = tx.details
               const status = tx.status
 
-              const amountFrom = new SwapKitNumber(tx.amountFrom)
+              const amountFrom = new USwapNumber(tx.amountFrom)
               const rateFrom = rates[tx.assetFrom.identifier]
               const fiatFrom = rateFrom && rateFrom.mul(amountFrom)
 
-              const amountTo = new SwapKitNumber(tx.amountTo)
+              const amountTo = new USwapNumber(tx.amountTo)
               const rateTo = rates[tx.assetTo.identifier]
               const fiatTo = rateTo && rateTo.mul(amountTo)
 

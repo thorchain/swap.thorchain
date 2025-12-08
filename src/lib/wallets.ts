@@ -1,4 +1,4 @@
-import { Chain, getEIP6963Wallets, NetworkDerivationPath, WalletOption, USwap } from '@uswap/core'
+import { Chain, getEIP6963Wallets, WalletOption, USwap } from '@uswap/core'
 import { EVMPlugin } from '@uswap/plugins/evm'
 import { NearPlugin } from '@uswap/plugins/near'
 import { RadixPlugin } from '@uswap/plugins/radix'
@@ -57,7 +57,7 @@ export function getUSwap() {
     config: {
       apiKeys: {
         blockchair: process.env.NEXT_PUBLIC_BLOCKCHAIR_API_KEY,
-        swapKit: process.env.NEXT_PUBLIC_UKIT_API_KEY
+        uSwap: process.env.NEXT_PUBLIC_UKIT_API_KEY
       },
       rpcUrls: {
         [Chain.Ethereum]: ['https://eth.llamarpc.com', 'https://ethereum-rpc.publicnode.com']

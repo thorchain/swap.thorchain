@@ -1,11 +1,11 @@
 import { useQuery, useQueryClient } from '@tanstack/react-query'
 import { getAssetRates } from '@/lib/api'
-import { assetFromString, getCommonAssetInfo, SwapKitNumber } from '@uswap/core'
+import { assetFromString, getCommonAssetInfo, USwapNumber } from '@uswap/core'
 import { useAssets } from '@/hooks/use-assets'
 import { useAssetFrom, useAssetTo } from '@/hooks/use-swap'
 import { useEffect } from 'react'
 
-export type AssetRateMap = Record<string, SwapKitNumber>
+export type AssetRateMap = Record<string, USwapNumber>
 
 class RateIdentifierCache {
   private maxSize: number
@@ -120,7 +120,7 @@ async function fetchRates(geckoIds: string[], identifiers: string[]): Promise<As
 
   identifiers.forEach((id, i) => {
     const price = data[geckoIds[i]]?.usd
-    if (price) result[id] = new SwapKitNumber(price)
+    if (price) result[id] = new USwapNumber(price)
   })
 
   return result

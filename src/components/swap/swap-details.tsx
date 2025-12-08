@@ -4,7 +4,7 @@ import { useQuote } from '@/hooks/use-quote'
 import { useAssetFrom, useAssetTo, useSwap } from '@/hooks/use-swap'
 import { Icon } from '@/components/icons'
 import { formatDuration, intervalToDuration } from 'date-fns'
-import { SwapKitNumber } from '@uswap/core'
+import { USwapNumber } from '@uswap/core'
 import { resolveFees } from '@/components/swap/swap-helpers'
 import { useRates } from '@/hooks/use-rates'
 import { InfoTooltip } from '@/components/tooltip'
@@ -14,7 +14,7 @@ import { PriceImpact } from '@/components/swap/price-impact'
 import { useDialog } from '@/components/global-dialog'
 import { SwapFeeDialog } from '@/components/swap/swap-fee-dialog'
 
-export function SwapDetails({ priceImpact }: { priceImpact?: SwapKitNumber }) {
+export function SwapDetails({ priceImpact }: { priceImpact?: USwapNumber }) {
   const assetFrom = useAssetFrom()
   const assetTo = useAssetTo()
   const [showMore, setShowMore] = useState(false)
@@ -51,7 +51,7 @@ export function SwapDetails({ priceImpact }: { priceImpact?: SwapKitNumber }) {
 
   if (!assetFrom || !assetTo || !quote) return null
 
-  const valueTo = new SwapKitNumber(quote.expectedBuyAmount)
+  const valueTo = new USwapNumber(quote.expectedBuyAmount)
   const priceDirect = priceInverted ? valueTo.lt(valueFrom) : valueTo.gt(valueFrom)
   const price = priceDirect ? valueTo.div(valueFrom) : valueFrom.div(valueTo)
 
@@ -76,7 +76,7 @@ export function SwapDetails({ priceImpact }: { priceImpact?: SwapKitNumber }) {
             <div className="text-thor-gray flex items-center gap-2 p-4">
               <span>Tx Fee:</span>
               <span className="text-leah">
-                {inbound.usd.lt(0.01) ? `< ${new SwapKitNumber(0.01).toCurrency()}` : inbound.usd.toCurrency()}
+                {inbound.usd.lt(0.01) ? `< ${new USwapNumber(0.01).toCurrency()}` : inbound.usd.toCurrency()}
               </span>
               <animated.div style={arrowSpring}>
                 <Icon name="arrow-s-down" className="size-5" />

@@ -2,13 +2,13 @@ import { Separator } from '@/components/ui/separator'
 import { useSwapAssets } from '@/hooks/use-swap'
 import { Icon } from '@/components/icons'
 import { useQuote } from '@/hooks/use-quote'
-import { SwapKitNumber } from '@uswap/core'
+import { USwapNumber } from '@uswap/core'
 
 export const SwapToggleAssets = () => {
   const swapAssets = useSwapAssets()
   const { quote } = useQuote()
 
-  const amount = quote && new SwapKitNumber(quote.expectedBuyAmount).toSignificant()
+  const amount = quote && new USwapNumber(quote.expectedBuyAmount).toSignificant()
 
   return (
     <div className="relative flex cursor-pointer items-center justify-center overflow-hidden">

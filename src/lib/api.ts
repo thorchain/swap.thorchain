@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { AssetValue, Chain, getChainConfig, SwapKitNumber } from '@uswap/core'
+import { AssetValue, Chain, getChainConfig, USwapNumber } from '@uswap/core'
 import { BalanceResponse } from '@uswap/helpers/api'
 import { Asset } from '@/components/swap/asset'
 
@@ -52,7 +52,7 @@ export const getQuotes = async (
   data: {
     buyAsset: Asset
     sellAsset: Asset
-    sellAmount: SwapKitNumber
+    sellAmount: USwapNumber
     sourceAddress?: string
     destinationAddress?: string
     refundAddress?: string

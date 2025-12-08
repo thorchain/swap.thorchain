@@ -10,7 +10,7 @@ import {
   EVMChains,
   FeeOption,
   isGasAsset,
-  SwapKitNumber,
+  USwapNumber,
   UTXOChain,
   UTXOChains
 } from '@uswap/core'
@@ -20,8 +20,8 @@ import { estimateTransactionFee } from '@uswap/toolboxes/cosmos'
 
 type UseBalance = {
   balance?: {
-    total: SwapKitNumber
-    spendable: SwapKitNumber
+    total: USwapNumber
+    spendable: USwapNumber
   } | null
   refetch: () => void
   isLoading: boolean
@@ -80,15 +80,15 @@ export const useBalance = (): UseBalance => {
             const { gasPrice, maxFeePerGas, maxPriorityFeePerGas } = gasPrices[FeeOption.Fast]
 
             if (gasPrice) {
-              return SwapKitNumber.fromBigInt(gasPrice * gasLimit, assetFrom.decimals)
+              return USwapNumber.fromBigInt(gasPrice * gasLimit, assetFrom.decimals)
             }
 
             if (maxFeePerGas && maxPriorityFeePerGas) {
               const fee = (maxFeePerGas + maxPriorityFeePerGas) * gasLimit
-              return SwapKitNumber.fromBigInt(fee, assetFrom.decimals)
+              return USwapNumber.fromBigInt(fee, assetFrom.decimals)
             }
 
-            return new SwapKitNumber(0)
+            return new USwapNumber(0)
           } else if (UTXOChains.includes(assetFrom.chain as UTXOChain)) {
             const utxoWallet = uSwap.getWallet<UTXOChain>(selected.provider, selected.network as UTXOChain)
             return await utxoWallet.estimateTransactionFee({
@@ -101,23 +101,23 @@ export const useBalance = (): UseBalance => {
           } else if (CosmosChains.includes(assetFrom.chain as CosmosChain)) {
             return estimateTransactionFee({ assetValue: value })
           } else if (assetFrom.chain === Chain.Tron) {
-            return new SwapKitNumber(1)
+            return new USwapNumber(1)
           }
         } catch (e) {
           console.log({ e })
         }
 
-        return new SwapKitNumber(0)
+        return new USwapNumber(0)
       }
 
       const fee =
         isGasAsset({ chain: assetFrom.chain, symbol: assetFrom.ticker }) && value.gt(0)
           ? await estimateFee()
-          : new SwapKitNumber(0)
+          : new USwapNumber(0)
 
       return {
         total: value,
-        spendable: value.gt(fee) ? value.sub(fee) : new SwapKitNumber(0)
+        spendable: value.gt(fee) ? value.sub(fee) : new USwapNumber(0)
       }
     },
     enabled: !!(selected && assetFrom),

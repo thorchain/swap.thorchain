@@ -10,7 +10,7 @@ import { ThemeButton } from '@/components/theme-button'
 import { Icon } from '@/components/icons'
 import { chainLabel } from '@/components/connect-wallet/config'
 import { DecimalInput } from '@/components/decimal/decimal-input'
-import { SwapKitNumber } from '@uswap/core'
+import { USwapNumber } from '@uswap/core'
 
 export const SwapInputFrom = () => {
   const assetFrom = useAssetFrom()
@@ -25,7 +25,7 @@ export const SwapInputFrom = () => {
     setValueFrom(balance.spendable.mul(percent / 100))
   }
 
-  const rateFrom = rate || new SwapKitNumber(0)
+  const rateFrom = rate || new USwapNumber(0)
   const fiatValueFrom = valueFrom.mul(rateFrom)
 
   const onClick = () => {
