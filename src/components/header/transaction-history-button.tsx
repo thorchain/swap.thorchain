@@ -3,7 +3,6 @@
 import { useHasTransactions, usePendingTransactions } from '@/store/transaction-store'
 import { TransactionHistoryDialog } from '@/components/header/transaction-history-dialog'
 import { useDialog } from '@/components/global-dialog'
-import { useConnectedWallets } from '@/hooks/use-wallets'
 import { ThemeButton } from '@/components/theme-button'
 import { Icon } from '@/components/icons'
 
@@ -12,9 +11,8 @@ export const TransactionHistoryButton = () => {
 
   const hasTransactions = useHasTransactions()
   const pendingTransactions = usePendingTransactions()
-  const connectedProviders = useConnectedWallets()
 
-  if (!connectedProviders.length || !hasTransactions) {
+  if (!hasTransactions) {
     return null
   }
 

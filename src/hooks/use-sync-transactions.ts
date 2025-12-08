@@ -21,7 +21,11 @@ export const useSyncTransactions = () => {
       refetchInterval: 5_000,
       refetchIntervalInBackground: false,
       queryFn: () => {
-        if (tx.status === 'not_started' && (!tx.expiration || tx.expiration < new Date().getTime() / 1000)) {
+        if (
+          !tx.hash &&
+          tx.status === 'not_started' &&
+          (!tx.expiration || tx.expiration < new Date().getTime() / 1000)
+        ) {
           setTransactionStatus(tx.uid, 'expired')
           return null
         }

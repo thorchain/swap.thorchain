@@ -68,6 +68,8 @@ export const transactionStore = create<TransactionStore>()(
               const tx = {
                 ...item,
                 status: data.status,
+                hash: data.hash,
+                addressFrom: data.fromAddress,
                 details: data
               }
 
