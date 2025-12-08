@@ -1,8 +1,6 @@
 import { Icon } from '@/components/icons'
 import { AppConfig } from '@/config'
 
-const SUPPORT_EMAIL = 'swap@horizontalsystems.io'
-
 export function Footer() {
   return (
     <footer className="bg-tyler fixed inset-x-0 bottom-0 mx-auto hidden md:block">
@@ -20,11 +18,11 @@ export function Footer() {
             <div className="flex items-center gap-2">
               <span>
                 Report bugs to{' '}
-                <a className="underline" href={`mailto:${SUPPORT_EMAIL}`}>
-                  {SUPPORT_EMAIL}
+                <a className="underline" href={`mailto:${AppConfig.supportEmail}`}>
+                  {AppConfig.supportEmail}
                 </a>
               </span>
-              <a href={`mailto:${SUPPORT_EMAIL}`}>
+              <a href={`mailto:${AppConfig.supportEmail}`}>
                 <Icon width={20} height={20} viewBox="0 0 20 20" name="email" />
               </a>
             </div>

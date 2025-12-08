@@ -10,6 +10,7 @@ type App = {
   favicon: string
   logo: string
   LogoText: () => JSX.Element
+  supportEmail: string
   logoLink?: string
   gtag?: string
   pixelId?: string
@@ -25,7 +26,8 @@ const apps: Record<AppKey, App> = {
     description: 'Unstoppable Swap',
     favicon: '/favicon-unstoppable.ico',
     logo: '/logo-unstoppable.svg',
-    LogoText: HeaderUnstoppable
+    LogoText: HeaderUnstoppable,
+    supportEmail: 'swap@horizontalsystems.io'
   },
   thorchain: {
     id: 'thorchain',
@@ -39,7 +41,8 @@ const apps: Record<AppKey, App> = {
     pixelId: 'qki4a',
     pixelEvent: 'tw-qki4a-qop3i',
     discordLink: 'https://discord.gg/eGrrwNE95w',
-    telegramLink: 'https://t.me/thorchain_org'
+    telegramLink: 'https://t.me/thorchain_org',
+    supportEmail: 'contact@thorchain.org'
   }
 }
 
