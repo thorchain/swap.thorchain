@@ -57,13 +57,13 @@ export function getUSwap() {
     config: {
       apiKeys: {
         blockchair: process.env.NEXT_PUBLIC_BLOCKCHAIR_API_KEY,
-        uSwap: process.env.NEXT_PUBLIC_UKIT_API_KEY
+        uSwap: process.env.NEXT_PUBLIC_USWAP_API_KEY
       },
       rpcUrls: {
         [Chain.Ethereum]: ['https://eth.llamarpc.com', 'https://ethereum-rpc.publicnode.com']
       },
       envs: {
-        apiUrl: process.env.NEXT_PUBLIC_UKIT_API_URL
+        apiUrl: process.env.NEXT_PUBLIC_USWAP_API_URL
       }
     }
   })

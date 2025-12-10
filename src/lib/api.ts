@@ -4,9 +4,9 @@ import { BalanceResponse } from '@uswap/helpers/api'
 import { Asset } from '@/components/swap/asset'
 
 const uKit = axios.create({
-  baseURL: process.env.NEXT_PUBLIC_UKIT_API_URL,
+  baseURL: process.env.NEXT_PUBLIC_USWAP_API_URL,
   headers: {
-    'x-api-key': process.env.NEXT_PUBLIC_UKIT_API_KEY
+    'x-api-key': process.env.NEXT_PUBLIC_USWAP_API_KEY
   }
 })
 
