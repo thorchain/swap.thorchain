@@ -3,7 +3,7 @@ import { AssetValue, Chain, getChainConfig, USwapNumber } from '@uswap/core'
 import { BalanceResponse } from '@uswap/helpers/api'
 import { Asset } from '@/components/swap/asset'
 
-const uKit = axios.create({
+const uSwap = axios.create({
   baseURL: process.env.NEXT_PUBLIC_USWAP_API_URL,
   headers: {
     'x-api-key': process.env.NEXT_PUBLIC_USWAP_API_KEY
@@ -32,12 +32,8 @@ export const getAssetRates = async (ids: string) => {
   return coingecko.get(`/simple/price?ids=${ids}&vs_currencies=usd`).then(res => res.data)
 }
 
-export const getTokenList = async (provider: string) => {
-  return uKit.get(`/tokens?provider=${provider}`).then(res => res.data)
-}
-
-export const getBalance = async (chain: Chain, address: string, identifier: string) => {
-  return uKit
+export const getAssetBalance = async (chain: Chain, address: string, identifier: string) => {
+  return uSwap
     .get(`/balance?chain=${chain}&address=${address}&identifier=${identifier}`)
     .then(res => res.data)
     .then((data: BalanceResponse) => {
@@ -62,7 +58,7 @@ export const getQuotes = async (
   },
   signal?: AbortSignal
 ) => {
-  return uKit
+  return uSwap
     .post(
       '/quote',
       {
@@ -85,5 +81,5 @@ export const getQuotes = async (
 }
 
 export const getTrack = async (data: Record<string, any>) => {
-  return uKit.post('/track', data).then(res => res.data)
+  return uSwap.post('/track', data).then(res => res.data)
 }

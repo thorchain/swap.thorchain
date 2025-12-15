@@ -1,20 +1,22 @@
 import { useQuery } from '@tanstack/react-query'
-import { getTokenList } from '@/lib/api'
 import { Asset } from '@/components/swap/asset'
+import { ProviderName } from '@uswap/helpers'
+import { USwapApi } from '@uswap/helpers/api'
 
-const PROVIDERS = ['THORCHAIN', 'NEAR', 'ONEINCH', 'MAYACHAIN']
+const PROVIDERS = [ProviderName.THORCHAIN, ProviderName.NEAR, ProviderName.ONEINCH, ProviderName.MAYACHAIN]
 
 export const useAssets = (): { assets?: Asset[]; geckoMap?: Map<string, string>; isLoading: boolean } => {
   const { data, isLoading } = useQuery({
     queryKey: ['assets'],
     queryFn: async () => {
-      const lists = await Promise.all(PROVIDERS.map(getTokenList))
+      const lists = await Promise.all(PROVIDERS.map(USwapApi.getTokenList))
       const tokens = lists.flatMap(l => l.tokens).filter(t => t.chain)
 
       const assets = new Map<string, Asset>()
       const geckoMap = new Map<string, string>()
 
       for (const token of tokens) {
+        if (!token.chain) continue
         const key = `${token.chain}-${token.identifier}`.toLowerCase()
         assets.set(key, {
           address: token.address,

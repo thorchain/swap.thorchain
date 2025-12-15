@@ -14,7 +14,7 @@ import {
   UTXOChain,
   UTXOChains
 } from '@uswap/core'
-import { getBalance } from '@/lib/api'
+import { getAssetBalance } from '@/lib/api'
 import { getUSwap } from '@/lib/wallets'
 import { estimateTransactionFee } from '@uswap/toolboxes/cosmos'
 
@@ -58,7 +58,7 @@ export const useBalance = (): UseBalance => {
         assetFrom.identifier.toLowerCase()
 
       if (assetFrom.chain === Chain.Near) {
-        const balances = await getBalance(assetFrom.chain, wallet.address, assetFrom.identifier)
+        const balances = await getAssetBalance(assetFrom.chain, wallet.address, assetFrom.identifier)
         const balance = balances.find(finder)
 
         if (balance) value = balance
