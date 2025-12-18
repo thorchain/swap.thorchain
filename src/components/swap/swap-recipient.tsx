@@ -1,3 +1,4 @@
+import Image from 'next/image'
 import { ThemeButton } from '@/components/theme-button'
 import { CredenzaHeader, CredenzaTitle } from '@/components/ui/credenza'
 import { useEffect, useState } from 'react'
@@ -10,7 +11,6 @@ import { cn, truncate } from '@/lib/utils'
 import { useAssetFrom, useAssetTo, useSlippage, useSwap } from '@/hooks/use-swap'
 import { getAddressValidator } from '@uswap/toolboxes'
 import { useAccounts, useSelectedAccount } from '@/hooks/use-wallets'
-import Image from 'next/image'
 import { getQuotes } from '@/lib/api'
 import { AxiosError } from 'axios'
 import { SwapError } from '@/components/swap/swap-error'
@@ -70,14 +70,14 @@ export const SwapRecipient = ({ provider, onFetchQuote }: SwapRecipientProps) =>
     setQuoting(true)
 
     getQuotes({
-      buyAsset: assetTo,
-      sellAsset: assetFrom,
-      sellAmount: valueFrom,
+      buyAsset: assetTo.identifier,
+      sellAsset: assetFrom.identifier,
+      sellAmount: valueFrom.toSignificant(),
       sourceAddress: selectedAccount?.address,
       destinationAddress: destinationAddress,
       refundAddress: refundRequired ? refundAddress : provider === 'MAYACHAIN' ? undefined : selectedAccount?.address,
       dry: !(refundRequired || selectedAccount),
-      slippage: slippage,
+      slippage: slippage ?? 99,
       providers: [provider]
     })
       .then(quotes => {

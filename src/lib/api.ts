@@ -1,7 +1,6 @@
 import axios from 'axios'
-import { AssetValue, Chain, getChainConfig, USwapNumber } from '@uswap/core'
-import { BalanceResponse } from '@uswap/helpers/api'
-import { Asset } from '@/components/swap/asset'
+import { AssetValue, Chain, getChainConfig } from '@uswap/core'
+import { BalanceResponse, QuoteRequest, USwapApi } from '@uswap/helpers/api'
 
 const uSwap = axios.create({
   baseURL: process.env.NEXT_PUBLIC_USWAP_API_URL,
@@ -44,40 +43,11 @@ export const getAssetBalance = async (chain: Chain, address: string, identifier:
     })
 }
 
-export const getQuotes = async (
-  data: {
-    buyAsset: Asset
-    sellAsset: Asset
-    sellAmount: USwapNumber
-    sourceAddress?: string
-    destinationAddress?: string
-    refundAddress?: string
-    dry?: boolean
-    slippage: number | undefined
-    providers?: string[]
-  },
-  signal?: AbortSignal
-) => {
-  return uSwap
-    .post(
-      '/quote',
-      {
-        buyAsset: data.buyAsset.identifier,
-        sellAsset: data.sellAsset.identifier,
-        sellAmount: data.sellAmount.toSignificant(),
-        sourceAddress: data.sourceAddress,
-        destinationAddress: data.destinationAddress,
-        refundAddress: data.refundAddress,
-        dry: data.dry,
-        slippage: data.slippage ?? 99,
-        providers: data.providers
-      },
-      {
-        signal
-      }
-    )
-    .then(res => res.data)
-    .then(data => data.routes || [])
+export const getQuotes = async (json: QuoteRequest, abortController?: AbortController) => {
+  return USwapApi.getSwapQuote(json, {
+    abortController,
+    retry: { maxRetries: 0 }
+  }).then(res => res.routes)
 }
 
 export const getTrack = async (data: Record<string, any>) => {

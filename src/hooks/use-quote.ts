@@ -3,6 +3,7 @@ import { RefetchOptions, useQuery } from '@tanstack/react-query'
 import { getQuotes } from '@/lib/api'
 import { useAssetFrom, useAssetTo, useSlippage, useSwap } from '@/hooks/use-swap'
 import { QuoteResponseRoute } from '@uswap/helpers/api'
+import { ProviderName } from '@uswap/helpers'
 import { AppConfig } from '@/config'
 import { USwapNumber } from '@uswap/core'
 
@@ -43,24 +44,24 @@ export const useQuote = (): UseQuote => {
 
       return getQuotes(
         {
-          buyAsset: assetTo,
-          sellAsset: assetFrom,
-          sellAmount: valueFrom,
-          slippage: slippage
+          buyAsset: assetTo.identifier,
+          sellAsset: assetFrom.identifier,
+          sellAmount: valueFrom.toSignificant(),
+          slippage: slippage ?? 99
         },
-        signal
+        createAbortController(signal)
       ).then(quotes => {
         if (AppConfig.id === 'thorchain') {
           const thorchainQuote =
-            quotes.find((q: any) => q.providers[0] === 'THORCHAIN_STREAMING') ||
-            quotes.find((q: any) => q.providers[0] === 'THORCHAIN')
+            quotes.find(q => q.providers[0] === ProviderName.THORCHAIN_STREAMING) ||
+            quotes.find(q => q.providers[0] === ProviderName.THORCHAIN)
 
           if (thorchainQuote) {
             return thorchainQuote
           }
         }
 
-        return quotes.reduce((best: any, current: any) =>
+        return quotes.reduce((best, current) =>
           new USwapNumber(current.expectedBuyAmount).gt(new USwapNumber(best.expectedBuyAmount)) ? current : best
         )
       })
@@ -86,4 +87,15 @@ export const useQuote = (): UseQuote => {
     quote: isLoading || isRefetching || error ? undefined : quote,
     error: newError
   }
+}
+
+function createAbortController(signal: AbortSignal) {
+  const controller = new AbortController()
+  if (signal.aborted) {
+    controller.abort()
+  } else {
+    signal.addEventListener('abort', () => controller.abort(), { once: true })
+  }
+
+  return controller
 }
