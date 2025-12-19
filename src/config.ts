@@ -1,4 +1,5 @@
 import { JSX } from 'react'
+import { ProviderName } from '@uswap/helpers'
 import { HeaderUnstoppable } from '@/components/header/header-unstoppable'
 import { HeaderThorchain } from '@/components/header/header-thorchain'
 
@@ -7,6 +8,7 @@ type App = {
   id: AppKey
   title: string
   description: string
+  providers: ProviderName[]
   favicon: string
   logo: string
   LogoText: () => JSX.Element
@@ -24,15 +26,17 @@ const apps: Record<AppKey, App> = {
     id: 'unstoppable',
     title: 'Unstoppable Swap',
     description: 'Unstoppable Swap',
+    providers: [ProviderName.THORCHAIN, ProviderName.NEAR, ProviderName.ONEINCH, ProviderName.MAYACHAIN],
     favicon: '/favicon-unstoppable.ico',
     logo: '/logo-unstoppable.svg',
     LogoText: HeaderUnstoppable,
-    supportEmail: 'swap@horizontalsystems.io'
+    supportEmail: 'swap@horizontalsystems.io',
   },
   thorchain: {
     id: 'thorchain',
     title: 'THORChain Swap',
     description: 'THORChain Swap',
+    providers: [ProviderName.THORCHAIN, ProviderName.MAYACHAIN],
     favicon: '/favicon.ico',
     logo: '/logo.svg',
     LogoText: HeaderThorchain,

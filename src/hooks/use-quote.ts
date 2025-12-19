@@ -47,7 +47,8 @@ export const useQuote = (): UseQuote => {
           buyAsset: assetTo.identifier,
           sellAsset: assetFrom.identifier,
           sellAmount: valueFrom.toSignificant(),
-          slippage: slippage ?? 99
+          slippage: slippage ?? 99,
+          providers: AppConfig.providers
         },
         createAbortController(signal)
       ).then(quotes => {

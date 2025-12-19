@@ -1,15 +1,13 @@
 import { useQuery } from '@tanstack/react-query'
 import { Asset } from '@/components/swap/asset'
-import { ProviderName } from '@uswap/helpers'
 import { USwapApi } from '@uswap/helpers/api'
-
-const PROVIDERS = [ProviderName.THORCHAIN, ProviderName.NEAR, ProviderName.ONEINCH, ProviderName.MAYACHAIN]
+import { AppConfig } from '@/config'
 
 export const useAssets = (): { assets?: Asset[]; geckoMap?: Map<string, string>; isLoading: boolean } => {
   const { data, isLoading } = useQuery({
     queryKey: ['assets'],
     queryFn: async () => {
-      const lists = await Promise.all(PROVIDERS.map(USwapApi.getTokenList))
+      const lists = await Promise.all(AppConfig.providers.map(USwapApi.getTokenList))
       const tokens = lists.flatMap(l => l.tokens).filter(t => t.chain)
 
       const assets = new Map<string, Asset>()
