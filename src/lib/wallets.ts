@@ -1,4 +1,4 @@
-import { Chain, getEIP6963Wallets, WalletOption, USwap } from '@uswap/core'
+import { Chain, getEIP6963Wallets, USwap, WalletOption } from '@uswap/core'
 import { EVMPlugin } from '@uswap/plugins/evm'
 import { NearPlugin } from '@uswap/plugins/near'
 import { RadixPlugin } from '@uswap/plugins/radix'
@@ -26,7 +26,6 @@ const defaultPlugins = {
   ...NearPlugin
 }
 
-
 const defaultWallets = {
   ...ctrlWallet,
   ...evmWallet,
@@ -36,7 +35,7 @@ const defaultWallets = {
   ...okxWallet,
   ...phantomWallet,
   ...tronlinkWallet,
-  ...vultisigWallet,
+  ...vultisigWallet
 }
 
 function createUSwap(config: Parameters<typeof USwap>[0] = {}) {

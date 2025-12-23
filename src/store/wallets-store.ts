@@ -21,8 +21,6 @@ interface WalletState {
   disconnect: (wallet: WalletOption) => void
 }
 
-const uSwap = getUSwap()
-
 export const useWalletStore = create<WalletState>()(
   persist(
     (set, get) => ({
@@ -57,6 +55,7 @@ export const useWalletStore = create<WalletState>()(
       },
 
       disconnect: (wallet: WalletOption) => {
+        const uSwap = getUSwap()
         supportedChains[wallet].forEach(chain => {
           uSwap.disconnectChain(chain)
         })
