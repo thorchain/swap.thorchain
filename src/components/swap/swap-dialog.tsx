@@ -53,7 +53,7 @@ export const SwapDialog = ({ provider, isOpen, onOpenChange }: SwapDialogProps) 
           amountFrom: valueFrom.toSignificant(),
           amountTo: new USwapNumber(quote.expectedBuyAmount).toSignificant(),
           addressFrom: quote.sourceAddress,
-          addressTo: quote.destinationAddress,
+          addressTo: quote.destinationAddress || '',
           addressDeposit: quote.inboundAddress,
           status: 'pending'
         })

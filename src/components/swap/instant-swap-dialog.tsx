@@ -64,7 +64,7 @@ export const InstantSwapDialog = ({ provider, isOpen, onOpenChange }: InstantSwa
       assetTo,
       amountFrom: value,
       amountTo: new USwapNumber(quote.expectedBuyAmount).toSignificant(),
-      addressTo: quote.destinationAddress,
+      addressTo: quote.destinationAddress || '',
       addressDeposit: address,
       status: 'not_started',
       qrCodeData,

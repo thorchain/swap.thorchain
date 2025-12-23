@@ -35,7 +35,8 @@ export const SwapConfirm = ({ quote }: SwapConfirmProps) => {
 
   const sellAmount = new USwapNumber(quote.sellAmount)
   const expectedBuyAmount = new USwapNumber(quote.expectedBuyAmount)
-  const expectedBuyAmountMaxSlippage = new USwapNumber(quote.expectedBuyAmountMaxSlippage)
+  const expectedBuyAmountMaxSlippage =
+    quote.expectedBuyAmountMaxSlippage && new USwapNumber(quote.expectedBuyAmountMaxSlippage)
 
   const { inbound } = resolveFees(quote, rates)
 
@@ -105,7 +106,7 @@ export const SwapConfirm = ({ quote }: SwapConfirmProps) => {
                   the transaction will be canceled automatically.
                 </InfoTooltip>
               </div>
-              {slippage ? (
+              {slippage && expectedBuyAmountMaxSlippage ? (
                 <div className="flex gap-2">
                   <span className="text-leah font-semibold">
                     {expectedBuyAmountMaxSlippage.toSignificant()} {assetTo.ticker}
@@ -129,13 +130,15 @@ export const SwapConfirm = ({ quote }: SwapConfirmProps) => {
               </div>
             )}
 
-            <div className="text-thor-gray flex justify-between text-sm">
-              <span>Destination Address</span>
-              <div className="flex items-center gap-2">
-                <span className="text-leah font-semibold">{truncate(quote.destinationAddress)}</span>
-                <CopyButton text={quote.destinationAddress} />
+            {quote.destinationAddress && (
+              <div className="text-thor-gray flex justify-between text-sm">
+                <span>Destination Address</span>
+                <div className="flex items-center gap-2">
+                  <span className="text-leah font-semibold">{truncate(quote.destinationAddress)}</span>
+                  <CopyButton text={quote.destinationAddress} />
+                </div>
               </div>
-            </div>
+            )}
 
             {quote.refundAddress && quote.sourceAddress != quote.refundAddress && (
               <div className="text-thor-gray flex justify-between text-sm">
