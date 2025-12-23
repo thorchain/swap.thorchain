@@ -3,6 +3,7 @@ import { Header } from '@/components/header/header'
 import { Swap } from '@/components/swap/swap'
 import { GlobalDialog } from '@/components/global-dialog'
 import { Footer } from '@/components/footer/footer'
+import { AppConfig } from '@/config'
 
 export default async function Page() {
   return (
@@ -11,11 +12,11 @@ export default async function Page() {
       <Swap />
       <GlobalDialog />
       <Footer />
-      {process.env.NEXT_PUBLIC_PIXEL_EVENT && (
+      {AppConfig.pixelEvent && (
         <Script
           id="twitter-events"
           strategy="afterInteractive"
-          dangerouslySetInnerHTML={{ __html: `twq('event', '${process.env.NEXT_PUBLIC_PIXEL_EVENT}', {})` }}
+          dangerouslySetInnerHTML={{ __html: `twq('event', '${AppConfig.pixelEvent}', {})` }}
         />
       )}
     </main>
