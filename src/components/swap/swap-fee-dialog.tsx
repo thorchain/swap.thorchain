@@ -2,6 +2,7 @@ import { Credenza, CredenzaContent, CredenzaHeader, CredenzaTitle } from '@/comp
 import { FeeData } from '@/components/swap/swap-helpers'
 import { InfoTooltip } from '@/components/tooltip'
 import { AppConfig } from '@/config'
+import { DecimalText } from '@/components/decimal/decimal-text'
 
 interface SwapFeeDialogProps {
   outbound?: FeeData
@@ -25,7 +26,7 @@ export const SwapFeeDialog = ({ outbound, liquidity, platform, isOpen, onOpenCha
             <>
               {fee.amount.gt(0) && (
                 <span className="text-thor-gray">
-                  {fee.amount.toSignificant()} {fee.ticker}
+                  <DecimalText amount={fee.amount.toSignificant()} symbol={fee.ticker} />
                 </span>
               )}
 

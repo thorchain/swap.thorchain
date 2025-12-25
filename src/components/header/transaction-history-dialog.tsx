@@ -17,6 +17,7 @@ import { chainLabel } from '@/components/connect-wallet/config'
 import { ThemeButton } from '@/components/theme-button'
 import { useDialog } from '@/components/global-dialog'
 import { InstantSwapChannelDialog } from '@/components/swap/instant-swap-channel-dialog'
+import { DecimalText } from '@/components/decimal/decimal-text'
 import { DepositChannel } from '@/components/swap/instant-swap-dialog'
 import { useSyncTransactions } from '@/hooks/use-sync-transactions'
 
@@ -112,7 +113,11 @@ export const TransactionHistoryDialog = ({ isOpen, onOpenChange }: HistoryDialog
                         {tx.assetFrom && <AssetIcon asset={tx.assetFrom} />}
                         <div className="flex flex-col gap-1">
                           <span className="text-leah text-sm font-semibold">
-                            <span className="break-all">{amountFrom.toSignificant()}</span> {tx.assetFrom?.ticker}
+                            <DecimalText
+                              className="break-all"
+                              amount={amountFrom.toSignificant()}
+                              symbol={tx.assetFrom?.ticker}
+                            />
                           </span>
                           <span className="text-thor-gray text-xs font-medium">{fiatFrom?.toCurrency()}</span>
                         </div>
@@ -146,7 +151,11 @@ export const TransactionHistoryDialog = ({ isOpen, onOpenChange }: HistoryDialog
                       <div className="flex flex-1 items-center justify-end gap-3">
                         <div className="flex flex-col gap-1 text-right">
                           <span className="text-leah text-sm font-semibold">
-                            <span className="break-all">{amountTo.toSignificant()}</span> {tx.assetTo?.ticker}
+                            <DecimalText
+                              className="break-all"
+                              amount={amountTo.toSignificant()}
+                              symbol={tx.assetTo?.ticker}
+                            />
                           </span>
                           <span className="text-thor-gray text-xs font-medium">{fiatTo?.toCurrency()}</span>
                         </div>

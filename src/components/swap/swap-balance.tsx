@@ -1,7 +1,7 @@
 import { Loader } from 'lucide-react'
-import { DecimalInput } from '@/components/decimal/decimal-input'
 import { useAssetFrom } from '@/hooks/use-swap'
 import { useBalance } from '@/hooks/use-balance'
+import { DecimalText } from '@/components/decimal/decimal-text'
 
 export const SwapBalance = () => {
   const assetFrom = useAssetFrom()
@@ -13,17 +13,7 @@ export const SwapBalance = () => {
     }
 
     if (balance) {
-      return (
-        <span>
-          <DecimalInput
-            displayType="text"
-            amount={balance.spendable.toSignificant()}
-            onAmountChange={() => null}
-            autoComplete="off"
-          />{' '}
-          {assetFrom?.ticker}
-        </span>
-      )
+      return <DecimalText amount={balance.spendable.toSignificant()} symbol={assetFrom?.ticker} />
     }
 
     return null

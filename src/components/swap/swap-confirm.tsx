@@ -15,6 +15,7 @@ import { useMemo } from 'react'
 import { InfoTooltip } from '@/components/tooltip'
 import { SwapProvider } from '@/components/swap/swap-provider'
 import { PriceImpact } from '@/components/swap/price-impact'
+import { DecimalText } from '@/components/decimal/decimal-text'
 
 interface SwapConfirmProps {
   quote: QuoteResponseRoute & {
@@ -49,7 +50,7 @@ export const SwapConfirm = ({ quote }: SwapConfirmProps) => {
       </CredenzaHeader>
 
       <ScrollArea className="relative flex min-h-0 flex-1 px-4 md:px-8" classNameViewport="flex-1 h-auto">
-        <div className="mb-4 rounded-xl border-1">
+        <div className="mb-4 rounded-xl border">
           <div className="relative flex flex-col">
             <div className="text-thor-gray flex justify-between p-4 text-sm">
               <div className="flex items-center gap-4">
@@ -60,7 +61,9 @@ export const SwapConfirm = ({ quote }: SwapConfirmProps) => {
                 </div>
               </div>
               <div className="flex flex-col items-end">
-                <span className="text-leah text-base font-semibold">{sellAmount.toSignificant()}</span>
+                <span className="text-leah text-base font-semibold">
+                  <DecimalText amount={sellAmount.toSignificant()} />
+                </span>
                 <span className="text-thor-gray text-sm">
                   {rateFrom ? sellAmount.mul(rateFrom).toCurrency() : 'n/a'}
                 </span>
@@ -76,7 +79,9 @@ export const SwapConfirm = ({ quote }: SwapConfirmProps) => {
                 </div>
               </div>
               <div className="flex flex-col items-end">
-                <span className="text-leah text-base font-semibold">{expectedBuyAmount.toSignificant()}</span>
+                <span className="text-leah text-base font-semibold">
+                  <DecimalText amount={expectedBuyAmount.toSignificant()} />
+                </span>
                 <span className="text-thor-gray text-sm">
                   {rateTo ? expectedBuyAmount.mul(rateTo).toCurrency() : 'n/a'}
                 </span>
@@ -109,7 +114,7 @@ export const SwapConfirm = ({ quote }: SwapConfirmProps) => {
               {slippage && expectedBuyAmountMaxSlippage ? (
                 <div className="flex gap-2">
                   <span className="text-leah font-semibold">
-                    {expectedBuyAmountMaxSlippage.toSignificant()} {assetTo.ticker}
+                    <DecimalText amount={expectedBuyAmountMaxSlippage.toSignificant()} symbol={assetTo.ticker} />
                   </span>
                   {rateTo && (
                     <span className="font-medium">({expectedBuyAmountMaxSlippage.mul(rateTo).toCurrency()})</span>
