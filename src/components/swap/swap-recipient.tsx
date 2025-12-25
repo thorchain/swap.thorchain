@@ -189,7 +189,7 @@ export const SwapRecipient = ({ provider, onFetchQuote }: SwapRecipientProps) =>
   return (
     <>
       <CredenzaHeader>
-        <CredenzaTitle>{refundRequired ? 'Enter Addresses' : 'Enter Address'}</CredenzaTitle>
+        <CredenzaTitle>{refundRequired ? 'Enter Addresses' : 'Enter Receiving Address'}</CredenzaTitle>
       </CredenzaHeader>
 
       <ScrollArea className="relative flex min-h-0 flex-1 px-4 md:px-8" classNameViewport="flex-1 h-auto">
@@ -204,7 +204,7 @@ export const SwapRecipient = ({ provider, onFetchQuote }: SwapRecipientProps) =>
               )}
 
               <div className="flex flex-col gap-3">
-                <div className="text-thor-gray text-sm font-semibold">Enter receiving address:</div>
+                {refundRequired && <div className="text-thor-gray text-sm font-semibold">Enter receiving address:</div>}
                 {addressInput(assetTo, destinationAddress, setDestinationAddress, isValidDestination, options)}
               </div>
             </div>
@@ -214,7 +214,7 @@ export const SwapRecipient = ({ provider, onFetchQuote }: SwapRecipientProps) =>
                 <Icon name="warning" className="text-jacob size-6 shrink-0" />
                 <div className="text-leah font-semibold">Use only personal wallet address</div>
               </div>
-              <div className="text-thor-gray">Do not use contract or exchange addresses — funds may be lost.</div>
+              <div className="text-thor-gray">DO NOT use contract or exchange addresses — funds will be lost.</div>
             </div>
           </div>
 
