@@ -17,7 +17,7 @@ export const InstantSwap = ({ asset, channel }: SwapMemolessChannelProps) => {
   return (
     <>
       <CredenzaHeader>
-        <CredenzaTitle>External Wallet Instructions</CredenzaTitle>
+        <CredenzaTitle>Send {asset.name || asset.ticker}</CredenzaTitle>
         <CredenzaDescription>
           Send exactly{' '}
           <b>
