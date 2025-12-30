@@ -9,23 +9,7 @@ const uSwap = axios.create({
   }
 })
 
-const memoless = axios.create({
-  baseURL: `${process.env.NEXT_PUBLIC_MEMOLESS_API}/api/v1`
-})
-
 const coingecko = axios.create({ baseURL: 'https://api.coingecko.com/api/v3' })
-
-export const getMemolessAssets = async () => {
-  return memoless.get('/assets').then(res => res.data)
-}
-
-export const registerMemoless = async (data: any) => {
-  return memoless.post('/register', data).then(res => res.data)
-}
-
-export const preflightMemoless = async (data: any) => {
-  return memoless.post('/preflight', data).then(res => res.data)
-}
 
 export const getAssetRates = async (ids: string) => {
   return coingecko.get(`/simple/price?ids=${ids}&vs_currencies=usd`).then(res => res.data)

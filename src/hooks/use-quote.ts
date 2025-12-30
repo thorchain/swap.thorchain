@@ -3,7 +3,7 @@ import { RefetchOptions, useQuery } from '@tanstack/react-query'
 import { getQuotes } from '@/lib/api'
 import { useAssetFrom, useAssetTo, useSlippage, useSwap } from '@/hooks/use-swap'
 import { QuoteResponseRoute } from '@uswap/helpers/api'
-import { ProviderName } from '@uswap/helpers'
+import { ProviderName, USwapError } from '@uswap/helpers'
 import { AppConfig } from '@/config'
 import { USwapNumber } from '@uswap/core'
 
@@ -73,12 +73,13 @@ export const useQuote = (): UseQuote => {
   })
 
   let newError = error
-  if (error instanceof AxiosError) {
-    const errors = error.response?.data?.providerErrors
+  if (error instanceof USwapError) {
+    const err = error.cause as any
+    const errors = err.errorData?.error?.providerErrors
     if (errors && errors[0]?.message) {
       newError = new Error(errors[0]?.message)
     } else {
-      newError = new Error(error.response?.data?.message || error.message)
+      newError = new Error(err.errorData?.error || error.message)
     }
   }
 

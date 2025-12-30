@@ -1,19 +1,17 @@
+import { useState } from 'react'
+import { LoaderCircle } from 'lucide-react'
 import { Credenza, CredenzaContent } from '@/components/ui/credenza'
 import { SwapRecipient } from '@/components/swap/swap-recipient'
-import { useState } from 'react'
-import { QuoteResponseRoute } from '@uswap/helpers/api'
+import { ProviderName, USwapError } from '@uswap/helpers'
+import { QuoteResponseRoute, USwapApi } from '@uswap/helpers/api'
+import { getChainConfig, USwapNumber } from '@uswap/core'
 import { SwapConfirm } from '@/components/swap/swap-confirm'
 import { ThemeButton } from '@/components/theme-button'
-import { LoaderCircle } from 'lucide-react'
-import { preflightMemoless, registerMemoless } from '@/lib/api'
-import { AxiosError } from 'axios'
 import { useAssetFrom, useAssetTo, useSwap } from '@/hooks/use-swap'
 import { InstantSwap } from '@/components/swap/instant-swap'
 import { SwapError } from '@/components/swap/swap-error'
-import { ProviderName } from '@uswap/helpers'
 import { useSetTransaction } from '@/store/transaction-store'
 import { generateId } from '@/components/swap/swap-helpers'
-import { getChainConfig, USwapNumber } from '@uswap/core'
 
 interface InstantSwapDialogProps {
   provider: ProviderName
@@ -89,36 +87,59 @@ export const InstantSwapDialog = ({ provider, isOpen, onOpenChange }: InstantSwa
       return
     }
 
+    if (!quote.memo) {
+      setError(new Error('Memo is missing'))
+      return
+    }
+
     setCreatingChannel(true)
     setError(undefined)
 
-    registerMemoless({
-      asset: assetFrom.identifier,
-      memo: quote.memo,
-      requested_in_asset_amount: valueFrom.toSignificant()
-    })
+    USwapApi.registerMemoless(
+      {
+        asset: assetFrom.identifier,
+        memo: quote.memo,
+        requested_in_asset_amount: valueFrom.toSignificant()
+      },
+      {
+        retry: {
+          maxRetries: 0
+        }
+      }
+    )
       .then(data => {
-        return preflightMemoless({
+        const suggestedInAssetAmount = data.suggested_in_asset_amount
+        if (!suggestedInAssetAmount) {
+          throw new Error('Failed to calculate suggested amount')
+        }
+
+        return USwapApi.preflightMemoless({
           asset: assetFrom.identifier,
           reference: data.reference,
-          amount: data.suggested_in_asset_amount
-        }).then(preflightData => ({
-          ...preflightData,
-          suggested_in_asset_amount: data.suggested_in_asset_amount
+          amount: suggestedInAssetAmount
+        }).then(preflight => ({
+          ...preflight,
+          suggested_in_asset_amount: suggestedInAssetAmount
         }))
       })
-      .then(data => {
+      .then(preflight => {
+        if (!preflight.data.qr_code_data_url || !preflight.data.inbound_address) {
+          console.log('Failed to preflight request', { preflight })
+          throw new Error('Failed to preflight request')
+        }
+
         createChannel(
           quote,
-          data.data.qr_code_data_url,
-          data.data.inbound_address,
-          data.suggested_in_asset_amount,
-          data.data.seconds_remaining ? new Date().getTime() / 1000 + data.data.seconds_remaining : undefined
+          preflight.data.qr_code_data_url,
+          preflight.data.inbound_address,
+          preflight.suggested_in_asset_amount,
+          preflight.data.seconds_remaining ? new Date().getTime() / 1000 + preflight.data.seconds_remaining : undefined
         )
       })
       .catch(err => {
-        if (err instanceof AxiosError) {
-          setError(new Error(err.response?.data?.error.message || err.message))
+        if (err instanceof USwapError) {
+          const error = err.cause as any
+          setError(new Error(error?.errorData?.error?.message || err.message))
         } else {
           setError(err)
         }
