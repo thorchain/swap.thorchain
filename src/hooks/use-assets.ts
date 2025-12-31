@@ -8,7 +8,7 @@ export const useAssets = (): { assets?: Asset[]; geckoMap?: Map<string, string>;
     queryKey: ['assets'],
     queryFn: async () => {
       const lists = await Promise.all(AppConfig.providers.map(USwapApi.getTokenList))
-      const tokens = lists.flatMap(l => l.tokens).filter(t => t.chain)
+      const tokens = lists.flatMap(l => l.tokens)
 
       const assets = new Map<string, Asset>()
       const geckoMap = new Map<string, string>()

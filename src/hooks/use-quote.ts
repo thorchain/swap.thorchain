@@ -1,4 +1,3 @@
-import { AxiosError } from 'axios'
 import { RefetchOptions, useQuery } from '@tanstack/react-query'
 import { getQuotes } from '@/lib/api'
 import { useAssetFrom, useAssetTo, useSlippage, useSwap } from '@/hooks/use-swap'
