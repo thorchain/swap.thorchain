@@ -40,6 +40,22 @@ const ClockIcon = memo<IconProps>(props => (
   </SVG>
 ))
 
+const ClockFilledIcon = memo<IconProps>(props => (
+  <SVG {...props}>
+    <g clip-path="url(#clip0_3005_29216)">
+      <path
+        d="M7.99902 1.33203C11.6809 1.33203 14.666 4.31713 14.666 7.99902C14.666 11.6809 11.6809 14.666 7.99902 14.666C4.31713 14.666 1.33203 11.6809 1.33203 7.99902C1.33203 4.31713 4.31713 1.33203 7.99902 1.33203ZM7.3291 8.27246L9.88574 10.8262L10.8262 9.88574L8.66211 7.71875V2.66211H7.3291V8.27246Z"
+        fill="currentColor"
+      />
+    </g>
+    <defs>
+      <clipPath id="clip0_3005_29216">
+        <rect width="16" height="16" fill="currentColor" />
+      </clipPath>
+    </defs>
+  </SVG>
+))
+
 const LightModeIcon = memo<IconProps>(props => (
   <SVG {...props}>
     <path
@@ -284,6 +300,15 @@ const EyeIcon = memo<IconProps>(props => (
   </SVG>
 ))
 
+const ListIcon = memo<IconProps>(props => (
+  <SVG {...props}>
+    <path
+      d="M13.334 14H2.66797V2H13.334V14ZM4.66797 12H8.66797V10.667H4.66797V12ZM4.66797 8.66699H11.334V7.33301H4.66797V8.66699ZM4.66797 5.33301H11.334V4H4.66797V5.33301Z"
+      fill="currentColor"
+    />
+  </SVG>
+))
+
 // Icon name mapping
 const iconMap = {
   'arrow-m-down': ArrowMDownIcon,
@@ -293,6 +318,7 @@ const iconMap = {
   'arrow-s-up': ArrowSUpIcon,
   check: CheckIcon,
   clock: ClockIcon,
+  'clock-filled': ClockFilledIcon,
   'cloud-in': CloudInIcon,
   copy: CopyIcon,
   'dark-mode': DarkModeIcon,
@@ -315,7 +341,8 @@ const iconMap = {
   'wallet-out': WalletOutIcon,
   warning: WarningIcon,
   'warning-filled': WarningFilledIcon,
-  x: XIcon
+  x: XIcon,
+  list: ListIcon
 } as const
 
 export type IconName = keyof typeof iconMap

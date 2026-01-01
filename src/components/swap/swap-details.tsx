@@ -3,7 +3,8 @@ import { Separator } from '@/components/ui/separator'
 import { useQuote } from '@/hooks/use-quote'
 import { useAssetFrom, useAssetTo, useSwap } from '@/hooks/use-swap'
 import { Icon } from '@/components/icons'
-import { formatDuration, intervalToDuration } from 'date-fns'
+import { intervalToDuration } from 'date-fns'
+import { cn } from '@/lib/utils'
 import { USwapNumber } from '@uswap/core'
 import { resolveFees } from '@/components/swap/swap-helpers'
 import { useRates } from '@/hooks/use-rates'
@@ -56,6 +57,14 @@ export function SwapDetails({ priceImpact }: { priceImpact?: USwapNumber }) {
   const price = priceDirect ? valueTo.div(valueFrom) : valueFrom.div(valueTo)
 
   const { inbound, outbound, liquidity, platform, included } = resolveFees(quote, rates)
+  const formatTime = (seconds: number) => {
+    const duration = intervalToDuration({ start: 0, end: seconds * 1000 })
+    const parts = []
+    if (duration.hours) parts.push(`${duration.hours}h`)
+    if (duration.minutes) parts.push(`${duration.minutes}m`)
+    if (duration.seconds && !duration.hours) parts.push(`${duration.seconds}s`)
+    return parts.join(' ')
+  }
 
   return (
     <>
@@ -72,17 +81,30 @@ export function SwapDetails({ priceImpact }: { priceImpact?: USwapNumber }) {
             {priceDirect ? assetTo.ticker : assetFrom.ticker}
           </span>
 
-          {inbound && (
-            <div className="text-thor-gray flex items-center gap-2 p-4">
-              <span>Tx Fee:</span>
-              <span className="text-leah">
-                {inbound.usd.lt(0.01) ? `< ${new USwapNumber(0.01).toCurrency()}` : inbound.usd.toCurrency()}
-              </span>
-              <animated.div style={arrowSpring}>
-                <Icon name="arrow-s-down" className="size-5" />
-              </animated.div>
-            </div>
-          )}
+          <div className="flex items-center">
+            {quote.estimatedTime && quote.estimatedTime.total > 0 && (
+              <div
+                className={cn('text-leah flex h-[32] items-center', {
+                  'bg-jacob/10 text-jacob rounded-full p-2': quote.estimatedTime.total > 3600
+                })}
+              >
+                <Icon width={16} height={16} viewBox="0 0 16 16" name="clock-filled" />
+                <span className="ms-1 text-xs">{formatTime(quote.estimatedTime.total)}</span>
+              </div>
+            )}
+
+            {inbound && (
+              <div className="text-thor-gray flex items-center p-4 ps-2">
+                <Icon width={16} height={16} viewBox="0 0 16 16" name="list" />
+                <span className="text-leah ms-1 me-2">
+                  {inbound.usd.lt(0.01) ? `< ${new USwapNumber(0.01).toCurrency()}` : inbound.usd.toCurrency()}
+                </span>
+                <animated.div style={arrowSpring}>
+                  <Icon name="arrow-s-down" className="size-5" />
+                </animated.div>
+              </div>
+            )}
+          </div>
         </div>
       </div>
 
@@ -123,21 +145,6 @@ export function SwapDetails({ priceImpact }: { priceImpact?: USwapNumber }) {
                 <span className="text-leah">{included.toCurrency()}</span>
                 <Icon name="eye" className="size-5" />
               </div>
-            </div>
-          )}
-
-          {quote.estimatedTime && quote.estimatedTime.total > 0 && (
-            <div className="flex items-center justify-between py-2">
-              <span>Estimated Time</span>
-              <span className="text-leah">
-                {formatDuration(
-                  intervalToDuration({
-                    start: 0,
-                    end: (quote.estimatedTime.total || 0) * 1000
-                  }),
-                  { format: ['hours', 'minutes', 'seconds'], zero: false }
-                )}
-              </span>
             </div>
           )}
         </div>
