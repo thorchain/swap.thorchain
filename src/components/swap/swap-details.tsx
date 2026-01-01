@@ -84,7 +84,7 @@ export function SwapDetails({ priceImpact }: { priceImpact?: USwapNumber }) {
           <div className="flex items-center">
             {quote.estimatedTime && quote.estimatedTime.total > 0 && (
               <div
-                className={cn('text-leah flex h-[32] items-center', {
+                className={cn('text-leah flex h-8 items-center', {
                   'bg-jacob/10 text-jacob rounded-full p-2': quote.estimatedTime.total > 3600
                 })}
               >
