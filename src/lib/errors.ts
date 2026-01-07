@@ -25,7 +25,7 @@ export const translateError = (message: string): string => {
 
   if (message.includes('user rejected action')) return 'Transaction Cancelled'
 
-  if (message.includes('insufficient funds')) return 'Insufficient Funds'
+  if (message.includes('insufficient funds') || message.includes('missing revert data')) return 'Insufficient Funds'
 
   if (message.includes(`Invalid \\\"to\\\" address.`)) return `Invalid \"to\" address`
 

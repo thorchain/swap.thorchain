@@ -12,10 +12,9 @@ import { useAssetFrom, useAssetTo, useSlippage, useSwap } from '@/hooks/use-swap
 import { getAddressValidator } from '@uswap/toolboxes'
 import { useAccounts, useSelectedAccount } from '@/hooks/use-wallets'
 import { getQuotes } from '@/lib/api'
-import { AxiosError } from 'axios'
 import { SwapError } from '@/components/swap/swap-error'
 import { useIsMobile } from '@/hooks/use-mobile'
-import { ProviderName } from '@uswap/helpers'
+import { ProviderName, USwapError } from '@uswap/helpers'
 import { Asset } from '@/components/swap/asset'
 import { Textarea } from '@/components/ui/textarea'
 import { WalletAccount } from '@/store/wallets-store'
@@ -85,13 +84,13 @@ export const SwapRecipient = ({ provider, onFetchQuote }: SwapRecipientProps) =>
       })
       .catch(error => {
         let newError = error
-
-        if (error instanceof AxiosError) {
-          const errors = error.response?.data?.providerErrors
-          if (errors && errors[0]?.message) {
-            newError = new Error(errors[0]?.message)
-          } else {
-            newError = new Error(error.response?.data?.message || error.message)
+        if (error instanceof USwapError) {
+          const cause = error.cause as any
+          const errors = cause.errorData?.providerErrors
+          if (errors && errors.length) {
+            newError = new Error(errors[0]?.message || errors[0]?.error)
+          } else if (cause.errorData?.error) {
+            newError = new Error(cause.errorData?.error)
           }
         }
 

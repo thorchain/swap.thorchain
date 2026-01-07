@@ -73,12 +73,12 @@ export const useQuote = (): UseQuote => {
 
   let newError = error
   if (error instanceof USwapError) {
-    const err = error.cause as any
-    const errors = err.errorData?.error?.providerErrors
-    if (errors && errors[0]?.message) {
-      newError = new Error(errors[0]?.message)
-    } else {
-      newError = new Error(err.errorData?.error || error.message)
+    const cause = error.cause as any
+    const errors = cause.errorData?.providerErrors
+    if (errors && errors.length) {
+      newError = new Error(errors[0]?.message || errors[0]?.error)
+    } else if (cause.errorData?.error) {
+      newError = new Error(cause.errorData?.error)
     }
   }
 
