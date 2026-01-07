@@ -2,6 +2,7 @@ import { useQuery } from '@tanstack/react-query'
 import { Asset } from '@/components/swap/asset'
 import { USwapApi } from '@uswap/helpers/api'
 import { AppConfig } from '@/config'
+import { getChainConfig } from '@uswap/helpers'
 
 export const useAssets = (): { assets?: Asset[]; geckoMap?: Map<string, string>; isLoading: boolean } => {
   const { data, isLoading } = useQuery({
@@ -14,7 +15,10 @@ export const useAssets = (): { assets?: Asset[]; geckoMap?: Map<string, string>;
       const geckoMap = new Map<string, string>()
 
       for (const token of tokens) {
-        if (!token.chain) continue
+        if (!token.chain || !getChainConfig(token.chain).chain) {
+          continue
+        }
+
         const key = `${token.chain}-${token.identifier}`.toLowerCase()
         assets.set(key, {
           address: token.address,
