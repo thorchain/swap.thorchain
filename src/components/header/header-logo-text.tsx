@@ -1,4 +1,4 @@
-export function HeaderThorchain() {
+export function HeaderLogoText() {
   return (
     <svg
       width="114"
