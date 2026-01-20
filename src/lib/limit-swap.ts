@@ -1,4 +1,4 @@
-import { QuoteResponseRoute } from '@uswap/helpers/api'
+import { QuoteResponseRoute } from '@tcswap/helpers/api'
 
 export function modifyMemoForLimitSwap(memo: string, priceAtomic: string, expiryBlocks?: number): string {
   if (!memo.startsWith('=:')) return memo

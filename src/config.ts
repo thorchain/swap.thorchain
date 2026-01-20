@@ -1,4 +1,4 @@
-import { ProviderName } from '@uswap/helpers'
+import { ProviderName } from '@tcswap/helpers'
 import { HeaderLogoText } from '@/components/header/header-logo-text'
 
 export const AppConfig = {

@@ -6,7 +6,7 @@ import {
   useSetTransactionStatus
 } from '@/store/transaction-store'
 import { getTrack } from '@/lib/api'
-import { getChainConfig } from '@uswap/core'
+import { getChainConfig } from '@tcswap/core'
 import { AxiosError } from 'axios'
 
 export const useSyncTransactions = () => {

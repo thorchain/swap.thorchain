@@ -13,10 +13,10 @@ import {
   USwapNumber,
   UTXOChain,
   UTXOChains
-} from '@uswap/core'
+} from '@tcswap/core'
 import { getAssetBalance } from '@/lib/api'
 import { getUSwap } from '@/lib/wallets'
-import { estimateTransactionFee } from '@uswap/toolboxes/cosmos'
+import { estimateTransactionFee } from '@tcswap/toolboxes/cosmos'
 
 type UseBalance = {
   balance?: {

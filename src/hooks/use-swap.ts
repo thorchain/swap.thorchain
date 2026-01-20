@@ -1,7 +1,7 @@
 import { useEffect, useMemo } from 'react'
 import { useAssets } from '@/hooks/use-assets'
 import { useSwapStore } from '@/store/swap-store'
-import { NumberPrimitives, USwapNumber } from '@uswap/core'
+import { NumberPrimitives, USwapNumber } from '@tcswap/core'
 
 // Selectors
 

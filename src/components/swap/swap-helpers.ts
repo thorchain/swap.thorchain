@@ -1,7 +1,7 @@
 import { intervalToDuration } from 'date-fns'
-import { assetFromString, USwapNumber } from '@uswap/core'
+import { assetFromString, USwapNumber } from '@tcswap/core'
 import { AssetRateMap } from '@/hooks/use-rates'
-import { QuoteResponseRoute } from '@uswap/helpers/api'
+import { QuoteResponseRoute } from '@tcswap/helpers/api'
 
 export type FeeData = {
   amount: USwapNumber

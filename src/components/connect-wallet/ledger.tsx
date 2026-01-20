@@ -8,7 +8,7 @@ import { useWallets } from '@/hooks/use-wallets'
 import { ScrollArea } from '@/components/ui/scroll-area'
 import { cn } from '@/lib/utils'
 import { chainLabel, WalletParams } from '@/components/connect-wallet/config'
-import { Chain, WalletOption } from '@uswap/core'
+import { Chain, WalletOption } from '@tcswap/core'
 
 const DERIVATION_PATHS = {
   native_segwit: {

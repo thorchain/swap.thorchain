@@ -1,10 +1,10 @@
 import { RefetchOptions, useQuery } from '@tanstack/react-query'
 import { getQuotes } from '@/lib/api'
 import { useAssetFrom, useAssetTo, useSlippage, useSwap } from '@/hooks/use-swap'
-import { QuoteResponseRoute } from '@uswap/helpers/api'
-import { ProviderName, USwapError } from '@uswap/helpers'
+import { QuoteResponseRoute } from '@tcswap/helpers/api'
+import { ProviderName, USwapError } from '@tcswap/helpers'
 import { AppConfig } from '@/config'
-import { USwapNumber } from '@uswap/core'
+import { USwapNumber } from '@tcswap/core'
 
 type UseQuote = {
   isLoading: boolean

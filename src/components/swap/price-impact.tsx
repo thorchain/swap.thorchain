@@ -1,4 +1,4 @@
-import { USwapNumber } from '@uswap/core'
+import { USwapNumber } from '@tcswap/core'
 import { cn } from '@/lib/utils'
 
 export const PriceImpact = ({ priceImpact, className }: { priceImpact: USwapNumber; className?: string }) => {

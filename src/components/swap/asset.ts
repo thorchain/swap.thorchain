@@ -1,4 +1,4 @@
-import { Chain } from '@uswap/core'
+import { Chain } from '@tcswap/core'
 
 export interface Asset {
   address?: string

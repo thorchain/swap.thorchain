@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query'
-import { type MemolessAsset, USwapApi } from '@uswap/helpers/api'
+import { type MemolessAsset, USwapApi } from '@tcswap/helpers/api'
 
 export const useMemolessAssets = (): { assets: MemolessAsset[] | undefined; isLoading: boolean } => {
   const { data, isLoading } = useQuery({

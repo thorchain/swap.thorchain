@@ -2,7 +2,7 @@ import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
 import { useShallow } from 'zustand/react/shallow'
 import { Asset } from '@/components/swap/asset'
-import { ProviderName } from '@uswap/helpers'
+import { ProviderName } from '@tcswap/helpers'
 
 export type TxStatus =
   | 'not_started'
