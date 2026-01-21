@@ -1,5 +1,6 @@
 import { Icon } from '@/components/icons'
 import { AppConfig } from '@/config'
+import { Separator } from '../ui/separator'
 
 export function Footer() {
   return (
@@ -15,7 +16,15 @@ export function Footer() {
           </div>
 
           <div className="text-thor-gray flex items-center gap-3 text-xs">
-            <div className="flex items-center gap-2">
+            <div className="flex h-4 items-center gap-2">
+              <a href={AppConfig.privacyPolicyLink} rel="noopener noreferrer" target="_blank">
+                Privacy Policy
+              </a>
+              <Separator orientation="vertical" className="bg-andy h-full" />
+              <a href={AppConfig.tosLink} rel="noopener noreferrer" target="_blank">
+                Terms of Use
+              </a>
+              <Separator orientation="vertical" className="bg-andy h-full" />
               <span>
                 Report bugs to{' '}
                 <a className="underline" href={`mailto:${AppConfig.supportEmail}`}>
@@ -28,7 +37,6 @@ export function Footer() {
             </div>
             {(AppConfig.discordLink || AppConfig.telegramLink) && (
               <div className="flex items-center gap-2">
-                <span>Got questions?</span>
                 {AppConfig.discordLink && (
                   <a href={AppConfig.discordLink} rel="noopener noreferrer" target="_blank">
                     <Icon width={20} height={20} viewBox="0 0 20 20" name="discord" />
