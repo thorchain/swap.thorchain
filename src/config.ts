@@ -3,9 +3,10 @@ import { HeaderLogoText } from '@/components/header/header-logo-text'
 
 export const AppConfig = {
   id: 'thorchain',
-  title: 'THORChain Swap',
-  description: 'THORChain Swap',
-  providers: [ProviderName.THORCHAIN, ProviderName.MAYACHAIN],
+  title: 'Swap BTC to ETH & Other Assets | THORChain',
+  description:
+    'Swap Bitcoin to ETH and other cryptocurrencies instantly with THORChain. Native BTC swaps with no bridges, wrapping, or centralized exchanges.',
+  providers: [ProviderName.THORCHAIN],
   favicon: '/favicon.ico',
   logo: '/logo.svg',
   LogoText: HeaderLogoText,
