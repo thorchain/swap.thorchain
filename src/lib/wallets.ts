@@ -4,7 +4,6 @@ import { NearPlugin } from '@tcswap/plugins/near'
 import { RadixPlugin } from '@tcswap/plugins/radix'
 import { SolanaPlugin } from '@tcswap/plugins/solana'
 import { MayachainPlugin, ThorchainPlugin } from '@tcswap/plugins/thorchain'
-
 import { ctrlWallet } from '@tcswap/wallets/ctrl'
 import { evmWallet } from '@tcswap/wallets/evm-extensions'
 import { keplrWallet } from '@tcswap/wallets/keplr'
@@ -14,7 +13,6 @@ import { okxWallet } from '@tcswap/wallets/okx'
 import { phantomWallet } from '@tcswap/wallets/phantom'
 import { tronlinkWallet } from '@tcswap/wallets/tronlink'
 import { vultisigWallet } from '@tcswap/wallets/vultisig'
-
 import { useWalletStore } from '@/store/wallets-store'
 
 const defaultPlugins = {

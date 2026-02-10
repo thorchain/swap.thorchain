@@ -1,13 +1,6 @@
 export function HeaderLogoText() {
   return (
-    <svg
-      width="114"
-      height="13"
-      viewBox="0 0 114 13"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-      className="text-leah"
-    >
+    <svg width="114" height="13" viewBox="0 0 114 13" fill="none" xmlns="http://www.w3.org/2000/svg" className="text-leah">
       <path
         d="M104.629 12.3456V0.115234H106.27L111.838 8.84886V0.115234H113.893V12.3456H112.252L106.684 3.612V12.3456H104.629Z"
         fill="currentColor"

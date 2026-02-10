@@ -1,6 +1,6 @@
-import { supportedChains } from '@/lib/wallets'
 import { Chain, okxMobileEnabled, WalletOption } from '@tcswap/core'
 import { getChainConfig } from '@tcswap/helpers'
+import { supportedChains } from '@/lib/wallets'
 
 export enum WalletType {
   browser,

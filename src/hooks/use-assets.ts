@@ -1,8 +1,8 @@
 import { useQuery } from '@tanstack/react-query'
-import { Asset } from '@/components/swap/asset'
-import { USwapApi } from '@tcswap/helpers/api'
-import { AppConfig } from '@/config'
 import { getChainConfig } from '@tcswap/helpers'
+import { USwapApi } from '@tcswap/helpers/api'
+import { Asset } from '@/components/swap/asset'
+import { AppConfig } from '@/config'
 
 export const useAssets = (): { assets?: Asset[]; geckoMap?: Map<string, string>; isLoading: boolean } => {
   const { data, isLoading } = useQuery({

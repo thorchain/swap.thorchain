@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
-import { Tooltip } from '@/components/tooltip'
 import { RefetchOptions } from '@tanstack/react-query'
 import { QuoteResponseRoute } from '@tcswap/helpers/api'
+import { Tooltip } from '@/components/tooltip'
 
 const QUOTE_EXPIRATION_MS = 60000
 
