@@ -2,6 +2,7 @@
 
 import Image from 'next/image'
 import { useEffect, useState } from 'react'
+import { toast } from 'sonner'
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu'
 import { ConnectWallet } from '@/components/connect-wallet/connect-wallet'
 import { useDialog } from '@/components/global-dialog'
@@ -20,6 +21,7 @@ export function Header() {
   const disconnectProvider = useDisconnect()
 
   const [isScrolled, setIsScrolled] = useState(false)
+  const [connectMenuOpen, setConnectMenuOpen] = useState(false)
 
   useEffect(() => {
     const handleScroll = () => {
@@ -50,9 +52,38 @@ export function Header() {
         <div className="flex flex-1 flex-wrap items-center justify-end gap-2">
           <ThemeSwitchButton />
           <TransactionHistoryButton />
-          <ThemeButton variant="secondarySmall" className="hidden md:flex" onClick={() => openDialog(ConnectWallet, {})}>
-            Connect Wallet
-          </ThemeButton>
+          <DropdownMenu open={connectMenuOpen}>
+            <div onMouseEnter={() => setConnectMenuOpen(true)}>
+              <DropdownMenuTrigger asChild>
+                <ThemeButton variant="secondarySmall" className="hidden md:flex">
+                  Wallet
+                </ThemeButton>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent
+                className="w-72 space-y-1 p-4"
+                onMouseLeave={() => setConnectMenuOpen(false)}
+                onCloseAutoFocus={e => e.preventDefault()}
+              >
+                <DropdownMenuItem
+                  className="focus:bg-liquidity-green/30 border-liquidity-green bg-liquidity-green/20 flex cursor-pointer flex-col items-start gap-1 rounded-2xl border p-4"
+                  onClick={() => {
+                    toast("External wallet doesn't require connecting any wallet. Simply follow steps in swap form.")
+                    setConnectMenuOpen(false)
+                  }}
+                >
+                  <span className="text-leah text-base font-semibold">External Wallet</span>
+                  <span className="text-thor-gray text-sm">Enter your order, click the Swap button, and follow the instructions</span>
+                </DropdownMenuItem>
+                <DropdownMenuItem
+                  className="focus:bg-liquidity-green/30 flex cursor-pointer flex-col items-start gap-1 rounded-2xl p-4"
+                  onClick={() => openDialog(ConnectWallet, {})}
+                >
+                  <span className="text-leah text-base font-semibold">Connect Wallet</span>
+                  <span className="text-thor-gray text-sm">I want to connect my wallet to the website</span>
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </div>
+          </DropdownMenu>
           <ThemeButton
             variant="circleSmall"
             className="flex md:hidden"
