@@ -20,7 +20,12 @@ export const SwapToggleAssets = () => {
     <div className="relative flex cursor-pointer items-center justify-center overflow-hidden">
       <Separator />
       <div className="bg-blade rounded-full p-1.5">
-        <Icon name={isFlipped ? 'arrow-m-up' : 'arrow-m-down'} className="text-thor-gray size-5" onClick={handleToggle} />
+        <Icon
+          viewBox="0 0 20 20"
+          name="arrow-up-down"
+          className={`text-thor-gray size-5 transition-transform ${isFlipped ? 'rotate-180' : ''}`}
+          onClick={handleToggle}
+        />
       </div>
       <Separator />
     </div>
