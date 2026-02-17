@@ -10,15 +10,6 @@ export function AssetIcon({ asset, className }: { asset: Asset | undefined; clas
     <div className={cn('bg-blade relative flex h-8 w-8 rounded-full', className)}>
       {asset && (
         <>
-          {!isNativeAsset(asset) && (
-            <Image
-              className="outline-lawrence bg-lawrence absolute -top-1 -right-1 h-4 w-4 rounded-md"
-              src={`/networks/${asset.chain.toLowerCase()}.svg`}
-              alt={asset.chain.toLowerCase()}
-              width={16}
-              height={16}
-            />
-          )}
           {asset.logoURI && (
             <img
               className={cn('shrink-0 rounded-full', { 'opacity-0': !loaded })}
@@ -28,6 +19,15 @@ export function AssetIcon({ asset, className }: { asset: Asset | undefined; clas
               height={32}
               onLoad={() => setLoaded(true)}
               onError={() => setLoaded(false)}
+            />
+          )}
+          {!isNativeAsset(asset) && (
+            <Image
+              className="outline-lawrence bg-lawrence absolute -right-1 -bottom-1 h-4 w-4 rounded-md"
+              src={`/networks/${asset.chain.toLowerCase()}.svg`}
+              alt={asset.chain.toLowerCase()}
+              width={16}
+              height={16}
             />
           )}
         </>
