@@ -82,13 +82,12 @@ export const useSwapStore = create<SwapState>()(
     }),
     {
       name: 'swap-store',
-      version: 6,
+      version: 7,
       onRehydrateStorage: () => state => {
         state?.setHasHydrated(true)
       },
       partialize: state => ({
         slippage: state.slippage,
-        amountFrom: state.amountFrom,
         feeWarning: state.feeWarning,
         assetFrom: state.assetFrom,
         assetTo: state.assetTo
