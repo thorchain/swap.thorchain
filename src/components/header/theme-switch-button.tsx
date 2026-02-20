@@ -19,7 +19,7 @@ export const ThemeSwitchButton = () => {
 
   return (
     <ThemeButton
-      variant="circleSmall"
+      variant="circleSmallOutline"
       onClick={() => {
         setTheme(theme === 'light' ? 'dark' : 'light')
       }}

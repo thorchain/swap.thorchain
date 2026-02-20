@@ -14,7 +14,9 @@ const buttonVariants = cva(
         secondaryMedium: 'text-lawrence bg-leah text-base px-10 py-4',
         secondarySmall: 'text-leah bg-blade text-xs px-4 h-8',
         secondarySmallTransparent: 'text-leah text-xs px-4 h-8',
-        circleSmall: 'text-leah bg-blade text-base w-8 h-8'
+        circleSmall: 'text-leah bg-blade text-base w-8 h-8',
+        circleSmallOutline: 'text-leah border border-[#262626] text-base w-8 h-8',
+        outlineSmall: 'text-leah border border-[#262626] text-xs px-4 h-8'
       }
     },
     defaultVariants: {

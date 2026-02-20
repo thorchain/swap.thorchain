@@ -22,8 +22,8 @@ export const TransactionHistoryButton = () => {
 
   return (
     <div className="relative">
-      <ThemeButton variant="secondarySmall" className="hidden md:flex" onClick={onClick}>
-        <Icon name="clock" /> History
+      <ThemeButton variant="outlineSmall" className="hidden md:flex" onClick={onClick}>
+        <Icon name="clock" /> HISTORY
       </ThemeButton>
       <ThemeButton variant="circleSmall" className="flex md:hidden" onClick={onClick}>
         <Icon name="clock" />
