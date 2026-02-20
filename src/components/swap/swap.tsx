@@ -68,7 +68,7 @@ export const Swap = () => {
             <ThemeButton variant={isLimitSwap ? 'secondarySmall' : 'primarySmall'} onClick={() => setIsLimitSwap(false)}>
               Market
             </ThemeButton>
-            <ThemeButton variant={isLimitSwap ? 'primarySmall' : 'secondarySmall'} onClick={() => setIsLimitSwap(true)}>
+            <ThemeButton variant={isLimitSwap ? 'primarySmall' : 'secondarySmall'} onClick={() => setIsLimitSwap(true)} disabled>
               Limit
             </ThemeButton>
           </div>
