@@ -69,7 +69,7 @@ export const Swap = () => {
               Market
             </ThemeButton>
             <ThemeButton variant={isLimitSwap ? 'primarySmall' : 'secondarySmall'} onClick={() => setIsLimitSwap(true)}>
-              Limit Order
+              Limit
             </ThemeButton>
           </div>
           <div className="flex items-center gap-4">
