@@ -72,7 +72,8 @@ export const useWalletStore = create<WalletState>()(
       }
     }),
     {
-      name: 'thorswap-wallet-store',
+      name: 'tc-wallet-store',
+      version: 1,
       partialize: state => ({
         accounts: state.accounts,
         selected: state.selected,
