@@ -29,7 +29,7 @@ export const TransactionHistoryButton = () => {
         <Icon name="clock" />
       </ThemeButton>
 
-      {pendingTransactions.length > 0 && <div className="bg-brand-first absolute top-0 right-0 -mr-1 size-3 rounded-full" />}
+      {pendingTransactions.length > 0 && <div className="bg-green-default absolute top-0 right-0 -mr-1 size-3 rounded-full" />}
     </div>
   )
 }

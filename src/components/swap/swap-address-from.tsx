@@ -20,7 +20,7 @@ export const SwapAddressFrom = () => {
   return (
     <DropdownMenu modal={false}>
       <DropdownMenuTrigger asChild>
-        <ThemeButton variant="secondarySmall" className="gap-2 pr-2">
+        <ThemeButton variant="secondarySmall" className="bg-btn-style-1-bg gap-2 pr-2">
           <Image src={`/wallets/${selectedAccount.provider.toLowerCase()}.svg`} alt="" width="16" height="16" /> {truncate(selectedAccount.address)}
           <Icon name="arrow-s-down" className="size-4" />
         </ThemeButton>
@@ -30,7 +30,7 @@ export const SwapAddressFrom = () => {
           {options?.map((account, index) => (
             <DropdownMenuItem
               key={index}
-              className="focus:bg-blade/50 flex cursor-pointer items-center justify-between gap-4 rounded-none px-4 py-3"
+              className="bg-btn-style-1-bg focus:bg-blade/50 flex cursor-pointer items-center justify-between gap-4 rounded-none px-4 py-3"
               onSelect={() => selectAccount(account)}
             >
               <div className="flex items-center gap-4">

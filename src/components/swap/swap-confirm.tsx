@@ -6,7 +6,6 @@ import { CredenzaHeader, CredenzaTitle } from '@/components/ui/credenza'
 import { ScrollArea } from '@/components/ui/scroll-area'
 import { AssetIcon } from '@/components/asset-icon'
 import { CopyButton } from '@/components/button-copy'
-import { chainLabel } from '@/components/connect-wallet/config'
 import { DecimalText } from '@/components/decimal/decimal-text'
 import { Icon } from '@/components/icons'
 import { PriceImpact } from '@/components/swap/price-impact'
@@ -68,49 +67,83 @@ export const SwapConfirm = ({ quote }: SwapConfirmProps) => {
       </CredenzaHeader>
 
       <ScrollArea className="relative flex min-h-0 flex-1 px-4 md:px-8" classNameViewport="flex-1 h-auto">
-        <div className="mb-4 rounded-xl border">
-          <div className="relative flex flex-col">
-            <div className="text-thor-gray flex justify-between p-4 text-sm">
-              <div className="flex items-center gap-4">
-                <AssetIcon asset={assetFrom} />
-                <div className="flex flex-col">
-                  <span className="text-leah text-base font-semibold">{assetFrom.ticker}</span>
-                  <span className="text-thor-gray text-sm">{chainLabel(assetFrom.chain)}</span>
-                </div>
-              </div>
-              <div className="flex flex-col items-end">
+        <div className="bg-sub-container-modal mb-2 rounded-xl border px-4 py-3">
+          <div className="flex items-center gap-2 py-3">
+            <div className="flex items-center gap-3">
+              <AssetIcon asset={assetFrom} />
+              <div className="flex flex-col">
                 <span className="text-leah text-base font-semibold">
-                  <DecimalText amount={sellAmount.toSignificant()} />
+                  <DecimalText amount={sellAmount.toSignificant()} /> {assetFrom.ticker}
                 </span>
                 <span className="text-thor-gray text-sm">{rateFrom ? sellAmount.mul(rateFrom).toCurrency() : 'n/a'}</span>
               </div>
             </div>
 
-            <div className="text-thor-gray flex justify-between border-t p-4 text-sm">
-              <div className="flex items-center gap-4">
-                <AssetIcon asset={assetTo} />
-                <div className="flex flex-col">
-                  <span className="text-leah text-base font-semibold">{assetTo.ticker}</span>
-                  <span className="text-thor-gray text-sm">{chainLabel(assetTo.chain)}</span>
-                </div>
-              </div>
+            <div className="flex flex-1 flex-col items-center">
+              <Icon name="arrow-m-right" className="text-thor-gray size-5" />
+              <span className="text-thor-gray text-xs">swap</span>
+            </div>
+
+            <div className="flex items-center gap-3">
               <div className="flex flex-col items-end">
                 <span className="text-leah text-base font-semibold">
-                  <DecimalText amount={displayBuyAmount.toSignificant()} />
+                  <DecimalText amount={displayBuyAmount.toSignificant()} /> {assetTo.ticker}
                 </span>
                 <span className="text-thor-gray text-sm">{rateTo ? displayBuyAmount.mul(rateTo).toCurrency() : 'n/a'}</span>
               </div>
-            </div>
-
-            <div className="bg-lawrence absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 p-2">
-              <Icon name="arrow-m-down" className="text-thor-gray size-5" />
+              <AssetIcon asset={assetTo} />
             </div>
           </div>
 
-          <div className="space-y-4 border-t p-4">
+          {(quote.destinationAddress ||
+            (quote.sourceAddress && quote.sourceAddress !== '{sourceAddress}') ||
+            (quote.refundAddress && quote.sourceAddress != quote.refundAddress)) && (
+            <div className="space-y-4 border-t py-3">
+              {quote.sourceAddress && quote.sourceAddress !== '{sourceAddress}' && (
+                <div className="text-thor-gray flex justify-between text-sm">
+                  <div className="flex items-center gap-1">
+                    <span>Source Address</span>
+                    <InfoTooltip>The wallet address sending the funds for this swap.</InfoTooltip>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <span className="text-leah font-semibold">{truncate(quote.sourceAddress)}</span>
+                    <CopyButton text={quote.sourceAddress} />
+                  </div>
+                </div>
+              )}
+
+              {quote.destinationAddress && (
+                <div className="text-thor-gray flex justify-between text-sm">
+                  <div className="flex items-center gap-1">
+                    <span>Destination Address</span>
+                    <InfoTooltip>The wallet address that will receive the swapped funds.</InfoTooltip>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <span className="text-leah font-semibold">{truncate(quote.destinationAddress)}</span>
+                    <CopyButton text={quote.destinationAddress} />
+                  </div>
+                </div>
+              )}
+
+              {quote.refundAddress && quote.sourceAddress != quote.refundAddress && (
+                <div className="text-thor-gray flex justify-between text-sm">
+                  <div className="flex items-center gap-1">
+                    <span>Refund Address</span>
+                    <InfoTooltip>The address where funds will be returned if the swap cannot be completed.</InfoTooltip>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <span className="text-leah font-semibold">{truncate(quote.refundAddress)}</span>
+                    <CopyButton text={quote.refundAddress} />
+                  </div>
+                </div>
+              )}
+            </div>
+          )}
+
+          <div className="space-y-4 border-t py-3">
             {isLimitSwap && limitPricePerUnit ? (
               <>
-                <div className="text-thor-gray mb-2 flex justify-between text-sm">
+                <div className="text-thor-gray flex justify-between text-sm">
                   <div className="flex items-center gap-1">
                     Limit Price
                     <InfoTooltip>
@@ -135,7 +168,7 @@ export const SwapConfirm = ({ quote }: SwapConfirmProps) => {
                   </div>
                 </div>
 
-                <div className="text-thor-gray mb-2 flex justify-between text-sm">
+                <div className="text-thor-gray flex justify-between text-sm">
                   <div className="flex items-center gap-1">
                     Target Amount
                     <InfoTooltip>The exact amount you will receive when your limit order executes at your specified price.</InfoTooltip>
@@ -149,7 +182,7 @@ export const SwapConfirm = ({ quote }: SwapConfirmProps) => {
                 </div>
               </>
             ) : (
-              <div className="text-thor-gray mb-2 flex justify-between text-sm">
+              <div className="text-thor-gray flex justify-between text-sm">
                 <div className="flex items-center gap-1">
                   <span>Minimum Payout</span>
                   <InfoTooltip>
@@ -158,45 +191,13 @@ export const SwapConfirm = ({ quote }: SwapConfirmProps) => {
                   </InfoTooltip>
                 </div>
                 {slippage && expectedBuyAmountMaxSlippage ? (
-                  <div className="flex flex-col items-end">
-                    <span className="text-leah font-semibold">
-                      <DecimalText amount={expectedBuyAmountMaxSlippage.toSignificant()} symbol={assetTo.ticker} />
-                    </span>
-                    {rateTo && <span className="font-medium">{expectedBuyAmountMaxSlippage.mul(rateTo).toCurrency()}</span>}
-                  </div>
+                  <span className="text-leah font-semibold">
+                    <DecimalText amount={expectedBuyAmountMaxSlippage.toSignificant()} symbol={assetTo.ticker} />
+                    {rateTo && ` (${expectedBuyAmountMaxSlippage.mul(rateTo).toCurrency()})`}
+                  </span>
                 ) : (
                   <span className="text-lucian font-semibold">Not Protected</span>
                 )}
-              </div>
-            )}
-
-            {quote.sourceAddress && quote.sourceAddress !== '{sourceAddress}' && (
-              <div className="text-thor-gray flex justify-between text-sm">
-                <span>Source Address</span>
-                <div className="flex items-center gap-2">
-                  <span className="text-leah font-semibold">{truncate(quote.sourceAddress)}</span>
-                  <CopyButton text={quote.sourceAddress} />
-                </div>
-              </div>
-            )}
-
-            {quote.destinationAddress && (
-              <div className="text-thor-gray flex justify-between text-sm">
-                <span>Destination Address</span>
-                <div className="flex items-center gap-2">
-                  <span className="text-leah font-semibold">{truncate(quote.destinationAddress)}</span>
-                  <CopyButton text={quote.destinationAddress} />
-                </div>
-              </div>
-            )}
-
-            {quote.refundAddress && quote.sourceAddress != quote.refundAddress && (
-              <div className="text-thor-gray flex justify-between text-sm">
-                <span>Refund Address</span>
-                <div className="flex items-center gap-2">
-                  <span className="text-leah font-semibold">{truncate(quote.refundAddress)}</span>
-                  <CopyButton text={quote.refundAddress} />
-                </div>
               </div>
             )}
 
@@ -214,7 +215,7 @@ export const SwapConfirm = ({ quote }: SwapConfirmProps) => {
 
             {inbound && (
               <div className="text-thor-gray flex justify-between text-sm">
-                <span>Gas Fee</span>
+                <span>Tx Fees</span>
                 <span className="text-leah font-semibold">
                   {inbound.usd.lt(0.01) ? `< ${new USwapNumber(0.01).toCurrency()}` : inbound.usd.toCurrency()}
                 </span>
@@ -236,21 +237,19 @@ export const SwapConfirm = ({ quote }: SwapConfirmProps) => {
               </div>
             )}
 
-            <div className="text-thor-gray flex justify-between text-sm font-semibold">
-              <span className="font-normal">Provider</span>
+            <div className="text-thor-gray flex justify-between text-sm">
+              <span>Provider</span>
               <SwapProvider provider={quote.providers[0]} />
             </div>
           </div>
 
           {quote.memo && (
-            <div className="text-thor-gray flex items-center justify-between gap-6 border-t p-4 text-sm">
+            <div className="text-thor-gray flex items-center justify-between gap-6 border-t py-3 text-sm">
               <span>Memo</span>
               <p className="text-leah text-right font-semibold text-balance break-all">{quote.memo}</p>
             </div>
           )}
         </div>
-
-        <div className="from-lawrence pointer-events-none absolute inset-x-0 -bottom-[1px] h-4 bg-linear-to-t to-transparent" />
       </ScrollArea>
     </>
   )

@@ -38,7 +38,7 @@ export const SwapInputFrom = () => {
   }
 
   return (
-    <div className="px-6 pt-6 pb-2">
+    <div className="bg-swap-bloc rounded-15 border p-7">
       <div className="text-thor-gray mb-3 font-semibold">Sell</div>
 
       <div className="flex items-center justify-between">
@@ -67,13 +67,23 @@ export const SwapInputFrom = () => {
 
       <div className="mt-2 flex items-end justify-between">
         <div className="flex gap-2">
-          <ThemeButton variant="secondarySmall" onClick={() => setAmountFrom('')} disabled={amountFrom === ''}>
+          <ThemeButton className="h-6" variant="secondarySmall" onClick={() => setAmountFrom('')} disabled={amountFrom === ''}>
             Clear
           </ThemeButton>
-          <ThemeButton variant="secondarySmall" onClick={() => handleSetPercent(50)} disabled={!balance || balance.spendable.eqValue(0)}>
+          <ThemeButton
+            className="h-6"
+            variant="secondarySmall"
+            onClick={() => handleSetPercent(50)}
+            disabled={!balance || balance.spendable.eqValue(0)}
+          >
             50%
           </ThemeButton>
-          <ThemeButton variant="secondarySmall" onClick={() => handleSetPercent(100)} disabled={!balance || balance.spendable.eqValue(0)}>
+          <ThemeButton
+            className="h-6"
+            variant="secondarySmall"
+            onClick={() => handleSetPercent(100)}
+            disabled={!balance || balance.spendable.eqValue(0)}
+          >
             100%
           </ThemeButton>
         </div>

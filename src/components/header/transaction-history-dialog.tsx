@@ -4,7 +4,7 @@ import { Fragment, useEffect, useMemo, useState } from 'react'
 import { assetFromString, ChainId, ChainIdToChain, getExplorerTxUrl, USwapNumber } from '@tcswap/core'
 import { ProviderName } from '@tcswap/helpers'
 import { format, formatDuration, intervalToDuration, isSameDay, isToday, isYesterday } from 'date-fns'
-import { Check, CircleAlert, CircleCheck, ClockFading, LoaderCircle, Undo2, X } from 'lucide-react'
+import { CircleAlert, CircleCheck, ClockFading, Undo2, X } from 'lucide-react'
 import { toast } from 'sonner'
 import { Credenza, CredenzaContent, CredenzaHeader, CredenzaTitle } from '@/components/ui/credenza'
 import { ScrollArea } from '@/components/ui/scroll-area'
@@ -127,8 +127,8 @@ export const TransactionHistoryDialog = ({ isOpen, onOpenChange }: HistoryDialog
                   {shouldRenderHeader && (
                     <div className={cn('text-andy px-4 pb-3 text-sm font-semibold', { 'pt-3': i !== 0 })}>{formatDate(txDate)}</div>
                   )}
-                  <div className="bg-blade/25 mb-3 rounded-xl border">
-                    <div className="flex cursor-pointer px-4 py-3" onClick={() => setExpandTx(isExpanded ? null : tx.uid)}>
+                  <div className="bg-sub-container-modal mb-3 rounded-xl border px-4 py-3">
+                    <div className="flex cursor-pointer" onClick={() => setExpandTx(isExpanded ? null : tx.uid)}>
                       <div className="flex flex-1 items-center gap-3">
                         {tx.assetFrom && <AssetIcon asset={tx.assetFrom} />}
                         <div className="flex flex-col gap-1">
@@ -139,21 +139,24 @@ export const TransactionHistoryDialog = ({ isOpen, onOpenChange }: HistoryDialog
                         </div>
                       </div>
                       <div className="flex flex-col items-center justify-center px-1">
-                        <span className="pb-2">
+                        <span>
                           {status === 'not_started' ? (
-                            <ClockFading className="text-thor-gray" size={16} />
+                            <ClockFading className="text-thor-gray" size={24} />
                           ) : status === 'pending' || status === 'swapping' ? (
-                            <LoaderCircle className="animate-spin" size={16} />
+                            <span className="relative flex items-center justify-center">
+                              <Icon name="loading" className="text-thor-gray size-6 animate-spin" />
+                              <Icon name="arrow-m-right" className="text-thor-gray absolute size-3" />
+                            </span>
                           ) : status === 'completed' ? (
-                            <Check className="text-brand-first" size={16} />
+                            <Icon name="check" className="text-brand-first size-6" />
                           ) : status === 'failed' ? (
-                            <X className="text-lucian" size={16} />
+                            <X className="text-lucian" size={24} />
                           ) : status === 'expired' ? (
-                            <ClockFading className="text-lucian" size={16} />
+                            <ClockFading className="text-lucian" size={24} />
                           ) : status === 'refunded' ? (
-                            <Undo2 className="text-thor-gray" size={16} />
+                            <Undo2 className="text-thor-gray" size={24} />
                           ) : (
-                            <CircleAlert className="text-thor-gray" size={16} />
+                            <CircleAlert className="text-thor-gray" size={24} />
                           )}
                         </span>
                         <span
@@ -218,7 +221,7 @@ export const TransactionHistoryDialog = ({ isOpen, onOpenChange }: HistoryDialog
 
                     {isExpanded && details && (
                       <>
-                        <div className="space-y-4 border-t p-4 text-xs font-semibold">
+                        <div className="space-y-4 border-t mt-3 py-4 text-xs font-semibold">
                           {details.fromAddress && (
                             <div className="text-thor-gray flex items-center justify-between">
                               <span>Source Address</span>
@@ -248,7 +251,7 @@ export const TransactionHistoryDialog = ({ isOpen, onOpenChange }: HistoryDialog
                     {isExpanded && tx.provider === ProviderName.THORCHAIN && tx.hash && (
                       <a
                         href={`https://thorchain.net/tx/${tx.hash}`}
-                        className="flex justify-end px-4 py-3"
+                        className="flex justify-end border-t px-4 pt-3"
                         rel="noopener noreferrer"
                         target="_blank"
                       >
@@ -306,7 +309,10 @@ function renderLeg(tx: any, legTx: any) {
         ) : legTx.status === 'not_started' ? (
           <ClockFading size={16} />
         ) : (
-          <LoaderCircle className="animate-spin" size={16} />
+          <span className="relative flex items-center justify-center">
+            <Icon name="loading" className="text-thor-gray size-4 animate-spin" />
+            <Icon name="arrow-m-right" className="text-thor-gray absolute size-2" />
+          </span>
         )}
         <span>{text}</span>
       </div>

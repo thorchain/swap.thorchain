@@ -7,7 +7,7 @@ export function AssetIcon({ asset, className }: { asset: Asset | undefined; clas
   const [loaded, setLoaded] = useState(false)
 
   return (
-    <div className={cn('bg-blade relative flex h-8 w-8 rounded-full', className)}>
+    <div className={cn('relative flex h-8 w-8 rounded-full', className)}>
       {asset && (
         <>
           {asset.logoURI && (

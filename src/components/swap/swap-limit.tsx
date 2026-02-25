@@ -3,9 +3,8 @@ import { USwapNumber } from '@tcswap/core'
 import { QuoteResponseRoute } from '@tcswap/helpers/api'
 import { X } from 'lucide-react'
 import { Select, SelectContent, SelectItem, SelectTrigger } from '@/components/ui/select'
-import { Separator } from '@/components/ui/separator'
 import { DecimalInput } from '@/components/decimal/decimal-input'
-import { ThemeButton } from '@/components/theme-button'
+import { buttonVariants, ThemeButton } from '@/components/theme-button'
 import { useAssetFrom, useAssetTo } from '@/hooks/use-swap'
 import { cn } from '@/lib/utils'
 import { useLimitSwapExpiry, useSetLimitSwapBuyAmount, useSetLimitSwapExpiry } from '@/store/limit-swap-store'
@@ -38,7 +37,7 @@ export const SwapLimit = ({ quote }: SwapLimitProps) => {
   useEffect(() => {
     setPricePerUnit(undefined)
     setLimitSwapBuyAmount(undefined)
-    setLimitSwapExpiry(BLOCKS_PER_WEEK)
+    setLimitSwapExpiry(BLOCKS_PER_HOUR)
   }, [assetFrom?.identifier, assetTo?.identifier, setLimitSwapBuyAmount, setLimitSwapExpiry])
 
   useEffect(() => {
@@ -107,23 +106,15 @@ export const SwapLimit = ({ quote }: SwapLimitProps) => {
   }
 
   return (
-    <div className="px-6 pb-6">
-      <Separator />
-
-      <div className="flex items-center justify-between pt-4">
-        <div className="text-thor-gray flex items-center text-sm font-medium">
-          <span>When 1</span>
-          {assetFrom && <img className="mx-1 h-4 w-4" src={assetFrom.logoURI} alt={assetFrom.ticker} />}
-          <span>{assetFrom?.ticker} is worth</span>
-        </div>
+    <div className="bg-swap-bloc rounded-15 border p-7">
+      <div className="flex items-center justify-between">
+        <div className="text-thor-gray flex items-center text-sm font-medium">When 1 {assetFrom?.ticker} is worth</div>
 
         <div className="text-thor-gray flex items-center text-sm font-medium">
-          Expiry
+          Expires in
           <Select value={activeExpiryPreset || '1h'} onValueChange={v => applyExpiryPreset(v as ExpiryPreset)}>
-            <SelectTrigger className="text-andy ml-1 h-auto w-auto border-none p-0 shadow-none" showIcon={false}>
-              <ThemeButton className="h-6" variant="secondarySmall">
-                {activeExpiryPreset || '1h'}
-              </ThemeButton>
+            <SelectTrigger className={cn(buttonVariants({ variant: 'secondarySmall' }), 'ml-1 h-6 py-0')} showIcon={false}>
+              {activeExpiryPreset || '1h'}
             </SelectTrigger>
             <SelectContent>
               <SelectItem value="1h">1 hour</SelectItem>

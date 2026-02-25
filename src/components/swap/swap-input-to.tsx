@@ -36,7 +36,7 @@ export const SwapInputTo = ({ priceImpact }: { priceImpact?: USwapNumber }) => {
     })
 
   return (
-    <div className="px-6 pt-2 pb-6">
+    <div className="bg-swap-bloc rounded-15 border p-7">
       <div className="text-thor-gray mb-3 font-semibold">Buy</div>
 
       <div className="flex items-center justify-between">

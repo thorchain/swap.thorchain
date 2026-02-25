@@ -8,15 +8,15 @@ const buttonVariants = cva(
   {
     variants: {
       variant: {
-        primaryMedium: 'text-lawrence bg-brand-first text-base px-10 py-4',
-        primarySmall: 'text-lawrence bg-brand-first text-xs px-4 h-8',
+        primaryMedium: 'text-txt-green-default bg-green-default text-base px-10 py-4 rounded-15!',
+        primarySmall: 'text-txt-green-default bg-green-default text-xs px-4 h-8',
         primarySmallTransparent: 'text-brand-first text-xs px-4 h-8',
-        secondaryMedium: 'text-lawrence bg-leah text-base px-10 py-4',
+        secondaryMedium: 'text-txt-green-default bg-leah text-base px-10 py-4 rounded-15!',
         secondarySmall: 'text-leah bg-blade text-xs px-4 h-8',
         secondarySmallTransparent: 'text-leah text-xs px-4 h-8',
-        circleSmall: 'text-leah bg-blade text-base w-8 h-8',
-        circleSmallOutline: 'text-leah border border-[#262626] text-base w-8 h-8',
-        outlineSmall: 'text-leah border border-[#262626] text-xs px-4 h-8'
+        circleSmall: 'text-leah bg-btn-style-1-bg text-base w-8 h-8',
+        circleSmallOutline: 'text-leah border border-btn-style-1-border bg-btn-style-1-bg text-base w-8 h-8',
+        outlineSmall: 'text-leah border border-btn-style-1-border bg-btn-style-1-bg text-xs px-4 h-8'
       }
     },
     defaultVariants: {

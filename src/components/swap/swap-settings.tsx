@@ -86,7 +86,7 @@ export const SwapSettings = () => {
       }}
     >
       <DropdownMenuTrigger asChild>
-        <ThemeButton variant="circleSmall">
+        <ThemeButton variant="circleSmall" className="bg-btn-style-1-bg">
           <Icon name="manage" />
         </ThemeButton>
       </DropdownMenuTrigger>
@@ -112,7 +112,7 @@ export const SwapSettings = () => {
               value={sliderValue}
               onValueChange={handleValueChange}
               classNameRange={cn({
-                'bg-liquidity-green': currentSlippage && currentSlippage <= 3,
+                'bg-green-default': currentSlippage && currentSlippage <= 3,
                 'bg-jacob': currentSlippage && currentSlippage > 3,
                 'bg-lucian': !currentSlippage
               })}

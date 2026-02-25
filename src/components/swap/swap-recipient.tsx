@@ -131,7 +131,7 @@ export const SwapRecipient = ({ provider, onFetchQuote }: SwapRecipientProps) =>
             value={address}
             aria-invalid={!isValid}
             onChange={e => setAddress(e.target.value)}
-            className={cn('max-h-21 pr-15', { 'pl-13': currentOption })}
+            className={cn('bg-input-modal-bg-active border-border-sub-container-modal-low', { 'pl-13': currentOption })}
             tabIndex={isMobile ? -1 : 0}
           />
 
@@ -192,7 +192,7 @@ export const SwapRecipient = ({ provider, onFetchQuote }: SwapRecipientProps) =>
       </CredenzaHeader>
 
       <ScrollArea className="relative flex min-h-0 flex-1 px-4 md:px-8" classNameViewport="flex-1 h-auto">
-        <div className="mb-4 flex flex-col gap-6">
+        <div className="mb-2 flex flex-col gap-6">
           <div className="flex flex-col gap-5">
             <div className="flex flex-col gap-6">
               {refundRequired && (
