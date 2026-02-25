@@ -69,7 +69,8 @@ export const providerLabel = (provider: ProviderName): string => {
 }
 
 export const formatExpiration = (seconds: number) => {
-  const duration = intervalToDuration({ start: 0, end: seconds * 1000 })
+  const roundedSeconds = Math.ceil(seconds / 60) * 60
+  const duration = intervalToDuration({ start: 0, end: roundedSeconds * 1000 })
   const parts = []
 
   if (duration.months) parts.push(`${duration.months}M`)

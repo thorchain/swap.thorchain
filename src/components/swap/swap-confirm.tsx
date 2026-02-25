@@ -1,7 +1,6 @@
 import { useMemo } from 'react'
 import { USwapNumber } from '@tcswap/core'
 import { QuoteResponseRoute } from '@tcswap/helpers/api'
-import { formatDuration, intervalToDuration } from 'date-fns'
 import { CredenzaHeader, CredenzaTitle } from '@/components/ui/credenza'
 import { ScrollArea } from '@/components/ui/scroll-area'
 import { AssetIcon } from '@/components/asset-icon'
@@ -16,7 +15,7 @@ import { SwapProvider } from '@/components/swap/swap-provider'
 import { InfoTooltip } from '@/components/tooltip'
 import { useRates, useSwapRates } from '@/hooks/use-rates'
 import { useAssetFrom, useAssetTo, useSlippage } from '@/hooks/use-swap'
-import { providerLabel, resolveFees, resolvePriceImpact } from '@/lib/swap-helpers'
+import { formatExpiration, providerLabel, resolveFees, resolvePriceImpact } from '@/lib/swap-helpers'
 import { cn, truncate } from '@/lib/utils'
 import { useIsLimitSwap, useLimitSwapBuyAmount } from '@/store/limit-swap-store'
 
@@ -236,15 +235,7 @@ export const SwapConfirm = ({ quote }: SwapConfirmProps) => {
             {quote.estimatedTime && quote.estimatedTime.total > 0 && (
               <div className="text-thor-gray flex justify-between text-sm">
                 <span>Estimated Time</span>
-                <span className="text-leah font-semibold">
-                  {formatDuration(
-                    intervalToDuration({
-                      start: 0,
-                      end: (quote.estimatedTime.total || 0) * 1000
-                    }),
-                    { format: ['hours', 'minutes', 'seconds'], zero: false }
-                  )}
-                </span>
+                <span className="text-leah font-semibold">{formatExpiration(quote.estimatedTime.total)}</span>
               </div>
             )}
 
