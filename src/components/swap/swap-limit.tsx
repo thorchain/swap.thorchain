@@ -125,12 +125,15 @@ export const SwapLimit = ({ quote }: SwapLimitProps) => {
         </div>
       </div>
 
-      <DecimalInput
-        className="text-leah my-3 w-full bg-transparent text-2xl font-medium outline-none"
-        amount={(pricePerUnit ?? expectedBuyAmountPerUnit)?.toSignificant() ?? ''}
-        onAmountChange={v => setPricePerUnit(new USwapNumber(v))}
-        autoComplete="off"
-      />
+      <div className="my-3 flex items-center gap-2">
+        <DecimalInput
+          className="text-leah w-full bg-transparent text-2xl font-medium outline-none"
+          amount={(pricePerUnit ?? expectedBuyAmountPerUnit)?.toSignificant() ?? ''}
+          onAmountChange={v => setPricePerUnit(new USwapNumber(v))}
+          autoComplete="off"
+        />
+        <span className="text-thor-gray text-2xl font-medium">{assetTo?.ticker}</span>
+      </div>
 
       <div className="flex items-center space-x-1">
         {activePreset === 'custom' && differencePercent ? (
