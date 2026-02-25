@@ -1,4 +1,5 @@
 import { assetFromString, USwapNumber } from '@tcswap/core'
+import { ProviderName } from '@tcswap/helpers'
 import { QuoteResponseRoute } from '@tcswap/helpers/api'
 import { intervalToDuration } from 'date-fns'
 import { AssetRateMap } from '@/hooks/use-rates'
@@ -57,6 +58,14 @@ export const resolvePriceImpact = (quote?: QuoteResponseRoute, rateFrom?: USwapN
   const hundredPercent = new USwapNumber(100)
   const toPriceRatio = buyAmountInUsd && sellAmountInUsd && buyAmountInUsd.mul(hundredPercent).div(sellAmountInUsd)
   return toPriceRatio && toPriceRatio.lte(hundredPercent) ? hundredPercent.sub(toPriceRatio) : undefined
+}
+
+export const providerLabel = (provider: ProviderName): string => {
+  if (provider === 'THORCHAIN' || provider === 'THORCHAIN_STREAMING') return 'THORChain'
+  if (provider === 'MAYACHAIN' || provider === 'MAYACHAIN_STREAMING') return 'MayaChain'
+  if (provider === 'NEAR') return 'Near'
+  if (provider === 'ONEINCH') return '1inch'
+  return 'Unknown'
 }
 
 export const formatExpiration = (seconds: number) => {

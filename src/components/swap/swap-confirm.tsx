@@ -8,12 +8,15 @@ import { AssetIcon } from '@/components/asset-icon'
 import { CopyButton } from '@/components/button-copy'
 import { DecimalText } from '@/components/decimal/decimal-text'
 import { Icon } from '@/components/icons'
+import { useDialog } from '@/components/global-dialog'
+import { chainLabel } from '@/components/connect-wallet/config'
 import { PriceImpact } from '@/components/swap/price-impact'
+import { SwapFeeDialog } from '@/components/swap/swap-fee-dialog'
 import { SwapProvider } from '@/components/swap/swap-provider'
 import { InfoTooltip } from '@/components/tooltip'
 import { useRates, useSwapRates } from '@/hooks/use-rates'
 import { useAssetFrom, useAssetTo, useSlippage } from '@/hooks/use-swap'
-import { resolveFees, resolvePriceImpact } from '@/lib/swap-helpers'
+import { providerLabel, resolveFees, resolvePriceImpact } from '@/lib/swap-helpers'
 import { cn, truncate } from '@/lib/utils'
 import { useIsLimitSwap, useLimitSwapBuyAmount } from '@/store/limit-swap-store'
 
@@ -40,7 +43,8 @@ export const SwapConfirm = ({ quote }: SwapConfirmProps) => {
   const expectedBuyAmount = new USwapNumber(quote.expectedBuyAmount)
   const expectedBuyAmountMaxSlippage = quote.expectedBuyAmountMaxSlippage && new USwapNumber(quote.expectedBuyAmountMaxSlippage)
 
-  const { inbound } = resolveFees(quote, rates)
+  const { inbound, outbound, liquidity, platform, included } = resolveFees(quote, rates)
+  const { openDialog } = useDialog()
 
   const limitBuyAmount = useMemo(() => {
     if (!limitSwapBuyAmount) return null
@@ -102,7 +106,7 @@ export const SwapConfirm = ({ quote }: SwapConfirmProps) => {
               {quote.sourceAddress && quote.sourceAddress !== '{sourceAddress}' && (
                 <div className="text-thor-gray flex justify-between text-sm">
                   <div className="flex items-center gap-1">
-                    <span>Source Address</span>
+                    <span>{chainLabel(assetFrom.chain)} Address</span>
                     <InfoTooltip>The wallet address sending the funds for this swap.</InfoTooltip>
                   </div>
                   <div className="flex items-center gap-2">
@@ -115,7 +119,7 @@ export const SwapConfirm = ({ quote }: SwapConfirmProps) => {
               {quote.destinationAddress && (
                 <div className="text-thor-gray flex justify-between text-sm">
                   <div className="flex items-center gap-1">
-                    <span>Destination Address</span>
+                    <span>{chainLabel(assetTo.chain)} Address</span>
                     <InfoTooltip>The wallet address that will receive the swapped funds.</InfoTooltip>
                   </div>
                   <div className="flex items-center gap-2">
@@ -213,12 +217,19 @@ export const SwapConfirm = ({ quote }: SwapConfirmProps) => {
               </div>
             )}
 
-            {inbound && (
-              <div className="text-thor-gray flex justify-between text-sm">
-                <span>Tx Fees</span>
-                <span className="text-leah font-semibold">
-                  {inbound.usd.lt(0.01) ? `< ${new USwapNumber(0.01).toCurrency()}` : inbound.usd.toCurrency()}
-                </span>
+            {included.gt(0) && (
+              <div
+                className="text-thor-gray flex cursor-pointer justify-between text-sm"
+                onClick={() => openDialog(SwapFeeDialog, { outbound: outbound, liquidity: liquidity, platform: platform })}
+              >
+                <div className="flex items-center gap-1">
+                  <span>Included Fees</span>
+                  <InfoTooltip>These fees are already included in the rate — you don't pay them separately.</InfoTooltip>
+                </div>
+                <div className="flex items-center gap-2">
+                  <span className="text-leah font-semibold">{included.toCurrency()}</span>
+                  <Icon name="eye" className="size-5" />
+                </div>
               </div>
             )}
 
@@ -237,18 +248,20 @@ export const SwapConfirm = ({ quote }: SwapConfirmProps) => {
               </div>
             )}
 
+            {inbound && (
+              <div className="text-thor-gray flex justify-between text-sm">
+                <span>{providerLabel(quote.providers[0])} Gas Fee</span>
+                <span className="text-leah font-semibold">
+                  <DecimalText amount={inbound.amount.toSignificant()} /> {inbound.ticker}
+                </span>
+              </div>
+            )}
+
             <div className="text-thor-gray flex justify-between text-sm">
-              <span>Provider</span>
+              <span>Exchange</span>
               <SwapProvider provider={quote.providers[0]} />
             </div>
           </div>
-
-          {quote.memo && (
-            <div className="text-thor-gray flex items-center justify-between gap-6 border-t py-3 text-sm">
-              <span>Memo</span>
-              <p className="text-leah text-right font-semibold text-balance break-all">{quote.memo}</p>
-            </div>
-          )}
         </div>
       </ScrollArea>
     </>

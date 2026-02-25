@@ -93,7 +93,7 @@ export const Swap = () => {
           </div>
         )}
 
-        <SwapDetails priceImpact={priceImpact} />
+        <SwapDetails />
       </div>
     </div>
   )
