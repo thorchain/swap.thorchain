@@ -13,8 +13,6 @@ export const useSetAssetTo = () => useSwapStore(state => state.setAssetTo)
 export const useSlippage = () => useSwapStore(state => state.slippage)
 export const useSetSlippage = () => useSwapStore(state => state.setSlippage)
 
-export const useTwapMode = () => useSwapStore(state => state.twapMode)
-export const useSetTwapMode = () => useSwapStore(state => state.setTwapMode)
 export const useCustomInterval = () => useSwapStore(state => state.customInterval)
 export const useSetCustomInterval = () => useSwapStore(state => state.setCustomInterval)
 export const useCustomQuantity = () => useSwapStore(state => state.customQuantity)

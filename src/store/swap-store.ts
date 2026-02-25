@@ -5,25 +5,20 @@ import { Asset } from '@/components/swap/asset'
 const INITIAL_AMOUNT_FROM = 1
 
 export const INITIAL_SLIPPAGE = 1
-export const INITIAL_TWAP_MODE = 'bestPrice' as TwapMode
-export const INITIAL_CUSTOM_INTERVAL = 10
-export const INITIAL_CUSTOM_QUANTITY = 10
-
-export type TwapMode = 'bestPrice' | 'bestTime' | 'custom'
+export const INITIAL_CUSTOM_INTERVAL = 0
+export const INITIAL_CUSTOM_QUANTITY = 0
 
 interface SwapState {
   assetFrom?: Asset
   assetTo?: Asset
   amountFrom: string
   slippage?: number
-  twapMode: TwapMode
   customInterval: number
   customQuantity: number
   feeWarning: string
   hasHydrated: boolean
 
   setSlippage: (limit?: number) => void
-  setTwapMode: (mode: TwapMode) => void
   setCustomInterval: (interval: number) => void
   setCustomQuantity: (quantity: number) => void
   setAmountFrom: (amount: string) => void
@@ -37,7 +32,6 @@ export const useSwapStore = create<SwapState>()(
   persist(
     (set, get) => ({
       slippage: INITIAL_SLIPPAGE,
-      twapMode: INITIAL_TWAP_MODE,
       customInterval: INITIAL_CUSTOM_INTERVAL,
       customQuantity: INITIAL_CUSTOM_QUANTITY,
       amountFrom: INITIAL_AMOUNT_FROM.toString(),
@@ -45,7 +39,6 @@ export const useSwapStore = create<SwapState>()(
       hasHydrated: false,
 
       setSlippage: slippage => set({ slippage: slippage }),
-      setTwapMode: twapMode => set({ twapMode }),
       setCustomInterval: customInterval => set({ customInterval }),
       setCustomQuantity: customQuantity => set({ customQuantity }),
       setAmountFrom: fromAmount => set({ amountFrom: fromAmount }),

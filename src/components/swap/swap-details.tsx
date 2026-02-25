@@ -11,7 +11,7 @@ import { SwapProvider } from '@/components/swap/swap-provider'
 import { InfoTooltip } from '@/components/tooltip'
 import { useQuote } from '@/hooks/use-quote'
 import { useRates } from '@/hooks/use-rates'
-import { useAssetFrom, useAssetTo, useCustomInterval, useCustomQuantity, useSwap, useTwapMode } from '@/hooks/use-swap'
+import { useAssetFrom, useAssetTo, useCustomInterval, useCustomQuantity, useSwap } from '@/hooks/use-swap'
 import { recalculateEstimatedTime, THORCHAIN_BLOCK_TIME_SECONDS } from '@/lib/memo-helpers'
 import { formatExpiration, resolveFees } from '@/lib/swap-helpers'
 import { cn } from '@/lib/utils'
@@ -26,7 +26,6 @@ export function SwapDetails({ priceImpact }: { priceImpact?: USwapNumber }) {
   const [contentHeight, setContentHeight] = useState(0)
   const [priceInverted, setPriceInverted] = useState(false)
   const { openDialog } = useDialog()
-  const twapMode = useTwapMode()
   const customInterval = useCustomInterval()
   const customQuantity = useCustomQuantity()
 
@@ -56,14 +55,11 @@ export function SwapDetails({ priceImpact }: { priceImpact?: USwapNumber }) {
 
   const isThorchain = quote?.providers[0] === ProviderName.THORCHAIN || quote?.providers[0] === ProviderName.THORCHAIN_STREAMING
   const estimatedTime = useMemo(() => {
-    if (!quote?.estimatedTime || !isThorchain || twapMode === 'bestPrice') return quote?.estimatedTime
-    if (twapMode === 'bestTime') {
-      return recalculateEstimatedTime(quote.estimatedTime, 0)
-    }
+    if (!quote?.estimatedTime || !isThorchain || customInterval === 0 || customQuantity === 0) return quote?.estimatedTime
 
     const swapSeconds = customInterval * customQuantity * THORCHAIN_BLOCK_TIME_SECONDS
     return recalculateEstimatedTime(quote.estimatedTime, swapSeconds)
-  }, [quote?.estimatedTime, isThorchain, twapMode, customInterval, customQuantity])
+  }, [quote?.estimatedTime, isThorchain, customInterval, customQuantity])
 
   if (!assetFrom || !assetTo || !quote) return null
 

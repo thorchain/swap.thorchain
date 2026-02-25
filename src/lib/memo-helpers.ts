@@ -1,6 +1,5 @@
 import { EstimatedTime, QuoteResponseRoute } from '@tcswap/helpers/api'
 import type { Asset } from '@/components/swap/asset'
-import { TwapMode } from '@/store/swap-store'
 
 export const THORCHAIN_BLOCK_TIME_SECONDS = 6
 
@@ -98,41 +97,6 @@ export function modifyMemoForStreaming(memo: string, interval: number, quantity:
   return result
 }
 
-export function stripStreamingParams(memo: string): string {
-  if (!memo.startsWith('=:')) return memo
-
-  const parts = memo.split(':')
-  // parts:
-  // [0] "="
-  // [1] ASSET (eg ETH.USDT)
-  // [2] destination address
-  // [3] limit/interval/qty
-  // [4] affiliate
-  // [5] bps
-
-  if (parts.length < 3) return memo
-
-  const asset = parts[1]
-  const destination = parts[2]
-  const swapParams = parts[3] || ''
-  const affiliate = parts[4]
-  const bps = parts[5]
-
-  const paramParts = swapParams.split('/')
-  const limit = paramParts[0] || '0'
-
-  // Only include limit, no interval/quantity
-  let result = `=:${asset}:${destination}:${limit}`
-  if (affiliate) {
-    result += `:${affiliate}`
-    if (bps) {
-      result += `:${bps}`
-    }
-  }
-
-  return result
-}
-
 export function recalculateEstimatedTime(estimatedTime: EstimatedTime | undefined, swapSeconds: number): EstimatedTime | undefined {
   if (!estimatedTime) return undefined
 
@@ -143,27 +107,14 @@ export function recalculateEstimatedTime(estimatedTime: EstimatedTime | undefine
   }
 }
 
-export function prepareQuoteForStreaming(
-  quote: QuoteResponseRoute,
-  twapMode: TwapMode,
-  customInterval: number,
-  customQuantity: number
-): QuoteResponseRoute {
+export function prepareQuoteForStreaming(quote: QuoteResponseRoute, customInterval: number, customQuantity: number): QuoteResponseRoute {
   if (!quote.memo) return quote
 
-  if (twapMode === 'bestPrice') {
+  // If either value is 0, leave memo as-is
+  if (customInterval === 0 || customQuantity === 0) {
     return quote
   }
 
-  if (twapMode === 'bestTime') {
-    return {
-      ...quote,
-      memo: stripStreamingParams(quote.memo),
-      estimatedTime: recalculateEstimatedTime(quote.estimatedTime, 0)
-    }
-  }
-
-  // Custom: use user-specified values
   const swapSeconds = customInterval * customQuantity * THORCHAIN_BLOCK_TIME_SECONDS
   return {
     ...quote,

@@ -15,7 +15,7 @@ import { SwapError } from '@/components/swap/swap-error'
 import { ThemeButton } from '@/components/theme-button'
 import { Tooltip } from '@/components/tooltip'
 import { useIsMobile } from '@/hooks/use-mobile'
-import { useAssetFrom, useAssetTo, useCustomInterval, useCustomQuantity, useSlippage, useSwap, useTwapMode } from '@/hooks/use-swap'
+import { useAssetFrom, useAssetTo, useCustomInterval, useCustomQuantity, useSlippage, useSwap } from '@/hooks/use-swap'
 import { useAccounts, useSelectedAccount } from '@/hooks/use-wallets'
 import { getQuotes } from '@/lib/api'
 import { prepareQuoteForLimitSwap, prepareQuoteForStreaming } from '@/lib/memo-helpers'
@@ -33,7 +33,6 @@ export const SwapRecipient = ({ provider, onFetchQuote }: SwapRecipientProps) =>
   const assetFrom = useAssetFrom()
   const assetTo = useAssetTo()
   const slippage = useSlippage()
-  const twapMode = useTwapMode()
   const customInterval = useCustomInterval()
   const customQuantity = useCustomQuantity()
   const accounts = useAccounts()
@@ -95,7 +94,7 @@ export const SwapRecipient = ({ provider, onFetchQuote }: SwapRecipientProps) =>
         if (isLimitSwap && (provider === 'THORCHAIN' || provider === 'THORCHAIN_STREAMING')) {
           quote = prepareQuoteForLimitSwap(quote, limitSwapBuyAmount, limitSwapExpiry)
         } else if (provider === 'THORCHAIN' || provider === 'THORCHAIN_STREAMING') {
-          quote = prepareQuoteForStreaming(quote, twapMode, customInterval, customQuantity)
+          quote = prepareQuoteForStreaming(quote, customInterval, customQuantity)
         }
 
         onFetchQuote(quote)
