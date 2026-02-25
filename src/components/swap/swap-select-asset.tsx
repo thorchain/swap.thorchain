@@ -108,8 +108,9 @@ export const SwapSelectAsset = ({ isOpen, onOpenChange, selected, onSelectAsset 
       return assets.filter(asset => {
         const ticker = asset.ticker.toLowerCase()
         const name = (asset.name || '').toLowerCase()
+        const chain = chainLabel(asset.chain).toLowerCase()
 
-        return ticker.includes(query) || name.includes(query)
+        return ticker.includes(query) || name.includes(query) || chain.includes(query)
       })
     }
 
