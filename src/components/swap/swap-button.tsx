@@ -9,6 +9,7 @@ import { InstantSwapDialog } from '@/components/swap/instant-swap-dialog'
 import { SwapDialog } from '@/components/swap/swap-dialog'
 import { ThemeButton } from '@/components/theme-button'
 import { useBalance } from '@/hooks/use-balance'
+import { useMimir } from '@/hooks/use-mimir'
 import { useQuote } from '@/hooks/use-quote'
 import { useSimulation } from '@/hooks/use-simulation'
 import { useAssetFrom, useAssetTo, useSwap } from '@/hooks/use-swap'
@@ -38,6 +39,8 @@ export const SwapButton = ({ instantSwapSupported, instantSwapAvailable }: SwapB
   const { quote, isLoading: isQuoting, refetch: refetchQuote } = useQuote()
   const { isLoading: isSimulating, approveData } = useSimulation()
   const { balance, isLoading: isBalanceLoading } = useBalance()
+  const { mimir } = useMimir()
+  const isLimitSwapDisabled = mimir['ENABLEADVSWAPQUEUE'] === 2
 
   const { openDialog } = useDialog()
 
@@ -50,6 +53,10 @@ export const SwapButton = ({ instantSwapSupported, instantSwapAvailable }: SwapB
   }
 
   const getState = (): ButtonState => {
+    if (isLimitSwap && isLimitSwapDisabled) {
+      return { text: 'Temporarily Not Available', spinner: false, accent: false }
+    }
+
     if (!assetFrom || !assetTo) return { text: '', spinner: true, accent: false }
 
     if (valueFrom.eqValue(0)) return { text: 'Enter Amount', spinner: false, accent: false }
