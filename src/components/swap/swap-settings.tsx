@@ -182,11 +182,11 @@ export const SwapSettings = () => {
                 </div>
                 <div className="flex flex-col">
                   <span>2 blocks</span>
-                  <span>~6 seconds</span>
+                  <span>~12 seconds</span>
                 </div>
                 <div className="flex flex-col">
                   <span>3 blocks</span>
-                  <span>~6 seconds</span>
+                  <span>~18 seconds</span>
                 </div>
               </div>
             </div>
