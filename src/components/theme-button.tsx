@@ -11,7 +11,7 @@ const buttonVariants = cva(
         primaryMedium: 'text-txt-green-default bg-green-default text-base px-10 py-4 rounded-15!',
         primarySmall: 'text-txt-green-default bg-green-default text-xs px-4 h-8',
         primarySmallTransparent: 'text-brand-first text-xs px-4 h-8',
-        secondaryMedium: 'text-txt-green-default bg-leah text-base px-10 py-4 rounded-15!',
+        secondaryMedium: 'text-txt-btn-small-hover bg-btn-small-hover text-base px-10 py-4 rounded-15!',
         secondarySmall: 'text-leah bg-blade text-xs px-4 h-8',
         secondarySmallTransparent: 'text-leah text-xs px-4 h-8',
         circleSmall: 'text-leah bg-btn-style-1-bg text-base w-8 h-8',
