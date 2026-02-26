@@ -49,7 +49,7 @@ export const SwapInputFrom = () => {
             onAmountChange={e => setAmountFrom(e)}
             autoComplete="off"
           />
-          <div className="text-thor-gray text-sm font-medium">{fiatValueFrom.toCurrency()}</div>
+          <div className="text-thor-gray text-sm font-medium">{fiatValueFrom.toCurrency('$', { trimTrailingZeros: false })}</div>
         </div>
         <div className="flex cursor-pointer items-center gap-2" onClick={onClick}>
           <AssetIcon asset={assetFrom} />

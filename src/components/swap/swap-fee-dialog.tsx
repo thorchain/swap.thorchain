@@ -21,7 +21,7 @@ export const SwapFeeDialog = ({ outbound, liquidity, platform, isOpen, onOpenCha
         <div className="flex items-center gap-1">
           {title} <InfoTooltip>{info}</InfoTooltip>
         </div>
-        <div className="text-leah flex items-center gap-2">
+        <div className="text-leah flex items-center gap-1">
           {fee ? (
             <>
               {fee.amount.gt(0) && (
@@ -30,7 +30,7 @@ export const SwapFeeDialog = ({ outbound, liquidity, platform, isOpen, onOpenCha
                 </span>
               )}
 
-              {fee.usd.gt(0) ? <span className="text-leah">{fee.usd.toCurrency()}</span> : 0}
+              {fee.usd.gt(0) ? <span className="text-leah">${fee.usd.toFixed(2)}</span> : '$0.00'}
             </>
           ) : (
             0

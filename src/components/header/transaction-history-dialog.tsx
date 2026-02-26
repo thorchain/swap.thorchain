@@ -135,7 +135,7 @@ export const TransactionHistoryDialog = ({ isOpen, onOpenChange }: HistoryDialog
                           <span className="text-leah text-sm font-semibold">
                             <DecimalText className="break-all" amount={amountFrom.toSignificant()} symbol={tx.assetFrom?.ticker} />
                           </span>
-                          <span className="text-thor-gray text-xs font-medium">{fiatFrom?.toCurrency()}</span>
+                          <span className="text-thor-gray text-xs font-medium">{fiatFrom?.toCurrency('$', { trimTrailingZeros: false })}</span>
                         </div>
                       </div>
                       <div className="flex flex-col items-center justify-center px-1">
@@ -177,7 +177,7 @@ export const TransactionHistoryDialog = ({ isOpen, onOpenChange }: HistoryDialog
                           <span className="text-leah text-sm font-semibold">
                             <DecimalText className="break-all" amount={amountTo.toSignificant()} symbol={tx.assetTo?.ticker} />
                           </span>
-                          <span className="text-thor-gray text-xs font-medium">{fiatTo?.toCurrency()}</span>
+                          <span className="text-thor-gray text-xs font-medium">{fiatTo?.toCurrency('$', { trimTrailingZeros: false })}</span>
                         </div>
                         {tx.assetTo && <AssetIcon asset={tx.assetTo} />}
                       </div>
@@ -221,7 +221,7 @@ export const TransactionHistoryDialog = ({ isOpen, onOpenChange }: HistoryDialog
 
                     {isExpanded && details && (
                       <>
-                        <div className="space-y-4 border-t mt-3 py-4 text-xs font-semibold">
+                        <div className="mt-3 space-y-4 border-t py-4 text-xs font-semibold">
                           {details.fromAddress && (
                             <div className="text-thor-gray flex items-center justify-between">
                               <span>Source Address</span>
