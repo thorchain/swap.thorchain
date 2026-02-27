@@ -245,7 +245,7 @@ export const SwapConfirm = ({ quote }: SwapConfirmProps) => {
 
             {inbound && (
               <div className="text-thor-gray flex justify-between text-sm">
-                <span>{providerLabel(quote.providers[0])} Gas Fee</span>
+                <span>{chainLabel(assetFrom.chain)} Gas Fee</span>
                 <span className="text-leah font-semibold">
                   <DecimalText amount={inbound.amount.toSignificant()} /> {inbound.ticker}
                 </span>

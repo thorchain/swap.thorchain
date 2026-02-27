@@ -18,7 +18,7 @@ export const SwapProvider = ({ provider }: { provider: ProviderName }) => {
   return (
     <div className="flex items-center gap-2">
       <Image src={`/providers/${icon}.svg`} alt="" width="16" height="16" />
-      <span className="text-leah">{providerLabel(provider)}</span>
+      <span className="text-leah font-bold">{providerLabel(provider)}</span>
     </div>
   )
 }
