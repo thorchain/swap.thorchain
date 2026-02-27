@@ -5,7 +5,7 @@ import { Asset } from '@/components/swap/asset'
 const INITIAL_AMOUNT_FROM = 1
 
 export const INITIAL_SLIPPAGE = 1
-export const INITIAL_CUSTOM_INTERVAL = 0
+export const INITIAL_CUSTOM_INTERVAL = 1
 export const INITIAL_CUSTOM_QUANTITY = 0
 
 interface SwapState {

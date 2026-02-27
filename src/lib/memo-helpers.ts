@@ -85,8 +85,12 @@ export function modifyMemoForStreaming(memo: string, interval: number, quantity:
 
   const paramParts = swapParams.split('/')
   const limit = paramParts[0] || '0'
+  const existingQuantity = paramParts[2] || '0'
 
-  let result = `=:${asset}:${destination}:${limit}/${interval}/${quantity}`
+  // If quantity is 0 (not customised), preserve the existing quantity from the memo
+  const effectiveQuantity = quantity === 0 ? existingQuantity : quantity
+
+  let result = `=:${asset}:${destination}:${limit}/${interval}/${effectiveQuantity}`
   if (affiliate) {
     result += `:${affiliate}`
     if (bps) {
@@ -110,15 +114,14 @@ export function recalculateEstimatedTime(estimatedTime: EstimatedTime | undefine
 export function prepareQuoteForStreaming(quote: QuoteResponseRoute, customInterval: number, customQuantity: number): QuoteResponseRoute {
   if (!quote.memo) return quote
 
-  // If either value is 0, leave memo as-is
-  if (customInterval === 0 || customQuantity === 0) {
-    return quote
-  }
+  const estimatedTime =
+    customInterval > 0 && customQuantity > 0
+      ? recalculateEstimatedTime(quote.estimatedTime, customInterval * customQuantity * THORCHAIN_BLOCK_TIME_SECONDS)
+      : quote.estimatedTime
 
-  const swapSeconds = customInterval * customQuantity * THORCHAIN_BLOCK_TIME_SECONDS
   return {
     ...quote,
     memo: modifyMemoForStreaming(quote.memo, customInterval, customQuantity),
-    estimatedTime: recalculateEstimatedTime(quote.estimatedTime, swapSeconds)
+    estimatedTime
   }
 }
