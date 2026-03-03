@@ -111,17 +111,30 @@ export function recalculateEstimatedTime(estimatedTime: EstimatedTime | undefine
   }
 }
 
+export function recalculateStreamingEstimatedTime(
+  estimatedTime: EstimatedTime | undefined,
+  memo: string,
+  customInterval: number,
+  customQuantity: number
+): EstimatedTime | undefined {
+  if (!estimatedTime) return undefined
+
+  const paramParts = (memo.split(':')[3] || '').split('/')
+  const existingInterval = parseInt(paramParts[1] || '1', 10) || 1
+  const existingQuantity = parseInt(paramParts[2] || '1', 10) || 1
+
+  const effectiveInterval = customInterval > 0 ? customInterval : existingInterval
+  const effectiveQuantity = customQuantity > 0 ? customQuantity : existingQuantity
+
+  return recalculateEstimatedTime(estimatedTime, effectiveInterval * effectiveQuantity * THORCHAIN_BLOCK_TIME_SECONDS)
+}
+
 export function prepareQuoteForStreaming(quote: QuoteResponseRoute, customInterval: number, customQuantity: number): QuoteResponseRoute {
   if (!quote.memo) return quote
-
-  const estimatedTime =
-    customInterval > 0 && customQuantity > 0
-      ? recalculateEstimatedTime(quote.estimatedTime, customInterval * customQuantity * THORCHAIN_BLOCK_TIME_SECONDS)
-      : quote.estimatedTime
 
   return {
     ...quote,
     memo: modifyMemoForStreaming(quote.memo, customInterval, customQuantity),
-    estimatedTime
+    estimatedTime: recalculateStreamingEstimatedTime(quote.estimatedTime, quote.memo, customInterval, customQuantity)
   }
 }

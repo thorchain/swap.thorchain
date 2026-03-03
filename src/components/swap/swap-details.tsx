@@ -4,7 +4,7 @@ import { ProviderName } from '@tcswap/helpers'
 import { Icon } from '@/components/icons'
 import { useQuote } from '@/hooks/use-quote'
 import { useAssetFrom, useAssetTo, useCustomInterval, useCustomQuantity, useSwap } from '@/hooks/use-swap'
-import { recalculateEstimatedTime, THORCHAIN_BLOCK_TIME_SECONDS } from '@/lib/memo-helpers'
+import { recalculateStreamingEstimatedTime } from '@/lib/memo-helpers'
 import { formatExpiration } from '@/lib/swap-helpers'
 import { cn } from '@/lib/utils'
 
@@ -18,11 +18,9 @@ export function SwapDetails() {
 
   const isThorchain = quote?.providers[0] === ProviderName.THORCHAIN || quote?.providers[0] === ProviderName.THORCHAIN_STREAMING
   const estimatedTime = useMemo(() => {
-    if (!quote?.estimatedTime || !isThorchain || customInterval === 0 || customQuantity === 0) return quote?.estimatedTime
-
-    const swapSeconds = customInterval * customQuantity * THORCHAIN_BLOCK_TIME_SECONDS
-    return recalculateEstimatedTime(quote.estimatedTime, swapSeconds)
-  }, [quote?.estimatedTime, isThorchain, customInterval, customQuantity])
+    if (!isThorchain) return quote?.estimatedTime
+    return recalculateStreamingEstimatedTime(quote?.estimatedTime, quote?.memo || '', customInterval, customQuantity)
+  }, [quote?.estimatedTime, quote?.memo, isThorchain, customInterval, customQuantity])
 
   if (!assetFrom || !assetTo || !quote) return null
 
