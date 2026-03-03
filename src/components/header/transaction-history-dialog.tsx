@@ -119,7 +119,8 @@ export const TransactionHistoryDialog = ({ isOpen, onOpenChange }: HistoryDialog
                 openDialog(InstantSwapChannelDialog, { assetFrom: tx.assetFrom, assetTo: tx.assetTo, channel: channel })
               }
 
-              const showRQ = !tx.hash && status !== 'expired' && status !== 'completed' && status !== 'refunded' && status !== 'failed'
+              const showRQ =
+                tx.qrCodeData && !tx.hash && status !== 'expired' && status !== 'completed' && status !== 'refunded' && status !== 'failed'
               const showLimitSwapActions = selectedAccount && tx.limitSwapMemo && isTxPending(status)
 
               return (
