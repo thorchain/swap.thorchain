@@ -1,9 +1,12 @@
 import { useEffect, useMemo, useState } from 'react'
+import { intervalToDuration } from 'date-fns'
 import { USwapNumber } from '@tcswap/core'
 import { QuoteResponseRoute } from '@tcswap/helpers/api'
 import { X } from 'lucide-react'
 import { Select, SelectContent, SelectItem, SelectTrigger } from '@/components/ui/select'
 import { DecimalInput } from '@/components/decimal/decimal-input'
+import { SwapLimitExpiry } from './swap-limit-expiry'
+import { useDialog } from '@/components/global-dialog'
 import { buttonVariants, ThemeButton } from '@/components/theme-button'
 import { useAssetFrom, useAssetTo } from '@/hooks/use-swap'
 import { cn } from '@/lib/utils'
@@ -12,8 +15,9 @@ import { useLimitSwapExpiry, useSetLimitSwapBuyAmount, useSetLimitSwapExpiry } f
 type PresetType = 5 | 10 | 'custom' | 'market'
 type SwapLimitProps = { quote?: QuoteResponseRoute }
 
-type ExpiryPreset = '1h' | '1d' | '1w' | undefined
+type ExpiryPreset = '1h' | '1d' | '1w' | 'custom' | undefined
 
+const BLOCKS_PER_MINUTE = 10
 const BLOCKS_PER_HOUR = 600
 const BLOCKS_PER_DAY = 14400
 const BLOCKS_PER_WEEK = 100800
@@ -25,6 +29,7 @@ export const SwapLimit = ({ quote }: SwapLimitProps) => {
   const setLimitSwapExpiry = useSetLimitSwapExpiry()
   const limitSwapExpiry = useLimitSwapExpiry()
 
+  const { openDialog } = useDialog()
   const [pricePerUnit, setPricePerUnit] = useState<USwapNumber | undefined>()
 
   const sellAmount = useMemo(() => (quote ? new USwapNumber(quote.sellAmount) : null), [quote])
@@ -91,8 +96,15 @@ export const SwapLimit = ({ quote }: SwapLimitProps) => {
     if (limitSwapExpiry === BLOCKS_PER_HOUR) return '1h'
     if (limitSwapExpiry === BLOCKS_PER_DAY) return '1d'
     if (limitSwapExpiry === BLOCKS_PER_WEEK) return '1w'
-    return undefined
+    return 'custom'
   }, [limitSwapExpiry])
+
+  const customExpiryLabel = useMemo(() => {
+    if (!limitSwapExpiry || activeExpiryPreset !== 'custom') return ''
+    const ms = (limitSwapExpiry / BLOCKS_PER_MINUTE) * 60 * 1000
+    const { days = 0, hours = 0, minutes = 0 } = intervalToDuration({ start: 0, end: ms })
+    return [days && `${days}d`, hours && `${hours}h`, minutes && `${minutes}m`].filter(Boolean).join(' ')
+  }, [limitSwapExpiry, activeExpiryPreset])
 
   const applyExpiryPreset = (preset: ExpiryPreset) => {
     switch (preset) {
@@ -102,6 +114,16 @@ export const SwapLimit = ({ quote }: SwapLimitProps) => {
         return setLimitSwapExpiry(BLOCKS_PER_DAY)
       case '1w':
         return setLimitSwapExpiry(BLOCKS_PER_WEEK)
+      case 'custom': {
+        const ms = limitSwapExpiry ? (limitSwapExpiry / BLOCKS_PER_MINUTE) * 60 * 1000 : 0
+        const { days = 0, hours = 0, minutes = 0 } = intervalToDuration({ start: 0, end: ms })
+        return openDialog(SwapLimitExpiry, {
+          onApply: setLimitSwapExpiry,
+          initialDays: days ? String(days) : '',
+          initialHours: hours ? String(hours) : '',
+          initialMinutes: minutes ? String(minutes) : '',
+        })
+      }
     }
   }
 
@@ -112,14 +134,18 @@ export const SwapLimit = ({ quote }: SwapLimitProps) => {
 
         <div className="text-thor-gray flex items-center text-sm font-medium">
           Expires in
-          <Select value={activeExpiryPreset || '1h'} onValueChange={v => applyExpiryPreset(v as ExpiryPreset)}>
+          <Select
+            value={activeExpiryPreset === 'custom' ? '__custom__' : activeExpiryPreset || '1h'}
+            onValueChange={v => applyExpiryPreset(v as ExpiryPreset)}
+          >
             <SelectTrigger className={cn(buttonVariants({ variant: 'secondarySmall' }), 'ml-1 h-6 py-0')} showIcon={false}>
-              {activeExpiryPreset || '1h'}
+              {activeExpiryPreset === 'custom' ? customExpiryLabel : activeExpiryPreset || '1h'}
             </SelectTrigger>
             <SelectContent>
               <SelectItem value="1h">1 hour</SelectItem>
               <SelectItem value="1d">1 day</SelectItem>
               <SelectItem value="1w">1 week</SelectItem>
+              <SelectItem value="custom">Custom</SelectItem>
             </SelectContent>
           </Select>
         </div>
