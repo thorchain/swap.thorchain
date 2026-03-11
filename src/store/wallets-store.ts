@@ -15,10 +15,12 @@ interface WalletState {
   selected?: WalletAccount
   connectedWallets: WalletOption[]
   hasHydrated: boolean
+  externalWalletMode: boolean
 
   select: (account?: WalletAccount) => void
   connect: (wallet: WalletOption, chains: Chain[], config?: any) => Promise<void>
   disconnect: (wallet: WalletOption) => void
+  setExternalWalletMode: (enabled: boolean) => void
 }
 
 export const useWalletStore = create<WalletState>()(
@@ -28,6 +30,7 @@ export const useWalletStore = create<WalletState>()(
       connectedWallets: [],
       selected: undefined,
       hasHydrated: false,
+      externalWalletMode: false,
 
       select: (account?: WalletAccount) => {
         set({ selected: account })
@@ -54,6 +57,10 @@ export const useWalletStore = create<WalletState>()(
         }
       },
 
+      setExternalWalletMode: (enabled: boolean) => {
+        set({ externalWalletMode: enabled })
+      },
+
       disconnect: (wallet: WalletOption) => {
         const uSwap = getUSwap()
         supportedChains[wallet].forEach(chain => {
@@ -77,7 +84,8 @@ export const useWalletStore = create<WalletState>()(
       partialize: state => ({
         accounts: state.accounts,
         selected: state.selected,
-        connectedWallets: state.connectedWallets
+        connectedWallets: state.connectedWallets,
+        externalWalletMode: state.externalWalletMode
       }),
       onRehydrateStorage: () => async (state, error) => {
         if (error || !state) {

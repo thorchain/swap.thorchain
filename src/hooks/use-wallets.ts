@@ -5,6 +5,8 @@ export const useDisconnect = () => useWalletStore(state => state.disconnect)
 export const useConnectedWallets = () => useWalletStore(state => state.connectedWallets)
 export const useSelectedAccount = () => useWalletStore(state => state.selected)
 export const useSelectAccount = () => useWalletStore(state => state.select)
+export const useExternalWalletMode = () => useWalletStore(state => state.externalWalletMode)
+export const useSetExternalWalletMode = () => useWalletStore(state => state.setExternalWalletMode)
 
 export const useWallets = () => {
   const accounts = useWalletStore(s => s.accounts)
