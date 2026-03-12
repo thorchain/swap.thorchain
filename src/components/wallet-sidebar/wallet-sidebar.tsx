@@ -51,7 +51,7 @@ export function WalletSidebar({ isOpen, onOpenChange }: WalletSidebarProps) {
 
   return (
     <Drawer direction="right" open={isOpen} onOpenChange={onOpenChange}>
-      <DrawerContent className="flex flex-col p-0" style={{ width: 320, maxWidth: '100vw' }}>
+      <DrawerContent className="flex flex-col p-0" style={{ width: 400, maxWidth: '100vw' }}>
         <DrawerHeader className="flex flex-row items-center justify-between px-4 py-5">
           <DrawerTitle className="text-2xl font-bold">Wallets</DrawerTitle>
           <button onClick={() => onOpenChange(false)} className="text-thor-gray hover:text-leah cursor-pointer transition-colors" aria-label="Close">
