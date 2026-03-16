@@ -1,19 +1,22 @@
 import { useMemo } from 'react'
 import { useQuery } from '@tanstack/react-query'
 import { AssetValue, USwapNumber } from '@tcswap/core'
+import { useAssets } from '@/hooks/use-assets'
 import { useRates } from '@/hooks/use-rates'
 import { useAccounts } from '@/hooks/use-wallets'
 import { getUSwap } from '@/lib/wallets'
 import { WalletAccount } from '@/store/wallets-store'
 
 function assetIdentifier(b: AssetValue): string {
-  return `${b.chain}.${b.isSynthetic || b.isTradeAsset ? b.ticker : b.symbol}`
+  const identifier = b.isSynthetic || b.isTradeAsset ? b.ticker : b.address ? `${b.ticker}-${b.address}` : b.ticker
+  return `${b.chain}.${identifier}`
 }
 
 export interface TokenBalance {
   balance: AssetValue
   amount: number
   usdValue?: USwapNumber
+  logoURI?: string
 }
 
 export interface ChainWalletData {
@@ -24,8 +27,20 @@ export interface ChainWalletData {
 }
 
 export const useWalletBalances = () => {
+  const { assets } = useAssets()
   const accounts = useAccounts()
   const uSwap = getUSwap()
+
+  const iconMap = useMemo(() => {
+    if (!assets) return new Map<string, string>()
+    const map = new Map<string, string>()
+    for (const asset of assets) {
+      if (asset.logoURI) {
+        map.set(`${asset.identifier}`.toLowerCase(), asset.logoURI)
+      }
+    }
+    return map
+  }, [assets])
 
   const queryKey = accounts.map(a => `${a.provider}-${a.network}`).join(',')
 
@@ -74,7 +89,9 @@ export const useWalletBalances = () => {
         const rate = rates[assetIdentifier(b)]
         const amount = parseFloat(b.toSignificant())
         const usdValue = rate ? rate.mul(amount) : undefined
-        return { balance: b, amount, usdValue }
+        const key = `${assetIdentifier(b)}`.toLowerCase()
+        const logoURI = iconMap.get(key)
+        return { balance: b, amount, usdValue, logoURI }
       })
 
       const allPriced = tokens.length > 0 && tokens.every(t => t.usdValue !== undefined)
@@ -82,7 +99,7 @@ export const useWalletBalances = () => {
 
       return { account, tokens, totalUsd, isLoading: false }
     })
-  }, [allBalances, rates, accounts])
+  }, [allBalances, rates, accounts, iconMap])
 
   return { walletData, isLoading }
 }

@@ -7,8 +7,8 @@ interface TokenRowProps {
 }
 
 export function WalletToken({ token, bordered }: TokenRowProps) {
-  const { balance, amount, usdValue } = token
-  const iconUrl = balance.getIconUrl()
+  const { balance, amount, usdValue, logoURI } = token
+  const iconUrl = logoURI || balance.getIconUrl()
 
   return (
     <div className={cn('flex items-center gap-3 px-4 py-2.5', { 'border-b': bordered })}>
