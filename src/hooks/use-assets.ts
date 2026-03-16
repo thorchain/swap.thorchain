@@ -4,7 +4,7 @@ import { USwapApi } from '@tcswap/helpers/api'
 import { Asset } from '@/components/swap/asset'
 import { AppConfig } from '@/config'
 
-export const useAssets = (): { assets?: Asset[]; geckoMap?: Map<string, string>; isLoading: boolean } => {
+export const useAssets = (): { assets?: Asset[]; isLoading: boolean } => {
   const { data, isLoading } = useQuery({
     queryKey: ['assets'],
     queryFn: async () => {
@@ -12,7 +12,6 @@ export const useAssets = (): { assets?: Asset[]; geckoMap?: Map<string, string>;
       const tokens = lists.flatMap(l => l.tokens)
 
       const assets = new Map<string, Asset>()
-      const geckoMap = new Map<string, string>()
 
       for (const token of tokens) {
         if (!token.chain || !getChainConfig(token.chain).chain) {
@@ -32,24 +31,16 @@ export const useAssets = (): { assets?: Asset[]; geckoMap?: Map<string, string>;
           shortCode: token.shortCode,
           ticker: token.ticker
         })
-
-        if (token.coingeckoId) {
-          geckoMap.set(token.identifier.toLowerCase(), token.coingeckoId)
-        }
       }
 
-      return {
-        assets: Array.from(assets.values()),
-        geckoMap
-      }
+      return Array.from(assets.values())
     },
     refetchOnMount: false,
     refetchOnWindowFocus: false
   })
 
   return {
-    assets: data?.assets,
-    geckoMap: data?.geckoMap,
+    assets: data,
     isLoading
   }
 }

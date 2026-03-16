@@ -10,10 +10,14 @@ const uSwap = axios.create({
 })
 
 const thornode = axios.create({ baseURL: 'https://thornode.ninerealms.com' })
-const coingecko = axios.create({ baseURL: 'https://api.coingecko.com/api/v3' })
+const midgard = axios.create({ baseURL: 'https://midgard.ninerealms.com/v2' })
 
-export const getAssetRates = async (ids: string) => {
-  return coingecko.get(`/simple/price?ids=${ids}&vs_currencies=usd`).then(res => res.data)
+export const getMidgardPools = async (): Promise<{ asset: string; assetPriceUSD: string }[]> => {
+  return midgard.get('/pools').then(res => res.data)
+}
+
+export const getMidgardRunePrice = async (): Promise<number> => {
+  return midgard.get('/stats').then(res => parseFloat(res.data.runePriceUSD))
 }
 
 export const getAssetBalance = async (chain: Chain, address: string, identifier: string) => {

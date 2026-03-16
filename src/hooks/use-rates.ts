@@ -1,104 +1,49 @@
-import { useEffect } from 'react'
-import { useQuery, useQueryClient } from '@tanstack/react-query'
-import { assetFromString, getCommonAssetInfo, USwapNumber } from '@tcswap/core'
-import { useAssets } from '@/hooks/use-assets'
+import { useQuery } from '@tanstack/react-query'
+import { USwapNumber } from '@tcswap/core'
 import { useAssetFrom, useAssetTo } from '@/hooks/use-swap'
-import { getAssetRates } from '@/lib/api'
+import { getMidgardPools, getMidgardRunePrice } from '@/lib/api'
 
 export type AssetRateMap = Record<string, USwapNumber>
 
-class RateIdentifierCache {
-  private maxSize: number
-  private cache: Map<string, number>
-
-  constructor(maxSize: number = 100) {
-    this.maxSize = maxSize
-    this.cache = new Map()
-  }
-
-  add(identifiers: string[]): boolean {
-    let hasNew = false
-    const now = Date.now()
-
-    for (const id of identifiers) {
-      const _id = id.toLowerCase()
-      if (!this.cache.has(_id)) {
-        hasNew = true
-      }
-      this.cache.delete(_id)
-      this.cache.set(_id, now)
-    }
-
-    while (this.cache.size > this.maxSize) {
-      const oldestKey = this.cache.keys().next().value
-      if (oldestKey) {
-        this.cache.delete(oldestKey)
-      }
-    }
-
-    return hasNew
-  }
-
-  getAll(): string[] {
-    return Array.from(this.cache.keys())
-  }
-
-  size(): number {
-    return this.cache.size
-  }
-}
-
-const identifierCache = new RateIdentifierCache(100)
+const RUNE_IDENTIFIER = 'THOR.RUNE'
 
 export const useRates = (identifiers: string[]): { rates: AssetRateMap; isLoading: boolean } => {
-  const { geckoMap } = useAssets()
-  const queryClient = useQueryClient()
-
-  useEffect(() => {
-    const gasIdentifiers = identifiers.map(id => getCommonAssetInfo(assetFromString(id).chain).identifier)
-    const hasNew = identifierCache.add([...identifiers, ...gasIdentifiers])
-
-    if (hasNew) {
-      queryClient.invalidateQueries({ queryKey: ['asset-rates-accumulated'] })
-    }
-  }, [identifiers, queryClient])
-
   const { data, isLoading } = useQuery({
-    queryKey: ['asset-rates-accumulated'],
-    enabled: !!geckoMap && identifierCache.size() > 0,
-    retry: false,
-    staleTime: 3 * 60_000,
-    refetchOnMount: false,
+    queryKey: ['thorchain-pool-prices'],
     queryFn: async () => {
-      if (!geckoMap || identifierCache.size() === 0) return {}
+      const [pools, runePrice] = await Promise.all([getMidgardPools(), getMidgardRunePrice()])
 
-      const allIdentifiers = identifierCache.getAll()
-      const idMap = new Map<string, string>()
-
-      for (const identifier of allIdentifiers) {
-        const gid = geckoMap.get(identifier)
-        if (gid) idMap.set(identifier, gid)
+      const priceMap: AssetRateMap = {}
+      for (const pool of pools) {
+        const price = parseFloat(pool.assetPriceUSD)
+        if (pool.asset && !isNaN(price) && price > 0) {
+          priceMap[pool.asset.toLowerCase()] = new USwapNumber(price)
+        }
       }
 
-      if (!idMap.size) return {}
+      if (!isNaN(runePrice) && runePrice > 0) {
+        priceMap[RUNE_IDENTIFIER.toLowerCase()] = new USwapNumber(runePrice)
+      }
 
-      return await fetchRates(Array.from(idMap.values()), Array.from(idMap.keys()))
-    }
+      return priceMap
+    },
+    staleTime: 3 * 60_000,
+    refetchOnMount: false,
+    refetchOnWindowFocus: false,
+    retry: false
   })
 
   const rates: AssetRateMap = {}
   if (data) {
     for (const id of identifiers) {
-      const _id = id.toLowerCase()
-      if (data[_id]) {
-        rates[id] = data[_id]
-      }
+      const price = data[id.toLowerCase()]
+      if (price) rates[id] = price
     }
   }
 
   return {
     rates,
-    isLoading: isLoading || !geckoMap || identifiers.length === 0
+    isLoading: isLoading || identifiers.length === 0
   }
 }
 
@@ -112,16 +57,4 @@ export const useSwapRates = () => {
     rateFrom: assetFrom && rates[assetFrom.identifier],
     rateTo: assetTo && rates[assetTo.identifier]
   }
-}
-
-async function fetchRates(geckoIds: string[], identifiers: string[]): Promise<AssetRateMap> {
-  const data = await getAssetRates(geckoIds.join(','))
-  const result: AssetRateMap = {}
-
-  identifiers.forEach((id, i) => {
-    const price = data[geckoIds[i]]?.usd
-    if (price) result[id] = new USwapNumber(price)
-  })
-
-  return result
 }
