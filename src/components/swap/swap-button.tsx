@@ -40,7 +40,8 @@ export const SwapButton = ({ instantSwapSupported, instantSwapAvailable }: SwapB
   const { isLoading: isSimulating, approveData } = useSimulation()
   const { balance, isLoading: isBalanceLoading } = useBalance()
   const { mimir } = useMimir()
-  const isLimitSwapDisabled = mimir['ENABLEADVSWAPQUEUE'] === 2
+  const isMayaChain = quote?.providers[0] === 'MAYACHAIN' || quote?.providers[0] === 'MAYACHAIN_STREAMING'
+  const isLimitSwapDisabled = mimir['ENABLEADVSWAPQUEUE'] === 2 || isMayaChain
 
   const { openDialog } = useDialog()
 
@@ -54,7 +55,7 @@ export const SwapButton = ({ instantSwapSupported, instantSwapAvailable }: SwapB
 
   const getState = (): ButtonState => {
     if (isLimitSwap && isLimitSwapDisabled) {
-      return { text: 'Temporarily Not Available', spinner: false, accent: false }
+      return { text: isMayaChain ? 'Not Available' : 'Temporarily Not Available', spinner: false, accent: false }
     }
 
     if (!assetFrom || !assetTo) return { text: '', spinner: true, accent: false }
