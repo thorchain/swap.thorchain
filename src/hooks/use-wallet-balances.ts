@@ -3,7 +3,7 @@ import { useQuery } from '@tanstack/react-query'
 import { AssetValue, USwapNumber } from '@tcswap/core'
 import { useAssets } from '@/hooks/use-assets'
 import { useRates } from '@/hooks/use-rates'
-import { useAccounts } from '@/hooks/use-wallets'
+import { useAccounts, useHasHydrated } from '@/hooks/use-wallets'
 import { getUSwap } from '@/lib/wallets'
 import { WalletAccount } from '@/store/wallets-store'
 
@@ -29,6 +29,7 @@ export interface ChainWalletData {
 export const useWalletBalances = () => {
   const { assets } = useAssets()
   const accounts = useAccounts()
+  const hasHydrated = useHasHydrated()
   const uSwap = getUSwap()
 
   const iconMap = useMemo(() => {
@@ -60,7 +61,7 @@ export const useWalletBalances = () => {
         balances: r.status === 'fulfilled' ? r.value.balances : ([] as AssetValue[])
       }))
     },
-    enabled: accounts.length > 0,
+    enabled: accounts.length > 0 && hasHydrated,
     staleTime: 30_000,
     retry: false,
     refetchOnMount: false

@@ -52,15 +52,15 @@ export function WalletSidebar({ isOpen, onOpenChange }: WalletSidebarProps) {
 
   return (
     <Drawer direction="right" open={isOpen} onOpenChange={onOpenChange}>
-      <DrawerContent className="flex flex-col p-0" style={{ width: 400, maxWidth: '100vw' }}>
-        <DrawerHeader className="flex flex-row items-center justify-between px-4 py-5">
+      <DrawerContent className="flex flex-col p-8" style={{ width: 400, maxWidth: '100vw' }}>
+        <DrawerHeader className="flex flex-row items-center justify-between p-0">
           <DrawerTitle className="text-2xl font-bold">Wallets</DrawerTitle>
           <button onClick={() => onOpenChange(false)} className="text-thor-gray hover:text-leah cursor-pointer transition-colors" aria-label="Close">
             <X className="size-5" />
           </button>
         </DrawerHeader>
 
-        <div className="flex flex-1 flex-col gap-6 overflow-y-auto p-4">
+        <div className="mt-7 flex flex-1 flex-col gap-7 overflow-y-auto">
           <div className="rounded-2xl border p-4">
             <div className="flex items-center justify-between gap-3">
               <div className="flex-1">
@@ -83,11 +83,7 @@ export function WalletSidebar({ isOpen, onOpenChange }: WalletSidebarProps) {
           )}
 
           {accountsByProvider.size > 0 && (
-            <div
-              className={cn('flex flex-col gap-6', {
-                'pointer-events-none': externalWalletMode
-              })}
-            >
+            <div className={cn('flex flex-col', externalWalletMode && 'pointer-events-none')}>
               {Array.from(accountsByProvider.entries()).map(([provider, providerAccounts]) => {
                 const chainDataList = providerAccounts.map(account => {
                   const found = walletData.find(d => d.account.provider === account.provider && d.account.network === account.network)
@@ -110,7 +106,7 @@ export function WalletSidebar({ isOpen, onOpenChange }: WalletSidebarProps) {
           )}
         </div>
 
-        <div className="p-4">
+        <div className="py-4">
           <ThemeButton onClick={handleConnectWallet} disabled={externalWalletMode} variant="primaryMedium" className="w-full">
             Connect Wallet
           </ThemeButton>
