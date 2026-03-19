@@ -89,11 +89,13 @@ export const useWalletStore = create<WalletState>()(
       }),
       onRehydrateStorage: () => async (state, error) => {
         if (error || !state) {
-          return console.log(error)
+          console.log(error)
+          useWalletStore.setState({ hasHydrated: true })
+          return
         }
 
         Promise.allSettled(
-          state.accounts.map(w => {
+          (state.accounts ?? []).map(w => {
             return getAccounts(w.provider, [w.network])
           })
         )
@@ -111,6 +113,6 @@ export const useWalletStore = create<WalletState>()(
   )
 )
 
-useWalletStore.subscribe(state => {
+useWalletStore.subscribe(_state => {
   // todo
 })
