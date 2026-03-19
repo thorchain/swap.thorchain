@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import { X } from 'lucide-react'
 import { WalletOption } from '@tcswap/core'
+import { Icon } from '@/components/icons'
 import { ConnectWallet } from '@/components/connect-wallet/connect-wallet'
 import { useDialog } from '@/components/global-dialog'
 import { Drawer, DrawerContent, DrawerHeader, DrawerTitle } from '@/components/ui/drawer'
@@ -71,6 +72,15 @@ export function WalletSidebar({ isOpen, onOpenChange }: WalletSidebarProps) {
               <Switch checked={externalWalletMode} onCheckedChange={setExternalWalletMode} size="md" />
             </div>
           </div>
+
+          {externalWalletMode && (
+            <div className="border-jacob flex items-center gap-3 rounded-xl border p-4">
+              <Icon name="warning" className="text-jacob size-6 shrink-0" />
+              <div className="text-txt-text-modal text-sm">
+                If an asset isn’t supported in External Wallet mode, you’ll be prompted to connect an in-browser wallet
+              </div>
+            </div>
+          )}
 
           {accountsByProvider.size > 0 && (
             <div

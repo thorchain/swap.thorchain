@@ -13,7 +13,7 @@ import { useMimir } from '@/hooks/use-mimir'
 import { useQuote } from '@/hooks/use-quote'
 import { useSimulation } from '@/hooks/use-simulation'
 import { useAssetFrom, useAssetTo, useSwap } from '@/hooks/use-swap'
-import { useSelectedAccount } from '@/hooks/use-wallets'
+import { useExternalWalletMode, useSelectedAccount, useSetExternalWalletMode } from '@/hooks/use-wallets'
 import { getUSwap } from '@/lib/wallets'
 import { useIsLimitSwap } from '@/store/limit-swap-store'
 
@@ -35,6 +35,8 @@ export const SwapButton = ({ instantSwapSupported, instantSwapAvailable }: SwapB
   const uSwap = getUSwap()
   const selectedAccount = useSelectedAccount()
   const isLimitSwap = useIsLimitSwap()
+  const externalWalletMode = useExternalWalletMode()
+  const setExternalWalletMode = useSetExternalWalletMode()
   const { valueFrom } = useSwap()
   const { quote, isLoading: isQuoting, refetch: refetchQuote } = useQuote()
   const { isLoading: isSimulating, approveData } = useSimulation()
@@ -76,7 +78,10 @@ export const SwapButton = ({ instantSwapSupported, instantSwapAvailable }: SwapB
           text: `Connect ${chainLabel(assetFrom.chain)} Wallet`,
           spinner: false,
           accent: false,
-          onClick: () => openDialog(ConnectWallet, { chain: assetFrom.chain })
+          onClick: () => {
+            if (externalWalletMode) setExternalWalletMode(false)
+            openDialog(ConnectWallet, { chain: assetFrom.chain })
+          }
         }
       }
     }
