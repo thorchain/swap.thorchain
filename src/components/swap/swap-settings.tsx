@@ -158,9 +158,8 @@ export const SwapSettings = () => {
                 <span className="text-sm font-semibold">
                   <span className="me-1">Time between sub-swaps</span>
                   <InfoTooltip>
-                    Time between each sub-swap, measured in blocks. The more blocks between each sub-swap, the better the price execution. The default
-                    value is 1 block. Chosing zero blocks will overide the TWAP and convert your trade into a market order, resulting in the worst
-                    price but fastest execution.
+                    Time between each sub-swap, measured in blocks. The more blocks between each sub-swap, the better the price execution. Zero blocks
+                    enables rapid swaps — multiple sub-swaps execute per block for fastest completion. The default value is 0 (rapid).
                   </InfoTooltip>
                 </span>
                 <span className="text-xs font-semibold">{localCustomInterval} blocks</span>
@@ -174,7 +173,7 @@ export const SwapSettings = () => {
               <div className="text-thor-gray mt-1 flex items-center justify-between text-center text-[10px] font-semibold">
                 <div className="flex flex-col">
                   <span>0 blocks</span>
-                  <span>Market Order</span>
+                  <span>Rapid Swap</span>
                 </div>
                 <div className="flex flex-col">
                   <span>1 block</span>

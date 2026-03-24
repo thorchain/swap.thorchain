@@ -120,10 +120,11 @@ export function recalculateStreamingEstimatedTime(
   if (!estimatedTime) return undefined
 
   const paramParts = (memo.split(':')[3] || '').split('/')
-  const existingInterval = parseInt(paramParts[1] || '1', 10) || 1
+  // const existingInterval = parseInt(paramParts[1] || '1', 10) || 1
   const existingQuantity = parseInt(paramParts[2] || '1', 10) || 1
 
-  const effectiveInterval = customInterval > 0 ? customInterval : existingInterval
+  // interval=0 means rapid swaps (multiple sub-swaps per block); treat as 1 block for time estimation
+  const effectiveInterval = customInterval > 0 ? customInterval : 1
   const effectiveQuantity = customQuantity > 0 ? customQuantity : existingQuantity
 
   return recalculateEstimatedTime(estimatedTime, effectiveInterval * effectiveQuantity * THORCHAIN_BLOCK_TIME_SECONDS)
