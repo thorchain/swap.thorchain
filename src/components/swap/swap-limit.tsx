@@ -47,7 +47,7 @@ export const SwapLimit = ({ quote }: SwapLimitProps) => {
 
   useEffect(() => {
     if (!expectedBuyAmountPerUnit) return
-    if (!pricePerUnit || pricePerUnit.eq(0)) {
+    if (!pricePerUnit) {
       setPricePerUnit(expectedBuyAmountPerUnit)
     }
   }, [expectedBuyAmountPerUnit, pricePerUnit])
@@ -121,7 +121,7 @@ export const SwapLimit = ({ quote }: SwapLimitProps) => {
           onApply: setLimitSwapExpiry,
           initialDays: days ? String(days) : '',
           initialHours: hours ? String(hours) : '',
-          initialMinutes: minutes ? String(minutes) : '',
+          initialMinutes: minutes ? String(minutes) : ''
         })
       }
     }
@@ -178,7 +178,10 @@ export const SwapLimit = ({ quote }: SwapLimitProps) => {
           </div>
         ) : (
           <ThemeButton
-            className={cn('h-6', activePreset === 'market' ? 'bg-liquidity-green text-txt-green-default' : 'text-txt-btn-small-default')}
+            className={cn(
+              'h-6',
+              activePreset === 'market' && pricePerUnit?.gt(0) ? 'bg-liquidity-green text-txt-green-default' : 'text-txt-btn-small-default'
+            )}
             variant="secondarySmall"
             onClick={() => applyPreset(0)}
           >

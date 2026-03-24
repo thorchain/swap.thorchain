@@ -15,7 +15,7 @@ import { useSimulation } from '@/hooks/use-simulation'
 import { useAssetFrom, useAssetTo, useSwap } from '@/hooks/use-swap'
 import { useExternalWalletMode, useSelectedAccount, useSetExternalWalletMode } from '@/hooks/use-wallets'
 import { getUSwap } from '@/lib/wallets'
-import { useIsLimitSwap } from '@/store/limit-swap-store'
+import { useIsLimitSwap, useLimitSwapBuyAmount } from '@/store/limit-swap-store'
 
 interface SwapButtonProps {
   instantSwapSupported: boolean
@@ -35,6 +35,7 @@ export const SwapButton = ({ instantSwapSupported, instantSwapAvailable }: SwapB
   const uSwap = getUSwap()
   const selectedAccount = useSelectedAccount()
   const isLimitSwap = useIsLimitSwap()
+  const limitSwapBuyAmount = useLimitSwapBuyAmount()
   const externalWalletMode = useExternalWalletMode()
   const setExternalWalletMode = useSetExternalWalletMode()
   const { valueFrom } = useSwap()
@@ -67,6 +68,10 @@ export const SwapButton = ({ instantSwapSupported, instantSwapAvailable }: SwapB
     if (isQuoting || isSimulating) return { text: 'Quoting...', spinner: true, accent: false }
 
     if (!quote) return { text: 'No Valid Quotes', spinner: false, accent: false }
+
+    if (isLimitSwap && limitSwapBuyAmount === '0') {
+      return { text: 'Enter limit price', spinner: false, accent: false }
+    }
 
     if (!selectedAccount) {
       if (instantSwapSupported) {
