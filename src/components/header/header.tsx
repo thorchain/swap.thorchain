@@ -2,6 +2,7 @@
 
 import Image from 'next/image'
 import { useEffect, useState } from 'react'
+import { SendMemoButton } from '@/components/header/send-memo-button'
 import { ThemeSwitchButton } from '@/components/header/theme-switch-button'
 import { TransactionHistoryButton } from '@/components/header/transaction-history-button'
 import { useDialog } from '@/components/global-dialog'
@@ -43,6 +44,7 @@ export function Header() {
         </a>
 
         <div className="flex flex-1 flex-wrap items-center justify-end gap-2">
+          <SendMemoButton />
           <ThemeSwitchButton />
           <TransactionHistoryButton />
           {connectedProviders.length > 0 ? (

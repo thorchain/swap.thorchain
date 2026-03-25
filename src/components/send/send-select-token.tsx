@@ -11,7 +11,6 @@ import { WalletAccount } from '@/store/wallets-store'
 import { DecimalText } from '@/components/decimal/decimal-text'
 import { toCurrencyFixed } from '@/lib/utils'
 import { CheckIcon } from 'lucide-react'
-import * as React from 'react'
 
 export interface SelectTokenDialogProps {
   isOpen: boolean
@@ -19,13 +18,14 @@ export interface SelectTokenDialogProps {
   selected: TokenBalance
   selectedAccount: WalletAccount
   onSelect: (token: TokenBalance, account: WalletAccount) => void
+  filter?: (token: TokenBalance) => boolean
 }
 
-export function SendSelectToken({ isOpen, onOpenChange, selected, selectedAccount, onSelect }: SelectTokenDialogProps) {
+export function SendSelectToken({ isOpen, onOpenChange, selected, selectedAccount, onSelect, filter }: SelectTokenDialogProps) {
   const { walletData } = useWalletBalances()
 
   const byProvider = walletData.reduce<Map<WalletOption, { account: WalletAccount; token: TokenBalance }[]>>((map, { account, tokens }) => {
-    const entries = tokens.filter(t => t.amount > 0).map(token => ({ account, token }))
+    const entries = tokens.filter(t => t.amount > 0 && (!filter || filter(t))).map(token => ({ account, token }))
     if (!entries.length) return map
     const existing = map.get(account.provider) ?? []
     map.set(account.provider, [...existing, ...entries])
