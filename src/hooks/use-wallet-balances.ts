@@ -52,7 +52,7 @@ export const useWalletBalances = () => {
         accounts.map(async account => {
           const wallet = uSwap.getWallet(account.provider, account.network)
           if (!wallet || !('getBalance' in wallet)) return { account, balances: [] as AssetValue[] }
-          const balances: AssetValue[] = await (wallet as any).getBalance(wallet.address)
+          const balances: AssetValue[] = await (wallet as any).getBalance(wallet.address, false)
           return { account, balances: balances || [] }
         })
       )
@@ -86,7 +86,7 @@ export const useWalletBalances = () => {
     }
 
     return allBalances.map(({ account, balances }) => {
-      const tokens: TokenBalance[] = balances.map(b => {
+      const tokens: TokenBalance[] = balances.filter(b => b.ticker && b.ticker.toLowerCase() !== 'unknown').map(b => {
         const rate = rates[assetIdentifier(b)]
         const amount = parseFloat(b.toSignificant())
         const usdValue = rate ? rate.mul(amount) : undefined
