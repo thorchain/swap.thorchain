@@ -153,6 +153,8 @@ export const chainLabel = (c: Chain | string): string => {
       return 'BNB Chain'
     case Chain.BitcoinCash:
       return 'Bitcoin Cash'
+    case Chain.Tron:
+      return 'TRON'
     case Chain.Ripple:
       return 'XRP Ledger'
     case 'XMR':
