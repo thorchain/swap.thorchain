@@ -118,8 +118,12 @@ export const SwapSettings = () => {
           <div className="flex flex-col gap-2">
             <div className="flex justify-between text-sm font-semibold">
               <div className="flex items-center gap-1">
-                <span>TWAP (Time Weighted Average Price)</span>
-                <InfoTooltip>TWAP trades on THORChain are called "streaming swaps" in the documents and code.</InfoTooltip>
+                <span>Time Weighted Average Price (TWAP)</span>
+                <InfoTooltip>
+                  TWAP trades on THORChain are called "streaming swaps" in the documents and code. <br /> <br />
+                  To place an instant sell order, which will result in the worst price execution, enter 1 for the number of sub-swaps and 1 block for
+                  the time between sub-swaps.
+                </InfoTooltip>
               </div>
             </div>
             <span className="text-thor-gray text-xs">
@@ -133,8 +137,8 @@ export const SwapSettings = () => {
                 <span className="text-sm font-semibold">
                   <span className="me-1">Number of sub-swaps</span>
                   <InfoTooltip>
-                    Split your trade into multiple sub-swaps. The more sub-swaps, the better price execution. When set to zero, the protocol will
-                    calculate the number of sub-swaps for you so that each one will have a slippage of 5 bps. The default value is zero.
+                    Break up your order into smaller trades called sub-swaps. The more sub-swaps, the better price execution. When set to zero, the
+                    protocol will calculate the number of sub-swaps for you so that each one will have a slippage of 5 bps. The default value is zero.
                   </InfoTooltip>
                 </span>
                 <span className="text-xs font-semibold">{localCustomQuantity}</span>
@@ -158,8 +162,8 @@ export const SwapSettings = () => {
                 <span className="text-sm font-semibold">
                   <span className="me-1">Time between sub-swaps</span>
                   <InfoTooltip>
-                    Time between each sub-swap, measured in blocks. The more blocks between each sub-swap, the better the price execution. Zero blocks
-                    enables rapid swaps — multiple sub-swaps execute per block for fastest completion. The default value is 0 (rapid).
+                    Time between each sub-swap measured in blocks. The more blocks between each sub-swap, the better the price execution. Choosing zero
+                    blocks will do multiple sub-swaps every block for faster execution. The default value is zero blocks.
                   </InfoTooltip>
                 </span>
                 <span className="text-xs font-semibold">{localCustomInterval} blocks</span>
