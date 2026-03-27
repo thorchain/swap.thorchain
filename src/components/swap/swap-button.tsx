@@ -58,7 +58,7 @@ export const SwapButton = ({ instantSwapSupported, instantSwapAvailable }: SwapB
 
   const getState = (): ButtonState => {
     if (isLimitSwap && isLimitSwapDisabled) {
-      return { text: isMayaChain ? 'Not Supported for This Pair' : 'Temporarily Not Available', spinner: false, accent: false }
+      return { text: isMayaChain ? 'Limit Order Not Supported' : 'Temporarily Not Available', spinner: false, accent: false }
     }
 
     if (!assetFrom || !assetTo) return { text: '', spinner: true, accent: false }
