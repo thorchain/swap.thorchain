@@ -1,19 +1,33 @@
 import { useQuery } from '@tanstack/react-query'
 import { USwapNumber } from '@tcswap/core'
 import { useAssetFrom, useAssetTo } from '@/hooks/use-swap'
-import { getMidgardPools, getMidgardRunePrice } from '@/lib/api'
+import { getMayaMidgardCacaoPrice, getMayaMidgardPools, getMidgardPools, getMidgardRunePrice } from '@/lib/api'
 
 export type AssetRateMap = Record<string, USwapNumber>
 
 const RUNE_IDENTIFIER = 'THOR.RUNE'
+const CACAO_IDENTIFIER = 'MAYA.CACAO'
 
 export const useRates = (identifiers: string[]): { rates: AssetRateMap; isLoading: boolean } => {
   const { data, isLoading } = useQuery({
     queryKey: ['thorchain-pool-prices'],
     queryFn: async () => {
-      const [pools, runePrice] = await Promise.all([getMidgardPools(), getMidgardRunePrice()])
+      const [pools, runePrice, mayaPools, cacaoPrice] = await Promise.all([
+        getMidgardPools(),
+        getMidgardRunePrice(),
+        getMayaMidgardPools().catch(() => []),
+        getMayaMidgardCacaoPrice().catch(() => NaN)
+      ])
 
       const priceMap: AssetRateMap = {}
+
+      for (const pool of mayaPools) {
+        const price = parseFloat(pool.assetPriceUSD)
+        if (pool.asset && !isNaN(price) && price > 0) {
+          priceMap[pool.asset.toLowerCase()] = new USwapNumber(price)
+        }
+      }
+
       for (const pool of pools) {
         const price = parseFloat(pool.assetPriceUSD)
         if (pool.asset && !isNaN(price) && price > 0) {
@@ -23,6 +37,10 @@ export const useRates = (identifiers: string[]): { rates: AssetRateMap; isLoadin
 
       if (!isNaN(runePrice) && runePrice > 0) {
         priceMap[RUNE_IDENTIFIER.toLowerCase()] = new USwapNumber(runePrice)
+      }
+
+      if (!isNaN(cacaoPrice) && cacaoPrice > 0) {
+        priceMap[CACAO_IDENTIFIER.toLowerCase()] = new USwapNumber(cacaoPrice)
       }
 
       return priceMap
