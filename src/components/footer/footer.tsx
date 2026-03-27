@@ -1,4 +1,5 @@
 import { Icon } from '@/components/icons'
+import { Tooltip } from '@/components/tooltip'
 import { AppConfig } from '@/config'
 import { Separator } from '../ui/separator'
 
@@ -15,6 +16,10 @@ export function Footer() {
             <a href={AppConfig.tosLink} rel="noopener noreferrer" target="_blank">
               Terms of Use
             </a>
+            <Separator orientation="vertical" className="bg-andy h-full" />
+            <Tooltip content="While this website is built with care it may have unintended bugs which may lead to site malfunctioning and even loss of funds. Proceed only if you understand and accept these risks.">
+              <span className="cursor-default font-semibold text-red-500">Risk Policy</span>
+            </Tooltip>
             <Separator orientation="vertical" className="bg-andy h-full" />
             <div className="flex items-center gap-1">
               <span>Built by</span>
