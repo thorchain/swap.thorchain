@@ -7,6 +7,7 @@ import { Credenza, CredenzaContent, CredenzaHeader, CredenzaTitle } from '@/comp
 import { Input } from '@/components/ui/input'
 import { ScrollArea } from '@/components/ui/scroll-area'
 import { ThemeButton } from '@/components/theme-button'
+import { composeMemo, parsePlaceholders, previewMemo } from '@/components/send-memo/send-memo-helpers'
 import { cn } from '@/lib/utils'
 
 interface MemoExample {
@@ -61,48 +62,6 @@ const PAYLOAD_BADGE: Record<MemoExample['payload'], { label: string; className: 
   dust: { label: 'dust', className: 'text-jacob bg-jacob/10' }
 }
 
-/** Returns placeholder tokens (ALL_CAPS parts after the function name). */
-function parsePlaceholders(template: string): string[] {
-  return template
-    .split(':')
-    .slice(1)
-    .filter(p => /^[A-Z][A-Z0-9]+$/.test(p))
-}
-
-/**
- * Preview memo — always shows the full template structure:
- * filled values replace their placeholder, unfilled placeholders stay as their name.
- * e.g. BOND:thor1abc:PROVIDERADDRESS:FEE while only NODEADDRESS is filled.
- */
-function previewMemo(template: string, values: Record<string, string>): string {
-  return template
-    .split(':')
-    .map((part, i) => {
-      if (i === 0) return part
-      if (/^[A-Z][A-Z0-9]+$/.test(part)) return values[part]?.trim() || part
-      return part
-    })
-    .join(':')
-}
-
-/**
- * Submission memo — replaces placeholders with user values and strips trailing
- * empty segments so unfilled optional params are cleanly omitted.
- * e.g. BOND:thor1abc when PROVIDERADDRESS and FEE are left blank.
- */
-function composeMemo(template: string, values: Record<string, string>): string {
-  const parts = template.split(':').map((part, i) => {
-    if (i === 0) return part
-    if (/^[A-Z][A-Z0-9]+$/.test(part)) return values[part]?.trim() ?? ''
-    return part
-  })
-
-  while (parts.length > 1 && parts[parts.length - 1] === '') {
-    parts.pop()
-  }
-
-  return parts.join(':')
-}
 
 interface SendMemoExamplesProps {
   isOpen: boolean
@@ -186,7 +145,6 @@ export function SendMemoExamples({ isOpen, onOpenChange, onSelect }: SendMemoExa
                 )
               })}
 
-              {/* Live preview */}
               <div className="bg-blade rounded-xl p-3">
                 <p className="text-thor-gray mb-1 text-xs font-medium">Preview</p>
                 <p className="text-leah font-mono text-sm break-all">{preview}</p>
@@ -206,7 +164,6 @@ export function SendMemoExamples({ isOpen, onOpenChange, onSelect }: SendMemoExa
     )
   }
 
-  // ── List view ─────────────────────────────────────────────────────────────
   return (
     <Credenza open={isOpen} onOpenChange={handleClose}>
       <CredenzaContent className="flex h-auto max-h-5/6 flex-col rounded-2xl md:max-w-xl">

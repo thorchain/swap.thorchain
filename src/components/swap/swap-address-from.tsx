@@ -7,7 +7,7 @@ import { useAssetFrom } from '@/hooks/use-swap'
 import { useAccounts, useSelectAccount, useSelectedAccount } from '@/hooks/use-wallets'
 import { cn, truncate } from '@/lib/utils'
 
-export const SwapAddressFrom = () => {
+export const SwapAddressFrom = ({ minOptions = 2 }: { minOptions?: number } = {}) => {
   const accounts = useAccounts()
   const selectedAccount = useSelectedAccount()
   const selectAccount = useSelectAccount()
@@ -15,7 +15,7 @@ export const SwapAddressFrom = () => {
 
   const options = accounts.filter(a => a.network === assetFrom?.chain)
 
-  if (!selectedAccount || options.length < 2) return null
+  if (!selectedAccount || options.length < minOptions) return null
 
   return (
     <DropdownMenu modal={false}>

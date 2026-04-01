@@ -5,7 +5,7 @@ import { useEffect, useState } from 'react'
 import { Chain, CosmosChain, CosmosChains, EVMChain, EVMChains, FeeOption, isGasAsset, USwapNumber, UTXOChain, UTXOChains } from '@tcswap/core'
 import { getAddressValidator } from '@tcswap/toolboxes'
 import { estimateTransactionFee } from '@tcswap/toolboxes/cosmos'
-import { Info, LoaderCircle } from 'lucide-react'
+import { LoaderCircle } from 'lucide-react'
 import { toast } from 'sonner'
 import { Credenza, CredenzaContent, CredenzaHeader, CredenzaTitle } from '@/components/ui/credenza'
 import { ScrollArea } from '@/components/ui/scroll-area'
@@ -240,7 +240,7 @@ export function Send({ isOpen, onOpenChange, initialToken, account }: SendDialog
                   value={recipient}
                   aria-invalid={!isValidRecipient}
                   onChange={e => setRecipient(e.target.value)}
-                  className={cn('bg-input-modal-bg-active border-border-sub-container-modal-low', {
+                  className={cn('bg-swap-bloc border-border-sub-container-modal-low', {
                     'pl-13': accounts.find(a => a.network === selectedToken.balance.chain && a.address.toLowerCase() === recipient.toLowerCase())
                   })}
                 />
@@ -295,9 +295,7 @@ export function Send({ isOpen, onOpenChange, initialToken, account }: SendDialog
             </div>
 
             <div className="text-thor-gray flex items-center justify-between text-sm">
-              <div className="flex items-center gap-1">
-                Transaction Fee <Info className="size-3.5" />
-              </div>
+              <div className="flex items-center gap-1">Transaction Fee</div>
               <span className="text-leah font-semibold">
                 {txFee ? (
                   <>

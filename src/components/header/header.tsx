@@ -44,7 +44,6 @@ export function Header() {
         </a>
 
         <div className="flex flex-1 flex-wrap items-center justify-end gap-2">
-          <SendMemoButton />
           <ThemeSwitchButton />
           <TransactionHistoryButton />
           {connectedProviders.length > 0 ? (
@@ -60,6 +59,7 @@ export function Header() {
               WALLET
             </ThemeButton>
           )}
+          <SendMemoButton />
         </div>
       </div>
     </header>

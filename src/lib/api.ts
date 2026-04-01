@@ -59,6 +59,42 @@ export const getMimir = async (): Promise<Record<string, number>> => {
   return thornode.get('/thorchain/mimir').then(res => res.data)
 }
 
+export interface ThorNodeInfo {
+  node_address: string
+  status: string
+  total_bond: string
+  current_award: string
+  ip_address: string
+  version: string
+  slash_points: number
+  jail?: { release_height: number; reason: string }
+  bond_providers: {
+    providers: { bond_address: string; bond: string }[]
+    node_operator_fee: string
+  }
+}
+
+export const getThorNodeInfo = async (address: string): Promise<ThorNodeInfo> => {
+  return thornode.get(`/thorchain/node/${address}`).then(res => res.data)
+}
+
+export const getTcyStaker = async (address: string): Promise<{ address: string; amount: string }> => {
+  return thornode.get(`/thorchain/tcy_staker/${address}`).then(res => res.data)
+}
+
+export interface TcyClaimer {
+  asset: string
+  l1_address: string
+  amount: string
+}
+
+export const getTcyClaimer = async (address: string): Promise<TcyClaimer[]> => {
+  return thornode
+    .get(`/thorchain/tcy_claimer/${address}`)
+    .then(res => res.data?.tcy_claimer ?? [])
+    .catch(() => [])
+}
+
 export const getInboundAddresses = () => {
   return USwapApi.thornode.getInboundAddresses()
 }

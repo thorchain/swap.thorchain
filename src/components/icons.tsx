@@ -353,6 +353,17 @@ const ListIcon = memo<IconProps>(props => (
   </SVG>
 ))
 
+const BurgerIcon = memo<IconProps>(props => (
+  <SVG {...props} viewBox="0 0 28 28">
+    <mask id="mask0_3921_19455" style={{ maskType: 'alpha' }} maskUnits="userSpaceOnUse" x="0" y="0" width="28" height="28">
+      <rect width="28" height="28" fill="currentColor" />
+    </mask>
+    <g mask="url(#mask0_3921_19455)">
+      <path d="M22.167 18.667H5.83301V16.333H22.167V18.667ZM22.167 11.667H5.83301V9.33301H22.167V11.667Z" fill="currentColor" />
+    </g>
+  </SVG>
+))
+
 // Icon name mapping
 const iconMap = {
   'arrow-m-up': ArrowMUpIcon,
@@ -391,7 +402,8 @@ const iconMap = {
   warning: WarningIcon,
   'warning-filled': WarningFilledIcon,
   x: XIcon,
-  list: ListIcon
+  list: ListIcon,
+  burger: BurgerIcon
 } as const
 
 export type IconName = keyof typeof iconMap
