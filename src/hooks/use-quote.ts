@@ -52,8 +52,8 @@ export const useQuote = (): UseQuote => {
           sellAmount: valueFrom.toSignificant(),
           slippage: slippage ?? 99,
           providers: AppConfig.providers,
-          streaming_interval: customInterval,
-          streaming_quantity: customQuantity
+          streamingInterval: customInterval,
+          streamingQuantity: customQuantity
         },
         createAbortController(signal)
       ).then(quotes => {

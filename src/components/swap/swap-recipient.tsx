@@ -18,7 +18,7 @@ import { useIsMobile } from '@/hooks/use-mobile'
 import { useAssetFrom, useAssetTo, useCustomInterval, useCustomQuantity, useSlippage, useSwap } from '@/hooks/use-swap'
 import { useAccounts, useSelectedAccount } from '@/hooks/use-wallets'
 import { getQuotes } from '@/lib/api'
-import { prepareQuoteForLimitSwap, prepareQuoteForStreaming } from '@/lib/memo-helpers'
+import { prepareQuoteForLimitSwap } from '@/lib/memo-helpers'
 import { cn, truncate } from '@/lib/utils'
 import { useIsLimitSwap, useLimitSwapBuyAmount, useLimitSwapExpiry } from '@/store/limit-swap-store'
 import { WalletAccount } from '@/store/wallets-store'
@@ -76,6 +76,8 @@ export const SwapRecipient = ({ provider, onFetchQuote }: SwapRecipientProps) =>
   const fetchQuote = () => {
     setQuoting(true)
 
+    const isThorchain = provider === 'THORCHAIN' || provider === 'THORCHAIN_STREAMING'
+
     getQuotes({
       buyAsset: assetTo.identifier,
       sellAsset: assetFrom.identifier,
@@ -85,16 +87,15 @@ export const SwapRecipient = ({ provider, onFetchQuote }: SwapRecipientProps) =>
       refundAddress: refundRequired ? refundAddress : provider === 'MAYACHAIN' ? undefined : selectedAccount?.address,
       dry: !(refundRequired || selectedAccount),
       slippage: isLimitSwap ? 0 : (slippage ?? 99),
-      providers: [provider]
+      providers: [provider],
+      ...(isThorchain && !isLimitSwap && { streamingInterval: customInterval, streamingQuantity: customQuantity })
     })
       .then(quotes => {
         let quote = quotes[0]
 
         // For THORChain limit orders, modify the memo to use limit order format
-        if (isLimitSwap && (provider === 'THORCHAIN' || provider === 'THORCHAIN_STREAMING')) {
+        if (isLimitSwap && isThorchain) {
           quote = prepareQuoteForLimitSwap(quote, limitSwapBuyAmount, limitSwapExpiry)
-        } else if (provider === 'THORCHAIN' || provider === 'THORCHAIN_STREAMING') {
-          quote = prepareQuoteForStreaming(quote, customInterval, customQuantity)
         }
 
         onFetchQuote(quote)
