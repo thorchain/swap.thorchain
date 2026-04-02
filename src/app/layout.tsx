@@ -13,6 +13,25 @@ export const metadata: Metadata = {
   description: AppConfig.description,
   icons: {
     icon: AppConfig.favicon
+  },
+  openGraph: {
+    title: AppConfig.title,
+    description: "The World's Leading Bitcoin DEX",
+    url: AppConfig.baseUrl,
+    siteName: 'THORChain Swap',
+    images: [
+      {
+        url: `${AppConfig.baseUrl}/logo.svg`,
+        alt: 'THORChain Logo'
+      }
+    ],
+    type: 'website'
+  },
+  twitter: {
+    card: 'summary',
+    title: AppConfig.title,
+    description: "The World's Leading Bitcoin DEX",
+    images: [`${AppConfig.baseUrl}/logo.svg`]
   }
 }
 
