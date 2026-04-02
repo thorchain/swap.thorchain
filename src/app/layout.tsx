@@ -16,7 +16,7 @@ export const metadata: Metadata = {
   },
   openGraph: {
     title: AppConfig.title,
-    description: "The World's Leading Bitcoin DEX",
+    description: AppConfig.description,
     url: AppConfig.baseUrl,
     siteName: 'THORChain Swap',
     images: [
@@ -30,7 +30,7 @@ export const metadata: Metadata = {
   twitter: {
     card: 'summary',
     title: AppConfig.title,
-    description: "The World's Leading Bitcoin DEX",
+    description: AppConfig.description,
     images: [`${AppConfig.baseUrl}/logo.svg`]
   }
 }

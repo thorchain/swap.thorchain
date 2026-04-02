@@ -5,8 +5,7 @@ export const AppConfig = {
   id: 'thorchain',
   baseUrl: 'https://swap.thorchain.org',
   title: 'Swap BTC to ETH & Other Assets | THORChain',
-  description:
-    'Swap Bitcoin to ETH and other cryptocurrencies instantly with THORChain. Native BTC swaps with no bridges, wrapping, or centralized exchanges.',
+  description: "The World's Leading Bitcoin DEX",
   providers: [ProviderName.THORCHAIN, ProviderName.MAYACHAIN],
   favicon: '/favicon.ico',
   logo: '/logo.svg',
