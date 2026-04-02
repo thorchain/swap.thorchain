@@ -3,7 +3,7 @@ import { USwapNumber } from '@tcswap/core'
 import { ProviderName, USwapError } from '@tcswap/helpers'
 import { QuoteResponseRoute } from '@tcswap/helpers/api'
 import { AppConfig } from '@/config'
-import { useAssetFrom, useAssetTo, useSlippage, useSwap } from '@/hooks/use-swap'
+import { useAssetFrom, useAssetTo, useCustomInterval, useCustomQuantity, useSlippage, useSwap } from '@/hooks/use-swap'
 import { getQuotes } from '@/lib/api'
 
 type UseQuote = {
@@ -18,8 +18,20 @@ export const useQuote = (): UseQuote => {
   const slippage = useSlippage()
   const assetFrom = useAssetFrom()
   const assetTo = useAssetTo()
+  const customInterval = useCustomInterval()
+  const customQuantity = useCustomQuantity()
 
-  const queryKey = ['quote', valueFrom.toSignificant(), assetFrom?.identifier, assetTo?.identifier, assetFrom?.chain, assetTo?.chain, slippage]
+  const queryKey = [
+    'quote',
+    valueFrom.toSignificant(),
+    assetFrom?.identifier,
+    assetTo?.identifier,
+    assetFrom?.chain,
+    assetTo?.chain,
+    slippage,
+    customInterval,
+    customQuantity
+  ]
 
   const {
     data: quote,
@@ -39,7 +51,9 @@ export const useQuote = (): UseQuote => {
           sellAsset: assetFrom.identifier,
           sellAmount: valueFrom.toSignificant(),
           slippage: slippage ?? 99,
-          providers: AppConfig.providers
+          providers: AppConfig.providers,
+          streaming_interval: customInterval,
+          streaming_quantity: customQuantity
         },
         createAbortController(signal)
       ).then(quotes => {

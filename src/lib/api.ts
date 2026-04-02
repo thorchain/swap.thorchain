@@ -41,8 +41,11 @@ export const getAssetBalance = async (chain: Chain, address: string, identifier:
     })
 }
 
-export const getQuotes = async (json: QuoteRequest, abortController?: AbortController) => {
-  return USwapApi.getSwapQuote(json, {
+export const getQuotes = async (
+  json: QuoteRequest & { streaming_interval?: number; streaming_quantity?: number },
+  abortController?: AbortController
+) => {
+  return USwapApi.getSwapQuote(json as QuoteRequest, {
     abortController,
     retry: { maxRetries: 0 }
   }).then(res => res.routes)
