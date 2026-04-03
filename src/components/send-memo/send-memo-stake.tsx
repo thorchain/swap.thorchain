@@ -14,6 +14,7 @@ import { Icon } from '@/components/icons'
 import { ThemeButton } from '@/components/theme-button'
 import { assetIdentifierStr, tokenToAsset } from '@/components/send/send-helpers'
 import { SwapAddressFrom } from '@/components/swap/swap-address-from'
+import { SendMemoBeta } from '@/components/send-memo/send-memo-beta'
 import { isRuneToken, isTcyToken } from '@/components/send-memo/send-memo-helpers'
 import { useWalletBalances } from '@/hooks/use-wallet-balances'
 import { useAccounts, useSelectAccount } from '@/hooks/use-wallets'
@@ -119,9 +120,7 @@ export function SendMemoStake({ account, initialTab = 'stake', stakedAmount }: S
 
     setSubmitting(true)
 
-    const claimWallet = tab === 'claim' && claimEntry
-      ? uSwap.getWallet(claimEntry.account.provider, claimEntry.account.network)
-      : null
+    const claimWallet = tab === 'claim' && claimEntry ? uSwap.getWallet(claimEntry.account.provider, claimEntry.account.network) : null
     const wallet = claimWallet ?? uSwap.getWallet(thorAccount.provider, Chain.THORChain)
     if (!wallet) {
       setSubmitting(false)
@@ -243,9 +242,7 @@ export function SendMemoStake({ account, initialTab = 'stake', stakedAmount }: S
               </div>
               <div className="flex items-center justify-between text-sm">
                 <span className="text-thor-gray">Available to Claim</span>
-                <span className="text-leah font-medium">
-                  {claimLoading ? '...' : <DecimalText amount={String(totalClaimable)} symbol="TCY" />}
-                </span>
+                <span className="text-leah font-medium">{claimLoading ? '...' : <DecimalText amount={String(totalClaimable)} symbol="TCY" />}</span>
               </div>
               <div className="mt-1.5 flex items-center justify-between text-sm">
                 <span className="text-thor-gray">Staked</span>
@@ -305,6 +302,8 @@ export function SendMemoStake({ account, initialTab = 'stake', stakedAmount }: S
         <div className="flex items-center gap-1">Transaction Fee</div>
         <span>0.02 RUNE {runeRate && ` (${toCurrencyFixed(runeRate.mul(0.02).toCurrency('$', { trimTrailingZeros: false }))})`}</span>
       </div>
+
+      <SendMemoBeta />
     </div>
   )
 }

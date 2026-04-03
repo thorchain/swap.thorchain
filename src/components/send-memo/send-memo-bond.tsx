@@ -11,11 +11,12 @@ import { AssetIcon } from '@/components/asset-icon'
 import { useDialog } from '@/components/global-dialog'
 import { DecimalInput } from '@/components/decimal/decimal-input'
 import { DecimalText } from '@/components/decimal/decimal-text'
+import { SendMemoBeta } from '@/components/send-memo/send-memo-beta'
 import { Icon } from '@/components/icons'
 import { ThemeButton } from '@/components/theme-button'
 import { assetIdentifierStr, tokenToAsset } from '@/components/send/send-helpers'
 import { isRuneToken, isThorAddress } from '@/components/send-memo/send-memo-helpers'
-import { TokenBalance, useWalletBalances } from '@/hooks/use-wallet-balances'
+import { useWalletBalances } from '@/hooks/use-wallet-balances'
 import { useAccounts, useSelectAccount } from '@/hooks/use-wallets'
 import { useRates } from '@/hooks/use-rates'
 import { useNodeInfo } from '@/hooks/use-node-info'
@@ -165,7 +166,6 @@ export function SendMemoBond({ account, initialTab = 'bond' }: BondFormProps) {
           </button>
         ))}
       </div>
-
       <div className="bg-lawrence rounded-20 relative space-y-1.25 border p-2.5">
         <div className="relative">
           <Textarea
@@ -290,13 +290,14 @@ export function SendMemoBond({ account, initialTab = 'bond' }: BondFormProps) {
           </ThemeButton>
         )}
       </div>
-
       {tab !== 'track' && (
         <div className="text-thor-gray flex items-center justify-between px-4 text-xs">
           <div className="flex items-center gap-1">Transaction Fee</div>
           <span>0.02 RUNE {runeRate && ` (${toCurrencyFixed(runeRate.mul(0.02).toCurrency('$', { trimTrailingZeros: false }))})`}</span>
         </div>
       )}
+
+      <SendMemoBeta />
     </div>
   )
 }

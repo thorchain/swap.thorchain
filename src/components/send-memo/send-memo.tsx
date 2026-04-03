@@ -17,6 +17,7 @@ import { SendMemoExamples } from '@/components/send-memo/send-memo-examples'
 import { SendSelectToken } from '@/components/send/send-select-token'
 import { isMemoToken, isZeroPayloadMemo } from '@/components/send-memo/send-memo-helpers'
 import { TokenBalance, useWalletBalances } from '@/hooks/use-wallet-balances'
+import { SendMemoBeta } from '@/components/send-memo/send-memo-beta'
 import { useAccounts } from '@/hooks/use-wallets'
 import { useRates } from '@/hooks/use-rates'
 import { getUSwap } from '@/lib/wallets'
@@ -237,6 +238,8 @@ export function SendMemo() {
           {feeUsd && ` (${toCurrencyFixed(feeUsd.toCurrency('$', { trimTrailingZeros: false }))})`}
         </span>
       </div>
+
+      <SendMemoBeta />
     </div>
   )
 }
