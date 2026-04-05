@@ -1,4 +1,4 @@
-import { QuoteResponseRoute } from '@tcswap/helpers/api'
+import { EstimatedTime, QuoteResponseRoute } from '@tcswap/helpers/api'
 import type { Asset } from '@/components/swap/asset'
 
 export const THORCHAIN_BLOCK_TIME_SECONDS = 6
@@ -62,3 +62,81 @@ export function prepareQuoteForLimitSwap(quote: QuoteResponseRoute, limitBuyAmou
     memo: modifyMemoForLimitSwap(quote.memo, limitBuyAmount, expiryBlocks)
   }
 }
+
+export function modifyMemoForStreaming(memo: string, interval: number, quantity: number): string {
+  if (!memo.startsWith('=:')) return memo
+
+  const parts = memo.split(':')
+  // parts:
+  // [0] "="
+  // [1] ASSET (eg ETH.USDT)
+  // [2] destination address
+  // [3] limit/interval/qty
+  // [4] affiliate
+  // [5] bps
+
+  if (parts.length < 3) return memo
+
+  const asset = parts[1]
+  const destination = parts[2]
+  const swapParams = parts[3] || ''
+  const affiliate = parts[4]
+  const bps = parts[5]
+
+  const paramParts = swapParams.split('/')
+  const limit = paramParts[0] || '0'
+  const existingQuantity = paramParts[2] || '0'
+
+  // If quantity is 0 (not customised), preserve the existing quantity from the memo
+  const effectiveQuantity = quantity === 0 ? existingQuantity : quantity
+
+  let result = `=:${asset}:${destination}:${limit}/${interval}/${effectiveQuantity}`
+  if (affiliate) {
+    result += `:${affiliate}`
+    if (bps) {
+      result += `:${bps}`
+    }
+  }
+
+  return result
+}
+
+export function recalculateEstimatedTime(estimatedTime: EstimatedTime | undefined, swapSeconds: number): EstimatedTime | undefined {
+  if (!estimatedTime) return undefined
+
+  return {
+    ...estimatedTime,
+    swap: swapSeconds,
+    total: (estimatedTime.inbound || 0) + swapSeconds + (estimatedTime.outbound || 0)
+  }
+}
+
+export function recalculateStreamingEstimatedTime(
+  estimatedTime: EstimatedTime | undefined,
+  memo: string,
+  customInterval: number,
+  customQuantity: number
+): EstimatedTime | undefined {
+  if (!estimatedTime) return undefined
+
+  const paramParts = (memo.split(':')[3] || '').split('/')
+  // const existingInterval = parseInt(paramParts[1] || '1', 10) || 1
+  const existingQuantity = parseInt(paramParts[2] || '1', 10) || 1
+
+  // interval=0 means rapid swaps (multiple sub-swaps per block); treat as 1 block for time estimation
+  const effectiveInterval = customInterval > 0 ? customInterval : 1
+  const effectiveQuantity = customQuantity > 0 ? customQuantity : existingQuantity
+
+  return recalculateEstimatedTime(estimatedTime, effectiveInterval * effectiveQuantity * THORCHAIN_BLOCK_TIME_SECONDS)
+}
+
+export function prepareQuoteForStreaming(quote: QuoteResponseRoute, customInterval: number, customQuantity: number): QuoteResponseRoute {
+  if (!quote.memo) return quote
+
+  return {
+    ...quote,
+    memo: modifyMemoForStreaming(quote.memo, customInterval, customQuantity),
+    // estimatedTime: recalculateStreamingEstimatedTime(quote.estimatedTime, quote.memo, customInterval, customQuantity)
+  }
+}
+
