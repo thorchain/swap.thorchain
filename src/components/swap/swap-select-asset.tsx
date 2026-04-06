@@ -209,16 +209,16 @@ export const SwapSelectAsset = ({ isOpen, onOpenChange, selected, onSelectAsset 
                   key={index}
                   onClick={() => handleChainSelect(chain)}
                   className={cn(
-                    'hover:bg-blade/50 m-0 flex cursor-pointer items-center gap-3 rounded-lg border border-transparent px-4 py-2 md:mr-10 md:mb-2 md:py-3',
+                    'hover:bg-sub-container-modal/50 m-0 flex cursor-pointer items-center gap-3 rounded-lg border border-transparent px-4 py-2 md:mr-10 md:mb-2 md:py-3',
                     {
-                      'border-brand-second': selectedChain === chain
+                      'border-border-btn-modal-hover': selectedChain === chain
                     }
                   )}
                 >
                   <div className="flex h-6 w-6 items-center justify-center rounded-full">
                     <Image src={chain === Filter.All ? '/icons/windows.svg' : `/networks/${chain.toLowerCase()}.svg`} alt="" width="24" height="24" />
                   </div>
-                  <span className="text-leah text-sm">{chain === Filter.All ? 'All Chains' : chainLabel(chain)}</span>
+                  <span className="text-txt-high-contrast text-sm">{chain === Filter.All ? 'All Chains' : chainLabel(chain)}</span>
                 </div>
               ))}
             </div>
@@ -227,12 +227,12 @@ export const SwapSelectAsset = ({ isOpen, onOpenChange, selected, onSelectAsset 
 
           <div className="mt-2 flex min-h-0 flex-1 flex-col md:mt-0">
             <div className="relative mx-4 md:mr-8 md:ml-0">
-              <Search className="text-thor-gray absolute top-1/2 left-4 -translate-y-1/2 transform" size={24} />
+              <Search className="text-txt-label-small absolute top-1/2 left-4 -translate-y-1/2 transform" size={24} />
               <Input
                 placeholder="Search"
                 value={searchQuery}
                 onChange={e => setSearchQuery(e.target.value)}
-                className="bg-blade rounded-3xl border-0 py-3 pl-12"
+                className="bg-input-modal-bg rounded-3xl border-0 py-3 pl-12"
                 tabIndex={isMobile ? -1 : 0}
               />
             </div>
@@ -265,21 +265,21 @@ export const SwapSelectAsset = ({ isOpen, onOpenChange, selected, onSelectAsset 
                           onClick={() => handleAssetSelect(asset)}
                           className={cn(
                             'mx-4 flex items-center justify-between gap-3 rounded-lg border border-transparent px-4 py-3 md:mr-8 md:ml-0',
-                            isAssetHalted(asset) ? 'cursor-not-allowed' : 'hover:bg-blade/50 cursor-pointer'
+                            isAssetHalted(asset) ? 'cursor-not-allowed' : 'hover:bg-sub-container-modal/50 cursor-pointer'
                           )}
                         >
                           <div className={cn('flex items-center gap-3', isAssetHalted(asset) && 'opacity-50')}>
                             <AssetIcon key={asset.identifier} asset={asset} />
                             <div className="text-left">
-                              <div className="text-leah max-w-30 truncate font-semibold">{asset.ticker}</div>
-                              <div className="text-thor-gray text-sm">{chainLabel(asset.chain)}</div>
+                              <div className="text-txt-high-contrast max-w-30 truncate font-semibold">{asset.ticker}</div>
+                              <div className="text-txt-label-small text-sm">{chainLabel(asset.chain)}</div>
                             </div>
                           </div>
                           {isAssetHalted(asset) ? (
                             <div className="border-jacob text-jacob rounded-full border px-1.5 text-[10px] font-semibold">Currently unavailable</div>
                           ) : (
                             asset.identifier === selected?.identifier && (
-                              <div className={cn('border-gray text-thor-gray rounded-full border px-1.5 py-0.5 text-xs font-medium')}>Selected</div>
+                              <div className={cn('border-gray text-txt-label-small rounded-full border px-1.5 py-0.5 text-xs font-medium')}>Selected</div>
                             )
                           )}
                         </div>

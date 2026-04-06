@@ -159,14 +159,14 @@ export function SendMemoBond({ account, initialTab = 'bond' }: BondFormProps) {
             }}
             className={cn(
               'cursor-pointer text-xl transition-colors',
-              tab === key ? 'text-leah font-bold' : 'text-thor-gray hover:text-leah/70 font-normal'
+              tab === key ? 'text-txt-high-contrast font-bold' : 'text-txt-label-small hover:text-txt-high-contrast/70 font-normal'
             )}
           >
             {label}
           </button>
         ))}
       </div>
-      <div className="bg-lawrence rounded-20 relative space-y-1.25 border p-2.5">
+      <div className="bg-modal rounded-20 relative space-y-1.25 border p-2.5">
         <div className="relative">
           <Textarea
             placeholder="Node Address"
@@ -178,7 +178,7 @@ export function SendMemoBond({ account, initialTab = 'bond' }: BondFormProps) {
             )}
           />
           {tab === 'track' && nodeAddress ? (
-            <button className="text-thor-gray hover:text-leah absolute end-3 top-3 shrink-0 rounded-full p-1" onClick={() => setNodeAddress('')}>
+            <button className="text-txt-label-small hover:text-txt-high-contrast absolute end-3 top-3 shrink-0 rounded-full p-1" onClick={() => setNodeAddress('')}>
               <X className="size-4" />
             </button>
           ) : (
@@ -216,18 +216,18 @@ export function SendMemoBond({ account, initialTab = 'bond' }: BondFormProps) {
 
         {needsAmount && (
           <div className="bg-swap-bloc rounded-15 border p-7">
-            <div className="text-thor-gray mb-2 text-xs font-normal">{amountLabel}</div>
+            <div className="text-txt-label-small mb-2 text-xs font-normal">{amountLabel}</div>
 
             <div className="flex items-center justify-between">
               <div className="flex-1">
                 <DecimalInput
-                  className="text-leah w-full bg-transparent text-4xl font-medium outline-none"
+                  className="text-txt-high-contrast w-full bg-transparent text-4xl font-medium outline-none"
                   amount={amount}
                   onAmountChange={v => setAmount(v)}
                   autoComplete="off"
                   disabled={!thorAccount}
                 />
-                <div className="text-thor-gray text-sm">
+                <div className="text-txt-label-small text-sm">
                   {toCurrencyFixed(fiatValue.toCurrency('$', { trimTrailingZeros: false }))} ({fiatPercent.toFixed(0)}%)
                 </div>
               </div>
@@ -236,10 +236,10 @@ export function SendMemoBond({ account, initialTab = 'bond' }: BondFormProps) {
                 <div className="flex items-center gap-2">
                   <AssetIcon asset={selectedAsset} />
                   <div className="flex flex-col items-start">
-                    <span className="text-leah text-sm font-bold">{selectedAsset.ticker}</span>
-                    <span className="text-thor-gray text-xs">{chainLabel(runeToken.balance.chain)}</span>
+                    <span className="text-txt-high-contrast text-sm font-bold">{selectedAsset.ticker}</span>
+                    <span className="text-txt-label-small text-xs">{chainLabel(runeToken.balance.chain)}</span>
                   </div>
-                  <Icon name="arrow-s-down" className="text-thor-gray size-4" />
+                  <Icon name="arrow-s-down" className="text-txt-label-small size-4" />
                 </div>
               )}
             </div>
@@ -257,7 +257,7 @@ export function SendMemoBond({ account, initialTab = 'bond' }: BondFormProps) {
                     100%
                   </ThemeButton>
                 </div>
-                <div className="text-thor-gray text-xs">
+                <div className="text-txt-label-small text-xs">
                   Balance: <DecimalText amount={runeToken.balance.toSignificant()} symbol={runeToken.balance.ticker} />
                 </div>
               </div>
@@ -269,10 +269,10 @@ export function SendMemoBond({ account, initialTab = 'bond' }: BondFormProps) {
           <div className="bg-swap-bloc rounded-15 border p-4">
             {nodeInfoLoading ? (
               <div className="flex items-center justify-center py-6">
-                <LoaderCircle size={20} className="text-thor-gray animate-spin" />
+                <LoaderCircle size={20} className="text-txt-label-small animate-spin" />
               </div>
             ) : nodeInfoError || !nodeInfo ? (
-              <p className="text-thor-gray text-sm">Node not found or unavailable.</p>
+              <p className="text-txt-label-small text-sm">Node not found or unavailable.</p>
             ) : (
               <NodeInfoCard nodeInfo={nodeInfo} runeRate={runeRate} connectedAddress={thorAccount?.address} />
             )}
@@ -291,7 +291,7 @@ export function SendMemoBond({ account, initialTab = 'bond' }: BondFormProps) {
         )}
       </div>
       {tab !== 'track' && (
-        <div className="text-thor-gray flex items-center justify-between px-4 text-xs">
+        <div className="text-txt-label-small flex items-center justify-between px-4 text-xs">
           <div className="flex items-center gap-1">Transaction Fee</div>
           <span>0.02 RUNE {runeRate && ` (${toCurrencyFixed(runeRate.mul(0.02).toCurrency('$', { trimTrailingZeros: false }))})`}</span>
         </div>
@@ -340,24 +340,24 @@ function NodeInfoCard({
 
   return (
     <div className="space-y-3">
-      <p className="text-leah text-sm font-semibold">Node Information</p>
+      <p className="text-txt-high-contrast text-sm font-semibold">Node Information</p>
       <div className="grid grid-cols-2 gap-2">
-        <div className="bg-lawrence rounded-xl border p-3">
-          <p className="text-thor-gray mb-1 text-xs tracking-wide uppercase">Bond</p>
-          <p className="text-leah text-lg font-bold">{bond.toLocaleString(undefined, { maximumFractionDigits: 0 })} RUNE</p>
-          {runeRate && <p className="text-thor-gray text-xs">{toCurrencyFixed(bondFiat.toCurrency('$', { trimTrailingZeros: false }))}</p>}
+        <div className="bg-modal rounded-xl border p-3">
+          <p className="text-txt-label-small mb-1 text-xs tracking-wide uppercase">Bond</p>
+          <p className="text-txt-high-contrast text-lg font-bold">{bond.toLocaleString(undefined, { maximumFractionDigits: 0 })} RUNE</p>
+          {runeRate && <p className="text-txt-label-small text-xs">{toCurrencyFixed(bondFiat.toCurrency('$', { trimTrailingZeros: false }))}</p>}
         </div>
-        <div className="bg-lawrence rounded-xl border p-3">
-          <p className="text-thor-gray mb-1 text-xs tracking-wide uppercase">Next Reward</p>
-          <p className="text-leah text-lg font-bold">{reward.toFixed(1)} RUNE</p>
-          {runeRate && <p className="text-thor-gray text-xs">{toCurrencyFixed(rewardFiat.toCurrency('$', { trimTrailingZeros: false }))}</p>}
+        <div className="bg-modal rounded-xl border p-3">
+          <p className="text-txt-label-small mb-1 text-xs tracking-wide uppercase">Next Reward</p>
+          <p className="text-txt-high-contrast text-lg font-bold">{reward.toFixed(1)} RUNE</p>
+          {runeRate && <p className="text-txt-label-small text-xs">{toCurrencyFixed(rewardFiat.toCurrency('$', { trimTrailingZeros: false }))}</p>}
         </div>
       </div>
       <div className="space-y-1.5">
         {rows.map(({ label, value }) => (
           <div key={label} className="flex items-center justify-between text-sm">
-            <span className="text-thor-gray">{label}</span>
-            <span className="text-leah font-medium">{value}</span>
+            <span className="text-txt-label-small">{label}</span>
+            <span className="text-txt-high-contrast font-medium">{value}</span>
           </div>
         ))}
       </div>

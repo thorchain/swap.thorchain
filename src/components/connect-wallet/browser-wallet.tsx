@@ -42,8 +42,8 @@ export const BrowserWallet = ({ wallet, chains, onConnect }: { wallet: WalletPar
   return (
     <>
       <div className="mb-3 flex items-center justify-between px-4 md:px-8">
-        <div className="text-thor-gray text-base font-semibold">Chains</div>
-        <div className="text-leah cursor-pointer text-xs" onClick={() => setSelectedChains(selectedChains.length ? [] : availableChains)}>
+        <div className="text-txt-label-small text-base font-semibold">Chains</div>
+        <div className="text-txt-high-contrast cursor-pointer text-xs" onClick={() => setSelectedChains(selectedChains.length ? [] : availableChains)}>
           {selectedChains.length ? 'Deselect All' : 'Select All'}
         </div>
       </div>
@@ -66,9 +66,9 @@ export const BrowserWallet = ({ wallet, chains, onConnect }: { wallet: WalletPar
                 <div
                   key={chain}
                   className={cn('flex items-center gap-3 rounded-2xl border-1 border-transparent px-4 py-3', {
-                    'border-brand-second': isSelected,
+                    'border-border-btn-modal-hover': isSelected,
                     'opacity-25': !isAvailable,
-                    'hover:bg-blade/50 cursor-pointer': isAvailable
+                    'hover:bg-sub-container-modal/50 cursor-pointer': isAvailable
                   })}
                   onClick={() => isAvailable && onSelectChain(chain as Chain)}
                 >
@@ -81,7 +81,7 @@ export const BrowserWallet = ({ wallet, chains, onConnect }: { wallet: WalletPar
           </div>
         </ScrollArea>
 
-        <div className="from-lawrence pointer-events-none absolute inset-x-0 -bottom-[1px] h-4 bg-linear-to-t to-transparent" />
+        <div className="from-modal pointer-events-none absolute inset-x-0 -bottom-[1px] h-4 bg-linear-to-t to-transparent" />
       </div>
 
       <div className="flex p-4 pt-2 md:justify-end md:px-8 md:pb-8">

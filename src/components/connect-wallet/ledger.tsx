@@ -89,7 +89,7 @@ export const Ledger = ({ wallet, onConnect }: { wallet: WalletParams; onConnect:
 
   return (
     <>
-      <div className="text-thor-gray mb-3 hidden px-8 text-base font-semibold md:block">Chains</div>
+      <div className="text-txt-label-small mb-3 hidden px-8 text-base font-semibold md:block">Chains</div>
 
       <div className="relative flex min-h-0 flex-1">
         <ScrollArea className="flex-1 px-4 md:px-8">
@@ -106,8 +106,8 @@ export const Ledger = ({ wallet, onConnect }: { wallet: WalletParams; onConnect:
               return (
                 <div
                   key={chain}
-                  className={cn('hover:bg-blade/50 flex cursor-pointer items-center gap-3 rounded-2xl border-1 border-transparent px-4 py-3', {
-                    'border-brand-second': isSelected
+                  className={cn('hover:bg-sub-container-modal/50 flex cursor-pointer items-center gap-3 rounded-2xl border-1 border-transparent px-4 py-3', {
+                    'border-border-btn-modal-hover': isSelected
                   })}
                   onClick={() => {
                     setSelectedChain(chain)
@@ -124,7 +124,7 @@ export const Ledger = ({ wallet, onConnect }: { wallet: WalletParams; onConnect:
                               alt={chain}
                               width="24"
                               height="24"
-                              className="bg-tyler rounded-md"
+                              className="bg-body rounded-md"
                               style={{ zIndex: chains.length - index }}
                             />
                           )
@@ -144,24 +144,24 @@ export const Ledger = ({ wallet, onConnect }: { wallet: WalletParams; onConnect:
           </div>
         </ScrollArea>
 
-        <div className="from-lawrence pointer-events-none absolute inset-x-0 -bottom-[1px] h-4 bg-linear-to-t to-transparent" />
+        <div className="from-modal pointer-events-none absolute inset-x-0 -bottom-[1px] h-4 bg-linear-to-t to-transparent" />
       </div>
 
       {pathOptions && (
         <div className="mt-2 grid grid-cols-5 gap-3 px-8 md:mb-4">
           <div className="col-span-4">
-            <div className="text-thor-gray mb-2 font-semibold">Derivation Path</div>
+            <div className="text-txt-label-small mb-2 font-semibold">Derivation Path</div>
             <Select value={path} onValueChange={setPath} disabled={connecting}>
               <SelectTrigger className="w-full">
                 <SelectValue placeholder="Select account type" />
               </SelectTrigger>
-              <SelectContent position="item-aligned" className="text-leah placeholder:text-andy rounded-xl border-1">
+              <SelectContent position="item-aligned" className="text-txt-high-contrast placeholder:text-txt-med-contrast rounded-xl border-1">
                 {pathOptions.map(item => {
                   const derivationPath = DERIVATION_PATHS[item as keyof typeof DERIVATION_PATHS]
 
                   return (
                     <SelectItem key={item} value={item}>
-                      {derivationPath.title} <span className="text-thor-gray">({derivationPath.pathTitle})</span>
+                      {derivationPath.title} <span className="text-txt-label-small">({derivationPath.pathTitle})</span>
                     </SelectItem>
                   )
                 })}
@@ -169,7 +169,7 @@ export const Ledger = ({ wallet, onConnect }: { wallet: WalletParams; onConnect:
             </Select>
           </div>
           <div className="col-span-1">
-            <div className="text-thor-gray mb-2 font-semibold">Index</div>
+            <div className="text-txt-label-small mb-2 font-semibold">Index</div>
             <Input placeholder="0" onChange={v => setIndex(parseInt(v.target.value || '0'))} disabled={connecting} />
           </div>
         </div>

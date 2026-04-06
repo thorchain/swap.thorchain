@@ -24,7 +24,7 @@ export const SwapBalance = () => {
   if (!balanceContent) return null
 
   return (
-    <div className="text-thor-gray flex gap-1 text-[10px]">
+    <div className="text-txt-label-small flex gap-1 text-[10px]">
       <span>Balance:</span>
       {balanceContent}
     </div>

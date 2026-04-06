@@ -50,7 +50,7 @@ export function SendSelectToken({ isOpen, onOpenChange, selected, selectedAccoun
                 <div key={provider} className="flex flex-col gap-2">
                   <div className="flex items-center gap-2 py-1">
                     <Image src={`/wallets/${walletKey}.svg`} alt={walletName} width={20} height={20} className="shrink-0 rounded-md" />
-                    <span className="text-thor-gray text-sm font-medium">{walletName}</span>
+                    <span className="text-txt-label-small text-sm font-medium">{walletName}</span>
                   </div>
 
                   <div className="bg-body overflow-hidden rounded-2xl">
@@ -75,20 +75,20 @@ export function SendSelectToken({ isOpen, onOpenChange, selected, selectedAccoun
                             {token.logoURI && <img src={token.logoURI} alt={asset.ticker} width={32} height={32} className="rounded-full" />}
                           </div>
                           <div className="min-w-0 flex-1">
-                            <div className="text-leah text-sm font-medium">{asset.ticker}</div>
+                            <div className="text-txt-high-contrast text-sm font-medium">{asset.ticker}</div>
                           </div>
                           <div className="flex items-center gap-2 text-right">
                             {token.usdValue !== undefined ? (
                               <div>
-                                <div className="text-leah text-sm font-medium">
+                                <div className="text-txt-high-contrast text-sm font-medium">
                                   {toCurrencyFixed(token.usdValue.toCurrency('$', { trimTrailingZeros: false }))}
                                 </div>
-                                <div className="text-thor-gray text-xs font-medium">
+                                <div className="text-txt-label-small text-xs font-medium">
                                   <DecimalText amount={token.balance.toSignificant()} symbol={asset.ticker} />
                                 </div>
                               </div>
                             ) : (
-                              <div className="text-leah text-sm font-medium">
+                              <div className="text-txt-high-contrast text-sm font-medium">
                                 <DecimalText amount={token.balance.toSignificant()} symbol={asset.ticker} />
                               </div>
                             )}

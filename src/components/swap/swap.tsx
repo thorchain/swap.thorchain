@@ -79,7 +79,7 @@ export const Swap = () => {
           </div>
         </div>
 
-        <div className="bg-lawrence rounded-20 relative space-y-1.25 border p-2.5">
+        <div className="bg-modal rounded-20 relative space-y-1.25 border p-2.5">
           <SwapInputFrom />
           <SwapToggleAssets />
           <SwapInputTo priceImpact={priceImpact} />

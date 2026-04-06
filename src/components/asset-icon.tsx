@@ -23,7 +23,7 @@ export function AssetIcon({ asset, className }: { asset: Asset | undefined; clas
           )}
           {!isNativeAsset(asset) && (
             <Image
-              className="outline-lawrence bg-lawrence absolute -right-1 -bottom-1 h-4 w-4 rounded-md"
+              className="outline-swap-global bg-swap-global absolute -right-1 -bottom-1 h-4 w-4 rounded-md"
               src={`/networks/${asset.chain.toLowerCase()}.svg`}
               alt={asset.chain.toLowerCase()}
               width={16}

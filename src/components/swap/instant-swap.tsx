@@ -55,7 +55,7 @@ export const InstantSwap = ({ assetFrom, assetTo, channel }: SwapMemolessChannel
           )}
           <div className="flex flex-col items-center space-y-4 rounded-xl border p-4 md:p-6">
             <div className="flex items-center gap-2">
-              <span className="text-leah text-xl font-semibold">
+              <span className="text-txt-high-contrast text-xl font-semibold">
                 {channel.value} {assetFrom.ticker}
               </span>
               <CopyButton text={channel.value} />
@@ -63,7 +63,7 @@ export const InstantSwap = ({ assetFrom, assetTo, channel }: SwapMemolessChannel
 
             <div className="flex flex-col items-center gap-2">
               <div className="flex items-center gap-2">
-                <div className={cn('text-thor-gray text-sm font-semibold break-all', { 'blur-xs': isBlurred })}>{channel.address}</div>
+                <div className={cn('text-txt-label-small text-sm font-semibold break-all', { 'blur-xs': isBlurred })}>{channel.address}</div>
                 <CopyButton text={channel.address} />
               </div>
 

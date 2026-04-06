@@ -188,26 +188,26 @@ export function Send({ isOpen, onOpenChange, initialToken, account }: SendDialog
         <ScrollArea className="relative flex min-h-0 flex-1 px-4 md:px-8" classNameViewport="flex-1 h-auto">
           <div className="mb-2 flex flex-col gap-6">
             <div className="bg-swap-bloc rounded-15 border p-7">
-              <div className="text-thor-gray mb-3 font-semibold">Amount</div>
+              <div className="text-txt-label-small mb-3 font-semibold">Amount</div>
 
               <div className="flex items-center justify-between">
                 <div className="flex-1">
                   <DecimalInput
-                    className="text-leah w-full bg-transparent text-2xl font-medium outline-none"
+                    className="text-txt-high-contrast w-full bg-transparent text-2xl font-medium outline-none"
                     amount={amount}
                     onAmountChange={v => setAmount(v)}
                     autoComplete="off"
                   />
-                  <div className="text-thor-gray text-sm font-medium">{toCurrencyFixed(fiatValue.toCurrency('$', { trimTrailingZeros: false }))}</div>
+                  <div className="text-txt-label-small text-sm font-medium">{toCurrencyFixed(fiatValue.toCurrency('$', { trimTrailingZeros: false }))}</div>
                 </div>
 
                 <div className={cn('flex items-center gap-2', totalTokenCount > 1 ? 'cursor-pointer' : 'cursor-default')} onClick={openTokenSelector}>
                   <AssetIcon asset={selectedAsset} />
                   <div className="flex w-16 flex-col items-start">
-                    <span className="text-leah inline-block w-full truncate text-base font-semibold">{selectedAsset.ticker}</span>
-                    <span className="text-thor-gray inline-block w-full truncate text-xs">{chainLabel(selectedToken.balance.chain)}</span>
+                    <span className="text-txt-high-contrast inline-block w-full truncate text-base font-semibold">{selectedAsset.ticker}</span>
+                    <span className="text-txt-label-small inline-block w-full truncate text-xs">{chainLabel(selectedToken.balance.chain)}</span>
                   </div>
-                  {totalTokenCount > 1 && <Icon name="arrow-s-down" className="text-thor-gray size-5" />}
+                  {totalTokenCount > 1 && <Icon name="arrow-s-down" className="text-txt-label-small size-5" />}
                 </div>
               </div>
 
@@ -223,7 +223,7 @@ export function Send({ isOpen, onOpenChange, initialToken, account }: SendDialog
                     100%
                   </ThemeButton>
                 </div>
-                <div className="text-thor-gray flex gap-1 text-[10px]">
+                <div className="text-txt-label-small flex gap-1 text-[10px]">
                   <span>Balance:</span>
                   <span>
                     <DecimalText amount={selectedToken.balance.toSignificant()} symbol={selectedToken.balance.ticker} />
@@ -233,7 +233,7 @@ export function Send({ isOpen, onOpenChange, initialToken, account }: SendDialog
             </div>
 
             <div className="flex flex-col gap-3">
-              <div className="text-thor-gray text-sm font-semibold">To</div>
+              <div className="text-txt-label-small text-sm font-semibold">To</div>
               <div className="relative">
                 <Textarea
                   placeholder={`${chainLabel(selectedToken.balance.chain)} address`}
@@ -294,9 +294,9 @@ export function Send({ isOpen, onOpenChange, initialToken, account }: SendDialog
               )}
             </div>
 
-            <div className="text-thor-gray flex items-center justify-between text-sm">
+            <div className="text-txt-label-small flex items-center justify-between text-sm">
               <div className="flex items-center gap-1">Transaction Fee</div>
-              <span className="text-leah font-semibold">
+              <span className="text-txt-high-contrast font-semibold">
                 {txFee ? (
                   <>
                     <DecimalText amount={txFee.amount.toSignificant()} symbol={txFee.ticker} />
@@ -309,7 +309,7 @@ export function Send({ isOpen, onOpenChange, initialToken, account }: SendDialog
             </div>
           </div>
 
-          <div className="from-lawrence pointer-events-none absolute inset-x-0 -bottom-px h-4 bg-linear-to-t to-transparent" />
+          <div className="from-modal pointer-events-none absolute inset-x-0 -bottom-px h-4 bg-linear-to-t to-transparent" />
         </ScrollArea>
 
         <div className="p-4 pt-2 md:p-8 md:pt-2">

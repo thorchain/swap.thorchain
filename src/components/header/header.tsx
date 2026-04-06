@@ -28,7 +28,7 @@ export function Header() {
 
   return (
     <header
-      className={cn('bg-tyler sticky inset-x-0 top-0 z-50 container mx-auto p-4 transition-all duration-200', {
+      className={cn('bg-body sticky inset-x-0 top-0 z-50 container mx-auto p-4 transition-all duration-200', {
         'border-b': isScrolled
       })}
     >

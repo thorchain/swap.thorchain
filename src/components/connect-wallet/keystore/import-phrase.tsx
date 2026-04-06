@@ -57,7 +57,7 @@ export function ImportPhrase({ onBack, onConnect }: { onBack: () => void; onConn
           </div>
         </ScrollArea>
 
-        <div className="from-lawrence pointer-events-none absolute inset-x-0 -bottom-[1px] h-4 bg-linear-to-t to-transparent" />
+        <div className="from-modal pointer-events-none absolute inset-x-0 -bottom-[1px] h-4 bg-linear-to-t to-transparent" />
       </div>
 
       <div className="flex gap-3 p-4 pt-2 md:justify-end md:gap-6 md:px-8 md:pb-8">

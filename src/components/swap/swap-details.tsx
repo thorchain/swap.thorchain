@@ -19,7 +19,7 @@ export function SwapDetails() {
   const price = valueTo.div(valueFrom)
 
   return (
-    <div className="text-leah flex justify-between text-[13px] font-semibold">
+    <div className="text-txt-high-contrast flex justify-between text-[13px] font-semibold">
       <span className="p-4">
         1 {assetFrom.ticker} = {price.toSignificant()} {assetTo.ticker}
       </span>
@@ -27,8 +27,8 @@ export function SwapDetails() {
       <div className="flex items-center px-4">
         {estimatedTime && estimatedTime.total > 0 && (
           <div
-            className={cn('text-leah flex h-8 items-center', {
-              'bg-jacob/10 text-jacob rounded-full': estimatedTime.total > 3600
+            className={cn('text-txt-high-contrast flex h-8 items-center', {
+              'rounded-full bg-jacob/10 p-2 text-jacob': estimatedTime.total > 3600
             })}
           >
             <Icon width={16} height={16} viewBox="0 0 16 16" name="clock-filled" />

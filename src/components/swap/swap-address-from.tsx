@@ -30,16 +30,16 @@ export const SwapAddressFrom = ({ minOptions = 2 }: { minOptions?: number } = {}
           {options?.map((account, index) => (
             <DropdownMenuItem
               key={index}
-              className="bg-btn-style-1-bg focus:bg-blade/50 flex cursor-pointer items-center justify-between gap-4 rounded-none px-4 py-3"
+              className="bg-btn-style-1-bg focus:bg-sub-container-modal/50 flex cursor-pointer items-center justify-between gap-4 rounded-none px-4 py-3"
               onSelect={() => selectAccount(account)}
             >
               <div className="flex items-center gap-4">
                 <Image src={`/wallets/${account.provider.toLowerCase()}.svg`} alt="" width="20" height="20" />
-                <span className="text-thor-gray text-xs font-semibold">{wallet(account.provider)?.label}</span>
+                <span className="text-txt-label-small text-xs font-semibold">{wallet(account.provider)?.label}</span>
               </div>
               <span
                 className={cn('ms-5 text-xs font-semibold', {
-                  'text-brand-second': account.provider === selectedAccount?.provider && account.address === selectedAccount?.address
+                  'text-green-contrast': account.provider === selectedAccount?.provider && account.address === selectedAccount?.address
                 })}
               >
                 {truncate(account.address)}

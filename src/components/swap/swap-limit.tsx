@@ -130,9 +130,9 @@ export const SwapLimit = ({ quote }: SwapLimitProps) => {
   return (
     <div className="bg-swap-bloc rounded-15 border p-7">
       <div className="flex items-center justify-between">
-        <div className="text-thor-gray flex items-center text-sm font-medium">When 1 {assetFrom?.ticker} is worth</div>
+        <div className="text-txt-label-small flex items-center text-sm font-medium">When 1 {assetFrom?.ticker} is worth</div>
 
-        <div className="text-thor-gray flex items-center text-sm font-medium">
+        <div className="text-txt-label-small flex items-center text-sm font-medium">
           Expires in
           <Select
             value={activeExpiryPreset === 'custom' ? '__custom__' : activeExpiryPreset || '1h'}
@@ -153,7 +153,7 @@ export const SwapLimit = ({ quote }: SwapLimitProps) => {
 
       <div className="my-3 flex items-center gap-2 overflow-hidden">
         <DecimalInput
-          className="text-leah field-sizing-content bg-transparent text-2xl font-medium outline-none"
+          className="text-txt-high-contrast field-sizing-content bg-transparent text-2xl font-medium outline-none"
           amount={(pricePerUnit ?? expectedBuyAmountPerUnit)?.toSignificant() ?? ''}
           onAmountChange={v => setPricePerUnit(new USwapNumber(v))}
           autoComplete="off"
@@ -164,12 +164,12 @@ export const SwapLimit = ({ quote }: SwapLimitProps) => {
       <div className="flex items-center space-x-1">
         {activePreset === 'custom' && differencePercent ? (
           <div className="flex items-center">
-            <ThemeButton className="border-abraham bg-liquidity-green h-6 rounded-r-none border-r px-2 text-xs" variant="secondarySmall">
+            <ThemeButton className="border-stroke-btn-low-contrast bg-green-default h-6 rounded-r-none border-r px-2 text-xs" variant="secondarySmall">
               {differencePercent.gte(0) ? '+' : ''}
               {differencePercent.toFixed(1)}%
             </ThemeButton>
             <ThemeButton
-              className="bg-liquidity-green h-6 rounded-l-none px-1"
+              className="bg-green-default h-6 rounded-l-none px-1"
               variant="secondarySmall"
               onClick={() => expectedBuyAmountPerUnit && setPricePerUnit(expectedBuyAmountPerUnit)}
             >
@@ -180,7 +180,7 @@ export const SwapLimit = ({ quote }: SwapLimitProps) => {
           <ThemeButton
             className={cn(
               'h-6',
-              activePreset === 'market' && pricePerUnit?.gt(0) ? 'bg-liquidity-green text-txt-green-default' : 'text-txt-btn-small-default'
+              activePreset === 'market' && pricePerUnit?.gt(0) ? 'bg-green-default text-txt-green-default' : 'text-txt-btn-small-default'
             )}
             variant="secondarySmall"
             onClick={() => applyPreset(0)}
@@ -190,7 +190,7 @@ export const SwapLimit = ({ quote }: SwapLimitProps) => {
         )}
 
         <ThemeButton
-          className={cn('h-6', activePreset === 5 ? 'bg-liquidity-green text-txt-green-default' : 'text-txt-btn-small-default')}
+          className={cn('h-6', activePreset === 5 ? 'bg-green-default text-txt-green-default' : 'text-txt-btn-small-default')}
           variant="secondarySmall"
           onClick={() => applyPreset(5)}
         >
@@ -198,7 +198,7 @@ export const SwapLimit = ({ quote }: SwapLimitProps) => {
         </ThemeButton>
 
         <ThemeButton
-          className={cn('h-6', activePreset === 10 ? 'bg-liquidity-green text-txt-green-default' : 'text-txt-btn-small-default')}
+          className={cn('h-6', activePreset === 10 ? 'bg-green-default text-txt-green-default' : 'text-txt-btn-small-default')}
           variant="secondarySmall"
           onClick={() => applyPreset(10)}
         >

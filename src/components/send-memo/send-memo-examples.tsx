@@ -57,8 +57,8 @@ const PLACEHOLDER_META: Record<string, PlaceholderMeta> = {
 
 const PAYLOAD_BADGE: Record<MemoExample['payload'], { label: string; className: string }> = {
   RUNE: { label: 'RUNE', className: 'text-green-contrast bg-green-default/10' },
-  TCY: { label: 'TCY', className: 'text-brand-first bg-brand-first/10' },
-  none: { label: 'no payload', className: 'text-thor-gray bg-blade' },
+  TCY: { label: 'TCY', className: 'text-green-contrast bg-green-default/10' },
+  none: { label: 'no payload', className: 'text-txt-label-small bg-sub-container-modal' },
   dust: { label: 'dust', className: 'text-jacob bg-jacob/10' }
 }
 
@@ -130,10 +130,10 @@ export function SendMemoExamples({ isOpen, onOpenChange, onSelect }: SendMemoExa
                 return (
                   <div key={token} className="flex flex-col gap-1.5">
                     <div className="flex items-center gap-2">
-                      <label className="text-leah text-sm font-semibold">{meta.label}</label>
-                      {isOptional && <span className="text-thor-gray bg-blade rounded px-1.5 py-0.5 text-[10px] font-medium">optional</span>}
+                      <label className="text-txt-high-contrast text-sm font-semibold">{meta.label}</label>
+                      {isOptional && <span className="text-txt-label-small bg-sub-container-modal rounded px-1.5 py-0.5 text-[10px] font-medium">optional</span>}
                     </div>
-                    {meta.hint && <p className="text-thor-gray text-xs">{meta.hint}</p>}
+                    {meta.hint && <p className="text-txt-label-small text-xs">{meta.hint}</p>}
                     <Input
                       value={values[token] ?? ''}
                       inputMode={meta.inputMode}
@@ -145,13 +145,13 @@ export function SendMemoExamples({ isOpen, onOpenChange, onSelect }: SendMemoExa
                 )
               })}
 
-              <div className="bg-blade rounded-xl p-3">
-                <p className="text-thor-gray mb-1 text-xs font-medium">Preview</p>
-                <p className="text-leah font-mono text-sm break-all">{preview}</p>
+              <div className="bg-sub-container-modal rounded-xl p-3">
+                <p className="text-txt-label-small mb-1 text-xs font-medium">Preview</p>
+                <p className="text-txt-high-contrast font-mono text-sm break-all">{preview}</p>
               </div>
             </div>
 
-            <div className="from-lawrence pointer-events-none absolute inset-x-0 -bottom-px h-4 bg-linear-to-t to-transparent" />
+            <div className="from-modal pointer-events-none absolute inset-x-0 -bottom-px h-4 bg-linear-to-t to-transparent" />
           </ScrollArea>
 
           <div className="p-4 pt-2 md:p-8 md:pt-2">
@@ -185,14 +185,14 @@ export function SendMemoExamples({ isOpen, onOpenChange, onSelect }: SendMemoExa
                   className="hover:bg-contrast-2/30 flex cursor-pointer items-center justify-between gap-3 py-3 transition-colors"
                 >
                   <div className="flex min-w-0 flex-col gap-0.5">
-                    <span className="text-leah text-sm font-medium">{label}</span>
+                    <span className="text-txt-high-contrast text-sm font-medium">{label}</span>
                     <div className="flex items-center gap-1.5">
                       <span className={cn('rounded px-1.5 py-0.5 text-[10px] font-semibold', badge.className)}>{badge.label}</span>
-                      {hasParams && <span className="text-thor-gray text-[10px]">fill in values →</span>}
+                      {hasParams && <span className="text-txt-label-small text-[10px]">fill in values →</span>}
                     </div>
                   </div>
                   <div className="flex shrink-0 items-center gap-2">
-                    <span className="text-thor-gray max-w-40 truncate font-mono text-xs">{template}</span>
+                    <span className="text-txt-label-small max-w-40 truncate font-mono text-xs">{template}</span>
                     <ThemeButton variant="circleSmall" onClick={e => handleCopy(e, template)} aria-label={`Copy ${label} memo`}>
                       <Copy className="size-4" />
                     </ThemeButton>
@@ -202,7 +202,7 @@ export function SendMemoExamples({ isOpen, onOpenChange, onSelect }: SendMemoExa
             })}
           </div>
 
-          <div className="from-lawrence pointer-events-none absolute inset-x-0 -bottom-px h-4 bg-linear-to-t to-transparent" />
+          <div className="from-modal pointer-events-none absolute inset-x-0 -bottom-px h-4 bg-linear-to-t to-transparent" />
         </ScrollArea>
 
         <div className="flex justify-end p-4 pt-2 md:p-8 md:pt-2">
@@ -210,7 +210,7 @@ export function SendMemoExamples({ isOpen, onOpenChange, onSelect }: SendMemoExa
             href="https://dev.thorchain.org/concepts/memos.html"
             target="_blank"
             rel="noopener noreferrer"
-            className="text-thor-gray hover:text-leah flex items-center gap-1 text-sm font-medium transition-colors"
+            className="text-txt-label-small hover:text-txt-high-contrast flex items-center gap-1 text-sm font-medium transition-colors"
           >
             Learn More <ExternalLink className="size-3.5" />
           </a>

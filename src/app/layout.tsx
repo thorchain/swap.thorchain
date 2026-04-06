@@ -51,7 +51,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
           }}
         />
       )}
-      <body className={`${manrope.className} bg-tyler antialiased`}>
+      <body className={`${manrope.className} bg-body antialiased`}>
         <ReactQueryProvider>
           <ThemeProvider defaultTheme="light" attribute="class">
             {children}

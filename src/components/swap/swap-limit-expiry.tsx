@@ -49,7 +49,7 @@ export const SwapLimitExpiry = ({
       <DialogContent showCloseButton={false} className="h-auto max-w-md p-8">
         <div className="mb-6 flex items-center justify-between">
           <DialogTitle>Set Up Expiration Time</DialogTitle>
-          <button onClick={() => onOpenChange(false)} className="text-andy hover:text-leah cursor-pointer transition-colors">
+          <button onClick={() => onOpenChange(false)} className="text-txt-med-contrast hover:text-txt-high-contrast cursor-pointer transition-colors">
             <X className="size-5" />
           </button>
         </div>
@@ -57,20 +57,20 @@ export const SwapLimitExpiry = ({
         <div className="mb-6 grid grid-cols-3 gap-3">
           {fields.map(({ label, value, onChange }) => (
             <div key={label}>
-              <div className="text-andy mb-2 text-sm">{label}</div>
+              <div className="text-txt-med-contrast mb-2 text-sm">{label}</div>
               <div className="relative">
                 <Input
                   type="number"
                   value={value}
                   onChange={e => onChange(e.target.value)}
-                  className="bg-blade text-leah w-full rounded-xl px-3 py-2 text-base outline-none [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
+                  className="bg-input-modal-bg text-txt-high-contrast w-full rounded-xl px-3 py-2 text-base outline-none [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
                   min="0"
                   placeholder="0"
                 />
                 {value && (
                   <button
                     onClick={() => onChange('')}
-                    className="text-andy hover:text-leah absolute top-1/2 right-3 -translate-y-1/2 cursor-pointer transition-colors"
+                    className="text-txt-med-contrast hover:text-txt-high-contrast absolute top-1/2 right-3 -translate-y-1/2 cursor-pointer transition-colors"
                   >
                     <X className="size-4" />
                   </button>

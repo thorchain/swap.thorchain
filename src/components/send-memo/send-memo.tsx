@@ -118,7 +118,7 @@ export function SendMemo() {
   return (
     <div className="flex flex-col gap-5">
       <div className="flex items-center justify-between">
-        <h1 className="text-leah text-xl font-bold">Memo</h1>
+        <h1 className="text-txt-high-contrast text-xl font-bold">Memo</h1>
         <ThemeButton
           variant="secondarySmall"
           className="rounded-full"
@@ -128,7 +128,7 @@ export function SendMemo() {
         </ThemeButton>
       </div>
 
-      <div className="bg-lawrence rounded-20 relative space-y-1.25 border p-2.5">
+      <div className="bg-modal rounded-20 relative space-y-1.25 border p-2.5">
         <div className="bg-swap-bloc rounded-15 border p-7">
           <div className="relative">
             <Textarea
@@ -148,30 +148,30 @@ export function SendMemo() {
               Paste
             </ThemeButton>
           </div>
-          {memo.length > 200 && <div className="text-thor-gray mt-1 text-right text-xs">{memo.length}/250</div>}
+          {memo.length > 200 && <div className="text-txt-label-small mt-1 text-right text-xs">{memo.length}/250</div>}
         </div>
 
         {zeroPayload ? (
           <div className="bg-swap-bloc rounded-15 border p-7">
-            <div className="text-thor-gray flex items-start gap-2 text-sm">
+            <div className="text-txt-label-small flex items-start gap-2 text-sm">
               <Info className="mt-0.5 size-4 shrink-0" />
               <span>This operation requires no payload. Only the 0.02 RUNE network fee applies.</span>
             </div>
           </div>
         ) : (
           <div className="flex flex-col gap-1.5">
-            <div className="text-thor-gray px-2 text-xs font-normal">Amount</div>
+            <div className="text-txt-label-small px-2 text-xs font-normal">Amount</div>
             <div className="bg-swap-bloc rounded-15 border p-7">
               <div className="flex items-center justify-between">
                 <div className="flex-1">
                   <DecimalInput
-                    className="text-leah w-full bg-transparent text-4xl font-medium outline-none"
+                    className="text-txt-high-contrast w-full bg-transparent text-4xl font-medium outline-none"
                     amount={amount}
                     onAmountChange={v => setAmount(v)}
                     autoComplete="off"
                     disabled={!thorAccount}
                   />
-                  <div className="text-thor-gray text-sm">{toCurrencyFixed(fiatValue.toCurrency('$', { trimTrailingZeros: false }))}</div>
+                  <div className="text-txt-label-small text-sm">{toCurrencyFixed(fiatValue.toCurrency('$', { trimTrailingZeros: false }))}</div>
                 </div>
 
                 {selectedAsset && effectiveToken && (
@@ -181,10 +181,10 @@ export function SendMemo() {
                   >
                     <AssetIcon asset={selectedAsset} />
                     <div className="flex flex-col items-start">
-                      <span className="text-leah text-sm font-bold">{selectedAsset.ticker}</span>
-                      <span className="text-thor-gray text-xs">{effectiveToken.balance.chain}</span>
+                      <span className="text-txt-high-contrast text-sm font-bold">{selectedAsset.ticker}</span>
+                      <span className="text-txt-label-small text-xs">{effectiveToken.balance.chain}</span>
                     </div>
-                    <Icon name="arrow-s-down" className="text-thor-gray size-4" />
+                    <Icon name="arrow-s-down" className="text-txt-label-small size-4" />
                   </div>
                 )}
               </div>
@@ -202,7 +202,7 @@ export function SendMemo() {
                       100%
                     </ThemeButton>
                   </div>
-                  <div className="text-thor-gray text-xs">
+                  <div className="text-txt-label-small text-xs">
                     Balance: <DecimalText amount={effectiveToken.balance.toSignificant()} symbol={effectiveToken.balance.ticker} />
                   </div>
                 </div>
@@ -231,7 +231,7 @@ export function SendMemo() {
         </ThemeButton>
       </div>
 
-      <div className="text-thor-gray flex items-center justify-between px-4 text-xs">
+      <div className="text-txt-label-small flex items-center justify-between px-4 text-xs">
         <div className="flex items-center gap-1">Transaction Fee</div>
         <span>
           <DecimalText amount={txFee.amount.toSignificant()} symbol={txFee.ticker} />

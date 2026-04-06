@@ -77,9 +77,9 @@ export const ConnectWallet = ({ isOpen, onOpenChange, chain }: ConnectWalletProp
         <div
           key={index}
           className={cn('mb-1 flex items-center space-x-3 rounded-2xl border-1 border-transparent p-3', {
-            'border-brand-second': isSelected,
+            'border-border-btn-modal-hover': isSelected,
             'opacity-25': !isHighlighted,
-            'hover:bg-blade/50 cursor-pointer': isInstalled && !isConnected && isHighlighted,
+            'hover:bg-sub-container-modal/50 cursor-pointer': isInstalled && !isConnected && isHighlighted,
             'mb-4 md:mb-8': index === wallets.length - 1
           })}
           onClick={() => {
@@ -89,11 +89,11 @@ export const ConnectWallet = ({ isOpen, onOpenChange, chain }: ConnectWalletProp
         >
           <Image src={`/wallets/${wallet.key}.svg`} alt="" width="32" height="32" />
           <div className="flex-1">
-            <div className="text-leah font-medium">{wallet.label}</div>
+            <div className="text-txt-high-contrast font-medium">{wallet.label}</div>
             <div className="text-xs">
               {isInstalled ? (
                 isConnected ? (
-                  <span className="text-brand-first">Connected</span>
+                  <span className="text-green-contrast">Connected</span>
                 ) : (
                   <span>Disconnected</span>
                 )
@@ -148,10 +148,10 @@ export const ConnectWallet = ({ isOpen, onOpenChange, chain }: ConnectWalletProp
 
           {selectedWallet && (
             <div className="mb-2 flex cursor-pointer items-center gap-4 px-4 pb-4 md:hidden" onClick={() => setSelectedWallet(undefined)}>
-              <Icon name="arrow-m-left" className="text-thor-gray size-6" />
+              <Icon name="arrow-m-left" className="text-txt-label-small size-6" />
               <div className="flex gap-2">
                 <Image src={`/wallets/${selectedWallet.key}.svg`} alt="" width="20" height="20" />
-                <span className="text-thor-gray text-sm font-medium">{selectedWallet.label}</span>
+                <span className="text-txt-label-small text-sm font-medium">{selectedWallet.label}</span>
               </div>
             </div>
           )}
@@ -160,7 +160,7 @@ export const ConnectWallet = ({ isOpen, onOpenChange, chain }: ConnectWalletProp
             <div className="flex min-h-0 flex-1 flex-col">{renderSelectedWallet(selectedWallet)}</div>
           ) : (
             <div className="hidden flex-1 flex-col md:flex">
-              <div className="text-thor-gray mb-3 px-8 text-base font-semibold">Chains</div>
+              <div className="text-txt-label-small mb-3 px-8 text-base font-semibold">Chains</div>
 
               <div className="hidden min-h-0 flex-1 md:flex">
                 <ScrollArea className="flex px-8" classNameViewport="flex-1 h-auto">
@@ -179,8 +179,8 @@ export const ConnectWallet = ({ isOpen, onOpenChange, chain }: ConnectWalletProp
                         <div
                           key={chain}
                           className={cn('flex items-center gap-3 rounded-2xl border-1 border-transparent px-4 py-3', {
-                            'border-brand-second': isSelected,
-                            'hover:bg-blade/50 cursor-pointer': !isComingSoon
+                            'border-border-btn-modal-hover': isSelected,
+                            'hover:bg-sub-container-modal/50 cursor-pointer': !isComingSoon
                           })}
                           onClick={() => !isComingSoon && onSelectChain(chain as Chain)}
                         >

@@ -202,12 +202,12 @@ export const SwapLimitCancel = ({ isOpen, onOpenChange, mode, transaction }: Swa
                 <div className="flex items-center gap-3">
                   <AssetIcon asset={assetFrom} />
                   <div className="flex flex-col">
-                    <span className="text-leah text-sm font-semibold">{assetFrom.ticker}</span>
-                    <span className="text-thor-gray text-xs">{chainLabel(assetFrom.chain)}</span>
+                    <span className="text-txt-high-contrast text-sm font-semibold">{assetFrom.ticker}</span>
+                    <span className="text-txt-label-small text-xs">{chainLabel(assetFrom.chain)}</span>
                   </div>
                 </div>
                 <div className="text-right">
-                  <div className="text-leah text-sm font-semibold">
+                  <div className="text-txt-high-contrast text-sm font-semibold">
                     <DecimalText amount={amountFrom} symbol={assetFrom.ticker} />
                   </div>
                 </div>
@@ -217,12 +217,12 @@ export const SwapLimitCancel = ({ isOpen, onOpenChange, mode, transaction }: Swa
                 <div className="flex items-center gap-3">
                   <AssetIcon asset={assetTo} />
                   <div className="flex flex-col">
-                    <span className="text-leah text-sm font-semibold">{assetTo.ticker}</span>
-                    <span className="text-thor-gray text-xs">{chainLabel(assetTo.chain)}</span>
+                    <span className="text-txt-high-contrast text-sm font-semibold">{assetTo.ticker}</span>
+                    <span className="text-txt-label-small text-xs">{chainLabel(assetTo.chain)}</span>
                   </div>
                 </div>
                 <div className="text-right">
-                  <div className="text-leah text-sm font-semibold">
+                  <div className="text-txt-high-contrast text-sm font-semibold">
                     <DecimalText amount={amountTo} symbol={assetTo.ticker} />
                   </div>
                 </div>
@@ -232,36 +232,36 @@ export const SwapLimitCancel = ({ isOpen, onOpenChange, mode, transaction }: Swa
                 <div className="border-t p-4">
                   <div className="flex gap-4">
                     <div className="flex-1 space-y-1">
-                      <div className="text-thor-gray flex items-center text-xs font-medium">When 1 {assetFrom?.ticker} is worth</div>
+                      <div className="text-txt-label-small flex items-center text-xs font-medium">When 1 {assetFrom?.ticker} is worth</div>
                       <DecimalInput
-                        className="text-leah w-full bg-transparent text-lg font-semibold outline-none"
+                        className="text-txt-high-contrast w-full bg-transparent text-lg font-semibold outline-none"
                         amount={(pricePerUnit ?? currentPricePerUnit)?.toSignificant() ?? ''}
                         onAmountChange={onPriceChange}
                         autoComplete="off"
                       />
                       {differencePercent && !differencePercent.eq(0) && (
-                        <div className="text-thor-gray text-xs font-medium">
+                        <div className="text-txt-label-small text-xs font-medium">
                           {differencePercent.gte(0) ? '+' : ''}
                           {differencePercent.toFixed(1)}% from current
                         </div>
                       )}
                     </div>
                     <div className="flex-1 space-y-1 text-right">
-                      <div className="text-thor-gray text-xs font-medium">You will get</div>
+                      <div className="text-txt-label-small text-xs font-medium">You will get</div>
                       <DecimalInput
-                        className="text-leah w-full bg-transparent text-right text-lg font-semibold outline-none"
+                        className="text-txt-high-contrast w-full bg-transparent text-right text-lg font-semibold outline-none"
                         amount={totalAmount?.toSignificant() ?? amountTo}
                         onAmountChange={onTotalChange}
                         autoComplete="off"
                       />
-                      <div className="text-thor-gray text-xs font-medium">{assetTo.ticker}</div>
+                      <div className="text-txt-label-small text-xs font-medium">{assetTo.ticker}</div>
                     </div>
                   </div>
                 </div>
               )}
             </div>
 
-            <p className="text-thor-gray text-sm">
+            <p className="text-txt-label-small text-sm">
               {isModify
                 ? 'Modifying this limit order will update the target price. A small network fee will be charged to process the modification.'
                 : 'Cancelling this limit order will return your deposited funds to your wallet. A small network fee will be charged to process the cancellation.'}
@@ -272,7 +272,7 @@ export const SwapLimitCancel = ({ isOpen, onOpenChange, mode, transaction }: Swa
             {error && <SwapError error={error} />}
           </div>
 
-          <div className="from-lawrence pointer-events-none absolute inset-x-0 -bottom-px h-4 bg-linear-to-t to-transparent" />
+          <div className="from-modal pointer-events-none absolute inset-x-0 -bottom-px h-4 bg-linear-to-t to-transparent" />
         </ScrollArea>
 
         <div className="p-4 pt-2 md:p-8 md:pt-2">

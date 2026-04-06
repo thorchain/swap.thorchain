@@ -21,16 +21,16 @@ export const SwapFeeDialog = ({ outbound, liquidity, platform, isOpen, onOpenCha
         <div className="flex items-center gap-1">
           {title} <InfoTooltip>{info}</InfoTooltip>
         </div>
-        <div className="text-leah flex items-center gap-1">
+        <div className="text-txt-high-contrast flex items-center gap-1">
           {fee ? (
             <>
               {fee.amount.gt(0) && (
-                <span className="text-thor-gray">
+                <span className="text-txt-label-small">
                   <DecimalText amount={fee.amount.toSignificant()} symbol={fee.ticker} />
                 </span>
               )}
 
-              {fee.usd.gt(0) ? <span className="text-leah">${fee.usd.toFixed(2)}</span> : '$0.00'}
+              {fee.usd.gt(0) ? <span className="text-txt-high-contrast">${fee.usd.toFixed(2)}</span> : '$0.00'}
             </>
           ) : (
             0
@@ -48,7 +48,7 @@ export const SwapFeeDialog = ({ outbound, liquidity, platform, isOpen, onOpenCha
         </CredenzaHeader>
 
         <div className="flex flex-col gap-6 p-8 pt-0">
-          <div className="text-thor-gray text-xs">These fees are already included in the rate — you don’t pay them separately.</div>
+          <div className="text-txt-label-small text-xs">These fees are already included in the rate — you don’t pay them separately.</div>
 
           <div className="flex flex-col space-y-4 text-xs font-semibold">
             {feeSection('Liquidity Fee', 'Fee for liquidity providers on the route', liquidity)}

@@ -23,19 +23,19 @@ export function WalletToken({ token, bordered, account }: TokenRowProps) {
         {iconUrl && <img src={iconUrl} alt={balance.ticker} width={32} height={32} className="rounded-full" />}
       </div>
       <div className="min-w-0 flex-1">
-        <div className="text-leah text-sm font-medium">{balance.ticker}</div>
+        <div className="text-txt-high-contrast text-sm font-medium">{balance.ticker}</div>
       </div>
       <div className="flex shrink-0 items-center gap-2">
         <div className="text-right">
           {usdValue !== undefined ? (
             <>
-              <div className="text-leah text-sm font-medium">{toCurrencyFixed(usdValue.toCurrency('$', { trimTrailingZeros: false }))}</div>
-              <div className="text-thor-gray text-xs">
+              <div className="text-txt-high-contrast text-sm font-medium">{toCurrencyFixed(usdValue.toCurrency('$', { trimTrailingZeros: false }))}</div>
+              <div className="text-txt-label-small text-xs">
                 <DecimalText amount={balance.toSignificant()} symbol={balance.ticker} />
               </div>
             </>
           ) : (
-            <div className="text-leah text-sm font-medium">
+            <div className="text-txt-high-contrast text-sm font-medium">
               <DecimalText amount={balance.toSignificant()} symbol={balance.ticker} />
             </div>
           )}
@@ -44,7 +44,7 @@ export function WalletToken({ token, bordered, account }: TokenRowProps) {
           onClick={() => {
             openDialog(Send, { initialToken: token, account })
           }}
-          className="text-thor-gray hover:text-leah cursor-pointer"
+          className="text-txt-label-small hover:text-txt-high-contrast cursor-pointer"
           aria-label={`Send ${balance.ticker}`}
         >
           <Icon name="send" className="size-6" />

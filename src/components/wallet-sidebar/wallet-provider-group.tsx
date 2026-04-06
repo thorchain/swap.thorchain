@@ -24,10 +24,10 @@ export function WalletProviderGroup({ provider, chainDataList, expandedChains, o
     <div>
       <div className={cn('flex items-center gap-3 px-4 py-3', { 'opacity-30': disabled })}>
         <Image src={`/wallets/${walletKey}.svg`} alt={walletName} width={24} height={24} className="shrink-0 rounded-lg" />
-        <span className="text-leah flex-1 text-center text-sm font-medium">{walletName}</span>
+        <span className="text-txt-high-contrast flex-1 text-center text-sm font-medium">{walletName}</span>
         <button
           onClick={() => !disabled && onDisconnect(provider)}
-          className={cn('text-thor-gray transition-colors', { 'hover:text-leah cursor-pointer': !disabled })}
+          className={cn('text-txt-label-small transition-colors', { 'hover:text-txt-high-contrast cursor-pointer': !disabled })}
           aria-label={`Disconnect ${walletName}`}
         >
           <Power className="size-4.5" />

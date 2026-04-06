@@ -246,7 +246,7 @@ export function SendMemoMenu({ isOpen, onOpenChange }: SendMemoMenuProps) {
               </span>
             </a>
 
-            <DialogPrimitive.Close className="text-thor-gray hover:text-leah cursor-pointer rounded-sm transition-colors" aria-label="Close">
+            <DialogPrimitive.Close className="text-txt-label-small hover:text-txt-high-contrast cursor-pointer rounded-sm transition-colors" aria-label="Close">
               <X className="size-5" />
             </DialogPrimitive.Close>
           </div>
@@ -276,7 +276,7 @@ export function SendMemoMenu({ isOpen, onOpenChange }: SendMemoMenuProps) {
                         href={link.href}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="text-thor-gray flex items-center gap-2 text-lg transition-colors"
+                        className="text-txt-label-small flex items-center gap-2 text-lg transition-colors"
                       >
                         {link.icon}
                         {link.label}
@@ -288,7 +288,7 @@ export function SendMemoMenu({ isOpen, onOpenChange }: SendMemoMenuProps) {
             </div>
           </div>
 
-          <FooterContent className="border-thor-gray border-t px-4 py-3 pb-4 sm:px-8" />
+          <FooterContent className="border-stroke-menu border-t px-4 py-3 pb-4 sm:px-8" />
         </DialogPrimitive.Content>
       </DialogPortal>
     </Dialog>

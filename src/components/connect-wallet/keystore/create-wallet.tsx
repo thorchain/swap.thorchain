@@ -61,9 +61,9 @@ export function CreateWallet({ onBack, onConnect }: { onBack: () => void; onConn
       <div className="relative flex min-h-0 flex-1">
         <ScrollArea className="flex-1 px-4 md:px-8">
           <div className="flex flex-col">
-            <div className="text-leah mb-3 text-base font-semibold">Create New Wallet</div>
+            <div className="text-txt-high-contrast mb-3 text-base font-semibold">Create New Wallet</div>
 
-            <p className="text-thor-gray mb-5 text-sm">
+            <p className="text-txt-label-small mb-5 text-sm">
               Write these 12 words down and store them securely offline. This 12 word phrase is used to recover your wallet private keys.
             </p>
 
@@ -84,17 +84,17 @@ export function CreateWallet({ onBack, onConnect }: { onBack: () => void; onConn
 
             <div className="flex cursor-pointer items-center gap-4 py-4" onClick={() => setAccepted(!accepted)}>
               {accepted ? (
-                <Icon name="check" className="text-lawrence bg-brand-second size-6 shrink-0 rounded-full p-1" />
+                <Icon name="check" className="text-txt-green-default bg-green-default size-6 shrink-0 rounded-full p-1" />
               ) : (
-                <div className="bg-blade size-6 shrink-0 rounded-full" />
+                <div className="bg-contrast-2 size-6 shrink-0 rounded-full" />
               )}
 
-              <span className="text-thor-gray text-sm">I confirm I have securely saved the passphrase to recover my account in the future.</span>
+              <span className="text-txt-label-small text-sm">I confirm I have securely saved the passphrase to recover my account in the future.</span>
             </div>
           </div>
         </ScrollArea>
 
-        <div className="from-lawrence pointer-events-none absolute inset-x-0 -bottom-[1px] h-4 bg-linear-to-t to-transparent" />
+        <div className="from-modal pointer-events-none absolute inset-x-0 -bottom-[1px] h-4 bg-linear-to-t to-transparent" />
       </div>
 
       <div className="flex gap-6 p-4 pt-2 md:justify-end md:px-8 md:pb-8">
@@ -118,8 +118,8 @@ export function SetupPassword({ onBack, onSetup, connecting }: { onBack: () => v
       <div className="relative flex min-h-0 flex-1">
         <ScrollArea className="flex-1 px-4 md:px-8">
           <div className="mb-4 flex flex-col">
-            <div className="text-leah mb-3 text-base font-semibold">Setup Decryption Password</div>
-            <p className="text-thor-gray mb-5 text-sm">
+            <div className="text-txt-high-contrast mb-3 text-base font-semibold">Setup Decryption Password</div>
+            <p className="text-txt-label-small mb-5 text-sm">
               Enter a strong password to encrypt your created wallet. This is how you will access your wallet.
             </p>
 
@@ -140,7 +140,7 @@ export function SetupPassword({ onBack, onSetup, connecting }: { onBack: () => v
           </div>
         </ScrollArea>
 
-        <div className="from-lawrence pointer-events-none absolute inset-x-0 -bottom-[1px] h-4 bg-linear-to-t to-transparent" />
+        <div className="from-modal pointer-events-none absolute inset-x-0 -bottom-px h-4 bg-linear-to-t to-transparent" />
       </div>
 
       <div className="flex gap-3 p-4 pt-2 md:justify-end md:gap-6 md:px-8 md:pb-8">

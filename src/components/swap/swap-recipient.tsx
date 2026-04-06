@@ -199,13 +199,13 @@ export const SwapRecipient = ({ provider, onFetchQuote }: SwapRecipientProps) =>
             <div className="flex flex-col gap-6">
               {refundRequired && (
                 <div className="flex flex-col gap-3">
-                  <div className="text-thor-gray text-sm font-semibold">Enter refund address:</div>
+                  <div className="text-txt-label-small text-sm font-semibold">Enter refund address:</div>
                   {addressInput(assetFrom, refundAddress, setRefundAddress, isValidRefund)}
                 </div>
               )}
 
               <div className="flex flex-col gap-3">
-                {refundRequired && <div className="text-thor-gray text-sm font-semibold">Enter receiving address:</div>}
+                {refundRequired && <div className="text-txt-label-small text-sm font-semibold">Enter receiving address:</div>}
                 {addressInput(assetTo, destinationAddress, setDestinationAddress, isValidDestination, options)}
               </div>
             </div>
@@ -230,7 +230,7 @@ export const SwapRecipient = ({ provider, onFetchQuote }: SwapRecipientProps) =>
           {quoteError && <SwapError error={quoteError} />}
         </div>
 
-        <div className="from-lawrence pointer-events-none absolute inset-x-0 -bottom-px h-4 bg-linear-to-t to-transparent" />
+        <div className="from-modal pointer-events-none absolute inset-x-0 -bottom-px h-4 bg-linear-to-t to-transparent" />
       </ScrollArea>
 
       <div className="p-4 pt-2 md:p-8 md:pt-2">

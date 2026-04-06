@@ -77,7 +77,7 @@ export const TransactionHistoryDialog = ({ isOpen, onOpenChange }: HistoryDialog
     <Credenza open={isOpen} onOpenChange={onOpenChange}>
       <CredenzaContent className="flex h-auto max-h-5/6 flex-col md:max-w-xl">
         <CredenzaHeader>
-          <CredenzaTitle className="text-leah text-base font-semibold md:text-2xl">History</CredenzaTitle>
+          <CredenzaTitle className="text-txt-high-contrast text-base font-semibold md:text-2xl">History</CredenzaTitle>
         </CredenzaHeader>
 
         <ScrollArea className="flex min-h-0 flex-1 px-4 md:px-8" classNameViewport="flex-1 h-auto">
@@ -126,17 +126,17 @@ export const TransactionHistoryDialog = ({ isOpen, onOpenChange }: HistoryDialog
               return (
                 <Fragment key={i}>
                   {shouldRenderHeader && (
-                    <div className={cn('text-andy px-4 pb-3 text-sm font-semibold', { 'pt-3': i !== 0 })}>{formatDate(txDate)}</div>
+                    <div className={cn('text-txt-med-contrast px-4 pb-3 text-sm font-semibold', { 'pt-3': i !== 0 })}>{formatDate(txDate)}</div>
                   )}
                   <div className="bg-sub-container-modal mb-3 rounded-xl border px-4 py-3">
                     <div className="flex cursor-pointer" onClick={() => setExpandTx(isExpanded ? null : tx.uid)}>
                       <div className="flex flex-1 items-center gap-3">
                         {tx.assetFrom && <AssetIcon asset={tx.assetFrom} />}
                         <div className="flex flex-col gap-1">
-                          <span className="text-leah text-sm font-semibold">
+                          <span className="text-txt-high-contrast text-sm font-semibold">
                             <DecimalText className="break-all" amount={amountFrom.toSignificant()} symbol={tx.assetFrom?.ticker} />
                           </span>
-                          <span className="text-thor-gray text-xs font-medium">
+                          <span className="text-txt-label-small text-xs font-medium">
                             {fiatFrom && toCurrencyFixed(fiatFrom.toCurrency('$', { trimTrailingZeros: false }))}
                           </span>
                         </div>
@@ -144,26 +144,26 @@ export const TransactionHistoryDialog = ({ isOpen, onOpenChange }: HistoryDialog
                       <div className="flex flex-col items-center justify-center px-1">
                         <span>
                           {status === 'not_started' ? (
-                            <ClockFading className="text-thor-gray" size={24} />
+                            <ClockFading className="text-txt-label-small" size={24} />
                           ) : status === 'pending' || status === 'swapping' ? (
                             <span className="relative flex items-center justify-center">
-                              <Icon name="loading" className="text-thor-gray size-6 animate-spin" />
-                              <Icon name="arrow-m-right" className="text-thor-gray absolute size-3" />
+                              <Icon name="loading" className="text-txt-label-small size-6 animate-spin" />
+                              <Icon name="arrow-m-right" className="text-txt-label-small absolute size-3" />
                             </span>
                           ) : status === 'completed' ? (
-                            <Icon name="check" className="text-brand-first size-6" />
+                            <Icon name="check" className="text-green-contrast size-6" />
                           ) : status === 'failed' ? (
                             <X className="text-lucian" size={24} />
                           ) : status === 'expired' ? (
                             <ClockFading className="text-lucian" size={24} />
                           ) : status === 'refunded' ? (
-                            <Undo2 className="text-thor-gray" size={24} />
+                            <Undo2 className="text-txt-label-small" size={24} />
                           ) : (
-                            <CircleAlert className="text-thor-gray" size={24} />
+                            <CircleAlert className="text-txt-label-small" size={24} />
                           )}
                         </span>
                         <span
-                          className={cn('text-thor-gray text-[10px] font-semibold', {
+                          className={cn('text-txt-label-small text-[10px] font-semibold', {
                             'text-lucian': status === 'expired',
                             capitalize: !showRemainingTime
                           })}
@@ -177,10 +177,10 @@ export const TransactionHistoryDialog = ({ isOpen, onOpenChange }: HistoryDialog
                       </div>
                       <div className="flex flex-1 items-center justify-end gap-3">
                         <div className="flex flex-col gap-1 text-right">
-                          <span className="text-leah text-sm font-semibold">
+                          <span className="text-txt-high-contrast text-sm font-semibold">
                             <DecimalText className="break-all" amount={amountTo.toSignificant()} symbol={tx.assetTo?.ticker} />
                           </span>
-                          <span className="text-thor-gray text-xs font-medium">
+                          <span className="text-txt-label-small text-xs font-medium">
                             {fiatTo && toCurrencyFixed(fiatTo.toCurrency('$', { trimTrailingZeros: false }))}
                           </span>
                         </div>
@@ -192,7 +192,7 @@ export const TransactionHistoryDialog = ({ isOpen, onOpenChange }: HistoryDialog
                       <div className="mt-3 flex items-center justify-end border-t py-1">
                         {showRQ && (
                           <div className="flex items-center justify-end pt-1 pl-4">
-                            <div className="text-thor-gray text-xs font-semibold">
+                            <div className="text-txt-label-small text-xs font-semibold">
                               {tx.expiration && (
                                 <span>
                                   Expires in &nbsp;
@@ -228,25 +228,25 @@ export const TransactionHistoryDialog = ({ isOpen, onOpenChange }: HistoryDialog
                       <>
                         <div className="mt-3 space-y-4 border-t py-4 text-xs font-semibold">
                           {details.fromAddress && (
-                            <div className="text-thor-gray flex items-center justify-between">
+                            <div className="text-txt-label-small flex items-center justify-between">
                               <span>Source Address</span>
                               <div className="flex items-center gap-2">
-                                <span className="text-leah">{truncate(details.fromAddress)}</span>
+                                <span className="text-txt-high-contrast">{truncate(details.fromAddress)}</span>
                                 <CopyButton text={details.fromAddress} />
                               </div>
                             </div>
                           )}
 
-                          <div className="text-thor-gray flex items-center justify-between">
+                          <div className="text-txt-label-small flex items-center justify-between">
                             <span>Destination Address</span>
                             <div className="flex items-center gap-2">
-                              <span className="text-leah">{truncate(details.toAddress)}</span>
+                              <span className="text-txt-high-contrast">{truncate(details.toAddress)}</span>
                               <CopyButton text={details.toAddress} />
                             </div>
                           </div>
                         </div>
 
-                        <div className="space-y-4 border-t p-4 text-xs font-semibold">
+                        <div className="space-y-4 border-t py-4 text-xs font-semibold">
                           {details.legs.map((legTx: any, i: number) => {
                             return <div key={i}>{renderLeg(tx, legTx)}</div>
                           })}
@@ -256,7 +256,7 @@ export const TransactionHistoryDialog = ({ isOpen, onOpenChange }: HistoryDialog
                     {isExpanded && tx.provider === ProviderName.THORCHAIN && tx.hash && (
                       <a
                         href={`https://thorchain.net/tx/${tx.hash}`}
-                        className="flex justify-end border-t px-4 pt-3"
+                        className="flex justify-end border-t pt-3"
                         rel="noopener noreferrer"
                         target="_blank"
                       >
@@ -307,16 +307,16 @@ function renderLeg(tx: any, legTx: any) {
   const explorerUrl = legTx.hash && getExplorerTxUrl({ chain: chain, txHash: legTx.hash })
 
   return (
-    <div className="text-thor-gray flex justify-between">
+    <div className="text-txt-label-small flex justify-between">
       <div className="flex items-center gap-2">
         {legTx.status === 'completed' ? (
-          <CircleCheck className="text-brand-first" size={16} />
+          <CircleCheck className="text-green-contrast" size={16} />
         ) : legTx.status === 'not_started' ? (
           <ClockFading size={16} />
         ) : (
           <span className="relative flex items-center justify-center">
-            <Icon name="loading" className="text-thor-gray size-4 animate-spin" />
-            <Icon name="arrow-m-right" className="text-thor-gray absolute size-2" />
+            <Icon name="loading" className="text-txt-label-small size-4 animate-spin" />
+            <Icon name="arrow-m-right" className="text-txt-label-small absolute size-2" />
           </span>
         )}
         <span>{text}</span>

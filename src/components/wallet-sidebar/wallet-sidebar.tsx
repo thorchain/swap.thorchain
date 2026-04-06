@@ -55,7 +55,7 @@ export function WalletSidebar({ isOpen, onOpenChange }: WalletSidebarProps) {
       <DrawerContent className="flex flex-col p-8" style={{ width: 400, maxWidth: '100vw' }}>
         <DrawerHeader className="flex flex-row items-center justify-between p-0">
           <DrawerTitle className="text-2xl font-bold">Wallets</DrawerTitle>
-          <button onClick={() => onOpenChange(false)} className="text-thor-gray hover:text-leah cursor-pointer transition-colors" aria-label="Close">
+          <button onClick={() => onOpenChange(false)} className="text-txt-label-small hover:text-txt-high-contrast cursor-pointer transition-colors" aria-label="Close">
             <X className="size-5" />
           </button>
         </DrawerHeader>
@@ -64,8 +64,8 @@ export function WalletSidebar({ isOpen, onOpenChange }: WalletSidebarProps) {
           <div className="rounded-2xl border p-4">
             <div className="flex items-center justify-between gap-3">
               <div className="flex-1">
-                <div className="text-leah text-sm font-semibold">External Wallet Mode</div>
-                <div className="text-thor-gray mt-0.5 text-xs leading-relaxed">
+                <div className="text-txt-high-contrast text-sm font-semibold">External Wallet Mode</div>
+                <div className="text-txt-label-small mt-0.5 text-xs leading-relaxed">
                   Enter your order, click the Swap button, and follow the instructions
                 </div>
               </div>

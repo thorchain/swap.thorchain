@@ -18,7 +18,7 @@ export function Tooltip({ content, children }: { content: ReactNode; children: R
 export function InfoTooltip({ children }: { children: ReactNode }) {
   return (
     <Tooltip content={children}>
-      <Icon name="info" className="text-thor-gray inline-block size-4 shrink-0" />
+      <Icon name="info" className="text-txt-med-contrast inline-block size-4 shrink-0" />
     </Tooltip>
   )
 }

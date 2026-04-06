@@ -88,7 +88,7 @@ export const SwapSettings = () => {
               </div>
               <span>{currentSlippage ? `${currentSlippage}%` : 'No Protection'}</span>
             </div>
-            <span className="text-thor-gray text-xs">
+            <span className="text-txt-label-small text-xs">
               Maximum acceptable price change. Transaction will fail if the price moves unfavorably beyond this amount.
             </span>
           </div>
@@ -103,7 +103,7 @@ export const SwapSettings = () => {
                 'bg-lucian': !currentSlippage
               })}
             />
-            <div className="text-thor-gray mt-3 flex items-center justify-between text-[10px] font-semibold">
+            <div className="text-txt-label-small mt-3 flex items-center justify-between text-[10px] font-semibold">
               {ramExpansions.map((expansion, index) => (
                 <span key={expansion}>
                   {expansion}
@@ -126,7 +126,7 @@ export const SwapSettings = () => {
                 </InfoTooltip>
               </div>
             </div>
-            <span className="text-thor-gray text-xs">
+            <span className="text-txt-label-small text-xs">
               The vast majority of users should use the default settings. Only expert traders should change these settings
             </span>
           </div>
@@ -149,9 +149,9 @@ export const SwapSettings = () => {
                 max={numberOfTradesValues.length}
                 value={[quantityToSliderIndex(localCustomQuantity)]}
                 onValueChange={([index]) => setLocalCustomQuantity(sliderIndexToQuantity(index))}
-                classNameRange="bg-liquidity-green"
+                classNameRange="bg-green-default"
               />
-              <div className="text-thor-gray mt-3 flex items-center justify-between text-[10px] font-semibold">
+              <div className="text-txt-label-small mt-3 flex items-center justify-between text-[10px] font-semibold">
                 <span>0</span>
                 <span>{numberOfTradesValues[numberOfTradesValues.length - 1]}</span>
               </div>
@@ -172,9 +172,9 @@ export const SwapSettings = () => {
                 max={3}
                 value={[localCustomInterval]}
                 onValueChange={([value]) => setLocalCustomInterval(value)}
-                classNameRange="bg-liquidity-green"
+                classNameRange="bg-green-default"
               />
-              <div className="text-thor-gray mt-1 flex items-center justify-between text-center text-[10px] font-semibold">
+              <div className="text-txt-label-small mt-1 flex items-center justify-between text-center text-[10px] font-semibold">
                 <div className="flex flex-col">
                   <span>0 blocks</span>
                   <span>Rapid Swap</span>

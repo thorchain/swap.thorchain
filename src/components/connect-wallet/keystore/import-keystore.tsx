@@ -106,8 +106,8 @@ export function ImportKeystore({ onBack, onConnect }: { onBack: () => void; onCo
               }}
               className={cn(
                 'flex h-40 flex-col items-center justify-center gap-2 rounded-3xl border-2 border-dashed px-8 text-center transition-all duration-200 ease-in-out',
-                { 'hover:bg-blade/50 cursor-pointer': !file },
-                { 'bg-blade/50': isDragging }
+                { 'hover:bg-sub-container-modal/50 cursor-pointer': !file },
+                { 'bg-sub-container-modal/50': isDragging }
               )}
             >
               <Input
@@ -123,7 +123,7 @@ export function ImportKeystore({ onBack, onConnect }: { onBack: () => void; onCo
 
               {file ? (
                 <div
-                  className="bg-brand-first/10 border-brand-first text-leah hover:bg-lucian/10 hover:text-lucian hover:border-lucian flex cursor-pointer items-center gap-3 rounded-2xl border px-4 py-3 font-semibold"
+                  className="bg-green-default/10 border-green-default text-txt-high-contrast hover:bg-lucian/10 hover:text-lucian hover:border-lucian flex cursor-pointer items-center gap-3 rounded-2xl border px-4 py-3 font-semibold"
                   onClick={() => {
                     setFile(undefined)
                   }}
@@ -133,14 +133,14 @@ export function ImportKeystore({ onBack, onConnect }: { onBack: () => void; onCo
                 </div>
               ) : (
                 <>
-                  <Icon name="cloud-in" className="text-thor-gray size-12 shrink-0" />
-                  <span className="text-leah text-sm font-semibold">Select or drag your keystore file to upload it</span>
+                  <Icon name="cloud-in" className="text-txt-label-small size-12 shrink-0" />
+                  <span className="text-txt-high-contrast text-sm font-semibold">Select or drag your keystore file to upload it</span>
                 </>
               )}
             </div>
 
             <div className="mt-5 flex flex-col gap-2">
-              <div className="text-thor-gray text-base font-semibold">Decryption Password</div>
+              <div className="text-txt-label-small text-base font-semibold">Decryption Password</div>
               <Input type="password" placeholder="Password" onChange={e => setPassword(e.target.value)} disabled={connecting} />
             </div>
 
@@ -152,7 +152,7 @@ export function ImportKeystore({ onBack, onConnect }: { onBack: () => void; onCo
           </div>
         </ScrollArea>
 
-        <div className="from-lawrence pointer-events-none absolute inset-x-0 -bottom-[1px] h-4 bg-linear-to-t to-transparent" />
+        <div className="from-modal pointer-events-none absolute inset-x-0 -bottom-[1px] h-4 bg-linear-to-t to-transparent" />
       </div>
 
       <div className="flex gap-3 p-4 pt-2 md:justify-end md:gap-6 md:px-8 md:pb-8">

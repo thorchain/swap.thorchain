@@ -40,29 +40,29 @@ export const SwapInputFrom = () => {
 
   return (
     <div className="bg-swap-bloc rounded-15 border p-7">
-      <div className="text-thor-gray mb-3 font-semibold">Sell</div>
+      <div className="text-txt-label-small mb-3 font-semibold">Sell</div>
 
       <div className="flex items-center justify-between">
         <div className="flex-1">
           <DecimalInput
-            className="text-leah w-full bg-transparent text-2xl font-medium outline-none"
+            className="text-txt-high-contrast w-full bg-transparent text-2xl font-medium outline-none"
             amount={amountFrom}
             onAmountChange={e => setAmountFrom(e)}
             autoComplete="off"
           />
-          <div className="text-thor-gray text-sm font-medium">{toCurrencyFixed(fiatValueFrom.toCurrency('$', { trimTrailingZeros: false }))}</div>
+          <div className="text-txt-label-small text-sm font-medium">{toCurrencyFixed(fiatValueFrom.toCurrency('$', { trimTrailingZeros: false }))}</div>
         </div>
         <div className="flex cursor-pointer items-center gap-2" onClick={onClick}>
           <AssetIcon asset={assetFrom} />
           <div className="flex w-16 flex-col items-start">
-            <span className="text-leah inline-block w-full truncate text-base font-semibold">
+            <span className="text-txt-high-contrast inline-block w-full truncate text-base font-semibold">
               {assetFrom ? assetFrom.ticker : <Skeleton className="mb-0.5 h-6 w-12" />}
             </span>
-            <span className="text-thor-gray inline-block w-full truncate text-xs">
+            <span className="text-txt-label-small inline-block w-full truncate text-xs">
               {assetFrom?.chain ? chainLabel(assetFrom.chain) : <Skeleton className="mt-0.5 h-3 w-16" />}
             </span>
           </div>
-          <Icon name="arrow-s-down" className="text-thor-gray size-5" />
+          <Icon name="arrow-s-down" className="text-txt-label-small size-5" />
         </div>
       </div>
 
