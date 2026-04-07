@@ -15,7 +15,7 @@ import { SwapProvider } from '@/components/swap/swap-provider'
 import { InfoTooltip } from '@/components/tooltip'
 import { useRates, useSwapRates } from '@/hooks/use-rates'
 import { useAssetFrom, useAssetTo, useSlippage } from '@/hooks/use-swap'
-import { formatExpiration, providerLabel, resolveFees, resolvePriceImpact } from '@/lib/swap-helpers'
+import { formatExpiration, resolveFees, resolvePriceImpact } from '@/lib/swap-helpers'
 import { cn, toCurrencyFixed, truncate } from '@/lib/utils'
 import { useIsLimitSwap, useLimitSwapBuyAmount } from '@/store/limit-swap-store'
 

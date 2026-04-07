@@ -15,7 +15,7 @@ import { SwapError } from '@/components/swap/swap-error'
 import { ThemeButton } from '@/components/theme-button'
 import { Tooltip } from '@/components/tooltip'
 import { useIsMobile } from '@/hooks/use-mobile'
-import { useAssetFrom, useAssetTo, useCustomInterval, useCustomQuantity, useSlippage, useSwap } from '@/hooks/use-swap'
+import { useAssetFrom, useAssetTo, useCustomQuantity, useSlippage, useSwap } from '@/hooks/use-swap'
 import { useAccounts, useSelectedAccount } from '@/hooks/use-wallets'
 import { getQuotes } from '@/lib/api'
 import { prepareQuoteForLimitSwap, prepareQuoteForStreaming } from '@/lib/memo-helpers'
@@ -33,7 +33,6 @@ export const SwapRecipient = ({ provider, onFetchQuote }: SwapRecipientProps) =>
   const assetFrom = useAssetFrom()
   const assetTo = useAssetTo()
   const slippage = useSlippage()
-  const customInterval = useCustomInterval()
   const customQuantity = useCustomQuantity()
   const accounts = useAccounts()
   const selectedAccount = useSelectedAccount()

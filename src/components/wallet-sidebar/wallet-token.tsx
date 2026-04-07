@@ -14,7 +14,7 @@ interface TokenRowProps {
 
 export function WalletToken({ token, bordered, account }: TokenRowProps) {
   const { openDialog } = useDialog()
-  const { balance, amount, usdValue, logoURI } = token
+  const { balance, usdValue, logoURI } = token
   const iconUrl = logoURI || balance.getIconUrl()
 
   return (
