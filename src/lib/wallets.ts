@@ -124,7 +124,8 @@ export async function getAccounts(
 
   return chains
     .map(chain => {
-      const address = uSwap.getAddress(chain)
+      const raw = uSwap.getAddress(chain)
+      const address = Array.isArray(raw) ? raw[0] : raw
       return address ? { address, network: chain, provider: option } : null
     })
     .filter(acc => acc !== null)
