@@ -3,9 +3,8 @@ import { HeaderLogoText } from '@/components/header/header-logo-text'
 
 export const AppConfig = {
   id: 'thorchain',
+  title: "The World's Leading Bitcoin DEX",
   baseUrl: 'https://swap.thorchain.org',
-  title: 'Swap BTC to ETH & Other Assets | THORChain',
-  description: "The World's Leading Bitcoin DEX",
   providers: [ProviderName.THORCHAIN, ProviderName.MAYACHAIN],
   favicon: '/favicon.ico',
   logo: '/logo.svg',
