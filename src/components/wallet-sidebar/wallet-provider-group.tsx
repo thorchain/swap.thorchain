@@ -22,9 +22,11 @@ export function WalletProviderGroup({ provider, chainDataList, expandedChains, o
 
   return (
     <div>
-      <div className={cn('flex items-center gap-3 px-4 py-3', { 'opacity-30': disabled })}>
-        <Image src={`/wallets/${walletKey}.svg`} alt={walletName} width={24} height={24} className="shrink-0 rounded-lg" />
-        <span className="text-txt-high-contrast flex-1 text-center text-sm font-medium">{walletName}</span>
+      <div className={cn('flex items-center justify-center px-4 py-3', { 'opacity-30': disabled })}>
+        <div className="flex flex-1 items-center justify-center gap-3">
+          <Image src={`/wallets/${walletKey}.svg`} alt={walletName} width={24} height={24} className="shrink-0 rounded-lg" />
+          <span className="text-txt-high-contrast text-sm font-medium">{walletName}</span>
+        </div>
         <button
           onClick={() => !disabled && onDisconnect(provider)}
           className={cn('text-txt-label-small transition-colors', { 'hover:text-txt-high-contrast cursor-pointer': !disabled })}
