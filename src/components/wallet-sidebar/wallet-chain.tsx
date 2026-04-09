@@ -67,7 +67,7 @@ export function WalletChain({ data, isExpanded, onToggle, disabled }: WalletChai
               </div>
               {isUtxo && (
                 <div
-                  className="text-txt-label-small hover:text-txt-high-contrast flex flex-1 cursor-pointer items-center justify-center rounded-xl border py-1.5 text-sm"
+                  className="text-txt-label-small hover:text-green-contrast flex flex-1 cursor-pointer items-center justify-center rounded-xl border py-1.5 text-sm"
                   onClick={() => openDialog(Send, { initialToken: nativeToken, account })}
                 >
                   Send

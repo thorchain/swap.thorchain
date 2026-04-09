@@ -47,7 +47,7 @@ export function WalletToken({ token, bordered, account }: TokenRowProps) {
           className="text-txt-label-small hover:text-txt-high-contrast cursor-pointer"
           aria-label={`Send ${balance.ticker}`}
         >
-          <Icon name="send" className="size-6" />
+          <Icon name="send" className="size-6 hover:text-green-contrast" />
         </button>
       </div>
     </div>
