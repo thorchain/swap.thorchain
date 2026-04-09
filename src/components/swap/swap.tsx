@@ -65,10 +65,10 @@ export const Swap = () => {
       <div className="w-full max-w-md">
         <div className="mb-3 flex items-center justify-between">
           <div className="flex cursor-pointer items-center gap-4 text-2xl font-medium">
-            <span className={cn(isLimitSwap ? 'text-txt-btn-small-default' : 'text-txt-contrast-1-default')} onClick={() => setIsLimitSwap(false)}>
+            <span className={cn(isLimitSwap ? 'text-txt-text-modal' : 'text-txt-contrast-1-default')} onClick={() => setIsLimitSwap(false)}>
               Swap
             </span>
-            <span className={cn(isLimitSwap ? 'text-txt-contrast-1-default' : 'text-txt-btn-small-default')} onClick={() => setIsLimitSwap(true)}>
+            <span className={cn(isLimitSwap ? 'text-txt-contrast-1-default' : 'text-txt-text-modal')} onClick={() => setIsLimitSwap(true)}>
               Limit
             </span>
           </div>
