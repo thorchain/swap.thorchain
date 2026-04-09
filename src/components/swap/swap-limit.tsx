@@ -30,7 +30,7 @@ export const SwapLimit = ({ quote }: SwapLimitProps) => {
   const limitSwapExpiry = useLimitSwapExpiry()
 
   const { openDialog } = useDialog()
-  const [pricePerUnit, setPricePerUnit] = useState<USwapNumber | undefined>()
+  const [pricePerUnit, setPricePerUnit] = useState<USwapNumber | null | undefined>()
 
   const sellAmount = useMemo(() => (quote ? new USwapNumber(quote.sellAmount) : null), [quote])
 
@@ -47,7 +47,7 @@ export const SwapLimit = ({ quote }: SwapLimitProps) => {
 
   useEffect(() => {
     if (!expectedBuyAmountPerUnit) return
-    if (!pricePerUnit) {
+    if (pricePerUnit === undefined) {
       setPricePerUnit(expectedBuyAmountPerUnit)
     }
   }, [expectedBuyAmountPerUnit, pricePerUnit])
@@ -154,8 +154,8 @@ export const SwapLimit = ({ quote }: SwapLimitProps) => {
       <div className="my-3 flex items-center gap-2 overflow-hidden">
         <DecimalInput
           className="text-txt-high-contrast field-sizing-content bg-transparent text-2xl font-medium outline-none"
-          amount={(pricePerUnit ?? expectedBuyAmountPerUnit)?.toSignificant() ?? ''}
-          onAmountChange={v => setPricePerUnit(new USwapNumber(v))}
+          amount={pricePerUnit === null ? '' : (pricePerUnit ?? expectedBuyAmountPerUnit)?.toSignificant() ?? ''}
+          onAmountChange={v => setPricePerUnit(v === '' ? null : new USwapNumber(v))}
           autoComplete="off"
         />
         <div className="text-txt-label-small text-2xl font-medium">{assetTo?.ticker}</div>
