@@ -1,11 +1,14 @@
 import { useMemo } from 'react'
 import { useQuery } from '@tanstack/react-query'
-import { AssetValue, USwapNumber } from '@tcswap/core'
+import { AssetValue, Chain, USwapNumber } from '@tcswap/core'
 import { useAssets } from '@/hooks/use-assets'
 import { useRates } from '@/hooks/use-rates'
 import { useAccounts, useHasHydrated } from '@/hooks/use-wallets'
+import { getAlchemyTokenBalances } from '@/lib/api'
 import { getUSwap } from '@/lib/wallets'
 import { WalletAccount } from '@/store/wallets-store'
+
+const ETH_RPC_URL = process.env.NEXT_PUBLIC_ALCHEMY_ETH_RPC_URL || 'https://eth.llamarpc.com'
 
 function assetIdentifier(b: AssetValue): string {
   const identifier = b.isSynthetic || b.isTradeAsset ? b.ticker : b.address ? `${b.ticker}-${b.address}` : b.ticker
@@ -52,8 +55,33 @@ export const useWalletBalances = () => {
         accounts.map(async account => {
           const wallet = uSwap.getWallet(account.provider, account.network)
           if (!wallet || !('getBalance' in wallet)) return { account, balances: [] as AssetValue[] }
-          const balances: AssetValue[] = await (wallet as any).getBalance(wallet.address, false)
-          return { account, balances: balances || [] }
+          const rawBalances = await (wallet as any).getBalance(wallet.address, false)
+          const balances: AssetValue[] = rawBalances ? [...rawBalances] : []
+
+          // For Ethereum, supplement with Alchemy to discover meme coins not in the curated API list
+          if (account.network === Chain.Ethereum) {
+            const alchemyBalances = await getAlchemyTokenBalances(wallet.address, ETH_RPC_URL)
+            const existingAddresses = new Set(
+              balances.map(b => b.address?.toLowerCase()).filter(Boolean)
+            )
+            for (const t of alchemyBalances) {
+              const addr = t.contractAddress.toLowerCase()
+              if (existingAddresses.has(addr)) continue
+              const value = BigInt(t.tokenBalance).toString()
+              try {
+                const av = AssetValue.from({
+                  asset: `ETH.${t.symbol}-${t.contractAddress}`,
+                  fromBaseDecimal: t.decimals,
+                  value
+                })
+                balances.push(av)
+              } catch {
+                // skip tokens that can't be parsed
+              }
+            }
+          }
+
+          return { account, balances }
         })
       )
       return results.map((r, i) => ({
@@ -95,8 +123,8 @@ export const useWalletBalances = () => {
         return { balance: b, amount, usdValue, logoURI }
       })
 
-      const allPriced = tokens.length > 0 && tokens.every(t => t.usdValue !== undefined)
-      const totalUsd = allPriced ? tokens.slice(1).reduce((sum, t) => sum.add(t.usdValue!), tokens[0].usdValue!) : undefined
+      const pricedTokens = tokens.filter(t => t.usdValue !== undefined)
+      const totalUsd = pricedTokens.length > 0 ? pricedTokens.slice(1).reduce((sum, t) => sum.add(t.usdValue!), pricedTokens[0].usdValue!) : undefined
 
       return { account, tokens, totalUsd, isLoading: false }
     })

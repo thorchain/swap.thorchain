@@ -9,12 +9,77 @@ const uSwap = axios.create({
   }
 })
 
+export const getJupiterPrices = async (mintAddresses: string[]): Promise<Record<string, number>> => {
+  if (mintAddresses.length === 0) return {}
+  const ids = mintAddresses.join(',')
+  try {
+    const res = await axios.get(`https://api.jup.ag/price/v3?ids=${ids}`)
+    const result: Record<string, number> = {}
+    for (const [mint, data] of Object.entries<any>(res.data || {})) {
+      const price = data?.usdPrice
+      if (price != null) result[mint] = parseFloat(price)
+    }
+    return result
+  } catch {
+    return {}
+  }
+}
+
+export interface AlchemyTokenBalance {
+  contractAddress: string
+  tokenBalance: string
+  symbol: string
+  name: string
+  decimals: number
+}
+
+export const getAlchemyTokenBalances = async (address: string, rpcUrl: string): Promise<AlchemyTokenBalance[]> => {
+  try {
+    const balanceRes = await axios.post(
+      rpcUrl,
+      { jsonrpc: '2.0', method: 'alchemy_getTokenBalances', params: [address, 'erc20'], id: 1 },
+      { timeout: 10_000 }
+    )
+
+    const tokenBalances: Array<{ contractAddress: string; tokenBalance: string }> = balanceRes.data?.result?.tokenBalances || []
+    const nonZero = tokenBalances.filter(t => {
+      try {
+        return BigInt(t.tokenBalance) > 0n
+      } catch {
+        return false
+      }
+    })
+    if (nonZero.length === 0) return []
+
+    const metaRes = await Promise.all(
+      nonZero.map(t =>
+        axios
+          .post(rpcUrl, { jsonrpc: '2.0', method: 'alchemy_getTokenMetadata', params: [t.contractAddress], id: 1 }, { timeout: 10_000 })
+          .then(r => r.data?.result)
+          .catch(() => null)
+      )
+    )
+
+    return nonZero
+      .map((t, i) => ({
+        contractAddress: t.contractAddress,
+        tokenBalance: t.tokenBalance,
+        symbol: (metaRes[i]?.symbol as string) || '',
+        name: (metaRes[i]?.name as string) || '',
+        decimals: (metaRes[i]?.decimals as number) ?? 18
+      }))
+      .filter(t => t.symbol)
+  } catch {
+    return []
+  }
+}
+
 const thornode = axios.create({ baseURL: 'https://gateway.liquify.com/chain/thorchain_api' })
 const midgard = axios.create({ baseURL: 'https://gateway.liquify.com/chain/thorchain_midgard' })
 const mayaMidgard = axios.create({ baseURL: 'https://midgard.mayachain.info' })
 
 export const getMidgardPools = async (): Promise<{ asset: string; assetPriceUSD: string }[]> => {
-  return midgard.get('/v2/pools').then(res => res.data)
+  return thornode.get('/thorchain/pools').then(res => res.data)
 }
 
 export const getMidgardRunePrice = async (): Promise<number> => {
