@@ -1,13 +1,10 @@
 import Image from 'next/image'
 import { ChevronDown, ChevronUp, Loader2 } from 'lucide-react'
 import { toast } from 'sonner'
-import { UTXOChains } from '@tcswap/core'
-import { useDialog } from '@/components/global-dialog'
 import { chainLabel } from '@/components/connect-wallet/config'
 import { ChainWalletData } from '@/hooks/use-wallet-balances'
 import { cn, toCurrencyFixed, truncate } from '@/lib/utils'
 import { WalletToken } from '@/components/wallet-sidebar/wallet-token'
-import { Send } from '@/components/send/send'
 
 interface WalletChainProps {
   data: ChainWalletData
@@ -17,16 +14,13 @@ interface WalletChainProps {
 }
 
 export function WalletChain({ data, isExpanded, onToggle, disabled }: WalletChainProps) {
-  const { openDialog } = useDialog()
   const { account, tokens, totalUsd, isLoading } = data
   const chainName = chainLabel(account.network)
-  const isUtxo = UTXOChains.includes(account.network as (typeof UTXOChains)[number])
-  const nativeToken = tokens[0]
 
   return (
     <div className={cn({ 'opacity-30': disabled })}>
       <button
-        className={cn('flex w-full cursor-pointer items-center gap-3 px-4 py-2 text-left', { 'border-b': isExpanded && !isUtxo })}
+        className={cn('flex w-full cursor-pointer items-center gap-3 px-4 py-2 text-left', { 'border-b': isExpanded })}
         onClick={onToggle}
         disabled={disabled}
       >
@@ -49,12 +43,11 @@ export function WalletChain({ data, isExpanded, onToggle, disabled }: WalletChai
 
       {isExpanded && (
         <div>
-          {!isUtxo &&
-            (tokens.filter(t => t.amount > 0).length > 0 ? (
-              tokens.filter(t => t.amount > 0).map((token, i) => <WalletToken bordered={false} key={i} token={token} account={account} />)
-            ) : (
-              <div className="text-txt-label-small px-4 py-1 text-xs">No tokens found</div>
-            ))}
+          {tokens.filter(t => t.amount > 0).length > 0 ? (
+            tokens.filter(t => t.amount > 0).map((token, i) => <WalletToken bordered={false} key={i} token={token} account={account} />)
+          ) : (
+            <div className="text-txt-label-small px-4 py-1 text-xs">No tokens found</div>
+          )}
           <div className="border-t py-1">
             <div className="mx-4 flex gap-2">
               <div
@@ -65,14 +58,6 @@ export function WalletChain({ data, isExpanded, onToggle, disabled }: WalletChai
               >
                 Copy Address
               </div>
-              {isUtxo && (
-                <div
-                  className="text-txt-label-small hover:text-green-contrast flex flex-1 cursor-pointer items-center justify-center rounded-xl border py-1.5 text-sm"
-                  onClick={() => openDialog(Send, { initialToken: nativeToken, account })}
-                >
-                  Send
-                </div>
-              )}
             </div>
           </div>
         </div>
