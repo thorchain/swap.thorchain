@@ -9,13 +9,15 @@ import { AppConfig } from '@/config'
 import './globals.css'
 
 export const metadata: Metadata = {
+  metadataBase: new URL(AppConfig.baseUrl),
   title: AppConfig.title,
   description: AppConfig.description,
   icons: {
     icon: AppConfig.favicon
   },
   openGraph: {
-    title: AppConfig.description,
+    title: AppConfig.title,
+    description: AppConfig.description,
     url: AppConfig.baseUrl,
     siteName: 'THORChain Swap',
     images: [
@@ -23,15 +25,24 @@ export const metadata: Metadata = {
         url: `${AppConfig.baseUrl}/og-image.png`,
         width: 1200,
         height: 630,
-        alt: 'THORChain Logo'
+        alt: "THORChain Swap — The World's Leading Bitcoin DEX"
       }
     ],
-    type: 'website'
+    type: 'website',
+    locale: 'en_US'
   },
   twitter: {
     card: 'summary_large_image',
-    title: AppConfig.description,
-    images: [`${AppConfig.baseUrl}/og-image.png`]
+    title: AppConfig.title,
+    description: AppConfig.description,
+    images: [
+      {
+        url: `${AppConfig.baseUrl}/og-image.png`,
+        width: 1200,
+        height: 630,
+        alt: "THORChain Swap — The World's Leading Bitcoin DEX"
+      }
+    ]
   }
 }
 
