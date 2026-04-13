@@ -10,12 +10,12 @@ import './globals.css'
 
 export const metadata: Metadata = {
   title: AppConfig.title,
+  description: AppConfig.description,
   icons: {
     icon: AppConfig.favicon
   },
   openGraph: {
-    title: AppConfig.title,
-    description: AppConfig.description,
+    title: AppConfig.description,
     url: AppConfig.baseUrl,
     siteName: 'THORChain Swap',
     images: [
@@ -30,8 +30,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: AppConfig.title,
-    description: AppConfig.description,
+    title: AppConfig.description,
     images: [`${AppConfig.baseUrl}/og-image.png`]
   }
 }
