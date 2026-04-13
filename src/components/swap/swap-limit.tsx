@@ -15,12 +15,12 @@ import { useLimitSwapExpiry, useSetLimitSwapBuyAmount, useSetLimitSwapExpiry } f
 type PresetType = 5 | 10 | 'custom' | 'market'
 type SwapLimitProps = { quote?: QuoteResponseRoute }
 
-type ExpiryPreset = '1h' | '1d' | '1w' | 'custom' | undefined
+type ExpiryPreset = '1h' | '1d' | '3d' | 'custom' | undefined
 
 const BLOCKS_PER_MINUTE = 10
 const BLOCKS_PER_HOUR = 600
 const BLOCKS_PER_DAY = 14400
-const BLOCKS_PER_WEEK = 100800
+const BLOCKS_PER_3_DAYS = 43200
 
 export const SwapLimit = ({ quote }: SwapLimitProps) => {
   const assetFrom = useAssetFrom()
@@ -95,7 +95,7 @@ export const SwapLimit = ({ quote }: SwapLimitProps) => {
     if (!limitSwapExpiry) return undefined
     if (limitSwapExpiry === BLOCKS_PER_HOUR) return '1h'
     if (limitSwapExpiry === BLOCKS_PER_DAY) return '1d'
-    if (limitSwapExpiry === BLOCKS_PER_WEEK) return '1w'
+    if (limitSwapExpiry === BLOCKS_PER_3_DAYS) return '3d'
     return 'custom'
   }, [limitSwapExpiry])
 
@@ -112,8 +112,8 @@ export const SwapLimit = ({ quote }: SwapLimitProps) => {
         return setLimitSwapExpiry(BLOCKS_PER_HOUR)
       case '1d':
         return setLimitSwapExpiry(BLOCKS_PER_DAY)
-      case '1w':
-        return setLimitSwapExpiry(BLOCKS_PER_WEEK)
+      case '3d':
+        return setLimitSwapExpiry(BLOCKS_PER_3_DAYS)
       case 'custom': {
         const ms = limitSwapExpiry ? (limitSwapExpiry / BLOCKS_PER_MINUTE) * 60 * 1000 : 0
         const { days = 0, hours = 0, minutes = 0 } = intervalToDuration({ start: 0, end: ms })
@@ -144,7 +144,7 @@ export const SwapLimit = ({ quote }: SwapLimitProps) => {
             <SelectContent>
               <SelectItem value="1h">1 hour</SelectItem>
               <SelectItem value="1d">1 day</SelectItem>
-              <SelectItem value="1w">1 week</SelectItem>
+              <SelectItem value="3d">3 days</SelectItem>
               <SelectItem value="custom">Custom</SelectItem>
             </SelectContent>
           </Select>

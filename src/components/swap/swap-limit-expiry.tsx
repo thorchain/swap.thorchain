@@ -1,5 +1,5 @@
-import { useState } from 'react'
-import { X } from 'lucide-react'
+import { useMemo, useState } from 'react'
+import { AlertTriangle, X } from 'lucide-react'
 import { Dialog, DialogContent, DialogTitle } from '@/components/ui/dialog'
 import { ThemeButton } from '@/components/theme-button'
 import { Input } from '@/components/ui/input'
@@ -7,6 +7,7 @@ import { Input } from '@/components/ui/input'
 const BLOCKS_PER_MINUTE = 10
 const BLOCKS_PER_HOUR = 600
 const BLOCKS_PER_DAY = 14400
+const MAX_DAYS = 3
 
 type SwapExpiryDialogProps = {
   isOpen: boolean
@@ -28,6 +29,15 @@ export const SwapLimitExpiry = ({
   const [customDays, setCustomDays] = useState(initialDays)
   const [customHours, setCustomHours] = useState(initialHours)
   const [customMinutes, setCustomMinutes] = useState(initialMinutes)
+
+  const totalDays = useMemo(() => {
+    const days = parseFloat(customDays) || 0
+    const hours = parseFloat(customHours) || 0
+    const minutes = parseFloat(customMinutes) || 0
+    return days + hours / 24 + minutes / 1440
+  }, [customDays, customHours, customMinutes])
+
+  const exceedsMax = totalDays > MAX_DAYS
 
   const handleApply = () => {
     const days = parseFloat(customDays) || 0
@@ -80,11 +90,17 @@ export const SwapLimitExpiry = ({
           ))}
         </div>
 
+        {exceedsMax && (
+          <div className="mb-4 flex items-center gap-2 rounded-xl bg-jacob/10 px-4 py-3 text-sm text-jacob">
+            <AlertTriangle className="size-4 shrink-0" /> Maximum expiry is 3 days
+          </div>
+        )}
+
         <ThemeButton
           className="w-full rounded-xl py-5 text-lg"
           variant="primarySmall"
           onClick={handleApply}
-          disabled={!customDays && !customHours && !customMinutes}
+          disabled={(!customDays && !customHours && !customMinutes) || exceedsMax}
         >
           Apply
         </ThemeButton>
