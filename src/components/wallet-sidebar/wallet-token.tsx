@@ -44,10 +44,10 @@ export function WalletToken({ token, bordered, account }: TokenRowProps) {
           onClick={() => {
             openDialog(Send, { initialToken: token, account })
           }}
-          className="text-txt-label-small hover:text-txt-high-contrast cursor-pointer"
+          className="text-txt-label-small hover:text-green-contrast cursor-pointer"
           aria-label={`Send ${balance.ticker}`}
         >
-          <Icon name="send" className="size-6 hover:text-green-contrast" />
+          <Icon name="send" className="size-6" />
         </button>
       </div>
     </div>

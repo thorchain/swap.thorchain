@@ -51,7 +51,7 @@ export function WalletChain({ data, isExpanded, onToggle, disabled }: WalletChai
           <div className="border-t py-1">
             <div className="mx-4 flex gap-2">
               <div
-                className="text-txt-label-small hover:text-txt-high-contrast flex flex-1 cursor-pointer items-center justify-center rounded-xl border py-1.5 text-sm"
+                className="text-txt-label-small hover:text-green-contrast hover:border-green-contrast flex flex-1 cursor-pointer items-center justify-center rounded-xl border py-1.5 text-sm"
                 onClick={() => {
                   navigator.clipboard.writeText(account.address).then(() => toast.success('Address copied'))
                 }}
