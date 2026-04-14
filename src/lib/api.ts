@@ -9,24 +9,24 @@ const uSwap = axios.create({
   }
 })
 
-const thornode = axios.create({ baseURL: 'https://thornode.ninerealms.com' })
-const midgard = axios.create({ baseURL: 'https://midgard.ninerealms.com/v2' })
-const mayaMidgard = axios.create({ baseURL: 'https://midgard.mayachain.info/v2' })
+const thornode = axios.create({ baseURL: 'https://gateway.liquify.com/chain/thorchain_api' })
+const midgard = axios.create({ baseURL: 'https://gateway.liquify.com/chain/thorchain_midgard' })
+const mayaMidgard = axios.create({ baseURL: 'https://midgard.mayachain.info' })
 
 export const getMidgardPools = async (): Promise<{ asset: string; assetPriceUSD: string }[]> => {
-  return midgard.get('/pools').then(res => res.data)
+  return midgard.get('/v2/pools').then(res => res.data)
 }
 
 export const getMidgardRunePrice = async (): Promise<number> => {
-  return midgard.get('/stats').then(res => parseFloat(res.data.runePriceUSD))
+  return midgard.get('/v2/stats').then(res => parseFloat(res.data.runePriceUSD))
 }
 
 export const getMayaMidgardPools = async (): Promise<{ asset: string; assetPriceUSD: string }[]> => {
-  return mayaMidgard.get('/pools').then(res => res.data)
+  return mayaMidgard.get('/v2/pools').then(res => res.data)
 }
 
 export const getMayaMidgardCacaoPrice = async (): Promise<number> => {
-  return mayaMidgard.get('/stats').then(res => parseFloat(res.data.cacaoPriceUSD))
+  return mayaMidgard.get('/v2/stats').then(res => parseFloat(res.data.cacaoPriceUSD))
 }
 
 export const getAssetBalance = async (chain: Chain, address: string, identifier: string) => {
