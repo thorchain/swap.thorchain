@@ -9,15 +9,18 @@ const uSwap = axios.create({
   }
 })
 
-export const getJupiterPrices = async (mintAddresses: string[]): Promise<Record<string, number>> => {
+export const getDexScreenerPrices = async (mintAddresses: string[]): Promise<Record<string, number>> => {
   if (mintAddresses.length === 0) return {}
-  const ids = mintAddresses.join(',')
+  const addresses = mintAddresses.join(',')
   try {
-    const res = await axios.get(`https://api.jup.ag/price/v3?ids=${ids}`)
+    const res = await axios.get(`https://api.dexscreener.com/tokens/v1/solana/${addresses}`)
     const result: Record<string, number> = {}
-    for (const [mint, data] of Object.entries<any>(res.data || {})) {
-      const price = data?.usdPrice
-      if (price != null) result[mint] = parseFloat(price)
+    for (const pair of res.data || []) {
+      const mint = pair?.baseToken?.address
+      const price = pair?.priceUsd
+      if (mint && price != null && !result[mint]) {
+        result[mint] = parseFloat(price)
+      }
     }
     return result
   } catch {

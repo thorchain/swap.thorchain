@@ -2,7 +2,7 @@ import { useMemo } from 'react'
 import { useQuery } from '@tanstack/react-query'
 import { USwapNumber } from '@tcswap/core'
 import { useAssetFrom, useAssetTo } from '@/hooks/use-swap'
-import { getJupiterPrices, getMayaMidgardCacaoPrice, getMayaMidgardPools, getMidgardPools, getMidgardRunePrice } from '@/lib/api'
+import { getDexScreenerPrices, getMayaMidgardCacaoPrice, getMayaMidgardPools, getMidgardPools, getMidgardRunePrice } from '@/lib/api'
 
 export type AssetRateMap = Record<string, USwapNumber>
 
@@ -64,9 +64,9 @@ export const useRates = (identifiers: string[]): { rates: AssetRateMap; isLoadin
     return mints
   }, [identifiers])
 
-  const { data: jupiterData, isLoading: jupiterLoading } = useQuery({
-    queryKey: ['jupiter-prices', solanaMints.slice().sort().join(',')],
-    queryFn: () => getJupiterPrices(solanaMints),
+  const { data: dexScreenerData, isLoading: dexScreenerLoading } = useQuery({
+    queryKey: ['dexscreener-prices', solanaMints.slice().sort().join(',')],
+    queryFn: () => getDexScreenerPrices(solanaMints),
     enabled: solanaMints.length > 0,
     staleTime: 3 * 60_000,
     refetchOnMount: false,
@@ -82,23 +82,23 @@ export const useRates = (identifiers: string[]): { rates: AssetRateMap; isLoadin
     }
   }
 
-  // Supplement with Jupiter prices for Solana tokens that have no Midgard price
-  if (jupiterData) {
+  // Supplement with DexScreener prices for Solana tokens that have no Midgard price
+  if (dexScreenerData) {
     for (const id of identifiers) {
       if (rates[id]) continue
       if (id.toUpperCase().startsWith('SOL.') && id.includes('-')) {
         const mint = id.split('-').pop()!
-        const price = jupiterData[mint]
+        const price = dexScreenerData[mint]
         if (price) rates[id] = new USwapNumber(price)
       }
     }
   }
 
-  const jupiterPending = solanaMints.length > 0 && jupiterLoading
+  const dexScreenerPending = solanaMints.length > 0 && dexScreenerLoading
 
   return {
     rates,
-    isLoading: midgardLoading || jupiterPending || identifiers.length === 0
+    isLoading: midgardLoading || dexScreenerPending || identifiers.length === 0
   }
 }
 
