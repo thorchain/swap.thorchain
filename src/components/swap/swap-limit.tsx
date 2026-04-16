@@ -155,7 +155,7 @@ export const SwapLimit = ({ quote }: SwapLimitProps) => {
         <DecimalInput
           className="text-txt-high-contrast field-sizing-content bg-transparent text-2xl font-medium outline-none"
           amount={pricePerUnit === null ? '' : (pricePerUnit ?? expectedBuyAmountPerUnit)?.toSignificant() ?? ''}
-          onAmountChange={v => setPricePerUnit(v === '' ? null : new USwapNumber(v))}
+          onAmountChange={v => setPricePerUnit(v === '' ? null : new USwapNumber(v.startsWith('.') ? '0' + v : v))}
           autoComplete="off"
         />
         <div className="text-txt-label-small text-2xl font-medium">{assetTo?.ticker}</div>
