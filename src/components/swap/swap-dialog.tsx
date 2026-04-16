@@ -12,7 +12,7 @@ import { useBalance } from '@/hooks/use-balance'
 import { useAssetFrom, useAssetTo, useSwap } from '@/hooks/use-swap'
 import { generateId } from '@/lib/utils'
 import { getUSwap } from '@/lib/wallets'
-import { useIsLimitSwap } from '@/store/limit-swap-store'
+import { useIsLimitSwap, useLimitSwapBuyAmount } from '@/store/limit-swap-store'
 import { useSetTransaction } from '@/store/transaction-store'
 
 interface SwapDialogProps {
@@ -30,6 +30,7 @@ export const SwapDialog = ({ provider, isOpen, onOpenChange }: SwapDialogProps) 
   const [submitting, setSubmitting] = useState(false)
   const setTransaction = useSetTransaction()
   const isLimitSwap = useIsLimitSwap()
+  const limitSwapBuyAmount = useLimitSwapBuyAmount()
 
   const [quote, setQuote] = useState<QuoteResponseRoute | undefined>(undefined)
 
@@ -59,7 +60,11 @@ export const SwapDialog = ({ provider, isOpen, onOpenChange }: SwapDialogProps) 
           addressTo: quote.destinationAddress || '',
           addressDeposit: quote.inboundAddress,
           status: 'pending',
-          limitSwapMemo: isLimitSwap ? quote.memo : undefined
+          limitSwapMemo: isLimitSwap ? quote.memo : undefined,
+          limitPrice:
+            isLimitSwap && limitSwapBuyAmount && !valueFrom.eq(0)
+              ? USwapNumber.fromBigInt(BigInt(limitSwapBuyAmount), 8).div(valueFrom).toSignificant()
+              : undefined
         })
 
         setAmountFrom('')

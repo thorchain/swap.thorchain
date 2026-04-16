@@ -4,7 +4,7 @@ import { Fragment, useEffect, useMemo, useState } from 'react'
 import { assetFromString, ChainId, ChainIdToChain, getExplorerTxUrl, USwapNumber } from '@tcswap/core'
 import { ProviderName } from '@tcswap/helpers'
 import { format, formatDuration, intervalToDuration, isSameDay, isToday, isYesterday } from 'date-fns'
-import { CircleAlert, CircleCheck, ClockFading, Undo2, X } from 'lucide-react'
+import { CircleAlert, CircleCheck, ClockFading, Crosshair, Undo2, X } from 'lucide-react'
 import { toast } from 'sonner'
 import { Credenza, CredenzaContent, CredenzaHeader, CredenzaTitle } from '@/components/ui/credenza'
 import { ScrollArea } from '@/components/ui/scroll-area'
@@ -105,7 +105,10 @@ export const TransactionHistoryDialog = ({ isOpen, onOpenChange }: HistoryDialog
                 statusTitle = 'Deposit Pending'
               }
 
+              const isLimitSwapPending = !!tx.limitSwapMemo && isTxPending(status)
               const showRemainingTime = statusTitle === 'pending' && tx.estimatedTime
+              const limitPricePerUnit = tx.limitPrice ? new USwapNumber(tx.limitPrice) : null
+              const limitFiatPerUnit = limitPricePerUnit && rateTo ? rateTo.mul(limitPricePerUnit) : null
               const showQrCode = () => {
                 if (!tx.qrCodeData || !tx.addressDeposit) return
 
@@ -143,7 +146,12 @@ export const TransactionHistoryDialog = ({ isOpen, onOpenChange }: HistoryDialog
                       </div>
                       <div className="flex flex-col items-center justify-center px-1">
                         <span>
-                          {status === 'not_started' ? (
+                          {isLimitSwapPending ? (
+                            <span className="relative flex items-center justify-center">
+                              <Icon name="loading" className="text-txt-label-small size-6 animate-spin" />
+                              <Icon name="arrow-m-right" className="text-txt-label-small absolute size-3" />
+                            </span>
+                          ) : status === 'not_started' ? (
                             <ClockFading className="text-txt-label-small" size={24} />
                           ) : status === 'pending' || status === 'swapping' ? (
                             <span className="relative flex items-center justify-center">
@@ -188,12 +196,25 @@ export const TransactionHistoryDialog = ({ isOpen, onOpenChange }: HistoryDialog
                       </div>
                     </div>
 
-                    {(showLimitSwapActions || showRQ) && (
-                      <div className="mt-3 flex items-center justify-end border-t py-1">
-                        {showRQ && (
-                          <div className="flex items-center justify-end pt-1 pl-4">
-                            <div className="text-txt-label-small text-xs font-semibold">
-                              {tx.expiration && (
+                    {(limitPricePerUnit || showLimitSwapActions || showRQ) && (
+                      <div className="mt-3 border-t">
+                        {limitPricePerUnit && (
+                          <div className="flex items-center justify-between px-1 pt-3 pb-1 text-xs font-semibold">
+                            <span className="text-txt-label-small">Limit price</span>
+                            <span className="text-txt-high-contrast">
+                              1 {tx.assetFrom.ticker} = <DecimalText amount={limitPricePerUnit.toSignificant()} /> {tx.assetTo.ticker}
+                              {limitFiatPerUnit && (
+                                <span className="text-txt-label-small ml-1">
+                                  ({toCurrencyFixed(limitFiatPerUnit.toCurrency('$', { trimTrailingZeros: false }))})
+                                </span>
+                              )}
+                            </span>
+                          </div>
+                        )}
+                        {(showLimitSwapActions || showRQ) && (
+                          <div className="flex items-center justify-end py-1">
+                            {showRQ && tx.expiration && (
+                              <div className="text-txt-label-small flex-1 pl-1 text-xs font-semibold">
                                 <span>
                                   Expires in &nbsp;
                                   {formatDuration(
@@ -204,22 +225,24 @@ export const TransactionHistoryDialog = ({ isOpen, onOpenChange }: HistoryDialog
                                     { format: ['hours', 'minutes'], zero: false }
                                   )}
                                 </span>
-                              )}
-                            </div>
-                            <ThemeButton variant="primarySmallTransparent" onClick={showQrCode}>
-                              Show QR
-                            </ThemeButton>
+                              </div>
+                            )}
+                            {showRQ && (
+                              <ThemeButton variant="primarySmallTransparent" onClick={showQrCode}>
+                                Show QR
+                              </ThemeButton>
+                            )}
+                            {showLimitSwapActions && (
+                              <ThemeButton className="rounded-none" variant="primarySmallTransparent" onClick={() => onLimitModify('modify', tx)}>
+                                Modify
+                              </ThemeButton>
+                            )}
+                            {showLimitSwapActions && (
+                              <ThemeButton className="rounded-none" variant="primarySmallTransparent" onClick={() => onLimitModify('cancel', tx)}>
+                                Cancel Order
+                              </ThemeButton>
+                            )}
                           </div>
-                        )}
-                        {showLimitSwapActions && (
-                          <ThemeButton className="rounded-none" variant="primarySmallTransparent" onClick={() => onLimitModify('modify', tx)}>
-                            Modify
-                          </ThemeButton>
-                        )}
-                        {showLimitSwapActions && (
-                          <ThemeButton className="rounded-none" variant="primarySmallTransparent" onClick={() => onLimitModify('cancel', tx)}>
-                            Cancel Order
-                          </ThemeButton>
                         )}
                       </div>
                     )}
