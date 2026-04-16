@@ -34,6 +34,7 @@ export interface AlchemyTokenBalance {
   symbol: string
   name: string
   decimals: number
+  logo?: string
 }
 
 export const getAlchemyTokenBalances = async (address: string, rpcUrl: string): Promise<AlchemyTokenBalance[]> => {
@@ -69,7 +70,8 @@ export const getAlchemyTokenBalances = async (address: string, rpcUrl: string): 
         tokenBalance: t.tokenBalance,
         symbol: (metaRes[i]?.symbol as string) || '',
         name: (metaRes[i]?.name as string) || '',
-        decimals: (metaRes[i]?.decimals as number) ?? 18
+        decimals: (metaRes[i]?.decimals as number) ?? 18,
+        logo: (metaRes[i]?.logo as string) || undefined
       }))
       .filter(t => t.symbol)
   } catch {

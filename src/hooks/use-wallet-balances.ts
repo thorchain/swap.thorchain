@@ -54,11 +54,12 @@ export const useWalletBalances = () => {
       const results = await Promise.allSettled(
         accounts.map(async account => {
           const wallet = uSwap.getWallet(account.provider, account.network)
-          if (!wallet || !('getBalance' in wallet)) return { account, balances: [] as AssetValue[] }
+          if (!wallet || !('getBalance' in wallet)) return { account, balances: [] as AssetValue[], alchemyLogoMap: new Map<string, string>() }
           const rawBalances = await (wallet as any).getBalance(wallet.address, false)
           const balances: AssetValue[] = rawBalances ? [...rawBalances] : []
 
           // For Ethereum, supplement with Alchemy to discover meme coins not in the curated API list
+          const alchemyLogoMap = new Map<string, string>()
           if (account.network === Chain.Ethereum) {
             const alchemyBalances = await getAlchemyTokenBalances(wallet.address, ETH_RPC_URL)
             const existingAddresses = new Set(
@@ -66,6 +67,7 @@ export const useWalletBalances = () => {
             )
             for (const t of alchemyBalances) {
               const addr = t.contractAddress.toLowerCase()
+              if (t.logo) alchemyLogoMap.set(addr, t.logo)
               if (existingAddresses.has(addr)) continue
               const value = BigInt(t.tokenBalance).toString()
               try {
@@ -81,12 +83,13 @@ export const useWalletBalances = () => {
             }
           }
 
-          return { account, balances }
+          return { account, balances, alchemyLogoMap }
         })
       )
       return results.map((r, i) => ({
         account: accounts[i],
-        balances: r.status === 'fulfilled' ? r.value.balances : ([] as AssetValue[])
+        balances: r.status === 'fulfilled' ? r.value.balances : ([] as AssetValue[]),
+        alchemyLogoMap: r.status === 'fulfilled' ? r.value.alchemyLogoMap : new Map<string, string>()
       }))
     },
     enabled: accounts.length > 0 && hasHydrated,
@@ -113,13 +116,13 @@ export const useWalletBalances = () => {
       return accounts.map(account => ({ account, tokens: [], totalUsd: undefined, isLoading: true }))
     }
 
-    return allBalances.map(({ account, balances }) => {
+    return allBalances.map(({ account, balances, alchemyLogoMap }) => {
       const tokens: TokenBalance[] = balances.filter(b => b.ticker && b.ticker.toLowerCase() !== 'unknown').map(b => {
         const rate = rates[assetIdentifier(b)]
         const amount = parseFloat(b.toSignificant())
         const usdValue = rate ? rate.mul(amount) : undefined
         const key = `${assetIdentifier(b)}`.toLowerCase()
-        const logoURI = iconMap.get(key)
+        const logoURI = iconMap.get(key) ?? (b.address ? alchemyLogoMap.get(b.address.toLowerCase()) : undefined)
         return { balance: b, amount, usdValue, logoURI }
       })
 
