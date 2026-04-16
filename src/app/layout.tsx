@@ -12,7 +12,13 @@ export const metadata: Metadata = {
   metadataBase: new URL(AppConfig.baseUrl),
   title: AppConfig.title,
   icons: {
-    icon: AppConfig.favicon
+    icon: AppConfig.favicon,
+    apple: [{ url: '/apple-touch-icon.png', sizes: '180x180', type: 'image/png' }]
+  },
+  appleWebApp: {
+    capable: true,
+    title: 'THORChain Swap',
+    statusBarStyle: 'black-translucent'
   },
   openGraph: {
     title: AppConfig.title,
