@@ -55,7 +55,11 @@ export function WalletSidebar({ isOpen, onOpenChange }: WalletSidebarProps) {
       <DrawerContent className="flex flex-col p-8" style={{ width: 400, maxWidth: '100vw' }}>
         <DrawerHeader className="flex flex-row items-center justify-between p-0">
           <DrawerTitle className="text-2xl font-bold">Wallets</DrawerTitle>
-          <button onClick={() => onOpenChange(false)} className="text-txt-label-small hover:text-txt-high-contrast cursor-pointer transition-colors" aria-label="Close">
+          <button
+            onClick={() => onOpenChange(false)}
+            className="text-txt-label-small hover:text-txt-high-contrast cursor-pointer transition-colors"
+            aria-label="Close"
+          >
             <X className="size-5" />
           </button>
         </DrawerHeader>
@@ -69,7 +73,12 @@ export function WalletSidebar({ isOpen, onOpenChange }: WalletSidebarProps) {
                   Enter your order, click the Swap button, and follow the instructions
                 </div>
               </div>
-              <Switch checked={externalWalletMode} onCheckedChange={setExternalWalletMode} size="md" />
+              <Switch
+                checked={externalWalletMode}
+                onCheckedChange={setExternalWalletMode}
+                size="md"
+                className="data-[state=checked]:bg-green-default"
+              />
             </div>
           </div>
 
