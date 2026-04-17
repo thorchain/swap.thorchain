@@ -1,7 +1,7 @@
 'use client'
 
-import Image from 'next/image'
 import { WalletOption } from '@tcswap/core'
+import { WalletIcon } from '@/components/wallet-icon'
 import { Credenza, CredenzaContent, CredenzaHeader, CredenzaTitle } from '@/components/ui/credenza'
 import { ScrollArea } from '@/components/ui/scroll-area'
 import { wallet, WALLETS } from '@/components/connect-wallet/config'
@@ -49,7 +49,7 @@ export function SendSelectToken({ isOpen, onOpenChange, selected, selectedAccoun
               return (
                 <div key={provider} className="flex flex-col gap-2">
                   <div className="flex items-center gap-2 py-1">
-                    <Image src={`/wallets/${walletKey}.svg`} alt={walletName} width={20} height={20} className="shrink-0 rounded-md" />
+                    <WalletIcon walletKey={walletKey} width={20} height={20} alt={walletName} className="shrink-0 rounded-md" />
                     <span className="text-txt-label-small text-sm font-medium">{walletName}</span>
                   </div>
 

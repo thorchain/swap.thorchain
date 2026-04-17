@@ -2,6 +2,7 @@
 
 import Image from 'next/image'
 import { useEffect, useState } from 'react'
+import { WalletIcon } from '@/components/wallet-icon'
 import { SendMemoButton } from '@/components/header/send-memo-button'
 import { ThemeSwitchButton } from '@/components/header/theme-switch-button'
 import { TransactionHistoryButton } from '@/components/header/transaction-history-button'
@@ -50,7 +51,7 @@ export function Header() {
             <div className="flex items-center gap-1">
               {connectedProviders.map((provider, i) => (
                 <ThemeButton key={i} variant="circleSmall" className="rounded-xl" onClick={() => openDialog(WalletSidebar, {})}>
-                  <Image width="24" height="24" src={`/wallets/${provider.toLowerCase()}.svg`} alt={provider} />
+                  <WalletIcon walletKey={provider.toLowerCase()} width={24} height={24} alt={provider} />
                 </ThemeButton>
               ))}
             </div>

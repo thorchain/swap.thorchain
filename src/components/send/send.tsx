@@ -1,7 +1,7 @@
 'use client'
 
-import Image from 'next/image'
 import { useEffect, useState } from 'react'
+import { WalletIcon } from '@/components/wallet-icon'
 import { Chain, CosmosChain, CosmosChains, EVMChain, EVMChains, FeeOption, isGasAsset, USwapNumber, UTXOChain, UTXOChains } from '@tcswap/core'
 import { getAddressValidator } from '@tcswap/toolboxes'
 import { estimateTransactionFee } from '@tcswap/toolboxes/cosmos'
@@ -250,8 +250,8 @@ export function Send({ isOpen, onOpenChange, initialToken, account }: SendDialog
                   )
                   if (currentOption) {
                     return (
-                      <Image
-                        src={`/wallets/${currentOption.provider.toLowerCase()}.svg`}
+                      <WalletIcon
+                        walletKey={currentOption.provider.toLowerCase()}
                         alt={currentOption.provider}
                         width={24}
                         height={24}
@@ -271,7 +271,7 @@ export function Send({ isOpen, onOpenChange, initialToken, account }: SendDialog
                       .map((a, i) => (
                         <Tooltip key={i} content={truncate(a.address)}>
                           <ThemeButton variant="circleSmall" className="rounded-xl" onClick={() => setRecipient(a.address)}>
-                            <Image src={`/wallets/${a.provider.toLowerCase()}.svg`} alt={a.provider} width={24} height={24} />
+                            <WalletIcon walletKey={a.provider.toLowerCase()} alt={a.provider} width={24} height={24} />
                           </ThemeButton>
                         </Tooltip>
                       ))}

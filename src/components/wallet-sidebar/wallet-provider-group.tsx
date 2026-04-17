@@ -1,5 +1,5 @@
-import Image from 'next/image'
 import { Power } from 'lucide-react'
+import { WalletIcon } from '@/components/wallet-icon'
 import { WalletOption } from '@tcswap/core'
 import { wallet, WALLETS } from '@/components/connect-wallet/config'
 import { ChainWalletData } from '@/hooks/use-wallet-balances'
@@ -24,7 +24,7 @@ export function WalletProviderGroup({ provider, chainDataList, expandedChains, o
     <div>
       <div className={cn('flex items-center justify-center px-4 py-3', { 'opacity-30': disabled })}>
         <div className="flex flex-1 items-center justify-center gap-3">
-          <Image src={`/wallets/${walletKey}.svg`} alt={walletName} width={24} height={24} className="shrink-0 rounded-lg" />
+          <WalletIcon walletKey={walletKey} width={24} height={24} alt={walletName} className="shrink-0 rounded-lg" />
           <span className="text-txt-high-contrast text-sm font-medium">{walletName}</span>
         </div>
         <button

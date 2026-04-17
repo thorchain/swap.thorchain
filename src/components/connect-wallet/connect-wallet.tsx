@@ -7,6 +7,7 @@ import { BrowserWallet } from '@/components/connect-wallet/browser-wallet'
 import { ALL_CHAINS, chainLabel, COMING_SOON_CHAINS, isWalletAvailable, WalletParams, WALLETS, WalletType } from '@/components/connect-wallet/config'
 import { Keystore } from '@/components/connect-wallet/keystore/keystore'
 import { Ledger } from '@/components/connect-wallet/ledger'
+import { WalletIcon } from '@/components/wallet-icon'
 import { Icon } from '@/components/icons'
 import { useWallets } from '@/hooks/use-wallets'
 import { cn } from '@/lib/utils'
@@ -87,7 +88,7 @@ export const ConnectWallet = ({ isOpen, onOpenChange, chain }: ConnectWalletProp
             onSelectWallet(wallet)
           }}
         >
-          <Image src={`/wallets/${wallet.key}.svg`} alt="" width="32" height="32" />
+          <WalletIcon walletKey={wallet.key} width={32} height={32} />
           <div className="flex-1">
             <div className="text-txt-high-contrast font-medium">{wallet.label}</div>
             <div className="text-xs">
@@ -150,7 +151,7 @@ export const ConnectWallet = ({ isOpen, onOpenChange, chain }: ConnectWalletProp
             <div className="mb-2 flex cursor-pointer items-center gap-4 px-4 pb-4 md:hidden" onClick={() => setSelectedWallet(undefined)}>
               <Icon name="arrow-m-left" className="text-txt-label-small size-6" />
               <div className="flex gap-2">
-                <Image src={`/wallets/${selectedWallet.key}.svg`} alt="" width="20" height="20" />
+                <WalletIcon walletKey={selectedWallet.key} width={20} height={20} />
                 <span className="text-txt-label-small text-sm font-medium">{selectedWallet.label}</span>
               </div>
             </div>

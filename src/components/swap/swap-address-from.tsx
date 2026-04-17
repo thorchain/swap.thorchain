@@ -1,6 +1,6 @@
-import Image from 'next/image'
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu'
 import { wallet } from '@/components/connect-wallet/config'
+import { WalletIcon } from '@/components/wallet-icon'
 import { Icon } from '@/components/icons'
 import { ThemeButton } from '@/components/theme-button'
 import { useAssetFrom } from '@/hooks/use-swap'
@@ -21,7 +21,7 @@ export const SwapAddressFrom = ({ minOptions = 2 }: { minOptions?: number } = {}
     <DropdownMenu modal={false}>
       <DropdownMenuTrigger asChild>
         <ThemeButton variant="secondarySmall" className="bg-btn-style-1-bg gap-2 pr-2">
-          <Image src={`/wallets/${selectedAccount.provider.toLowerCase()}.svg`} alt="" width="16" height="16" /> {truncate(selectedAccount.address)}
+          <WalletIcon walletKey={selectedAccount.provider.toLowerCase()} width={16} height={16} /> {truncate(selectedAccount.address)}
           <Icon name="arrow-s-down" className="size-4" />
         </ThemeButton>
       </DropdownMenuTrigger>
@@ -34,7 +34,7 @@ export const SwapAddressFrom = ({ minOptions = 2 }: { minOptions?: number } = {}
               onSelect={() => selectAccount(account)}
             >
               <div className="flex items-center gap-4">
-                <Image src={`/wallets/${account.provider.toLowerCase()}.svg`} alt="" width="20" height="20" />
+                <WalletIcon walletKey={account.provider.toLowerCase()} width={20} height={20} />
                 <span className="text-txt-label-small text-xs font-semibold">{wallet(account.provider)?.label}</span>
               </div>
               <span

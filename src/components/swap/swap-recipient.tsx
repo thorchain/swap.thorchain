@@ -1,5 +1,5 @@
-import Image from 'next/image'
 import { useEffect, useState } from 'react'
+import { WalletIcon } from '@/components/wallet-icon'
 import { ProviderName, USwapError } from '@tcswap/helpers'
 import { QuoteResponseRoute } from '@tcswap/helpers/api'
 import { getAddressValidator } from '@tcswap/toolboxes'
@@ -137,11 +137,11 @@ export const SwapRecipient = ({ provider, onFetchQuote }: SwapRecipientProps) =>
           />
 
           {currentOption && (
-            <Image
-              src={`/wallets/${currentOption.provider.toLowerCase()}.svg`}
+            <WalletIcon
+              walletKey={currentOption.provider.toLowerCase()}
               alt={currentOption.provider}
-              width="24"
-              height="24"
+              width={24}
+              height={24}
               className="absolute top-1/2 left-4 -translate-y-1/2"
             />
           )}
@@ -161,7 +161,7 @@ export const SwapRecipient = ({ provider, onFetchQuote }: SwapRecipientProps) =>
               {[...options].map((account, index) => (
                 <Tooltip key={index} content={truncate(account.address)}>
                   <ThemeButton variant="circleSmall" className="rounded-xl" onClick={() => setDestinationAddress(account.address)}>
-                    <Image src={`/wallets/${account.provider.toLowerCase()}.svg`} alt={account.provider} width="24" height="24" />
+                    <WalletIcon walletKey={account.provider.toLowerCase()} alt={account.provider} width={24} height={24} />
                   </ThemeButton>
                 </Tooltip>
               ))}
