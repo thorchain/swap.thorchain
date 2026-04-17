@@ -35,7 +35,7 @@ export const ALL_CHAINS = [
   Chain.Zcash
 ]
 
-export const COMING_SOON_CHAINS = ['ADA', 'POL', 'SUI', 'TON']
+export const COMING_SOON_CHAINS = ['XMR', 'TAO']
 
 export const WALLETS: WalletParams[] = [
   {
@@ -159,6 +159,8 @@ export const chainLabel = (c: Chain | string): string => {
       return 'XRP Ledger'
     case 'XMR':
       return 'Monero'
+    case 'TAO':
+      return 'Bittensor'
     default:
       return getChainConfig(c as Chain).name
   }
