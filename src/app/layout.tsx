@@ -22,7 +22,7 @@ export const metadata: Metadata = {
   },
   openGraph: {
     title: AppConfig.title,
-    description: AppConfig.title,
+    description: AppConfig.description,
     url: AppConfig.baseUrl,
     siteName: 'THORChain Swap',
     images: [
@@ -30,7 +30,7 @@ export const metadata: Metadata = {
         url: `${AppConfig.baseUrl}/og-image.png`,
         width: 1200,
         height: 630,
-        alt: "THORChain Swap — The World's Leading Bitcoin DEX"
+        alt: AppConfig.title
       }
     ],
     type: 'website',
@@ -39,13 +39,13 @@ export const metadata: Metadata = {
   twitter: {
     card: 'summary_large_image',
     title: AppConfig.title,
-    description: AppConfig.title,
+    description: AppConfig.description,
     images: [
       {
         url: `${AppConfig.baseUrl}/og-image.png`,
         width: 1200,
         height: 630,
-        alt: "THORChain Swap — The World's Leading Bitcoin DEX"
+        alt: AppConfig.title
       }
     ]
   }
