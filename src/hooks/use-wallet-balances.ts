@@ -35,15 +35,16 @@ export const useWalletBalances = () => {
   const hasHydrated = useHasHydrated()
   const uSwap = getUSwap()
 
-  const iconMap = useMemo(() => {
-    if (!assets) return new Map<string, string>()
-    const map = new Map<string, string>()
+  const { iconMap, curatedIdentifiers } = useMemo(() => {
+    const iconMap = new Map<string, string>()
+    const curatedIdentifiers = new Set<string>()
+    if (!assets) return { iconMap, curatedIdentifiers }
     for (const asset of assets) {
-      if (asset.logoURI) {
-        map.set(`${asset.identifier}`.toLowerCase(), asset.logoURI)
-      }
+      const key = `${asset.identifier}`.toLowerCase()
+      curatedIdentifiers.add(key)
+      if (asset.logoURI) iconMap.set(key, asset.logoURI)
     }
-    return map
+    return { iconMap, curatedIdentifiers }
   }, [assets])
 
   const queryKey = accounts.map(a => `${a.provider}-${a.network}`).join(',')
@@ -117,21 +118,27 @@ export const useWalletBalances = () => {
     }
 
     return allBalances.map(({ account, balances, alchemyLogoMap }) => {
-      const tokens: TokenBalance[] = balances.filter(b => b.ticker && b.ticker.toLowerCase() !== 'unknown').map(b => {
-        const rate = rates[assetIdentifier(b)]
-        const amount = parseFloat(b.toSignificant())
-        const usdValue = rate ? rate.mul(amount) : undefined
-        const key = `${assetIdentifier(b)}`.toLowerCase()
-        const logoURI = iconMap.get(key) ?? (b.address ? alchemyLogoMap.get(b.address.toLowerCase()) : undefined)
-        return { balance: b, amount, usdValue, logoURI }
-      })
+      const tokens: TokenBalance[] = balances
+        .filter(b => b.ticker && b.ticker.toLowerCase() !== 'unknown')
+        .map(b => {
+          const rate = rates[assetIdentifier(b)]
+          const amount = parseFloat(b.toSignificant())
+          const usdValue = rate ? rate.mul(amount) : undefined
+          const key = `${assetIdentifier(b)}`.toLowerCase()
+          const logoURI = iconMap.get(key) ?? (b.address ? alchemyLogoMap.get(b.address.toLowerCase()) : undefined)
+          return { balance: b, amount, usdValue, logoURI }
+        })
+        .filter(t => {
+          const key = `${assetIdentifier(t.balance)}`.toLowerCase()
+          return curatedIdentifiers.has(key) || t.usdValue !== undefined
+        })
 
       const pricedTokens = tokens.filter(t => t.usdValue !== undefined)
       const totalUsd = pricedTokens.length > 0 ? pricedTokens.slice(1).reduce((sum, t) => sum.add(t.usdValue!), pricedTokens[0].usdValue!) : undefined
 
       return { account, tokens, totalUsd, isLoading: false }
     })
-  }, [allBalances, rates, accounts, iconMap])
+  }, [allBalances, rates, accounts, iconMap, curatedIdentifiers])
 
   return { walletData, isLoading }
 }
