@@ -311,7 +311,7 @@ export function SendMemoMenu({ isOpen, onOpenChange }: SendMemoMenuProps) {
 
                 {/* Newsletter */}
                 <div className="hidden flex-col gap-5 md:flex">
-                  <p className="text-lg leading-snug text-white">The best way to stay up to date on THORChain</p>
+                  <p className="text-lg leading-snug text-white font-medium">The best way to stay up to date on THORChain</p>
                   {newsletterStatus === 'success' ? (
                     <p className="text-green-default text-base">Thanks for subscribing!</p>
                   ) : (
