@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import { Manrope } from 'next/font/google'
+import localFont from 'next/font/local'
 import Script from 'next/script'
 import { GoogleAnalytics, GoogleTagManager } from '@next/third-parties/google'
 import { ThemeProvider } from 'next-themes'
@@ -51,9 +51,21 @@ export const metadata: Metadata = {
   }
 }
 
-const manrope = Manrope({
-  subsets: ['latin'],
-  display: 'swap'
+const crit = localFont({
+  variable: '--font-crit',
+  display: 'swap',
+  src: [
+    { path: './fonts/Crit-Light-Trial.otf', weight: '300', style: 'normal' },
+    { path: './fonts/Crit-Light-Italic-Trial.otf', weight: '300', style: 'italic' },
+    { path: './fonts/Crit-Regular-Trial.otf', weight: '400', style: 'normal' },
+    { path: './fonts/Crit-Italic-Trial.otf', weight: '400', style: 'italic' },
+    { path: './fonts/Crit-Medium-Trial.otf', weight: '500', style: 'normal' },
+    { path: './fonts/Crit-Medium-Italic-Trial.otf', weight: '500', style: 'italic' },
+    { path: './fonts/Crit-Semibold-Trial.otf', weight: '600', style: 'normal' },
+    { path: './fonts/Crit-Semibold-Italic-Trial.otf', weight: '600', style: 'italic' },
+    { path: './fonts/Crit-Bold-Trial.otf', weight: '700', style: 'normal' },
+    { path: './fonts/Crit-Bold-Italic-Trial.otf', weight: '700', style: 'italic' }
+  ]
 })
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
@@ -75,7 +87,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
           }}
         />
       )}
-      <body className={`${manrope.className} bg-body antialiased`}>
+      <body className={`${crit.variable} bg-body font-sans antialiased`}>
         <ReactQueryProvider>
           <ThemeProvider defaultTheme="light" attribute="class">
             {children}
