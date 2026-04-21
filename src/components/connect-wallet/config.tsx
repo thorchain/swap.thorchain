@@ -150,7 +150,7 @@ export const isWalletAvailable = (option: WalletOption) => {
 export const chainLabel = (c: Chain | string): string => {
   switch (c) {
     case Chain.BinanceSmartChain:
-      return 'BNB Chain'
+      return 'BNB Smart Chain'
     case Chain.BitcoinCash:
       return 'Bitcoin Cash'
     case Chain.Tron:
