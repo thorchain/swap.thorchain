@@ -128,7 +128,7 @@ export const SwapButton = ({ instantSwapSupported, instantSwapAvailable }: SwapB
     }
 
     return {
-      text: isLimitSwap ? 'Place Limit Order' : 'Swap',
+      text: isLimitSwap ? 'Enter Limit Order' : 'Swap',
       spinner: false,
       accent: true,
       onClick: () => onSwap(quote)

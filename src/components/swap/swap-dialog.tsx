@@ -97,7 +97,7 @@ export const SwapDialog = ({ provider, isOpen, onOpenChange }: SwapDialogProps) 
 
             <div className="p-4 pt-2 md:p-8 md:pt-2">
               <ThemeButton variant="primaryMedium" className="w-full" onClick={() => onConfirm()} disabled={!quote || submitting}>
-                {submitting ? <LoaderCircle size={20} className="animate-spin" /> : <span>Confirm</span>}
+                {submitting ? <LoaderCircle size={20} className="animate-spin" /> : <span>{isLimitSwap ? 'Confim Limit Order' : 'Confirm'}</span>}
               </ThemeButton>
             </div>
           </>
