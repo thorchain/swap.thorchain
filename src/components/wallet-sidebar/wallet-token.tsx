@@ -15,7 +15,7 @@ interface TokenRowProps {
 export function WalletToken({ token, bordered, account }: TokenRowProps) {
   const { openDialog } = useDialog()
   const { balance, usdValue, logoURI } = token
-  const iconUrl = logoURI || balance.getIconUrl()
+  const iconUrl = logoURI
 
   return (
     <div className={cn('flex items-center gap-3 px-4 py-2', { 'border-b': bordered })}>
