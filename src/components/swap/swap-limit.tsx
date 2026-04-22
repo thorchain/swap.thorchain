@@ -31,6 +31,7 @@ export const SwapLimit = ({ quote }: SwapLimitProps) => {
 
   const { openDialog } = useDialog()
   const [pricePerUnit, setPricePerUnit] = useState<USwapNumber | null | undefined>()
+  const [inputStr, setInputStr] = useState<string | undefined>()
 
   const sellAmount = useMemo(() => (quote ? new USwapNumber(quote.sellAmount) : null), [quote])
 
@@ -41,6 +42,7 @@ export const SwapLimit = ({ quote }: SwapLimitProps) => {
 
   useEffect(() => {
     setPricePerUnit(undefined)
+    setInputStr(undefined)
     setLimitSwapBuyAmount(undefined)
     setLimitSwapExpiry(BLOCKS_PER_HOUR)
   }, [assetFrom?.identifier, assetTo?.identifier, setLimitSwapBuyAmount, setLimitSwapExpiry])
@@ -83,6 +85,7 @@ export const SwapLimit = ({ quote }: SwapLimitProps) => {
 
   const applyPreset = (percent: number) => {
     if (!expectedBuyAmountPerUnit) return
+    setInputStr(undefined)
     if (percent === 0) {
       setPricePerUnit(expectedBuyAmountPerUnit)
     } else {
@@ -154,8 +157,13 @@ export const SwapLimit = ({ quote }: SwapLimitProps) => {
       <div className="my-3 flex items-center gap-2 overflow-hidden">
         <DecimalInput
           className="text-txt-high-contrast field-sizing-content bg-transparent text-2xl font-medium outline-none"
-          amount={pricePerUnit === null ? '' : (pricePerUnit ?? expectedBuyAmountPerUnit)?.toSignificant() ?? ''}
-          onAmountChange={v => setPricePerUnit(v === '' ? null : new USwapNumber(v.startsWith('.') ? '0' + v : v))}
+          amount={
+            inputStr !== undefined ? inputStr : pricePerUnit === null ? '' : ((pricePerUnit ?? expectedBuyAmountPerUnit)?.toSignificant() ?? '')
+          }
+          onAmountChange={v => {
+            setInputStr(v)
+            setPricePerUnit(v === '' ? null : new USwapNumber(v.startsWith('.') ? '0' + v : v))
+          }}
           autoComplete="off"
         />
         <div className="text-txt-label-small text-2xl font-medium">{assetTo?.ticker}</div>
@@ -164,14 +172,20 @@ export const SwapLimit = ({ quote }: SwapLimitProps) => {
       <div className="flex items-center space-x-1">
         {activePreset === 'custom' && differencePercent ? (
           <div className="flex items-center">
-            <ThemeButton className="border-stroke-btn-low-contrast bg-green-default h-6 rounded-r-none border-r px-2 text-xs" variant="secondarySmall">
+            <ThemeButton
+              className="border-stroke-btn-low-contrast bg-green-default h-6 rounded-r-none border-r px-2 text-xs"
+              variant="secondarySmall"
+            >
               {differencePercent.gte(0) ? '+' : ''}
               {differencePercent.toFixed(1)}%
             </ThemeButton>
             <ThemeButton
               className="bg-green-default h-6 rounded-l-none px-1"
               variant="secondarySmall"
-              onClick={() => expectedBuyAmountPerUnit && setPricePerUnit(expectedBuyAmountPerUnit)}
+              onClick={() => {
+                setInputStr(undefined)
+                expectedBuyAmountPerUnit && setPricePerUnit(expectedBuyAmountPerUnit)
+              }}
             >
               <X className="size-4" />
             </ThemeButton>
