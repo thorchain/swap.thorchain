@@ -1,9 +1,15 @@
+'use client'
+
 import { Icon } from '@/components/icons'
 import { Tooltip } from '@/components/tooltip'
 import { AppConfig } from '@/config'
+import { useDialog } from '@/components/global-dialog'
+import { ReportBug } from '@/components/footer/report-bug'
 import { Separator } from '../ui/separator'
 
 export function FooterContent({ className }: { className?: string }) {
+  const { openDialog } = useDialog()
+
   return (
     <div className={className}>
       <div className="text-txt-med-contrast flex items-center justify-between gap-4 text-xs">
@@ -28,9 +34,15 @@ export function FooterContent({ className }: { className?: string }) {
             </a>
           </div>
         </div>
-        <a className="flex items-center gap-2 underline" href={AppConfig.discordLink} rel="noopener noreferrer" target="_blank">
-          Get Support in Discord <Icon width={20} height={20} viewBox="0 0 20 20" name="discord" />
-        </a>
+        <div className="flex h-4 items-center gap-2">
+          <div onClick={() => openDialog(ReportBug, {})} className="flex cursor-pointer items-center gap-1 underline transition-colors">
+            Report a Bug
+          </div>
+          <Separator orientation="vertical" className="h-full" />
+          <a className="flex items-center gap-2 underline" href={AppConfig.discordLink} rel="noopener noreferrer" target="_blank">
+            Get Support in Discord <Icon width={20} height={20} viewBox="0 0 20 20" name="discord" />
+          </a>
+        </div>
       </div>
     </div>
   )
