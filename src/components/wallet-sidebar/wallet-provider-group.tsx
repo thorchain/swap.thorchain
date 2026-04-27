@@ -1,3 +1,4 @@
+import { useMemo } from 'react'
 import { Power } from 'lucide-react'
 import { WalletIcon } from '@/components/wallet-icon'
 import { WalletOption } from '@tcswap/core'
@@ -20,6 +21,8 @@ export function WalletProviderGroup({ provider, chainDataList, expandedChains, o
   const walletKey = walletInfo?.key || provider.toLowerCase()
   const walletName = walletInfo?.label || provider
 
+  const visibleChains = useMemo(() => chainDataList.filter(data => data.isLoading || data.tokens.some(t => t.amount > 0)), [chainDataList])
+
   return (
     <div>
       <div className={cn('flex items-center justify-center px-4 py-3', { 'opacity-30': disabled })}>
@@ -37,16 +40,18 @@ export function WalletProviderGroup({ provider, chainDataList, expandedChains, o
       </div>
 
       <div className="bg-body rounded-2xl border">
-        {chainDataList
-          .filter(data => data.isLoading || data.tokens.some(t => t.amount > 0))
-          .map((data, i) => {
+        {visibleChains.length === 0 ? (
+          <div className="text-txt-label-small px-4 py-4 text-center text-sm">No coins</div>
+        ) : (
+          visibleChains.map((data, i) => {
             const key = `${data.account.provider}-${data.account.network}`
             return (
               <div key={key} className={cn({ 'border-t': i > 0 })}>
                 <WalletChain data={data} isExpanded={expandedChains.has(key)} onToggle={() => onToggleChain(key)} disabled={disabled} />
               </div>
             )
-          })}
+          })
+        )}
       </div>
     </div>
   )
