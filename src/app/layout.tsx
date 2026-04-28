@@ -48,6 +48,9 @@ export const metadata: Metadata = {
         alt: AppConfig.title
       }
     ]
+  },
+  verification: {
+    google: 'MWABJkMWVW-TIfLuXops2ZuVAYv71PSmQ6Iz6IGvu08'
   }
 }
 
