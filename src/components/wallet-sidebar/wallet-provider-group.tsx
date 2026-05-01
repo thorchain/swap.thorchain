@@ -21,7 +21,12 @@ export function WalletProviderGroup({ provider, chainDataList, expandedChains, o
   const walletKey = walletInfo?.key || provider.toLowerCase()
   const walletName = walletInfo?.label || provider
 
-  const visibleChains = useMemo(() => chainDataList.filter(data => data.isLoading || data.tokens.some(t => t.amount > 0)), [chainDataList])
+  const isLedger = provider === WalletOption.LEDGER
+
+  const visibleChains = useMemo(
+    () => (isLedger ? chainDataList : chainDataList.filter(data => data.isLoading || data.tokens.some(t => t.amount > 0))),
+    [chainDataList, isLedger],
+  )
 
   return (
     <div>
