@@ -15,17 +15,16 @@ import { SwapProvider } from '@/components/swap/swap-provider'
 import { InfoTooltip } from '@/components/tooltip'
 import { useRates, useSwapRates } from '@/hooks/use-rates'
 import { useAssetFrom, useAssetTo, useSlippage } from '@/hooks/use-swap'
-import { formatExpiration, resolveFees, resolvePriceImpact } from '@/lib/swap-helpers'
+import { formatExpiration, resolveFees } from '@/lib/swap-helpers'
 import { cn, toCurrencyFixed, truncate } from '@/lib/utils'
 import { useIsLimitSwap, useLimitSwapBuyAmount } from '@/store/limit-swap-store'
 
 interface SwapConfirmProps {
-  quote: QuoteResponseRoute & {
-    refundAddress?: string
-  }
+  quote: QuoteResponseRoute & { refundAddress?: string }
+  priceImpact?: USwapNumber
 }
 
-export const SwapConfirm = ({ quote }: SwapConfirmProps) => {
+export const SwapConfirm = ({ quote, priceImpact }: SwapConfirmProps) => {
   const assetFrom = useAssetFrom()
   const assetTo = useAssetTo()
   const slippage = useSlippage()
@@ -60,7 +59,6 @@ export const SwapConfirm = ({ quote }: SwapConfirmProps) => {
     return limitBuyAmount.sub(expectedBuyAmount).div(expectedBuyAmount).mul(100)
   }, [limitBuyAmount, expectedBuyAmount])
 
-  const priceImpact = resolvePriceImpact(quote, rateFrom, rateTo)
   const displayBuyAmount = isLimitSwap && limitBuyAmount ? limitBuyAmount : expectedBuyAmount
 
   return (
@@ -184,7 +182,11 @@ export const SwapConfirm = ({ quote }: SwapConfirmProps) => {
                     <span className="text-txt-high-contrast font-semibold">
                       <DecimalText amount={displayBuyAmount.toSignificant()} symbol={assetTo.ticker} />
                     </span>
-                    {rateTo && <span className="font-medium">{toCurrencyFixed(displayBuyAmount.mul(rateTo).toCurrency('$', { trimTrailingZeros: false }))}</span>}
+                    {rateTo && (
+                      <span className="font-medium">
+                        {toCurrencyFixed(displayBuyAmount.mul(rateTo).toCurrency('$', { trimTrailingZeros: false }))}
+                      </span>
+                    )}
                   </div>
                 </div>
               </>
@@ -230,7 +232,9 @@ export const SwapConfirm = ({ quote }: SwapConfirmProps) => {
                   <InfoTooltip>These fees are already included in the rate — you don't pay them separately.</InfoTooltip>
                 </div>
                 <div className="flex items-center gap-2">
-                  <span className="text-txt-high-contrast font-semibold">{toCurrencyFixed(included.toCurrency('$', { trimTrailingZeros: false }))}</span>
+                  <span className="text-txt-high-contrast font-semibold">
+                    {toCurrencyFixed(included.toCurrency('$', { trimTrailingZeros: false }))}
+                  </span>
                   <Icon name="eye" className="size-5" />
                 </div>
               </div>

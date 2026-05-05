@@ -5,12 +5,16 @@ import { QuoteResponseRoute, USwapApi } from '@tcswap/helpers/api'
 import { LoaderCircle } from 'lucide-react'
 import { Credenza, CredenzaContent } from '@/components/ui/credenza'
 import { InstantSwap } from '@/components/swap/instant-swap'
+import { SwapAddressWarning } from '@/components/swap/swap-address-warning'
 import { SwapConfirm } from '@/components/swap/swap-confirm'
 import { SwapError } from '@/components/swap/swap-error'
 import { SwapRecipient } from '@/components/swap/swap-recipient'
 import { ThemeButton } from '@/components/theme-button'
+import { useSwapRates } from '@/hooks/use-rates'
 import { useAssetFrom, useAssetTo, useSwap } from '@/hooks/use-swap'
+import { resolvePriceImpact } from '@/lib/swap-helpers'
 import { generateId } from '@/lib/utils'
+import { useIsLimitSwap } from '@/store/limit-swap-store'
 import { useSetTransaction } from '@/store/transaction-store'
 
 interface InstantSwapDialogProps {
@@ -31,11 +35,18 @@ export const InstantSwapDialog = ({ provider, isOpen, onOpenChange }: InstantSwa
   const assetTo = useAssetTo()
   const { valueFrom } = useSwap()
   const setTransaction = useSetTransaction()
+  const isLimitSwap = useIsLimitSwap()
+  const { rateFrom, rateTo } = useSwapRates()
 
   const [quote, setQuote] = useState<(QuoteResponseRoute & { qrCodeDataURL?: string }) | undefined>(undefined)
   const [channel, setChannel] = useState<DepositChannel | undefined>(undefined)
   const [creatingChannel, setCreatingChannel] = useState(false)
   const [error, setError] = useState<Error | undefined>()
+  const [highPriceImpactAccepted, setHighPriceImpactAccepted] = useState(false)
+
+  const priceImpact = resolvePriceImpact(quote, rateFrom, rateTo)
+  const requiresHighPriceImpactAcceptance = !isLimitSwap && !!priceImpact && priceImpact.gt(2)
+  const confirmBlocked = requiresHighPriceImpactAcceptance && !highPriceImpactAccepted
 
   if (!assetFrom || !assetTo) return null
 
@@ -145,7 +156,7 @@ export const InstantSwapDialog = ({ provider, isOpen, onOpenChange }: InstantSwa
           <InstantSwap assetFrom={assetFrom} assetTo={assetTo} channel={channel} />
         ) : quote ? (
           <>
-            <SwapConfirm quote={quote} />
+            <SwapConfirm quote={quote} priceImpact={priceImpact} />
 
             {error && (
               <div className="px-8 pt-2 pb-4">
@@ -153,12 +164,19 @@ export const InstantSwapDialog = ({ provider, isOpen, onOpenChange }: InstantSwa
               </div>
             )}
 
-            <div className="p-4 pt-2 md:p-8 md:pt-2">
+            <div className="space-y-3 p-4 pt-2 md:p-8 md:pt-2">
+              {requiresHighPriceImpactAcceptance && (
+                <SwapAddressWarning
+                  checked={highPriceImpactAccepted}
+                  onCheckedChange={setHighPriceImpactAccepted}
+                  text="I accept a higher price impact for this swap"
+                />
+              )}
               <ThemeButton
                 variant={channel ? 'secondaryMedium' : 'primaryMedium'}
                 className="w-full"
                 onClick={() => onConfirm()}
-                disabled={creatingChannel}
+                disabled={creatingChannel || confirmBlocked}
               >
                 {creatingChannel && <LoaderCircle size={20} className="animate-spin" />}
                 <span>{creatingChannel ? 'Confirming' : 'Confirm'}</span>

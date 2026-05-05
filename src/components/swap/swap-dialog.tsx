@@ -4,12 +4,15 @@ import { ProviderName } from '@tcswap/helpers'
 import { QuoteResponseRoute } from '@tcswap/helpers/api'
 import { LoaderCircle } from 'lucide-react'
 import { toast } from 'sonner'
+import { Checkbox } from '@/components/ui/checkbox'
 import { Credenza, CredenzaContent } from '@/components/ui/credenza'
 import { SwapConfirm } from '@/components/swap/swap-confirm'
 import { SwapRecipient } from '@/components/swap/swap-recipient'
 import { ThemeButton } from '@/components/theme-button'
 import { useBalance } from '@/hooks/use-balance'
+import { useSwapRates } from '@/hooks/use-rates'
 import { useAssetFrom, useAssetTo, useSwap } from '@/hooks/use-swap'
+import { resolvePriceImpact } from '@/lib/swap-helpers'
 import { generateId } from '@/lib/utils'
 import { getUSwap } from '@/lib/wallets'
 import { useIsLimitSwap, useLimitSwapBuyAmount } from '@/store/limit-swap-store'
@@ -31,8 +34,14 @@ export const SwapDialog = ({ provider, isOpen, onOpenChange }: SwapDialogProps) 
   const setTransaction = useSetTransaction()
   const isLimitSwap = useIsLimitSwap()
   const limitSwapBuyAmount = useLimitSwapBuyAmount()
+  const { rateFrom, rateTo } = useSwapRates()
 
   const [quote, setQuote] = useState<QuoteResponseRoute | undefined>(undefined)
+  const [highPriceImpactAccepted, setHighPriceImpactAccepted] = useState(false)
+
+  const priceImpact = resolvePriceImpact(quote, rateFrom, rateTo)
+  const requiresHighPriceImpactAcceptance = !isLimitSwap && !!priceImpact && priceImpact.gt(2)
+  const confirmBlocked = requiresHighPriceImpactAcceptance && !highPriceImpactAccepted
 
   const onConfirm = () => {
     if (!quote || !assetFrom || !assetTo) return
@@ -93,10 +102,16 @@ export const SwapDialog = ({ provider, isOpen, onOpenChange }: SwapDialogProps) 
       <CredenzaContent className="flex h-auto max-h-5/6 flex-col md:max-w-xl">
         {quote ? (
           <>
-            <SwapConfirm quote={quote} />
+            <SwapConfirm quote={quote} priceImpact={priceImpact} />
 
-            <div className="p-4 pt-2 md:p-8 md:pt-2">
-              <ThemeButton variant="primaryMedium" className="w-full" onClick={() => onConfirm()} disabled={!quote || submitting}>
+            <div className="space-y-3 p-4 pt-2 md:p-8 md:pt-2">
+              {requiresHighPriceImpactAcceptance && (
+                <label className="border-stroke-swap-bloc flex cursor-pointer items-center gap-4 rounded-xl border p-4 text-sm">
+                  <Checkbox className="size-6" checked={highPriceImpactAccepted} onCheckedChange={checked => setHighPriceImpactAccepted(checked === true)} />
+                  <span className="text-txt-label-small">I accept a higher price impact for this swap</span>
+                </label>
+              )}
+              <ThemeButton variant="primaryMedium" className="w-full" onClick={() => onConfirm()} disabled={!quote || submitting || confirmBlocked}>
                 {submitting ? <LoaderCircle size={20} className="animate-spin" /> : <span>{isLimitSwap ? 'Confim Limit Order' : 'Confirm'}</span>}
               </ThemeButton>
             </div>
