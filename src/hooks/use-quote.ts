@@ -52,7 +52,7 @@ export const useQuote = (): UseQuote => {
           sellAmount: valueFrom.toSignificant(),
           slippage: slippage ?? 99,
           providers: AppConfig.providers,
-          streamingInterval: 1,
+          streamingInterval: customInterval,
           streamingQuantity: customQuantity
         },
         createAbortController(signal)
