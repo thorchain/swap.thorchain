@@ -33,6 +33,17 @@ export const useRates = (identifiers: string[]): { rates: AssetRateMap; isLoadin
         const price = parseFloat(pool.assetPriceUSD)
         if (pool.asset && !isNaN(price) && price > 0) {
           priceMap[pool.asset.toLowerCase()] = new USwapNumber(price)
+
+          // Mirror the L1 pool price onto the corresponding Secured Asset identifier
+          // (e.g. BTC.BTC -> BTC-BTC, ETH.USDC-0x… -> ETH-USDC-0x…). Secured assets track
+          // 1:1 with the underlying L1 asset, so the L1 pool price is a close proxy.
+          const dotIndex = pool.asset.indexOf('.')
+          if (dotIndex > 0) {
+            const chainPart = pool.asset.slice(0, dotIndex)
+            const tickerPart = pool.asset.slice(dotIndex + 1)
+            const securedKey = `${chainPart}-${tickerPart}`.toLowerCase()
+            priceMap[securedKey] = new USwapNumber(price)
+          }
         }
       }
 

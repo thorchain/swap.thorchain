@@ -116,6 +116,14 @@ export const SwapSelectAsset = ({ isOpen, onOpenChange, selected, onSelectAsset 
           return true
         }
 
+        const identifier = asset.identifier.toLowerCase()
+        if (identifier.includes(query)) {
+          return true
+        }
+
+        if ((query === 'secured' || query === 'secure') && asset.isSecuredAsset) return true
+        if (query === 'trade' && asset.isTradeAsset) return true
+
         const chain = chainLabel(asset.chain).toLowerCase()
         return chain.includes(query)
       })
@@ -271,7 +279,19 @@ export const SwapSelectAsset = ({ isOpen, onOpenChange, selected, onSelectAsset 
                           <div className={cn('flex items-center gap-3', isAssetHalted(asset) && 'opacity-50')}>
                             <AssetIcon key={asset.identifier} asset={asset} />
                             <div className="text-left">
-                              <div className="text-txt-high-contrast max-w-30 truncate font-semibold">{asset.ticker}</div>
+                              <div className="text-txt-high-contrast flex max-w-40 items-center gap-1.5 truncate font-semibold">
+                                <span>{asset.ticker}</span>
+                                {asset.isSecuredAsset && (
+                                  <span className="border-gray text-txt-label-small rounded-full border px-1.5 text-[10px] font-medium">
+                                    Secured
+                                  </span>
+                                )}
+                                {asset.isTradeAsset && (
+                                  <span className="border-gray text-txt-label-small rounded-full border px-1.5 text-[10px] font-medium">
+                                    Trade
+                                  </span>
+                                )}
+                              </div>
                               <div className="text-txt-label-small text-sm">{chainLabel(asset.chain)}</div>
                             </div>
                           </div>

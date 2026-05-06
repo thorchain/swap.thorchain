@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query'
-import { getChainConfig } from '@tcswap/helpers'
+import { getChainConfig, isSecuredAssetIdentifier } from '@tcswap/helpers'
 import { USwapApi } from '@tcswap/helpers/api'
 import { Asset } from '@/components/swap/asset'
 import { AppConfig } from '@/config'
@@ -18,19 +18,26 @@ export const useAssets = (): { assets?: Asset[]; isLoading: boolean } => {
           continue
         }
 
-        const key = `${token.chain}-${token.identifier}`.toLowerCase()
-        assets.set(key, {
+        const isSecured = isSecuredAssetIdentifier(token.identifier)
+        const isTrade = !isSecured && token.identifier.includes('~')
+
+        const asset: Asset = {
           address: token.address,
           chain: token.chain,
           chainId: token.chainId,
           coingeckoId: token.coingeckoId,
           decimals: token.decimals,
           identifier: token.identifier,
+          isSecuredAsset: isSecured || undefined,
+          isTradeAsset: isTrade || undefined,
           logoURI: token.logoURI,
           name: token.name,
           shortCode: token.shortCode,
           ticker: token.ticker
-        })
+        }
+
+        const key = `${token.chain}-${token.identifier}`.toLowerCase()
+        assets.set(key, asset)
       }
 
       return Array.from(assets.values())

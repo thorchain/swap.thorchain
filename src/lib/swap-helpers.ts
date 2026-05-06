@@ -1,4 +1,4 @@
-import { assetFromString, USwapNumber } from '@tcswap/core'
+import { assetFromString, Chain, USwapNumber } from '@tcswap/core'
 import { ProviderName } from '@tcswap/helpers'
 import { QuoteResponseRoute } from '@tcswap/helpers/api'
 import { intervalToDuration } from 'date-fns'
@@ -83,4 +83,30 @@ export const formatExpiration = (seconds: number) => {
   }
 
   return parts.join(' ')
+}
+
+// Fetches all bank-module balances for a THORChain address. Includes Secured Asset denoms
+// (e.g. "btc-btc", "eth-usdc-0x…") which the wallet toolbox may or may not surface depending
+// on its scam-filter heuristics. Decimals on THORChain bank are always 8.
+//
+// Bank denoms come back in several shapes — we normalise each one so it parses cleanly:
+//   rune, tcy            → THOR.RUNE / THOR.TCY  (THORChain natives, missing chain prefix)
+//   x/ruji               → THOR.RUJI            (factory denom, strip the "x/" prefix)
+//   btc/btc              → THOR.BTC/BTC          (synth)
+//   btc~btc              → THOR.BTC~BTC          (trade)
+//   eth-eth, eth-usdc-0x → ETH-ETH               (secured, bare canonical form)
+export function normalizeThorBankDenom(denom: string): string | null {
+  const lower = denom.toLowerCase()
+
+  // Factory-style denoms (x/<symbol>) collapse to THOR.<SYMBOL> for now (only RUJI exists today).
+  if (lower.startsWith('x/')) return `${Chain.THORChain}.${lower.slice(2).toUpperCase()}`
+
+  // Synth or trade — both live under THOR.<DENOM>.
+  if (lower.includes('/') || lower.includes('~')) return `${Chain.THORChain}.${lower.toUpperCase()}`
+
+  // Secured assets: "<CHAIN>-<SYMBOL>" (one or more dashes when address-bearing).
+  if (lower.includes('-')) return lower.toUpperCase()
+
+  // Native single-word THORChain denoms (rune, tcy).
+  return `${Chain.THORChain}.${lower.toUpperCase()}`
 }

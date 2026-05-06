@@ -1,6 +1,7 @@
+import axios from 'axios'
 import { AssetValue, Chain, getChainConfig } from '@tcswap/core'
 import { BalanceResponse, QuoteRequest, USwapApi } from '@tcswap/helpers/api'
-import axios from 'axios'
+import { normalizeThorBankDenom } from '@/lib/swap-helpers'
 
 const uSwap = axios.create({
   baseURL: process.env.NEXT_PUBLIC_USWAP_API_URL,
@@ -97,6 +98,27 @@ export const getMayaMidgardPools = async (): Promise<{ asset: string; assetPrice
 
 export const getMayaMidgardCacaoPrice = async (): Promise<number> => {
   return mayaMidgard.get('/v2/stats').then(res => parseFloat(res.data.cacaoPriceUSD))
+}
+
+export const getThorBankBalances = async (address: string): Promise<AssetValue[]> => {
+  try {
+    const res = await thornode.get(`/cosmos/bank/v1beta1/balances/${address}`)
+    const balances: { denom: string; amount: string }[] = res.data?.balances || []
+    const out: AssetValue[] = []
+    for (const { denom, amount } of balances) {
+      if (!denom || denom.includes('IBC/')) continue
+      const asset = normalizeThorBankDenom(denom)
+      if (!asset) continue
+      try {
+        out.push(AssetValue.from({ asset, fromBaseDecimal: 8, value: amount }))
+      } catch {
+        // skip unparseable denoms (e.g. unknown factory tokens)
+      }
+    }
+    return out
+  } catch {
+    return []
+  }
 }
 
 export const getAssetBalance = async (chain: Chain, address: string, identifier: string) => {

@@ -15,7 +15,7 @@ import {
 import { estimateTransactionFee } from '@tcswap/toolboxes/cosmos'
 import { useAssetFrom } from '@/hooks/use-swap'
 import { useWallets } from '@/hooks/use-wallets'
-import { getAssetBalance } from '@/lib/api'
+import { getAssetBalance, getThorBankBalances } from '@/lib/api'
 import { getUSwap } from '@/lib/wallets'
 
 type UseBalance = {
@@ -53,8 +53,12 @@ export const useBalance = (): UseBalance => {
 
       let value = AssetValue.from({ chain: assetFrom.chain, value: 0 })
 
-      const finder = (b: AssetValue) =>
-        `${b.chain}.${b.isSynthetic || b.isTradeAsset ? b.ticker : b.symbol}`.toLowerCase() === assetFrom.identifier.toLowerCase()
+      const finder = (b: AssetValue) => {
+        const symbolPart = b.isSynthetic || b.isTradeAsset ? b.ticker : b.symbol
+        // Secured Assets are addressed as bare "<CHAIN>-<SYMBOL>" without a chain prefix.
+        const id = b.isSecuredAsset ? b.symbol : `${b.chain}.${symbolPart}`
+        return id.toLowerCase() === assetFrom.identifier.toLowerCase()
+      }
 
       if (assetFrom.chain === Chain.Near) {
         const balances = await getAssetBalance(assetFrom.chain, wallet.address, assetFrom.identifier)
@@ -66,6 +70,15 @@ export const useBalance = (): UseBalance => {
         const balance = balances.find(finder)
 
         if (balance) value = balance
+
+        // Secured Asset balances come from the THORChain bank module. If the wallet wrapper
+        // didn't surface it (some connectors strip non-RUNE denoms), fall back to a direct
+        // bank query so the user sees their balance.
+        if (!balance && assetFrom.chain === Chain.THORChain && assetFrom.isSecuredAsset) {
+          const bankBalances = await getThorBankBalances(wallet.address)
+          const securedBalance = bankBalances.find(finder)
+          if (securedBalance) value = securedBalance
+        }
       }
 
       const estimateFee = async () => {

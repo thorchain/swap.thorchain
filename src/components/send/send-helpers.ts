@@ -1,7 +1,17 @@
 import { Asset } from '@/components/swap/asset'
 import { TokenBalance } from '@/hooks/use-wallet-balances'
 
-export function assetIdentifierStr(b: { chain: string; isSynthetic?: boolean; isTradeAsset?: boolean; ticker: string; address?: string }): string {
+export function assetIdentifierStr(b: {
+  chain: string
+  isSynthetic?: boolean
+  isTradeAsset?: boolean
+  isSecuredAsset?: boolean
+  symbol?: string
+  ticker: string
+  address?: string
+}): string {
+  // Secured Asset canonical identifier is the bare "<CHAIN>-<SYMBOL>" form (no "THOR." prefix).
+  if (b.isSecuredAsset && b.symbol) return b.symbol
   const id = b.isSynthetic || b.isTradeAsset ? b.ticker : b.address ? `${b.ticker}-${b.address}` : b.ticker
   return `${b.chain}.${id}`
 }

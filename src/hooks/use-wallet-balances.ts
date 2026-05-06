@@ -4,13 +4,15 @@ import { AssetValue, Chain, USwapNumber } from '@tcswap/core'
 import { useAssets } from '@/hooks/use-assets'
 import { useRates } from '@/hooks/use-rates'
 import { useAccounts, useHasHydrated } from '@/hooks/use-wallets'
-import { getAlchemyTokenBalances } from '@/lib/api'
+import { getAlchemyTokenBalances, getThorBankBalances } from '@/lib/api'
 import { getUSwap } from '@/lib/wallets'
 import { WalletAccount } from '@/store/wallets-store'
 
 const ETH_RPC_URL = process.env.NEXT_PUBLIC_ALCHEMY_ETH_RPC_URL || 'https://eth.llamarpc.com'
 
 function assetIdentifier(b: AssetValue): string {
+  // Secured Asset canonical identifier is the bare "<CHAIN>-<SYMBOL>" form (no "THOR." prefix).
+  if (b.isSecuredAsset) return b.symbol
   const identifier = b.isSynthetic || b.isTradeAsset ? b.ticker : b.address ? `${b.ticker}-${b.address}` : b.ticker
   return `${b.chain}.${identifier}`
 }
@@ -58,6 +60,20 @@ export const useWalletBalances = () => {
           if (!wallet || !('getBalance' in wallet)) return { account, balances: [] as AssetValue[], alchemyLogoMap: new Map<string, string>() }
           const rawBalances = await (wallet as any).getBalance(wallet.address, false)
           const balances: AssetValue[] = rawBalances ? [...rawBalances] : []
+
+          // For THORChain, also pull bank-module balances directly so Secured Asset denoms
+          // (btc-btc, eth-eth, eth-usdc-0x…) are always surfaced. Merge by chain+symbol.
+          if (account.network === Chain.THORChain) {
+            const bankBalances = await getThorBankBalances(account.address)
+            const seen = new Set(balances.map(b => `${b.chain}.${b.symbol}`.toLowerCase()))
+            for (const b of bankBalances) {
+              const key = `${b.chain}.${b.symbol}`.toLowerCase()
+              if (!seen.has(key)) {
+                balances.push(b)
+                seen.add(key)
+              }
+            }
+          }
 
           // For Ethereum, supplement with Alchemy to discover meme coins not in the curated API list
           const alchemyLogoMap = new Map<string, string>()

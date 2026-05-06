@@ -7,6 +7,8 @@ export interface Asset {
   coingeckoId?: string
   decimals: number
   identifier: string
+  isSecuredAsset?: boolean
+  isTradeAsset?: boolean
   logoURI?: string
   name?: string
   shortCode?: string

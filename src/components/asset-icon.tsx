@@ -5,6 +5,7 @@ import { cn } from '@/lib/utils'
 
 export function AssetIcon({ asset, className }: { asset: Asset | undefined; className?: string }) {
   const [loaded, setLoaded] = useState(false)
+  const l1Chain = asset?.isSecuredAsset ? asset.identifier.split('-')[0] : asset?.chain
 
   return (
     <div className={cn('relative flex h-8 w-8 rounded-full', className)}>
@@ -21,11 +22,20 @@ export function AssetIcon({ asset, className }: { asset: Asset | undefined; clas
               onError={() => setLoaded(false)}
             />
           )}
-          {!isNativeAsset(asset) && (
+          {l1Chain && !isNativeAsset(l1Chain, asset.ticker) && (
             <Image
               className="outline-swap-global bg-swap-global absolute -right-1 -bottom-1 h-4 w-4 rounded-md"
-              src={`/networks/${asset.chain.toLowerCase()}.svg`}
-              alt={asset.chain.toLowerCase()}
+              src={`/networks/${l1Chain.toLowerCase()}.svg`}
+              alt=""
+              width={16}
+              height={16}
+            />
+          )}
+          {asset.isSecuredAsset && (
+            <Image
+              className="outline-swap-global bg-swap-global absolute -top-1 -right-1 h-4 w-4 rounded-md"
+              src="/networks/thor.svg"
+              alt="thor"
               width={16}
               height={16}
             />
@@ -36,6 +46,10 @@ export function AssetIcon({ asset, className }: { asset: Asset | undefined; clas
   )
 }
 
-function isNativeAsset(asset: Asset): boolean {
-  return ['THOR.RUNE', 'BSC.BNB', 'GAIA.ATOM', 'TRON.TRX'].includes(asset.identifier) || asset.chain.toLowerCase() === asset.ticker.toLowerCase()
+const NATIVE_GAS_PAIRS = new Set(['thor.rune', 'bsc.bnb', 'gaia.atom', 'tron.trx'])
+
+function isNativeAsset(chain: string, ticker: string): boolean {
+  const c = chain.toLowerCase()
+  const t = ticker.toLowerCase()
+  return c === t || NATIVE_GAS_PAIRS.has(`${c}.${t}`)
 }
