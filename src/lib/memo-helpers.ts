@@ -1,7 +1,5 @@
-import { EstimatedTime, QuoteResponseRoute } from '@tcswap/helpers/api'
+import { QuoteResponseRoute } from '@tcswap/helpers/api'
 import type { Asset } from '@/components/swap/asset'
-
-export const THORCHAIN_BLOCK_TIME_SECONDS = 6
 
 function toBaseAmount(amount: string, decimals: number = 8): bigint {
   const [whole, frac = ''] = amount.split('.')
