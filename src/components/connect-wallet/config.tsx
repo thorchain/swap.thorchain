@@ -157,6 +157,8 @@ export const chainLabel = (c: Chain | string): string => {
       return 'TRON'
     case Chain.Ripple:
       return 'XRP Ledger'
+    case Chain.Maya:
+      return 'Maya Protocol'
     case 'XMR':
       return 'Monero'
     case 'TAO':

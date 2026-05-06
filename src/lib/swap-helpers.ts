@@ -62,7 +62,7 @@ export const resolvePriceImpact = (quote?: QuoteResponseRoute, rateFrom?: USwapN
 
 export const providerLabel = (provider: ProviderName): string => {
   if (provider === 'THORCHAIN' || provider === 'THORCHAIN_STREAMING') return 'THORChain'
-  if (provider === 'MAYACHAIN' || provider === 'MAYACHAIN_STREAMING') return 'MayaChain'
+  if (provider === 'MAYACHAIN' || provider === 'MAYACHAIN_STREAMING') return 'Maya Protocol'
   if (provider === 'NEAR') return 'Near'
   if (provider === 'ONEINCH') return '1inch'
   return 'Unknown'
