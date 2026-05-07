@@ -73,18 +73,19 @@ export const ConnectWallet = ({ isOpen, onOpenChange, chain }: ConnectWalletProp
       const isInstalled = isWalletAvailable(wallet.option)
       const isSelected = wallet === selectedWallet
       const isHighlighted = isWalletHighlighted(wallet.option)
+      const isClickable = isInstalled && isHighlighted && (!isConnected || wallet.option === WalletOption.LEDGER)
 
       return (
         <div
           key={index}
-          className={cn('mb-1 flex items-center space-x-3 rounded-2xl border-1 border-transparent p-3', {
+          className={cn('mb-1 flex items-center space-x-3 rounded-2xl border border-transparent p-3', {
             'border-border-btn-modal-hover': isSelected,
             'opacity-25': !isHighlighted,
-            'hover:bg-sub-container-modal/50 cursor-pointer': isInstalled && !isConnected && isHighlighted,
+            'hover:bg-sub-container-modal/50 cursor-pointer': isClickable,
             'mb-4 md:mb-8': index === wallets.length - 1
           })}
           onClick={() => {
-            if (isConnected || !isInstalled || !isHighlighted) return
+            if (!isClickable) return
             onSelectWallet(wallet)
           }}
         >

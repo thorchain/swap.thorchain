@@ -44,7 +44,8 @@ export const useWalletStore = create<WalletState>()(
           }
 
           set(state => {
-            const filtered = state.accounts.filter(acc => acc.provider !== wallet)
+            const replacedChains = new Set(newAccounts.map(a => a.network))
+            const filtered = state.accounts.filter(acc => acc.provider !== wallet || !replacedChains.has(acc.network))
             const accounts = [...filtered, ...newAccounts]
 
             return {
