@@ -1,13 +1,11 @@
 'use client'
 
 import Image from 'next/image'
-import Link from 'next/link'
 import * as DialogPrimitive from '@radix-ui/react-dialog'
 import { useRef, useState } from 'react'
 import Lottie, { LottieRefCurrentProps } from 'lottie-react'
 import { VisuallyHidden } from '@radix-ui/react-visually-hidden'
 import { X } from 'lucide-react'
-import { useRouter } from 'next/navigation'
 import { Dialog, DialogPortal } from '@/components/ui/dialog'
 import { AppConfig } from '@/config'
 import { cn } from '@/lib/utils'
@@ -96,18 +94,16 @@ function RollingText({ text }: { text: string }) {
 interface TileProps {
   label: string
   animationData: object
+  href: string
   onClick?: () => void
-  disabled?: boolean
 }
 
-function MenuTile({ label, animationData, onClick, disabled }: TileProps) {
+function MenuTile({ label, animationData, href, onClick }: TileProps) {
   const lottieRef = useRef<LottieRefCurrentProps>(null)
 
   const handleMouseEnter = () => {
-    if (!disabled) {
-      lottieRef.current?.animationItem?.setLoop(true)
-      lottieRef.current?.goToAndPlay(0, true)
-    }
+    lottieRef.current?.animationItem?.setLoop(true)
+    lottieRef.current?.goToAndPlay(0, true)
   }
 
   const handleMouseLeave = () => {
@@ -115,9 +111,9 @@ function MenuTile({ label, animationData, onClick, disabled }: TileProps) {
   }
 
   return (
-    <button
+    <a
+      href={href}
       onClick={onClick}
-      disabled={disabled || !onClick}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
       className={cn(
@@ -146,7 +142,7 @@ function MenuTile({ label, animationData, onClick, disabled }: TileProps) {
           className="inline-flex size-full items-center justify-center overflow-visible [&>svg]:size-full"
         />
       </div>
-    </button>
+    </a>
   )
 }
 
@@ -155,16 +151,28 @@ interface SendMemoMenuProps {
   onOpenChange: (open: boolean) => void
 }
 
+const SUBDOMAIN_HOSTS: Record<string, string> = {
+  '/swap': 'swap.thorchain.org',
+  '/tcy': 'tcy.thorchain.org',
+  '/bond': 'bond.thorchain.org',
+  '/memo': 'memo.thorchain.org'
+}
+
+function resolveHref(path: string): string {
+  if (typeof window === 'undefined') return path
+  const [pathname, search = ''] = path.split('?')
+  const host = SUBDOMAIN_HOSTS[pathname]
+  if (host && window.location.hostname.endsWith('.thorchain.org')) {
+    const suffix = search ? `?${search}` : ''
+    return host === 'swap.thorchain.org' ? `https://${host}${pathname}${suffix}` : `https://${host}/${suffix}`
+  }
+  return path
+}
+
 export function GlobalMenu({ isOpen, onOpenChange }: SendMemoMenuProps) {
-  const router = useRouter()
   const [newsletterEmail, setNewsletterEmail] = useState('')
   const [newsletterStatus, setNewsletterStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle')
   const [newsletterError, setNewsletterError] = useState('')
-
-  const navigate = (path: string) => {
-    router.push(path)
-    onOpenChange(false)
-  }
 
   const handleNewsletterSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -190,11 +198,13 @@ export function GlobalMenu({ isOpen, onOpenChange }: SendMemoMenuProps) {
     }
   }
 
+  const closeMenu = () => onOpenChange(false)
+
   const tiles: TileProps[] = [
-    { label: 'Swap', animationData: swapAnim, onClick: () => navigate('/swap') },
-    { label: '$TCY', animationData: tcyAnim, onClick: () => navigate('/tcy') },
-    { label: 'Bond', animationData: bondAnim, onClick: () => navigate('/bond') },
-    { label: 'Memo', animationData: memoAnim, onClick: () => navigate('/memo') }
+    { label: 'Swap', animationData: swapAnim, href: resolveHref('/swap'), onClick: closeMenu },
+    { label: '$TCY', animationData: tcyAnim, href: resolveHref('/tcy'), onClick: closeMenu },
+    { label: 'Bond', animationData: bondAnim, href: resolveHref('/bond'), onClick: closeMenu },
+    { label: 'Memo', animationData: memoAnim, href: resolveHref('/memo'), onClick: closeMenu }
   ]
 
   return (
@@ -229,9 +239,9 @@ export function GlobalMenu({ isOpen, onOpenChange }: SendMemoMenuProps) {
               </a>
 
               <div className="flex items-center gap-2.5">
-                <Link
-                  href="/swap?sellAsset=BTC.BTC&buyAsset=ETH.ETH"
-                  onClick={() => onOpenChange(false)}
+                <a
+                  href={resolveHref('/swap?sellAsset=BTC.BTC&buyAsset=ETH.ETH')}
+                  onClick={closeMenu}
                   className="group bg-green-default hidden items-center gap-2.5 rounded-full border border-transparent px-4.5 py-2.5 text-[15px] font-medium text-black transition-colors hover:bg-white md:flex"
                 >
                   <RollingText text="Launch App" />
@@ -253,7 +263,7 @@ export function GlobalMenu({ isOpen, onOpenChange }: SendMemoMenuProps) {
                       </svg>
                     </span>
                   </span>
-                </Link>
+                </a>
                 <DialogPrimitive.Close
                   className="flex size-10.5 cursor-pointer items-center justify-center rounded-full bg-white text-black transition-colors hover:bg-neutral-200 focus:outline-none"
                   aria-label="Close"
@@ -270,7 +280,7 @@ export function GlobalMenu({ isOpen, onOpenChange }: SendMemoMenuProps) {
                 <ul className="w-full md:grid md:w-fit md:grid-cols-4 md:gap-5">
                   {tiles.map(tile => (
                     <li key={tile.label} className="md:aspect-square md:max-w-55">
-                      <MenuTile label={tile.label} animationData={tile.animationData} onClick={tile.onClick} disabled={tile.disabled} />
+                      <MenuTile label={tile.label} animationData={tile.animationData} href={tile.href} onClick={tile.onClick} />
                     </li>
                   ))}
                 </ul>
@@ -311,7 +321,7 @@ export function GlobalMenu({ isOpen, onOpenChange }: SendMemoMenuProps) {
 
                 {/* Newsletter */}
                 <div className="hidden flex-col gap-5 md:flex">
-                  <p className="text-lg leading-snug text-white font-medium">The best way to stay up to date on THORChain</p>
+                  <p className="text-lg leading-snug font-medium text-white">The best way to stay up to date on THORChain</p>
                   {newsletterStatus === 'success' ? (
                     <p className="text-green-default text-base">Thanks for subscribing!</p>
                   ) : (
@@ -345,13 +355,13 @@ export function GlobalMenu({ isOpen, onOpenChange }: SendMemoMenuProps) {
 
             {/* Mobile: Launch App full-width button at bottom */}
             <div className="px-7.5 pb-7.5 md:hidden">
-              <Link
-                href="/swap?sellAsset=BTC.BTC&buyAsset=ETH.ETH"
-                onClick={() => onOpenChange(false)}
+              <a
+                href={resolveHref('/swap?sellAsset=BTC.BTC&buyAsset=ETH.ETH')}
+                onClick={closeMenu}
                 className="group bg-green-default flex h-23.25 w-full items-center justify-center rounded-[5px] text-[18px] font-medium text-black transition-colors hover:bg-white"
               >
                 <RollingText text="Launch App" />
-              </Link>
+              </a>
             </div>
           </div>
         </DialogPrimitive.Content>
