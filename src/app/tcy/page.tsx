@@ -9,7 +9,7 @@ export const metadata: Metadata = {
   title: '$TCY Stake | THORChain'
 }
 
-export default function StakePage() {
+export default function TcyPage() {
   return (
     <main className="min-h-screen">
       <Header />

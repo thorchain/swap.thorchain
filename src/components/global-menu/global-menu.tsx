@@ -192,7 +192,7 @@ export function GlobalMenu({ isOpen, onOpenChange }: SendMemoMenuProps) {
 
   const tiles: TileProps[] = [
     { label: 'Swap', animationData: swapAnim, onClick: () => navigate('/swap') },
-    { label: '$TCY', animationData: tcyAnim, onClick: () => navigate('/stake') },
+    { label: '$TCY', animationData: tcyAnim, onClick: () => navigate('/tcy') },
     { label: 'Bond', animationData: bondAnim, onClick: () => navigate('/bond') },
     { label: 'Memo', animationData: memoAnim, onClick: () => navigate('/memo') }
   ]
