@@ -21,11 +21,11 @@ export function WalletProviderGroup({ provider, chainDataList, expandedChains, o
   const walletKey = walletInfo?.key || provider.toLowerCase()
   const walletName = walletInfo?.label || provider
 
-  const isLedger = provider === WalletOption.LEDGER
+  const showAllChains = provider === WalletOption.LEDGER || provider === WalletOption.KEYSTORE
 
   const visibleChains = useMemo(
-    () => (isLedger ? chainDataList : chainDataList.filter(data => data.isLoading || data.tokens.some(t => t.amount > 0))),
-    [chainDataList, isLedger],
+    () => (showAllChains ? chainDataList : chainDataList.filter(data => data.isLoading || data.tokens.some(t => t.amount > 0))),
+    [chainDataList, showAllChains],
   )
 
   return (
