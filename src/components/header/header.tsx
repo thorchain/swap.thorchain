@@ -3,7 +3,7 @@
 import Image from 'next/image'
 import { useEffect, useState } from 'react'
 import { WalletIcon } from '@/components/wallet-icon'
-import { SendMemoButton } from '@/components/header/send-memo-button'
+import { GlobalMenuButton } from '@/components/global-menu/global-menu-button'
 import { ThemeSwitchButton } from '@/components/header/theme-switch-button'
 import { TransactionHistoryButton } from '@/components/header/transaction-history-button'
 import { useDialog } from '@/components/global-dialog'
@@ -60,7 +60,7 @@ export function Header() {
               WALLET
             </ThemeButton>
           )}
-          <SendMemoButton />
+          <GlobalMenuButton />
         </div>
       </div>
     </header>

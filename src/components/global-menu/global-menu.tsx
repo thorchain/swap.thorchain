@@ -155,7 +155,7 @@ interface SendMemoMenuProps {
   onOpenChange: (open: boolean) => void
 }
 
-export function SendMemoMenu({ isOpen, onOpenChange }: SendMemoMenuProps) {
+export function GlobalMenu({ isOpen, onOpenChange }: SendMemoMenuProps) {
   const router = useRouter()
   const [newsletterEmail, setNewsletterEmail] = useState('')
   const [newsletterStatus, setNewsletterStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle')
