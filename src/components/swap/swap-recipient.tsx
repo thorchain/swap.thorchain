@@ -77,6 +77,8 @@ export const SwapRecipient = ({ provider, onFetchQuote }: SwapRecipientProps) =>
     setQuoting(true)
 
     const isThorchain = provider === 'THORCHAIN' || provider === 'THORCHAIN_STREAMING'
+    const isMayachain = provider === 'MAYACHAIN' || provider === 'MAYACHAIN_STREAMING'
+    const supportsStreaming = isThorchain || isMayachain
 
     getQuotes({
       buyAsset: assetTo.identifier,
@@ -88,7 +90,7 @@ export const SwapRecipient = ({ provider, onFetchQuote }: SwapRecipientProps) =>
       dry: !(refundRequired || selectedAccount),
       slippage: isLimitSwap ? 0 : (slippage ?? 99),
       providers: [provider],
-      ...(isThorchain && !isLimitSwap && { streamingInterval: customInterval, streamingQuantity: customQuantity })
+      ...(supportsStreaming && !isLimitSwap && { streamingInterval: customInterval, streamingQuantity: customQuantity })
     })
       .then(quotes => {
         let quote = quotes[0]
