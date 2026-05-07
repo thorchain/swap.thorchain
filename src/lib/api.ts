@@ -10,17 +10,18 @@ const uSwap = axios.create({
   }
 })
 
-export const getDexScreenerPrices = async (mintAddresses: string[]): Promise<Record<string, number>> => {
-  if (mintAddresses.length === 0) return {}
-  const addresses = mintAddresses.join(',')
+export const getDexScreenerPrices = async (tokenAddresses: string[], chainId: 'solana' | 'ethereum' = 'solana'): Promise<Record<string, number>> => {
+  if (tokenAddresses.length === 0) return {}
+  const addresses = tokenAddresses.join(',')
   try {
-    const res = await axios.get(`https://api.dexscreener.com/tokens/v1/solana/${addresses}`)
+    const res = await axios.get(`https://api.dexscreener.com/tokens/v1/${chainId}/${addresses}`)
     const result: Record<string, number> = {}
     for (const pair of res.data || []) {
-      const mint = pair?.baseToken?.address
+      const addr = pair?.baseToken?.address
       const price = pair?.priceUsd
-      if (mint && price != null && !result[mint]) {
-        result[mint] = parseFloat(price)
+      if (addr && price != null) {
+        const key = chainId === 'ethereum' ? addr.toLowerCase() : addr
+        if (!result[key]) result[key] = parseFloat(price)
       }
     }
     return result

@@ -75,10 +75,32 @@ export const useRates = (identifiers: string[]): { rates: AssetRateMap; isLoadin
     return mints
   }, [identifiers])
 
+  // Collect Ethereum token addresses
+  const ethAddresses = useMemo(() => {
+    const addresses: string[] = []
+    for (const id of identifiers) {
+      if (id.toUpperCase().startsWith('ETH.') && id.includes('-')) {
+        const addr = id.split('-').pop()
+        if (addr) addresses.push(addr.toLowerCase())
+      }
+    }
+    return addresses
+  }, [identifiers])
+
   const { data: dexScreenerData, isLoading: dexScreenerLoading } = useQuery({
-    queryKey: ['dexscreener-prices', solanaMints.slice().sort().join(',')],
-    queryFn: () => getDexScreenerPrices(solanaMints),
+    queryKey: ['dexscreener-prices-sol', solanaMints.slice().sort().join(',')],
+    queryFn: () => getDexScreenerPrices(solanaMints, 'solana'),
     enabled: solanaMints.length > 0,
+    staleTime: 3 * 60_000,
+    refetchOnMount: false,
+    refetchOnWindowFocus: false,
+    retry: false
+  })
+
+  const { data: dexScreenerEthData, isLoading: dexScreenerEthLoading } = useQuery({
+    queryKey: ['dexscreener-prices-eth', ethAddresses.slice().sort().join(',')],
+    queryFn: () => getDexScreenerPrices(ethAddresses, 'ethereum'),
+    enabled: ethAddresses.length > 0,
     staleTime: 3 * 60_000,
     refetchOnMount: false,
     refetchOnWindowFocus: false,
@@ -105,11 +127,23 @@ export const useRates = (identifiers: string[]): { rates: AssetRateMap; isLoadin
     }
   }
 
+  if (dexScreenerEthData) {
+    for (const id of identifiers) {
+      if (rates[id]) continue
+      if (id.toUpperCase().startsWith('ETH.') && id.includes('-')) {
+        const addr = id.split('-').pop()!.toLowerCase()
+        const price = dexScreenerEthData[addr]
+        if (price) rates[id] = new USwapNumber(price)
+      }
+    }
+  }
+
   const dexScreenerPending = solanaMints.length > 0 && dexScreenerLoading
+  const dexScreenerEthPending = ethAddresses.length > 0 && dexScreenerEthLoading
 
   return {
     rates,
-    isLoading: midgardLoading || dexScreenerPending || identifiers.length === 0
+    isLoading: midgardLoading || dexScreenerPending || dexScreenerEthPending || identifiers.length === 0
   }
 }
 
