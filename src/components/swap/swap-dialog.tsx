@@ -4,10 +4,10 @@ import { ProviderName } from '@tcswap/helpers'
 import { QuoteResponseRoute } from '@tcswap/helpers/api'
 import { LoaderCircle } from 'lucide-react'
 import { toast } from 'sonner'
-import { Checkbox } from '@/components/ui/checkbox'
 import { Credenza, CredenzaContent } from '@/components/ui/credenza'
 import { SwapConfirm } from '@/components/swap/swap-confirm'
 import { SwapRecipient } from '@/components/swap/swap-recipient'
+import { SwapAddressWarning } from '@/components/swap/swap-address-warning'
 import { ThemeButton } from '@/components/theme-button'
 import { useBalance } from '@/hooks/use-balance'
 import { useSwapRates } from '@/hooks/use-rates'
@@ -106,10 +106,11 @@ export const SwapDialog = ({ provider, isOpen, onOpenChange }: SwapDialogProps) 
 
             <div className="space-y-3 p-4 pt-2 md:p-8 md:pt-2">
               {requiresHighPriceImpactAcceptance && (
-                <label className="border-stroke-swap-bloc flex cursor-pointer items-center gap-4 rounded-xl border p-4 text-sm">
-                  <Checkbox className="size-6" checked={highPriceImpactAccepted} onCheckedChange={checked => setHighPriceImpactAccepted(checked === true)} />
-                  <span className="text-txt-label-small">I accept a higher price impact for this swap</span>
-                </label>
+                <SwapAddressWarning
+                  checked={highPriceImpactAccepted}
+                  onCheckedChange={setHighPriceImpactAccepted}
+                  text="I understand the price impact is in addition to the slippage tolerance. I accept the high price impact on this swap"
+                />
               )}
               <ThemeButton variant="primaryMedium" className="w-full" onClick={() => onConfirm()} disabled={!quote || submitting || confirmBlocked}>
                 {submitting ? <LoaderCircle size={20} className="animate-spin" /> : <span>{isLimitSwap ? 'Confim Limit Order' : 'Confirm'}</span>}

@@ -169,7 +169,7 @@ export const InstantSwapDialog = ({ provider, isOpen, onOpenChange }: InstantSwa
                 <SwapAddressWarning
                   checked={highPriceImpactAccepted}
                   onCheckedChange={setHighPriceImpactAccepted}
-                  text="I accept a higher price impact for this swap"
+                  text="I understand the price impact is in addition to the slippage tolerance. I accept the high price impact on this swap"
                 />
               )}
               <ThemeButton
