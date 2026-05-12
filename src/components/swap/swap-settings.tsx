@@ -81,15 +81,21 @@ export const SwapSettings = () => {
           <div className="flex flex-col gap-2">
             <div className="flex justify-between text-sm font-semibold">
               <div className="flex items-center gap-1">
-                <span>Slippage Tolerance</span>
+                <span>Price Protection</span>
                 <InfoTooltip>
-                  Due to market volatility, prices may change before completion. This setting ensures you receive at least your minimum amount.
+                  Price impact is how much your swap moves the pool's price. The larger your swap relative to available liquidity, the higher the
+                  impact.
+                  <br />
+                  <br />
+                  During the time between seeing a quote and your swap completing, prices can change. Slippage tolerance is the maximum price change
+                  you'll accept before the swap is cancelled.
                 </InfoTooltip>
               </div>
               <span>{currentSlippage ? `${currentSlippage}%` : 'No Protection'}</span>
             </div>
             <span className="text-txt-label-small text-xs">
-              Maximum acceptable price change. Transaction will fail if the price moves unfavorably beyond this amount.
+              The most you are willing to spend on a swap. This includes the price impact of your swap and any slippage on the token prices before the
+              swap is executed.
             </span>
           </div>
           <div className="w-full">
@@ -162,8 +168,8 @@ export const SwapSettings = () => {
                 <span className="text-sm font-semibold">
                   <span className="me-1">Time between sub-swaps</span>
                   <InfoTooltip>
-                    Time between each sub-swap measured in blocks. The more blocks between each sub-swap, the better the price execution. Choosing zero
-                    blocks will do multiple sub-swaps every block for faster execution. The default value is zero blocks.
+                    Time between each sub-swap measured in blocks. The more blocks between each sub-swap, the better the price execution. Choosing
+                    zero blocks will do multiple sub-swaps every block for faster execution. The default value is zero blocks.
                   </InfoTooltip>
                 </span>
                 <span className="text-xs font-semibold">{localCustomInterval} blocks</span>
