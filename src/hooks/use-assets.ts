@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query'
-import { getChainConfig, isSecuredAssetIdentifier } from '@tcswap/helpers'
+import { Chain, getChainConfig, isSecuredAssetIdentifier } from '@tcswap/helpers'
 import { USwapApi } from '@tcswap/helpers/api'
 import { Asset } from '@/components/swap/asset'
 import { AppConfig } from '@/config'
@@ -21,13 +21,19 @@ export const useAssets = (): { assets?: Asset[]; isLoading: boolean } => {
         const isSecured = isSecuredAssetIdentifier(token.identifier)
         const isTrade = !isSecured && token.identifier.includes('~')
 
+        // The token list API returns TRON identifiers with the address segment uppercased
+        // (e.g. TRON.USDT-TR7NHQJEKQ...), but Tron base58 addresses are case-sensitive and
+        // tronWeb rejects them as invalid. Rebuild the identifier from the canonical address.
+        const identifier =
+          token.chain === Chain.Tron && token.address ? `${token.chain}.${token.ticker}-${token.address}` : token.identifier
+
         const asset: Asset = {
           address: token.address,
           chain: token.chain,
           chainId: token.chainId,
           coingeckoId: token.coingeckoId,
           decimals: token.decimals,
-          identifier: token.identifier,
+          identifier,
           isSecuredAsset: isSecured || undefined,
           isTradeAsset: isTrade || undefined,
           logoURI: token.logoURI,

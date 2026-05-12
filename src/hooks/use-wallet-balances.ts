@@ -1,5 +1,5 @@
 import { useMemo } from 'react'
-import { useQuery } from '@tanstack/react-query'
+import { useQuery, useQueryClient } from '@tanstack/react-query'
 import { AssetValue, Chain, USwapNumber } from '@tcswap/core'
 import { useAssets } from '@/hooks/use-assets'
 import { useRates } from '@/hooks/use-rates'
@@ -36,6 +36,7 @@ export const useWalletBalances = () => {
   const accounts = useAccounts()
   const hasHydrated = useHasHydrated()
   const uSwap = getUSwap()
+  const queryClient = useQueryClient()
 
   const { iconMap, curatedIdentifiers } = useMemo(() => {
     const iconMap = new Map<string, string>()
@@ -58,7 +59,11 @@ export const useWalletBalances = () => {
         accounts.map(async account => {
           const wallet = uSwap.getWallet(account.provider, account.network)
           if (!wallet || !('getBalance' in wallet)) return { account, balances: [] as AssetValue[], alchemyLogoMap: new Map<string, string>() }
-          const rawBalances = await (wallet as any).getBalance(wallet.address, false)
+          const rawBalances = await queryClient.ensureQueryData({
+            queryKey: ['account-balance', account.network, account.address],
+            queryFn: () => (wallet as any).getBalance(wallet.address, false),
+            staleTime: 30_000
+          })
           const balances: AssetValue[] = rawBalances ? [...rawBalances] : []
 
           // For THORChain, also pull bank-module balances directly so Secured Asset denoms
