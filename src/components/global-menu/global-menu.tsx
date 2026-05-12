@@ -160,9 +160,8 @@ const SUBDOMAIN_HOSTS: Record<string, string> = {
 
 function resolveHref(path: string): string {
   if (typeof window === 'undefined') return path
-  const pathStr = path === '/' ? '/swap' : path
-  const [pathname, search = ''] = pathStr.split('?')
-  const host = SUBDOMAIN_HOSTS[pathname]
+  const [pathname, search = ''] = path.split('?')
+  const host = SUBDOMAIN_HOSTS[path === '/' ? '/swap' : pathname]
   if (host && window.location.hostname.endsWith('.thorchain.org')) {
     const suffix = search ? `?${search}` : ''
     return host === 'swap.thorchain.org' ? `https://${host}${pathname}${suffix}` : `https://${host}/${suffix}`
