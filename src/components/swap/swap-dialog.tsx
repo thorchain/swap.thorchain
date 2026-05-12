@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { FeeOption, getChainConfig, USwapNumber } from '@tcswap/core'
+import { Chain, FeeOption, getChainConfig, USwapNumber } from '@tcswap/core'
 import { ProviderName } from '@tcswap/helpers'
 import { QuoteResponseRoute } from '@tcswap/helpers/api'
 import { LoaderCircle } from 'lucide-react'
@@ -48,9 +48,17 @@ export const SwapDialog = ({ provider, isOpen, onOpenChange }: SwapDialogProps) 
 
     setSubmitting(true)
 
+    // THORchain returns `route.expiration` as an absolute Unix timestamp (seconds),
+    // but the TRON toolbox passes it straight to `tronWeb.extendExpiration(tx, seconds)`
+    // which expects an *extension in seconds* (chain max ~24h). The huge value yields
+    // an expiration ~56 years in the future: the fullnode accepts the broadcast and
+    // returns a txid, but consensus silently drops the tx. THORchain TRON deposits
+    // are plain TRC20 transfers with no on-chain expiry, so dropping the field is safe.
+    const route = assetFrom.chain === Chain.Tron && quote.expiration ? ({ ...quote, expiration: undefined } as QuoteResponseRoute) : quote
+
     const broadcast = uSwap
       .swap({
-        route: quote as any,
+        route: route as any,
         feeOptionKey: FeeOption.Fast
       })
       .then((hash: string) => {
