@@ -21,6 +21,7 @@ export const useUrlParams = () => {
   const updateUrl = useCallback(
     (sellAsset: string, buyAsset: string) => {
       if (isUpdatingUrl.current) return
+      if (pathname === '/') return
       isUpdatingUrl.current = true
 
       const params = new URLSearchParams(searchParams.toString())

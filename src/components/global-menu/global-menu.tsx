@@ -160,7 +160,8 @@ const SUBDOMAIN_HOSTS: Record<string, string> = {
 
 function resolveHref(path: string): string {
   if (typeof window === 'undefined') return path
-  const [pathname, search = ''] = path.split('?')
+  const pathStr = path === '/' ? '/swap' : path
+  const [pathname, search = ''] = pathStr.split('?')
   const host = SUBDOMAIN_HOSTS[pathname]
   if (host && window.location.hostname.endsWith('.thorchain.org')) {
     const suffix = search ? `?${search}` : ''
@@ -201,7 +202,7 @@ export function GlobalMenu({ isOpen, onOpenChange }: SendMemoMenuProps) {
   const closeMenu = () => onOpenChange(false)
 
   const tiles: TileProps[] = [
-    { label: 'Swap', animationData: swapAnim, href: resolveHref('/swap'), onClick: closeMenu },
+    { label: 'Swap', animationData: swapAnim, href: resolveHref('/'), onClick: closeMenu },
     { label: '$TCY', animationData: tcyAnim, href: resolveHref('/tcy'), onClick: closeMenu },
     { label: 'Bond', animationData: bondAnim, href: resolveHref('/bond'), onClick: closeMenu },
     { label: 'Memo', animationData: memoAnim, href: resolveHref('/memo'), onClick: closeMenu }
@@ -240,7 +241,7 @@ export function GlobalMenu({ isOpen, onOpenChange }: SendMemoMenuProps) {
 
               <div className="flex items-center gap-2.5">
                 <a
-                  href={resolveHref('/swap?sellAsset=BTC.BTC&buyAsset=ETH.ETH')}
+                  href={resolveHref('/')}
                   onClick={closeMenu}
                   className="group bg-green-default hidden items-center gap-2.5 rounded-full border border-transparent px-4.5 py-2.5 text-[15px] font-medium text-black transition-colors hover:bg-white md:flex"
                 >
@@ -356,7 +357,7 @@ export function GlobalMenu({ isOpen, onOpenChange }: SendMemoMenuProps) {
             {/* Mobile: Launch App full-width button at bottom */}
             <div className="px-7.5 pb-7.5 md:hidden">
               <a
-                href={resolveHref('/swap?sellAsset=BTC.BTC&buyAsset=ETH.ETH')}
+                href={resolveHref('/')}
                 onClick={closeMenu}
                 className="group bg-green-default flex h-23.25 w-full items-center justify-center rounded-[5px] text-[18px] font-medium text-black transition-colors hover:bg-white"
               >
