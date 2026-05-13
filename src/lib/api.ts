@@ -10,19 +10,24 @@ const uSwap = axios.create({
   }
 })
 
-export const getDexScreenerPrices = async (tokenAddresses: string[], chainId: 'solana' | 'ethereum' = 'solana'): Promise<Record<string, number>> => {
+export const getDexScreenerTokens = async (tokenAddresses: string[], chainId: 'solana' | 'ethereum' = 'solana'): Promise<Record<string, { price?: number; logo?: string }>> => {
   if (tokenAddresses.length === 0) return {}
   const addresses = tokenAddresses.join(',')
   try {
     const res = await axios.get(`https://api.dexscreener.com/tokens/v1/${chainId}/${addresses}`)
-    const result: Record<string, number> = {}
+    const result: Record<string, { price?: number; logo?: string }> = {}
     for (const pair of res.data || []) {
       const addr = pair?.baseToken?.address
-      const price = pair?.priceUsd
-      if (addr && price != null) {
-        const key = chainId === 'ethereum' ? addr.toLowerCase() : addr
-        if (!result[key]) result[key] = parseFloat(price)
+      if (!addr) continue
+      const key = chainId === 'ethereum' ? addr.toLowerCase() : addr
+      const existing = result[key] ?? {}
+      if (existing.price == null && pair?.priceUsd != null) {
+        existing.price = parseFloat(pair.priceUsd)
       }
+      if (!existing.logo && pair?.info?.imageUrl) {
+        existing.logo = pair.info.imageUrl
+      }
+      result[key] = existing
     }
     return result
   } catch {

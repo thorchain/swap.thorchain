@@ -2,14 +2,15 @@ import { useMemo } from 'react'
 import { useQuery } from '@tanstack/react-query'
 import { USwapNumber } from '@tcswap/core'
 import { useAssetFrom, useAssetTo } from '@/hooks/use-swap'
-import { getDexScreenerPrices, getMayaMidgardCacaoPrice, getMayaMidgardPools, getMidgardPools, getMidgardRunePrice } from '@/lib/api'
+import { getDexScreenerTokens, getMayaMidgardCacaoPrice, getMayaMidgardPools, getMidgardPools, getMidgardRunePrice } from '@/lib/api'
 
 export type AssetRateMap = Record<string, USwapNumber>
+export type AssetLogoMap = Record<string, string>
 
 const RUNE_IDENTIFIER = 'THOR.RUNE'
 const CACAO_IDENTIFIER = 'MAYA.CACAO'
 
-export const useRates = (identifiers: string[]): { rates: AssetRateMap; isLoading: boolean } => {
+export const useRates = (identifiers: string[]): { rates: AssetRateMap; logos: AssetLogoMap; isLoading: boolean } => {
   const { data: midgardData, isLoading: midgardLoading } = useQuery({
     queryKey: ['thorchain-pool-prices'],
     queryFn: async () => {
@@ -88,8 +89,8 @@ export const useRates = (identifiers: string[]): { rates: AssetRateMap; isLoadin
   }, [identifiers])
 
   const { data: dexScreenerData, isLoading: dexScreenerLoading } = useQuery({
-    queryKey: ['dexscreener-prices-sol', solanaMints.slice().sort().join(',')],
-    queryFn: () => getDexScreenerPrices(solanaMints, 'solana'),
+    queryKey: ['dexscreener-tokens-sol', solanaMints.slice().sort().join(',')],
+    queryFn: () => getDexScreenerTokens(solanaMints, 'solana'),
     enabled: solanaMints.length > 0,
     staleTime: 3 * 60_000,
     refetchOnMount: false,
@@ -98,8 +99,8 @@ export const useRates = (identifiers: string[]): { rates: AssetRateMap; isLoadin
   })
 
   const { data: dexScreenerEthData, isLoading: dexScreenerEthLoading } = useQuery({
-    queryKey: ['dexscreener-prices-eth', ethAddresses.slice().sort().join(',')],
-    queryFn: () => getDexScreenerPrices(ethAddresses, 'ethereum'),
+    queryKey: ['dexscreener-tokens-eth', ethAddresses.slice().sort().join(',')],
+    queryFn: () => getDexScreenerTokens(ethAddresses, 'ethereum'),
     enabled: ethAddresses.length > 0,
     staleTime: 3 * 60_000,
     refetchOnMount: false,
@@ -108,6 +109,7 @@ export const useRates = (identifiers: string[]): { rates: AssetRateMap; isLoadin
   })
 
   const rates: AssetRateMap = {}
+  const logos: AssetLogoMap = {}
   if (midgardData) {
     for (const id of identifiers) {
       const price = midgardData[id.toLowerCase()]
@@ -115,25 +117,25 @@ export const useRates = (identifiers: string[]): { rates: AssetRateMap; isLoadin
     }
   }
 
-  // Supplement with DexScreener prices for Solana tokens that have no Midgard price
+  // Supplement with DexScreener prices and logos for Solana tokens
   if (dexScreenerData) {
     for (const id of identifiers) {
-      if (rates[id]) continue
       if (id.toUpperCase().startsWith('SOL.') && id.includes('-')) {
         const mint = id.split('-').pop()!
-        const price = dexScreenerData[mint]
-        if (price) rates[id] = new USwapNumber(price)
+        const info = dexScreenerData[mint]
+        if (info?.price && !rates[id]) rates[id] = new USwapNumber(info.price)
+        if (info?.logo) logos[id] = info.logo
       }
     }
   }
 
   if (dexScreenerEthData) {
     for (const id of identifiers) {
-      if (rates[id]) continue
       if (id.toUpperCase().startsWith('ETH.') && id.includes('-')) {
         const addr = id.split('-').pop()!.toLowerCase()
-        const price = dexScreenerEthData[addr]
-        if (price) rates[id] = new USwapNumber(price)
+        const info = dexScreenerEthData[addr]
+        if (info?.price && !rates[id]) rates[id] = new USwapNumber(info.price)
+        if (info?.logo) logos[id] = info.logo
       }
     }
   }
@@ -143,6 +145,7 @@ export const useRates = (identifiers: string[]): { rates: AssetRateMap; isLoadin
 
   return {
     rates,
+    logos,
     isLoading: midgardLoading || dexScreenerPending || dexScreenerEthPending || identifiers.length === 0
   }
 }

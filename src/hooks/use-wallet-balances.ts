@@ -134,7 +134,7 @@ export const useWalletBalances = () => {
     return Array.from(ids)
   }, [allBalances])
 
-  const { rates } = useRates(tokenIdentifiers)
+  const { rates, logos: dexScreenerLogos } = useRates(tokenIdentifiers)
 
   const walletData: ChainWalletData[] = useMemo(() => {
     if (!allBalances) {
@@ -148,8 +148,9 @@ export const useWalletBalances = () => {
           const rate = rates[assetIdentifier(b)]
           const amount = parseFloat(b.toSignificant())
           const usdValue = rate ? rate.mul(amount) : undefined
-          const key = `${assetIdentifier(b)}`.toLowerCase()
-          const logoURI = iconMap.get(key) ?? (b.address ? alchemyLogoMap.get(b.address.toLowerCase()) : undefined)
+          const identifier = assetIdentifier(b)
+          const key = identifier.toLowerCase()
+          const logoURI = iconMap.get(key) ?? dexScreenerLogos[identifier] ?? (b.address ? alchemyLogoMap.get(b.address.toLowerCase()) : undefined)
           return { balance: b, amount, usdValue, logoURI }
         })
         .filter(t => {
@@ -162,7 +163,7 @@ export const useWalletBalances = () => {
 
       return { account, tokens, totalUsd, isLoading: false }
     })
-  }, [allBalances, rates, accounts, iconMap, curatedIdentifiers])
+  }, [allBalances, rates, accounts, iconMap, curatedIdentifiers, dexScreenerLogos])
 
   return { walletData, isLoading }
 }
