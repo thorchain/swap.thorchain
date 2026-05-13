@@ -10,6 +10,8 @@ import { WalletAccount } from '@/store/wallets-store'
 
 const ETH_RPC_URL = process.env.NEXT_PUBLIC_ALCHEMY_ETH_RPC_URL || 'https://eth.llamarpc.com'
 
+const ETH_SCAM_TICKERS = new Set(['HEX', 'AICC'])
+
 function assetIdentifier(b: AssetValue): string {
   // Secured Asset canonical identifier is the bare "<CHAIN>-<SYMBOL>" form (no "THOR." prefix).
   if (b.isSecuredAsset) return b.symbol
@@ -91,6 +93,7 @@ export const useWalletBalances = () => {
               const addr = t.contractAddress.toLowerCase()
               if (t.logo) alchemyLogoMap.set(addr, t.logo)
               if (existingAddresses.has(addr)) continue
+              if (t.symbol && ETH_SCAM_TICKERS.has(t.symbol.toUpperCase())) continue
               const value = BigInt(t.tokenBalance).toString()
               try {
                 const av = AssetValue.from({
