@@ -7,13 +7,19 @@ import { Icon } from '@/components/icons'
 import { ConnectWallet } from '@/components/connect-wallet/connect-wallet'
 import { useDialog } from '@/components/global-dialog'
 import { Drawer, DrawerContent, DrawerHeader, DrawerTitle } from '@/components/ui/drawer'
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu'
 import { Switch } from '@/components/ui/switch'
 import { useWalletBalances } from '@/hooks/use-wallet-balances'
-import { WalletProviderGroup } from '@/components/wallet-sidebar/wallet-provider-group'
+import { WalletProviderGroup, WalletSortBy } from '@/components/wallet-sidebar/wallet-provider-group'
 import { useAccounts, useConnectedWallets, useDisconnect, useExternalWalletMode, useSetExternalWalletMode } from '@/hooks/use-wallets'
 import { cn } from '@/lib/utils'
 import { WalletAccount } from '@/store/wallets-store'
 import { ThemeButton } from '@/components/theme-button'
+
+const SORT_OPTIONS: { value: WalletSortBy; label: string }[] = [
+  { value: 'name', label: 'Name (A-Z)' },
+  { value: 'balance', label: 'Balance (High → Low)' }
+]
 
 interface WalletSidebarProps {
   isOpen: boolean
@@ -30,6 +36,7 @@ export function WalletSidebar({ isOpen, onOpenChange }: WalletSidebarProps) {
   const { walletData, isLoading } = useWalletBalances()
 
   const [expandedChains, setExpandedChains] = useState<Set<string>>(new Set())
+  const [sortBy, setSortBy] = useState<WalletSortBy>('name')
 
   const toggleChain = (key: string) => {
     setExpandedChains(prev => {
@@ -55,13 +62,43 @@ export function WalletSidebar({ isOpen, onOpenChange }: WalletSidebarProps) {
       <DrawerContent className="flex flex-col p-8" style={{ width: 400, maxWidth: '100vw' }}>
         <DrawerHeader className="flex flex-row items-center justify-between p-0">
           <DrawerTitle className="text-2xl font-bold">Wallets</DrawerTitle>
-          <button
-            onClick={() => onOpenChange(false)}
-            className="text-txt-label-small hover:text-txt-high-contrast cursor-pointer transition-colors"
-            aria-label="Close"
-          >
-            <X className="size-5" />
-          </button>
+          <div className="flex items-center gap-4">
+            {accountsByProvider.size > 0 && (
+              <DropdownMenu>
+                <DropdownMenuTrigger
+                  className="text-txt-label-small hover:text-txt-high-contrast cursor-pointer transition-colors focus:outline-none"
+                  aria-label="Sort wallets"
+                >
+                  <Icon name="filter" className="size-5" />
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="end" className="min-w-56 p-2">
+                  <div className="text-txt-label-small px-3 pt-2 pb-1 text-xs">Sort by</div>
+                  {SORT_OPTIONS.map(option => {
+                    const selected = sortBy === option.value
+                    return (
+                      <DropdownMenuItem
+                        key={option.value}
+                        onSelect={() => setSortBy(option.value)}
+                        className="cursor-pointer rounded-xl px-3 py-2.5 text-sm"
+                      >
+                        <span className="flex w-5 shrink-0 items-center justify-center">
+                          {selected && <Icon name="check" className="text-green-contrast size-4.5" />}
+                        </span>
+                        <span className={cn('text-btn-style-1-text font-medium')}>{option.label}</span>
+                      </DropdownMenuItem>
+                    )
+                  })}
+                </DropdownMenuContent>
+              </DropdownMenu>
+            )}
+            <button
+              onClick={() => onOpenChange(false)}
+              className="text-txt-label-small hover:text-txt-high-contrast cursor-pointer transition-colors"
+              aria-label="Close"
+            >
+              <X className="size-5" />
+            </button>
+          </div>
         </DrawerHeader>
 
         <div className="mt-7 flex flex-1 flex-col gap-7 overflow-y-auto">
@@ -108,6 +145,7 @@ export function WalletSidebar({ isOpen, onOpenChange }: WalletSidebarProps) {
                     onToggleChain={toggleChain}
                     onDisconnect={disconnect}
                     disabled={externalWalletMode}
+                    sortBy={sortBy}
                   />
                 )
               })}

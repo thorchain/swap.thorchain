@@ -364,6 +364,15 @@ const BurgerIcon = memo<IconProps>(props => (
   </SVG>
 ))
 
+const FilterIcon = memo<IconProps>(props => (
+  <SVG {...props}>
+    <path
+      d="M22 8.41406L16 14.4141V21H8V14.4141L2 8.41406V3H22V8.41406ZM4 7.58594L10 13.5859V19H14V13.5859L20 7.58594V5H4V7.58594Z"
+      fill="currentColor"
+    />
+  </SVG>
+))
+
 // Icon name mapping
 const iconMap = {
   'arrow-m-up': ArrowMUpIcon,
@@ -403,7 +412,8 @@ const iconMap = {
   'warning-filled': WarningFilledIcon,
   x: XIcon,
   list: ListIcon,
-  burger: BurgerIcon
+  burger: BurgerIcon,
+  filter: FilterIcon
 } as const
 
 export type IconName = keyof typeof iconMap

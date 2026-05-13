@@ -2,10 +2,12 @@ import { useMemo } from 'react'
 import { Power } from 'lucide-react'
 import { WalletIcon } from '@/components/wallet-icon'
 import { WalletOption } from '@tcswap/core'
-import { wallet, WALLETS } from '@/components/connect-wallet/config'
+import { chainLabel, wallet, WALLETS } from '@/components/connect-wallet/config'
 import { ChainWalletData } from '@/hooks/use-wallet-balances'
 import { WalletChain } from '@/components/wallet-sidebar/wallet-chain'
 import { cn } from '@/lib/utils'
+
+export type WalletSortBy = 'name' | 'balance'
 
 export interface WalletProviderGroupProps {
   provider: WalletOption
@@ -14,19 +16,33 @@ export interface WalletProviderGroupProps {
   onToggleChain: (key: string) => void
   onDisconnect: (provider: WalletOption) => void
   disabled: boolean
+  sortBy: WalletSortBy
 }
 
-export function WalletProviderGroup({ provider, chainDataList, expandedChains, onToggleChain, onDisconnect, disabled }: WalletProviderGroupProps) {
+export function WalletProviderGroup({ provider, chainDataList, expandedChains, onToggleChain, onDisconnect, disabled, sortBy }: WalletProviderGroupProps) {
   const walletInfo = wallet(provider) || WALLETS.find(w => w.option === provider)
   const walletKey = walletInfo?.key || provider.toLowerCase()
   const walletName = walletInfo?.label || provider
 
   const showAllChains = provider === WalletOption.LEDGER || provider === WalletOption.KEYSTORE
 
-  const visibleChains = useMemo(
-    () => (showAllChains ? chainDataList : chainDataList.filter(data => data.isLoading || data.tokens.some(t => t.amount > 0))),
-    [chainDataList, showAllChains],
-  )
+  const visibleChains = useMemo(() => {
+    const filtered = showAllChains ? chainDataList : chainDataList.filter(data => data.isLoading || data.tokens.some(t => t.amount > 0))
+    const sorted = [...filtered]
+    if (sortBy === 'name') {
+      sorted.sort((a, b) => chainLabel(a.account.network).localeCompare(chainLabel(b.account.network)))
+    } else {
+      sorted.sort((a, b) => {
+        const aHas = a.totalUsd !== undefined
+        const bHas = b.totalUsd !== undefined
+        if (aHas && bHas) return b.totalUsd!.gt(a.totalUsd!) ? 1 : b.totalUsd!.lt(a.totalUsd!) ? -1 : 0
+        if (aHas) return -1
+        if (bHas) return 1
+        return 0
+      })
+    }
+    return sorted
+  }, [chainDataList, showAllChains, sortBy])
 
   return (
     <div>
