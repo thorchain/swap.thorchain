@@ -152,7 +152,7 @@ interface SendMemoMenuProps {
 }
 
 const SUBDOMAIN_HOSTS: Record<string, string> = {
-  '/swap': 'swap.thorchain.org',
+  '/': 'swap.thorchain.org',
   '/tcy': 'tcy.thorchain.org',
   '/bond': 'bond.thorchain.org',
   '/memo': 'memo.thorchain.org'
@@ -161,10 +161,10 @@ const SUBDOMAIN_HOSTS: Record<string, string> = {
 function resolveHref(path: string): string {
   if (typeof window === 'undefined') return path
   const [pathname, search = ''] = path.split('?')
-  const host = SUBDOMAIN_HOSTS[path === '/' ? '/swap' : pathname]
+  const host = SUBDOMAIN_HOSTS[pathname]
   if (host && window.location.hostname.endsWith('.thorchain.org')) {
     const suffix = search ? `?${search}` : ''
-    return host === 'swap.thorchain.org' ? `https://${host}${pathname}${suffix}` : `https://${host}/${suffix}`
+    return `https://${host}/${suffix}`
   }
   return path
 }

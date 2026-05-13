@@ -1,77 +1,76 @@
 'use client'
 
+import { isGasAsset as isNativeAsset } from '@tcswap/core'
 import { usePathname } from 'next/navigation'
-import { useCallback, useEffect, useRef } from 'react'
+import { useEffect, useRef } from 'react'
+import { Asset } from '@/components/swap/asset'
 import { useAssets } from '@/hooks/use-assets'
 import { useSwapStore } from '@/store/swap-store'
 
-const DEFAULT_SELL_ASSET = 'BTC.BTC'
-const DEFAULT_BUY_ASSET = 'ETH.ETH'
+const DEFAULT_SELL = 'BTC.BTC'
+const DEFAULT_BUY = 'ETH.ETH'
+const SELL = 'sell-'
+const BUY = '-buy-'
+
+const isGasAsset = (asset: Asset) => isNativeAsset({ chain: asset.chain, symbol: asset.ticker })
+const toSlug = (asset: Asset) => (isGasAsset(asset) ? asset.ticker : asset.identifier)
+
+function parsePath(pathname: string): { sell: string | null; buy: string | null } {
+  if (!pathname.startsWith(`/${SELL}`)) return { sell: null, buy: null }
+  const rest = pathname.slice(1 + SELL.length)
+  const idx = rest.indexOf(BUY)
+  if (idx === -1) return { sell: null, buy: null }
+  return {
+    sell: decodeURIComponent(rest.slice(0, idx)),
+    buy: decodeURIComponent(rest.slice(idx + BUY.length))
+  }
+}
+
+function resolveAsset(assets: Asset[], token: string | null, fallback: string): Asset | undefined {
+  if (token) {
+    const lower = token.toLowerCase()
+    const exact = assets.find(a => a.identifier.toLowerCase() === lower)
+    if (exact) return exact
+    if (!token.includes('.')) {
+      const gasAsset = assets.find(a => a.ticker.toLowerCase() === lower && isGasAsset(a))
+      if (gasAsset) return gasAsset
+    }
+  }
+  return assets.find(a => a.identifier === fallback)
+}
 
 export const useUrlParams = () => {
   const pathname = usePathname()
-  const initializedFromUrl = useRef(false)
-  const initialAssets = useRef<{ from: string; to: string } | null>(null)
-  const isUpdatingUrl = useRef(false)
-
   const { assets } = useAssets()
   const { assetFrom, assetTo, hasHydrated, setAssetFrom, setAssetTo } = useSwapStore()
+  const initialized = useRef(false)
+  const skipNextSync = useRef(true)
 
-  // Update URL without causing navigation/re-render
-  const updateUrl = useCallback(
-    (sellAsset: string, buyAsset: string) => {
-      if (isUpdatingUrl.current) return
-      isUpdatingUrl.current = true
-
-      const params = new URLSearchParams(window.location.search)
-      params.set('sellAsset', sellAsset)
-      params.set('buyAsset', buyAsset)
-
-      const newUrl = `${pathname}?${params.toString()}`
-      window.history.replaceState(window.history.state, '', newUrl)
-
-      isUpdatingUrl.current = false
-    },
-    [pathname]
-  )
-
-  // Initialize assets from URL params (runs once when assets are loaded)
+  // Init store from URL (once)
   useEffect(() => {
-    if (!assets?.length || !hasHydrated || initializedFromUrl.current) return
+    if (!assets?.length || !hasHydrated || initialized.current) return
 
-    const params = new URLSearchParams(window.location.search)
-    const sellAssetParam = params.get('sellAsset') || DEFAULT_SELL_ASSET
-    const buyAssetParam = params.get('buyAsset') || DEFAULT_BUY_ASSET
+    const { sell, buy } = parsePath(pathname)
+    const sellAsset = resolveAsset(assets, sell, DEFAULT_SELL)
+    const buyAsset = resolveAsset(assets, buy, DEFAULT_BUY)
 
-    const sellAsset =
-      assets.find(a => a.identifier.toLowerCase() === sellAssetParam.toLowerCase()) ?? assets.find(a => a.identifier === DEFAULT_SELL_ASSET)
+    if (sellAsset) setAssetFrom(sellAsset)
+    if (buyAsset && buyAsset.identifier !== sellAsset?.identifier) setAssetTo(buyAsset)
 
-    const buyAsset =
-      assets.find(a => a.identifier.toLowerCase() === buyAssetParam.toLowerCase()) ?? assets.find(a => a.identifier === DEFAULT_BUY_ASSET)
+    initialized.current = true
+  }, [assets, hasHydrated, pathname, setAssetFrom, setAssetTo])
 
-    // Ensure we don't set the same asset for both
-    if (sellAsset && buyAsset && sellAsset.identifier === buyAsset.identifier) {
-      setAssetFrom(sellAsset)
-    } else {
-      if (sellAsset) setAssetFrom(sellAsset)
-      if (buyAsset) setAssetTo(buyAsset)
-    }
-
-    if (sellAsset && buyAsset) {
-      initialAssets.current = { from: sellAsset.identifier, to: buyAsset.identifier }
-    }
-    initializedFromUrl.current = true
-  }, [assets, hasHydrated, setAssetFrom, setAssetTo])
-
-  // Update URL when assets change (after initial load)
+  // Sync URL on user-driven asset changes (skip the first sync after init so `/` stays clean)
   useEffect(() => {
-    if (!initializedFromUrl.current || !assetFrom || !assetTo) return
-
-    // On root, keep URL clean until user changes an asset
-    if (pathname === '/' && initialAssets.current?.from === assetFrom.identifier && initialAssets.current?.to === assetTo.identifier) {
+    if (!initialized.current || !assetFrom || !assetTo) return
+    if (skipNextSync.current) {
+      skipNextSync.current = false
       return
     }
-
-    updateUrl(assetFrom.identifier, assetTo.identifier)
-  }, [assetFrom, assetTo, pathname, updateUrl])
+    const newPath = `/${SELL}${toSlug(assetFrom)}${BUY}${toSlug(assetTo)}`
+    const newUrl = `${newPath}${window.location.search}`
+    if (window.location.pathname + window.location.search !== newUrl) {
+      window.history.replaceState(window.history.state, '', newUrl)
+    }
+  }, [assetFrom, assetTo])
 }
