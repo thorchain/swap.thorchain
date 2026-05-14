@@ -39,7 +39,20 @@ export const SwapConfirm = ({ quote, priceImpact }: SwapConfirmProps) => {
 
   const sellAmount = new USwapNumber(quote.sellAmount)
   const expectedBuyAmount = new USwapNumber(quote.expectedBuyAmount)
-  const expectedBuyAmountMaxSlippage = quote.expectedBuyAmountMaxSlippage && new USwapNumber(quote.expectedBuyAmountMaxSlippage)
+
+  // Displayed Minimum Payout is derived from the residual.
+  const slippageTolerance = useMemo(() => {
+    if (slippage === undefined) return undefined
+    const protection = new USwapNumber(slippage)
+    if (!priceImpact) return protection
+    const residual = protection.sub(priceImpact)
+    return residual.gt(0) ? residual : new USwapNumber(0)
+  }, [slippage, priceImpact])
+
+  const minimumPayout = useMemo(() => {
+    if (!slippageTolerance) return undefined
+    return expectedBuyAmount.mul(new USwapNumber(100).sub(slippageTolerance)).div(100)
+  }, [expectedBuyAmount, slippageTolerance])
 
   const { inbound, outbound, liquidity, platform, included } = resolveFees(quote, rates)
   const { openDialog } = useDialog()
@@ -195,14 +208,14 @@ export const SwapConfirm = ({ quote, priceImpact }: SwapConfirmProps) => {
                 <div className="flex items-center gap-1">
                   <span>Minimum Payout</span>
                   <InfoTooltip>
-                    Minimum guaranteed amount based on your {slippage && `${slippage}%`} slippage tolerance. If market conditions would give you less,
-                    the transaction will automatically cancel.
+                    This is the minimum you're guaranteed to receive at your {slippage && `${slippage}%`} price protection setting. If the market
+                    moves enough that you'd receive less, the swap is cancelled and refunded.
                   </InfoTooltip>
                 </div>
-                {slippage && expectedBuyAmountMaxSlippage ? (
+                {minimumPayout ? (
                   <span className="text-txt-high-contrast font-semibold">
-                    <DecimalText amount={expectedBuyAmountMaxSlippage.toSignificant()} symbol={assetTo.ticker} />
-                    {rateTo && ` (${toCurrencyFixed(expectedBuyAmountMaxSlippage.mul(rateTo).toCurrency('$', { trimTrailingZeros: false }))})`}
+                    <DecimalText amount={minimumPayout.toSignificant()} symbol={assetTo.ticker} />
+                    {rateTo && ` (${toCurrencyFixed(minimumPayout.mul(rateTo).toCurrency('$', { trimTrailingZeros: false }))})`}
                   </span>
                 ) : (
                   <span className="text-lucian font-semibold">Not Protected</span>
@@ -215,10 +228,25 @@ export const SwapConfirm = ({ quote, priceImpact }: SwapConfirmProps) => {
                 <div className="flex items-center gap-1">
                   Price Impact
                   <InfoTooltip>
-                    The difference between the market price and your actual swap price. Larger trades have a high price impact.
+                    How much your swap moves the pool's price. The larger your swap relative to available liquidity, the higher the price impact.
                   </InfoTooltip>
                 </div>
                 <PriceImpact priceImpact={priceImpact} className="font-semibold" />
+              </div>
+            )}
+
+            {!isLimitSwap && slippageTolerance && slippageTolerance.gt(0) && (
+              <div className="text-txt-label-small flex justify-between text-sm">
+                <div className="flex items-center gap-1">
+                  Slippage Tolerance
+                  <InfoTooltip>
+                    The difference between your {slippage && `${slippage}%`} price protection and the price impact.
+                    <br /> <br />
+                    During the time between seeing a quote and your swap completing, prices can change. Slippage tolerance is the maximum price change
+                    you'll accept before the swap is cancelled.
+                  </InfoTooltip>
+                </div>
+                <PriceImpact priceImpact={slippageTolerance} className="font-semibold" />
               </div>
             )}
 

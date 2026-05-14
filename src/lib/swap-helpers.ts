@@ -52,9 +52,12 @@ export const resolveFees = (quote: QuoteResponseRoute, rates: AssetRateMap) => {
 }
 
 export const resolvePriceImpact = (quote?: QuoteResponseRoute, rateFrom?: USwapNumber, rateTo?: USwapNumber) => {
+  const slippageBps = (quote?.meta as { slippageBps?: number } | undefined)?.slippageBps
+  if (typeof slippageBps === 'number') return new USwapNumber(slippageBps).div(100)
+
+  // Fallback for providers that don't return slippageBps
   const sellAmountInUsd = quote && rateFrom && new USwapNumber(quote.sellAmount).mul(rateFrom)
   const buyAmountInUsd = quote && rateTo && new USwapNumber(quote.expectedBuyAmount).mul(rateTo)
-
   const hundredPercent = new USwapNumber(100)
   const toPriceRatio = buyAmountInUsd && sellAmountInUsd && buyAmountInUsd.mul(hundredPercent).div(sellAmountInUsd)
   return toPriceRatio && toPriceRatio.lte(hundredPercent) ? hundredPercent.sub(toPriceRatio) : undefined
