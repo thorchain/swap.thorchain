@@ -14,7 +14,7 @@ import { useSwapRates } from '@/hooks/use-rates'
 import { useAssetFrom, useAssetTo, useSwap } from '@/hooks/use-swap'
 import { resolvePriceImpact } from '@/lib/swap-helpers'
 import { generateId } from '@/lib/utils'
-import { useIsLimitSwap } from '@/store/limit-swap-store'
+import { useIsLimitSwap, useLimitSwapBuyAmount } from '@/store/limit-swap-store'
 import { useSetTransaction } from '@/store/transaction-store'
 
 interface InstantSwapDialogProps {
@@ -36,6 +36,7 @@ export const InstantSwapDialog = ({ provider, isOpen, onOpenChange }: InstantSwa
   const { valueFrom } = useSwap()
   const setTransaction = useSetTransaction()
   const isLimitSwap = useIsLimitSwap()
+  const limitSwapBuyAmount = useLimitSwapBuyAmount()
   const { rateFrom, rateTo } = useSwapRates()
 
   const [quote, setQuote] = useState<(QuoteResponseRoute & { qrCodeDataURL?: string }) | undefined>(undefined)
@@ -58,6 +59,8 @@ export const InstantSwapDialog = ({ provider, isOpen, onOpenChange }: InstantSwa
       expiration
     })
 
+    const sentAmount = new USwapNumber(value)
+
     setTransaction({
       uid: generateId(),
       provider,
@@ -72,7 +75,12 @@ export const InstantSwapDialog = ({ provider, isOpen, onOpenChange }: InstantSwa
       addressDeposit: address,
       status: 'not_started',
       qrCodeData,
-      expiration
+      expiration,
+      limitSwapMemo: isLimitSwap ? quote.memo : undefined,
+      limitPrice:
+        isLimitSwap && limitSwapBuyAmount && !sentAmount.eq(0)
+          ? USwapNumber.fromBigInt(BigInt(limitSwapBuyAmount), 8).div(sentAmount).toSignificant()
+          : undefined
     })
   }
 

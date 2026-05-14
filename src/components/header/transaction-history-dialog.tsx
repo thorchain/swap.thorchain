@@ -56,7 +56,8 @@ export const TransactionHistoryDialog = ({ isOpen, onOpenChange }: HistoryDialog
   }
 
   const onLimitModify = (mode: 'cancel' | 'modify', tx: Transaction) => {
-    if (selectedAccount?.network !== tx.assetFrom.chain) {
+    const isMemoless = !!tx.qrCodeData
+    if (!isMemoless && selectedAccount?.network !== tx.assetFrom.chain) {
       return toast.error('Only the original swap creator can modify')
     }
 
@@ -68,7 +69,8 @@ export const TransactionHistoryDialog = ({ isOpen, onOpenChange }: HistoryDialog
         amountFrom: tx.amountFrom,
         amountTo: tx.amountTo,
         addressFrom: tx.addressFrom,
-        limitSwapMemo: tx.limitSwapMemo
+        limitSwapMemo: tx.limitSwapMemo,
+        isMemoless
       }
     })
   }
@@ -124,7 +126,7 @@ export const TransactionHistoryDialog = ({ isOpen, onOpenChange }: HistoryDialog
 
               const showRQ =
                 tx.qrCodeData && !tx.hash && status !== 'expired' && status !== 'completed' && status !== 'refunded' && status !== 'failed'
-              const showLimitSwapActions = selectedAccount && tx.limitSwapMemo && isTxPending(status)
+              const showLimitSwapActions = !!tx.limitSwapMemo && isTxPending(status) && (!!selectedAccount || !!tx.qrCodeData)
 
               return (
                 <Fragment key={i}>

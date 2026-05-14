@@ -75,9 +75,12 @@ export const SwapButton = ({ instantSwapSupported, instantSwapAvailable }: SwapB
 
     if (!selectedAccount) {
       if (instantSwapSupported) {
-        if (!instantSwapAvailable) return { text: 'Swap', spinner: false, accent: false }
+        const label = isLimitSwap ? 'Enter Limit Order' : 'Swap'
+        if (!instantSwapAvailable) {
+          return { text: label, spinner: false, accent: false }
+        }
 
-        return { text: 'Swap', spinner: false, accent: true, onClick: () => onInstantSwap(quote) }
+        return { text: label, spinner: false, accent: true, onClick: () => onInstantSwap(quote) }
       } else {
         return {
           text: `Connect ${chainLabel(assetFrom.chain)} Wallet`,

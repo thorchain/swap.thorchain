@@ -2,7 +2,7 @@
 
 import { useEffect, useMemo, useState } from 'react'
 import { AssetValue, FeeOption, USwapNumber } from '@tcswap/core'
-import type { InboundAddressesItem } from '@tcswap/helpers/api'
+import { type InboundAddressesItem, USwapApi } from '@tcswap/helpers/api'
 import { AlertTriangle, LoaderCircle } from 'lucide-react'
 import { toast } from 'sonner'
 import { Credenza, CredenzaContent, CredenzaHeader, CredenzaTitle } from '@/components/ui/credenza'
@@ -11,9 +11,12 @@ import { AssetIcon } from '@/components/asset-icon'
 import { chainLabel } from '@/components/connect-wallet/config'
 import { DecimalInput } from '@/components/decimal/decimal-input'
 import { DecimalText } from '@/components/decimal/decimal-text'
+import { useDialog } from '@/components/global-dialog'
 import { Asset } from '@/components/swap/asset'
+import { InstantSwapChannelDialog } from '@/components/swap/instant-swap-channel-dialog'
 import { SwapError } from '@/components/swap/swap-error'
 import { ThemeButton } from '@/components/theme-button'
+import { useMemolessAssets } from '@/hooks/use-memoless-assets'
 import { useSelectedAccount } from '@/hooks/use-wallets'
 import { getInboundAddresses } from '@/lib/api'
 import { createCancelLimitSwapMemo, createModifyLimitSwapMemo } from '@/lib/memo-helpers'
@@ -30,12 +33,15 @@ interface SwapLimitCancelProps {
     amountTo: string
     addressFrom?: string
     limitSwapMemo?: string
+    isMemoless?: boolean
   }
 }
 
 export const SwapLimitCancel = ({ isOpen, onOpenChange, mode, transaction }: SwapLimitCancelProps) => {
   const uSwap = getUSwap()
   const selectedAccount = useSelectedAccount()
+  const { openDialog } = useDialog()
+  const { assets: memolessAssets } = useMemolessAssets()
   const [inboundAddresses, setInboundAddresses] = useState<InboundAddressesItem[]>([])
   const [loading, setLoading] = useState(false)
   const [submitting, setSubmitting] = useState(false)
@@ -43,7 +49,7 @@ export const SwapLimitCancel = ({ isOpen, onOpenChange, mode, transaction }: Swa
   const [pricePerUnit, setPricePerUnit] = useState<USwapNumber | undefined>()
   const [totalAmount, setTotalAmount] = useState<USwapNumber | undefined>()
 
-  const { assetFrom, assetTo, amountFrom, amountTo, addressFrom, limitSwapMemo } = transaction
+  const { assetFrom, assetTo, amountFrom, amountTo, addressFrom, limitSwapMemo, isMemoless } = transaction
 
   const sellAmount = useMemo(() => new USwapNumber(amountFrom), [amountFrom])
 
@@ -77,6 +83,10 @@ export const SwapLimitCancel = ({ isOpen, onOpenChange, mode, transaction }: Swa
 
   const inboundAddress = inboundAddresses.find(addr => addr.chain === assetFrom.chain)
 
+  const memolessAsset = memolessAssets?.find(a => a.asset === assetFrom.identifier)
+  const walletMatchesChain = !!selectedAccount && selectedAccount.network === assetFrom.chain
+  const useMemolessPath = !!isMemoless && !!memolessAsset && !walletMatchesChain
+
   const addressMatch = !addressFrom || !selectedAccount || selectedAccount.address.toLowerCase() === addressFrom.toLowerCase()
 
   const differencePercent = useMemo(() => {
@@ -106,18 +116,14 @@ export const SwapLimitCancel = ({ isOpen, onOpenChange, mode, transaction }: Swa
     return totalAmount.getBaseValue('string', 8)
   }, [totalAmount])
 
-  const canSubmit =
-    selectedAccount &&
-    selectedAccount.network === assetFrom.chain &&
-    addressMatch &&
-    limitSwapMemo &&
-    inboundAddress &&
-    !inboundAddress.halted &&
-    !inboundAddress.chain_trading_paused &&
-    (mode === 'cancel' || (mode === 'modify' && newTargetBaseAmount))
+  const targetReady = mode === 'cancel' || (mode === 'modify' && !!newTargetBaseAmount)
+  const walletReady =
+    !!selectedAccount && walletMatchesChain && addressMatch && !!inboundAddress && !inboundAddress.halted && !inboundAddress.chain_trading_paused
+  const memolessReady = useMemolessPath && !!memolessAsset
+  const canSubmit = !!limitSwapMemo && targetReady && (walletReady || memolessReady)
 
   const onSubmit = async () => {
-    if (!canSubmit || !inboundAddress?.address || !selectedAccount || !limitSwapMemo) return
+    if (!canSubmit || !limitSwapMemo) return
 
     setSubmitting(true)
     setError(undefined)
@@ -127,6 +133,50 @@ export const SwapLimitCancel = ({ isOpen, onOpenChange, mode, transaction }: Swa
         mode === 'cancel'
           ? createCancelLimitSwapMemo(limitSwapMemo, amountFrom, assetFrom, assetTo)
           : createModifyLimitSwapMemo(limitSwapMemo, amountFrom, assetFrom, assetTo, newTargetBaseAmount!)
+
+      if (useMemolessPath && memolessAsset) {
+        // Memoless minimum: 10^-(decimals - 5) in source units.
+        const requestedAmount = new USwapNumber(10 ** -(memolessAsset.decimals - 5)).toSignificant()
+
+        const reg = await USwapApi.registerMemoless(
+          { asset: assetFrom.identifier, memo, requested_in_asset_amount: requestedAmount },
+          { retry: { maxRetries: 0 } }
+        )
+
+        if (!reg.suggested_in_asset_amount) throw new Error('Failed to calculate suggested amount')
+
+        const preflight = await USwapApi.preflightMemoless({
+          asset: assetFrom.identifier,
+          reference: reg.reference,
+          amount: reg.suggested_in_asset_amount
+        })
+
+        if (!preflight.data.qr_code_data_url || !preflight.data.inbound_address) {
+          throw new Error('Failed to preflight memoless request')
+        }
+
+        const expiration = preflight.data.seconds_remaining ? new Date().getTime() / 1000 + preflight.data.seconds_remaining : undefined
+
+        onOpenChange(false)
+        openDialog(InstantSwapChannelDialog, {
+          assetFrom,
+          assetTo,
+          channel: {
+            qrCodeData: preflight.data.qr_code_data_url,
+            address: preflight.data.inbound_address,
+            value: reg.suggested_in_asset_amount,
+            expiration
+          }
+        })
+        toast.success(
+          mode === 'cancel'
+            ? `Send ${reg.suggested_in_asset_amount} ${assetFrom.ticker} from the original wallet to cancel`
+            : `Send ${reg.suggested_in_asset_amount} ${assetFrom.ticker} from the original wallet to modify`
+        )
+        return
+      }
+
+      if (!inboundAddress?.address || !selectedAccount) return
 
       const dustThreshold = BigInt(inboundAddress.dust_threshold || '0')
       const minAmount = dustThreshold > 0n ? dustThreshold : 10000n
@@ -158,15 +208,21 @@ export const SwapLimitCancel = ({ isOpen, onOpenChange, mode, transaction }: Swa
     const action = mode === 'cancel' ? 'cancel' : 'modify'
     const warnings: string[] = []
 
-    if (!selectedAccount) {
-      warnings.push(`Connect a ${chainLabel(assetFrom.chain)} wallet to ${action} this order`)
+    if (useMemolessPath) {
+      warnings.push(`To ${action} this order, send the deposit from the original ${chainLabel(assetFrom.chain)} wallet that placed it`)
+    } else if (!selectedAccount) {
+      if (isMemoless && memolessAsset) {
+        warnings.push(`Connect a ${chainLabel(assetFrom.chain)} wallet or use the memoless deposit to ${action} this order`)
+      } else {
+        warnings.push(`Connect a ${chainLabel(assetFrom.chain)} wallet to ${action} this order`)
+      }
     } else if (selectedAccount.network !== assetFrom.chain) {
       warnings.push(`Switch to a ${chainLabel(assetFrom.chain)} wallet to ${action} this order`)
     } else if (addressFrom && selectedAccount.address.toLowerCase() !== addressFrom.toLowerCase()) {
       warnings.push(`Connected wallet does not match the address that placed this order`)
     }
 
-    if (inboundAddress?.halted || inboundAddress?.chain_trading_paused) {
+    if (!useMemolessPath && (inboundAddress?.halted || inboundAddress?.chain_trading_paused)) {
       warnings.push(`${chainLabel(assetFrom.chain)} trading is currently paused`)
     }
 
@@ -276,8 +332,13 @@ export const SwapLimitCancel = ({ isOpen, onOpenChange, mode, transaction }: Swa
         </ScrollArea>
 
         <div className="p-4 pt-2 md:p-8 md:pt-2">
-          <ThemeButton variant="primaryMedium" className="w-full" onClick={onSubmit} disabled={!canSubmit || submitting || loading}>
-            {(submitting || loading) && <LoaderCircle size={20} className="animate-spin" />}
+          <ThemeButton
+            variant="primaryMedium"
+            className="w-full"
+            onClick={onSubmit}
+            disabled={!canSubmit || submitting || (loading && !useMemolessPath)}
+          >
+            {(submitting || (loading && !useMemolessPath)) && <LoaderCircle size={20} className="animate-spin" />}
             <span>{buttonLabel}</span>
           </ThemeButton>
         </div>

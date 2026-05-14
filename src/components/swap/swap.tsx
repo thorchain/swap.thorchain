@@ -54,7 +54,7 @@ export const Swap = () => {
       return new Error(`Minimum swap amount without a connected wallet is ${minAmount.toSignificant()} ${assetFrom.ticker}`)
   }, [memolessAsset, selectedAccount, valueFrom])
 
-  const instantSwapSupported = !isLimitSwap && !!memolessAsset
+  const instantSwapSupported = !!memolessAsset
 
   const priceImpact = useMemo(() => {
     return resolvePriceImpact(quote, rateFrom, rateTo)
