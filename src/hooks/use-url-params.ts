@@ -11,8 +11,8 @@ const DEFAULT_BUY = 'ETH.ETH'
 const SELL = 'sell-'
 const BUY = '-buy-'
 
-const isGasAsset = (asset: Asset) => asset.chain === asset.ticker
-const toSlug = (asset: Asset) => (isGasAsset(asset) ? asset.ticker : asset.identifier)
+const isNativeAsset = (asset: Asset) => asset.chain === asset.ticker && !asset.isSecuredAsset && !asset.isTradeAsset
+const toSlug = (asset: Asset) => (isNativeAsset(asset) ? asset.ticker : asset.identifier)
 
 function parsePath(pathname: string): { sell: string | null; buy: string | null } {
   if (!pathname.startsWith(`/${SELL}`)) return { sell: null, buy: null }
@@ -31,7 +31,7 @@ function resolveAsset(assets: Asset[], token: string | null, fallback: string): 
     const exact = assets.find(a => a.identifier.toLowerCase() === lower)
     if (exact) return exact
     if (!token.includes('.')) {
-      const nativeAsset = assets.find(a => a.ticker.toLowerCase() === lower && isGasAsset(a))
+      const nativeAsset = assets.find(a => a.ticker.toLowerCase() === lower && isNativeAsset(a))
       if (nativeAsset) return nativeAsset
     }
   }
