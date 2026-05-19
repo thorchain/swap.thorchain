@@ -56,10 +56,18 @@ export const SwapSelectAsset = ({ isOpen, onOpenChange, selected, onSelectAsset 
   const [searchQuery, setSearchQuery] = useState('')
 
   const { assets } = useAssets()
-  const { mimir } = useMimir()
+  const { mimir, mayaMimir } = useMimir()
 
   const isAssetHalted = (asset: Asset) => {
-    return mimir[`HALT${asset.ticker}TRADING`] === 1 || mimir['HALTTRADING'] === 1
+    const tickerKey = `HALT${asset.ticker}TRADING`
+    const isThorOnly = asset.isSecuredAsset // Secured assets are THORChain-only; Maya can't serve them
+    const thorCanServe = isThorOnly || tickerKey in mimir
+    const mayaCanServe = !isThorOnly && tickerKey in mayaMimir
+
+    const haltedOnThor = !thorCanServe || mimir[tickerKey] === 1 || mimir['HALTTRADING'] === 1
+    const haltedOnMaya = !mayaCanServe || mayaMimir[tickerKey] === 1 || mayaMimir['HALTTRADING'] === 1
+
+    return haltedOnThor && haltedOnMaya
   }
 
   const chainMap: Map<FilterChain, Asset[]> = useMemo(() => {
@@ -282,14 +290,10 @@ export const SwapSelectAsset = ({ isOpen, onOpenChange, selected, onSelectAsset 
                               <div className="text-txt-high-contrast flex max-w-40 items-center gap-1.5 truncate font-semibold">
                                 <span>{asset.ticker}</span>
                                 {asset.isSecuredAsset && (
-                                  <span className="border-gray text-txt-label-small rounded-full border px-1.5 text-[10px] font-medium">
-                                    Secured
-                                  </span>
+                                  <span className="border-gray text-txt-label-small rounded-full border px-1.5 text-[10px] font-medium">Secured</span>
                                 )}
                                 {asset.isTradeAsset && (
-                                  <span className="border-gray text-txt-label-small rounded-full border px-1.5 text-[10px] font-medium">
-                                    Trade
-                                  </span>
+                                  <span className="border-gray text-txt-label-small rounded-full border px-1.5 text-[10px] font-medium">Trade</span>
                                 )}
                               </div>
                               <div className="text-txt-label-small text-sm">{chainLabel(asset.chain)}</div>
@@ -299,7 +303,9 @@ export const SwapSelectAsset = ({ isOpen, onOpenChange, selected, onSelectAsset 
                             <div className="border-jacob text-jacob rounded-full border px-1.5 text-[10px] font-semibold">Currently unavailable</div>
                           ) : (
                             asset.identifier === selected?.identifier && (
-                              <div className={cn('border-gray text-txt-label-small rounded-full border px-1.5 py-0.5 text-xs font-medium')}>Selected</div>
+                              <div className={cn('border-gray text-txt-label-small rounded-full border px-1.5 py-0.5 text-xs font-medium')}>
+                                Selected
+                              </div>
                             )
                           )}
                         </div>

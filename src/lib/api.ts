@@ -89,6 +89,7 @@ export const getAlchemyTokenBalances = async (address: string, rpcUrl: string): 
 const thornode = axios.create({ baseURL: 'https://gateway.liquify.com/chain/thorchain_api' })
 const midgard = axios.create({ baseURL: 'https://gateway.liquify.com/chain/thorchain_midgard' })
 const mayaMidgard = axios.create({ baseURL: 'https://midgard.mayachain.info' })
+const mayanode = axios.create({ baseURL: 'https://mayanode.mayachain.info' })
 
 export const getMidgardPools = async (): Promise<{ asset: string; assetPriceUSD: string }[]> => {
   return midgard.get('/v2/pools').then(res => res.data)
@@ -155,6 +156,10 @@ export const getTrack = async (data: Record<string, any>) => {
 
 export const getMimir = async (): Promise<Record<string, number>> => {
   return thornode.get('/thorchain/mimir').then(res => res.data)
+}
+
+export const getMayaMimir = async (): Promise<Record<string, number>> => {
+  return mayanode.get('/mayachain/mimir').then(res => res.data)
 }
 
 export interface ThorNodeInfo {
