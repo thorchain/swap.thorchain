@@ -1,6 +1,5 @@
 'use client'
 
-import { isGasAsset as isNativeAsset } from '@tcswap/core'
 import { usePathname } from 'next/navigation'
 import { useEffect, useRef } from 'react'
 import { Asset } from '@/components/swap/asset'
@@ -12,7 +11,7 @@ const DEFAULT_BUY = 'ETH.ETH'
 const SELL = 'sell-'
 const BUY = '-buy-'
 
-const isGasAsset = (asset: Asset) => isNativeAsset({ chain: asset.chain, symbol: asset.ticker })
+const isGasAsset = (asset: Asset) => asset.chain === asset.ticker
 const toSlug = (asset: Asset) => (isGasAsset(asset) ? asset.ticker : asset.identifier)
 
 function parsePath(pathname: string): { sell: string | null; buy: string | null } {
@@ -32,8 +31,8 @@ function resolveAsset(assets: Asset[], token: string | null, fallback: string): 
     const exact = assets.find(a => a.identifier.toLowerCase() === lower)
     if (exact) return exact
     if (!token.includes('.')) {
-      const gasAsset = assets.find(a => a.ticker.toLowerCase() === lower && isGasAsset(a))
-      if (gasAsset) return gasAsset
+      const nativeAsset = assets.find(a => a.ticker.toLowerCase() === lower && isGasAsset(a))
+      if (nativeAsset) return nativeAsset
     }
   }
   return assets.find(a => a.identifier === fallback)
