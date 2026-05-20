@@ -187,7 +187,6 @@ export function SendMemoStake({ account, initialTab = 'stake', stakedAmount }: S
                   amount={amount}
                   onAmountChange={v => setAmount(v)}
                   autoComplete="off"
-                  disabled={!thorAccount}
                 />
                 <div className="text-txt-label-small text-sm">
                   {toCurrencyFixed(fiatValue.toCurrency('$', { trimTrailingZeros: false }))} ({fiatPercent.toFixed(0)}%)
@@ -206,30 +205,32 @@ export function SendMemoStake({ account, initialTab = 'stake', stakedAmount }: S
               )}
             </div>
 
-            <div className="mt-3 flex items-center justify-between">
-              <div className="flex gap-2">
-                <ThemeButton className="h-7 rounded-full" variant="secondarySmall" onClick={() => setAmount('')} disabled={amount === ''}>
-                  Clear
-                </ThemeButton>
-                <ThemeButton className="h-7 rounded-full" variant="secondarySmall" onClick={() => setAmount(String(referenceAmount * 0.5))}>
-                  50%
-                </ThemeButton>
-                <ThemeButton className="h-7 rounded-full" variant="secondarySmall" onClick={() => setAmount(String(referenceAmount))}>
-                  100%
-                </ThemeButton>
+            {thorAccount && (
+              <div className="mt-3 flex items-center justify-between">
+                <div className="flex gap-2">
+                  <ThemeButton className="h-7 rounded-full" variant="secondarySmall" onClick={() => setAmount('')} disabled={amount === ''}>
+                    Clear
+                  </ThemeButton>
+                  <ThemeButton className="h-7 rounded-full" variant="secondarySmall" onClick={() => setAmount(String(referenceAmount * 0.5))}>
+                    50%
+                  </ThemeButton>
+                  <ThemeButton className="h-7 rounded-full" variant="secondarySmall" onClick={() => setAmount(String(referenceAmount))}>
+                    100%
+                  </ThemeButton>
+                </div>
+                <div className="text-txt-label-small text-xs">
+                  {tab === 'unstake' ? (
+                    <>
+                      Staked: <DecimalText amount={String(effectiveStakedAmount)} symbol="TCY" />
+                    </>
+                  ) : tcyToken ? (
+                    <>
+                      Balance: <DecimalText amount={tcyToken.balance.toSignificant()} symbol={tcyToken.balance.ticker} />
+                    </>
+                  ) : null}
+                </div>
               </div>
-              <div className="text-txt-label-small text-xs">
-                {tab === 'unstake' ? (
-                  <>
-                    Staked: <DecimalText amount={String(effectiveStakedAmount)} symbol="TCY" />
-                  </>
-                ) : tcyToken ? (
-                  <>
-                    Balance: <DecimalText amount={tcyToken.balance.toSignificant()} symbol={tcyToken.balance.ticker} />
-                  </>
-                ) : null}
-              </div>
-            </div>
+            )}
           </div>
         )}
 

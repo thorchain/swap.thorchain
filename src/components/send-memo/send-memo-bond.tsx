@@ -177,7 +177,7 @@ export function SendMemoBond({ account, initialTab = 'bond' }: BondFormProps) {
               nodeAddress.trim() && !nodeAddressValid && 'border-destructive focus-visible:ring-destructive'
             )}
           />
-          {tab === 'track' && nodeAddress ? (
+          {nodeAddress ? (
             <button className="text-txt-label-small hover:text-txt-high-contrast absolute end-3 top-3 shrink-0 rounded-full p-1" onClick={() => setNodeAddress('')}>
               <X className="size-4" />
             </button>
@@ -185,7 +185,6 @@ export function SendMemoBond({ account, initialTab = 'bond' }: BondFormProps) {
             <ThemeButton
               variant="secondarySmall"
               className="absolute end-3 top-3 shrink-0 rounded-full"
-              disabled={tab !== 'track' && !thorAccount}
               onClick={() => navigator.clipboard.readText().then(text => setNodeAddress(text.trim()))}
             >
               Paste
@@ -204,13 +203,19 @@ export function SendMemoBond({ account, initialTab = 'bond' }: BondFormProps) {
                 newAddress.trim() && !newAddressValid && 'border-destructive focus-visible:ring-destructive'
               )}
             />
-            <ThemeButton
-              variant="secondarySmall"
-              className="absolute end-3 top-3 shrink-0 rounded-full"
-              onClick={() => navigator.clipboard.readText().then(text => setNewAddress(text.trim()))}
-            >
-              Paste
-            </ThemeButton>
+            {newAddress ? (
+              <button className="text-txt-label-small hover:text-txt-high-contrast absolute end-3 top-3 shrink-0 rounded-full p-1" onClick={() => setNewAddress('')}>
+                <X className="size-4" />
+              </button>
+            ) : (
+              <ThemeButton
+                variant="secondarySmall"
+                className="absolute end-3 top-3 shrink-0 rounded-full"
+                onClick={() => navigator.clipboard.readText().then(text => setNewAddress(text.trim()))}
+              >
+                Paste
+              </ThemeButton>
+            )}
           </div>
         )}
 
@@ -225,7 +230,6 @@ export function SendMemoBond({ account, initialTab = 'bond' }: BondFormProps) {
                   amount={amount}
                   onAmountChange={v => setAmount(v)}
                   autoComplete="off"
-                  disabled={!thorAccount}
                 />
                 <div className="text-txt-label-small text-sm">
                   {toCurrencyFixed(fiatValue.toCurrency('$', { trimTrailingZeros: false }))} ({fiatPercent.toFixed(0)}%)

@@ -2,7 +2,7 @@
 
 import { useMemo, useState } from 'react'
 import { Chain, USwapNumber } from '@tcswap/core'
-import { Info, LoaderCircle } from 'lucide-react'
+import { Info, LoaderCircle, X } from 'lucide-react'
 import { toast } from 'sonner'
 import { Textarea } from '@/components/ui/textarea'
 import { ConnectWallet } from '@/components/connect-wallet/connect-wallet'
@@ -137,16 +137,20 @@ export function SendMemo() {
               maxLength={250}
               onChange={e => setMemo(e.target.value)}
               className="border-0 bg-transparent pr-20"
-              disabled={!thorAccount}
             />
-            <ThemeButton
-              variant="secondarySmall"
-              className="absolute end-3 top-3 rounded-full"
-              disabled={!thorAccount}
-              onClick={() => navigator.clipboard.readText().then(text => setMemo(text.slice(0, 250)))}
-            >
-              Paste
-            </ThemeButton>
+            {memo ? (
+              <button className="text-txt-label-small hover:text-txt-high-contrast absolute end-3 top-3 shrink-0 rounded-full p-1" onClick={() => setMemo('')}>
+                <X className="size-4" />
+              </button>
+            ) : (
+              <ThemeButton
+                variant="secondarySmall"
+                className="absolute end-3 top-3 rounded-full"
+                onClick={() => navigator.clipboard.readText().then(text => setMemo(text.slice(0, 250)))}
+              >
+                Paste
+              </ThemeButton>
+            )}
           </div>
           {memo.length > 200 && <div className="text-txt-label-small mt-1 text-right text-xs">{memo.length}/250</div>}
         </div>
@@ -169,7 +173,6 @@ export function SendMemo() {
                     amount={amount}
                     onAmountChange={v => setAmount(v)}
                     autoComplete="off"
-                    disabled={!thorAccount}
                   />
                   <div className="text-txt-label-small text-sm">{toCurrencyFixed(fiatValue.toCurrency('$', { trimTrailingZeros: false }))}</div>
                 </div>
