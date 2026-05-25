@@ -1,0 +1,464 @@
+{
+  "menu": {
+    "swap": "Takas",
+    "bond": "Bond",
+    "memo": "Memo",
+    "launchApp": "Uygulamayı Aç",
+    "socials": "Sosyal Medya",
+    "language": "Dil",
+    "newsletterPitch": "THORChain hakkında güncel kalmanın en iyi yolu",
+    "emailPlaceholder": "E-postanı gir",
+    "signUp": "Abone Ol",
+    "signingUp": "Abone olunuyor…",
+    "subscribed": "Abone olduğun için teşekkürler!",
+    "genericError": "Bir şeyler ters gitti"
+  },
+  "header": {
+    "wallet": "CÜZDAN",
+    "history": "GEÇMİŞ"
+  },
+  "footer": {
+    "privacyPolicy": "Gizlilik Politikası",
+    "termsOfUse": "Kullanım Koşulları",
+    "riskPolicy": "Risk Politikası",
+    "riskTooltip": "Bu web sitesi özenle oluşturulmuş olsa da, sitenin hatalı çalışmasına ve hatta fon kaybına yol açabilecek istenmeyen hatalar içerebilir. Yalnızca bu riskleri anlıyor ve kabul ediyorsan devam et.",
+    "builtBy": "Geliştiren",
+    "reportBug": "Hata Bildir",
+    "getSupport": "Discord'da Destek Al",
+    "bug": {
+      "title": "Hata Bildir",
+      "success": "Teşekkürler! Bildirimin gönderildi.",
+      "close": "Kapat",
+      "emailLabel": "E-posta (isteğe bağlı)",
+      "descriptionLabel": "Açıklama",
+      "descriptionPlaceholder": "Hatayı açıkla…",
+      "attachmentLabel": "Ek (isteğe bağlı)",
+      "attachFile": "Dosya ekle",
+      "sending": "Gönderiliyor…",
+      "send": "Bildirimi Gönder",
+      "failed": "Bildirim gönderilemedi"
+    }
+  },
+  "swap": {
+    "tab": {
+      "swap": "Takas",
+      "limit": "Limit"
+    },
+    "input": {
+      "sell": "Sat",
+      "buy": "Al",
+      "clear": "Temizle"
+    },
+    "balance": {
+      "label": "Bakiye:"
+    },
+    "button": {
+      "limitNotSupported": "Limit Emri Desteklenmiyor",
+      "temporarilyUnavailable": "Geçici Olarak Kullanılamıyor",
+      "enterAmount": "Tutar Gir",
+      "quoting": "Fiyat alınıyor…",
+      "noValidQuotes": "Geçerli Teklif Yok",
+      "enterLimitPrice": "Limit fiyatı gir",
+      "enterLimitOrder": "Limit Emri Gir",
+      "swap": "Takas Et",
+      "connectWallet": "{chain} Cüzdanı Bağla",
+      "insufficientBalance": "Yetersiz Bakiye",
+      "approve": "{ticker} Onayla"
+    },
+    "toast": {
+      "approvalTransaction": "Onay İşlemi",
+      "success": "Başarılı",
+      "errorSubmitting": "İşlem Gönderilirken Hata Oluştu",
+      "submittingTransaction": "İşlem Gönderiliyor",
+      "transactionSubmitted": "İşlem gönderildi"
+    },
+    "confirm": {
+      "titleLimit": "Limit Emrini Onayla",
+      "titleSwap": "Takası Onayla",
+      "notAvailable": "n/a",
+      "swapArrowLabel": "takas",
+      "chainAddress": "{chain} Adresi",
+      "sourceAddressTooltip": "Bu takas için fonları gönderen cüzdan adresi.",
+      "destinationAddressTooltip": "Takas edilen fonları alacak cüzdan adresi.",
+      "refundAddress": "İade Adresi",
+      "refundAddressTooltip": "Takas tamamlanamazsa fonların iade edileceği adres.",
+      "limitPrice": "Limit Fiyatı",
+      "limitPriceTooltip": "Limit emrinin gerçekleşeceği birim başına fiyat. Emir yalnızca piyasa bu fiyata ulaştığında gerçekleşir.",
+      "targetAmount": "Hedef Tutar",
+      "targetAmountTooltip": "Limit emrin belirlediğin fiyattan gerçekleştiğinde alacağın tam tutar.",
+      "minimumPayout": "Minimum Ödeme",
+      "minimumPayoutTooltip": "Bu, {protection} fiyat koruma ayarınla almanın garanti edildiği minimum tutardır. Piyasa, daha azını alacağın kadar hareket ederse takas iptal edilir ve iade yapılır.",
+      "notProtected": "Korumasız",
+      "priceImpact": "Fiyat Etkisi",
+      "priceImpactTooltip": "Takasının Pool fiyatını ne kadar hareket ettirdiği. Takasın, mevcut Liquidity'ye kıyasla ne kadar büyükse fiyat etkisi o kadar yüksektir.",
+      "slippageTolerance": "Slippage Toleransı",
+      "slippageToleranceTooltip1": "{protection} fiyat koruman ile fiyat etkisi arasındaki fark.",
+      "slippageToleranceTooltip2": "Bir teklif görmen ile takasının tamamlanması arasındaki sürede fiyatlar değişebilir. Slippage toleransı, takas iptal edilmeden önce kabul edeceğin maksimum fiyat değişimidir.",
+      "includedFees": "Dahil Edilen Ücretler",
+      "includedFeesTooltip": "Bu ücretler kura zaten dahildir — bunları ayrıca ödemezsin.",
+      "estimatedTime": "Tahmini Süre",
+      "gasFee": "{chain} Gas Ücreti",
+      "exchange": "Borsa",
+      "button": "Onayla",
+      "buttonLimit": "Limit Emrini Onayla",
+      "confirming": "Onaylanıyor"
+    },
+    "warning": {
+      "highPriceImpact": "Fiyat etkisinin Slippage toleransına ek olduğunu anlıyorum. Bu takastaki yüksek fiyat etkisini kabul ediyorum.",
+      "sendExact": "Belirtilen tutarı bir öz saklamalı cüzdandan tam olarak göndermem gerektiğini anlıyorum. Bir Smart Contract cüzdanından, borsa adresinden, yetkilendirilmiş adresten veya EIP 7702 cüzdanından göndermek",
+      "lossOfFunds": "fon kaybına yol açar.",
+      "ltcMweb": "LTC MWEB adresi kullanmak",
+      "selfCustody": "Bir öz saklamalı cüzdan kullanmam gerektiğini anlıyorum. Bir Smart Contract cüzdanı, borsa adresi, yetkilendirilmiş adres veya EIP 7702 cüzdanı kullanmak"
+    },
+    "instant": {
+      "sendTitle": "{asset} Gönder",
+      "sendDescription": "Aşağıdaki adrese öz saklamalı bir cüzdandan tam olarak <b>{amount} {ticker}</b> gönder.",
+      "qrCodeAlt": "QR Kodu",
+      "expiresIn": "Sona erme"
+    },
+    "error": {
+      "memoMissing": "Memo eksik",
+      "calculateSuggestedAmount": "Önerilen tutar hesaplanamadı",
+      "preflightRequest": "Ön kontrol isteği başarısız oldu",
+      "preflightMemoless": "Memo'suz ön kontrol isteği başarısız oldu",
+      "minAmountNoWallet": "Bağlı cüzdan olmadan minimum takas tutarı {amount} {ticker}'dir",
+      "unknown": "Bilinmeyen Hata"
+    },
+    "feeDialog": {
+      "title": "Kura Dahil Ücretler",
+      "description": "Bu ücretler kura zaten dahildir — bunları ayrıca ödemezsin.",
+      "liquidityFee": "Liquidity Ücreti",
+      "liquidityFeeInfo": "Rotadaki Liquidity sağlayıcıları için ücret",
+      "outboundFee": "Giden İşlem Ücreti",
+      "outboundFeeInfo": "Giden işlemi gönderme ücreti",
+      "platformFee": "Platform Ücreti",
+      "platformFeeInfo": "{app} tarafından alınan ücret"
+    },
+    "expiry": {
+      "title": "Sona Erme Süresini Ayarla",
+      "days": "Gün",
+      "hours": "Saat",
+      "minutes": "Dakika",
+      "maxExpiry": "Maksimum sona erme süresi {days} gündür",
+      "apply": "Uygula"
+    },
+    "limit": {
+      "whenWorth": "1 {ticker} şu değere ulaştığında",
+      "expiresIn": "Sona erme",
+      "oneHour": "1 saat",
+      "oneDay": "1 gün",
+      "threeDays": "3 gün",
+      "custom": "Özel",
+      "market": "Piyasa"
+    },
+    "limitCancel": {
+      "titleModify": "Limit Emrini Değiştir",
+      "titleCancel": "Limit Emrini İptal Et",
+      "descriptionModify": "Bu limit emrini değiştirmek hedef fiyatı güncelleyecek. Değişikliği işlemek için küçük bir ağ ücreti alınır.",
+      "descriptionCancel": "Bu limit emrini iptal etmek yatırdığın fonları cüzdanına geri gönderir. İptali işlemek için küçük bir ağ ücreti alınır.",
+      "fromCurrent": "Mevcuda göre %{percent}",
+      "youWillGet": "Alacağın miktar",
+      "button": {
+        "modifying": "Değiştiriliyor…",
+        "cancelling": "İptal ediliyor…",
+        "loading": "Yükleniyor…",
+        "modifyOrder": "Emri Değiştir",
+        "cancelOrder": "Emri İptal Et"
+      },
+      "error": {
+        "loadInboundAddresses": "Gelen adresler yüklenemedi",
+        "cancelFailed": "Limit takası iptal edilemedi",
+        "modifyFailed": "Limit takası değiştirilemedi"
+      },
+      "toast": {
+        "sendToCancel": "İptal etmek için orijinal cüzdandan {amount} {ticker} gönder",
+        "sendToModify": "Değiştirmek için orijinal cüzdandan {amount} {ticker} gönder",
+        "cancelSubmitted": "İptal işlemi gönderildi",
+        "modifySubmitted": "Değişiklik işlemi gönderildi"
+      },
+      "warning": {
+        "memolessDeposit": "Bu emri {mode} için, emri oluşturan orijinal {chain} cüzdanından yatırma gönder",
+        "connectOrMemoless": "Bu emri {mode} için bir {chain} cüzdanı bağla veya Memo'suz yatırmayı kullan",
+        "connect": "Bu emri {mode} için bir {chain} cüzdanı bağla",
+        "switch": "Bu emri {mode} için bir {chain} cüzdanına geç",
+        "addressMismatch": "Bağlı cüzdan, bu emri oluşturan adresle eşleşmiyor",
+        "tradingPaused": "{chain} işlemleri şu anda duraklatıldı"
+      }
+    },
+    "quoteTimer": {
+      "refresh": "Yenile"
+    },
+    "recipient": {
+      "addressPlaceholder": "{chain} adresi",
+      "paste": "Yapıştır",
+      "invalidAddress": "Geçersiz {chain} adresi",
+      "titleAddresses": "Adresleri Gir",
+      "titleReceiving": "Alıcı Adresi Gir",
+      "enterRefundAddress": "İade adresini gir:",
+      "enterReceivingAddress": "Alıcı adresini gir:",
+      "preparingSwap": "Takas Hazırlanıyor",
+      "next": "İleri"
+    },
+    "selectAsset": {
+      "title": "Coin seç",
+      "allChains": "Tüm Ağlar",
+      "search": "Ara",
+      "secured": "Güvenli Varlıklar",
+      "trade": "İşlem Varlıkları",
+      "currentlyUnavailable": "Şu anda kullanılamıyor",
+      "selected": "Seçildi"
+    },
+    "settings": {
+      "noProtection": "Koruma Yok",
+      "priceProtection": "Fiyat Koruması",
+      "priceProtectionTooltip1": "Fiyat etkisi, takasının Pool fiyatını ne kadar hareket ettirdiğidir. Takasın, mevcut Liquidity'ye kıyasla ne kadar büyükse etki o kadar yüksektir.",
+      "priceProtectionTooltip2": "Bir teklif görmen ile takasının tamamlanması arasındaki sürede fiyatlar değişebilir. Slippage toleransı, takas iptal edilmeden önce kabul edeceğin maksimum fiyat değişimidir.",
+      "priceProtectionDescription": "Bir takasa harcamaya razı olduğun maksimum tutar. Buna takasının fiyat etkisi ve takas gerçekleşmeden önce token fiyatlarındaki Slippage dahildir.",
+      "twapTitle": "Zaman Ağırlıklı Ortalama Fiyat (TWAP)",
+      "twapTooltip1": "THORChain'deki TWAP işlemleri, belgelerde ve kodda \"streaming swaps\" olarak adlandırılır.",
+      "twapTooltip2": "En kötü fiyat gerçekleşmesiyle sonuçlanacak anında bir satış emri vermek için, alt takas sayısına 1 ve alt takaslar arası süreye 1 blok gir.",
+      "twapDescription": "Kullanıcıların büyük çoğunluğu varsayılan ayarları kullanmalı. Bu ayarları yalnızca uzman yatırımcılar değiştirmeli.",
+      "numberOfSubSwaps": "Alt takas sayısı",
+      "numberOfSubSwapsTooltip": "Emrini alt takas adı verilen daha küçük işlemlere böl. Ne kadar çok alt takas olursa fiyat gerçekleşmesi o kadar iyi olur. Sıfır olarak ayarlandığında protokol, her birinin Slippage'i 5 bps olacak şekilde alt takas sayısını senin için hesaplar. Varsayılan değer sıfırdır.",
+      "timeBetweenSubSwaps": "Alt takaslar arası süre",
+      "timeBetweenSubSwapsTooltip": "Her alt takas arasındaki, blok cinsinden ölçülen süre. Her alt takas arasında ne kadar çok blok olursa fiyat gerçekleşmesi o kadar iyi olur. Sıfır blok seçmek, daha hızlı gerçekleşme için her blokta birden çok alt takas yapar. Varsayılan değer sıfır bloktur.",
+      "blocksCount": "{count, plural, one {# blok} other {# blok}}",
+      "rapidSwap": "Hızlı Takas",
+      "seconds": "~{count, plural, one {# saniye} other {# saniye}}",
+      "reset": "Sıfırla",
+      "save": "Kaydet"
+    }
+  },
+  "send": {
+    "title": "Gönder",
+    "send": "Gönder",
+    "amount": "Tutar",
+    "clear": "Temizle",
+    "balanceLabel": "Bakiye:",
+    "to": "Alıcı",
+    "addressPlaceholder": "{chain} adresi",
+    "paste": "Yapıştır",
+    "transactionFee": "İşlem Ücreti",
+    "selectCoin": "Coin seç",
+    "connectThorchainWallet": "THORChain Cüzdanı Bağla",
+    "enterMemo": "Memo gir",
+    "enterAmount": "Tutar gir",
+    "toast": {
+      "submitting": "İşlem gönderiliyor…",
+      "submitted": "İşlem gönderildi",
+      "submitError": "İşlem gönderilirken hata oluştu"
+    },
+    "error": {
+      "walletNotConnectedReconnect": "Cüzdan bağlı değil. Lütfen yeniden bağlan.",
+      "walletNotConnected": "Cüzdan bağlı değil.",
+      "invalidAddress": "Geçersiz {chain} adresi",
+      "noRuneBalance": "RUNE bakiyesi bulunamadı.",
+      "noTcyBalance": "TCY bakiyesi bulunamadı."
+    },
+    "beta": {
+      "title": "Bu bir beta özelliğidir",
+      "description": "Henüz keşfedilmemiş hatalar olabilir. Kendi sorumluluğunda kullan!"
+    },
+    "memo": {
+      "title": "Memo",
+      "examplesButton": "Memo Örnekleri",
+      "placeholder": "Memo gir",
+      "noPayloadInfo": "Bu işlem herhangi bir veri yükü gerektirmez. Yalnızca 0.02 RUNE ağ ücreti uygulanır."
+    },
+    "bond": {
+      "bondAmount": "Bond Tutarı",
+      "rebondAmount": "Rebond Tutarı",
+      "nodeAddress": "Node Adresi",
+      "newAddress": "Yeni Adres",
+      "enterNodeAddress": "Node Adresi Gir",
+      "invalidNodeAddress": "Geçersiz Node Adresi",
+      "validatingNode": "Node doğrulanıyor…",
+      "nodeNotFound": "Node bulunamadı",
+      "enterNewAddress": "Yeni Adres Gir",
+      "invalidNewAddress": "Geçersiz Yeni Adres",
+      "bond": "Bond",
+      "unbond": "Unbond",
+      "rebond": "Rebond",
+      "nodeNotFoundOrUnavailable": "Node bulunamadı veya kullanılamıyor.",
+      "tab": {
+        "bond": "Bond",
+        "unbond": "Unbond",
+        "rebond": "Rebond",
+        "track": "Takip Et"
+      },
+      "node": {
+        "version": "Sürüm",
+        "ipAddress": "IP Adresi",
+        "status": "Durum",
+        "providers": "Sağlayıcılar",
+        "yourShare": "Payın",
+        "slashPoints": "Ceza Puanları",
+        "operatorFee": "Operatör Ücreti",
+        "information": "Node Bilgisi",
+        "bond": "Bond",
+        "nextReward": "Sonraki Ödül"
+      }
+    },
+    "stake": {
+      "stakeAmount": "Stake Tutarı",
+      "unstakeAmount": "Unstake Tutarı",
+      "compound": "Yeniden Yatır",
+      "checking": "Kontrol ediliyor…",
+      "claim": "Talep Et",
+      "nothingToClaim": "Talep edilecek bir şey yok",
+      "stake": "Stake Et",
+      "unstake": "Unstake Et",
+      "stakedLabel": "Stake edilen:",
+      "wallet": "Cüzdan",
+      "availableToClaim": "Talep Edilebilir",
+      "staked": "Stake edildi",
+      "claimAmount": "Talep Tutarı",
+      "compoundInfo": "Bekleyen TCY stake ödüllerini stake pozisyonuna yeniden yatır.",
+      "tab": {
+        "stake": "Stake Et",
+        "unstake": "Unstake Et",
+        "compound": "Yeniden Yatır",
+        "claim": "Talep Et"
+      }
+    },
+    "examples": {
+      "back": "Geri",
+      "copied": "Panoya kopyalandı",
+      "copyMemo": "{label} Memo'sunu kopyala",
+      "fillInValues": "değerleri doldur →",
+      "learnMore": "Daha Fazla Bilgi",
+      "optional": "isteğe bağlı",
+      "optionalPlaceholder": "{hint} (atlamak için boş bırak)",
+      "preview": "Önizleme",
+      "useMemo": "Memo Kullan",
+      "badgeNoPayload": "veri yükü yok",
+      "badgeDust": "dust",
+      "items": {
+        "stakeTcy": "TCY Stake Et",
+        "unstakeTcy": "TCY Unstake Et",
+        "claimTcy": "TCY Talep Et",
+        "depositRunepool": "RUNEPool'a Yatır",
+        "withdrawRunepool": "RUNEPool'dan Çek",
+        "bond": "Bond",
+        "unbond": "Unbond",
+        "rebond": "Rebond",
+        "leave": "Leave",
+        "whitelistBondProvider": "Bond Sağlayıcısını Beyaz Listeye Ekle",
+        "unwhitelistBondProvider": "Bond Sağlayıcısını Beyaz Listeden Çıkar",
+        "addLpSingle": "LP Ekle (tek taraflı)",
+        "addLpDual": "LP Ekle (çift taraflı)",
+        "withdrawLp": "LP Çek",
+        "donateToPool": "Pool'a Bağışla"
+      },
+      "placeholder": {
+        "nodeAddress": "Node Adresi",
+        "providerAddress": "Sağlayıcı Adresi",
+        "newAddress": "Yeni Adres",
+        "thorAddress": "THORChain Adresi",
+        "pairedAddress": "Eşleştirilmiş Adres",
+        "affiliate": "Affiliate",
+        "pool": "Pool",
+        "asset": "Varlık",
+        "amount": "Tutar",
+        "basisPoints": "Baz Puan",
+        "fee": "Ücret (baz puan)",
+        "thorPrefix": "thor1…",
+        "pairedAddressHint": "Harici zincir adresi",
+        "affiliateHint": "THORName veya thor1… adresi",
+        "poolHint": "örn. BTC.BTC veya ETH/ETH",
+        "assetHint": "örn. BTC.BTC veya RUNE (tek taraflı)",
+        "amountHint": "1e8 formatı — örn. 100000000 = 1 RUNE",
+        "basisPointsHint": "0 – 10000 (10000 = %100)",
+        "feeHint": "0 – 10000"
+      }
+    }
+  },
+  "wallet": {
+    "chains": "Ağlar",
+    "deselectAll": "Tüm Seçimi Kaldır",
+    "selectAll": "Tümünü Seç",
+    "soon": "Yakında",
+    "connectNamed": "{name} Bağla",
+    "connected": "Bağlandı",
+    "disconnected": "Bağlantı Kesildi",
+    "install": "Yükle",
+    "connectWallet": "Cüzdan Bağla",
+    "derivationPath": "Türetme Yolu",
+    "selectAccountType": "Hesap türünü seç",
+    "index": "İndeks",
+    "ledgerUnlockHint": "Bağlamadan önce Ledger'ının kilidinin açık ve {app} uygulamasının açık olduğundan emin ol.",
+    "correspondingApp": "ilgili ağ",
+    "createNewWallet": "Yeni Cüzdan Oluştur",
+    "createWalletInstructions": "Bu 12 kelimeyi yaz ve çevrimdışı olarak güvenle sakla. Bu 12 kelimelik ifade, cüzdanının özel anahtarlarını kurtarmak için kullanılır.",
+    "copyPhrase": "İfadeyi Kopyala",
+    "confirmSavedPassphrase": "Hesabımı gelecekte kurtarmak için kurtarma ifadesini güvenle kaydettiğimi onaylıyorum.",
+    "back": "Geri",
+    "next": "İleri",
+    "setupDecryptionPassword": "Şifre Çözme Parolası Ayarla",
+    "setupPasswordInstructions": "Oluşturduğun cüzdanı şifrelemek için güçlü bir parola gir. Cüzdanına bu şekilde erişeceksin.",
+    "enterPassword": "Parola Gir",
+    "confirmPassword": "Parolayı Onayla",
+    "passwordMustMatch": "Parolalar eşleşmeli",
+    "create": "Oluştur",
+    "error": {
+      "invalidFileType": "Geçersiz dosya türü. Lütfen bir JSON veya TXT dosyası yükle."
+    },
+    "importKeystore": "Keystore İçe Aktar",
+    "selectOrDragKeystore": "Yüklemek için Keystore dosyanı seç veya sürükle",
+    "decryptionPassword": "Şifre Çözme Parolası",
+    "password": "Parola",
+    "import": "İçe Aktar",
+    "importSeedPhrase": "Tohum İfadesini İçe Aktar",
+    "typeSeedPhrase": "Tohum ifadeni yaz",
+    "openKeystore": "Keystore Aç",
+    "noTokensFound": "Token bulunamadı",
+    "addressCopied": "Adres kopyalandı",
+    "copyAddress": "Adresi Kopyala",
+    "disconnectWallet": "{name} Bağlantısını Kes",
+    "noCoins": "Coin yok",
+    "sidebar": {
+      "title": "Cüzdanlar"
+    },
+    "sortWallets": "Cüzdanları sırala",
+    "sortBy": "Sıralama ölçütü",
+    "sortByName": "Ad (A-Z)",
+    "sortByBalance": "Bakiye (Yüksek → Düşük)",
+    "externalWalletMode": "Harici Cüzdan Modu",
+    "externalWalletModeDescription": "Emrini gir, Takas düğmesine tıkla ve talimatları izle",
+    "externalWalletModeWarning": "Bir varlık Harici Cüzdan modunda desteklenmiyorsa, tarayıcı içi bir cüzdan bağlaman istenir",
+    "close": "Kapat",
+    "sendToken": "{ticker} Gönder"
+  },
+  "common": {
+    "close": "Kapat"
+  },
+  "tx": {
+    "title": "Geçmiş",
+    "today": "Bugün",
+    "yesterday": "Dün",
+    "onlyCreatorModify": "Yalnızca takası oluşturan kişi değiştirebilir",
+    "limitPrice": "Limit fiyatı",
+    "expiresIn": "Sona erme",
+    "showQr": "QR Göster",
+    "modify": "Değiştir",
+    "cancelOrder": "Emri İptal Et",
+    "sourceAddress": "Kaynak Adres",
+    "destinationAddress": "Hedef Adres",
+    "remaining": "{time} kaldı",
+    "status": {
+      "not_started": "Yatırma Bekleniyor",
+      "pending": "Beklemede",
+      "swapping": "Takas ediliyor",
+      "completed": "Tamamlandı",
+      "failed": "Başarısız",
+      "expired": "Süresi doldu",
+      "refunded": "İade edildi",
+      "unknown": "Bilinmiyor"
+    },
+    "leg": {
+      "deposit": "{ticker} Yatır",
+      "send": "{ticker} Gönder",
+      "swap": "{from} → {to} Takas"
+    }
+  }
+}

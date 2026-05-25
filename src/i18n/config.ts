@@ -1,5 +1,5 @@
 // i18n configuration — cookie-based locale
-export const locales = ['en', 'zh', 'zh-Hant', 'ko', 'ru', 'es', 'fa'] as const
+export const locales = ['en', 'zh', 'zh-Hant', 'ko', 'ru', 'es', 'fa', 'tr'] as const
 
 export type Locale = (typeof locales)[number]
 
@@ -15,7 +15,8 @@ export const localeNames: Record<Locale, string> = {
   ko: '한국어',
   ru: 'Русский',
   es: 'Español',
-  fa: 'فارسی'
+  fa: 'فارسی',
+  tr: 'Türkçe'
 }
 
 // Right-to-left locales need dir="rtl" on the <html> element.
