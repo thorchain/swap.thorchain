@@ -1,4 +1,5 @@
 import { useMemo, useState } from 'react'
+import { useTranslations } from 'next-intl'
 import { AlertTriangle, X } from 'lucide-react'
 import { Dialog, DialogContent, DialogTitle } from '@/components/ui/dialog'
 import { ThemeButton } from '@/components/theme-button'
@@ -26,6 +27,7 @@ export const SwapLimitExpiry = ({
   initialHours = '',
   initialMinutes = ''
 }: SwapExpiryDialogProps) => {
+  const t = useTranslations('swap')
   const [customDays, setCustomDays] = useState(initialDays)
   const [customHours, setCustomHours] = useState(initialHours)
   const [customMinutes, setCustomMinutes] = useState(initialMinutes)
@@ -49,16 +51,16 @@ export const SwapLimitExpiry = ({
   }
 
   const fields = [
-    { label: 'Days', value: customDays, onChange: setCustomDays },
-    { label: 'Hours', value: customHours, onChange: setCustomHours },
-    { label: 'Minutes', value: customMinutes, onChange: setCustomMinutes }
+    { label: t('expiry.days'), value: customDays, onChange: setCustomDays },
+    { label: t('expiry.hours'), value: customHours, onChange: setCustomHours },
+    { label: t('expiry.minutes'), value: customMinutes, onChange: setCustomMinutes }
   ]
 
   return (
     <Dialog open={isOpen} onOpenChange={onOpenChange}>
       <DialogContent showCloseButton={false} className="h-auto max-w-md p-8">
         <div className="mb-6 flex items-center justify-between">
-          <DialogTitle>Set Up Expiration Time</DialogTitle>
+          <DialogTitle>{t('expiry.title')}</DialogTitle>
           <button onClick={() => onOpenChange(false)} className="text-txt-med-contrast hover:text-txt-high-contrast cursor-pointer transition-colors">
             <X className="size-5" />
           </button>
@@ -92,7 +94,7 @@ export const SwapLimitExpiry = ({
 
         {exceedsMax && (
           <div className="mb-4 flex items-center gap-2 rounded-xl bg-jacob/10 px-4 py-3 text-sm text-jacob">
-            <AlertTriangle className="size-4 shrink-0" /> Maximum expiry is 3 days
+            <AlertTriangle className="size-4 shrink-0" /> {t('expiry.maxExpiry', { days: MAX_DAYS })}
           </div>
         )}
 
@@ -102,7 +104,7 @@ export const SwapLimitExpiry = ({
           onClick={handleApply}
           disabled={(!customDays && !customHours && !customMinutes) || exceedsMax}
         >
-          Apply
+          {t('expiry.apply')}
         </ThemeButton>
       </DialogContent>
     </Dialog>

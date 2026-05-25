@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { useTranslations } from 'next-intl'
 import { Chain, FeeOption, getChainConfig, USwapNumber } from '@tcswap/core'
 import { ProviderName } from '@tcswap/helpers'
 import { QuoteResponseRoute } from '@tcswap/helpers/api'
@@ -25,6 +26,7 @@ interface SwapDialogProps {
 }
 
 export const SwapDialog = ({ provider, isOpen, onOpenChange }: SwapDialogProps) => {
+  const t = useTranslations('swap')
   const uSwap = getUSwap()
   const assetFrom = useAssetFrom()
   const assetTo = useAssetTo()
@@ -96,11 +98,11 @@ export const SwapDialog = ({ provider, isOpen, onOpenChange }: SwapDialogProps) 
       })
 
     toast.promise(broadcast, {
-      loading: 'Submitting Transaction',
-      success: () => 'Transaction submitted',
+      loading: t('toast.submittingTransaction'),
+      success: () => t('toast.transactionSubmitted'),
       error: (err: any) => {
         console.log(err)
-        return 'Error Submitting Transaction'
+        return t('toast.errorSubmitting')
       }
     })
   }
@@ -117,11 +119,11 @@ export const SwapDialog = ({ provider, isOpen, onOpenChange }: SwapDialogProps) 
                 <SwapAddressWarning
                   checked={highPriceImpactAccepted}
                   onCheckedChange={setHighPriceImpactAccepted}
-                  text="I understand the price impact is in addition to the slippage tolerance. I accept the high price impact on this swap"
+                  text={t('warning.highPriceImpact')}
                 />
               )}
               <ThemeButton variant="primaryMedium" className="w-full" onClick={() => onConfirm()} disabled={!quote || submitting || confirmBlocked}>
-                {submitting ? <LoaderCircle size={20} className="animate-spin" /> : <span>{isLimitSwap ? 'Confim Limit Order' : 'Confirm'}</span>}
+                {submitting ? <LoaderCircle size={20} className="animate-spin" /> : <span>{isLimitSwap ? t('confirm.buttonLimit') : t('confirm.button')}</span>}
               </ThemeButton>
             </div>
           </>

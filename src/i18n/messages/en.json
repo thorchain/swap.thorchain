@@ -1,0 +1,464 @@
+{
+  "menu": {
+    "swap": "Swap",
+    "bond": "Bond",
+    "memo": "Memo",
+    "launchApp": "Launch App",
+    "socials": "Socials",
+    "language": "Language",
+    "newsletterPitch": "The best way to stay up to date on THORChain",
+    "emailPlaceholder": "Enter your email",
+    "signUp": "Sign Up",
+    "signingUp": "Signing up…",
+    "subscribed": "Thanks for subscribing!",
+    "genericError": "Something went wrong"
+  },
+  "header": {
+    "wallet": "WALLET",
+    "history": "HISTORY"
+  },
+  "footer": {
+    "privacyPolicy": "Privacy Policy",
+    "termsOfUse": "Terms of Use",
+    "riskPolicy": "Risk Policy",
+    "riskTooltip": "While this website is built with care it may have unintended bugs which may lead to site malfunctioning and even loss of funds. Proceed only if you understand and accept these risks.",
+    "builtBy": "Built by",
+    "reportBug": "Report a Bug",
+    "getSupport": "Get Support in Discord",
+    "bug": {
+      "title": "Report a Bug",
+      "success": "Thank you! Your report has been sent.",
+      "close": "Close",
+      "emailLabel": "Email (optional)",
+      "descriptionLabel": "Description",
+      "descriptionPlaceholder": "Describe the bug...",
+      "attachmentLabel": "Attachment (optional)",
+      "attachFile": "Attach a file",
+      "sending": "Sending...",
+      "send": "Send Report",
+      "failed": "Failed to send report"
+    }
+  },
+  "swap": {
+    "tab": {
+      "swap": "Swap",
+      "limit": "Limit"
+    },
+    "input": {
+      "sell": "Sell",
+      "buy": "Buy",
+      "clear": "Clear"
+    },
+    "balance": {
+      "label": "Balance:"
+    },
+    "button": {
+      "limitNotSupported": "Limit Order Not Supported",
+      "temporarilyUnavailable": "Temporarily Not Available",
+      "enterAmount": "Enter Amount",
+      "quoting": "Quoting...",
+      "noValidQuotes": "No Valid Quotes",
+      "enterLimitPrice": "Enter limit price",
+      "enterLimitOrder": "Enter Limit Order",
+      "swap": "Swap",
+      "connectWallet": "Connect {chain} Wallet",
+      "insufficientBalance": "Insufficient Balance",
+      "approve": "Approve {ticker}"
+    },
+    "toast": {
+      "approvalTransaction": "Approval Transaction",
+      "success": "Success",
+      "errorSubmitting": "Error Submitting Transaction",
+      "submittingTransaction": "Submitting Transaction",
+      "transactionSubmitted": "Transaction submitted"
+    },
+    "confirm": {
+      "titleLimit": "Confirm Limit Order",
+      "titleSwap": "Confirm Swap",
+      "notAvailable": "n/a",
+      "swapArrowLabel": "swap",
+      "chainAddress": "{chain} Address",
+      "sourceAddressTooltip": "The wallet address sending the funds for this swap.",
+      "destinationAddressTooltip": "The wallet address that will receive the swapped funds.",
+      "refundAddress": "Refund Address",
+      "refundAddressTooltip": "The address where funds will be returned if the swap cannot be completed.",
+      "limitPrice": "Limit Price",
+      "limitPriceTooltip": "The price per unit at which your limit order will execute. The order will only fill when the market reaches this price.",
+      "targetAmount": "Target Amount",
+      "targetAmountTooltip": "The exact amount you will receive when your limit order executes at your specified price.",
+      "minimumPayout": "Minimum Payout",
+      "minimumPayoutTooltip": "This is the minimum you're guaranteed to receive at your {protection} price protection setting. If the market moves enough that you'd receive less, the swap is cancelled and refunded.",
+      "notProtected": "Not Protected",
+      "priceImpact": "Price Impact",
+      "priceImpactTooltip": "How much your swap moves the pool's price. The larger your swap relative to available liquidity, the higher the price impact.",
+      "slippageTolerance": "Slippage Tolerance",
+      "slippageToleranceTooltip1": "The difference between your {protection} price protection and the price impact.",
+      "slippageToleranceTooltip2": "During the time between seeing a quote and your swap completing, prices can change. Slippage tolerance is the maximum price change you'll accept before the swap is cancelled.",
+      "includedFees": "Included Fees",
+      "includedFeesTooltip": "These fees are already included in the rate — you don't pay them separately.",
+      "estimatedTime": "Estimated Time",
+      "gasFee": "{chain} Gas Fee",
+      "exchange": "Exchange",
+      "button": "Confirm",
+      "buttonLimit": "Confim Limit Order",
+      "confirming": "Confirming"
+    },
+    "warning": {
+      "highPriceImpact": "I understand the price impact is in addition to the slippage tolerance. I accept the high price impact on this swap",
+      "sendExact": "I understand that I must send exactly the specified amount from a self-custody wallet. I understand that sending from a smart contract wallet, exchange address, delegated address, or an EIP 7702 wallet, will result in",
+      "lossOfFunds": "loss of funds.",
+      "ltcMweb": "I understand that using an LTC MWEB address will result in",
+      "selfCustody": "I understand that I must use a self-custody wallet. I understand that using a smart contract wallet, exchange address, delegated address, or an EIP 7702 wallet, will result in"
+    },
+    "instant": {
+      "sendTitle": "Send {asset}",
+      "sendDescription": "Send exactly <b>{amount} {ticker}</b> to the address below from a self custody wallet.",
+      "qrCodeAlt": "QR Code",
+      "expiresIn": "Expires in"
+    },
+    "error": {
+      "memoMissing": "Memo is missing",
+      "calculateSuggestedAmount": "Failed to calculate suggested amount",
+      "preflightRequest": "Failed to preflight request",
+      "preflightMemoless": "Failed to preflight memoless request",
+      "minAmountNoWallet": "Minimum swap amount without a connected wallet is {amount} {ticker}",
+      "unknown": "Unknown Error"
+    },
+    "feeDialog": {
+      "title": "Fees Included in the Rate",
+      "description": "These fees are already included in the rate — you don't pay them separately.",
+      "liquidityFee": "Liquidity Fee",
+      "liquidityFeeInfo": "Fee for liquidity providers on the route",
+      "outboundFee": "Outbound Fee",
+      "outboundFeeInfo": "Fee for sending outbound transaction",
+      "platformFee": "Platform Fee",
+      "platformFeeInfo": "Fee charged by {app}"
+    },
+    "expiry": {
+      "title": "Set Up Expiration Time",
+      "days": "Days",
+      "hours": "Hours",
+      "minutes": "Minutes",
+      "maxExpiry": "Maximum expiry is {days} days",
+      "apply": "Apply"
+    },
+    "limit": {
+      "whenWorth": "When 1 {ticker} is worth",
+      "expiresIn": "Expires in",
+      "oneHour": "1 hour",
+      "oneDay": "1 day",
+      "threeDays": "3 days",
+      "custom": "Custom",
+      "market": "Market"
+    },
+    "limitCancel": {
+      "titleModify": "Modify Limit Order",
+      "titleCancel": "Cancel Limit Order",
+      "descriptionModify": "Modifying this limit order will update the target price. A small network fee will be charged to process the modification.",
+      "descriptionCancel": "Cancelling this limit order will return your deposited funds to your wallet. A small network fee will be charged to process the cancellation.",
+      "fromCurrent": "{percent}% from current",
+      "youWillGet": "You will get",
+      "button": {
+        "modifying": "Modifying...",
+        "cancelling": "Cancelling...",
+        "loading": "Loading...",
+        "modifyOrder": "Modify Order",
+        "cancelOrder": "Cancel Order"
+      },
+      "error": {
+        "loadInboundAddresses": "Failed to load inbound addresses",
+        "cancelFailed": "Failed to cancel limit swap",
+        "modifyFailed": "Failed to modify limit swap"
+      },
+      "toast": {
+        "sendToCancel": "Send {amount} {ticker} from the original wallet to cancel",
+        "sendToModify": "Send {amount} {ticker} from the original wallet to modify",
+        "cancelSubmitted": "Cancel transaction submitted",
+        "modifySubmitted": "Modify transaction submitted"
+      },
+      "warning": {
+        "memolessDeposit": "To {mode} this order, send the deposit from the original {chain} wallet that placed it",
+        "connectOrMemoless": "Connect a {chain} wallet or use the memoless deposit to {mode} this order",
+        "connect": "Connect a {chain} wallet to {mode} this order",
+        "switch": "Switch to a {chain} wallet to {mode} this order",
+        "addressMismatch": "Connected wallet does not match the address that placed this order",
+        "tradingPaused": "{chain} trading is currently paused"
+      }
+    },
+    "quoteTimer": {
+      "refresh": "Refresh"
+    },
+    "recipient": {
+      "addressPlaceholder": "{chain} address",
+      "paste": "Paste",
+      "invalidAddress": "Invalid {chain} address",
+      "titleAddresses": "Enter Addresses",
+      "titleReceiving": "Enter Receiving Address",
+      "enterRefundAddress": "Enter refund address:",
+      "enterReceivingAddress": "Enter receiving address:",
+      "preparingSwap": "Preparing Swap",
+      "next": "Next"
+    },
+    "selectAsset": {
+      "title": "Select coin",
+      "allChains": "All Chains",
+      "search": "Search",
+      "secured": "Secured",
+      "trade": "Trade",
+      "currentlyUnavailable": "Currently unavailable",
+      "selected": "Selected"
+    },
+    "settings": {
+      "noProtection": "No Protection",
+      "priceProtection": "Price Protection",
+      "priceProtectionTooltip1": "Price impact is how much your swap moves the pool's price. The larger your swap relative to available liquidity, the higher the impact.",
+      "priceProtectionTooltip2": "During the time between seeing a quote and your swap completing, prices can change. Slippage tolerance is the maximum price change you'll accept before the swap is cancelled.",
+      "priceProtectionDescription": "The most you are willing to spend on a swap. This includes the price impact of your swap and any slippage on the token prices before the swap is executed.",
+      "twapTitle": "Time Weighted Average Price (TWAP)",
+      "twapTooltip1": "TWAP trades on THORChain are called \"streaming swaps\" in the documents and code.",
+      "twapTooltip2": "To place an instant sell order, which will result in the worst price execution, enter 1 for the number of sub-swaps and 1 block for the time between sub-swaps.",
+      "twapDescription": "The vast majority of users should use the default settings. Only expert traders should change these settings",
+      "numberOfSubSwaps": "Number of sub-swaps",
+      "numberOfSubSwapsTooltip": "Break up your order into smaller trades called sub-swaps. The more sub-swaps, the better price execution. When set to zero, the protocol will calculate the number of sub-swaps for you so that each one will have a slippage of 5 bps. The default value is zero.",
+      "timeBetweenSubSwaps": "Time between sub-swaps",
+      "timeBetweenSubSwapsTooltip": "Time between each sub-swap measured in blocks. The more blocks between each sub-swap, the better the price execution. Choosing zero blocks will do multiple sub-swaps every block for faster execution. The default value is zero blocks.",
+      "blocksCount": "{count, plural, one {# block} other {# blocks}}",
+      "rapidSwap": "Rapid Swap",
+      "seconds": "~{count, plural, one {# second} other {# seconds}}",
+      "reset": "Reset",
+      "save": "Save"
+    }
+  },
+  "send": {
+    "title": "Send",
+    "send": "Send",
+    "amount": "Amount",
+    "clear": "Clear",
+    "balanceLabel": "Balance:",
+    "to": "To",
+    "addressPlaceholder": "{chain} address",
+    "paste": "Paste",
+    "transactionFee": "Transaction Fee",
+    "selectCoin": "Select coin",
+    "connectThorchainWallet": "Connect THORChain Wallet",
+    "enterMemo": "Enter memo",
+    "enterAmount": "Enter amount",
+    "toast": {
+      "submitting": "Submitting transaction...",
+      "submitted": "Transaction submitted",
+      "submitError": "Error submitting transaction"
+    },
+    "error": {
+      "walletNotConnectedReconnect": "Wallet not connected. Please reconnect.",
+      "walletNotConnected": "Wallet not connected.",
+      "invalidAddress": "Invalid {chain} address",
+      "noRuneBalance": "No RUNE balance found.",
+      "noTcyBalance": "No TCY balance found."
+    },
+    "beta": {
+      "title": "This is a beta feature",
+      "description": "There may be undiscovered bugs. Use at your own risk!"
+    },
+    "memo": {
+      "title": "Memo",
+      "examplesButton": "Memo Examples",
+      "placeholder": "Enter memo",
+      "noPayloadInfo": "This operation requires no payload. Only the 0.02 RUNE network fee applies."
+    },
+    "bond": {
+      "bondAmount": "Bond Amount",
+      "rebondAmount": "Rebond Amount",
+      "nodeAddress": "Node Address",
+      "newAddress": "New Address",
+      "enterNodeAddress": "Enter Node Address",
+      "invalidNodeAddress": "Invalid Node Address",
+      "validatingNode": "Validating node...",
+      "nodeNotFound": "Node not found",
+      "enterNewAddress": "Enter New Address",
+      "invalidNewAddress": "Invalid New Address",
+      "bond": "Bond",
+      "unbond": "Unbond",
+      "rebond": "Rebond",
+      "nodeNotFoundOrUnavailable": "Node not found or unavailable.",
+      "tab": {
+        "bond": "Bond",
+        "unbond": "Unbond",
+        "rebond": "Rebond",
+        "track": "Track"
+      },
+      "node": {
+        "version": "Version",
+        "ipAddress": "IP Address",
+        "status": "Status",
+        "providers": "Providers",
+        "yourShare": "Your Share",
+        "slashPoints": "Slash Points",
+        "operatorFee": "Operator Fee",
+        "information": "Node Information",
+        "bond": "Bond",
+        "nextReward": "Next Reward"
+      }
+    },
+    "stake": {
+      "stakeAmount": "Stake Amount",
+      "unstakeAmount": "Unstake Amount",
+      "compound": "Compound",
+      "checking": "Checking...",
+      "claim": "Claim",
+      "nothingToClaim": "Nothing to claim",
+      "stake": "Stake",
+      "unstake": "Unstake",
+      "stakedLabel": "Staked:",
+      "wallet": "Wallet",
+      "availableToClaim": "Available to Claim",
+      "staked": "Staked",
+      "claimAmount": "Claim Amount",
+      "compoundInfo": "Compound your pending TCY staking rewards back into your stake position.",
+      "tab": {
+        "stake": "Stake",
+        "unstake": "Unstake",
+        "compound": "Compound",
+        "claim": "Claim"
+      }
+    },
+    "examples": {
+      "back": "Back",
+      "copied": "Copied to clipboard",
+      "copyMemo": "Copy {label} memo",
+      "fillInValues": "fill in values →",
+      "learnMore": "Learn More",
+      "optional": "optional",
+      "optionalPlaceholder": "{hint} (leave blank to omit)",
+      "preview": "Preview",
+      "useMemo": "Use Memo",
+      "badgeNoPayload": "no payload",
+      "badgeDust": "dust",
+      "items": {
+        "stakeTcy": "Stake TCY",
+        "unstakeTcy": "Unstake TCY",
+        "claimTcy": "Claim TCY",
+        "depositRunepool": "Deposit RUNEPool",
+        "withdrawRunepool": "Withdraw RUNEPool",
+        "bond": "Bond",
+        "unbond": "Unbond",
+        "rebond": "Rebond",
+        "leave": "Leave",
+        "whitelistBondProvider": "Whitelist Bond Provider",
+        "unwhitelistBondProvider": "Unwhitelist Bond Provider",
+        "addLpSingle": "Add LP (single-sided)",
+        "addLpDual": "Add LP (dual-sided)",
+        "withdrawLp": "Withdraw LP",
+        "donateToPool": "Donate to Pool"
+      },
+      "placeholder": {
+        "nodeAddress": "Node Address",
+        "providerAddress": "Provider Address",
+        "newAddress": "New Address",
+        "thorAddress": "THORChain Address",
+        "pairedAddress": "Paired Address",
+        "affiliate": "Affiliate",
+        "pool": "Pool",
+        "asset": "Asset",
+        "amount": "Amount",
+        "basisPoints": "Basis Points",
+        "fee": "Fee (basis points)",
+        "thorPrefix": "thor1…",
+        "pairedAddressHint": "External chain address",
+        "affiliateHint": "THORName or thor1… address",
+        "poolHint": "e.g. BTC.BTC or ETH/ETH",
+        "assetHint": "e.g. BTC.BTC or RUNE (single-sided)",
+        "amountHint": "1e8 format — e.g. 100000000 = 1 RUNE",
+        "basisPointsHint": "0 – 10000 (10000 = 100%)",
+        "feeHint": "0 – 10000"
+      }
+    }
+  },
+  "wallet": {
+    "chains": "Chains",
+    "deselectAll": "Deselect All",
+    "selectAll": "Select All",
+    "soon": "Soon",
+    "connectNamed": "Connect {name}",
+    "connected": "Connected",
+    "disconnected": "Disconnected",
+    "install": "Install",
+    "connectWallet": "Connect Wallet",
+    "derivationPath": "Derivation Path",
+    "selectAccountType": "Select account type",
+    "index": "Index",
+    "ledgerUnlockHint": "Make sure your Ledger is unlocked and the {app} app is open before connecting.",
+    "correspondingApp": "corresponding",
+    "createNewWallet": "Create New Wallet",
+    "createWalletInstructions": "Write these 12 words down and store them securely offline. This 12 word phrase is used to recover your wallet private keys.",
+    "copyPhrase": "Copy Phrase",
+    "confirmSavedPassphrase": "I confirm I have securely saved the passphrase to recover my account in the future.",
+    "back": "Back",
+    "next": "Next",
+    "setupDecryptionPassword": "Setup Decryption Password",
+    "setupPasswordInstructions": "Enter a strong password to encrypt your created wallet. This is how you will access your wallet.",
+    "enterPassword": "Enter Password",
+    "confirmPassword": "Confirm Password",
+    "passwordMustMatch": "Password must match",
+    "create": "Create",
+    "error": {
+      "invalidFileType": "Invalid file type. Please upload a JSON or TXT file."
+    },
+    "importKeystore": "Import Keystore",
+    "selectOrDragKeystore": "Select or drag your keystore file to upload it",
+    "decryptionPassword": "Decryption Password",
+    "password": "Password",
+    "import": "Import",
+    "importSeedPhrase": "Import Seed Phrase",
+    "typeSeedPhrase": "Type your seed phrase",
+    "openKeystore": "Open Keystore",
+    "noTokensFound": "No tokens found",
+    "addressCopied": "Address copied",
+    "copyAddress": "Copy Address",
+    "disconnectWallet": "Disconnect {name}",
+    "noCoins": "No coins",
+    "sidebar": {
+      "title": "Wallets"
+    },
+    "sortWallets": "Sort wallets",
+    "sortBy": "Sort by",
+    "sortByName": "Name (A-Z)",
+    "sortByBalance": "Balance (High → Low)",
+    "externalWalletMode": "External Wallet Mode",
+    "externalWalletModeDescription": "Enter your order, click the Swap button, and follow the instructions",
+    "externalWalletModeWarning": "If an asset isn’t supported in External Wallet mode, you’ll be prompted to connect an in-browser wallet",
+    "close": "Close",
+    "sendToken": "Send {ticker}"
+  },
+  "common": {
+    "close": "Close"
+  },
+  "tx": {
+    "title": "History",
+    "today": "Today",
+    "yesterday": "Yesterday",
+    "onlyCreatorModify": "Only the original swap creator can modify",
+    "limitPrice": "Limit price",
+    "expiresIn": "Expires in",
+    "showQr": "Show QR",
+    "modify": "Modify",
+    "cancelOrder": "Cancel Order",
+    "sourceAddress": "Source Address",
+    "destinationAddress": "Destination Address",
+    "remaining": "{time} remaining",
+    "status": {
+      "not_started": "Deposit Pending",
+      "pending": "Pending",
+      "swapping": "Swapping",
+      "completed": "Completed",
+      "failed": "Failed",
+      "expired": "Expired",
+      "refunded": "Refunded",
+      "unknown": "Unknown"
+    },
+    "leg": {
+      "deposit": "Deposit {ticker}",
+      "send": "Send {ticker}",
+      "swap": "Swap {from} to {to}"
+    }
+  }
+}

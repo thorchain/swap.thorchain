@@ -1,6 +1,7 @@
 'use client'
 
 import { useMemo, useState } from 'react'
+import { useTranslations } from 'next-intl'
 import { Chain, USwapNumber } from '@tcswap/core'
 import { Info, LoaderCircle, X } from 'lucide-react'
 import { toast } from 'sonner'
@@ -24,6 +25,7 @@ import { getUSwap } from '@/lib/wallets'
 import { cn, toCurrencyFixed } from '@/lib/utils'
 
 export function SendMemo() {
+  const t = useTranslations('send')
   const uSwap = getUSwap()
   const accounts = useAccounts()
   const { openDialog } = useDialog()
@@ -67,7 +69,7 @@ export function SendMemo() {
 
     const depositToken = zeroPayload ? runeToken : effectiveToken
     if (!depositToken) {
-      toast.error('No RUNE balance found.')
+      toast.error(t('error.noRuneBalance'))
       return
     }
 
@@ -77,7 +79,7 @@ export function SendMemo() {
     const wallet = uSwap.getWallet(thorAccount.provider, Chain.THORChain)
     if (!wallet) {
       setSubmitting(false)
-      toast.error('Wallet not connected.')
+      toast.error(t('error.walletNotConnected'))
       return
     }
 
@@ -94,9 +96,9 @@ export function SendMemo() {
       })
 
     toast.promise(broadcast, {
-      loading: 'Submitting transaction...',
-      success: () => 'Transaction submitted',
-      error: (err: any) => err?.message || 'Error submitting transaction'
+      loading: t('toast.submitting'),
+      success: () => t('toast.submitted'),
+      error: (err: any) => err?.message || t('toast.submitError')
     })
   }
 
@@ -118,13 +120,13 @@ export function SendMemo() {
   return (
     <div className="flex flex-col gap-5">
       <div className="flex items-center justify-between">
-        <h1 className="text-txt-high-contrast text-xl font-bold">Memo</h1>
+        <h1 className="text-txt-high-contrast text-xl font-bold">{t('memo.title')}</h1>
         <ThemeButton
           variant="secondarySmall"
           className="rounded-full"
-          onClick={() => openDialog(SendMemoExamples, { onSelect: (t: string) => setMemo(t) })}
+          onClick={() => openDialog(SendMemoExamples, { onSelect: (value: string) => setMemo(value) })}
         >
-          Memo Examples
+          {t('memo.examplesButton')}
         </ThemeButton>
       </div>
 
@@ -132,7 +134,7 @@ export function SendMemo() {
         <div className="bg-swap-bloc rounded-15 border p-7">
           <div className="relative">
             <Textarea
-              placeholder="Enter memo"
+              placeholder={t('memo.placeholder')}
               value={memo}
               maxLength={250}
               onChange={e => setMemo(e.target.value)}
@@ -148,7 +150,7 @@ export function SendMemo() {
                 className="absolute end-3 top-3 rounded-full"
                 onClick={() => navigator.clipboard.readText().then(text => setMemo(text.slice(0, 250)))}
               >
-                Paste
+                {t('paste')}
               </ThemeButton>
             )}
           </div>
@@ -159,12 +161,12 @@ export function SendMemo() {
           <div className="bg-swap-bloc rounded-15 border p-7">
             <div className="text-txt-label-small flex items-start gap-2 text-sm">
               <Info className="mt-0.5 size-4 shrink-0" />
-              <span>This operation requires no payload. Only the 0.02 RUNE network fee applies.</span>
+              <span>{t('memo.noPayloadInfo')}</span>
             </div>
           </div>
         ) : (
           <div className="flex flex-col gap-1.5">
-            <div className="text-txt-label-small px-2 text-xs font-normal">Amount</div>
+            <div className="text-txt-label-small px-2 text-xs font-normal">{t('amount')}</div>
             <div className="bg-swap-bloc rounded-15 border p-7">
               <div className="flex items-center justify-between">
                 <div className="flex-1">
@@ -196,7 +198,7 @@ export function SendMemo() {
                 <div className="mt-3 flex items-center justify-between">
                   <div className="flex gap-2">
                     <ThemeButton className="h-7 rounded-full" variant="secondarySmall" onClick={() => setAmount('')} disabled={amount === ''}>
-                      Clear
+                      {t('clear')}
                     </ThemeButton>
                     <ThemeButton className="h-7 rounded-full" variant="secondarySmall" onClick={() => setAmount(String(effectiveToken.amount * 0.5))}>
                       50%
@@ -206,7 +208,7 @@ export function SendMemo() {
                     </ThemeButton>
                   </div>
                   <div className="text-txt-label-small text-xs">
-                    Balance: <DecimalText amount={effectiveToken.balance.toSignificant()} symbol={effectiveToken.balance.ticker} />
+                    {t('balanceLabel')} <DecimalText amount={effectiveToken.balance.toSignificant()} symbol={effectiveToken.balance.ticker} />
                   </div>
                 </div>
               )}
@@ -223,19 +225,19 @@ export function SendMemo() {
           {submitting ? (
             <LoaderCircle size={20} className="animate-spin" />
           ) : !thorAccount ? (
-            'Connect THORChain Wallet'
+            t('connectThorchainWallet')
           ) : !memo.trim() ? (
-            'Enter memo'
+            t('enterMemo')
           ) : !zeroPayload && (!amount || numericAmount <= 0) ? (
-            'Enter amount'
+            t('enterAmount')
           ) : (
-            'Send'
+            t('send')
           )}
         </ThemeButton>
       </div>
 
       <div className="text-txt-label-small flex items-center justify-between px-4 text-xs">
-        <div className="flex items-center gap-1">Transaction Fee</div>
+        <div className="flex items-center gap-1">{t('transactionFee')}</div>
         <span>
           <DecimalText amount={txFee.amount.toSignificant()} symbol={txFee.ticker} />
           {feeUsd && ` (${toCurrencyFixed(feeUsd.toCurrency('$', { trimTrailingZeros: false }))})`}

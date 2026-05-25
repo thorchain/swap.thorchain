@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect, useMemo, useState } from 'react'
+import { useTranslations } from 'next-intl'
 import { AssetValue, FeeOption, USwapNumber } from '@tcswap/core'
 import { type InboundAddressesItem, USwapApi } from '@tcswap/helpers/api'
 import { AlertTriangle, LoaderCircle } from 'lucide-react'
@@ -38,6 +39,7 @@ interface SwapLimitCancelProps {
 }
 
 export const SwapLimitCancel = ({ isOpen, onOpenChange, mode, transaction }: SwapLimitCancelProps) => {
+  const t = useTranslations('swap')
   const uSwap = getUSwap()
   const selectedAccount = useSelectedAccount()
   const { openDialog } = useDialog()
@@ -77,9 +79,9 @@ export const SwapLimitCancel = ({ isOpen, onOpenChange, mode, transaction }: Swa
 
     getInboundAddresses()
       .then(addresses => setInboundAddresses(addresses))
-      .catch(() => setError(new Error('Failed to load inbound addresses')))
+      .catch(() => setError(new Error(t('limitCancel.error.loadInboundAddresses'))))
       .finally(() => setLoading(false))
-  }, [isOpen])
+  }, [isOpen, t])
 
   const inboundAddress = inboundAddresses.find(addr => addr.chain === assetFrom.chain)
 
@@ -143,7 +145,7 @@ export const SwapLimitCancel = ({ isOpen, onOpenChange, mode, transaction }: Swa
           { retry: { maxRetries: 0 } }
         )
 
-        if (!reg.suggested_in_asset_amount) throw new Error('Failed to calculate suggested amount')
+        if (!reg.suggested_in_asset_amount) throw new Error(t('error.calculateSuggestedAmount'))
 
         const preflight = await USwapApi.preflightMemoless({
           asset: assetFrom.identifier,
@@ -152,7 +154,7 @@ export const SwapLimitCancel = ({ isOpen, onOpenChange, mode, transaction }: Swa
         })
 
         if (!preflight.data.qr_code_data_url || !preflight.data.inbound_address) {
-          throw new Error('Failed to preflight memoless request')
+          throw new Error(t('error.preflightMemoless'))
         }
 
         const expiration = preflight.data.seconds_remaining ? new Date().getTime() / 1000 + preflight.data.seconds_remaining : undefined
@@ -170,8 +172,8 @@ export const SwapLimitCancel = ({ isOpen, onOpenChange, mode, transaction }: Swa
         })
         toast.success(
           mode === 'cancel'
-            ? `Send ${reg.suggested_in_asset_amount} ${assetFrom.ticker} from the original wallet to cancel`
-            : `Send ${reg.suggested_in_asset_amount} ${assetFrom.ticker} from the original wallet to modify`
+            ? t('limitCancel.toast.sendToCancel', { amount: reg.suggested_in_asset_amount, ticker: assetFrom.ticker })
+            : t('limitCancel.toast.sendToModify', { amount: reg.suggested_in_asset_amount, ticker: assetFrom.ticker })
         )
         return
       }
@@ -194,36 +196,35 @@ export const SwapLimitCancel = ({ isOpen, onOpenChange, mode, transaction }: Swa
         feeOptionKey: FeeOption.Fast
       })
 
-      toast.success(mode === 'cancel' ? 'Cancel transaction submitted' : 'Modify transaction submitted')
+      toast.success(mode === 'cancel' ? t('limitCancel.toast.cancelSubmitted') : t('limitCancel.toast.modifySubmitted'))
       onOpenChange(false)
     } catch (err: any) {
       console.error(`Failed to ${mode} limit swap:`, err)
-      setError(new Error(err.message || `Failed to ${mode} limit swap`))
+      setError(new Error(err.message || (mode === 'cancel' ? t('limitCancel.error.cancelFailed') : t('limitCancel.error.modifyFailed'))))
     } finally {
       setSubmitting(false)
     }
   }
 
   const renderWarnings = () => {
-    const action = mode === 'cancel' ? 'cancel' : 'modify'
     const warnings: string[] = []
 
     if (useMemolessPath) {
-      warnings.push(`To ${action} this order, send the deposit from the original ${chainLabel(assetFrom.chain)} wallet that placed it`)
+      warnings.push(t('limitCancel.warning.memolessDeposit', { mode, chain: chainLabel(assetFrom.chain) }))
     } else if (!selectedAccount) {
       if (isMemoless && memolessAsset) {
-        warnings.push(`Connect a ${chainLabel(assetFrom.chain)} wallet or use the memoless deposit to ${action} this order`)
+        warnings.push(t('limitCancel.warning.connectOrMemoless', { mode, chain: chainLabel(assetFrom.chain) }))
       } else {
-        warnings.push(`Connect a ${chainLabel(assetFrom.chain)} wallet to ${action} this order`)
+        warnings.push(t('limitCancel.warning.connect', { mode, chain: chainLabel(assetFrom.chain) }))
       }
     } else if (selectedAccount.network !== assetFrom.chain) {
-      warnings.push(`Switch to a ${chainLabel(assetFrom.chain)} wallet to ${action} this order`)
+      warnings.push(t('limitCancel.warning.switch', { mode, chain: chainLabel(assetFrom.chain) }))
     } else if (addressFrom && selectedAccount.address.toLowerCase() !== addressFrom.toLowerCase()) {
-      warnings.push(`Connected wallet does not match the address that placed this order`)
+      warnings.push(t('limitCancel.warning.addressMismatch'))
     }
 
     if (!useMemolessPath && (inboundAddress?.halted || inboundAddress?.chain_trading_paused)) {
-      warnings.push(`${chainLabel(assetFrom.chain)} trading is currently paused`)
+      warnings.push(t('limitCancel.warning.tradingPaused', { chain: chainLabel(assetFrom.chain) }))
     }
 
     if (warnings.length === 0) return null
@@ -241,8 +242,16 @@ export const SwapLimitCancel = ({ isOpen, onOpenChange, mode, transaction }: Swa
   }
 
   const isModify = mode === 'modify'
-  const title = isModify ? 'Modify Limit Order' : 'Cancel Limit Order'
-  const buttonLabel = submitting ? (isModify ? 'Modifying...' : 'Cancelling...') : loading ? 'Loading...' : isModify ? 'Modify Order' : 'Cancel Order'
+  const title = isModify ? t('limitCancel.titleModify') : t('limitCancel.titleCancel')
+  const buttonLabel = submitting
+    ? isModify
+      ? t('limitCancel.button.modifying')
+      : t('limitCancel.button.cancelling')
+    : loading
+      ? t('limitCancel.button.loading')
+      : isModify
+        ? t('limitCancel.button.modifyOrder')
+        : t('limitCancel.button.cancelOrder')
 
   return (
     <Credenza open={isOpen} onOpenChange={onOpenChange}>
@@ -288,7 +297,7 @@ export const SwapLimitCancel = ({ isOpen, onOpenChange, mode, transaction }: Swa
                 <div className="border-t p-4">
                   <div className="flex gap-4">
                     <div className="flex-1 space-y-1">
-                      <div className="text-txt-label-small flex items-center text-xs font-medium">When 1 {assetFrom?.ticker} is worth</div>
+                      <div className="text-txt-label-small flex items-center text-xs font-medium">{t('limit.whenWorth', { ticker: assetFrom?.ticker ?? '' })}</div>
                       <DecimalInput
                         className="text-txt-high-contrast w-full bg-transparent text-lg font-semibold outline-none"
                         amount={(pricePerUnit ?? currentPricePerUnit)?.toSignificant() ?? ''}
@@ -297,13 +306,14 @@ export const SwapLimitCancel = ({ isOpen, onOpenChange, mode, transaction }: Swa
                       />
                       {differencePercent && !differencePercent.eq(0) && (
                         <div className="text-txt-label-small text-xs font-medium">
-                          {differencePercent.gte(0) ? '+' : ''}
-                          {differencePercent.toFixed(1)}% from current
+                          {t('limitCancel.fromCurrent', {
+                            percent: `${differencePercent.gte(0) ? '+' : ''}${differencePercent.toFixed(1)}`
+                          })}
                         </div>
                       )}
                     </div>
                     <div className="flex-1 space-y-1 text-right">
-                      <div className="text-txt-label-small text-xs font-medium">You will get</div>
+                      <div className="text-txt-label-small text-xs font-medium">{t('limitCancel.youWillGet')}</div>
                       <DecimalInput
                         className="text-txt-high-contrast w-full bg-transparent text-right text-lg font-semibold outline-none"
                         amount={totalAmount?.toSignificant() ?? amountTo}
@@ -318,9 +328,7 @@ export const SwapLimitCancel = ({ isOpen, onOpenChange, mode, transaction }: Swa
             </div>
 
             <p className="text-txt-label-small text-sm">
-              {isModify
-                ? 'Modifying this limit order will update the target price. A small network fee will be charged to process the modification.'
-                : 'Cancelling this limit order will return your deposited funds to your wallet. A small network fee will be charged to process the cancellation.'}
+              {isModify ? t('limitCancel.descriptionModify') : t('limitCancel.descriptionCancel')}
             </p>
 
             {renderWarnings()}

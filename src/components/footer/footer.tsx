@@ -1,5 +1,6 @@
 'use client'
 
+import { useTranslations } from 'next-intl'
 import { Icon } from '@/components/icons'
 import { Tooltip } from '@/components/tooltip'
 import { AppConfig } from '@/config'
@@ -9,25 +10,26 @@ import { Separator } from '../ui/separator'
 
 export function FooterContent({ className }: { className?: string }) {
   const { openDialog } = useDialog()
+  const t = useTranslations('footer')
 
   return (
     <div className={className}>
       <div className="text-txt-med-contrast flex items-center justify-between gap-4 text-xs">
         <div className="flex h-4 items-center gap-2">
           <a href={AppConfig.privacyPolicyLink} rel="noopener noreferrer" target="_blank">
-            Privacy Policy
+            {t('privacyPolicy')}
           </a>
           <Separator orientation="vertical" className="h-full" />
           <a href={AppConfig.tosLink} rel="noopener noreferrer" target="_blank">
-            Terms of Use
+            {t('termsOfUse')}
           </a>
           <Separator orientation="vertical" className="h-full" />
-          <Tooltip content="While this website is built with care it may have unintended bugs which may lead to site malfunctioning and even loss of funds. Proceed only if you understand and accept these risks.">
-            <span className="cursor-default font-semibold text-red-500">Risk Policy</span>
+          <Tooltip content={t('riskTooltip')}>
+            <span className="cursor-default font-semibold text-red-500">{t('riskPolicy')}</span>
           </Tooltip>
           <Separator orientation="vertical" className="h-full" />
           <div className="flex items-center gap-1">
-            <span>Built by</span>
+            <span>{t('builtBy')}</span>
             <Icon name="unstoppable" className="size-3" />
             <a className="underline" href="https://x.com/unstoppablebyhs" rel="noopener noreferrer" target="_blank">
               Unstoppable Wallet
@@ -36,11 +38,11 @@ export function FooterContent({ className }: { className?: string }) {
         </div>
         <div className="flex h-4 items-center gap-2">
           <div onClick={() => openDialog(ReportBug, {})} className="flex cursor-pointer items-center gap-1 underline transition-colors">
-            Report a Bug
+            {t('reportBug')}
           </div>
           <Separator orientation="vertical" className="h-full" />
           <a className="flex items-center gap-2 underline" href={AppConfig.discordLink} rel="noopener noreferrer" target="_blank">
-            Get Support in Discord <Icon width={20} height={20} viewBox="0 0 20 20" name="discord" />
+            {t('getSupport')} <Icon width={20} height={20} viewBox="0 0 20 20" name="discord" />
           </a>
         </div>
       </div>

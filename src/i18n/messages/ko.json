@@ -1,0 +1,464 @@
+{
+  "menu": {
+    "swap": "스왑",
+    "bond": "본딩",
+    "memo": "메모",
+    "launchApp": "앱 실행",
+    "socials": "소셜 미디어",
+    "language": "언어",
+    "newsletterPitch": "THORChain 소식을 가장 빠르게 받아보는 방법",
+    "emailPlaceholder": "이메일을 입력하세요",
+    "signUp": "구독하기",
+    "signingUp": "구독 중…",
+    "subscribed": "구독해 주셔서 감사합니다!",
+    "genericError": "문제가 발생했습니다"
+  },
+  "header": {
+    "wallet": "지갑",
+    "history": "내역"
+  },
+  "footer": {
+    "privacyPolicy": "개인정보처리방침",
+    "termsOfUse": "이용약관",
+    "riskPolicy": "위험 정책",
+    "riskTooltip": "이 웹사이트는 주의 깊게 제작되었지만, 의도치 않은 버그로 인해 사이트 오작동이나 자금 손실이 발생할 수 있습니다. 이러한 위험을 이해하고 동의하는 경우에만 진행하세요.",
+    "builtBy": "제작",
+    "reportBug": "버그 신고",
+    "getSupport": "Discord에서 지원받기",
+    "bug": {
+      "title": "버그 신고",
+      "success": "감사합니다! 신고가 전송되었습니다.",
+      "close": "닫기",
+      "emailLabel": "이메일 (선택)",
+      "descriptionLabel": "설명",
+      "descriptionPlaceholder": "버그를 설명해 주세요…",
+      "attachmentLabel": "첨부파일 (선택)",
+      "attachFile": "파일 첨부",
+      "sending": "전송 중…",
+      "send": "신고 보내기",
+      "failed": "신고 전송에 실패했습니다"
+    }
+  },
+  "swap": {
+    "tab": {
+      "swap": "스왑",
+      "limit": "지정가"
+    },
+    "input": {
+      "sell": "판매",
+      "buy": "구매",
+      "clear": "지우기"
+    },
+    "balance": {
+      "label": "잔액:"
+    },
+    "button": {
+      "limitNotSupported": "지정가 주문 미지원",
+      "temporarilyUnavailable": "일시적으로 사용 불가",
+      "enterAmount": "금액 입력",
+      "quoting": "견적 중…",
+      "noValidQuotes": "유효한 견적 없음",
+      "enterLimitPrice": "지정가 입력",
+      "enterLimitOrder": "지정가 주문 입력",
+      "swap": "스왑",
+      "connectWallet": "{chain} 지갑 연결",
+      "insufficientBalance": "잔액 부족",
+      "approve": "{ticker} 승인"
+    },
+    "toast": {
+      "approvalTransaction": "승인 트랜잭션",
+      "success": "성공",
+      "errorSubmitting": "트랜잭션 제출 오류",
+      "submittingTransaction": "트랜잭션 제출 중",
+      "transactionSubmitted": "트랜잭션 제출됨"
+    },
+    "confirm": {
+      "titleLimit": "지정가 주문 확인",
+      "titleSwap": "스왑 확인",
+      "notAvailable": "해당 없음",
+      "swapArrowLabel": "스왑",
+      "chainAddress": "{chain} 주소",
+      "sourceAddressTooltip": "이 스왑의 자금을 보내는 지갑 주소입니다.",
+      "destinationAddressTooltip": "스왑된 자금을 받을 지갑 주소입니다.",
+      "refundAddress": "환불 주소",
+      "refundAddressTooltip": "스왑을 완료할 수 없는 경우 자금이 반환될 주소입니다.",
+      "limitPrice": "지정가",
+      "limitPriceTooltip": "지정가 주문이 실행될 단위당 가격입니다. 주문은 시장이 이 가격에 도달할 때만 체결됩니다.",
+      "targetAmount": "목표 금액",
+      "targetAmountTooltip": "지정가 주문이 지정한 가격에 실행될 때 받게 될 정확한 금액입니다.",
+      "minimumPayout": "최소 수령액",
+      "minimumPayoutTooltip": "{protection} 가격 보호 설정에서 받도록 보장되는 최소 금액입니다. 시장이 충분히 변동하여 이보다 적게 받게 되는 경우 스왑이 취소되고 환불됩니다.",
+      "notProtected": "보호되지 않음",
+      "priceImpact": "가격 영향",
+      "priceImpactTooltip": "스왑이 풀 가격을 얼마나 변동시키는지를 나타냅니다. 가용 유동성 대비 스왑 규모가 클수록 가격 영향이 커집니다.",
+      "slippageTolerance": "슬리피지 허용 범위",
+      "slippageToleranceTooltip1": "{protection} 가격 보호와 가격 영향 간의 차이입니다.",
+      "slippageToleranceTooltip2": "견적을 본 시점과 스왑이 완료되는 사이에 가격이 변할 수 있습니다. 슬리피지 허용 범위는 스왑이 취소되기 전에 허용할 최대 가격 변동입니다.",
+      "includedFees": "포함된 수수료",
+      "includedFeesTooltip": "이 수수료는 이미 환율에 포함되어 있어 별도로 지불하지 않습니다.",
+      "estimatedTime": "예상 시간",
+      "gasFee": "{chain} 가스 수수료",
+      "exchange": "거래소",
+      "button": "확인",
+      "buttonLimit": "지정가 주문 확인",
+      "confirming": "확인 중"
+    },
+    "warning": {
+      "highPriceImpact": "가격 영향이 슬리피지 허용 범위에 추가로 적용된다는 점을 이해합니다. 이 스왑의 높은 가격 영향을 수락합니다",
+      "sendExact": "지정된 금액을 자기수탁 지갑에서 정확히 보내야 한다는 점을 이해합니다. 스마트 컨트랙트 지갑, 거래소 주소, 위임 주소 또는 EIP 7702 지갑에서 보낼 경우 다음과 같은 결과가 발생함을 이해합니다",
+      "lossOfFunds": "자금 손실.",
+      "ltcMweb": "LTC MWEB 주소를 사용할 경우 다음과 같은 결과가 발생함을 이해합니다",
+      "selfCustody": "자기수탁 지갑을 사용해야 한다는 점을 이해합니다. 스마트 컨트랙트 지갑, 거래소 주소, 위임 주소 또는 EIP 7702 지갑을 사용할 경우 다음과 같은 결과가 발생함을 이해합니다"
+    },
+    "instant": {
+      "sendTitle": "{asset} 보내기",
+      "sendDescription": "자기수탁 지갑에서 아래 주소로 정확히 <b>{amount} {ticker}</b>을(를) 보내세요.",
+      "qrCodeAlt": "QR 코드",
+      "expiresIn": "만료까지"
+    },
+    "error": {
+      "memoMissing": "메모가 없습니다",
+      "calculateSuggestedAmount": "권장 금액을 계산하지 못했습니다",
+      "preflightRequest": "사전 점검 요청에 실패했습니다",
+      "preflightMemoless": "메모리스 사전 점검 요청에 실패했습니다",
+      "minAmountNoWallet": "지갑을 연결하지 않은 경우 최소 스왑 금액은 {amount} {ticker}입니다",
+      "unknown": "알 수 없는 오류"
+    },
+    "feeDialog": {
+      "title": "환율에 포함된 수수료",
+      "description": "이 수수료는 이미 환율에 포함되어 있어 별도로 지불하지 않습니다.",
+      "liquidityFee": "유동성 수수료",
+      "liquidityFeeInfo": "경로의 유동성 공급자를 위한 수수료",
+      "outboundFee": "아웃바운드 수수료",
+      "outboundFeeInfo": "아웃바운드 트랜잭션 전송 수수료",
+      "platformFee": "플랫폼 수수료",
+      "platformFeeInfo": "{app}에서 부과하는 수수료"
+    },
+    "expiry": {
+      "title": "만료 시간 설정",
+      "days": "일",
+      "hours": "시간",
+      "minutes": "분",
+      "maxExpiry": "최대 만료 기간은 {days}일입니다",
+      "apply": "적용"
+    },
+    "limit": {
+      "whenWorth": "1 {ticker}의 가치가 다음에 도달할 때",
+      "expiresIn": "만료",
+      "oneHour": "1시간",
+      "oneDay": "1일",
+      "threeDays": "3일",
+      "custom": "사용자 지정",
+      "market": "시장가"
+    },
+    "limitCancel": {
+      "titleModify": "지정가 주문 수정",
+      "titleCancel": "지정가 주문 취소",
+      "descriptionModify": "이 지정가 주문을 수정하면 목표 가격이 업데이트됩니다. 수정을 처리하기 위해 소액의 네트워크 수수료가 부과됩니다.",
+      "descriptionCancel": "이 지정가 주문을 취소하면 입금된 자금이 지갑으로 반환됩니다. 취소를 처리하기 위해 소액의 네트워크 수수료가 부과됩니다.",
+      "fromCurrent": "현재 대비 {percent}%",
+      "youWillGet": "받게 될 금액",
+      "button": {
+        "modifying": "수정 중…",
+        "cancelling": "취소 중…",
+        "loading": "로딩 중…",
+        "modifyOrder": "주문 수정",
+        "cancelOrder": "주문 취소"
+      },
+      "error": {
+        "loadInboundAddresses": "인바운드 주소를 불러오지 못했습니다",
+        "cancelFailed": "지정가 스왑 취소에 실패했습니다",
+        "modifyFailed": "지정가 스왑 수정에 실패했습니다"
+      },
+      "toast": {
+        "sendToCancel": "취소하려면 원래 지갑에서 {amount} {ticker}을(를) 보내세요",
+        "sendToModify": "수정하려면 원래 지갑에서 {amount} {ticker}을(를) 보내세요",
+        "cancelSubmitted": "취소 트랜잭션이 제출되었습니다",
+        "modifySubmitted": "수정 트랜잭션이 제출되었습니다"
+      },
+      "warning": {
+        "memolessDeposit": "이 주문을 {mode}하려면 주문을 넣은 원래 {chain} 지갑에서 입금을 보내세요",
+        "connectOrMemoless": "이 주문을 {mode}하려면 {chain} 지갑을 연결하거나 메모리스 입금을 사용하세요",
+        "connect": "이 주문을 {mode}하려면 {chain} 지갑을 연결하세요",
+        "switch": "이 주문을 {mode}하려면 {chain} 지갑으로 전환하세요",
+        "addressMismatch": "연결된 지갑이 이 주문을 넣은 주소와 일치하지 않습니다",
+        "tradingPaused": "{chain} 거래가 현재 일시 중단되어 있습니다"
+      }
+    },
+    "quoteTimer": {
+      "refresh": "새로고침"
+    },
+    "recipient": {
+      "addressPlaceholder": "{chain} 주소",
+      "paste": "붙여넣기",
+      "invalidAddress": "유효하지 않은 {chain} 주소",
+      "titleAddresses": "주소 입력",
+      "titleReceiving": "받는 주소 입력",
+      "enterRefundAddress": "환불 주소 입력:",
+      "enterReceivingAddress": "받는 주소 입력:",
+      "preparingSwap": "스왑 준비 중",
+      "next": "다음"
+    },
+    "selectAsset": {
+      "title": "코인 선택",
+      "allChains": "모든 체인",
+      "search": "검색",
+      "secured": "시큐어드",
+      "trade": "트레이드",
+      "currentlyUnavailable": "현재 사용 불가",
+      "selected": "선택됨"
+    },
+    "settings": {
+      "noProtection": "보호 없음",
+      "priceProtection": "가격 보호",
+      "priceProtectionTooltip1": "가격 영향은 스왑이 풀 가격을 얼마나 변동시키는지를 나타냅니다. 가용 유동성 대비 스왑 규모가 클수록 영향이 커집니다.",
+      "priceProtectionTooltip2": "견적을 본 시점과 스왑이 완료되는 사이에 가격이 변할 수 있습니다. 슬리피지 허용 범위는 스왑이 취소되기 전에 허용할 최대 가격 변동입니다.",
+      "priceProtectionDescription": "스왑에 지출할 의향이 있는 최대 금액입니다. 여기에는 스왑의 가격 영향과 스왑이 실행되기 전 토큰 가격의 슬리피지가 포함됩니다.",
+      "twapTitle": "시간 가중 평균 가격 (TWAP)",
+      "twapTooltip1": "THORChain의 TWAP 거래는 문서와 코드에서 \"스트리밍 스왑\"이라고 부릅니다.",
+      "twapTooltip2": "체결 가격이 가장 불리한 즉시 매도 주문을 넣으려면 서브 스왑 수에 1을, 서브 스왑 간 시간에 1블록을 입력하세요.",
+      "twapDescription": "대부분의 사용자는 기본 설정을 사용해야 합니다. 전문 트레이더만 이 설정을 변경해야 합니다",
+      "numberOfSubSwaps": "서브 스왑 수",
+      "numberOfSubSwapsTooltip": "주문을 서브 스왑이라는 더 작은 거래로 나눕니다. 서브 스왑이 많을수록 체결 가격이 좋아집니다. 0으로 설정하면 각 서브 스왑의 슬리피지가 5 bps가 되도록 프로토콜이 서브 스왑 수를 계산해 줍니다. 기본값은 0입니다.",
+      "timeBetweenSubSwaps": "서브 스왑 간 시간",
+      "timeBetweenSubSwapsTooltip": "각 서브 스왑 사이의 시간으로, 블록 단위로 측정됩니다. 서브 스왑 사이의 블록 수가 많을수록 체결 가격이 좋아집니다. 0블록을 선택하면 더 빠른 실행을 위해 매 블록마다 여러 서브 스왑을 수행합니다. 기본값은 0블록입니다.",
+      "blocksCount": "{count}블록",
+      "rapidSwap": "빠른 스왑",
+      "seconds": "약 {count}초",
+      "reset": "초기화",
+      "save": "저장"
+    }
+  },
+  "send": {
+    "title": "보내기",
+    "send": "보내기",
+    "amount": "금액",
+    "clear": "지우기",
+    "balanceLabel": "잔액:",
+    "to": "받는 사람",
+    "addressPlaceholder": "{chain} 주소",
+    "paste": "붙여넣기",
+    "transactionFee": "트랜잭션 수수료",
+    "selectCoin": "코인 선택",
+    "connectThorchainWallet": "THORChain 지갑 연결",
+    "enterMemo": "메모 입력",
+    "enterAmount": "금액 입력",
+    "toast": {
+      "submitting": "트랜잭션 제출 중…",
+      "submitted": "트랜잭션이 제출되었습니다",
+      "submitError": "트랜잭션 제출 중 오류가 발생했습니다"
+    },
+    "error": {
+      "walletNotConnectedReconnect": "지갑이 연결되지 않았습니다. 다시 연결해 주세요.",
+      "walletNotConnected": "지갑이 연결되지 않았습니다.",
+      "invalidAddress": "유효하지 않은 {chain} 주소",
+      "noRuneBalance": "RUNE 잔액을 찾을 수 없습니다.",
+      "noTcyBalance": "TCY 잔액을 찾을 수 없습니다."
+    },
+    "beta": {
+      "title": "베타 기능입니다",
+      "description": "발견되지 않은 버그가 있을 수 있습니다. 사용에 따른 위험은 본인 책임입니다!"
+    },
+    "memo": {
+      "title": "메모",
+      "examplesButton": "메모 예시",
+      "placeholder": "메모 입력",
+      "noPayloadInfo": "이 작업에는 금액이 필요하지 않습니다. 0.02 RUNE의 네트워크 수수료만 적용됩니다."
+    },
+    "bond": {
+      "bondAmount": "본딩 금액",
+      "rebondAmount": "리본딩 금액",
+      "nodeAddress": "노드 주소",
+      "newAddress": "새 주소",
+      "enterNodeAddress": "노드 주소 입력",
+      "invalidNodeAddress": "유효하지 않은 노드 주소",
+      "validatingNode": "노드 확인 중…",
+      "nodeNotFound": "노드를 찾을 수 없습니다",
+      "enterNewAddress": "새 주소 입력",
+      "invalidNewAddress": "유효하지 않은 새 주소",
+      "bond": "BOND",
+      "unbond": "UNBOND",
+      "rebond": "REBOND",
+      "nodeNotFoundOrUnavailable": "노드를 찾을 수 없거나 사용할 수 없습니다.",
+      "tab": {
+        "bond": "BOND",
+        "unbond": "UNBOND",
+        "rebond": "REBOND",
+        "track": "추적"
+      },
+      "node": {
+        "version": "버전",
+        "ipAddress": "IP 주소",
+        "status": "상태",
+        "providers": "제공자",
+        "yourShare": "내 지분",
+        "slashPoints": "슬래시 포인트",
+        "operatorFee": "운영자 수수료",
+        "information": "노드 정보",
+        "bond": "본딩",
+        "nextReward": "다음 보상"
+      }
+    },
+    "stake": {
+      "stakeAmount": "스테이킹 금액",
+      "unstakeAmount": "언스테이킹 금액",
+      "compound": "복리",
+      "checking": "확인 중…",
+      "claim": "수령",
+      "nothingToClaim": "수령할 항목 없음",
+      "stake": "스테이킹",
+      "unstake": "언스테이킹",
+      "stakedLabel": "스테이킹됨:",
+      "wallet": "지갑",
+      "availableToClaim": "수령 가능",
+      "staked": "스테이킹됨",
+      "claimAmount": "수령 금액",
+      "compoundInfo": "수령 대기 중인 TCY 스테이킹 보상을 스테이킹 포지션에 복리로 재투자합니다.",
+      "tab": {
+        "stake": "스테이킹",
+        "unstake": "언스테이킹",
+        "compound": "복리",
+        "claim": "수령"
+      }
+    },
+    "examples": {
+      "back": "뒤로",
+      "copied": "클립보드에 복사되었습니다",
+      "copyMemo": "{label} 메모 복사",
+      "fillInValues": "값 입력 →",
+      "learnMore": "자세히 보기",
+      "optional": "선택 사항",
+      "optionalPlaceholder": "{hint} (비워두면 생략됩니다)",
+      "preview": "미리보기",
+      "useMemo": "메모 사용",
+      "badgeNoPayload": "금액 없음",
+      "badgeDust": "더스트",
+      "items": {
+        "stakeTcy": "TCY 스테이킹",
+        "unstakeTcy": "TCY 언스테이킹",
+        "claimTcy": "TCY 수령",
+        "depositRunepool": "RUNEPool 입금",
+        "withdrawRunepool": "RUNEPool 출금",
+        "bond": "BOND",
+        "unbond": "UNBOND",
+        "rebond": "REBOND",
+        "leave": "LEAVE",
+        "whitelistBondProvider": "본드 제공자 화이트리스트 추가",
+        "unwhitelistBondProvider": "본드 제공자 화이트리스트 제거",
+        "addLpSingle": "유동성 추가 (단방향)",
+        "addLpDual": "유동성 추가 (양방향)",
+        "withdrawLp": "유동성 출금",
+        "donateToPool": "풀에 기부"
+      },
+      "placeholder": {
+        "nodeAddress": "노드 주소",
+        "providerAddress": "제공자 주소",
+        "newAddress": "새 주소",
+        "thorAddress": "THORChain 주소",
+        "pairedAddress": "페어 주소",
+        "affiliate": "제휴",
+        "pool": "풀",
+        "asset": "자산",
+        "amount": "금액",
+        "basisPoints": "베이시스 포인트",
+        "fee": "수수료 (베이시스 포인트)",
+        "thorPrefix": "thor1…",
+        "pairedAddressHint": "외부 체인 주소",
+        "affiliateHint": "THORName 또는 thor1… 주소",
+        "poolHint": "예: BTC.BTC 또는 ETH/ETH",
+        "assetHint": "예: BTC.BTC 또는 RUNE (단방향)",
+        "amountHint": "1e8 형식 — 예: 100000000 = 1 RUNE",
+        "basisPointsHint": "0 – 10000 (10000 = 100%)",
+        "feeHint": "0 – 10000"
+      }
+    }
+  },
+  "wallet": {
+    "chains": "체인",
+    "deselectAll": "전체 선택 해제",
+    "selectAll": "전체 선택",
+    "soon": "곧 출시",
+    "connectNamed": "{name} 연결",
+    "connected": "연결됨",
+    "disconnected": "연결 해제됨",
+    "install": "설치",
+    "connectWallet": "지갑 연결",
+    "derivationPath": "파생 경로",
+    "selectAccountType": "계정 유형 선택",
+    "index": "인덱스",
+    "ledgerUnlockHint": "연결하기 전에 Ledger가 잠금 해제되어 있고 {app} 앱이 열려 있는지 확인하세요.",
+    "correspondingApp": "해당",
+    "createNewWallet": "새 지갑 만들기",
+    "createWalletInstructions": "이 12개의 단어를 적어 오프라인에 안전하게 보관하세요. 이 12단어 구문은 지갑 개인 키를 복구하는 데 사용됩니다.",
+    "copyPhrase": "구문 복사",
+    "confirmSavedPassphrase": "나중에 계정을 복구할 수 있도록 패스프레이즈를 안전하게 저장했음을 확인합니다.",
+    "back": "뒤로",
+    "next": "다음",
+    "setupDecryptionPassword": "복호화 비밀번호 설정",
+    "setupPasswordInstructions": "생성한 지갑을 암호화할 강력한 비밀번호를 입력하세요. 이것이 지갑에 접근하는 방법입니다.",
+    "enterPassword": "비밀번호 입력",
+    "confirmPassword": "비밀번호 확인",
+    "passwordMustMatch": "비밀번호가 일치해야 합니다",
+    "create": "만들기",
+    "error": {
+      "invalidFileType": "잘못된 파일 형식입니다. JSON 또는 TXT 파일을 업로드하세요."
+    },
+    "importKeystore": "Keystore 가져오기",
+    "selectOrDragKeystore": "Keystore 파일을 선택하거나 끌어서 업로드하세요",
+    "decryptionPassword": "복호화 비밀번호",
+    "password": "비밀번호",
+    "import": "가져오기",
+    "importSeedPhrase": "시드 구문 가져오기",
+    "typeSeedPhrase": "시드 구문을 입력하세요",
+    "openKeystore": "Keystore 열기",
+    "noTokensFound": "토큰을 찾을 수 없습니다",
+    "addressCopied": "주소가 복사되었습니다",
+    "copyAddress": "주소 복사",
+    "disconnectWallet": "{name} 연결 해제",
+    "noCoins": "코인 없음",
+    "sidebar": {
+      "title": "지갑"
+    },
+    "sortWallets": "지갑 정렬",
+    "sortBy": "정렬 기준",
+    "sortByName": "이름 (A-Z)",
+    "sortByBalance": "잔액 (높음 → 낮음)",
+    "externalWalletMode": "외부 지갑 모드",
+    "externalWalletModeDescription": "주문을 입력하고 스왑 버튼을 클릭한 후 안내를 따르세요",
+    "externalWalletModeWarning": "외부 지갑 모드에서 지원되지 않는 자산이 있으면 브라우저 내 지갑을 연결하라는 안내가 표시됩니다",
+    "close": "닫기",
+    "sendToken": "{ticker} 보내기"
+  },
+  "common": {
+    "close": "닫기"
+  },
+  "tx": {
+    "title": "내역",
+    "today": "오늘",
+    "yesterday": "어제",
+    "onlyCreatorModify": "원래 스왑을 만든 사람만 수정할 수 있습니다",
+    "limitPrice": "지정가",
+    "expiresIn": "만료까지",
+    "showQr": "QR 보기",
+    "modify": "수정",
+    "cancelOrder": "주문 취소",
+    "sourceAddress": "보내는 주소",
+    "destinationAddress": "받는 주소",
+    "remaining": "{time} 남음",
+    "status": {
+      "not_started": "입금 대기 중",
+      "pending": "대기 중",
+      "swapping": "스왑 중",
+      "completed": "완료됨",
+      "failed": "실패",
+      "expired": "만료됨",
+      "refunded": "환불됨",
+      "unknown": "알 수 없음"
+    },
+    "leg": {
+      "deposit": "{ticker} 입금",
+      "send": "{ticker} 보내기",
+      "swap": "{from}을(를) {to}(으)로 스왑"
+    }
+  }
+}

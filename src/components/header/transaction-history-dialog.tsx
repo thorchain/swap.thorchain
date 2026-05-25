@@ -6,6 +6,7 @@ import { ProviderName } from '@tcswap/helpers'
 import { format, formatDuration, intervalToDuration, isSameDay, isToday, isYesterday } from 'date-fns'
 import { CircleAlert, CircleCheck, ClockFading, Crosshair, Undo2, X } from 'lucide-react'
 import { toast } from 'sonner'
+import { useTranslations } from 'next-intl'
 import { Credenza, CredenzaContent, CredenzaHeader, CredenzaTitle } from '@/components/ui/credenza'
 import { ScrollArea } from '@/components/ui/scroll-area'
 import { AssetIcon } from '@/components/asset-icon'
@@ -35,6 +36,7 @@ export const TransactionHistoryDialog = ({ isOpen, onOpenChange }: HistoryDialog
   const selectedAccount = useSelectedAccount()
   const [expandTx, setExpandTx] = useState<string | null>(null)
   const { openDialog } = useDialog()
+  const t = useTranslations('tx')
 
   const identifiers = useMemo(() => transactions.flatMap(t => [t.assetFrom.identifier, t.assetTo.identifier]), [transactions])
 
@@ -47,10 +49,10 @@ export const TransactionHistoryDialog = ({ isOpen, onOpenChange }: HistoryDialog
   const now = new Date()
   const formatDate = (date: Date): string => {
     if (isToday(date)) {
-      return 'Today'
+      return t('today')
     }
     if (isYesterday(date)) {
-      return 'Yesterday'
+      return t('yesterday')
     }
     return format(date, 'd MMMM')
   }
@@ -58,7 +60,7 @@ export const TransactionHistoryDialog = ({ isOpen, onOpenChange }: HistoryDialog
   const onLimitModify = (mode: 'cancel' | 'modify', tx: Transaction) => {
     const isMemoless = !!tx.qrCodeData
     if (!isMemoless && selectedAccount?.network !== tx.assetFrom.chain) {
-      return toast.error('Only the original swap creator can modify')
+      return toast.error(t('onlyCreatorModify'))
     }
 
     openDialog(SwapLimitCancel, {
@@ -79,7 +81,7 @@ export const TransactionHistoryDialog = ({ isOpen, onOpenChange }: HistoryDialog
     <Credenza open={isOpen} onOpenChange={onOpenChange}>
       <CredenzaContent className="flex h-auto max-h-5/6 flex-col md:max-w-xl">
         <CredenzaHeader>
-          <CredenzaTitle className="text-txt-high-contrast text-base font-semibold md:text-2xl">History</CredenzaTitle>
+          <CredenzaTitle className="text-txt-high-contrast text-base font-semibold md:text-2xl">{t('title')}</CredenzaTitle>
         </CredenzaHeader>
 
         <ScrollArea className="flex min-h-0 flex-1 px-4 md:px-8" classNameViewport="flex-1 h-auto">
@@ -102,13 +104,10 @@ export const TransactionHistoryDialog = ({ isOpen, onOpenChange }: HistoryDialog
 
               const isExpanded = expandTx === tx.uid
 
-              let statusTitle = status.replace('_', ' ')
-              if (status === 'not_started') {
-                statusTitle = 'Deposit Pending'
-              }
+              const statusTitle = t.has(`status.${status}`) ? t(`status.${status}`) : status.replace('_', ' ')
 
               const isLimitSwapPending = !!tx.limitSwapMemo && isTxPending(status)
-              const showRemainingTime = statusTitle === 'pending' && tx.estimatedTime
+              const showRemainingTime = status === 'pending' && tx.estimatedTime
               const limitPricePerUnit = tx.limitPrice ? new USwapNumber(tx.limitPrice) : null
               const limitFiatPerUnit = limitPricePerUnit && rateTo ? rateTo.mul(limitPricePerUnit) : null
               const showQrCode = () => {
@@ -202,7 +201,7 @@ export const TransactionHistoryDialog = ({ isOpen, onOpenChange }: HistoryDialog
                       <div className="mt-3 border-t">
                         {limitPricePerUnit && (
                           <div className="flex items-center justify-between px-1 pt-3 pb-1 text-xs font-semibold">
-                            <span className="text-txt-label-small">Limit price</span>
+                            <span className="text-txt-label-small">{t('limitPrice')}</span>
                             <span className="text-txt-high-contrast">
                               1 {tx.assetFrom.ticker} = <DecimalText amount={limitPricePerUnit.toSignificant()} /> {tx.assetTo.ticker}
                               {limitFiatPerUnit && (
@@ -218,7 +217,7 @@ export const TransactionHistoryDialog = ({ isOpen, onOpenChange }: HistoryDialog
                             {showRQ && tx.expiration && (
                               <div className="text-txt-label-small flex-1 pl-1 text-xs font-semibold">
                                 <span>
-                                  Expires in &nbsp;
+                                  {t('expiresIn')} &nbsp;
                                   {formatDuration(
                                     intervalToDuration({
                                       start: now.getTime(),
@@ -231,17 +230,17 @@ export const TransactionHistoryDialog = ({ isOpen, onOpenChange }: HistoryDialog
                             )}
                             {showRQ && (
                               <ThemeButton variant="primarySmallTransparent" onClick={showQrCode}>
-                                Show QR
+                                {t('showQr')}
                               </ThemeButton>
                             )}
                             {showLimitSwapActions && (
                               <ThemeButton className="rounded-none" variant="primarySmallTransparent" onClick={() => onLimitModify('modify', tx)}>
-                                Modify
+                                {t('modify')}
                               </ThemeButton>
                             )}
                             {showLimitSwapActions && (
                               <ThemeButton className="rounded-none" variant="primarySmallTransparent" onClick={() => onLimitModify('cancel', tx)}>
-                                Cancel Order
+                                {t('cancelOrder')}
                               </ThemeButton>
                             )}
                           </div>
@@ -254,7 +253,7 @@ export const TransactionHistoryDialog = ({ isOpen, onOpenChange }: HistoryDialog
                         <div className="mt-3 space-y-4 border-t py-4 text-xs font-semibold">
                           {details.fromAddress && (
                             <div className="text-txt-label-small flex items-center justify-between">
-                              <span>Source Address</span>
+                              <span>{t('sourceAddress')}</span>
                               <div className="flex items-center gap-2">
                                 <span className="text-txt-high-contrast">{truncate(details.fromAddress)}</span>
                                 <CopyButton text={details.fromAddress} />
@@ -263,7 +262,7 @@ export const TransactionHistoryDialog = ({ isOpen, onOpenChange }: HistoryDialog
                           )}
 
                           <div className="text-txt-label-small flex items-center justify-between">
-                            <span>Destination Address</span>
+                            <span>{t('destinationAddress')}</span>
                             <div className="flex items-center gap-2">
                               <span className="text-txt-high-contrast">{truncate(details.toAddress)}</span>
                               <CopyButton text={details.toAddress} />
@@ -273,7 +272,7 @@ export const TransactionHistoryDialog = ({ isOpen, onOpenChange }: HistoryDialog
 
                         <div className="space-y-4 border-t py-4 text-xs font-semibold">
                           {details.legs.map((legTx: any, i: number) => {
-                            return <div key={i}>{renderLeg(tx, legTx)}</div>
+                            return <div key={i}>{renderLeg(tx, legTx, t)}</div>
                           })}
                         </div>
                       </>
@@ -302,6 +301,7 @@ export const TransactionHistoryDialog = ({ isOpen, onOpenChange }: HistoryDialog
 }
 
 function RemainingTime({ startTime, estimatedTime, fallback }: { startTime: number; estimatedTime: number; fallback: string }) {
+  const t = useTranslations('tx')
   const [now, setNow] = useState(Date.now())
 
   useEffect(() => {
@@ -314,19 +314,19 @@ function RemainingTime({ startTime, estimatedTime, fallback }: { startTime: numb
 
   if (remainingSeconds <= 0) return <span className="capitalize">{fallback}</span>
 
-  return <>{formatExpiration(remainingSeconds)} remaining</>
+  return <>{t('remaining', { time: formatExpiration(remainingSeconds) })}</>
 }
 
-function renderLeg(tx: any, legTx: any) {
+function renderLeg(tx: any, legTx: any, t: ReturnType<typeof useTranslations>) {
   const from = assetFromString(legTx.fromAsset)
   const to = assetFromString(legTx.toAsset)
 
   const text =
     legTx.fromAsset === legTx.toAsset
       ? legTx.fromAsset.toLowerCase() === tx.assetFrom.identifier.toLowerCase()
-        ? `Deposit ${from.ticker}`
-        : `Send ${to.ticker}`
-      : `Swap ${from.ticker} to ${to.ticker}`
+        ? t('leg.deposit', { ticker: from.ticker ?? '' })
+        : t('leg.send', { ticker: to.ticker ?? '' })
+      : t('leg.swap', { from: from.ticker ?? '', to: to.ticker ?? '' })
 
   const chain = ChainIdToChain[legTx.chainId as ChainId]
   const explorerUrl = legTx.hash && getExplorerTxUrl({ chain: chain, txHash: legTx.hash })

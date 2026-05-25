@@ -1,6 +1,7 @@
 'use client'
 
 import { useRef, useState } from 'react'
+import { useTranslations } from 'next-intl'
 import { CheckCircle, Paperclip, X } from 'lucide-react'
 import { Dialog, DialogContent, DialogTitle } from '@/components/ui/dialog'
 import { Input } from '@/components/ui/input'
@@ -18,6 +19,7 @@ type AttachmentFile = {
 }
 
 export function ReportBug({ isOpen, onOpenChange }: ReportBugProps) {
+  const t = useTranslations('footer.bug')
   const [email, setEmail] = useState('')
   const [description, setDescription] = useState('')
   const [attachment, setAttachment] = useState<AttachmentFile | null>(null)
@@ -48,7 +50,7 @@ export function ReportBug({ isOpen, onOpenChange }: ReportBugProps) {
         body: JSON.stringify({ email: email.trim() || undefined, description, attachment })
       })
       const data = await res.json()
-      if (!res.ok) throw new Error(data.error ?? 'Failed to send report')
+      if (!res.ok) throw new Error(data.error ?? t('failed'))
       setSubmitted(true)
     } catch (err: any) {
       setError(err.message)
@@ -72,7 +74,7 @@ export function ReportBug({ isOpen, onOpenChange }: ReportBugProps) {
     <Dialog open={isOpen} onOpenChange={handleClose}>
       <DialogContent showCloseButton={false} className="h-auto max-w-md p-8">
         <div className="mb-6 flex items-center justify-between">
-          <DialogTitle>Report a Bug</DialogTitle>
+          <DialogTitle>{t('title')}</DialogTitle>
           <button onClick={handleClose} className="text-txt-med-contrast hover:text-txt-high-contrast cursor-pointer transition-colors">
             <X className="size-5" />
           </button>
@@ -81,15 +83,15 @@ export function ReportBug({ isOpen, onOpenChange }: ReportBugProps) {
         {submitted ? (
           <div className="flex flex-col items-center gap-4 py-6 text-center">
             <CheckCircle className="size-12 text-green-500" />
-            <p className="text-txt-high-contrast font-medium">Thank you! Your report has been sent.</p>
+            <p className="text-txt-high-contrast font-medium">{t('success')}</p>
             <ThemeButton variant="primarySmall" className="w-full rounded-xl py-5 text-lg" onClick={handleClose}>
-              Close
+              {t('close')}
             </ThemeButton>
           </div>
         ) : (
           <div className="flex flex-col gap-4">
             <div>
-              <div className="text-txt-med-contrast mb-2 text-sm">Email (optional)</div>
+              <div className="text-txt-med-contrast mb-2 text-sm">{t('emailLabel')}</div>
               <Input
                 type="email"
                 placeholder="your@email.com"
@@ -101,10 +103,10 @@ export function ReportBug({ isOpen, onOpenChange }: ReportBugProps) {
 
             <div>
               <div className="text-txt-med-contrast mb-2 text-sm">
-                Description <span className="text-red-500">*</span>
+                {t('descriptionLabel')} <span className="text-red-500">*</span>
               </div>
               <Textarea
-                placeholder="Describe the bug..."
+                placeholder={t('descriptionPlaceholder')}
                 value={description}
                 onChange={e => setDescription(e.target.value)}
                 className="bg-input-modal-bg text-txt-high-contrast min-h-28"
@@ -112,7 +114,7 @@ export function ReportBug({ isOpen, onOpenChange }: ReportBugProps) {
             </div>
 
             <div>
-              <div className="text-txt-med-contrast mb-2 text-sm">Attachment (optional)</div>
+              <div className="text-txt-med-contrast mb-2 text-sm">{t('attachmentLabel')}</div>
               <input ref={fileInputRef} type="file" className="hidden" onChange={handleFileChange} />
               {attachment ? (
                 <div className="flex items-center gap-2 rounded-xl border px-3 py-2 text-sm">
@@ -128,7 +130,7 @@ export function ReportBug({ isOpen, onOpenChange }: ReportBugProps) {
                   className="text-txt-med-contrast hover:text-txt-high-contrast flex w-full cursor-pointer items-center gap-2 rounded-xl border px-3 py-2 text-sm transition-colors"
                 >
                   <Paperclip className="size-4" />
-                  Attach a file
+                  {t('attachFile')}
                 </button>
               )}
             </div>
@@ -141,7 +143,7 @@ export function ReportBug({ isOpen, onOpenChange }: ReportBugProps) {
               onClick={handleSubmit}
               disabled={!description.trim() || isSubmitting}
             >
-              {isSubmitting ? 'Sending...' : 'Send Report'}
+              {isSubmitting ? t('sending') : t('send')}
             </ThemeButton>
           </div>
         )}

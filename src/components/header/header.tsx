@@ -2,6 +2,7 @@
 
 import Image from 'next/image'
 import { useEffect, useState } from 'react'
+import { useTranslations } from 'next-intl'
 import { WalletIcon } from '@/components/wallet-icon'
 import { GlobalMenuButton } from '@/components/global-menu/global-menu-button'
 import { ThemeSwitchButton } from '@/components/header/theme-switch-button'
@@ -14,6 +15,7 @@ import { useConnectedWallets } from '@/hooks/use-wallets'
 import { cn } from '@/lib/utils'
 
 export function Header() {
+  const t = useTranslations('header')
   const { openDialog } = useDialog()
   const connectedProviders = useConnectedWallets()
   const [isScrolled, setIsScrolled] = useState(false)
@@ -57,7 +59,7 @@ export function Header() {
             </div>
           ) : (
             <ThemeButton variant="outlineSmall" onClick={() => openDialog(WalletSidebar, {})}>
-              WALLET
+              {t('wallet')}
             </ThemeButton>
           )}
           <GlobalMenuButton />

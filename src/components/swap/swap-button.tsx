@@ -1,5 +1,6 @@
 import { EVMChain } from '@tcswap/core'
 import { QuoteResponseRoute } from '@tcswap/helpers/api'
+import { useTranslations } from 'next-intl'
 import { LoaderCircle } from 'lucide-react'
 import { toast } from 'sonner'
 import { chainLabel } from '@/components/connect-wallet/config'
@@ -30,6 +31,7 @@ interface ButtonState {
 }
 
 export const SwapButton = ({ instantSwapSupported, instantSwapAvailable }: SwapButtonProps) => {
+  const t = useTranslations('swap')
   const assetFrom = useAssetFrom()
   const assetTo = useAssetTo()
   const uSwap = getUSwap()
@@ -58,24 +60,24 @@ export const SwapButton = ({ instantSwapSupported, instantSwapAvailable }: SwapB
 
   const getState = (): ButtonState => {
     if (isLimitSwap && isLimitSwapDisabled) {
-      return { text: isMayaChain ? 'Limit Order Not Supported' : 'Temporarily Not Available', spinner: false, accent: false }
+      return { text: isMayaChain ? t('button.limitNotSupported') : t('button.temporarilyUnavailable'), spinner: false, accent: false }
     }
 
     if (!assetFrom || !assetTo) return { text: '', spinner: true, accent: false }
 
-    if (valueFrom.eqValue(0)) return { text: 'Enter Amount', spinner: false, accent: false }
+    if (valueFrom.eqValue(0)) return { text: t('button.enterAmount'), spinner: false, accent: false }
 
-    if (isQuoting || isSimulating) return { text: 'Quoting...', spinner: true, accent: false }
+    if (isQuoting || isSimulating) return { text: t('button.quoting'), spinner: true, accent: false }
 
-    if (!quote) return { text: 'No Valid Quotes', spinner: false, accent: false }
+    if (!quote) return { text: t('button.noValidQuotes'), spinner: false, accent: false }
 
     if (isLimitSwap && limitSwapBuyAmount === '0') {
-      return { text: 'Enter limit price', spinner: false, accent: false }
+      return { text: t('button.enterLimitPrice'), spinner: false, accent: false }
     }
 
     if (!selectedAccount) {
       if (instantSwapSupported) {
-        const label = isLimitSwap ? 'Enter Limit Order' : 'Swap'
+        const label = isLimitSwap ? t('button.enterLimitOrder') : t('button.swap')
         if (!instantSwapAvailable) {
           return { text: label, spinner: false, accent: false }
         }
@@ -83,7 +85,7 @@ export const SwapButton = ({ instantSwapSupported, instantSwapAvailable }: SwapB
         return { text: label, spinner: false, accent: true, onClick: () => onInstantSwap(quote) }
       } else {
         return {
-          text: `Connect ${chainLabel(assetFrom.chain)} Wallet`,
+          text: t('button.connectWallet', { chain: chainLabel(assetFrom.chain) }),
           spinner: false,
           accent: false,
           onClick: () => {
@@ -96,7 +98,7 @@ export const SwapButton = ({ instantSwapSupported, instantSwapAvailable }: SwapB
 
     if (isBalanceLoading || !balance || balance.spendable.lt(valueFrom)) {
       return {
-        text: 'Insufficient Balance',
+        text: t('button.insufficientBalance'),
         spinner: false,
         accent: false
       }
@@ -104,7 +106,7 @@ export const SwapButton = ({ instantSwapSupported, instantSwapAvailable }: SwapB
 
     if (approveData) {
       return {
-        text: `Approve ${assetFrom.ticker}`,
+        text: t('button.approve', { ticker: assetFrom.ticker }),
         spinner: false,
         accent: false,
         onClick: async () => {
@@ -122,16 +124,16 @@ export const SwapButton = ({ instantSwapSupported, instantSwapAvailable }: SwapB
             })
 
           toast.promise(promise, {
-            loading: 'Approval Transaction',
-            success: 'Success',
-            error: (err: any) => err.message || 'Error Submitting Transaction'
+            loading: t('toast.approvalTransaction'),
+            success: t('toast.success'),
+            error: (err: any) => err.message || t('toast.errorSubmitting')
           })
         }
       }
     }
 
     return {
-      text: isLimitSwap ? 'Enter Limit Order' : 'Swap',
+      text: isLimitSwap ? t('button.enterLimitOrder') : t('button.swap'),
       spinner: false,
       accent: true,
       onClick: () => onSwap(quote)

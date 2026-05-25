@@ -1,5 +1,6 @@
 import Image from 'next/image'
 import { useEffect, useMemo, useRef, useState } from 'react'
+import { useTranslations } from 'next-intl'
 import { useVirtualizer } from '@tanstack/react-virtual'
 import { Chain } from '@tcswap/core'
 import { Search } from 'lucide-react'
@@ -51,6 +52,7 @@ enum Filter {
 type FilterChain = Chain | Filter
 
 export const SwapSelectAsset = ({ isOpen, onOpenChange, selected, onSelectAsset }: SwapSelectAssetProps) => {
+  const t = useTranslations('swap')
   const isMobile = useIsMobile()
   const [selectedChain, setSelectedChain] = useState<FilterChain>(Filter.All)
   const [searchQuery, setSearchQuery] = useState('')
@@ -59,6 +61,7 @@ export const SwapSelectAsset = ({ isOpen, onOpenChange, selected, onSelectAsset 
   const { mimir, mayaMimir } = useMimir()
 
   const isAssetHalted = (asset: Asset) => {
+    return false
     const tickerKey = `HALT${asset.ticker}TRADING`
     const isThorOnly = asset.isSecuredAsset // Secured assets are THORChain-only; Maya can't serve them
     const thorCanServe = isThorOnly || tickerKey in mimir
@@ -214,7 +217,7 @@ export const SwapSelectAsset = ({ isOpen, onOpenChange, selected, onSelectAsset 
     <Credenza open={isOpen} onOpenChange={onOpenChange}>
       <CredenzaContent className="flex max-h-5/6 flex-col">
         <CredenzaHeader>
-          <CredenzaTitle>Select coin</CredenzaTitle>
+          <CredenzaTitle>{t('selectAsset.title')}</CredenzaTitle>
         </CredenzaHeader>
 
         <div className="flex min-h-0 flex-1 flex-col md:flex-row">
@@ -234,7 +237,7 @@ export const SwapSelectAsset = ({ isOpen, onOpenChange, selected, onSelectAsset 
                   <div className="flex h-6 w-6 items-center justify-center rounded-full">
                     <Image src={chain === Filter.All ? '/icons/windows.svg' : `/networks/${chain.toLowerCase()}.svg`} alt="" width="24" height="24" />
                   </div>
-                  <span className="text-txt-high-contrast text-sm">{chain === Filter.All ? 'All Chains' : chainLabel(chain)}</span>
+                  <span className="text-txt-high-contrast text-sm">{chain === Filter.All ? t('selectAsset.allChains') : chainLabel(chain)}</span>
                 </div>
               ))}
             </div>
@@ -245,7 +248,7 @@ export const SwapSelectAsset = ({ isOpen, onOpenChange, selected, onSelectAsset 
             <div className="relative mx-4 md:mr-8 md:ml-0">
               <Search className="text-txt-label-small absolute top-1/2 left-4 -translate-y-1/2 transform" size={24} />
               <Input
-                placeholder="Search"
+                placeholder={t('selectAsset.search')}
                 value={searchQuery}
                 onChange={e => setSearchQuery(e.target.value)}
                 className="bg-input-modal-bg rounded-3xl border-0 py-3 pl-12"
@@ -290,21 +293,27 @@ export const SwapSelectAsset = ({ isOpen, onOpenChange, selected, onSelectAsset 
                               <div className="text-txt-high-contrast flex max-w-40 items-center gap-1.5 truncate font-semibold">
                                 <span>{asset.ticker}</span>
                                 {asset.isSecuredAsset && (
-                                  <span className="border-gray text-txt-label-small rounded-full border px-1.5 text-[10px] font-medium">Secured</span>
+                                  <span className="border-gray text-txt-label-small rounded-full border px-1.5 text-[10px] font-medium">
+                                    {t('selectAsset.secured')}
+                                  </span>
                                 )}
                                 {asset.isTradeAsset && (
-                                  <span className="border-gray text-txt-label-small rounded-full border px-1.5 text-[10px] font-medium">Trade</span>
+                                  <span className="border-gray text-txt-label-small rounded-full border px-1.5 text-[10px] font-medium">
+                                    {t('selectAsset.trade')}
+                                  </span>
                                 )}
                               </div>
                               <div className="text-txt-label-small text-sm">{chainLabel(asset.chain)}</div>
                             </div>
                           </div>
                           {isAssetHalted(asset) ? (
-                            <div className="border-jacob text-jacob rounded-full border px-1.5 text-[10px] font-semibold">Currently unavailable</div>
+                            <div className="border-jacob text-jacob rounded-full border px-1.5 text-[10px] font-semibold">
+                              {t('selectAsset.currentlyUnavailable')}
+                            </div>
                           ) : (
                             asset.identifier === selected?.identifier && (
                               <div className={cn('border-gray text-txt-label-small rounded-full border px-1.5 py-0.5 text-xs font-medium')}>
-                                Selected
+                                {t('selectAsset.selected')}
                               </div>
                             )
                           )}

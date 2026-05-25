@@ -2,11 +2,13 @@
 
 import Image from 'next/image'
 import * as DialogPrimitive from '@radix-ui/react-dialog'
-import { useRef, useState } from 'react'
 import Lottie, { LottieRefCurrentProps } from 'lottie-react'
+import { useRef, useState } from 'react'
+import { useTranslations } from 'next-intl'
 import { VisuallyHidden } from '@radix-ui/react-visually-hidden'
 import { X } from 'lucide-react'
 import { Dialog, DialogPortal } from '@/components/ui/dialog'
+import { LanguageSwitcher } from './language-switcher'
 import { AppConfig } from '@/config'
 import { cn } from '@/lib/utils'
 import { bondAnim, memoAnim, swapAnim, tcyAnim } from './animations'
@@ -170,6 +172,7 @@ function resolveHref(path: string): string {
 }
 
 export function GlobalMenu({ isOpen, onOpenChange }: SendMemoMenuProps) {
+  const t = useTranslations('menu')
   const [newsletterEmail, setNewsletterEmail] = useState('')
   const [newsletterStatus, setNewsletterStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle')
   const [newsletterError, setNewsletterError] = useState('')
@@ -189,11 +192,11 @@ export function GlobalMenu({ isOpen, onOpenChange }: SendMemoMenuProps) {
         setNewsletterEmail('')
       } else {
         const data = await res.json().catch(() => ({}))
-        setNewsletterError((data as { error?: string }).error ?? 'Something went wrong')
+        setNewsletterError((data as { error?: string }).error ?? t('genericError'))
         setNewsletterStatus('error')
       }
     } catch {
-      setNewsletterError('Something went wrong')
+      setNewsletterError(t('genericError'))
       setNewsletterStatus('error')
     }
   }
@@ -201,10 +204,10 @@ export function GlobalMenu({ isOpen, onOpenChange }: SendMemoMenuProps) {
   const closeMenu = () => onOpenChange(false)
 
   const tiles: TileProps[] = [
-    { label: 'Swap', animationData: swapAnim, href: resolveHref('/'), onClick: closeMenu },
+    { label: t('swap'), animationData: swapAnim, href: resolveHref('/'), onClick: closeMenu },
     { label: '$TCY', animationData: tcyAnim, href: resolveHref('/tcy'), onClick: closeMenu },
-    { label: 'Bond', animationData: bondAnim, href: resolveHref('/bond'), onClick: closeMenu },
-    { label: 'Memo', animationData: memoAnim, href: resolveHref('/memo'), onClick: closeMenu }
+    { label: t('bond'), animationData: bondAnim, href: resolveHref('/bond'), onClick: closeMenu },
+    { label: t('memo'), animationData: memoAnim, href: resolveHref('/memo'), onClick: closeMenu }
   ]
 
   return (
@@ -244,7 +247,7 @@ export function GlobalMenu({ isOpen, onOpenChange }: SendMemoMenuProps) {
                   onClick={closeMenu}
                   className="group bg-green-default hidden items-center gap-2.5 rounded-full border border-transparent px-4.5 py-2.5 text-[15px] font-medium text-black transition-colors hover:bg-white md:flex"
                 >
-                  <RollingText text="Launch App" />
+                  <RollingText text={t('launchApp')} />
                   <span className="relative flex size-4.25 shrink-0 items-center justify-center overflow-hidden rounded-full border border-black transition-all duration-300 group-hover:scale-150 group-hover:bg-black">
                     <span
                       aria-hidden="true"
@@ -290,7 +293,7 @@ export function GlobalMenu({ isOpen, onOpenChange }: SendMemoMenuProps) {
               <div className="flex flex-col gap-20">
                 {/* Socials */}
                 <div className="flex flex-col gap-10">
-                  <span className="text-xl font-medium text-white">Socials</span>
+                  <span className="text-xl font-medium text-white">{t('socials')}</span>
                   <ul className="flex flex-wrap gap-1.75 md:grid md:grid-cols-2 md:gap-x-20 md:gap-y-5">
                     {SOCIAL_LINKS.map(link => (
                       <li key={link.label}>
@@ -319,18 +322,21 @@ export function GlobalMenu({ isOpen, onOpenChange }: SendMemoMenuProps) {
                   </ul>
                 </div>
 
+                {/* Language */}
+                <LanguageSwitcher />
+
                 {/* Newsletter */}
                 <div className="hidden flex-col gap-5 md:flex">
-                  <p className="text-lg leading-snug font-medium text-white">The best way to stay up to date on THORChain</p>
+                  <p className="text-lg leading-snug font-medium text-white">{t('newsletterPitch')}</p>
                   {newsletterStatus === 'success' ? (
-                    <p className="text-green-default text-base">Thanks for subscribing!</p>
+                    <p className="text-green-default text-base">{t('subscribed')}</p>
                   ) : (
                     <form className="flex max-w-175 flex-col gap-2" onSubmit={handleNewsletterSubmit}>
                       <div className="flex rounded-[10px] bg-white px-3.75 py-3">
                         <label className="grow">
                           <input
                             type="email"
-                            placeholder="Enter your email"
+                            placeholder={t('emailPlaceholder')}
                             className="size-full bg-transparent text-lg text-neutral-950 placeholder:text-neutral-400 focus:outline-none"
                             value={newsletterEmail}
                             onChange={e => setNewsletterEmail(e.target.value)}
@@ -343,7 +349,7 @@ export function GlobalMenu({ isOpen, onOpenChange }: SendMemoMenuProps) {
                           disabled={newsletterStatus === 'loading'}
                           className="hover:border-neutral-650 hover:bg-neutral-650 cursor-pointer rounded-[5px] border border-black bg-neutral-950 px-3.75 py-2.5 text-[15px] text-white transition-colors disabled:opacity-60"
                         >
-                          {newsletterStatus === 'loading' ? 'Signing up…' : 'Sign Up'}
+                          {newsletterStatus === 'loading' ? t('signingUp') : t('signUp')}
                         </button>
                       </div>
                       {newsletterStatus === 'error' && <p className="text-sm text-red-400">{newsletterError}</p>}
@@ -360,7 +366,7 @@ export function GlobalMenu({ isOpen, onOpenChange }: SendMemoMenuProps) {
                 onClick={closeMenu}
                 className="group bg-green-default flex h-23.25 w-full items-center justify-center rounded-[5px] text-[18px] font-medium text-black transition-colors hover:bg-white"
               >
-                <RollingText text="Launch App" />
+                <RollingText text={t('launchApp')} />
               </a>
             </div>
           </div>

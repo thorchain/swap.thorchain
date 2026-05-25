@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { useTranslations } from 'next-intl'
 import { DropdownMenu, DropdownMenuContent, DropdownMenuTrigger } from '@/components/ui/dropdown-menu'
 import { Separator } from '@/components/ui/separator'
 import { Slider } from '@/components/ui/slider'
@@ -25,6 +26,7 @@ function sliderIndexToQuantity(index: number): number {
 }
 
 export const SwapSettings = () => {
+  const t = useTranslations('swap')
   const slippage = useSlippage()
   const setSlippage = useSetSlippage()
   const customInterval = useCustomInterval()
@@ -38,7 +40,7 @@ export const SwapSettings = () => {
   const [localCustomQuantity, setLocalCustomQuantity] = useState(customQuantity)
 
   const enabledSteps = [...Array(22).keys(), 25]
-  const ramExpansions = [slippageValues[0], 'No Protection']
+  const ramExpansions = [slippageValues[0], t('settings.noProtection')]
   const currentSlippage = slippageValues[sliderValue[0]]
 
   const handleValueChange = (newValue: [number]) => {
@@ -81,22 +83,17 @@ export const SwapSettings = () => {
           <div className="flex flex-col gap-2">
             <div className="flex justify-between text-sm font-semibold">
               <div className="flex items-center gap-1">
-                <span>Price Protection</span>
+                <span>{t('settings.priceProtection')}</span>
                 <InfoTooltip>
-                  Price impact is how much your swap moves the pool's price. The larger your swap relative to available liquidity, the higher the
-                  impact.
+                  {t('settings.priceProtectionTooltip1')}
                   <br />
                   <br />
-                  During the time between seeing a quote and your swap completing, prices can change. Slippage tolerance is the maximum price change
-                  you'll accept before the swap is cancelled.
+                  {t('settings.priceProtectionTooltip2')}
                 </InfoTooltip>
               </div>
-              <span>{currentSlippage ? `${currentSlippage}%` : 'No Protection'}</span>
+              <span>{currentSlippage ? `${currentSlippage}%` : t('settings.noProtection')}</span>
             </div>
-            <span className="text-txt-label-small text-xs">
-              The most you are willing to spend on a swap. This includes the price impact of your swap and any slippage on the token prices before the
-              swap is executed.
-            </span>
+            <span className="text-txt-label-small text-xs">{t('settings.priceProtectionDescription')}</span>
           </div>
           <div className="w-full">
             <Slider
@@ -124,28 +121,22 @@ export const SwapSettings = () => {
           <div className="flex flex-col gap-2">
             <div className="flex justify-between text-sm font-semibold">
               <div className="flex items-center gap-1">
-                <span>Time Weighted Average Price (TWAP)</span>
+                <span>{t('settings.twapTitle')}</span>
                 <InfoTooltip>
-                  TWAP trades on THORChain are called "streaming swaps" in the documents and code. <br /> <br />
-                  To place an instant sell order, which will result in the worst price execution, enter 1 for the number of sub-swaps and 1 block for
-                  the time between sub-swaps.
+                  {t('settings.twapTooltip1')} <br /> <br />
+                  {t('settings.twapTooltip2')}
                 </InfoTooltip>
               </div>
             </div>
-            <span className="text-txt-label-small text-xs">
-              The vast majority of users should use the default settings. Only expert traders should change these settings
-            </span>
+            <span className="text-txt-label-small text-xs">{t('settings.twapDescription')}</span>
           </div>
 
           <div className="flex flex-col gap-4">
             <div className="flex flex-col gap-2">
               <div className="flex items-center justify-between">
                 <span className="text-sm font-semibold">
-                  <span className="me-1">Number of sub-swaps</span>
-                  <InfoTooltip>
-                    Break up your order into smaller trades called sub-swaps. The more sub-swaps, the better price execution. When set to zero, the
-                    protocol will calculate the number of sub-swaps for you so that each one will have a slippage of 5 bps. The default value is zero.
-                  </InfoTooltip>
+                  <span className="me-1">{t('settings.numberOfSubSwaps')}</span>
+                  <InfoTooltip>{t('settings.numberOfSubSwapsTooltip')}</InfoTooltip>
                 </span>
                 <span className="text-xs font-semibold">{localCustomQuantity}</span>
               </div>
@@ -166,13 +157,10 @@ export const SwapSettings = () => {
             <div className="flex flex-col gap-2">
               <div className="flex items-center justify-between">
                 <span className="text-sm font-semibold">
-                  <span className="me-1">Time between sub-swaps</span>
-                  <InfoTooltip>
-                    Time between each sub-swap measured in blocks. The more blocks between each sub-swap, the better the price execution. Choosing
-                    zero blocks will do multiple sub-swaps every block for faster execution. The default value is zero blocks.
-                  </InfoTooltip>
+                  <span className="me-1">{t('settings.timeBetweenSubSwaps')}</span>
+                  <InfoTooltip>{t('settings.timeBetweenSubSwapsTooltip')}</InfoTooltip>
                 </span>
-                <span className="text-xs font-semibold">{localCustomInterval} blocks</span>
+                <span className="text-xs font-semibold">{t('settings.blocksCount', { count: localCustomInterval })}</span>
               </div>
               <Slider
                 max={3}
@@ -182,20 +170,20 @@ export const SwapSettings = () => {
               />
               <div className="text-txt-label-small mt-1 flex items-center justify-between text-center text-[10px] font-semibold">
                 <div className="flex flex-col">
-                  <span>0 blocks</span>
-                  <span>Rapid Swap</span>
+                  <span>{t('settings.blocksCount', { count: 0 })}</span>
+                  <span>{t('settings.rapidSwap')}</span>
                 </div>
                 <div className="flex flex-col">
-                  <span>1 block</span>
-                  <span>~6 seconds</span>
+                  <span>{t('settings.blocksCount', { count: 1 })}</span>
+                  <span>{t('settings.seconds', { count: 6 })}</span>
                 </div>
                 <div className="flex flex-col">
-                  <span>2 blocks</span>
-                  <span>~12 seconds</span>
+                  <span>{t('settings.blocksCount', { count: 2 })}</span>
+                  <span>{t('settings.seconds', { count: 12 })}</span>
                 </div>
                 <div className="flex flex-col">
-                  <span>3 blocks</span>
-                  <span>~18 seconds</span>
+                  <span>{t('settings.blocksCount', { count: 3 })}</span>
+                  <span>{t('settings.seconds', { count: 18 })}</span>
                 </div>
               </div>
             </div>
@@ -215,7 +203,7 @@ export const SwapSettings = () => {
               }}
               disabled={slippage === INITIAL_SLIPPAGE && customInterval === INITIAL_CUSTOM_INTERVAL && customQuantity === INITIAL_CUSTOM_QUANTITY}
             >
-              Reset
+              {t('settings.reset')}
             </ThemeButton>
 
             <ThemeButton
@@ -229,7 +217,7 @@ export const SwapSettings = () => {
               }}
               disabled={currentSlippage === slippage && localCustomInterval === customInterval && localCustomQuantity === customQuantity}
             >
-              Save
+              {t('settings.save')}
             </ThemeButton>
           </div>
         </div>

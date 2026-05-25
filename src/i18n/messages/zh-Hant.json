@@ -1,0 +1,464 @@
+{
+  "menu": {
+    "swap": "兌換",
+    "bond": "綁定",
+    "memo": "備忘",
+    "launchApp": "啟動應用程式",
+    "socials": "社群媒體",
+    "language": "語言",
+    "newsletterPitch": "及時掌握 THORChain 最新動態的最佳方式",
+    "emailPlaceholder": "輸入您的電子郵件",
+    "signUp": "訂閱",
+    "signingUp": "訂閱中…",
+    "subscribed": "感謝您的訂閱！",
+    "genericError": "發生錯誤"
+  },
+  "header": {
+    "wallet": "錢包",
+    "history": "歷史記錄"
+  },
+  "footer": {
+    "privacyPolicy": "隱私權政策",
+    "termsOfUse": "使用條款",
+    "riskPolicy": "風險政策",
+    "riskTooltip": "本網站雖經精心建置，但仍可能存在意外漏洞，導致網站故障甚至資金損失。請在充分理解並接受這些風險後再繼續。",
+    "builtBy": "建置者",
+    "reportBug": "回報問題",
+    "getSupport": "在 Discord 取得支援",
+    "bug": {
+      "title": "回報問題",
+      "success": "謝謝！您的報告已送出。",
+      "close": "關閉",
+      "emailLabel": "電子郵件（選填）",
+      "descriptionLabel": "描述",
+      "descriptionPlaceholder": "請描述該問題…",
+      "attachmentLabel": "附件（選填）",
+      "attachFile": "新增附件",
+      "sending": "傳送中…",
+      "send": "傳送報告",
+      "failed": "報告傳送失敗"
+    }
+  },
+  "swap": {
+    "tab": {
+      "swap": "兌換",
+      "limit": "限價"
+    },
+    "input": {
+      "sell": "賣出",
+      "buy": "買入",
+      "clear": "清除"
+    },
+    "balance": {
+      "label": "餘額："
+    },
+    "button": {
+      "limitNotSupported": "不支援限價訂單",
+      "temporarilyUnavailable": "暫時無法使用",
+      "enterAmount": "輸入金額",
+      "quoting": "報價中…",
+      "noValidQuotes": "無有效報價",
+      "enterLimitPrice": "輸入限價",
+      "enterLimitOrder": "提交限價訂單",
+      "swap": "兌換",
+      "connectWallet": "連接 {chain} 錢包",
+      "insufficientBalance": "餘額不足",
+      "approve": "授權 {ticker}"
+    },
+    "toast": {
+      "approvalTransaction": "授權交易",
+      "success": "成功",
+      "errorSubmitting": "提交交易出錯",
+      "submittingTransaction": "正在提交交易",
+      "transactionSubmitted": "交易已提交"
+    },
+    "confirm": {
+      "titleLimit": "確認限價訂單",
+      "titleSwap": "確認兌換",
+      "notAvailable": "無",
+      "swapArrowLabel": "兌換",
+      "chainAddress": "{chain} 地址",
+      "sourceAddressTooltip": "為本次兌換傳送資金的錢包地址。",
+      "destinationAddressTooltip": "將接收兌換後資金的錢包地址。",
+      "refundAddress": "退款地址",
+      "refundAddressTooltip": "如果兌換無法完成，資金將退回到該地址。",
+      "limitPrice": "限價",
+      "limitPriceTooltip": "您的限價訂單將執行的單價。訂單僅在市場達到此價格時才會成交。",
+      "targetAmount": "目標金額",
+      "targetAmountTooltip": "當您的限價訂單以指定價格執行時，您將收到的確切金額。",
+      "minimumPayout": "最低到帳",
+      "minimumPayoutTooltip": "這是在您 {protection} 價格保護設定下保證能收到的最低金額。如果市場波動過大，導致您收到的金額少於此值，本次兌換將被取消並退款。",
+      "notProtected": "無保護",
+      "priceImpact": "價格影響",
+      "priceImpactTooltip": "您的兌換對資金池價格的影響程度。相對於可用流動性，您的兌換規模越大，價格影響就越高。",
+      "slippageTolerance": "滑點容差",
+      "slippageToleranceTooltip1": "您的 {protection} 價格保護與價格影響之間的差額。",
+      "slippageToleranceTooltip2": "從您看到報價到兌換完成的這段時間內，價格可能發生變化。滑點容差是指在兌換被取消之前，您願意接受的最大價格變動幅度。",
+      "includedFees": "已含費用",
+      "includedFeesTooltip": "這些費用已包含在匯率中——您無需另行支付。",
+      "estimatedTime": "預計時間",
+      "gasFee": "{chain} Gas 費",
+      "exchange": "兌換平台",
+      "button": "確認",
+      "buttonLimit": "確認限價訂單",
+      "confirming": "確認中"
+    },
+    "warning": {
+      "highPriceImpact": "我理解價格影響是在滑點容差之外另行產生的。我接受本次兌換的高價格影響",
+      "sendExact": "我理解我必須從自我保管錢包準確傳送指定的金額。我理解從智慧型合約錢包、交易所地址、委託地址或 EIP 7702 錢包傳送將導致",
+      "lossOfFunds": "資金損失。",
+      "ltcMweb": "我理解使用 LTC MWEB 地址將導致",
+      "selfCustody": "我理解我必須使用自我保管錢包。我理解使用智慧型合約錢包、交易所地址、委託地址或 EIP 7702 錢包將導致"
+    },
+    "instant": {
+      "sendTitle": "傳送 {asset}",
+      "sendDescription": "請從自我保管錢包向下方地址傳送準確的 <b>{amount} {ticker}</b>。",
+      "qrCodeAlt": "QR 碼",
+      "expiresIn": "剩餘時間"
+    },
+    "error": {
+      "memoMissing": "缺少備忘",
+      "calculateSuggestedAmount": "無法計算建議金額",
+      "preflightRequest": "預檢請求失敗",
+      "preflightMemoless": "無備註預檢請求失敗",
+      "minAmountNoWallet": "未連接錢包時的最低兌換金額為 {amount} {ticker}",
+      "unknown": "未知錯誤"
+    },
+    "feeDialog": {
+      "title": "已含在匯率中的費用",
+      "description": "這些費用已包含在匯率中——您無需另行支付。",
+      "liquidityFee": "流動性費用",
+      "liquidityFeeInfo": "支付給兌換路徑上流動性提供者的費用",
+      "outboundFee": "轉出費用",
+      "outboundFeeInfo": "傳送轉出交易的費用",
+      "platformFee": "平台費用",
+      "platformFeeInfo": "由 {app} 收取的費用"
+    },
+    "expiry": {
+      "title": "設定到期時間",
+      "days": "天",
+      "hours": "小時",
+      "minutes": "分鐘",
+      "maxExpiry": "最長到期時間為 {days} 天",
+      "apply": "套用"
+    },
+    "limit": {
+      "whenWorth": "當 1 {ticker} 價值達到",
+      "expiresIn": "到期時間",
+      "oneHour": "1 小時",
+      "oneDay": "1 天",
+      "threeDays": "3 天",
+      "custom": "自訂",
+      "market": "市價"
+    },
+    "limitCancel": {
+      "titleModify": "修改限價訂單",
+      "titleCancel": "取消限價訂單",
+      "descriptionModify": "修改此限價訂單將更新目標價格。處理該修改操作時會收取少量網路費用。",
+      "descriptionCancel": "取消此限價訂單會將您已存入的資金退回到您的錢包。處理該取消操作時會收取少量網路費用。",
+      "fromCurrent": "較目前價 {percent}%",
+      "youWillGet": "您將獲得",
+      "button": {
+        "modifying": "修改中…",
+        "cancelling": "取消中…",
+        "loading": "載入中…",
+        "modifyOrder": "修改訂單",
+        "cancelOrder": "取消訂單"
+      },
+      "error": {
+        "loadInboundAddresses": "無法載入入站地址",
+        "cancelFailed": "取消限價兌換失敗",
+        "modifyFailed": "修改限價兌換失敗"
+      },
+      "toast": {
+        "sendToCancel": "從原始錢包傳送 {amount} {ticker} 以取消",
+        "sendToModify": "從原始錢包傳送 {amount} {ticker} 以修改",
+        "cancelSubmitted": "取消交易已提交",
+        "modifySubmitted": "修改交易已提交"
+      },
+      "warning": {
+        "memolessDeposit": "要 {mode} 此訂單，請從下單時使用的原始 {chain} 錢包傳送存款",
+        "connectOrMemoless": "連接 {chain} 錢包或使用無備註存款來 {mode} 此訂單",
+        "connect": "連接 {chain} 錢包以 {mode} 此訂單",
+        "switch": "切換到 {chain} 錢包以 {mode} 此訂單",
+        "addressMismatch": "已連接的錢包與下單時使用的地址不相符",
+        "tradingPaused": "{chain} 交易目前已暫停"
+      }
+    },
+    "quoteTimer": {
+      "refresh": "重新整理"
+    },
+    "recipient": {
+      "addressPlaceholder": "{chain} 地址",
+      "paste": "貼上",
+      "invalidAddress": "無效的 {chain} 地址",
+      "titleAddresses": "輸入地址",
+      "titleReceiving": "輸入收款地址",
+      "enterRefundAddress": "輸入退款地址：",
+      "enterReceivingAddress": "輸入收款地址：",
+      "preparingSwap": "準備兌換中",
+      "next": "下一步"
+    },
+    "selectAsset": {
+      "title": "選擇幣種",
+      "allChains": "全部鏈",
+      "search": "搜尋",
+      "secured": "安全資產",
+      "trade": "交易資產",
+      "currentlyUnavailable": "目前無法使用",
+      "selected": "已選擇"
+    },
+    "settings": {
+      "noProtection": "無保護",
+      "priceProtection": "價格保護",
+      "priceProtectionTooltip1": "價格影響是指您的兌換對資金池價格的影響程度。相對於可用流動性，您的兌換規模越大，影響就越高。",
+      "priceProtectionTooltip2": "從您看到報價到兌換完成的這段時間內，價格可能發生變化。滑點容差是指在兌換被取消之前，您願意接受的最大價格變動幅度。",
+      "priceProtectionDescription": "您願意為本次兌換承擔的最大成本。其中包括兌換的價格影響，以及兌換執行前代幣價格產生的任何滑點。",
+      "twapTitle": "時間加權平均價格 (TWAP)",
+      "twapTooltip1": "在 THORChain 上的 TWAP 交易在文件和程式碼中稱為「流式兌換」。",
+      "twapTooltip2": "如要下達即時賣單（這會導致最差的成交價格），請將子兌換次數設為 1，並將子兌換間隔時間設為 1 個區塊。",
+      "twapDescription": "絕大多數使用者應使用預設設定，只有資深交易者才需要更改這些設定",
+      "numberOfSubSwaps": "子兌換次數",
+      "numberOfSubSwapsTooltip": "將您的訂單拆分為多筆較小的交易，即子兌換。子兌換越多，成交價格越優。設為零時，協定會自動為您計算子兌換次數，使每筆的滑點為 5 bps。預設值為零。",
+      "timeBetweenSubSwaps": "子兌換間隔時間",
+      "timeBetweenSubSwapsTooltip": "每筆子兌換之間的時間，以區塊數衡量。間隔的區塊越多，成交價格越優。選擇零個區塊將在每個區塊進行多筆子兌換，以加快執行速度。預設值為零個區塊。",
+      "blocksCount": "{count, plural, one {# 個區塊} other {# 個區塊}}",
+      "rapidSwap": "快速兌換",
+      "seconds": "約 {count, plural, one {# 秒} other {# 秒}}",
+      "reset": "重設",
+      "save": "儲存"
+    }
+  },
+  "send": {
+    "title": "傳送",
+    "send": "傳送",
+    "amount": "金額",
+    "clear": "清除",
+    "balanceLabel": "餘額：",
+    "to": "收款人",
+    "addressPlaceholder": "{chain} 地址",
+    "paste": "貼上",
+    "transactionFee": "交易費用",
+    "selectCoin": "選擇幣種",
+    "connectThorchainWallet": "連接 THORChain 錢包",
+    "enterMemo": "輸入備忘",
+    "enterAmount": "輸入金額",
+    "toast": {
+      "submitting": "正在提交交易…",
+      "submitted": "交易已提交",
+      "submitError": "提交交易時出錯"
+    },
+    "error": {
+      "walletNotConnectedReconnect": "錢包未連接，請重新連接。",
+      "walletNotConnected": "錢包未連接。",
+      "invalidAddress": "無效的 {chain} 地址",
+      "noRuneBalance": "未找到 RUNE 餘額。",
+      "noTcyBalance": "未找到 TCY 餘額。"
+    },
+    "beta": {
+      "title": "這是一項測試功能",
+      "description": "可能存在尚未發現的漏洞，請自行承擔使用風險！"
+    },
+    "memo": {
+      "title": "備忘",
+      "examplesButton": "備忘範例",
+      "placeholder": "輸入備忘",
+      "noPayloadInfo": "此操作無需附帶金額，僅收取 0.02 RUNE 的網路費用。"
+    },
+    "bond": {
+      "bondAmount": "綁定金額",
+      "rebondAmount": "重新綁定金額",
+      "nodeAddress": "節點地址",
+      "newAddress": "新地址",
+      "enterNodeAddress": "輸入節點地址",
+      "invalidNodeAddress": "無效的節點地址",
+      "validatingNode": "正在驗證節點…",
+      "nodeNotFound": "未找到節點",
+      "enterNewAddress": "輸入新地址",
+      "invalidNewAddress": "無效的新地址",
+      "bond": "BOND",
+      "unbond": "UNBOND",
+      "rebond": "REBOND",
+      "nodeNotFoundOrUnavailable": "未找到節點或節點無法使用。",
+      "tab": {
+        "bond": "BOND",
+        "unbond": "UNBOND",
+        "rebond": "REBOND",
+        "track": "追蹤"
+      },
+      "node": {
+        "version": "版本",
+        "ipAddress": "IP 地址",
+        "status": "狀態",
+        "providers": "提供者",
+        "yourShare": "您的份額",
+        "slashPoints": "罰分",
+        "operatorFee": "營運者費用",
+        "information": "節點資訊",
+        "bond": "綁定",
+        "nextReward": "下次獎勵"
+      }
+    },
+    "stake": {
+      "stakeAmount": "質押金額",
+      "unstakeAmount": "解除質押金額",
+      "compound": "複投",
+      "checking": "正在檢查…",
+      "claim": "領取",
+      "nothingToClaim": "無可領取",
+      "stake": "質押",
+      "unstake": "解除質押",
+      "stakedLabel": "已質押：",
+      "wallet": "錢包",
+      "availableToClaim": "可領取",
+      "staked": "已質押",
+      "claimAmount": "領取金額",
+      "compoundInfo": "將您待領取的 TCY 質押獎勵複投回您的質押部位。",
+      "tab": {
+        "stake": "質押",
+        "unstake": "解除質押",
+        "compound": "複投",
+        "claim": "領取"
+      }
+    },
+    "examples": {
+      "back": "返回",
+      "copied": "已複製到剪貼簿",
+      "copyMemo": "複製 {label} 備忘",
+      "fillInValues": "填寫數值 →",
+      "learnMore": "瞭解更多",
+      "optional": "選填",
+      "optionalPlaceholder": "{hint}（留空則省略）",
+      "preview": "預覽",
+      "useMemo": "使用備忘",
+      "badgeNoPayload": "無附帶金額",
+      "badgeDust": "粉塵金額",
+      "items": {
+        "stakeTcy": "質押 TCY",
+        "unstakeTcy": "解除質押 TCY",
+        "claimTcy": "領取 TCY",
+        "depositRunepool": "存入 RUNEPool",
+        "withdrawRunepool": "提取 RUNEPool",
+        "bond": "BOND",
+        "unbond": "UNBOND",
+        "rebond": "REBOND",
+        "leave": "LEAVE",
+        "whitelistBondProvider": "將綁定提供者加入白名單",
+        "unwhitelistBondProvider": "將綁定提供者移出白名單",
+        "addLpSingle": "新增流動性（單邊）",
+        "addLpDual": "新增流動性（雙邊）",
+        "withdrawLp": "提取流動性",
+        "donateToPool": "捐贈到資金池"
+      },
+      "placeholder": {
+        "nodeAddress": "節點地址",
+        "providerAddress": "提供者地址",
+        "newAddress": "新地址",
+        "thorAddress": "THORChain 地址",
+        "pairedAddress": "配對地址",
+        "affiliate": "推薦人",
+        "pool": "資金池",
+        "asset": "資產",
+        "amount": "金額",
+        "basisPoints": "基點",
+        "fee": "費用（基點）",
+        "thorPrefix": "thor1…",
+        "pairedAddressHint": "外部鏈地址",
+        "affiliateHint": "THORName 或 thor1… 地址",
+        "poolHint": "例如 BTC.BTC 或 ETH/ETH",
+        "assetHint": "例如 BTC.BTC 或 RUNE（單邊）",
+        "amountHint": "1e8 格式 — 例如 100000000 = 1 RUNE",
+        "basisPointsHint": "0 – 10000（10000 = 100%）",
+        "feeHint": "0 – 10000"
+      }
+    }
+  },
+  "wallet": {
+    "chains": "網路",
+    "deselectAll": "取消全選",
+    "selectAll": "全選",
+    "soon": "即將推出",
+    "connectNamed": "連接 {name}",
+    "connected": "已連接",
+    "disconnected": "未連接",
+    "install": "安裝",
+    "connectWallet": "連接錢包",
+    "derivationPath": "衍生路徑",
+    "selectAccountType": "選擇帳戶類型",
+    "index": "索引",
+    "ledgerUnlockHint": "連接前請確保您的 Ledger 已解鎖並已開啟 {app} 應用程式。",
+    "correspondingApp": "對應",
+    "createNewWallet": "建立新錢包",
+    "createWalletInstructions": "請將這 12 個單字抄寫下來並離線安全保存。這組 12 字助記詞用於復原您的錢包私鑰。",
+    "copyPhrase": "複製助記詞",
+    "confirmSavedPassphrase": "我確認已安全保存助記詞，以便日後復原我的帳戶。",
+    "back": "返回",
+    "next": "下一步",
+    "setupDecryptionPassword": "設定解密密碼",
+    "setupPasswordInstructions": "請輸入一個強密碼來加密您建立的錢包。這是您存取錢包的方式。",
+    "enterPassword": "輸入密碼",
+    "confirmPassword": "確認密碼",
+    "passwordMustMatch": "密碼必須一致",
+    "create": "建立",
+    "error": {
+      "invalidFileType": "檔案類型無效。請上傳 JSON 或 TXT 檔案。"
+    },
+    "importKeystore": "匯入 Keystore",
+    "selectOrDragKeystore": "選擇或拖曳您的 Keystore 檔案以上傳",
+    "decryptionPassword": "解密密碼",
+    "password": "密碼",
+    "import": "匯入",
+    "importSeedPhrase": "匯入助記詞",
+    "typeSeedPhrase": "輸入您的助記詞",
+    "openKeystore": "開啟 Keystore",
+    "noTokensFound": "未找到代幣",
+    "addressCopied": "地址已複製",
+    "copyAddress": "複製地址",
+    "disconnectWallet": "中斷 {name} 連接",
+    "noCoins": "無幣種",
+    "sidebar": {
+      "title": "錢包"
+    },
+    "sortWallets": "錢包排序",
+    "sortBy": "排序方式",
+    "sortByName": "名稱（A-Z）",
+    "sortByBalance": "餘額（高 → 低）",
+    "externalWalletMode": "外部錢包模式",
+    "externalWalletModeDescription": "輸入您的訂單，點擊「兌換」按鈕，然後依照提示操作",
+    "externalWalletModeWarning": "如果某項資產在外部錢包模式下不受支援，系統會提示您連接瀏覽器內建錢包",
+    "close": "關閉",
+    "sendToken": "傳送 {ticker}"
+  },
+  "common": {
+    "close": "關閉"
+  },
+  "tx": {
+    "title": "歷史記錄",
+    "today": "今天",
+    "yesterday": "昨天",
+    "onlyCreatorModify": "只有原始兌換的建立者才能修改",
+    "limitPrice": "限價",
+    "expiresIn": "剩餘時間",
+    "showQr": "顯示 QR 碼",
+    "modify": "修改",
+    "cancelOrder": "取消訂單",
+    "sourceAddress": "來源地址",
+    "destinationAddress": "目標地址",
+    "remaining": "剩餘 {time}",
+    "status": {
+      "not_started": "等待存款",
+      "pending": "處理中",
+      "swapping": "兌換中",
+      "completed": "已完成",
+      "failed": "失敗",
+      "expired": "已過期",
+      "refunded": "已退款",
+      "unknown": "未知"
+    },
+    "leg": {
+      "deposit": "存入 {ticker}",
+      "send": "傳送 {ticker}",
+      "swap": "將 {from} 兌換為 {to}"
+    }
+  }
+}

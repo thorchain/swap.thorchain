@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
+import { useTranslations } from 'next-intl'
 import { RefetchOptions } from '@tanstack/react-query'
 import { QuoteResponseRoute } from '@tcswap/helpers/api'
 import { Tooltip } from '@/components/tooltip'
@@ -12,6 +13,7 @@ interface SwapQuoteTimerProps {
 }
 
 export const SwapQuoteTimer = ({ quote, isLoading, refetch }: SwapQuoteTimerProps) => {
+  const t = useTranslations('swap')
   const [timeRemaining, setTimeRemaining] = useState(QUOTE_EXPIRATION_MS)
   const [progress, setProgress] = useState(100)
   const [expiresAt, setExpiresAt] = useState<number | null>(null)
@@ -80,7 +82,7 @@ export const SwapQuoteTimer = ({ quote, isLoading, refetch }: SwapQuoteTimerProp
   const strokeDashoffset = strokeDasharray - (strokeDasharray * progress) / 100
 
   return (
-    <Tooltip content="Refresh">
+    <Tooltip content={t('quoteTimer.refresh')}>
       <div className="relative cursor-pointer" onClick={() => refetch()}>
         <svg width="32" height="32" viewBox="0 0 28 28" className="-rotate-90">
           <circle cx="14" cy="14" r="12" fill="none" strokeWidth="2" className="stroke-sub-container-modal" />

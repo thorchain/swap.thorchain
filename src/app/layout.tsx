@@ -3,9 +3,12 @@ import localFont from 'next/font/local'
 import Script from 'next/script'
 import { GoogleAnalytics, GoogleTagManager } from '@next/third-parties/google'
 import { ThemeProvider } from 'next-themes'
+import { NextIntlClientProvider } from 'next-intl'
+import { getLocale, getMessages } from 'next-intl/server'
 import { Toaster } from '@/components/ui/sonner'
 import { ReactQueryProvider } from '@/components/react-query/react-query-provider'
 import { AppConfig } from '@/config'
+import { getLangDir, type Locale } from '@/i18n/config'
 import './globals.css'
 
 export const metadata: Metadata = {
@@ -71,9 +74,12 @@ const crit = localFont({
   ]
 })
 
-export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
+export default async function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
+  const locale = (await getLocale()) as Locale
+  const messages = await getMessages()
+
   return (
-    <html lang="en" data-brand={AppConfig.id} suppressHydrationWarning>
+    <html lang={locale} dir={getLangDir(locale)} data-brand={AppConfig.id} suppressHydrationWarning>
       {AppConfig.gtag && <GoogleTagManager gtmId={AppConfig.gtag} />}
       <GoogleAnalytics gaId="G-VZ0FQ1WC7G" />
       <Script
@@ -92,9 +98,11 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
       )}
       <body className={`${crit.variable} bg-body font-sans antialiased`}>
         <ReactQueryProvider>
-          <ThemeProvider defaultTheme="light" attribute="class">
-            {children}
-          </ThemeProvider>
+          <NextIntlClientProvider locale={locale} messages={messages}>
+            <ThemeProvider defaultTheme="light" attribute="class">
+              {children}
+            </ThemeProvider>
+          </NextIntlClientProvider>
         </ReactQueryProvider>
         <Toaster />
       </body>

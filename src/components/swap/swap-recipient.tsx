@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import { useTranslations } from 'next-intl'
 import { WalletIcon } from '@/components/wallet-icon'
 import { ProviderName, USwapError } from '@tcswap/helpers'
 import { QuoteResponseRoute } from '@tcswap/helpers/api'
@@ -29,6 +30,7 @@ interface SwapRecipientProps {
 }
 
 export const SwapRecipient = ({ provider, onFetchQuote }: SwapRecipientProps) => {
+  const t = useTranslations('swap')
   const isMobile = useIsMobile()
   const assetFrom = useAssetFrom()
   const assetTo = useAssetTo()
@@ -129,7 +131,7 @@ export const SwapRecipient = ({ provider, onFetchQuote }: SwapRecipientProps) =>
       <>
         <div className="relative">
           <Textarea
-            placeholder={isMobile ? undefined : `${chainLabel(asset.chain)} address`}
+            placeholder={isMobile ? undefined : t('recipient.addressPlaceholder', { chain: chainLabel(asset.chain) })}
             value={address}
             aria-invalid={!isValid}
             onChange={e => setAddress(e.target.value)}
@@ -176,13 +178,13 @@ export const SwapRecipient = ({ provider, onFetchQuote }: SwapRecipientProps) =>
                   })
                 }}
               >
-                Paste
+                {t('recipient.paste')}
               </ThemeButton>
             </div>
           )}
         </div>
 
-        {!isValid && <div className="text-lucian text-xs font-semibold">Invalid {chainLabel(asset.chain)} address</div>}
+        {!isValid && <div className="text-lucian text-xs font-semibold">{t('recipient.invalidAddress', { chain: chainLabel(asset.chain) })}</div>}
       </>
     )
   }
@@ -190,7 +192,7 @@ export const SwapRecipient = ({ provider, onFetchQuote }: SwapRecipientProps) =>
   return (
     <>
       <CredenzaHeader>
-        <CredenzaTitle>{refundRequired ? 'Enter Addresses' : 'Enter Receiving Address'}</CredenzaTitle>
+        <CredenzaTitle>{refundRequired ? t('recipient.titleAddresses') : t('recipient.titleReceiving')}</CredenzaTitle>
       </CredenzaHeader>
 
       <ScrollArea className="relative flex min-h-0 flex-1 px-4 md:px-8" classNameViewport="flex-1 h-auto">
@@ -199,13 +201,13 @@ export const SwapRecipient = ({ provider, onFetchQuote }: SwapRecipientProps) =>
             <div className="flex flex-col gap-6">
               {refundRequired && (
                 <div className="flex flex-col gap-3">
-                  <div className="text-txt-label-small text-sm font-semibold">Enter refund address:</div>
+                  <div className="text-txt-label-small text-sm font-semibold">{t('recipient.enterRefundAddress')}</div>
                   {addressInput(assetFrom, refundAddress, setRefundAddress, isValidRefund)}
                 </div>
               )}
 
               <div className="flex flex-col gap-3">
-                {refundRequired && <div className="text-txt-label-small text-sm font-semibold">Enter receiving address:</div>}
+                {refundRequired && <div className="text-txt-label-small text-sm font-semibold">{t('recipient.enterReceivingAddress')}</div>}
                 {addressInput(assetTo, destinationAddress, setDestinationAddress, isValidDestination, options)}
               </div>
             </div>
@@ -213,16 +215,16 @@ export const SwapRecipient = ({ provider, onFetchQuote }: SwapRecipientProps) =>
             <SwapAddressWarning
               checked={warningChecked}
               onCheckedChange={setWarningChecked}
-              text="I understand that I must use a self-custody wallet. I understand that using a smart contract wallet, exchange address, delegated address, or an EIP 7702 wallet, will result in"
-              textAccent="loss of funds."
+              text={t('warning.selfCustody')}
+              textAccent={t('warning.lossOfFunds')}
             />
 
             {isLTC && (
               <SwapAddressWarning
                 checked={warningCheckedLTC}
                 onCheckedChange={setWarningCheckedLTC}
-                text="I understand that using an LTC MWEB address will result in"
-                textAccent="loss of funds."
+                text={t('warning.ltcMweb')}
+                textAccent={t('warning.lossOfFunds')}
               />
             )}
           </div>
@@ -241,7 +243,7 @@ export const SwapRecipient = ({ provider, onFetchQuote }: SwapRecipientProps) =>
           disabled={!buttonEnabled || !warningChecked || (isLTC && !warningCheckedLTC)}
         >
           {quoting && <LoaderCircle size={20} className="animate-spin" />}
-          <span>{quoting ? 'Preparing Swap' : 'Next'}</span>
+          <span>{quoting ? t('recipient.preparingSwap') : t('recipient.next')}</span>
         </ThemeButton>
       </div>
     </>

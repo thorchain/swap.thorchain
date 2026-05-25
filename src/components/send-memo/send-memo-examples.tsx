@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import { useTranslations } from 'next-intl'
 import { ArrowLeft, Copy, ExternalLink } from 'lucide-react'
 import { toast } from 'sonner'
 import { Credenza, CredenzaContent, CredenzaHeader, CredenzaTitle } from '@/components/ui/credenza'
@@ -11,55 +12,55 @@ import { composeMemo, parsePlaceholders, previewMemo } from '@/components/send-m
 import { cn } from '@/lib/utils'
 
 interface MemoExample {
-  label: string
+  key: string
   template: string
   payload: 'RUNE' | 'TCY' | 'none' | 'dust'
   optional?: string[]
 }
 
 const MEMO_EXAMPLES: MemoExample[] = [
-  { label: 'Stake TCY', template: 'TCY+', payload: 'TCY' },
-  { label: 'Unstake TCY', template: 'TCY-:BASISPOINTS', payload: 'none' },
-  { label: 'Claim TCY', template: 'TCY:THORADDRESS', payload: 'dust' },
-  { label: 'Deposit RUNEPool', template: 'POOL+', payload: 'RUNE' },
-  { label: 'Withdraw RUNEPool', template: 'POOL-:BASISPOINTS:AFFILIATE:FEE', payload: 'none', optional: ['AFFILIATE', 'FEE'] },
-  { label: 'Bond', template: 'BOND:NODEADDRESS', payload: 'RUNE' },
-  { label: 'Unbond', template: 'UNBOND:NODEADDRESS:AMOUNT', payload: 'none' },
-  { label: 'Rebond', template: 'REBOND:NODEADDRESS:NEWADDRESS:AMOUNT', payload: 'none', optional: ['AMOUNT'] },
-  { label: 'Leave', template: 'LEAVE:NODEADDRESS', payload: 'none' },
-  { label: 'Whitelist Bond Provider', template: 'BOND:NODEADDRESS:PROVIDERADDRESS:FEE', payload: 'RUNE', optional: ['PROVIDERADDRESS', 'FEE'] },
-  { label: 'Unwhitelist Bond Provider', template: 'UNBOND:NODEADDRESS:AMOUNT:PROVIDERADDRESS', payload: 'none', optional: ['PROVIDERADDRESS'] },
-  { label: 'Add LP (single-sided)', template: 'ADD:POOL', payload: 'RUNE' },
-  { label: 'Add LP (dual-sided)', template: 'ADD:POOL:PAIREDADDRESS:AFFILIATE:FEE', payload: 'RUNE', optional: ['AFFILIATE', 'FEE'] },
-  { label: 'Withdraw LP', template: 'WITHDRAW:POOL:BASISPOINTS:ASSET', payload: 'dust', optional: ['ASSET'] },
-  { label: 'Donate to Pool', template: 'DONATE:POOL', payload: 'RUNE' }
+  { key: 'stakeTcy', template: 'TCY+', payload: 'TCY' },
+  { key: 'unstakeTcy', template: 'TCY-:BASISPOINTS', payload: 'none' },
+  { key: 'claimTcy', template: 'TCY:THORADDRESS', payload: 'dust' },
+  { key: 'depositRunepool', template: 'POOL+', payload: 'RUNE' },
+  { key: 'withdrawRunepool', template: 'POOL-:BASISPOINTS:AFFILIATE:FEE', payload: 'none', optional: ['AFFILIATE', 'FEE'] },
+  { key: 'bond', template: 'BOND:NODEADDRESS', payload: 'RUNE' },
+  { key: 'unbond', template: 'UNBOND:NODEADDRESS:AMOUNT', payload: 'none' },
+  { key: 'rebond', template: 'REBOND:NODEADDRESS:NEWADDRESS:AMOUNT', payload: 'none', optional: ['AMOUNT'] },
+  { key: 'leave', template: 'LEAVE:NODEADDRESS', payload: 'none' },
+  { key: 'whitelistBondProvider', template: 'BOND:NODEADDRESS:PROVIDERADDRESS:FEE', payload: 'RUNE', optional: ['PROVIDERADDRESS', 'FEE'] },
+  { key: 'unwhitelistBondProvider', template: 'UNBOND:NODEADDRESS:AMOUNT:PROVIDERADDRESS', payload: 'none', optional: ['PROVIDERADDRESS'] },
+  { key: 'addLpSingle', template: 'ADD:POOL', payload: 'RUNE' },
+  { key: 'addLpDual', template: 'ADD:POOL:PAIREDADDRESS:AFFILIATE:FEE', payload: 'RUNE', optional: ['AFFILIATE', 'FEE'] },
+  { key: 'withdrawLp', template: 'WITHDRAW:POOL:BASISPOINTS:ASSET', payload: 'dust', optional: ['ASSET'] },
+  { key: 'donateToPool', template: 'DONATE:POOL', payload: 'RUNE' }
 ]
 
 interface PlaceholderMeta {
-  label: string
-  hint: string
+  labelKey: string
+  hintKey?: string
   inputMode?: 'text' | 'numeric'
 }
 
 const PLACEHOLDER_META: Record<string, PlaceholderMeta> = {
-  NODEADDRESS: { label: 'Node Address', hint: 'thor1…', inputMode: 'text' },
-  PROVIDERADDRESS: { label: 'Provider Address', hint: 'thor1…', inputMode: 'text' },
-  NEWADDRESS: { label: 'New Address', hint: 'thor1…', inputMode: 'text' },
-  THORADDRESS: { label: 'THORChain Address', hint: 'thor1…', inputMode: 'text' },
-  PAIREDADDRESS: { label: 'Paired Address', hint: 'External chain address', inputMode: 'text' },
-  AFFILIATE: { label: 'Affiliate', hint: 'THORName or thor1… address', inputMode: 'text' },
-  POOL: { label: 'Pool', hint: 'e.g. BTC.BTC or ETH/ETH', inputMode: 'text' },
-  ASSET: { label: 'Asset', hint: 'e.g. BTC.BTC or RUNE (single-sided)', inputMode: 'text' },
-  AMOUNT: { label: 'Amount', hint: '1e8 format — e.g. 100000000 = 1 RUNE', inputMode: 'numeric' },
-  BASISPOINTS: { label: 'Basis Points', hint: '0 – 10000 (10000 = 100%)', inputMode: 'numeric' },
-  FEE: { label: 'Fee (basis points)', hint: '0 – 10000', inputMode: 'numeric' }
+  NODEADDRESS: { labelKey: 'nodeAddress', hintKey: 'thorPrefix', inputMode: 'text' },
+  PROVIDERADDRESS: { labelKey: 'providerAddress', hintKey: 'thorPrefix', inputMode: 'text' },
+  NEWADDRESS: { labelKey: 'newAddress', hintKey: 'thorPrefix', inputMode: 'text' },
+  THORADDRESS: { labelKey: 'thorAddress', hintKey: 'thorPrefix', inputMode: 'text' },
+  PAIREDADDRESS: { labelKey: 'pairedAddress', hintKey: 'pairedAddressHint', inputMode: 'text' },
+  AFFILIATE: { labelKey: 'affiliate', hintKey: 'affiliateHint', inputMode: 'text' },
+  POOL: { labelKey: 'pool', hintKey: 'poolHint', inputMode: 'text' },
+  ASSET: { labelKey: 'asset', hintKey: 'assetHint', inputMode: 'text' },
+  AMOUNT: { labelKey: 'amount', hintKey: 'amountHint', inputMode: 'numeric' },
+  BASISPOINTS: { labelKey: 'basisPoints', hintKey: 'basisPointsHint', inputMode: 'numeric' },
+  FEE: { labelKey: 'fee', hintKey: 'feeHint', inputMode: 'numeric' }
 }
 
-const PAYLOAD_BADGE: Record<MemoExample['payload'], { label: string; className: string }> = {
-  RUNE: { label: 'RUNE', className: 'text-green-contrast bg-green-default/10' },
-  TCY: { label: 'TCY', className: 'text-green-contrast bg-green-default/10' },
-  none: { label: 'no payload', className: 'text-txt-label-small bg-sub-container-modal' },
-  dust: { label: 'dust', className: 'text-jacob bg-jacob/10' }
+const PAYLOAD_BADGE: Record<MemoExample['payload'], { labelKey?: string; literal?: string; className: string }> = {
+  RUNE: { literal: 'RUNE', className: 'text-green-contrast bg-green-default/10' },
+  TCY: { literal: 'TCY', className: 'text-green-contrast bg-green-default/10' },
+  none: { labelKey: 'badgeNoPayload', className: 'text-txt-label-small bg-sub-container-modal' },
+  dust: { labelKey: 'badgeDust', className: 'text-jacob bg-jacob/10' }
 }
 
 
@@ -70,6 +71,7 @@ interface SendMemoExamplesProps {
 }
 
 export function SendMemoExamples({ isOpen, onOpenChange, onSelect }: SendMemoExamplesProps) {
+  const t = useTranslations('send')
   const [editing, setEditing] = useState<MemoExample | null>(null)
   const [values, setValues] = useState<Record<string, string>>({})
 
@@ -94,7 +96,7 @@ export function SendMemoExamples({ isOpen, onOpenChange, onSelect }: SendMemoExa
 
   const handleCopy = (e: React.MouseEvent, template: string) => {
     e.stopPropagation()
-    navigator.clipboard.writeText(template).then(() => toast.success('Copied to clipboard'))
+    navigator.clipboard.writeText(template).then(() => toast.success(t('examples.copied')))
   }
 
   const handleApply = () => {
@@ -114,30 +116,33 @@ export function SendMemoExamples({ isOpen, onOpenChange, onSelect }: SendMemoExa
         <CredenzaContent className="flex h-auto max-h-5/6 flex-col rounded-2xl md:max-w-xl">
           <CredenzaHeader>
             <div className="flex items-center gap-3">
-              <ThemeButton variant="circleSmall" onClick={() => setEditing(null)} aria-label="Back">
+              <ThemeButton variant="circleSmall" onClick={() => setEditing(null)} aria-label={t('examples.back')}>
                 <ArrowLeft className="size-4" />
               </ThemeButton>
-              <CredenzaTitle>{editing.label}</CredenzaTitle>
+              <CredenzaTitle>{t(`examples.items.${editing.key}`)}</CredenzaTitle>
             </div>
           </CredenzaHeader>
 
           <ScrollArea className="relative flex min-h-0 flex-1 px-4 md:px-8" classNameViewport="flex-1 h-auto">
             <div className="mb-4 flex flex-col gap-4">
               {placeholders.map(token => {
-                const meta = PLACEHOLDER_META[token] ?? { label: token, hint: '', inputMode: 'text' as const }
+                const meta = PLACEHOLDER_META[token]
+                const label = meta ? t(`examples.placeholder.${meta.labelKey}`) : token
+                const hint = meta?.hintKey ? t(`examples.placeholder.${meta.hintKey}`) : ''
+                const inputMode = meta?.inputMode ?? 'text'
                 const isOptional = editing.optional?.includes(token) ?? false
 
                 return (
                   <div key={token} className="flex flex-col gap-1.5">
                     <div className="flex items-center gap-2">
-                      <label className="text-txt-high-contrast text-sm font-semibold">{meta.label}</label>
-                      {isOptional && <span className="text-txt-label-small bg-sub-container-modal rounded px-1.5 py-0.5 text-[10px] font-medium">optional</span>}
+                      <label className="text-txt-high-contrast text-sm font-semibold">{label}</label>
+                      {isOptional && <span className="text-txt-label-small bg-sub-container-modal rounded px-1.5 py-0.5 text-[10px] font-medium">{t('examples.optional')}</span>}
                     </div>
-                    {meta.hint && <p className="text-txt-label-small text-xs">{meta.hint}</p>}
+                    {hint && <p className="text-txt-label-small text-xs">{hint}</p>}
                     <Input
                       value={values[token] ?? ''}
-                      inputMode={meta.inputMode}
-                      placeholder={isOptional ? `${meta.hint} (leave blank to omit)` : meta.hint}
+                      inputMode={inputMode}
+                      placeholder={isOptional ? t('examples.optionalPlaceholder', { hint }) : hint}
                       onChange={e => setValues(prev => ({ ...prev, [token]: e.target.value }))}
                       className={cn('bg-input-modal-bg-active border-border-sub-container-modal-low', isOptional && 'opacity-80')}
                     />
@@ -146,7 +151,7 @@ export function SendMemoExamples({ isOpen, onOpenChange, onSelect }: SendMemoExa
               })}
 
               <div className="bg-sub-container-modal rounded-xl p-3">
-                <p className="text-txt-label-small mb-1 text-xs font-medium">Preview</p>
+                <p className="text-txt-label-small mb-1 text-xs font-medium">{t('examples.preview')}</p>
                 <p className="text-txt-high-contrast font-mono text-sm break-all">{preview}</p>
               </div>
             </div>
@@ -156,7 +161,7 @@ export function SendMemoExamples({ isOpen, onOpenChange, onSelect }: SendMemoExa
 
           <div className="p-4 pt-2 md:p-8 md:pt-2">
             <ThemeButton variant="primaryMedium" className="w-full" onClick={handleApply} disabled={!canApply}>
-              Use Memo
+              {t('examples.useMemo')}
             </ThemeButton>
           </div>
         </CredenzaContent>
@@ -168,14 +173,16 @@ export function SendMemoExamples({ isOpen, onOpenChange, onSelect }: SendMemoExa
     <Credenza open={isOpen} onOpenChange={handleClose}>
       <CredenzaContent className="flex h-auto max-h-5/6 flex-col rounded-2xl md:max-w-xl">
         <CredenzaHeader>
-          <CredenzaTitle>Memo Examples</CredenzaTitle>
+          <CredenzaTitle>{t('memo.examplesButton')}</CredenzaTitle>
         </CredenzaHeader>
 
         <ScrollArea className="relative flex min-h-0 flex-1 px-4 md:px-8" classNameViewport="flex-1 h-auto">
           <div className="mb-4 flex flex-col divide-y">
             {MEMO_EXAMPLES.map(example => {
-              const { label, template, payload } = example
+              const { key, template, payload } = example
+              const label = t(`examples.items.${key}`)
               const badge = PAYLOAD_BADGE[payload]
+              const badgeLabel = badge.literal ?? t(`examples.${badge.labelKey}`)
               const hasParams = parsePlaceholders(template).length > 0
 
               return (
@@ -187,13 +194,13 @@ export function SendMemoExamples({ isOpen, onOpenChange, onSelect }: SendMemoExa
                   <div className="flex min-w-0 flex-col gap-0.5">
                     <span className="text-txt-high-contrast text-sm font-medium">{label}</span>
                     <div className="flex items-center gap-1.5">
-                      <span className={cn('rounded px-1.5 py-0.5 text-[10px] font-semibold', badge.className)}>{badge.label}</span>
-                      {hasParams && <span className="text-txt-label-small text-[10px]">fill in values →</span>}
+                      <span className={cn('rounded px-1.5 py-0.5 text-[10px] font-semibold', badge.className)}>{badgeLabel}</span>
+                      {hasParams && <span className="text-txt-label-small text-[10px]">{t('examples.fillInValues')}</span>}
                     </div>
                   </div>
                   <div className="flex shrink-0 items-center gap-2">
                     <span className="text-txt-label-small max-w-40 truncate font-mono text-xs">{template}</span>
-                    <ThemeButton variant="circleSmall" onClick={e => handleCopy(e, template)} aria-label={`Copy ${label} memo`}>
+                    <ThemeButton variant="circleSmall" onClick={e => handleCopy(e, template)} aria-label={t('examples.copyMemo', { label })}>
                       <Copy className="size-4" />
                     </ThemeButton>
                   </div>
@@ -212,7 +219,7 @@ export function SendMemoExamples({ isOpen, onOpenChange, onSelect }: SendMemoExa
             rel="noopener noreferrer"
             className="text-txt-label-small hover:text-txt-high-contrast flex items-center gap-1 text-sm font-medium transition-colors"
           >
-            Learn More <ExternalLink className="size-3.5" />
+            {t('examples.learnMore')} <ExternalLink className="size-3.5" />
           </a>
         </div>
       </CredenzaContent>

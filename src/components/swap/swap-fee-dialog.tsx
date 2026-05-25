@@ -1,3 +1,4 @@
+import { useTranslations } from 'next-intl'
 import { Credenza, CredenzaContent, CredenzaHeader, CredenzaTitle } from '@/components/ui/credenza'
 import { DecimalText } from '@/components/decimal/decimal-text'
 import { InfoTooltip } from '@/components/tooltip'
@@ -13,6 +14,7 @@ interface SwapFeeDialogProps {
 }
 
 export const SwapFeeDialog = ({ outbound, liquidity, platform, isOpen, onOpenChange }: SwapFeeDialogProps) => {
+  const t = useTranslations('swap')
   const feeSection = (title: string, info: string, fee?: FeeData) => {
     if (!fee) return null
 
@@ -44,16 +46,16 @@ export const SwapFeeDialog = ({ outbound, liquidity, platform, isOpen, onOpenCha
     <Credenza open={isOpen} onOpenChange={onOpenChange}>
       <CredenzaContent className="flex h-auto max-h-5/6 flex-col md:max-w-md">
         <CredenzaHeader className="pb-4">
-          <CredenzaTitle className="text-base">Fees Included in the Rate</CredenzaTitle>
+          <CredenzaTitle className="text-base">{t('feeDialog.title')}</CredenzaTitle>
         </CredenzaHeader>
 
         <div className="flex flex-col gap-6 p-8 pt-0">
-          <div className="text-txt-label-small text-xs">These fees are already included in the rate — you don’t pay them separately.</div>
+          <div className="text-txt-label-small text-xs">{t('feeDialog.description')}</div>
 
           <div className="flex flex-col space-y-4 text-xs font-semibold">
-            {feeSection('Liquidity Fee', 'Fee for liquidity providers on the route', liquidity)}
-            {feeSection('Outbound Fee', 'Fee for sending outbound transaction', outbound)}
-            {feeSection('Platform Fee', `Fee charged by ${AppConfig.title}`, platform)}
+            {feeSection(t('feeDialog.liquidityFee'), t('feeDialog.liquidityFeeInfo'), liquidity)}
+            {feeSection(t('feeDialog.outboundFee'), t('feeDialog.outboundFeeInfo'), outbound)}
+            {feeSection(t('feeDialog.platformFee'), t('feeDialog.platformFeeInfo', { app: AppConfig.title }), platform)}
           </div>
         </div>
       </CredenzaContent>

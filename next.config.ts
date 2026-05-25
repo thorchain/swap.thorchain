@@ -1,4 +1,5 @@
 import type { NextConfig } from 'next'
+import createNextIntlPlugin from 'next-intl/plugin'
 
 const SUBDOMAIN_ROUTES = [
   { host: 'tcy.thorchain.org', destination: '/tcy' },
@@ -6,6 +7,7 @@ const SUBDOMAIN_ROUTES = [
   { host: 'memo.thorchain.org', destination: '/memo' }
 ]
 
+const withNextIntl = createNextIntlPlugin('./src/i18n/request.ts')
 const nextConfig: NextConfig = {
   output: 'standalone',
   async rewrites() {
@@ -21,4 +23,4 @@ const nextConfig: NextConfig = {
   }
 }
 
-export default nextConfig
+export default withNextIntl(nextConfig)

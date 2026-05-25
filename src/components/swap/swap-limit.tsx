@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from 'react'
+import { useTranslations } from 'next-intl'
 import { intervalToDuration } from 'date-fns'
 import { USwapNumber } from '@tcswap/core'
 import { QuoteResponseRoute } from '@tcswap/helpers/api'
@@ -23,6 +24,7 @@ const BLOCKS_PER_DAY = 14400
 const BLOCKS_PER_3_DAYS = 43200
 
 export const SwapLimit = ({ quote }: SwapLimitProps) => {
+  const t = useTranslations('swap')
   const assetFrom = useAssetFrom()
   const assetTo = useAssetTo()
   const setLimitSwapBuyAmount = useSetLimitSwapBuyAmount()
@@ -133,10 +135,10 @@ export const SwapLimit = ({ quote }: SwapLimitProps) => {
   return (
     <div className="bg-swap-bloc rounded-15 border p-7">
       <div className="flex items-center justify-between">
-        <div className="text-txt-label-small flex items-center text-sm font-medium">When 1 {assetFrom?.ticker} is worth</div>
+        <div className="text-txt-label-small flex items-center text-sm font-medium">{t('limit.whenWorth', { ticker: assetFrom?.ticker ?? '' })}</div>
 
         <div className="text-txt-label-small flex items-center text-sm font-medium">
-          Expires in
+          {t('limit.expiresIn')}
           <Select
             value={activeExpiryPreset === 'custom' ? '__custom__' : activeExpiryPreset || '1h'}
             onValueChange={v => applyExpiryPreset(v as ExpiryPreset)}
@@ -145,10 +147,10 @@ export const SwapLimit = ({ quote }: SwapLimitProps) => {
               {activeExpiryPreset === 'custom' ? customExpiryLabel : activeExpiryPreset || '1h'}
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="1h">1 hour</SelectItem>
-              <SelectItem value="1d">1 day</SelectItem>
-              <SelectItem value="3d">3 days</SelectItem>
-              <SelectItem value="custom">Custom</SelectItem>
+              <SelectItem value="1h">{t('limit.oneHour')}</SelectItem>
+              <SelectItem value="1d">{t('limit.oneDay')}</SelectItem>
+              <SelectItem value="3d">{t('limit.threeDays')}</SelectItem>
+              <SelectItem value="custom">{t('limit.custom')}</SelectItem>
             </SelectContent>
           </Select>
         </div>
@@ -199,7 +201,7 @@ export const SwapLimit = ({ quote }: SwapLimitProps) => {
             variant="secondarySmall"
             onClick={() => applyPreset(0)}
           >
-            Market
+            {t('limit.market')}
           </ThemeButton>
         )}
 

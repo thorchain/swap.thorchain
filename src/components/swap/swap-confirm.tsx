@@ -1,4 +1,5 @@
 import { useMemo } from 'react'
+import { useTranslations } from 'next-intl'
 import { USwapNumber } from '@tcswap/core'
 import { QuoteResponseRoute } from '@tcswap/helpers/api'
 import { CredenzaHeader, CredenzaTitle } from '@/components/ui/credenza'
@@ -25,6 +26,7 @@ interface SwapConfirmProps {
 }
 
 export const SwapConfirm = ({ quote, priceImpact }: SwapConfirmProps) => {
+  const t = useTranslations('swap')
   const assetFrom = useAssetFrom()
   const assetTo = useAssetTo()
   const slippage = useSlippage()
@@ -77,7 +79,7 @@ export const SwapConfirm = ({ quote, priceImpact }: SwapConfirmProps) => {
   return (
     <>
       <CredenzaHeader>
-        <CredenzaTitle>{isLimitSwap ? 'Confirm Limit Order' : 'Confirm Swap'}</CredenzaTitle>
+        <CredenzaTitle>{isLimitSwap ? t('confirm.titleLimit') : t('confirm.titleSwap')}</CredenzaTitle>
       </CredenzaHeader>
 
       <ScrollArea className="relative flex min-h-0 flex-1 px-4 md:px-8" classNameViewport="flex-1 h-auto">
@@ -90,14 +92,14 @@ export const SwapConfirm = ({ quote, priceImpact }: SwapConfirmProps) => {
                   <DecimalText amount={sellAmount.toSignificant()} /> {assetFrom.ticker}
                 </span>
                 <span className="text-txt-label-small text-sm">
-                  {rateFrom ? toCurrencyFixed(sellAmount.mul(rateFrom).toCurrency('$', { trimTrailingZeros: false })) : 'n/a'}
+                  {rateFrom ? toCurrencyFixed(sellAmount.mul(rateFrom).toCurrency('$', { trimTrailingZeros: false })) : t('confirm.notAvailable')}
                 </span>
               </div>
             </div>
 
             <div className="flex flex-1 flex-col items-center">
               <Icon name="arrow-m-right" className="text-txt-label-small size-5" />
-              <span className="text-txt-label-small text-xs">swap</span>
+              <span className="text-txt-label-small text-xs">{t('confirm.swapArrowLabel')}</span>
             </div>
 
             <div className="flex items-center gap-3">
@@ -106,7 +108,7 @@ export const SwapConfirm = ({ quote, priceImpact }: SwapConfirmProps) => {
                   <DecimalText amount={displayBuyAmount.toSignificant()} /> {assetTo.ticker}
                 </span>
                 <span className="text-txt-label-small text-sm">
-                  {rateTo ? toCurrencyFixed(displayBuyAmount.mul(rateTo).toCurrency('$', { trimTrailingZeros: false })) : 'n/a'}
+                  {rateTo ? toCurrencyFixed(displayBuyAmount.mul(rateTo).toCurrency('$', { trimTrailingZeros: false })) : t('confirm.notAvailable')}
                 </span>
               </div>
               <AssetIcon asset={assetTo} />
@@ -120,8 +122,8 @@ export const SwapConfirm = ({ quote, priceImpact }: SwapConfirmProps) => {
               {quote.sourceAddress && quote.sourceAddress !== '{sourceAddress}' && (
                 <div className="text-txt-label-small flex justify-between text-sm">
                   <div className="flex items-center gap-1">
-                    <span>{chainLabel(assetFrom.chain)} Address</span>
-                    <InfoTooltip>The wallet address sending the funds for this swap.</InfoTooltip>
+                    <span>{t('confirm.chainAddress', { chain: chainLabel(assetFrom.chain) })}</span>
+                    <InfoTooltip>{t('confirm.sourceAddressTooltip')}</InfoTooltip>
                   </div>
                   <div className="flex items-center gap-2">
                     <span className="text-txt-contrast-modal font-semibold">{truncate(quote.sourceAddress)}</span>
@@ -133,8 +135,8 @@ export const SwapConfirm = ({ quote, priceImpact }: SwapConfirmProps) => {
               {quote.destinationAddress && (
                 <div className="text-txt-label-small flex justify-between text-sm">
                   <div className="flex items-center gap-1">
-                    <span>{chainLabel(assetTo.chain)} Address</span>
-                    <InfoTooltip>The wallet address that will receive the swapped funds.</InfoTooltip>
+                    <span>{t('confirm.chainAddress', { chain: chainLabel(assetTo.chain) })}</span>
+                    <InfoTooltip>{t('confirm.destinationAddressTooltip')}</InfoTooltip>
                   </div>
                   <div className="flex items-center gap-2">
                     <span className="text-txt-high-contrast font-semibold">{truncate(quote.destinationAddress)}</span>
@@ -146,8 +148,8 @@ export const SwapConfirm = ({ quote, priceImpact }: SwapConfirmProps) => {
               {quote.refundAddress && quote.sourceAddress != quote.refundAddress && (
                 <div className="text-txt-label-small flex justify-between text-sm">
                   <div className="flex items-center gap-1">
-                    <span>Refund Address</span>
-                    <InfoTooltip>The address where funds will be returned if the swap cannot be completed.</InfoTooltip>
+                    <span>{t('confirm.refundAddress')}</span>
+                    <InfoTooltip>{t('confirm.refundAddressTooltip')}</InfoTooltip>
                   </div>
                   <div className="flex items-center gap-2">
                     <span className="text-txt-high-contrast font-semibold">{truncate(quote.refundAddress)}</span>
@@ -163,10 +165,8 @@ export const SwapConfirm = ({ quote, priceImpact }: SwapConfirmProps) => {
               <>
                 <div className="text-txt-label-small flex justify-between text-sm">
                   <div className="flex items-center gap-1">
-                    Limit Price
-                    <InfoTooltip>
-                      The price per unit at which your limit order will execute. The order will only fill when the market reaches this price.
-                    </InfoTooltip>
+                    {t('confirm.limitPrice')}
+                    <InfoTooltip>{t('confirm.limitPriceTooltip')}</InfoTooltip>
                   </div>
                   <div className="flex flex-col items-end">
                     <span className="text-txt-high-contrast font-semibold">
@@ -188,8 +188,8 @@ export const SwapConfirm = ({ quote, priceImpact }: SwapConfirmProps) => {
 
                 <div className="text-txt-label-small flex justify-between text-sm">
                   <div className="flex items-center gap-1">
-                    Target Amount
-                    <InfoTooltip>The exact amount you will receive when your limit order executes at your specified price.</InfoTooltip>
+                    {t('confirm.targetAmount')}
+                    <InfoTooltip>{t('confirm.targetAmountTooltip')}</InfoTooltip>
                   </div>
                   <div className="flex flex-col items-end">
                     <span className="text-txt-high-contrast font-semibold">
@@ -206,11 +206,8 @@ export const SwapConfirm = ({ quote, priceImpact }: SwapConfirmProps) => {
             ) : (
               <div className="text-txt-label-small flex justify-between text-sm">
                 <div className="flex items-center gap-1">
-                  <span>Minimum Payout</span>
-                  <InfoTooltip>
-                    This is the minimum you're guaranteed to receive at your {slippage && `${slippage}%`} price protection setting. If the market
-                    moves enough that you'd receive less, the swap is cancelled and refunded.
-                  </InfoTooltip>
+                  <span>{t('confirm.minimumPayout')}</span>
+                  <InfoTooltip>{t('confirm.minimumPayoutTooltip', { protection: slippage ? `${slippage}%` : '' })}</InfoTooltip>
                 </div>
                 {minimumPayout ? (
                   <span className="text-txt-high-contrast font-semibold">
@@ -218,7 +215,7 @@ export const SwapConfirm = ({ quote, priceImpact }: SwapConfirmProps) => {
                     {rateTo && ` (${toCurrencyFixed(minimumPayout.mul(rateTo).toCurrency('$', { trimTrailingZeros: false }))})`}
                   </span>
                 ) : (
-                  <span className="text-lucian font-semibold">Not Protected</span>
+                  <span className="text-lucian font-semibold">{t('confirm.notProtected')}</span>
                 )}
               </div>
             )}
@@ -226,10 +223,8 @@ export const SwapConfirm = ({ quote, priceImpact }: SwapConfirmProps) => {
             {!isLimitSwap && priceImpact && (
               <div className="text-txt-label-small flex justify-between text-sm">
                 <div className="flex items-center gap-1">
-                  Price Impact
-                  <InfoTooltip>
-                    How much your swap moves the pool's price. The larger your swap relative to available liquidity, the higher the price impact.
-                  </InfoTooltip>
+                  {t('confirm.priceImpact')}
+                  <InfoTooltip>{t('confirm.priceImpactTooltip')}</InfoTooltip>
                 </div>
                 <PriceImpact priceImpact={priceImpact} className="font-semibold" />
               </div>
@@ -238,12 +233,11 @@ export const SwapConfirm = ({ quote, priceImpact }: SwapConfirmProps) => {
             {!isLimitSwap && slippageTolerance && slippageTolerance.gt(0) && (
               <div className="text-txt-label-small flex justify-between text-sm">
                 <div className="flex items-center gap-1">
-                  Slippage Tolerance
+                  {t('confirm.slippageTolerance')}
                   <InfoTooltip>
-                    The difference between your {slippage && `${slippage}%`} price protection and the price impact.
+                    {t('confirm.slippageToleranceTooltip1', { protection: slippage ? `${slippage}%` : '' })}
                     <br /> <br />
-                    During the time between seeing a quote and your swap completing, prices can change. Slippage tolerance is the maximum price change
-                    you'll accept before the swap is cancelled.
+                    {t('confirm.slippageToleranceTooltip2')}
                   </InfoTooltip>
                 </div>
                 <PriceImpact priceImpact={slippageTolerance} className="font-semibold" />
@@ -256,8 +250,8 @@ export const SwapConfirm = ({ quote, priceImpact }: SwapConfirmProps) => {
                 onClick={() => openDialog(SwapFeeDialog, { outbound: outbound, liquidity: liquidity, platform: platform })}
               >
                 <div className="flex items-center gap-1">
-                  <span>Included Fees</span>
-                  <InfoTooltip>These fees are already included in the rate — you don't pay them separately.</InfoTooltip>
+                  <span>{t('confirm.includedFees')}</span>
+                  <InfoTooltip>{t('confirm.includedFeesTooltip')}</InfoTooltip>
                 </div>
                 <div className="flex items-center gap-2">
                   <span className="text-txt-high-contrast font-semibold">
@@ -270,14 +264,14 @@ export const SwapConfirm = ({ quote, priceImpact }: SwapConfirmProps) => {
 
             {quote.estimatedTime && quote.estimatedTime.total > 0 && (
               <div className="text-txt-label-small flex justify-between text-sm">
-                <span>Estimated Time</span>
+                <span>{t('confirm.estimatedTime')}</span>
                 <span className="text-txt-high-contrast font-semibold">{formatExpiration(quote.estimatedTime.total)}</span>
               </div>
             )}
 
             {inbound && (
               <div className="text-txt-label-small flex justify-between text-sm">
-                <span>{chainLabel(assetFrom.chain)} Gas Fee</span>
+                <span>{t('confirm.gasFee', { chain: chainLabel(assetFrom.chain) })}</span>
                 <span className="text-txt-high-contrast font-semibold">
                   <DecimalText amount={inbound.amount.toSignificant()} /> {inbound.ticker}
                 </span>
@@ -285,7 +279,7 @@ export const SwapConfirm = ({ quote, priceImpact }: SwapConfirmProps) => {
             )}
 
             <div className="text-txt-label-small flex justify-between text-sm">
-              <span>Exchange</span>
+              <span>{t('confirm.exchange')}</span>
               <SwapProvider provider={quote.providers[0]} />
             </div>
           </div>

@@ -2,6 +2,7 @@ import Image from 'next/image'
 import { useEffect, useMemo, useState } from 'react'
 import { Chain, WalletOption } from '@tcswap/core'
 import { CircleCheckBig, Info, LoaderCircle } from 'lucide-react'
+import { useTranslations } from 'next-intl'
 import { Input } from '@/components/ui/input'
 import { ScrollArea } from '@/components/ui/scroll-area'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
@@ -55,6 +56,7 @@ const CHAIN_PATH_MAP: Record<string, Array<keyof typeof DERIVATION_PATHS>> = {
 }
 
 export const Ledger = ({ wallet }: { wallet: WalletParams; onConnect: () => void }) => {
+  const t = useTranslations('wallet')
   const evmChains = [Chain.Ethereum, Chain.BinanceSmartChain, Chain.Base, Chain.Avalanche]
   const chains = ['EVM', Chain.Bitcoin, Chain.BitcoinCash, Chain.Litecoin, Chain.THORChain]
 
@@ -106,7 +108,7 @@ export const Ledger = ({ wallet }: { wallet: WalletParams; onConnect: () => void
 
   return (
     <>
-      <div className="text-txt-label-small mb-3 hidden px-8 text-base font-semibold md:block">Chains</div>
+      <div className="text-txt-label-small mb-3 hidden px-8 text-base font-semibold md:block">{t('chains')}</div>
 
       <div className="relative flex min-h-0 flex-1">
         <ScrollArea className="flex-1 px-4 md:px-8">
@@ -172,10 +174,10 @@ export const Ledger = ({ wallet }: { wallet: WalletParams; onConnect: () => void
       {pathOptions && (
         <div className="mt-2 grid grid-cols-5 gap-3 px-8 md:mb-4">
           <div className="col-span-4">
-            <div className="text-txt-label-small mb-2 font-semibold">Derivation Path</div>
+            <div className="text-txt-label-small mb-2 font-semibold">{t('derivationPath')}</div>
             <Select value={path} onValueChange={setPath} disabled={connecting}>
               <SelectTrigger className="w-full">
-                <SelectValue placeholder="Select account type" />
+                <SelectValue placeholder={t('selectAccountType')} />
               </SelectTrigger>
               <SelectContent position="item-aligned" className="text-txt-high-contrast placeholder:text-txt-med-contrast rounded-xl border-1">
                 {pathOptions.map(item => {
@@ -191,7 +193,7 @@ export const Ledger = ({ wallet }: { wallet: WalletParams; onConnect: () => void
             </Select>
           </div>
           <div className="col-span-1">
-            <div className="text-txt-label-small mb-2 font-semibold">Index</div>
+            <div className="text-txt-label-small mb-2 font-semibold">{t('index')}</div>
             <Input placeholder="0" onChange={v => setIndex(parseInt(v.target.value || '0'))} disabled={connecting} />
           </div>
         </div>
@@ -200,15 +202,16 @@ export const Ledger = ({ wallet }: { wallet: WalletParams; onConnect: () => void
       <div className="text-txt-label-small flex items-start gap-2 px-8 pt-1 pb-3 text-xs">
         <Info className="mt-0.5 size-4 shrink-0" />
         <span>
-          Make sure your Ledger is unlocked and the{' '}
-          {selectedChain === 'EVM' ? 'Ethereum' : selectedChain ? chainLabel(selectedChain as Chain) : 'corresponding'} app is open before connecting.
+          {t('ledgerUnlockHint', {
+            app: selectedChain === 'EVM' ? 'Ethereum' : selectedChain ? chainLabel(selectedChain as Chain) : t('correspondingApp')
+          })}
         </span>
       </div>
 
       <div className="flex p-4 md:justify-end md:px-8 md:pt-0 md:pb-8">
         <ThemeButton variant="primaryMedium" className="w-full md:w-auto" disabled={connecting || !selectedChain} onClick={() => handleConnect()}>
           {connecting && <LoaderCircle size={20} className="animate-spin" />}
-          Connect {wallet.label}
+          {t('connectNamed', { name: wallet.label })}
         </ThemeButton>
       </div>
     </>

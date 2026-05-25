@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect, useMemo } from 'react'
+import { useTranslations } from 'next-intl'
 import { AssetValue, USwapNumber } from '@tcswap/core'
 import { type MemolessAsset } from '@tcswap/helpers/api'
 import { SwapAddressFrom } from '@/components/swap/swap-address-from'
@@ -25,6 +26,7 @@ import { cn } from '@/lib/utils'
 import { useIsLimitSwap, useSetIsLimitSwap } from '@/store/limit-swap-store'
 
 export const Swap = () => {
+  const t = useTranslations('swap')
   const assetFrom = useAssetFrom()
   const selectedAccount = useSelectedAccount()
   const isLimitSwap = useIsLimitSwap()
@@ -51,8 +53,8 @@ export const Swap = () => {
     if (selectedAccount || !memolessAsset || !assetFrom) return
     const minAmount = new USwapNumber(10 ** -(memolessAsset.decimals - 5))
     if (valueFrom.lt(minAmount))
-      return new Error(`Minimum swap amount without a connected wallet is ${minAmount.toSignificant()} ${assetFrom.ticker}`)
-  }, [memolessAsset, selectedAccount, valueFrom])
+      return new Error(t('error.minAmountNoWallet', { amount: minAmount.toSignificant(), ticker: assetFrom.ticker }))
+  }, [memolessAsset, selectedAccount, valueFrom, t])
 
   const instantSwapSupported = !!memolessAsset
 
@@ -66,10 +68,10 @@ export const Swap = () => {
         <div className="mb-3 flex items-center justify-between">
           <div className="flex cursor-pointer items-center gap-4 text-2xl font-medium">
             <span className={cn(isLimitSwap ? 'text-txt-text-modal' : 'text-txt-contrast-1-default')} onClick={() => setIsLimitSwap(false)}>
-              Swap
+              {t('tab.swap')}
             </span>
             <span className={cn(isLimitSwap ? 'text-txt-contrast-1-default' : 'text-txt-text-modal')} onClick={() => setIsLimitSwap(true)}>
-              Limit
+              {t('tab.limit')}
             </span>
           </div>
           <div className="flex items-center gap-4">

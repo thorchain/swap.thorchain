@@ -1,3 +1,4 @@
+import { useTranslations } from 'next-intl'
 import { USwapNumber } from '@tcswap/core'
 import { Skeleton } from '@/components/ui/skeleton'
 import { AssetIcon } from '@/components/asset-icon'
@@ -14,6 +15,7 @@ import { useAssetFrom, useSetAssetFrom, useSwap } from '@/hooks/use-swap'
 import { toCurrencyFixed } from '@/lib/utils'
 
 export const SwapInputFrom = () => {
+  const t = useTranslations('swap')
   const assetFrom = useAssetFrom()
   const setAssetFrom = useSetAssetFrom()
   const { openDialog } = useDialog()
@@ -40,7 +42,7 @@ export const SwapInputFrom = () => {
 
   return (
     <div className="bg-swap-bloc rounded-15 border p-7">
-      <div className="text-txt-label-small mb-3 font-semibold">Sell</div>
+      <div className="text-txt-label-small mb-3 font-semibold">{t('input.sell')}</div>
 
       <div className="flex items-center justify-between">
         <div className="flex-1">
@@ -69,7 +71,7 @@ export const SwapInputFrom = () => {
       <div className="mt-2 flex items-end justify-between">
         <div className="flex gap-2">
           <ThemeButton className="h-6" variant="secondarySmall" onClick={() => setAmountFrom('')} disabled={amountFrom === ''}>
-            Clear
+            {t('input.clear')}
           </ThemeButton>
           <ThemeButton
             className="h-6"

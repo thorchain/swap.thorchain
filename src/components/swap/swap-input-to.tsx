@@ -1,3 +1,4 @@
+import { useTranslations } from 'next-intl'
 import { USwapNumber } from '@tcswap/core'
 import { Skeleton } from '@/components/ui/skeleton'
 import { AssetIcon } from '@/components/asset-icon'
@@ -15,6 +16,7 @@ import { useIsLimitSwap, useLimitSwapBuyAmount } from '@/store/limit-swap-store'
 import { toCurrencyFixed } from '@/lib/utils'
 
 export const SwapInputTo = ({ priceImpact }: { priceImpact?: USwapNumber }) => {
+  const t = useTranslations('swap')
   const assetTo = useAssetTo()
   const setAssetTo = useSetAssetTo()
   const { quote } = useQuote()
@@ -38,7 +40,7 @@ export const SwapInputTo = ({ priceImpact }: { priceImpact?: USwapNumber }) => {
 
   return (
     <div className="bg-swap-bloc rounded-15 border p-7">
-      <div className="text-txt-label-small mb-3 font-semibold">Buy</div>
+      <div className="text-txt-label-small mb-3 font-semibold">{t('input.buy')}</div>
 
       <div className="flex items-center justify-between">
         <div className="flex-1">
@@ -52,7 +54,7 @@ export const SwapInputTo = ({ priceImpact }: { priceImpact?: USwapNumber }) => {
           <div className="flex gap-2 text-sm font-medium">
             <span className="text-txt-label-small">{toCurrencyFixed(fiatValueTo.toCurrency('$', { trimTrailingZeros: false }))}</span>
             {priceImpact && (
-              <Tooltip content="Price Impact">
+              <Tooltip content={t('confirm.priceImpact')}>
                 <span>
                   (<PriceImpact priceImpact={priceImpact} />)
                 </span>

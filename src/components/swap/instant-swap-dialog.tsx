@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { useTranslations } from 'next-intl'
 import { getChainConfig, USwapNumber } from '@tcswap/core'
 import { ProviderName, USwapError } from '@tcswap/helpers'
 import { QuoteResponseRoute, USwapApi } from '@tcswap/helpers/api'
@@ -31,6 +32,7 @@ export interface DepositChannel {
 }
 
 export const InstantSwapDialog = ({ provider, isOpen, onOpenChange }: InstantSwapDialogProps) => {
+  const t = useTranslations('swap')
   const assetFrom = useAssetFrom()
   const assetTo = useAssetTo()
   const { valueFrom } = useSwap()
@@ -96,7 +98,7 @@ export const InstantSwapDialog = ({ provider, isOpen, onOpenChange }: InstantSwa
     }
 
     if (!quote.memo) {
-      setError(new Error('Memo is missing'))
+      setError(new Error(t('error.memoMissing')))
       return
     }
 
@@ -118,7 +120,7 @@ export const InstantSwapDialog = ({ provider, isOpen, onOpenChange }: InstantSwa
       .then(data => {
         const suggestedInAssetAmount = data.suggested_in_asset_amount
         if (!suggestedInAssetAmount) {
-          throw new Error('Failed to calculate suggested amount')
+          throw new Error(t('error.calculateSuggestedAmount'))
         }
 
         return USwapApi.preflightMemoless({
@@ -133,7 +135,7 @@ export const InstantSwapDialog = ({ provider, isOpen, onOpenChange }: InstantSwa
       .then(preflight => {
         if (!preflight.data.qr_code_data_url || !preflight.data.inbound_address) {
           console.log('Failed to preflight request', { preflight })
-          throw new Error('Failed to preflight request')
+          throw new Error(t('error.preflightRequest'))
         }
 
         createChannel(
@@ -177,7 +179,7 @@ export const InstantSwapDialog = ({ provider, isOpen, onOpenChange }: InstantSwa
                 <SwapAddressWarning
                   checked={highPriceImpactAccepted}
                   onCheckedChange={setHighPriceImpactAccepted}
-                  text="I understand the price impact is in addition to the slippage tolerance. I accept the high price impact on this swap"
+                  text={t('warning.highPriceImpact')}
                 />
               )}
               <ThemeButton
@@ -187,7 +189,7 @@ export const InstantSwapDialog = ({ provider, isOpen, onOpenChange }: InstantSwa
                 disabled={creatingChannel || confirmBlocked}
               >
                 {creatingChannel && <LoaderCircle size={20} className="animate-spin" />}
-                <span>{creatingChannel ? 'Confirming' : 'Confirm'}</span>
+                <span>{creatingChannel ? t('confirm.confirming') : t('confirm.button')}</span>
               </ThemeButton>
             </div>
           </>

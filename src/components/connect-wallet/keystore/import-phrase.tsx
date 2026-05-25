@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { useTranslations } from 'next-intl'
 import { mnemonicToSeedSync } from '@scure/bip39'
 import { WalletOption } from '@tcswap/core'
 import { LoaderCircle } from 'lucide-react'
@@ -10,6 +11,7 @@ import { ThemeButton } from '@/components/theme-button'
 import { useWallets } from '@/hooks/use-wallets'
 
 export function ImportPhrase({ onBack, onConnect }: { onBack: () => void; onConnect: () => void }) {
+  const t = useTranslations('wallet')
   const [phrase, setPhrase] = useState<string | undefined>()
   const [error, setError] = useState<Error | undefined>()
   const [connecting, setConnecting] = useState(false)
@@ -35,12 +37,12 @@ export function ImportPhrase({ onBack, onConnect }: { onBack: () => void; onConn
       <div className="relative flex min-h-0 flex-1">
         <ScrollArea className="flex-1 px-4 md:px-8">
           <div className="mb-4 flex flex-col">
-            <div className="mb-4 text-base font-semibold">Import Seed Phrase</div>
+            <div className="mb-4 text-base font-semibold">{t('importSeedPhrase')}</div>
 
             <div className="flex flex-col gap-2">
               <Textarea
                 className="h-40"
-                placeholder="Type your seed phrase"
+                placeholder={t('typeSeedPhrase')}
                 disabled={connecting}
                 onChange={e => {
                   setPhrase(e.target.value)
@@ -62,11 +64,11 @@ export function ImportPhrase({ onBack, onConnect }: { onBack: () => void; onConn
 
       <div className="flex gap-3 p-4 pt-2 md:justify-end md:gap-6 md:px-8 md:pb-8">
         <ThemeButton variant="secondaryMedium" onClick={onBack}>
-          Back
+          {t('back')}
         </ThemeButton>
 
         <ThemeButton variant="primaryMedium" className="flex-1 md:flex-0" onClick={onImport} disabled={connecting || !phrase}>
-          {connecting && <LoaderCircle size={20} className="animate-spin" />} Import
+          {connecting && <LoaderCircle size={20} className="animate-spin" />} {t('import')}
         </ThemeButton>
       </div>
     </>

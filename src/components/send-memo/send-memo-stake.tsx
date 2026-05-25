@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect, useMemo, useState } from 'react'
+import { useTranslations } from 'next-intl'
 import { AssetValue, Chain, USwapNumber } from '@tcswap/core'
 import { Info, LoaderCircle } from 'lucide-react'
 import { toast } from 'sonner'
@@ -27,12 +28,7 @@ import { cn, toCurrencyFixed } from '@/lib/utils'
 
 type StakeTab = 'stake' | 'unstake' | 'compound' | 'claim'
 
-const STAKE_TABS: { key: StakeTab; label: string }[] = [
-  { key: 'stake', label: 'Stake' },
-  { key: 'unstake', label: 'Unstake' },
-  { key: 'compound', label: 'Compound' },
-  { key: 'claim', label: 'Claim' }
-]
+const STAKE_TABS: StakeTab[] = ['stake', 'unstake', 'compound', 'claim']
 
 interface StakeFormProps {
   account?: WalletAccount
@@ -41,6 +37,7 @@ interface StakeFormProps {
 }
 
 export function SendMemoStake({ account, initialTab = 'stake', stakedAmount }: StakeFormProps) {
+  const t = useTranslations('send')
   const uSwap = getUSwap()
   const accounts = useAccounts()
   const { openDialog } = useDialog()
@@ -100,7 +97,7 @@ export function SendMemoStake({ account, initialTab = 'stake', stakedAmount }: S
 
     if (tab === 'stake') {
       if (!tcyToken) {
-        toast.error('No TCY balance found.')
+        toast.error(t('error.noTcyBalance'))
         return
       }
       memo = 'TCY+'
@@ -124,7 +121,7 @@ export function SendMemoStake({ account, initialTab = 'stake', stakedAmount }: S
     const wallet = claimWallet ?? uSwap.getWallet(thorAccount.provider, Chain.THORChain)
     if (!wallet) {
       setSubmitting(false)
-      toast.error('Wallet not connected.')
+      toast.error(t('error.walletNotConnected'))
       return
     }
 
@@ -140,25 +137,25 @@ export function SendMemoStake({ account, initialTab = 'stake', stakedAmount }: S
       })
 
     toast.promise(broadcast, {
-      loading: 'Submitting transaction...',
-      success: () => 'Transaction submitted',
-      error: (err: any) => err?.message || 'Error submitting transaction'
+      loading: t('toast.submitting'),
+      success: () => t('toast.submitted'),
+      error: (err: any) => err?.message || t('toast.submitError')
     })
   }
 
-  const amountLabel = tab === 'stake' ? 'Stake Amount' : 'Unstake Amount'
+  const amountLabel = tab === 'stake' ? t('stake.stakeAmount') : t('stake.unstakeAmount')
 
   const submitLabel = (() => {
-    if (tab === 'compound') return 'Compound'
-    if (tab === 'claim') return claimLoading ? 'Checking...' : totalClaimable > 0 ? 'Claim' : 'Nothing to claim'
-    if (!numericAmount) return 'Enter amount'
-    return tab === 'stake' ? 'Stake' : 'Unstake'
+    if (tab === 'compound') return t('stake.compound')
+    if (tab === 'claim') return claimLoading ? t('stake.checking') : totalClaimable > 0 ? t('stake.claim') : t('stake.nothingToClaim')
+    if (!numericAmount) return t('enterAmount')
+    return tab === 'stake' ? t('stake.stake') : t('stake.unstake')
   })()
 
   return (
     <div className="flex flex-col gap-5">
       <div className="flex items-center gap-6">
-        {STAKE_TABS.map(({ key, label }) => (
+        {STAKE_TABS.map(key => (
           <button
             key={key}
             onClick={() => {
@@ -170,7 +167,7 @@ export function SendMemoStake({ account, initialTab = 'stake', stakedAmount }: S
               tab === key ? 'text-txt-high-contrast font-bold' : 'text-txt-label-small hover:text-txt-high-contrast/70 font-normal'
             )}
           >
-            {label}
+            {t(`stake.tab.${key}`)}
           </button>
         ))}
       </div>
@@ -209,7 +206,7 @@ export function SendMemoStake({ account, initialTab = 'stake', stakedAmount }: S
               <div className="mt-3 flex items-center justify-between">
                 <div className="flex gap-2">
                   <ThemeButton className="h-7 rounded-full" variant="secondarySmall" onClick={() => setAmount('')} disabled={amount === ''}>
-                    Clear
+                    {t('clear')}
                   </ThemeButton>
                   <ThemeButton className="h-7 rounded-full" variant="secondarySmall" onClick={() => setAmount(String(referenceAmount * 0.5))}>
                     50%
@@ -221,11 +218,11 @@ export function SendMemoStake({ account, initialTab = 'stake', stakedAmount }: S
                 <div className="text-txt-label-small text-xs">
                   {tab === 'unstake' ? (
                     <>
-                      Staked: <DecimalText amount={String(effectiveStakedAmount)} symbol="TCY" />
+                      {t('stake.stakedLabel')} <DecimalText amount={String(effectiveStakedAmount)} symbol="TCY" />
                     </>
                   ) : tcyToken ? (
                     <>
-                      Balance: <DecimalText amount={tcyToken.balance.toSignificant()} symbol={tcyToken.balance.ticker} />
+                      {t('balanceLabel')} <DecimalText amount={tcyToken.balance.toSignificant()} symbol={tcyToken.balance.ticker} />
                     </>
                   ) : null}
                 </div>
@@ -238,15 +235,15 @@ export function SendMemoStake({ account, initialTab = 'stake', stakedAmount }: S
           <>
             <div className="bg-swap-bloc rounded-15 border p-4">
               <div className="mb-3 flex items-center justify-between">
-                <span className="text-txt-label-small text-xs">Wallet</span>
+                <span className="text-txt-label-small text-xs">{t('stake.wallet')}</span>
                 <SwapAddressFrom minOptions={1} />
               </div>
               <div className="flex items-center justify-between text-sm">
-                <span className="text-txt-label-small">Available to Claim</span>
+                <span className="text-txt-label-small">{t('stake.availableToClaim')}</span>
                 <span className="text-txt-high-contrast font-medium">{claimLoading ? '...' : <DecimalText amount={String(totalClaimable)} symbol="TCY" />}</span>
               </div>
               <div className="mt-1.5 flex items-center justify-between text-sm">
-                <span className="text-txt-label-small">Staked</span>
+                <span className="text-txt-label-small">{t('stake.staked')}</span>
                 <span className="text-txt-high-contrast font-medium">
                   <DecimalText amount={String(effectiveStakedAmount)} symbol="TCY" />
                 </span>
@@ -254,7 +251,7 @@ export function SendMemoStake({ account, initialTab = 'stake', stakedAmount }: S
             </div>
 
             <div className="bg-swap-bloc rounded-15 border p-7">
-              <div className="text-txt-label-small mb-2 text-xs font-normal">Claim Amount</div>
+              <div className="text-txt-label-small mb-2 text-xs font-normal">{t('stake.claimAmount')}</div>
               <div className="flex items-center justify-between">
                 <div className="flex-1">
                   <p className="text-txt-high-contrast text-4xl font-medium">
@@ -284,7 +281,7 @@ export function SendMemoStake({ account, initialTab = 'stake', stakedAmount }: S
           <div className="bg-swap-bloc rounded-15 border p-7">
             <div className="text-txt-label-small flex items-start gap-2 text-sm">
               <Info className="mt-0.5 size-4 shrink-0" />
-              <span>Compound your pending TCY staking rewards back into your stake position.</span>
+              <span>{t('stake.compoundInfo')}</span>
             </div>
           </div>
         )}
@@ -295,12 +292,12 @@ export function SendMemoStake({ account, initialTab = 'stake', stakedAmount }: S
           onClick={!thorAccount ? () => openDialog(ConnectWallet, { chain: Chain.THORChain }) : handleSend}
           disabled={!!thorAccount && !canSend}
         >
-          {submitting ? <LoaderCircle size={20} className="animate-spin" /> : !thorAccount ? 'Connect THORChain Wallet' : submitLabel}
+          {submitting ? <LoaderCircle size={20} className="animate-spin" /> : !thorAccount ? t('connectThorchainWallet') : submitLabel}
         </ThemeButton>
       </div>
 
       <div className="text-txt-label-small flex items-center justify-between px-4 text-xs">
-        <div className="flex items-center gap-1">Transaction Fee</div>
+        <div className="flex items-center gap-1">{t('transactionFee')}</div>
         <span>0.02 RUNE {runeRate && ` (${toCurrencyFixed(runeRate.mul(0.02).toCurrency('$', { trimTrailingZeros: false }))})`}</span>
       </div>
 

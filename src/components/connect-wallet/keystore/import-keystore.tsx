@@ -1,4 +1,5 @@
 import { DragEvent, useRef, useState } from 'react'
+import { useTranslations } from 'next-intl'
 import { WalletOption } from '@tcswap/core'
 import { LoaderCircle } from 'lucide-react'
 import { Input } from '@/components/ui/input'
@@ -11,6 +12,7 @@ import { useWallets } from '@/hooks/use-wallets'
 import { cn } from '@/lib/utils'
 
 export function ImportKeystore({ onBack, onConnect }: { onBack: () => void; onConnect: () => void }) {
+  const t = useTranslations('wallet')
   const fileInputRef = useRef<HTMLInputElement>(null)
   const [file, setFile] = useState<File | undefined>()
   const [isDragging, setIsDragging] = useState<boolean>(false)
@@ -41,7 +43,7 @@ export function ImportKeystore({ onBack, onConnect }: { onBack: () => void; onCo
   const handleFile = (file: File) => {
     console.log(file.type)
 
-    if (!['application/json', 'text/plain'].includes(file.type)) return setError(new Error('Invalid file type. Please upload a JSON or TXT file.'))
+    if (!['application/json', 'text/plain'].includes(file.type)) return setError(new Error(t('error.invalidFileType')))
 
     setError(undefined)
     setFile(file)
@@ -95,7 +97,7 @@ export function ImportKeystore({ onBack, onConnect }: { onBack: () => void; onCo
       <div className="relative flex min-h-0 flex-1">
         <ScrollArea className="flex-1 px-4 md:px-8">
           <div className="mb-4 flex flex-col">
-            <div className="mb-4 text-base font-semibold">Import Keystore</div>
+            <div className="mb-4 text-base font-semibold">{t('importKeystore')}</div>
 
             <div
               onDragOver={handleDragOver}
@@ -134,14 +136,14 @@ export function ImportKeystore({ onBack, onConnect }: { onBack: () => void; onCo
               ) : (
                 <>
                   <Icon name="cloud-in" className="text-txt-label-small size-12 shrink-0" />
-                  <span className="text-txt-high-contrast text-sm font-semibold">Select or drag your keystore file to upload it</span>
+                  <span className="text-txt-high-contrast text-sm font-semibold">{t('selectOrDragKeystore')}</span>
                 </>
               )}
             </div>
 
             <div className="mt-5 flex flex-col gap-2">
-              <div className="text-txt-label-small text-base font-semibold">Decryption Password</div>
-              <Input type="password" placeholder="Password" onChange={e => setPassword(e.target.value)} disabled={connecting} />
+              <div className="text-txt-label-small text-base font-semibold">{t('decryptionPassword')}</div>
+              <Input type="password" placeholder={t('password')} onChange={e => setPassword(e.target.value)} disabled={connecting} />
             </div>
 
             {error && (
@@ -157,11 +159,11 @@ export function ImportKeystore({ onBack, onConnect }: { onBack: () => void; onCo
 
       <div className="flex gap-3 p-4 pt-2 md:justify-end md:gap-6 md:px-8 md:pb-8">
         <ThemeButton variant="secondaryMedium" onClick={onBack}>
-          Back
+          {t('back')}
         </ThemeButton>
 
         <ThemeButton variant="primaryMedium" className="flex-1 md:flex-0" onClick={onImport} disabled={connecting || !file || !password}>
-          {connecting && <LoaderCircle size={20} className="animate-spin" />} Import
+          {connecting && <LoaderCircle size={20} className="animate-spin" />} {t('import')}
         </ThemeButton>
       </div>
     </>
