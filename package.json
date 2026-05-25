@@ -60,6 +60,10 @@
     "xrpl": "^4.4.2",
     "zustand": "^5.0.8"
   },
+  "overrides": {
+    "libsodium-wrappers-sumo": "0.7.15",
+    "libsodium-sumo": "0.7.15"
+  },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
     "@tailwindcss/postcss": "^4.1.18",
