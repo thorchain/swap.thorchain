@@ -20,7 +20,7 @@ export async function POST(req: NextRequest) {
   const payload: Record<string, unknown> = {
     sender: { name: 'Swap THORChain', email: BREVO_EMAIL },
     to: [{ email: REPORT_TO_EMAIL }],
-    subject: 'STO Bug Report',
+    subject: 'STO Bug Report / Feature request',
     htmlContent: `
       <p><strong>Description:</strong></p>
       <pre style="white-space:pre-wrap">${safeDescription}</pre>
