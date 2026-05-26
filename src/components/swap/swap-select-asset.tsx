@@ -61,7 +61,6 @@ export const SwapSelectAsset = ({ isOpen, onOpenChange, selected, onSelectAsset 
   const { mimir, mayaMimir } = useMimir()
 
   const isAssetHalted = (asset: Asset) => {
-    return false
     const tickerKey = `HALT${asset.ticker}TRADING`
     const isThorOnly = asset.isSecuredAsset // Secured assets are THORChain-only; Maya can't serve them
     const thorCanServe = isThorOnly || tickerKey in mimir
