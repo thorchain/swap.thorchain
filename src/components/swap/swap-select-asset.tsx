@@ -292,18 +292,20 @@ export const SwapSelectAsset = ({ isOpen, onOpenChange, selected, onSelectAsset 
                             <div className="text-left">
                               <div className="text-txt-high-contrast flex max-w-40 items-center gap-1.5 truncate font-semibold">
                                 <span>{asset.ticker}</span>
-                                {asset.isSecuredAsset && (
-                                  <span className="border-gray text-txt-label-small rounded-full border px-1.5 text-[10px] font-medium">
-                                    {t('selectAsset.secured')}
-                                  </span>
-                                )}
                                 {asset.isTradeAsset && (
                                   <span className="border-gray text-txt-label-small rounded-full border px-1.5 text-[10px] font-medium">
                                     {t('selectAsset.trade')}
                                   </span>
                                 )}
                               </div>
-                              <div className="text-txt-label-small text-sm">{chainLabel(asset.chain)}</div>
+                              <div className="text-txt-label-small flex items-center gap-1.5 text-sm">
+                                <span>{chainLabel(asset.chain)}</span>
+                                {asset.isSecuredAsset && (
+                                  <span className="border-gray rounded-full border px-1.5 text-[10px] font-medium">
+                                    {t('selectAsset.secured')}
+                                  </span>
+                                )}
+                              </div>
                             </div>
                           </div>
                           {isAssetHalted(asset) ? (

@@ -24,7 +24,7 @@ export function AssetIcon({ asset, className }: { asset: Asset | undefined; clas
           )}
           {l1Chain && !isNativeAsset(l1Chain, asset.ticker) && (
             <Image
-              className="outline-swap-global bg-swap-global absolute -right-1 -bottom-1 h-4 w-4 rounded-md"
+              className="outline-swap-global bg-swap-global absolute -top-1 -right-1 h-4 w-4 rounded-md"
               src={`/networks/${l1Chain.toLowerCase()}.svg`}
               alt=""
               width={16}
@@ -33,7 +33,7 @@ export function AssetIcon({ asset, className }: { asset: Asset | undefined; clas
           )}
           {asset.isSecuredAsset && (
             <Image
-              className="outline-swap-global bg-swap-global absolute -top-1 -right-1 h-4 w-4 rounded-md"
+              className="outline-swap-global bg-swap-global absolute -right-1 -bottom-1 h-4 w-4 rounded-md"
               src="/networks/thor.svg"
               alt="thor"
               width={16}
