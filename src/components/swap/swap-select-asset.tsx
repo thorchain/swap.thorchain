@@ -1,5 +1,5 @@
 import Image from 'next/image'
-import { useEffect, useMemo, useRef, useState } from 'react'
+import { Fragment, useEffect, useMemo, useRef, useState } from 'react'
 import { useTranslations } from 'next-intl'
 import { useVirtualizer } from '@tanstack/react-virtual'
 import { Chain } from '@tcswap/core'
@@ -56,6 +56,7 @@ export const SwapSelectAsset = ({ isOpen, onOpenChange, selected, onSelectAsset 
   const isMobile = useIsMobile()
   const [selectedChain, setSelectedChain] = useState<FilterChain>(Filter.All)
   const [searchQuery, setSearchQuery] = useState('')
+  const [showSecuredAssets, setShowSecuredAssets] = useState(false)
 
   const { assets } = useAssets()
   const { mimir, mayaMimir } = useMimir()
@@ -79,6 +80,8 @@ export const SwapSelectAsset = ({ isOpen, onOpenChange, selected, onSelectAsset 
     const allAssets: Asset[] = []
 
     for (const asset of assets) {
+      if (asset.isSecuredAsset && !showSecuredAssets) continue
+
       allAssets.push(asset)
 
       const chainAssets = chainMap.get(asset.chain)
@@ -92,7 +95,7 @@ export const SwapSelectAsset = ({ isOpen, onOpenChange, selected, onSelectAsset 
     chainMap.set(Filter.All, allAssets)
 
     return chainMap
-  }, [assets])
+  }, [assets, showSecuredAssets])
 
   const chains = useMemo(() => {
     return Array.from(chainMap.keys()).sort((a, b) => {
@@ -223,21 +226,41 @@ export const SwapSelectAsset = ({ isOpen, onOpenChange, selected, onSelectAsset 
           <ScrollArea className="border-b md:mr-8 md:w-2/5 md:border-r md:border-b-0 md:pl-8">
             <div className="mx-4 mb-4 flex w-max gap-2 md:mx-0 md:mb-8 md:block md:w-full">
               {chains.map((chain, index) => (
-                <div
-                  key={index}
-                  onClick={() => handleChainSelect(chain)}
-                  className={cn(
-                    'hover:bg-sub-container-modal/50 m-0 flex cursor-pointer items-center gap-3 rounded-lg border border-transparent px-4 py-2 md:mr-10 md:mb-2 md:py-3',
-                    {
-                      'border-border-btn-modal-hover': selectedChain === chain
-                    }
-                  )}
-                >
-                  <div className="flex h-6 w-6 items-center justify-center rounded-full">
-                    <Image src={chain === Filter.All ? '/icons/windows.svg' : `/networks/${chain.toLowerCase()}.svg`} alt="" width="24" height="24" />
+                <Fragment key={index}>
+                  <div
+                    onClick={() => handleChainSelect(chain)}
+                    className={cn(
+                      'hover:bg-sub-container-modal/50 m-0 flex cursor-pointer items-center gap-3 rounded-lg border border-transparent px-4 py-2 md:mr-10 md:mb-2 md:py-3',
+                      {
+                        'border-border-btn-modal-hover': selectedChain === chain
+                      }
+                    )}
+                  >
+                    <div className="flex h-6 w-6 items-center justify-center rounded-full">
+                      <Image
+                        src={chain === Filter.All ? '/icons/windows.svg' : `/networks/${chain.toLowerCase()}.svg`}
+                        alt=""
+                        width="24"
+                        height="24"
+                      />
+                    </div>
+                    <span className="text-txt-high-contrast text-sm">{chain === Filter.All ? t('selectAsset.allChains') : chainLabel(chain)}</span>
                   </div>
-                  <span className="text-txt-high-contrast text-sm">{chain === Filter.All ? t('selectAsset.allChains') : chainLabel(chain)}</span>
-                </div>
+
+                  {chain === Filter.All && (
+                    <div
+                      onClick={() => setShowSecuredAssets(prev => !prev)}
+                      className={cn(
+                        'hover:bg-sub-container-modal/50 m-0 flex cursor-pointer items-center justify-center rounded-lg border border-transparent px-4 py-2 md:mr-10 md:mb-2 md:py-3',
+                        {
+                          'border-border-btn-modal-hover': showSecuredAssets
+                        }
+                      )}
+                    >
+                      <span className="text-txt-high-contrast text-sm font-medium">{t('selectAsset.showSecuredAssets')}</span>
+                    </div>
+                  )}
+                </Fragment>
               ))}
             </div>
             {isMobile && <ScrollBar orientation="horizontal" />}

@@ -204,6 +204,7 @@
       "allChains": "Все сети",
       "search": "Поиск",
       "secured": "Защищённые активы",
+      "showSecuredAssets": "Показать защищённые активы",
       "trade": "Торговые активы",
       "currentlyUnavailable": "Сейчас недоступно",
       "selected": "Выбрано"
