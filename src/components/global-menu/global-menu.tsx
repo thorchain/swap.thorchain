@@ -8,7 +8,6 @@ import { useTranslations } from 'next-intl'
 import { VisuallyHidden } from '@radix-ui/react-visually-hidden'
 import { X } from 'lucide-react'
 import { Dialog, DialogPortal } from '@/components/ui/dialog'
-import { LanguageSwitcher } from './language-switcher'
 import { AppConfig } from '@/config'
 import { cn } from '@/lib/utils'
 import { bondAnim, memoAnim, swapAnim, tcyAnim } from './animations'
@@ -321,9 +320,6 @@ export function GlobalMenu({ isOpen, onOpenChange }: SendMemoMenuProps) {
                     ))}
                   </ul>
                 </div>
-
-                {/* Language */}
-                <LanguageSwitcher />
 
                 {/* Newsletter */}
                 <div className="hidden flex-col gap-5 md:flex">

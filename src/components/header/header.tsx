@@ -6,6 +6,7 @@ import { useTranslations } from 'next-intl'
 import { WalletIcon } from '@/components/wallet-icon'
 import { GlobalMenuButton } from '@/components/global-menu/global-menu-button'
 import { ThemeSwitchButton } from '@/components/header/theme-switch-button'
+import { LanguageSwitchButton } from '@/components/header/language-switch-button'
 import { TransactionHistoryButton } from '@/components/header/transaction-history-button'
 import { useDialog } from '@/components/global-dialog'
 import { ThemeButton } from '@/components/theme-button'
@@ -48,6 +49,7 @@ export function Header() {
 
         <div className="flex flex-1 flex-wrap items-center justify-end gap-2">
           <ThemeSwitchButton />
+          <LanguageSwitchButton />
           <TransactionHistoryButton />
           {connectedProviders.length > 0 ? (
             <div className="flex items-center gap-1">
