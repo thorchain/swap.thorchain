@@ -36,7 +36,7 @@ export const SwapConfirm = ({ quote, priceImpact }: SwapConfirmProps) => {
   if (!assetFrom || !assetTo) return null
 
   const identifiers = useMemo(() => quote.fees.map(f => f.asset).sort(), [quote.fees])
-  const { rates } = useRates(identifiers)
+  const { rates } = useRates(identifiers, quote.providers[0])
   const { rateFrom, rateTo } = useSwapRates()
 
   const sellAmount = new USwapNumber(quote.sellAmount)
