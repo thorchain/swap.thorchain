@@ -24,7 +24,7 @@ export function AssetIcon({ asset, className }: { asset: Asset | undefined; clas
           )}
           {l1Chain && !isNativeAsset(l1Chain, asset.ticker) && (
             <Image
-              className="outline-swap-global bg-swap-global absolute -top-1 -right-1 h-4 w-4 rounded-md"
+              className={cn('outline-swap-global bg-swap-global absolute -right-1 h-4 w-4 rounded-md', asset.isSecuredAsset ? '-top-1' : '-bottom-1')}
               src={`/networks/${l1Chain.toLowerCase()}.svg`}
               alt=""
               width={16}
