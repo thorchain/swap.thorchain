@@ -135,7 +135,7 @@ export const SwapRecipient = ({ provider, onFetchQuote }: SwapRecipientProps) =>
             value={address}
             aria-invalid={!isValid}
             onChange={e => setAddress(e.target.value)}
-            className={cn('bg-input-modal-bg-active border-border-sub-container-modal-low', { 'pl-13': currentOption })}
+            className={cn('bg-input-modal-bg-active border-border-sub-container-modal-low', { 'pl-12': currentOption })}
             tabIndex={isMobile ? -1 : 0}
           />
 

@@ -243,7 +243,7 @@ export function Send({ isOpen, onOpenChange, initialToken, account }: SendDialog
                   aria-invalid={!isValidRecipient}
                   onChange={e => setRecipient(e.target.value)}
                   className={cn('bg-swap-bloc border-border-sub-container-modal-low', {
-                    'pl-13': accounts.find(a => a.network === selectedToken.balance.chain && a.address.toLowerCase() === recipient.toLowerCase())
+                    'pl-12': accounts.find(a => a.network === selectedToken.balance.chain && a.address.toLowerCase() === recipient.toLowerCase())
                   })}
                 />
                 {(() => {
