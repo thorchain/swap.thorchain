@@ -109,7 +109,7 @@ export const SwapDialog = ({ provider, isOpen, onOpenChange }: SwapDialogProps) 
 
   return (
     <Credenza open={isOpen} onOpenChange={onOpenChange}>
-      <CredenzaContent className="flex h-auto max-h-5/6 flex-col md:max-w-xl">
+      <CredenzaContent className="flex h-auto max-h-5/6 flex-col md:max-w-2xl">
         {quote ? (
           <>
             <SwapConfirm quote={quote} priceImpact={priceImpact} />
