@@ -3,7 +3,7 @@
 import { useMemo, useState } from 'react'
 import { useTranslations } from 'next-intl'
 import { Chain, USwapNumber } from '@tcswap/core'
-import { Info, LoaderCircle, X } from 'lucide-react'
+import { Info, LoaderCircle } from 'lucide-react'
 import { toast } from 'sonner'
 import { Textarea } from '@/components/ui/textarea'
 import { ConnectWallet } from '@/components/connect-wallet/connect-wallet'
@@ -138,12 +138,12 @@ export function SendMemo() {
               value={memo}
               maxLength={250}
               onChange={e => setMemo(e.target.value)}
-              className="border-0 bg-transparent pr-20"
+              className="border-0 bg-transparent"
             />
             {memo ? (
-              <button className="text-txt-label-small hover:text-txt-high-contrast absolute end-3 top-3 shrink-0 rounded-full p-1" onClick={() => setMemo('')}>
-                <X className="size-4" />
-              </button>
+              <ThemeButton variant="circleSmall" className="absolute end-3 top-3" onClick={() => setMemo('')}>
+                <Icon name="trash" />
+              </ThemeButton>
             ) : (
               <ThemeButton
                 variant="secondarySmall"

@@ -3,7 +3,7 @@
 import { useEffect, useMemo, useState } from 'react'
 import { useTranslations } from 'next-intl'
 import { Chain, USwapNumber } from '@tcswap/core'
-import { LoaderCircle, X } from 'lucide-react'
+import { LoaderCircle } from 'lucide-react'
 import { toast } from 'sonner'
 import { Textarea } from '@/components/ui/textarea'
 import { ConnectWallet } from '@/components/connect-wallet/connect-wallet'
@@ -170,14 +170,14 @@ export function SendMemoBond({ account, initialTab = 'bond' }: BondFormProps) {
             value={nodeAddress}
             onChange={e => setNodeAddress(e.target.value)}
             className={cn(
-              'bg-swap-bloc border-border-sub-container-modal-low pr-20',
+              'bg-swap-bloc border-border-sub-container-modal-low',
               nodeAddress.trim() && !nodeAddressValid && 'border-destructive focus-visible:ring-destructive'
             )}
           />
           {nodeAddress ? (
-            <button className="text-txt-label-small hover:text-txt-high-contrast absolute end-3 top-3 shrink-0 rounded-full p-1" onClick={() => setNodeAddress('')}>
-              <X className="size-4" />
-            </button>
+            <ThemeButton variant="circleSmall" className="absolute end-3 top-3" onClick={() => setNodeAddress('')}>
+              <Icon name="trash" />
+            </ThemeButton>
           ) : (
             <ThemeButton
               variant="secondarySmall"
@@ -196,14 +196,14 @@ export function SendMemoBond({ account, initialTab = 'bond' }: BondFormProps) {
               value={newAddress}
               onChange={e => setNewAddress(e.target.value)}
               className={cn(
-                'bg-swap-bloc border-border-sub-container-modal-low pr-20',
+                'bg-swap-bloc border-border-sub-container-modal-low',
                 newAddress.trim() && !newAddressValid && 'border-destructive focus-visible:ring-destructive'
               )}
             />
             {newAddress ? (
-              <button className="text-txt-label-small hover:text-txt-high-contrast absolute end-3 top-3 shrink-0 rounded-full p-1" onClick={() => setNewAddress('')}>
-                <X className="size-4" />
-              </button>
+              <ThemeButton variant="circleSmall" className="absolute end-3 top-3" onClick={() => setNewAddress('')}>
+                <Icon name="trash" />
+              </ThemeButton>
             ) : (
               <ThemeButton
                 variant="secondarySmall"
