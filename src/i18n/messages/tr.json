@@ -426,7 +426,7 @@
     "sortByBalance": "Bakiye (Yüksek → Düşük)",
     "externalWalletMode": "Harici Cüzdan Modu",
     "externalWalletModeDescription": "Emrini gir, Takas düğmesine tıkla ve talimatları izle",
-    "externalWalletModeWarning": "Bir varlık Harici Cüzdan modunda desteklenmiyorsa, tarayıcı içi bir cüzdan bağlaman istenir",
+    "externalWalletAssetUnsupported": "Bu varlık Harici Cüzdan modunda desteklenmiyor. Devam etmek istiyorsanız tarayıcı içi bir cüzdan bağlayın.",
     "close": "Kapat",
     "sendToken": "{ticker} Gönder"
   },

@@ -426,7 +426,7 @@
     "sortByBalance": "餘額（高 → 低）",
     "externalWalletMode": "外部錢包模式",
     "externalWalletModeDescription": "輸入您的訂單，點擊兌換按鈕，然後按照說明操作",
-    "externalWalletModeWarning": "如果某資產在外部錢包模式下不受支援，系統將提示您連接瀏覽器內錢包",
+    "externalWalletAssetUnsupported": "此資產在外部錢包模式下不受支援。如要繼續，請連接瀏覽器錢包。",
     "close": "關閉",
     "sendToken": "發送{ticker}"
   },

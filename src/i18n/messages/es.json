@@ -426,7 +426,7 @@
     "sortByBalance": "Saldo (mayor → menor)",
     "externalWalletMode": "Modo de billetera externa",
     "externalWalletModeDescription": "Ingresa tu orden, haz clic en el botón de intercambio y sigue las instrucciones",
-    "externalWalletModeWarning": "Si un activo no es compatible en el modo de billetera externa, se te pedirá que conectes una billetera del navegador",
+    "externalWalletAssetUnsupported": "Este activo no es compatible en el modo de billetera externa. Conecta una billetera del navegador si quieres continuar.",
     "close": "Cerrar",
     "sendToken": "Enviar {ticker}"
   },

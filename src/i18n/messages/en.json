@@ -426,7 +426,7 @@
     "sortByBalance": "Balance (High → Low)",
     "externalWalletMode": "External Wallet Mode",
     "externalWalletModeDescription": "Enter your order, click the Swap button, and follow the instructions",
-    "externalWalletModeWarning": "If an asset isn’t supported in External Wallet mode, you’ll be prompted to connect an in-browser wallet",
+    "externalWalletAssetUnsupported": "This asset is not supported in External Wallet mode. Connect a browser wallet if you want to continue.",
     "close": "Close",
     "sendToken": "Send {ticker}"
   },

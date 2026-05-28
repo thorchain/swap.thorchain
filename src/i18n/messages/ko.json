@@ -426,7 +426,7 @@
     "sortByBalance": "잔액 (높은 순 → 낮은 순)",
     "externalWalletMode": "외부 지갑 모드",
     "externalWalletModeDescription": "주문을 입력하고 스왑 버튼을 누른 후 안내를 따르세요",
-    "externalWalletModeWarning": "외부 지갑 모드에서 지원되지 않는 자산의 경우, 브라우저 내 지갑을 연결하라는 안내가 표시됩니다",
+    "externalWalletAssetUnsupported": "이 자산은 외부 지갑 모드에서 지원되지 않습니다. 계속하려면 브라우저 지갑을 연결하세요.",
     "close": "닫기",
     "sendToken": "{ticker} 보내기"
   },

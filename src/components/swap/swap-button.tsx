@@ -32,6 +32,7 @@ interface ButtonState {
 
 export const SwapButton = ({ instantSwapSupported, instantSwapAvailable }: SwapButtonProps) => {
   const t = useTranslations('swap')
+  const tWallet = useTranslations('wallet')
   const assetFrom = useAssetFrom()
   const assetTo = useAssetTo()
   const uSwap = getUSwap()
@@ -89,7 +90,10 @@ export const SwapButton = ({ instantSwapSupported, instantSwapAvailable }: SwapB
           spinner: false,
           accent: false,
           onClick: () => {
-            if (externalWalletMode) setExternalWalletMode(false)
+            if (externalWalletMode) {
+              toast.warning(tWallet('externalWalletAssetUnsupported'))
+              setExternalWalletMode(false)
+            }
             openDialog(ConnectWallet, { chain: assetFrom.chain })
           }
         }

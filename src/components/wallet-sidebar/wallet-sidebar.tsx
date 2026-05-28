@@ -121,14 +121,9 @@ export function WalletSidebar({ isOpen, onOpenChange }: WalletSidebarProps) {
             </div>
           </div>
 
-          {externalWalletMode && (
-            <div className="border-jacob flex items-center gap-3 rounded-xl border p-4">
-              <Icon name="warning" className="text-jacob size-6 shrink-0" />
-              <div className="text-txt-text-modal text-sm">
-                {t('externalWalletModeWarning')}
-              </div>
-            </div>
-          )}
+          <ThemeButton onClick={handleConnectWallet} disabled={externalWalletMode} variant="primaryMedium" className="w-full">
+            {t('connectWallet')}
+          </ThemeButton>
 
           {accountsByProvider.size > 0 && (
             <div className={cn('flex flex-col', externalWalletMode && 'pointer-events-none')}>
@@ -153,12 +148,6 @@ export function WalletSidebar({ isOpen, onOpenChange }: WalletSidebarProps) {
               })}
             </div>
           )}
-        </div>
-
-        <div className="py-4">
-          <ThemeButton onClick={handleConnectWallet} disabled={externalWalletMode} variant="primaryMedium" className="w-full">
-            {t('connectWallet')}
-          </ThemeButton>
         </div>
       </DrawerContent>
     </Drawer>
