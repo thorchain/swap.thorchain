@@ -25,8 +25,8 @@ export const LanguageSwitchButton = () => {
   return (
     <DropdownMenu modal={false}>
       <DropdownMenuTrigger asChild>
-        <ThemeButton variant="outlineSmall" aria-label={t('language')} className="px-2.5 sm:px-4">
-          <span className="uppercase sm:hidden">{current}</span>
+        <ThemeButton variant="outlineSmall" aria-label={t('language')} className="px-2.5 sm:px-4 uppercase">
+          <span className="sm:hidden">{current}</span>
           <span className="hidden sm:inline">{localeNames[current]}</span>
         </ThemeButton>
       </DropdownMenuTrigger>
