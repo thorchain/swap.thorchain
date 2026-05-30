@@ -15,7 +15,7 @@ export const AppConfig = {
   gtag: 'G-VZ0FQ1WC7G',
   pixelId: 'qki4a',
   pixelEvent: 'tw-qki4a-qop3i',
-  discordLink: 'https://discord.gg/eGrrwNE95w',
+  discordLink: 'https://discord.gg/thorchaincommunity',
   telegramLink: 'https://t.me/thorchain_org',
   privacyPolicyLink: 'https://www.thorchain.org/privacy-policy',
   tosLink: 'https://www.thorchain.org/terms-of-use',
