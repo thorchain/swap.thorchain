@@ -1,0 +1,465 @@
+{
+  "menu": {
+    "swap": "Hoán đổi",
+    "bond": "Bond",
+    "memo": "Memo",
+    "launchApp": "Mở ứng dụng",
+    "socials": "Mạng xã hội",
+    "language": "Ngôn ngữ",
+    "newsletterPitch": "Cách tốt nhất để cập nhật tin tức về THORChain",
+    "emailPlaceholder": "Nhập email của bạn",
+    "signUp": "Đăng ký",
+    "signingUp": "Đang đăng ký…",
+    "subscribed": "Cảm ơn bạn đã đăng ký!",
+    "genericError": "Đã xảy ra lỗi"
+  },
+  "header": {
+    "wallet": "VÍ",
+    "history": "LỊCH SỬ"
+  },
+  "footer": {
+    "privacyPolicy": "Chính sách bảo mật",
+    "termsOfUse": "Điều khoản sử dụng",
+    "riskPolicy": "Chính sách rủi ro",
+    "riskTooltip": "Mặc dù trang web này được xây dựng cẩn thận, nó vẫn có thể chứa các lỗi ngoài ý muốn dẫn đến trục trặc và thậm chí mất tiền. Chỉ tiếp tục nếu bạn hiểu và chấp nhận những rủi ro này.",
+    "builtBy": "Được xây dựng bởi",
+    "reportBug": "Báo lỗi / Yêu cầu tính năng",
+    "getSupport": "Nhận hỗ trợ trên Discord",
+    "bug": {
+      "title": "Báo lỗi / Yêu cầu tính năng",
+      "success": "Cảm ơn bạn! Báo cáo của bạn đã được gửi.",
+      "close": "Đóng",
+      "emailLabel": "Email (tùy chọn)",
+      "descriptionLabel": "Mô tả",
+      "descriptionPlaceholder": "Mô tả lỗi / tính năng",
+      "attachmentLabel": "Tệp đính kèm (tùy chọn)",
+      "attachFile": "Đính kèm tệp",
+      "sending": "Đang gửi...",
+      "send": "Gửi báo cáo",
+      "failed": "Gửi báo cáo thất bại"
+    }
+  },
+  "swap": {
+    "tab": {
+      "swap": "Hoán đổi",
+      "limit": "Giới hạn"
+    },
+    "input": {
+      "sell": "Bán",
+      "buy": "Mua",
+      "clear": "Xóa"
+    },
+    "balance": {
+      "label": "Số dư:"
+    },
+    "button": {
+      "limitNotSupported": "Không hỗ trợ lệnh giới hạn",
+      "temporarilyUnavailable": "Tạm thời không khả dụng",
+      "enterAmount": "Nhập số lượng",
+      "quoting": "Đang báo giá...",
+      "noValidQuotes": "Không có báo giá hợp lệ",
+      "enterLimitPrice": "Nhập giá giới hạn",
+      "enterLimitOrder": "Nhập lệnh giới hạn",
+      "swap": "Hoán đổi",
+      "connectWallet": "Kết nối ví {chain}",
+      "insufficientBalance": "Số dư không đủ",
+      "approve": "Phê duyệt {ticker}"
+    },
+    "toast": {
+      "approvalTransaction": "Giao dịch phê duyệt",
+      "success": "Thành công",
+      "errorSubmitting": "Lỗi khi gửi giao dịch",
+      "submittingTransaction": "Đang gửi giao dịch",
+      "transactionSubmitted": "Giao dịch đã được gửi"
+    },
+    "confirm": {
+      "titleLimit": "Xác nhận lệnh giới hạn",
+      "titleSwap": "Xác nhận hoán đổi",
+      "notAvailable": "n/a",
+      "swapArrowLabel": "hoán đổi",
+      "chainAddress": "Địa chỉ {chain}",
+      "sourceAddressTooltip": "Địa chỉ ví gửi tiền cho giao dịch hoán đổi này.",
+      "destinationAddressTooltip": "Địa chỉ ví sẽ nhận số tiền đã hoán đổi.",
+      "refundAddress": "Địa chỉ hoàn tiền",
+      "refundAddressTooltip": "Địa chỉ nơi tiền sẽ được trả lại nếu không thể hoàn tất hoán đổi.",
+      "limitPrice": "Giá giới hạn",
+      "limitPriceTooltip": "Giá trên mỗi đơn vị mà lệnh giới hạn của bạn sẽ được thực hiện. Lệnh chỉ được khớp khi thị trường đạt đến mức giá này.",
+      "targetAmount": "Số lượng mục tiêu",
+      "targetAmountTooltip": "Số lượng chính xác bạn sẽ nhận được khi lệnh giới hạn của bạn được thực hiện ở mức giá bạn chỉ định.",
+      "minimumPayout": "Khoản chi trả tối thiểu",
+      "minimumPayoutTooltip": "Đây là mức tối thiểu bạn được đảm bảo nhận được với cài đặt bảo vệ giá {protection} của bạn. Nếu thị trường biến động đủ để bạn nhận được ít hơn, giao dịch hoán đổi sẽ bị hủy và hoàn tiền.",
+      "notProtected": "Không được bảo vệ",
+      "priceImpact": "Tác động giá",
+      "priceImpactTooltip": "Mức độ giao dịch hoán đổi của bạn làm thay đổi giá của Pool. Giao dịch của bạn càng lớn so với thanh khoản hiện có, tác động giá càng cao.",
+      "slippageTolerance": "Dung sai Slippage",
+      "slippageToleranceTooltip1": "Chênh lệch giữa bảo vệ giá {protection} của bạn và tác động giá.",
+      "slippageToleranceTooltip2": "Trong khoảng thời gian từ khi xem báo giá đến khi hoàn tất hoán đổi, giá có thể thay đổi. Dung sai Slippage là mức thay đổi giá tối đa bạn chấp nhận trước khi giao dịch bị hủy.",
+      "includedFees": "Phí đã bao gồm",
+      "includedFeesTooltip": "Các khoản phí này đã được tính trong tỷ giá — bạn không phải trả riêng.",
+      "estimatedTime": "Thời gian ước tính",
+      "gasFee": "Phí Gas {chain}",
+      "exchange": "Sàn",
+      "button": "Xác nhận",
+      "buttonLimit": "Xác nhận lệnh giới hạn",
+      "confirming": "Đang xác nhận"
+    },
+    "warning": {
+      "highPriceImpact": "Tôi hiểu rằng tác động giá là khoản bổ sung ngoài dung sai Slippage. Tôi chấp nhận tác động giá cao trên giao dịch hoán đổi này",
+      "sendExact": "Tôi hiểu rằng tôi phải gửi chính xác số lượng đã chỉ định từ một ví tự lưu ký. Tôi hiểu rằng gửi từ ví hợp đồng thông minh, địa chỉ sàn giao dịch, địa chỉ được ủy quyền hoặc ví EIP 7702 sẽ dẫn đến",
+      "lossOfFunds": "mất tiền.",
+      "ltcMweb": "Tôi hiểu rằng việc sử dụng địa chỉ LTC MWEB sẽ dẫn đến",
+      "selfCustody": "Tôi hiểu rằng tôi phải sử dụng ví tự lưu ký. Tôi hiểu rằng việc sử dụng ví hợp đồng thông minh, địa chỉ sàn giao dịch, địa chỉ được ủy quyền hoặc ví EIP 7702 sẽ dẫn đến"
+    },
+    "instant": {
+      "sendTitle": "Gửi {asset}",
+      "sendDescription": "Gửi chính xác <b>{amount} {ticker}</b> đến địa chỉ bên dưới từ một ví tự lưu ký.",
+      "qrCodeAlt": "Mã QR",
+      "expiresIn": "Hết hạn sau"
+    },
+    "error": {
+      "memoMissing": "Thiếu Memo",
+      "calculateSuggestedAmount": "Không thể tính số lượng đề xuất",
+      "preflightRequest": "Không thể kiểm tra trước yêu cầu",
+      "preflightMemoless": "Không thể kiểm tra trước yêu cầu không Memo",
+      "minAmountNoWallet": "Số lượng hoán đổi tối thiểu khi chưa kết nối ví là {amount} {ticker}",
+      "unknown": "Lỗi không xác định"
+    },
+    "feeDialog": {
+      "title": "Phí đã bao gồm trong tỷ giá",
+      "description": "Các khoản phí này đã được tính trong tỷ giá — bạn không phải trả riêng.",
+      "liquidityFee": "Phí thanh khoản",
+      "liquidityFeeInfo": "Phí cho nhà cung cấp thanh khoản trên tuyến đường",
+      "outboundFee": "Phí gửi ra",
+      "outboundFeeInfo": "Phí cho việc gửi giao dịch ra ngoài",
+      "platformFee": "Phí nền tảng",
+      "platformFeeInfo": "Phí do {app} thu"
+    },
+    "expiry": {
+      "title": "Thiết lập thời gian hết hạn",
+      "days": "Ngày",
+      "hours": "Giờ",
+      "minutes": "Phút",
+      "maxExpiry": "Thời gian hết hạn tối đa là {days} ngày",
+      "apply": "Áp dụng"
+    },
+    "limit": {
+      "whenWorth": "Khi 1 {ticker} có giá trị",
+      "expiresIn": "Hết hạn sau",
+      "oneHour": "1 giờ",
+      "oneDay": "1 ngày",
+      "threeDays": "3 ngày",
+      "custom": "Tùy chỉnh",
+      "market": "Thị trường"
+    },
+    "limitCancel": {
+      "titleModify": "Sửa lệnh giới hạn",
+      "titleCancel": "Hủy lệnh giới hạn",
+      "descriptionModify": "Việc sửa lệnh giới hạn này sẽ cập nhật giá mục tiêu. Một khoản phí mạng nhỏ sẽ được tính để xử lý việc sửa đổi.",
+      "descriptionCancel": "Việc hủy lệnh giới hạn này sẽ trả lại số tiền bạn đã gửi về ví của bạn. Một khoản phí mạng nhỏ sẽ được tính để xử lý việc hủy.",
+      "fromCurrent": "{percent}% so với hiện tại",
+      "youWillGet": "Bạn sẽ nhận được",
+      "button": {
+        "modifying": "Đang sửa...",
+        "cancelling": "Đang hủy...",
+        "loading": "Đang tải...",
+        "modifyOrder": "Sửa lệnh",
+        "cancelOrder": "Hủy lệnh"
+      },
+      "error": {
+        "loadInboundAddresses": "Không thể tải địa chỉ nhận vào",
+        "cancelFailed": "Không thể hủy lệnh hoán đổi giới hạn",
+        "modifyFailed": "Không thể sửa lệnh hoán đổi giới hạn"
+      },
+      "toast": {
+        "sendToCancel": "Gửi {amount} {ticker} từ ví gốc để hủy",
+        "sendToModify": "Gửi {amount} {ticker} từ ví gốc để sửa",
+        "cancelSubmitted": "Giao dịch hủy đã được gửi",
+        "modifySubmitted": "Giao dịch sửa đã được gửi"
+      },
+      "warning": {
+        "memolessDeposit": "Để {mode} lệnh này, hãy gửi khoản tiền nạp từ ví {chain} gốc đã đặt lệnh",
+        "connectOrMemoless": "Kết nối ví {chain} hoặc dùng khoản tiền nạp không Memo để {mode} lệnh này",
+        "connect": "Kết nối ví {chain} để {mode} lệnh này",
+        "switch": "Chuyển sang ví {chain} để {mode} lệnh này",
+        "addressMismatch": "Ví đã kết nối không khớp với địa chỉ đã đặt lệnh này",
+        "tradingPaused": "Giao dịch {chain} hiện đang tạm dừng"
+      }
+    },
+    "quoteTimer": {
+      "refresh": "Làm mới"
+    },
+    "recipient": {
+      "addressPlaceholder": "Địa chỉ {chain}",
+      "paste": "Dán",
+      "invalidAddress": "Địa chỉ {chain} không hợp lệ",
+      "titleAddresses": "Nhập địa chỉ",
+      "titleReceiving": "Nhập địa chỉ nhận",
+      "enterRefundAddress": "Nhập địa chỉ hoàn tiền:",
+      "enterReceivingAddress": "Nhập địa chỉ nhận:",
+      "preparingSwap": "Đang chuẩn bị hoán đổi",
+      "next": "Tiếp theo"
+    },
+    "selectAsset": {
+      "title": "Chọn coin",
+      "allChains": "Tất cả chuỗi",
+      "search": "Tìm kiếm",
+      "secured": "Được bảo mật",
+      "showSecuredAssets": "Hiển thị tài sản được bảo mật",
+      "trade": "Trade",
+      "currentlyUnavailable": "Hiện không khả dụng",
+      "selected": "Đã chọn"
+    },
+    "settings": {
+      "noProtection": "Không bảo vệ",
+      "priceProtection": "Bảo vệ giá",
+      "priceProtectionTooltip1": "Tác động giá là mức độ giao dịch hoán đổi của bạn làm thay đổi giá của Pool. Giao dịch của bạn càng lớn so với thanh khoản hiện có, tác động càng cao.",
+      "priceProtectionTooltip2": "Trong khoảng thời gian từ khi xem báo giá đến khi hoàn tất hoán đổi, giá có thể thay đổi. Dung sai Slippage là mức thay đổi giá tối đa bạn chấp nhận trước khi giao dịch bị hủy.",
+      "priceProtectionDescription": "Mức tối đa bạn sẵn sàng chi cho một giao dịch hoán đổi. Khoản này bao gồm tác động giá của giao dịch và bất kỳ Slippage nào trên giá token trước khi hoán đổi được thực hiện.",
+      "twapTitle": "Giá trung bình theo trọng số thời gian (TWAP)",
+      "twapTooltip1": "Các giao dịch TWAP trên THORChain được gọi là \"streaming swap\" trong tài liệu và mã nguồn.",
+      "twapTooltip2": "Để đặt lệnh bán tức thì, vốn sẽ dẫn đến mức giá thực hiện kém nhất, hãy nhập 1 cho số lượng sub-swap và 1 khối cho thời gian giữa các sub-swap.",
+      "twapDescription": "Phần lớn người dùng nên sử dụng cài đặt mặc định. Chỉ những nhà giao dịch chuyên nghiệp mới nên thay đổi các cài đặt này",
+      "numberOfSubSwaps": "Số lượng sub-swap",
+      "numberOfSubSwapsTooltip": "Chia nhỏ lệnh của bạn thành các giao dịch nhỏ hơn gọi là sub-swap. Càng nhiều sub-swap, giá thực hiện càng tốt. Khi đặt bằng 0, giao thức sẽ tự tính số lượng sub-swap cho bạn sao cho mỗi sub-swap có Slippage 5 bps. Giá trị mặc định là 0.",
+      "timeBetweenSubSwaps": "Thời gian giữa các sub-swap",
+      "timeBetweenSubSwapsTooltip": "Thời gian giữa mỗi sub-swap được đo bằng khối. Càng nhiều khối giữa mỗi sub-swap, giá thực hiện càng tốt. Chọn 0 khối sẽ thực hiện nhiều sub-swap trong mỗi khối để thực hiện nhanh hơn. Giá trị mặc định là 0 khối.",
+      "blocksCount": "{count, plural, other {# khối}}",
+      "rapidSwap": "Hoán đổi nhanh",
+      "seconds": "~{count, plural, other {# giây}}",
+      "reset": "Đặt lại",
+      "save": "Lưu"
+    }
+  },
+  "send": {
+    "title": "Gửi",
+    "send": "Gửi",
+    "amount": "Số lượng",
+    "clear": "Xóa",
+    "balanceLabel": "Số dư:",
+    "to": "Đến",
+    "addressPlaceholder": "Địa chỉ {chain}",
+    "paste": "Dán",
+    "transactionFee": "Phí giao dịch",
+    "selectCoin": "Chọn coin",
+    "connectThorchainWallet": "Kết nối ví THORChain",
+    "enterMemo": "Nhập Memo",
+    "enterAmount": "Nhập số lượng",
+    "toast": {
+      "submitting": "Đang gửi giao dịch...",
+      "submitted": "Giao dịch đã được gửi",
+      "submitError": "Lỗi khi gửi giao dịch"
+    },
+    "error": {
+      "walletNotConnectedReconnect": "Ví chưa kết nối. Vui lòng kết nối lại.",
+      "walletNotConnected": "Ví chưa kết nối.",
+      "invalidAddress": "Địa chỉ {chain} không hợp lệ",
+      "noRuneBalance": "Không tìm thấy số dư RUNE.",
+      "noTcyBalance": "Không tìm thấy số dư TCY."
+    },
+    "beta": {
+      "title": "Đây là tính năng beta",
+      "description": "Có thể còn lỗi chưa được phát hiện. Sử dụng với rủi ro của riêng bạn!"
+    },
+    "memo": {
+      "title": "Memo",
+      "examplesButton": "Ví dụ Memo",
+      "placeholder": "Nhập Memo",
+      "noPayloadInfo": "Thao tác này không cần payload. Chỉ áp dụng phí mạng 0.02 RUNE."
+    },
+    "bond": {
+      "bondAmount": "Số lượng Bond",
+      "rebondAmount": "Số lượng Rebond",
+      "nodeAddress": "Địa chỉ Node",
+      "newAddress": "Địa chỉ mới",
+      "enterNodeAddress": "Nhập địa chỉ Node",
+      "invalidNodeAddress": "Địa chỉ Node không hợp lệ",
+      "validatingNode": "Đang xác thực node...",
+      "nodeNotFound": "Không tìm thấy node",
+      "enterNewAddress": "Nhập địa chỉ mới",
+      "invalidNewAddress": "Địa chỉ mới không hợp lệ",
+      "bond": "Bond",
+      "unbond": "Unbond",
+      "rebond": "Rebond",
+      "nodeNotFoundOrUnavailable": "Không tìm thấy node hoặc node không khả dụng.",
+      "tab": {
+        "bond": "Bond",
+        "unbond": "Unbond",
+        "rebond": "Rebond",
+        "track": "Theo dõi"
+      },
+      "node": {
+        "version": "Phiên bản",
+        "ipAddress": "Địa chỉ IP",
+        "status": "Trạng thái",
+        "providers": "Nhà cung cấp",
+        "yourShare": "Phần của bạn",
+        "slashPoints": "Slash Points",
+        "operatorFee": "Phí vận hành",
+        "information": "Thông tin Node",
+        "bond": "Bond",
+        "nextReward": "Phần thưởng tiếp theo"
+      }
+    },
+    "stake": {
+      "stakeAmount": "Số lượng Stake",
+      "unstakeAmount": "Số lượng Unstake",
+      "compound": "Tái đầu tư",
+      "checking": "Đang kiểm tra...",
+      "claim": "Nhận",
+      "nothingToClaim": "Không có gì để nhận",
+      "stake": "Stake",
+      "unstake": "Unstake",
+      "stakedLabel": "Đã stake:",
+      "wallet": "Ví",
+      "availableToClaim": "Có thể nhận",
+      "staked": "Đã stake",
+      "claimAmount": "Số lượng nhận",
+      "compoundInfo": "Tái đầu tư phần thưởng stake TCY đang chờ của bạn trở lại vào vị thế stake.",
+      "tab": {
+        "stake": "Stake",
+        "unstake": "Unstake",
+        "compound": "Tái đầu tư",
+        "claim": "Nhận"
+      }
+    },
+    "examples": {
+      "back": "Quay lại",
+      "copied": "Đã sao chép vào bộ nhớ tạm",
+      "copyMemo": "Sao chép Memo {label}",
+      "fillInValues": "điền giá trị →",
+      "learnMore": "Tìm hiểu thêm",
+      "optional": "tùy chọn",
+      "optionalPlaceholder": "{hint} (để trống để bỏ qua)",
+      "preview": "Xem trước",
+      "useMemo": "Dùng Memo",
+      "badgeNoPayload": "không payload",
+      "badgeDust": "dust",
+      "items": {
+        "stakeTcy": "Stake TCY",
+        "unstakeTcy": "Unstake TCY",
+        "claimTcy": "Nhận TCY",
+        "depositRunepool": "Nạp RUNEPool",
+        "withdrawRunepool": "Rút RUNEPool",
+        "bond": "Bond",
+        "unbond": "Unbond",
+        "rebond": "Rebond",
+        "leave": "Rời",
+        "whitelistBondProvider": "Thêm nhà cung cấp Bond vào danh sách trắng",
+        "unwhitelistBondProvider": "Xóa nhà cung cấp Bond khỏi danh sách trắng",
+        "addLpSingle": "Thêm LP (một phía)",
+        "addLpDual": "Thêm LP (hai phía)",
+        "withdrawLp": "Rút LP",
+        "donateToPool": "Quyên góp vào Pool"
+      },
+      "placeholder": {
+        "nodeAddress": "Địa chỉ Node",
+        "providerAddress": "Địa chỉ nhà cung cấp",
+        "newAddress": "Địa chỉ mới",
+        "thorAddress": "Địa chỉ THORChain",
+        "pairedAddress": "Địa chỉ ghép cặp",
+        "affiliate": "Affiliate",
+        "pool": "Pool",
+        "asset": "Tài sản",
+        "amount": "Số lượng",
+        "basisPoints": "Basis Points",
+        "fee": "Phí (basis points)",
+        "thorPrefix": "thor1…",
+        "pairedAddressHint": "Địa chỉ chuỗi bên ngoài",
+        "affiliateHint": "THORName hoặc địa chỉ thor1…",
+        "poolHint": "ví dụ BTC.BTC hoặc ETH/ETH",
+        "assetHint": "ví dụ BTC.BTC hoặc RUNE (một phía)",
+        "amountHint": "Định dạng 1e8 — ví dụ 100000000 = 1 RUNE",
+        "basisPointsHint": "0 – 10000 (10000 = 100%)",
+        "feeHint": "0 – 10000"
+      }
+    }
+  },
+  "wallet": {
+    "chains": "Chuỗi",
+    "deselectAll": "Bỏ chọn tất cả",
+    "selectAll": "Chọn tất cả",
+    "soon": "Sắp ra mắt",
+    "connectNamed": "Kết nối {name}",
+    "connected": "Đã kết nối",
+    "disconnected": "Đã ngắt kết nối",
+    "install": "Cài đặt",
+    "connectWallet": "Kết nối ví",
+    "derivationPath": "Đường dẫn dẫn xuất",
+    "selectAccountType": "Chọn loại tài khoản",
+    "index": "Chỉ mục",
+    "ledgerUnlockHint": "Hãy đảm bảo Ledger của bạn đã được mở khóa và ứng dụng {app} đang mở trước khi kết nối.",
+    "correspondingApp": "tương ứng",
+    "createNewWallet": "Tạo ví mới",
+    "createWalletInstructions": "Viết 12 từ này ra và lưu trữ an toàn ở chế độ ngoại tuyến. Cụm 12 từ này được dùng để khôi phục khóa riêng tư của ví bạn.",
+    "copyPhrase": "Sao chép cụm từ",
+    "confirmSavedPassphrase": "Tôi xác nhận đã lưu cụm mật khẩu an toàn để khôi phục tài khoản của tôi trong tương lai.",
+    "back": "Quay lại",
+    "next": "Tiếp theo",
+    "setupDecryptionPassword": "Thiết lập mật khẩu giải mã",
+    "setupPasswordInstructions": "Nhập một mật khẩu mạnh để mã hóa ví bạn đã tạo. Đây là cách bạn sẽ truy cập ví của mình.",
+    "enterPassword": "Nhập mật khẩu",
+    "confirmPassword": "Xác nhận mật khẩu",
+    "passwordMustMatch": "Mật khẩu phải khớp",
+    "create": "Tạo",
+    "error": {
+      "invalidFileType": "Loại tệp không hợp lệ. Vui lòng tải lên tệp JSON hoặc TXT."
+    },
+    "importKeystore": "Nhập Keystore",
+    "selectOrDragKeystore": "Chọn hoặc kéo tệp keystore của bạn để tải lên",
+    "decryptionPassword": "Mật khẩu giải mã",
+    "password": "Mật khẩu",
+    "import": "Nhập",
+    "importSeedPhrase": "Nhập cụm từ khôi phục",
+    "typeSeedPhrase": "Nhập cụm từ khôi phục của bạn",
+    "openKeystore": "Mở Keystore",
+    "noTokensFound": "Không tìm thấy token",
+    "addressCopied": "Đã sao chép địa chỉ",
+    "copyAddress": "Sao chép địa chỉ",
+    "disconnectWallet": "Ngắt kết nối {name}",
+    "noCoins": "Không có coin",
+    "sidebar": {
+      "title": "Ví"
+    },
+    "sortWallets": "Sắp xếp ví",
+    "sortBy": "Sắp xếp theo",
+    "sortByName": "Tên (A-Z)",
+    "sortByBalance": "Số dư (Cao → Thấp)",
+    "externalWalletMode": "Chế độ ví bên ngoài",
+    "externalWalletModeDescription": "Nhập lệnh của bạn, nhấn nút Hoán đổi và làm theo hướng dẫn",
+    "externalWalletAssetUnsupported": "Tài sản này không được hỗ trợ ở chế độ ví bên ngoài. Kết nối ví trình duyệt nếu bạn muốn tiếp tục.",
+    "close": "Đóng",
+    "sendToken": "Gửi {ticker}"
+  },
+  "common": {
+    "close": "Đóng"
+  },
+  "tx": {
+    "title": "Lịch sử",
+    "today": "Hôm nay",
+    "yesterday": "Hôm qua",
+    "onlyCreatorModify": "Chỉ người tạo lệnh hoán đổi gốc mới có thể sửa",
+    "limitPrice": "Giá giới hạn",
+    "expiresIn": "Hết hạn sau",
+    "showQr": "Hiện mã QR",
+    "modify": "Sửa",
+    "cancelOrder": "Hủy lệnh",
+    "sourceAddress": "Địa chỉ nguồn",
+    "destinationAddress": "Địa chỉ đích",
+    "remaining": "Còn lại {time}",
+    "status": {
+      "not_started": "Đang chờ nạp tiền",
+      "pending": "Đang chờ",
+      "swapping": "Đang hoán đổi",
+      "completed": "Hoàn tất",
+      "failed": "Thất bại",
+      "expired": "Đã hết hạn",
+      "refunded": "Đã hoàn tiền",
+      "unknown": "Không xác định"
+    },
+    "leg": {
+      "deposit": "Nạp {ticker}",
+      "send": "Gửi {ticker}",
+      "swap": "Hoán đổi {from} sang {to}"
+    }
+  }
+}

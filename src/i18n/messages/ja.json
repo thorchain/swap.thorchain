@@ -1,0 +1,465 @@
+{
+  "menu": {
+    "swap": "スワップ",
+    "bond": "Bond",
+    "memo": "Memo",
+    "launchApp": "アプリを起動",
+    "socials": "ソーシャル",
+    "language": "言語",
+    "newsletterPitch": "THORChainの最新情報を入手する最良の方法です",
+    "emailPlaceholder": "メールアドレスを入力",
+    "signUp": "登録",
+    "signingUp": "登録中…",
+    "subscribed": "ご購読ありがとうございます。",
+    "genericError": "問題が発生しました"
+  },
+  "header": {
+    "wallet": "ウォレット",
+    "history": "履歴"
+  },
+  "footer": {
+    "privacyPolicy": "プライバシーポリシー",
+    "termsOfUse": "利用規約",
+    "riskPolicy": "リスクポリシー",
+    "riskTooltip": "このウェブサイトは細心の注意を払って構築されていますが、意図しない不具合により、サイトの誤動作や資金の損失につながる可能性があります。これらのリスクを理解し、受け入れた場合にのみ続行してください。",
+    "builtBy": "開発元",
+    "reportBug": "バグの報告／機能のリクエスト",
+    "getSupport": "Discordでサポートを受ける",
+    "bug": {
+      "title": "バグの報告／機能のリクエスト",
+      "success": "ありがとうございます。報告が送信されました。",
+      "close": "閉じる",
+      "emailLabel": "メールアドレス（任意）",
+      "descriptionLabel": "説明",
+      "descriptionPlaceholder": "バグ／機能について説明してください",
+      "attachmentLabel": "添付ファイル（任意）",
+      "attachFile": "ファイルを添付",
+      "sending": "送信中…",
+      "send": "報告を送信",
+      "failed": "報告の送信に失敗しました"
+    }
+  },
+  "swap": {
+    "tab": {
+      "swap": "スワップ",
+      "limit": "指値"
+    },
+    "input": {
+      "sell": "売却",
+      "buy": "購入",
+      "clear": "クリア"
+    },
+    "balance": {
+      "label": "残高:"
+    },
+    "button": {
+      "limitNotSupported": "指値注文は対応していません",
+      "temporarilyUnavailable": "一時的に利用できません",
+      "enterAmount": "金額を入力",
+      "quoting": "見積もり中…",
+      "noValidQuotes": "有効な見積もりがありません",
+      "enterLimitPrice": "指値価格を入力",
+      "enterLimitOrder": "指値注文を入力",
+      "swap": "スワップ",
+      "connectWallet": "{chain} ウォレットを接続",
+      "insufficientBalance": "残高が不足しています",
+      "approve": "{ticker} を承認"
+    },
+    "toast": {
+      "approvalTransaction": "承認トランザクション",
+      "success": "成功",
+      "errorSubmitting": "トランザクションの送信エラー",
+      "submittingTransaction": "トランザクションを送信中",
+      "transactionSubmitted": "トランザクションが送信されました"
+    },
+    "confirm": {
+      "titleLimit": "指値注文の確認",
+      "titleSwap": "スワップの確認",
+      "notAvailable": "n/a",
+      "swapArrowLabel": "スワップ",
+      "chainAddress": "{chain} アドレス",
+      "sourceAddressTooltip": "このスワップの資金を送信するウォレットアドレスです。",
+      "destinationAddressTooltip": "スワップされた資金を受け取るウォレットアドレスです。",
+      "refundAddress": "返金アドレス",
+      "refundAddressTooltip": "スワップが完了できない場合に資金が返金されるアドレスです。",
+      "limitPrice": "指値価格",
+      "limitPriceTooltip": "指値注文が執行される単位あたりの価格です。注文は市場がこの価格に達したときにのみ約定します。",
+      "targetAmount": "目標金額",
+      "targetAmountTooltip": "指定した価格で指値注文が執行された際に受け取る正確な金額です。",
+      "minimumPayout": "最小受取額",
+      "minimumPayoutTooltip": "{protection} の価格保護設定で受け取りが保証される最小額です。市場が大きく変動して受取額がこれを下回る場合、スワップはキャンセルされ返金されます。",
+      "notProtected": "保護されていません",
+      "priceImpact": "価格への影響",
+      "priceImpactTooltip": "スワップがプールの価格をどれだけ動かすかを示します。利用可能な流動性に対してスワップが大きいほど、価格への影響が大きくなります。",
+      "slippageTolerance": "Slippage許容範囲",
+      "slippageToleranceTooltip1": "{protection} の価格保護と価格への影響との差です。",
+      "slippageToleranceTooltip2": "見積もりを確認してからスワップが完了するまでの間に、価格は変動することがあります。Slippage許容範囲とは、スワップがキャンセルされる前に許容できる最大の価格変動です。",
+      "includedFees": "含まれる手数料",
+      "includedFeesTooltip": "これらの手数料はすでにレートに含まれており、別途お支払いいただく必要はありません。",
+      "estimatedTime": "推定所要時間",
+      "gasFee": "{chain} Gas手数料",
+      "exchange": "交換",
+      "button": "確認",
+      "buttonLimit": "指値注文を確認",
+      "confirming": "確認中"
+    },
+    "warning": {
+      "highPriceImpact": "価格への影響はSlippage許容範囲に加算されることを理解しています。このスワップで高い価格への影響を受け入れます",
+      "sendExact": "セルフカストディウォレットから指定された金額を正確に送金する必要があることを理解しています。スマートコントラクトウォレット、取引所アドレス、委任されたアドレス、またはEIP 7702ウォレットから送金すると、次の結果になることを理解しています:",
+      "lossOfFunds": "資金の損失。",
+      "ltcMweb": "LTC MWEBアドレスを使用すると、次の結果になることを理解しています:",
+      "selfCustody": "セルフカストディウォレットを使用する必要があることを理解しています。スマートコントラクトウォレット、取引所アドレス、委任されたアドレス、またはEIP 7702ウォレットを使用すると、次の結果になることを理解しています:"
+    },
+    "instant": {
+      "sendTitle": "{asset} を送信",
+      "sendDescription": "セルフカストディウォレットから以下のアドレスへ正確に<b>{amount} {ticker}</b>を送信してください。",
+      "qrCodeAlt": "QRコード",
+      "expiresIn": "有効期限"
+    },
+    "error": {
+      "memoMissing": "Memoがありません",
+      "calculateSuggestedAmount": "推奨金額の計算に失敗しました",
+      "preflightRequest": "事前確認リクエストに失敗しました",
+      "preflightMemoless": "Memoなしの事前確認リクエストに失敗しました",
+      "minAmountNoWallet": "ウォレットを接続していない場合の最小スワップ金額は{amount} {ticker}です",
+      "unknown": "不明なエラー"
+    },
+    "feeDialog": {
+      "title": "レートに含まれる手数料",
+      "description": "これらの手数料はすでにレートに含まれており、別途お支払いいただく必要はありません。",
+      "liquidityFee": "Liquidity手数料",
+      "liquidityFeeInfo": "ルート上の流動性プロバイダーへの手数料",
+      "outboundFee": "送金手数料",
+      "outboundFeeInfo": "送金トランザクションのための手数料",
+      "platformFee": "プラットフォーム手数料",
+      "platformFeeInfo": "{app}が請求する手数料"
+    },
+    "expiry": {
+      "title": "有効期限の設定",
+      "days": "日",
+      "hours": "時間",
+      "minutes": "分",
+      "maxExpiry": "最大有効期限は{days}日です",
+      "apply": "適用"
+    },
+    "limit": {
+      "whenWorth": "1 {ticker}の価値が次の額になったとき",
+      "expiresIn": "有効期限",
+      "oneHour": "1時間",
+      "oneDay": "1日",
+      "threeDays": "3日",
+      "custom": "カスタム",
+      "market": "成行"
+    },
+    "limitCancel": {
+      "titleModify": "指値注文の変更",
+      "titleCancel": "指値注文のキャンセル",
+      "descriptionModify": "この指値注文を変更すると、目標価格が更新されます。変更の処理には少額のネットワーク手数料が請求されます。",
+      "descriptionCancel": "この指値注文をキャンセルすると、預け入れた資金がウォレットに返金されます。キャンセルの処理には少額のネットワーク手数料が請求されます。",
+      "fromCurrent": "現在から{percent}%",
+      "youWillGet": "受取額",
+      "button": {
+        "modifying": "変更中…",
+        "cancelling": "キャンセル中…",
+        "loading": "読み込み中…",
+        "modifyOrder": "注文を変更",
+        "cancelOrder": "注文をキャンセル"
+      },
+      "error": {
+        "loadInboundAddresses": "受信アドレスの読み込みに失敗しました",
+        "cancelFailed": "指値スワップのキャンセルに失敗しました",
+        "modifyFailed": "指値スワップの変更に失敗しました"
+      },
+      "toast": {
+        "sendToCancel": "キャンセルするには元のウォレットから{amount} {ticker}を送信してください",
+        "sendToModify": "変更するには元のウォレットから{amount} {ticker}を送信してください",
+        "cancelSubmitted": "キャンセルトランザクションが送信されました",
+        "modifySubmitted": "変更トランザクションが送信されました"
+      },
+      "warning": {
+        "memolessDeposit": "この注文を{mode}するには、注文を行った元の{chain}ウォレットから預け入れを送信してください",
+        "connectOrMemoless": "この注文を{mode}するには、{chain}ウォレットを接続するか、Memoなしの預け入れを使用してください",
+        "connect": "この注文を{mode}するには、{chain}ウォレットを接続してください",
+        "switch": "この注文を{mode}するには、{chain}ウォレットに切り替えてください",
+        "addressMismatch": "接続中のウォレットがこの注文を行ったアドレスと一致しません",
+        "tradingPaused": "{chain}の取引は現在停止されています"
+      }
+    },
+    "quoteTimer": {
+      "refresh": "更新"
+    },
+    "recipient": {
+      "addressPlaceholder": "{chain} アドレス",
+      "paste": "貼り付け",
+      "invalidAddress": "無効な{chain}アドレスです",
+      "titleAddresses": "アドレスを入力",
+      "titleReceiving": "受取アドレスを入力",
+      "enterRefundAddress": "返金アドレスを入力:",
+      "enterReceivingAddress": "受取アドレスを入力:",
+      "preparingSwap": "スワップを準備中",
+      "next": "次へ"
+    },
+    "selectAsset": {
+      "title": "コインを選択",
+      "allChains": "すべてのチェーン",
+      "search": "検索",
+      "secured": "Secured",
+      "showSecuredAssets": "Secured資産を表示",
+      "trade": "Trade",
+      "currentlyUnavailable": "現在利用できません",
+      "selected": "選択中"
+    },
+    "settings": {
+      "noProtection": "保護なし",
+      "priceProtection": "価格保護",
+      "priceProtectionTooltip1": "価格への影響とは、スワップがプールの価格をどれだけ動かすかを示します。利用可能な流動性に対してスワップが大きいほど、影響が大きくなります。",
+      "priceProtectionTooltip2": "見積もりを確認してからスワップが完了するまでの間に、価格は変動することがあります。Slippage許容範囲とは、スワップがキャンセルされる前に許容できる最大の価格変動です。",
+      "priceProtectionDescription": "スワップに費やしてもよい最大額です。これには、スワップの価格への影響と、スワップが執行される前のトークン価格のSlippageが含まれます。",
+      "twapTitle": "時間加重平均価格（TWAP）",
+      "twapTooltip1": "THORChainでのTWAP取引は、ドキュメントやコードでは「streaming swaps」と呼ばれます。",
+      "twapTooltip2": "最悪の価格で執行される成行売り注文を出すには、サブスワップ数に1、サブスワップ間の時間に1ブロックを入力してください。",
+      "twapDescription": "大多数のユーザーはデフォルト設定を使用してください。専門のトレーダーのみがこれらの設定を変更してください",
+      "numberOfSubSwaps": "サブスワップ数",
+      "numberOfSubSwapsTooltip": "注文をサブスワップと呼ばれる小さな取引に分割します。サブスワップが多いほど、より良い価格で執行されます。ゼロに設定すると、各サブスワップのSlippageが5 bpsになるように、プロトコルがサブスワップ数を自動で計算します。デフォルト値はゼロです。",
+      "timeBetweenSubSwaps": "サブスワップ間の時間",
+      "timeBetweenSubSwapsTooltip": "各サブスワップ間の時間をブロック数で測定します。各サブスワップ間のブロックが多いほど、より良い価格で執行されます。ゼロブロックを選択すると、より速い執行のために毎ブロック複数のサブスワップを行います。デフォルト値はゼロブロックです。",
+      "blocksCount": "{count, plural, other {#ブロック}}",
+      "rapidSwap": "Rapid Swap",
+      "seconds": "~{count, plural, other {#秒}}",
+      "reset": "リセット",
+      "save": "保存"
+    }
+  },
+  "send": {
+    "title": "送信",
+    "send": "送信",
+    "amount": "金額",
+    "clear": "クリア",
+    "balanceLabel": "残高:",
+    "to": "宛先",
+    "addressPlaceholder": "{chain} アドレス",
+    "paste": "貼り付け",
+    "transactionFee": "トランザクション手数料",
+    "selectCoin": "コインを選択",
+    "connectThorchainWallet": "THORChain ウォレットを接続",
+    "enterMemo": "Memoを入力",
+    "enterAmount": "金額を入力",
+    "toast": {
+      "submitting": "トランザクションを送信中…",
+      "submitted": "トランザクションが送信されました",
+      "submitError": "トランザクションの送信エラー"
+    },
+    "error": {
+      "walletNotConnectedReconnect": "ウォレットが接続されていません。再接続してください。",
+      "walletNotConnected": "ウォレットが接続されていません。",
+      "invalidAddress": "無効な{chain}アドレスです",
+      "noRuneBalance": "RUNE残高が見つかりません。",
+      "noTcyBalance": "TCY残高が見つかりません。"
+    },
+    "beta": {
+      "title": "これはベータ機能です",
+      "description": "未発見の不具合がある可能性があります。自己責任でご利用ください。"
+    },
+    "memo": {
+      "title": "Memo",
+      "examplesButton": "Memoの例",
+      "placeholder": "Memoを入力",
+      "noPayloadInfo": "この操作にペイロードは不要です。0.02 RUNEのネットワーク手数料のみが適用されます。"
+    },
+    "bond": {
+      "bondAmount": "Bond額",
+      "rebondAmount": "Rebond額",
+      "nodeAddress": "Nodeアドレス",
+      "newAddress": "新しいアドレス",
+      "enterNodeAddress": "Nodeアドレスを入力",
+      "invalidNodeAddress": "無効なNodeアドレスです",
+      "validatingNode": "Nodeを検証中…",
+      "nodeNotFound": "Nodeが見つかりません",
+      "enterNewAddress": "新しいアドレスを入力",
+      "invalidNewAddress": "無効な新しいアドレスです",
+      "bond": "Bond",
+      "unbond": "Unbond",
+      "rebond": "Rebond",
+      "nodeNotFoundOrUnavailable": "Nodeが見つからないか、利用できません。",
+      "tab": {
+        "bond": "Bond",
+        "unbond": "Unbond",
+        "rebond": "Rebond",
+        "track": "追跡"
+      },
+      "node": {
+        "version": "バージョン",
+        "ipAddress": "IPアドレス",
+        "status": "ステータス",
+        "providers": "プロバイダー",
+        "yourShare": "あなたのシェア",
+        "slashPoints": "Slashポイント",
+        "operatorFee": "オペレーター手数料",
+        "information": "Node情報",
+        "bond": "Bond",
+        "nextReward": "次の報酬"
+      }
+    },
+    "stake": {
+      "stakeAmount": "Stake額",
+      "unstakeAmount": "Unstake額",
+      "compound": "複利運用",
+      "checking": "確認中…",
+      "claim": "請求",
+      "nothingToClaim": "請求できるものがありません",
+      "stake": "Stake",
+      "unstake": "Unstake",
+      "stakedLabel": "ステーク済み:",
+      "wallet": "ウォレット",
+      "availableToClaim": "請求可能額",
+      "staked": "ステーク済み",
+      "claimAmount": "請求額",
+      "compoundInfo": "保留中のTCYステーキング報酬をステークポジションに再投資します。",
+      "tab": {
+        "stake": "Stake",
+        "unstake": "Unstake",
+        "compound": "複利運用",
+        "claim": "請求"
+      }
+    },
+    "examples": {
+      "back": "戻る",
+      "copied": "クリップボードにコピーしました",
+      "copyMemo": "{label}のMemoをコピー",
+      "fillInValues": "値を入力 →",
+      "learnMore": "詳細を見る",
+      "optional": "任意",
+      "optionalPlaceholder": "{hint}（省略する場合は空欄）",
+      "preview": "プレビュー",
+      "useMemo": "Memoを使用",
+      "badgeNoPayload": "ペイロードなし",
+      "badgeDust": "dust",
+      "items": {
+        "stakeTcy": "TCYをStake",
+        "unstakeTcy": "TCYをUnstake",
+        "claimTcy": "TCYを請求",
+        "depositRunepool": "RUNEPoolに預け入れ",
+        "withdrawRunepool": "RUNEPoolから引き出し",
+        "bond": "Bond",
+        "unbond": "Unbond",
+        "rebond": "Rebond",
+        "leave": "退出",
+        "whitelistBondProvider": "Bondプロバイダーをホワイトリストに追加",
+        "unwhitelistBondProvider": "Bondプロバイダーをホワイトリストから削除",
+        "addLpSingle": "LPを追加（片側）",
+        "addLpDual": "LPを追加（両側）",
+        "withdrawLp": "LPを引き出し",
+        "donateToPool": "Poolに寄付"
+      },
+      "placeholder": {
+        "nodeAddress": "Nodeアドレス",
+        "providerAddress": "プロバイダーアドレス",
+        "newAddress": "新しいアドレス",
+        "thorAddress": "THORChain アドレス",
+        "pairedAddress": "ペアアドレス",
+        "affiliate": "Affiliate",
+        "pool": "Pool",
+        "asset": "資産",
+        "amount": "金額",
+        "basisPoints": "Basis Points",
+        "fee": "手数料（basis points）",
+        "thorPrefix": "thor1…",
+        "pairedAddressHint": "外部チェーンのアドレス",
+        "affiliateHint": "THORNameまたはthor1…アドレス",
+        "poolHint": "例: BTC.BTC または ETH/ETH",
+        "assetHint": "例: BTC.BTC または RUNE（片側）",
+        "amountHint": "1e8形式 — 例: 100000000 = 1 RUNE",
+        "basisPointsHint": "0 – 10000（10000 = 100%）",
+        "feeHint": "0 – 10000"
+      }
+    }
+  },
+  "wallet": {
+    "chains": "チェーン",
+    "deselectAll": "すべて選択解除",
+    "selectAll": "すべて選択",
+    "soon": "近日公開",
+    "connectNamed": "{name} を接続",
+    "connected": "接続済み",
+    "disconnected": "切断済み",
+    "install": "インストール",
+    "connectWallet": "ウォレットを接続",
+    "derivationPath": "Derivation Path",
+    "selectAccountType": "アカウントの種類を選択",
+    "index": "インデックス",
+    "ledgerUnlockHint": "接続する前に、Ledgerのロックが解除され、{app}アプリが開かれていることを確認してください。",
+    "correspondingApp": "対応する",
+    "createNewWallet": "新しいウォレットを作成",
+    "createWalletInstructions": "これら12個の単語を書き留め、オフラインで安全に保管してください。この12単語のフレーズは、ウォレットの秘密鍵を復元するために使用されます。",
+    "copyPhrase": "フレーズをコピー",
+    "confirmSavedPassphrase": "今後アカウントを復元するためのパスフレーズを安全に保存したことを確認します。",
+    "back": "戻る",
+    "next": "次へ",
+    "setupDecryptionPassword": "復号パスワードの設定",
+    "setupPasswordInstructions": "作成したウォレットを暗号化するための強力なパスワードを入力してください。これがウォレットにアクセスする方法になります。",
+    "enterPassword": "パスワードを入力",
+    "confirmPassword": "パスワードを確認",
+    "passwordMustMatch": "パスワードが一致する必要があります",
+    "create": "作成",
+    "error": {
+      "invalidFileType": "無効なファイル形式です。JSONまたはTXTファイルをアップロードしてください。"
+    },
+    "importKeystore": "Keystoreをインポート",
+    "selectOrDragKeystore": "Keystoreファイルを選択するか、ドラッグしてアップロードしてください",
+    "decryptionPassword": "復号パスワード",
+    "password": "パスワード",
+    "import": "インポート",
+    "importSeedPhrase": "シードフレーズをインポート",
+    "typeSeedPhrase": "シードフレーズを入力してください",
+    "openKeystore": "Keystoreを開く",
+    "noTokensFound": "トークンが見つかりません",
+    "addressCopied": "アドレスをコピーしました",
+    "copyAddress": "アドレスをコピー",
+    "disconnectWallet": "{name} を切断",
+    "noCoins": "コインがありません",
+    "sidebar": {
+      "title": "ウォレット"
+    },
+    "sortWallets": "ウォレットを並べ替え",
+    "sortBy": "並べ替え",
+    "sortByName": "名前（A-Z）",
+    "sortByBalance": "残高（高 → 低）",
+    "externalWalletMode": "外部ウォレットモード",
+    "externalWalletModeDescription": "注文を入力し、スワップボタンをクリックして、指示に従ってください",
+    "externalWalletAssetUnsupported": "この資産は外部ウォレットモードでは対応していません。続行する場合はブラウザウォレットを接続してください。",
+    "close": "閉じる",
+    "sendToken": "{ticker} を送信"
+  },
+  "common": {
+    "close": "閉じる"
+  },
+  "tx": {
+    "title": "履歴",
+    "today": "今日",
+    "yesterday": "昨日",
+    "onlyCreatorModify": "元のスワップ作成者のみが変更できます",
+    "limitPrice": "指値価格",
+    "expiresIn": "有効期限",
+    "showQr": "QRを表示",
+    "modify": "変更",
+    "cancelOrder": "注文をキャンセル",
+    "sourceAddress": "送信元アドレス",
+    "destinationAddress": "送信先アドレス",
+    "remaining": "残り{time}",
+    "status": {
+      "not_started": "預け入れ保留中",
+      "pending": "保留中",
+      "swapping": "スワップ中",
+      "completed": "完了",
+      "failed": "失敗",
+      "expired": "期限切れ",
+      "refunded": "返金済み",
+      "unknown": "不明"
+    },
+    "leg": {
+      "deposit": "{ticker} を預け入れ",
+      "send": "{ticker} を送信",
+      "swap": "{from} を {to} にスワップ"
+    }
+  }
+}

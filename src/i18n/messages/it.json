@@ -1,0 +1,465 @@
+{
+  "menu": {
+    "swap": "Swap",
+    "bond": "Bond",
+    "memo": "Memo",
+    "launchApp": "Avvia l'app",
+    "socials": "Social",
+    "language": "Lingua",
+    "newsletterPitch": "Il modo migliore per restare aggiornati su THORChain",
+    "emailPlaceholder": "Inserisca la sua email",
+    "signUp": "Iscriviti",
+    "signingUp": "Iscrizione in corso…",
+    "subscribed": "Grazie per l'iscrizione!",
+    "genericError": "Si è verificato un errore"
+  },
+  "header": {
+    "wallet": "PORTAFOGLIO",
+    "history": "CRONOLOGIA"
+  },
+  "footer": {
+    "privacyPolicy": "Informativa sulla privacy",
+    "termsOfUse": "Termini di utilizzo",
+    "riskPolicy": "Informativa sui rischi",
+    "riskTooltip": "Sebbene questo sito sia realizzato con cura, potrebbe presentare bug imprevisti che possono causare malfunzionamenti del sito e persino la perdita di fondi. Prosegua solo se comprende e accetta questi rischi.",
+    "builtBy": "Realizzato da",
+    "reportBug": "Segnala un bug / Richiedi una funzionalità",
+    "getSupport": "Ricevi supporto su Discord",
+    "bug": {
+      "title": "Segnala un bug / Richiedi una funzionalità",
+      "success": "Grazie! La sua segnalazione è stata inviata.",
+      "close": "Chiudi",
+      "emailLabel": "Email (facoltativa)",
+      "descriptionLabel": "Descrizione",
+      "descriptionPlaceholder": "Descriva il bug / la funzionalità",
+      "attachmentLabel": "Allegato (facoltativo)",
+      "attachFile": "Allega un file",
+      "sending": "Invio in corso...",
+      "send": "Invia segnalazione",
+      "failed": "Invio della segnalazione non riuscito"
+    }
+  },
+  "swap": {
+    "tab": {
+      "swap": "Swap",
+      "limit": "Limite"
+    },
+    "input": {
+      "sell": "Vendi",
+      "buy": "Compra",
+      "clear": "Cancella"
+    },
+    "balance": {
+      "label": "Saldo:"
+    },
+    "button": {
+      "limitNotSupported": "Ordine limite non supportato",
+      "temporarilyUnavailable": "Temporaneamente non disponibile",
+      "enterAmount": "Inserisca l'importo",
+      "quoting": "Quotazione in corso...",
+      "noValidQuotes": "Nessuna quotazione valida",
+      "enterLimitPrice": "Inserisca il prezzo limite",
+      "enterLimitOrder": "Inserisca l'ordine limite",
+      "swap": "Scambia",
+      "connectWallet": "Connetti il portafoglio {chain}",
+      "insufficientBalance": "Saldo insufficiente",
+      "approve": "Approva {ticker}"
+    },
+    "toast": {
+      "approvalTransaction": "Transazione di approvazione",
+      "success": "Operazione riuscita",
+      "errorSubmitting": "Errore nell'invio della transazione",
+      "submittingTransaction": "Invio della transazione",
+      "transactionSubmitted": "Transazione inviata"
+    },
+    "confirm": {
+      "titleLimit": "Conferma l'ordine limite",
+      "titleSwap": "Conferma lo swap",
+      "notAvailable": "n/a",
+      "swapArrowLabel": "scambia",
+      "chainAddress": "Indirizzo {chain}",
+      "sourceAddressTooltip": "L'indirizzo del portafoglio che invia i fondi per questo swap.",
+      "destinationAddressTooltip": "L'indirizzo del portafoglio che riceverà i fondi scambiati.",
+      "refundAddress": "Indirizzo di rimborso",
+      "refundAddressTooltip": "L'indirizzo a cui verranno restituiti i fondi se lo swap non può essere completato.",
+      "limitPrice": "Prezzo limite",
+      "limitPriceTooltip": "Il prezzo per unità al quale verrà eseguito il suo ordine limite. L'ordine verrà evaso solo quando il mercato raggiunge questo prezzo.",
+      "targetAmount": "Importo obiettivo",
+      "targetAmountTooltip": "L'importo esatto che riceverà quando il suo ordine limite verrà eseguito al prezzo specificato.",
+      "minimumPayout": "Pagamento minimo",
+      "minimumPayoutTooltip": "Questo è il minimo che le è garantito di ricevere con la sua impostazione di protezione del prezzo {protection}. Se il mercato si muove al punto da farle ricevere meno, lo swap viene annullato e rimborsato.",
+      "notProtected": "Non protetto",
+      "priceImpact": "Impatto sul prezzo",
+      "priceImpactTooltip": "Quanto il suo swap sposta il prezzo del pool. Più grande è il suo swap rispetto alla liquidità disponibile, maggiore è l'impatto sul prezzo.",
+      "slippageTolerance": "Tolleranza di slippage",
+      "slippageToleranceTooltip1": "La differenza tra la sua protezione del prezzo {protection} e l'impatto sul prezzo.",
+      "slippageToleranceTooltip2": "Nel tempo che intercorre tra la visualizzazione di una quotazione e il completamento dello swap, i prezzi possono cambiare. La tolleranza di slippage è la variazione massima di prezzo che accetterà prima che lo swap venga annullato.",
+      "includedFees": "Commissioni incluse",
+      "includedFeesTooltip": "Queste commissioni sono già incluse nel tasso: non le paga separatamente.",
+      "estimatedTime": "Tempo stimato",
+      "gasFee": "Commissione Gas {chain}",
+      "exchange": "Scambia",
+      "button": "Conferma",
+      "buttonLimit": "Conferma l'ordine limite",
+      "confirming": "Conferma in corso"
+    },
+    "warning": {
+      "highPriceImpact": "Comprendo che l'impatto sul prezzo si aggiunge alla tolleranza di slippage. Accetto l'elevato impatto sul prezzo di questo swap",
+      "sendExact": "Comprendo che devo inviare esattamente l'importo specificato da un portafoglio self-custody. Comprendo che l'invio da un portafoglio smart contract, un indirizzo di exchange, un indirizzo delegato o un portafoglio EIP 7702 comporterà la",
+      "lossOfFunds": "perdita di fondi.",
+      "ltcMweb": "Comprendo che l'utilizzo di un indirizzo LTC MWEB comporterà la",
+      "selfCustody": "Comprendo che devo utilizzare un portafoglio self-custody. Comprendo che l'utilizzo di un portafoglio smart contract, un indirizzo di exchange, un indirizzo delegato o un portafoglio EIP 7702 comporterà la"
+    },
+    "instant": {
+      "sendTitle": "Invia {asset}",
+      "sendDescription": "Invii esattamente <b>{amount} {ticker}</b> all'indirizzo qui sotto da un portafoglio self-custody.",
+      "qrCodeAlt": "Codice QR",
+      "expiresIn": "Scade tra"
+    },
+    "error": {
+      "memoMissing": "Memo mancante",
+      "calculateSuggestedAmount": "Calcolo dell'importo suggerito non riuscito",
+      "preflightRequest": "Preflight della richiesta non riuscito",
+      "preflightMemoless": "Preflight della richiesta senza memo non riuscito",
+      "minAmountNoWallet": "L'importo minimo di swap senza un portafoglio connesso è {amount} {ticker}",
+      "unknown": "Errore sconosciuto"
+    },
+    "feeDialog": {
+      "title": "Commissioni incluse nel tasso",
+      "description": "Queste commissioni sono già incluse nel tasso: non le paga separatamente.",
+      "liquidityFee": "Commissione di liquidità",
+      "liquidityFeeInfo": "Commissione per i fornitori di liquidità sul percorso",
+      "outboundFee": "Commissione in uscita",
+      "outboundFeeInfo": "Commissione per l'invio della transazione in uscita",
+      "platformFee": "Commissione della piattaforma",
+      "platformFeeInfo": "Commissione applicata da {app}"
+    },
+    "expiry": {
+      "title": "Imposta il tempo di scadenza",
+      "days": "Giorni",
+      "hours": "Ore",
+      "minutes": "Minuti",
+      "maxExpiry": "La scadenza massima è {days} giorni",
+      "apply": "Applica"
+    },
+    "limit": {
+      "whenWorth": "Quando 1 {ticker} vale",
+      "expiresIn": "Scade tra",
+      "oneHour": "1 ora",
+      "oneDay": "1 giorno",
+      "threeDays": "3 giorni",
+      "custom": "Personalizzato",
+      "market": "Mercato"
+    },
+    "limitCancel": {
+      "titleModify": "Modifica l'ordine limite",
+      "titleCancel": "Annulla l'ordine limite",
+      "descriptionModify": "La modifica di questo ordine limite aggiornerà il prezzo obiettivo. Verrà applicata una piccola commissione di rete per elaborare la modifica.",
+      "descriptionCancel": "L'annullamento di questo ordine limite restituirà i fondi depositati al suo portafoglio. Verrà applicata una piccola commissione di rete per elaborare l'annullamento.",
+      "fromCurrent": "{percent}% rispetto all'attuale",
+      "youWillGet": "Riceverà",
+      "button": {
+        "modifying": "Modifica in corso...",
+        "cancelling": "Annullamento in corso...",
+        "loading": "Caricamento in corso...",
+        "modifyOrder": "Modifica l'ordine",
+        "cancelOrder": "Annulla l'ordine"
+      },
+      "error": {
+        "loadInboundAddresses": "Caricamento degli indirizzi in entrata non riuscito",
+        "cancelFailed": "Annullamento dello swap limite non riuscito",
+        "modifyFailed": "Modifica dello swap limite non riuscita"
+      },
+      "toast": {
+        "sendToCancel": "Invii {amount} {ticker} dal portafoglio originale per annullare",
+        "sendToModify": "Invii {amount} {ticker} dal portafoglio originale per modificare",
+        "cancelSubmitted": "Transazione di annullamento inviata",
+        "modifySubmitted": "Transazione di modifica inviata"
+      },
+      "warning": {
+        "memolessDeposit": "Per {mode} questo ordine, invii il deposito dal portafoglio {chain} originale che lo ha effettuato",
+        "connectOrMemoless": "Connetta un portafoglio {chain} o utilizzi il deposito senza memo per {mode} questo ordine",
+        "connect": "Connetta un portafoglio {chain} per {mode} questo ordine",
+        "switch": "Passi a un portafoglio {chain} per {mode} questo ordine",
+        "addressMismatch": "Il portafoglio connesso non corrisponde all'indirizzo che ha effettuato questo ordine",
+        "tradingPaused": "Il trading {chain} è attualmente sospeso"
+      }
+    },
+    "quoteTimer": {
+      "refresh": "Aggiorna"
+    },
+    "recipient": {
+      "addressPlaceholder": "Indirizzo {chain}",
+      "paste": "Incolla",
+      "invalidAddress": "Indirizzo {chain} non valido",
+      "titleAddresses": "Inserisca gli indirizzi",
+      "titleReceiving": "Inserisca l'indirizzo di ricezione",
+      "enterRefundAddress": "Inserisca l'indirizzo di rimborso:",
+      "enterReceivingAddress": "Inserisca l'indirizzo di ricezione:",
+      "preparingSwap": "Preparazione dello swap",
+      "next": "Avanti"
+    },
+    "selectAsset": {
+      "title": "Seleziona la moneta",
+      "allChains": "Tutte le chain",
+      "search": "Cerca",
+      "secured": "Secured",
+      "showSecuredAssets": "Mostra gli asset Secured",
+      "trade": "Trade",
+      "currentlyUnavailable": "Attualmente non disponibile",
+      "selected": "Selezionato"
+    },
+    "settings": {
+      "noProtection": "Nessuna protezione",
+      "priceProtection": "Protezione del prezzo",
+      "priceProtectionTooltip1": "L'impatto sul prezzo è quanto il suo swap sposta il prezzo del pool. Più grande è il suo swap rispetto alla liquidità disponibile, maggiore è l'impatto.",
+      "priceProtectionTooltip2": "Nel tempo che intercorre tra la visualizzazione di una quotazione e il completamento dello swap, i prezzi possono cambiare. La tolleranza di slippage è la variazione massima di prezzo che accetterà prima che lo swap venga annullato.",
+      "priceProtectionDescription": "Il massimo che è disposto a spendere per uno swap. Include l'impatto sul prezzo del suo swap e qualsiasi slippage sui prezzi dei token prima che lo swap venga eseguito.",
+      "twapTitle": "Prezzo medio ponderato sul tempo (TWAP)",
+      "twapTooltip1": "Le operazioni TWAP su THORChain sono chiamate \"streaming swap\" nella documentazione e nel codice.",
+      "twapTooltip2": "Per effettuare un ordine di vendita istantaneo, che comporterà la peggiore esecuzione del prezzo, inserisca 1 come numero di sub-swap e 1 block come tempo tra i sub-swap.",
+      "twapDescription": "La stragrande maggioranza degli utenti dovrebbe utilizzare le impostazioni predefinite. Solo i trader esperti dovrebbero modificare queste impostazioni",
+      "numberOfSubSwaps": "Numero di sub-swap",
+      "numberOfSubSwapsTooltip": "Suddivida il suo ordine in operazioni più piccole chiamate sub-swap. Più sub-swap ci sono, migliore è l'esecuzione del prezzo. Se impostato a zero, il protocollo calcolerà per lei il numero di sub-swap in modo che ciascuno abbia uno slippage di 5 bps. Il valore predefinito è zero.",
+      "timeBetweenSubSwaps": "Tempo tra i sub-swap",
+      "timeBetweenSubSwapsTooltip": "Tempo tra ciascun sub-swap misurato in block. Più block ci sono tra ciascun sub-swap, migliore è l'esecuzione del prezzo. Scegliere zero block eseguirà più sub-swap a ogni block per un'esecuzione più rapida. Il valore predefinito è zero block.",
+      "blocksCount": "{count, plural, one {# block} other {# block}}",
+      "rapidSwap": "Swap rapido",
+      "seconds": "~{count, plural, one {# secondo} other {# secondi}}",
+      "reset": "Reimposta",
+      "save": "Salva"
+    }
+  },
+  "send": {
+    "title": "Invia",
+    "send": "Invia",
+    "amount": "Importo",
+    "clear": "Cancella",
+    "balanceLabel": "Saldo:",
+    "to": "A",
+    "addressPlaceholder": "Indirizzo {chain}",
+    "paste": "Incolla",
+    "transactionFee": "Commissione di transazione",
+    "selectCoin": "Seleziona la moneta",
+    "connectThorchainWallet": "Connetti il portafoglio THORChain",
+    "enterMemo": "Inserisca il memo",
+    "enterAmount": "Inserisca l'importo",
+    "toast": {
+      "submitting": "Invio della transazione in corso...",
+      "submitted": "Transazione inviata",
+      "submitError": "Errore nell'invio della transazione"
+    },
+    "error": {
+      "walletNotConnectedReconnect": "Portafoglio non connesso. La preghiamo di riconnetterlo.",
+      "walletNotConnected": "Portafoglio non connesso.",
+      "invalidAddress": "Indirizzo {chain} non valido",
+      "noRuneBalance": "Nessun saldo RUNE trovato.",
+      "noTcyBalance": "Nessun saldo TCY trovato."
+    },
+    "beta": {
+      "title": "Questa è una funzionalità beta",
+      "description": "Potrebbero esserci bug non ancora scoperti. La utilizzi a suo rischio!"
+    },
+    "memo": {
+      "title": "Memo",
+      "examplesButton": "Esempi di memo",
+      "placeholder": "Inserisca il memo",
+      "noPayloadInfo": "Questa operazione non richiede alcun payload. Si applica solo la commissione di rete di 0,02 RUNE."
+    },
+    "bond": {
+      "bondAmount": "Importo del bond",
+      "rebondAmount": "Importo del rebond",
+      "nodeAddress": "Indirizzo del node",
+      "newAddress": "Nuovo indirizzo",
+      "enterNodeAddress": "Inserisca l'indirizzo del node",
+      "invalidNodeAddress": "Indirizzo del node non valido",
+      "validatingNode": "Convalida del node in corso...",
+      "nodeNotFound": "Node non trovato",
+      "enterNewAddress": "Inserisca il nuovo indirizzo",
+      "invalidNewAddress": "Nuovo indirizzo non valido",
+      "bond": "Bond",
+      "unbond": "Unbond",
+      "rebond": "Rebond",
+      "nodeNotFoundOrUnavailable": "Node non trovato o non disponibile.",
+      "tab": {
+        "bond": "Bond",
+        "unbond": "Unbond",
+        "rebond": "Rebond",
+        "track": "Traccia"
+      },
+      "node": {
+        "version": "Versione",
+        "ipAddress": "Indirizzo IP",
+        "status": "Stato",
+        "providers": "Provider",
+        "yourShare": "La sua quota",
+        "slashPoints": "Slash Points",
+        "operatorFee": "Commissione dell'operatore",
+        "information": "Informazioni sul node",
+        "bond": "Bond",
+        "nextReward": "Prossima ricompensa"
+      }
+    },
+    "stake": {
+      "stakeAmount": "Importo dello stake",
+      "unstakeAmount": "Importo dell'unstake",
+      "compound": "Compound",
+      "checking": "Verifica in corso...",
+      "claim": "Riscatta",
+      "nothingToClaim": "Niente da riscattare",
+      "stake": "Stake",
+      "unstake": "Unstake",
+      "stakedLabel": "In stake:",
+      "wallet": "Portafoglio",
+      "availableToClaim": "Disponibile per il riscatto",
+      "staked": "In stake",
+      "claimAmount": "Importo da riscattare",
+      "compoundInfo": "Reinvesta le sue ricompense di staking TCY in sospeso nella sua posizione di stake.",
+      "tab": {
+        "stake": "Stake",
+        "unstake": "Unstake",
+        "compound": "Compound",
+        "claim": "Riscatta"
+      }
+    },
+    "examples": {
+      "back": "Indietro",
+      "copied": "Copiato negli appunti",
+      "copyMemo": "Copia il memo {label}",
+      "fillInValues": "inserisci i valori →",
+      "learnMore": "Scopri di più",
+      "optional": "facoltativo",
+      "optionalPlaceholder": "{hint} (lasci vuoto per omettere)",
+      "preview": "Anteprima",
+      "useMemo": "Usa il memo",
+      "badgeNoPayload": "nessun payload",
+      "badgeDust": "dust",
+      "items": {
+        "stakeTcy": "Stake TCY",
+        "unstakeTcy": "Unstake TCY",
+        "claimTcy": "Riscatta TCY",
+        "depositRunepool": "Deposita in RUNEPool",
+        "withdrawRunepool": "Preleva da RUNEPool",
+        "bond": "Bond",
+        "unbond": "Unbond",
+        "rebond": "Rebond",
+        "leave": "Esci",
+        "whitelistBondProvider": "Aggiungi alla whitelist il bond provider",
+        "unwhitelistBondProvider": "Rimuovi dalla whitelist il bond provider",
+        "addLpSingle": "Aggiungi LP (single-sided)",
+        "addLpDual": "Aggiungi LP (dual-sided)",
+        "withdrawLp": "Preleva LP",
+        "donateToPool": "Dona al pool"
+      },
+      "placeholder": {
+        "nodeAddress": "Indirizzo del node",
+        "providerAddress": "Indirizzo del provider",
+        "newAddress": "Nuovo indirizzo",
+        "thorAddress": "Indirizzo THORChain",
+        "pairedAddress": "Indirizzo accoppiato",
+        "affiliate": "Affiliate",
+        "pool": "Pool",
+        "asset": "Asset",
+        "amount": "Importo",
+        "basisPoints": "Basis Points",
+        "fee": "Commissione (basis points)",
+        "thorPrefix": "thor1…",
+        "pairedAddressHint": "Indirizzo della chain esterna",
+        "affiliateHint": "THORName o indirizzo thor1…",
+        "poolHint": "es. BTC.BTC o ETH/ETH",
+        "assetHint": "es. BTC.BTC o RUNE (single-sided)",
+        "amountHint": "Formato 1e8 — es. 100000000 = 1 RUNE",
+        "basisPointsHint": "0 – 10000 (10000 = 100%)",
+        "feeHint": "0 – 10000"
+      }
+    }
+  },
+  "wallet": {
+    "chains": "Chain",
+    "deselectAll": "Deseleziona tutto",
+    "selectAll": "Seleziona tutto",
+    "soon": "Presto",
+    "connectNamed": "Connetti {name}",
+    "connected": "Connesso",
+    "disconnected": "Disconnesso",
+    "install": "Installa",
+    "connectWallet": "Connetti il portafoglio",
+    "derivationPath": "Percorso di derivazione",
+    "selectAccountType": "Seleziona il tipo di account",
+    "index": "Indice",
+    "ledgerUnlockHint": "Si assicuri che il suo Ledger sia sbloccato e che l'app {app} sia aperta prima di connettersi.",
+    "correspondingApp": "corrispondente",
+    "createNewWallet": "Crea un nuovo portafoglio",
+    "createWalletInstructions": "Annoti queste 12 parole e le conservi in modo sicuro offline. Questa frase di 12 parole serve a recuperare le chiavi private del suo portafoglio.",
+    "copyPhrase": "Copia la frase",
+    "confirmSavedPassphrase": "Confermo di aver salvato in modo sicuro la passphrase per recuperare il mio account in futuro.",
+    "back": "Indietro",
+    "next": "Avanti",
+    "setupDecryptionPassword": "Imposta la password di decrittazione",
+    "setupPasswordInstructions": "Inserisca una password robusta per crittografare il portafoglio creato. È così che accederà al suo portafoglio.",
+    "enterPassword": "Inserisca la password",
+    "confirmPassword": "Conferma la password",
+    "passwordMustMatch": "Le password devono corrispondere",
+    "create": "Crea",
+    "error": {
+      "invalidFileType": "Tipo di file non valido. La preghiamo di caricare un file JSON o TXT."
+    },
+    "importKeystore": "Importa il Keystore",
+    "selectOrDragKeystore": "Selezioni o trascini il suo file keystore per caricarlo",
+    "decryptionPassword": "Password di decrittazione",
+    "password": "Password",
+    "import": "Importa",
+    "importSeedPhrase": "Importa la seed phrase",
+    "typeSeedPhrase": "Digiti la sua seed phrase",
+    "openKeystore": "Apri il Keystore",
+    "noTokensFound": "Nessun token trovato",
+    "addressCopied": "Indirizzo copiato",
+    "copyAddress": "Copia l'indirizzo",
+    "disconnectWallet": "Disconnetti {name}",
+    "noCoins": "Nessuna moneta",
+    "sidebar": {
+      "title": "Portafogli"
+    },
+    "sortWallets": "Ordina i portafogli",
+    "sortBy": "Ordina per",
+    "sortByName": "Nome (A-Z)",
+    "sortByBalance": "Saldo (Alto → Basso)",
+    "externalWalletMode": "Modalità portafoglio esterno",
+    "externalWalletModeDescription": "Inserisca il suo ordine, clicchi sul pulsante Scambia e segua le istruzioni",
+    "externalWalletAssetUnsupported": "Questo asset non è supportato in modalità portafoglio esterno. Connetta un portafoglio del browser se desidera continuare.",
+    "close": "Chiudi",
+    "sendToken": "Invia {ticker}"
+  },
+  "common": {
+    "close": "Chiudi"
+  },
+  "tx": {
+    "title": "Cronologia",
+    "today": "Oggi",
+    "yesterday": "Ieri",
+    "onlyCreatorModify": "Solo il creatore originale dello swap può modificare",
+    "limitPrice": "Prezzo limite",
+    "expiresIn": "Scade tra",
+    "showQr": "Mostra QR",
+    "modify": "Modifica",
+    "cancelOrder": "Annulla l'ordine",
+    "sourceAddress": "Indirizzo di origine",
+    "destinationAddress": "Indirizzo di destinazione",
+    "remaining": "{time} rimanenti",
+    "status": {
+      "not_started": "Deposito in sospeso",
+      "pending": "In sospeso",
+      "swapping": "Swap in corso",
+      "completed": "Completato",
+      "failed": "Non riuscito",
+      "expired": "Scaduto",
+      "refunded": "Rimborsato",
+      "unknown": "Sconosciuto"
+    },
+    "leg": {
+      "deposit": "Deposita {ticker}",
+      "send": "Invia {ticker}",
+      "swap": "Scambia {from} con {to}"
+    }
+  }
+}

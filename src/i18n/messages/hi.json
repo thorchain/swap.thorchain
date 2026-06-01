@@ -1,0 +1,465 @@
+{
+  "menu": {
+    "swap": "स्वैप",
+    "bond": "Bond",
+    "memo": "Memo",
+    "launchApp": "ऐप लॉन्च करें",
+    "socials": "सोशल",
+    "language": "भाषा",
+    "newsletterPitch": "THORChain से अपडेट रहने का सबसे अच्छा तरीका",
+    "emailPlaceholder": "अपना ईमेल दर्ज करें",
+    "signUp": "साइन अप करें",
+    "signingUp": "साइन अप किया जा रहा है…",
+    "subscribed": "सब्सक्राइब करने के लिए धन्यवाद!",
+    "genericError": "कुछ गलत हो गया"
+  },
+  "header": {
+    "wallet": "वॉलेट",
+    "history": "इतिहास"
+  },
+  "footer": {
+    "privacyPolicy": "गोपनीयता नीति",
+    "termsOfUse": "उपयोग की शर्तें",
+    "riskPolicy": "जोखिम नीति",
+    "riskTooltip": "हालांकि यह वेबसाइट सावधानी से बनाई गई है, फिर भी इसमें अनपेक्षित बग हो सकते हैं जिनसे साइट में खराबी आ सकती है और यहां तक कि धन की हानि भी हो सकती है. आगे तभी बढ़ें जब आप इन जोखिमों को समझते और स्वीकार करते हों.",
+    "builtBy": "द्वारा निर्मित",
+    "reportBug": "बग रिपोर्ट करें / फ़ीचर का अनुरोध करें",
+    "getSupport": "Discord में सहायता प्राप्त करें",
+    "bug": {
+      "title": "बग रिपोर्ट करें / फ़ीचर का अनुरोध करें",
+      "success": "धन्यवाद! आपकी रिपोर्ट भेज दी गई है.",
+      "close": "बंद करें",
+      "emailLabel": "ईमेल (वैकल्पिक)",
+      "descriptionLabel": "विवरण",
+      "descriptionPlaceholder": "बग / फ़ीचर का वर्णन करें",
+      "attachmentLabel": "अनुलग्नक (वैकल्पिक)",
+      "attachFile": "एक फ़ाइल संलग्न करें",
+      "sending": "भेजा जा रहा है...",
+      "send": "रिपोर्ट भेजें",
+      "failed": "रिपोर्ट भेजने में विफल"
+    }
+  },
+  "swap": {
+    "tab": {
+      "swap": "स्वैप",
+      "limit": "लिमिट"
+    },
+    "input": {
+      "sell": "बेचें",
+      "buy": "खरीदें",
+      "clear": "साफ़ करें"
+    },
+    "balance": {
+      "label": "शेष राशि:"
+    },
+    "button": {
+      "limitNotSupported": "लिमिट ऑर्डर समर्थित नहीं है",
+      "temporarilyUnavailable": "अस्थायी रूप से उपलब्ध नहीं है",
+      "enterAmount": "राशि दर्ज करें",
+      "quoting": "कोट किया जा रहा है...",
+      "noValidQuotes": "कोई मान्य कोट नहीं",
+      "enterLimitPrice": "लिमिट मूल्य दर्ज करें",
+      "enterLimitOrder": "लिमिट ऑर्डर दर्ज करें",
+      "swap": "स्वैप करें",
+      "connectWallet": "{chain} वॉलेट कनेक्ट करें",
+      "insufficientBalance": "अपर्याप्त शेष राशि",
+      "approve": "{ticker} को स्वीकृत करें"
+    },
+    "toast": {
+      "approvalTransaction": "स्वीकृति लेन-देन",
+      "success": "सफल",
+      "errorSubmitting": "लेन-देन सबमिट करने में त्रुटि",
+      "submittingTransaction": "लेन-देन सबमिट किया जा रहा है",
+      "transactionSubmitted": "लेन-देन सबमिट किया गया"
+    },
+    "confirm": {
+      "titleLimit": "लिमिट ऑर्डर की पुष्टि करें",
+      "titleSwap": "स्वैप की पुष्टि करें",
+      "notAvailable": "n/a",
+      "swapArrowLabel": "स्वैप",
+      "chainAddress": "{chain} पता",
+      "sourceAddressTooltip": "इस स्वैप के लिए धन भेजने वाला वॉलेट पता.",
+      "destinationAddressTooltip": "वह वॉलेट पता जो स्वैप किया गया धन प्राप्त करेगा.",
+      "refundAddress": "रिफंड पता",
+      "refundAddressTooltip": "वह पता जहां स्वैप पूरा न होने पर धन वापस किया जाएगा.",
+      "limitPrice": "लिमिट मूल्य",
+      "limitPriceTooltip": "वह प्रति-इकाई मूल्य जिस पर आपका लिमिट ऑर्डर निष्पादित होगा. ऑर्डर तभी पूरा होगा जब बाज़ार इस मूल्य तक पहुंचेगा.",
+      "targetAmount": "लक्ष्य राशि",
+      "targetAmountTooltip": "आपके निर्दिष्ट मूल्य पर लिमिट ऑर्डर निष्पादित होने पर आपको प्राप्त होने वाली सटीक राशि.",
+      "minimumPayout": "न्यूनतम भुगतान",
+      "minimumPayoutTooltip": "यह वह न्यूनतम राशि है जो आपको आपकी {protection} मूल्य सुरक्षा सेटिंग पर प्राप्त होने की गारंटी है. यदि बाज़ार इतना बदल जाए कि आपको कम प्राप्त हो, तो स्वैप रद्द कर दिया जाता है और रिफंड कर दिया जाता है.",
+      "notProtected": "सुरक्षित नहीं",
+      "priceImpact": "मूल्य प्रभाव",
+      "priceImpactTooltip": "आपका स्वैप Pool के मूल्य को कितना बदलता है. उपलब्ध Liquidity के सापेक्ष आपका स्वैप जितना बड़ा होगा, मूल्य प्रभाव उतना ही अधिक होगा.",
+      "slippageTolerance": "Slippage सहनशीलता",
+      "slippageToleranceTooltip1": "आपकी {protection} मूल्य सुरक्षा और मूल्य प्रभाव के बीच का अंतर.",
+      "slippageToleranceTooltip2": "कोट देखने और आपके स्वैप के पूरा होने के बीच के समय में, मूल्य बदल सकते हैं. Slippage सहनशीलता वह अधिकतम मूल्य परिवर्तन है जिसे आप स्वैप रद्द होने से पहले स्वीकार करेंगे.",
+      "includedFees": "शामिल शुल्क",
+      "includedFeesTooltip": "ये शुल्क पहले से ही दर में शामिल हैं — आप इन्हें अलग से नहीं चुकाते.",
+      "estimatedTime": "अनुमानित समय",
+      "gasFee": "{chain} Gas शुल्क",
+      "exchange": "विनिमय",
+      "button": "पुष्टि करें",
+      "buttonLimit": "लिमिट ऑर्डर की पुष्टि करें",
+      "confirming": "पुष्टि की जा रही है"
+    },
+    "warning": {
+      "highPriceImpact": "मैं समझता हूं कि मूल्य प्रभाव Slippage सहनशीलता के अतिरिक्त है. मैं इस स्वैप पर उच्च मूल्य प्रभाव स्वीकार करता हूं",
+      "sendExact": "मैं समझता हूं कि मुझे एक सेल्फ-कस्टडी वॉलेट से ठीक निर्दिष्ट राशि भेजनी होगी. मैं समझता हूं कि स्मार्ट कॉन्ट्रैक्ट वॉलेट, एक्सचेंज पते, प्रत्यायोजित पते, या EIP 7702 वॉलेट से भेजने पर",
+      "lossOfFunds": "धन की हानि होगी.",
+      "ltcMweb": "मैं समझता हूं कि LTC MWEB पते का उपयोग करने पर",
+      "selfCustody": "मैं समझता हूं कि मुझे एक सेल्फ-कस्टडी वॉलेट का उपयोग करना होगा. मैं समझता हूं कि स्मार्ट कॉन्ट्रैक्ट वॉलेट, एक्सचेंज पते, प्रत्यायोजित पते, या EIP 7702 वॉलेट का उपयोग करने पर"
+    },
+    "instant": {
+      "sendTitle": "{asset} भेजें",
+      "sendDescription": "नीचे दिए गए पते पर एक सेल्फ कस्टडी वॉलेट से ठीक <b>{amount} {ticker}</b> भेजें.",
+      "qrCodeAlt": "QR कोड",
+      "expiresIn": "समाप्त होगा"
+    },
+    "error": {
+      "memoMissing": "Memo अनुपस्थित है",
+      "calculateSuggestedAmount": "सुझाई गई राशि की गणना करने में विफल",
+      "preflightRequest": "अनुरोध को प्रीफ़्लाइट करने में विफल",
+      "preflightMemoless": "memoless अनुरोध को प्रीफ़्लाइट करने में विफल",
+      "minAmountNoWallet": "कनेक्ट किए गए वॉलेट के बिना न्यूनतम स्वैप राशि {amount} {ticker} है",
+      "unknown": "अज्ञात त्रुटि"
+    },
+    "feeDialog": {
+      "title": "दर में शामिल शुल्क",
+      "description": "ये शुल्क पहले से ही दर में शामिल हैं — आप इन्हें अलग से नहीं चुकाते.",
+      "liquidityFee": "Liquidity शुल्क",
+      "liquidityFeeInfo": "रूट पर Liquidity प्रदाताओं के लिए शुल्क",
+      "outboundFee": "आउटबाउंड शुल्क",
+      "outboundFeeInfo": "आउटबाउंड लेन-देन भेजने के लिए शुल्क",
+      "platformFee": "प्लेटफ़ॉर्म शुल्क",
+      "platformFeeInfo": "{app} द्वारा लिया जाने वाला शुल्क"
+    },
+    "expiry": {
+      "title": "समाप्ति समय सेट करें",
+      "days": "दिन",
+      "hours": "घंटे",
+      "minutes": "मिनट",
+      "maxExpiry": "अधिकतम समाप्ति {days} दिन है",
+      "apply": "लागू करें"
+    },
+    "limit": {
+      "whenWorth": "जब 1 {ticker} का मूल्य हो",
+      "expiresIn": "समाप्त होगा",
+      "oneHour": "1 घंटा",
+      "oneDay": "1 दिन",
+      "threeDays": "3 दिन",
+      "custom": "कस्टम",
+      "market": "बाज़ार"
+    },
+    "limitCancel": {
+      "titleModify": "लिमिट ऑर्डर संशोधित करें",
+      "titleCancel": "लिमिट ऑर्डर रद्द करें",
+      "descriptionModify": "इस लिमिट ऑर्डर को संशोधित करने से लक्ष्य मूल्य अपडेट होगा. संशोधन को संसाधित करने के लिए एक छोटा नेटवर्क शुल्क लिया जाएगा.",
+      "descriptionCancel": "इस लिमिट ऑर्डर को रद्द करने से आपका जमा किया गया धन आपके वॉलेट में वापस आ जाएगा. रद्दीकरण को संसाधित करने के लिए एक छोटा नेटवर्क शुल्क लिया जाएगा.",
+      "fromCurrent": "वर्तमान से {percent}%",
+      "youWillGet": "आपको प्राप्त होगा",
+      "button": {
+        "modifying": "संशोधित किया जा रहा है...",
+        "cancelling": "रद्द किया जा रहा है...",
+        "loading": "लोड हो रहा है...",
+        "modifyOrder": "ऑर्डर संशोधित करें",
+        "cancelOrder": "ऑर्डर रद्द करें"
+      },
+      "error": {
+        "loadInboundAddresses": "इनबाउंड पते लोड करने में विफल",
+        "cancelFailed": "लिमिट स्वैप रद्द करने में विफल",
+        "modifyFailed": "लिमिट स्वैप संशोधित करने में विफल"
+      },
+      "toast": {
+        "sendToCancel": "रद्द करने के लिए मूल वॉलेट से {amount} {ticker} भेजें",
+        "sendToModify": "संशोधित करने के लिए मूल वॉलेट से {amount} {ticker} भेजें",
+        "cancelSubmitted": "रद्दीकरण लेन-देन सबमिट किया गया",
+        "modifySubmitted": "संशोधन लेन-देन सबमिट किया गया"
+      },
+      "warning": {
+        "memolessDeposit": "इस ऑर्डर को {mode} करने के लिए, इसे रखने वाले मूल {chain} वॉलेट से जमा भेजें",
+        "connectOrMemoless": "इस ऑर्डर को {mode} करने के लिए एक {chain} वॉलेट कनेक्ट करें या memoless जमा का उपयोग करें",
+        "connect": "इस ऑर्डर को {mode} करने के लिए एक {chain} वॉलेट कनेक्ट करें",
+        "switch": "इस ऑर्डर को {mode} करने के लिए एक {chain} वॉलेट पर स्विच करें",
+        "addressMismatch": "कनेक्ट किया गया वॉलेट इस ऑर्डर को रखने वाले पते से मेल नहीं खाता",
+        "tradingPaused": "{chain} ट्रेडिंग वर्तमान में रुकी हुई है"
+      }
+    },
+    "quoteTimer": {
+      "refresh": "रिफ़्रेश करें"
+    },
+    "recipient": {
+      "addressPlaceholder": "{chain} पता",
+      "paste": "पेस्ट करें",
+      "invalidAddress": "अमान्य {chain} पता",
+      "titleAddresses": "पते दर्ज करें",
+      "titleReceiving": "प्राप्ति पता दर्ज करें",
+      "enterRefundAddress": "रिफंड पता दर्ज करें:",
+      "enterReceivingAddress": "प्राप्ति पता दर्ज करें:",
+      "preparingSwap": "स्वैप तैयार किया जा रहा है",
+      "next": "अगला"
+    },
+    "selectAsset": {
+      "title": "कॉइन चुनें",
+      "allChains": "सभी Chains",
+      "search": "खोजें",
+      "secured": "Secured",
+      "showSecuredAssets": "Secured एसेट दिखाएं",
+      "trade": "Trade",
+      "currentlyUnavailable": "वर्तमान में अनुपलब्ध",
+      "selected": "चयनित"
+    },
+    "settings": {
+      "noProtection": "कोई सुरक्षा नहीं",
+      "priceProtection": "मूल्य सुरक्षा",
+      "priceProtectionTooltip1": "मूल्य प्रभाव यह है कि आपका स्वैप Pool के मूल्य को कितना बदलता है. उपलब्ध Liquidity के सापेक्ष आपका स्वैप जितना बड़ा होगा, प्रभाव उतना ही अधिक होगा.",
+      "priceProtectionTooltip2": "कोट देखने और आपके स्वैप के पूरा होने के बीच के समय में, मूल्य बदल सकते हैं. Slippage सहनशीलता वह अधिकतम मूल्य परिवर्तन है जिसे आप स्वैप रद्द होने से पहले स्वीकार करेंगे.",
+      "priceProtectionDescription": "स्वैप पर खर्च करने के लिए आप जितना तैयार हैं उसकी अधिकतम सीमा. इसमें आपके स्वैप का मूल्य प्रभाव और स्वैप निष्पादित होने से पहले टोकन मूल्यों पर कोई भी Slippage शामिल है.",
+      "twapTitle": "Time Weighted Average Price (TWAP)",
+      "twapTooltip1": "THORChain पर TWAP ट्रेड को दस्तावेज़ों और कोड में \"streaming swaps\" कहा जाता है.",
+      "twapTooltip2": "एक तत्काल बिक्री ऑर्डर देने के लिए, जिसका परिणाम सबसे खराब मूल्य निष्पादन होगा, sub-swaps की संख्या के लिए 1 और sub-swaps के बीच के समय के लिए 1 block दर्ज करें.",
+      "twapDescription": "अधिकांश उपयोगकर्ताओं को डिफ़ॉल्ट सेटिंग्स का उपयोग करना चाहिए. केवल विशेषज्ञ ट्रेडर्स को ही इन सेटिंग्स को बदलना चाहिए",
+      "numberOfSubSwaps": "sub-swaps की संख्या",
+      "numberOfSubSwapsTooltip": "अपने ऑर्डर को sub-swaps नामक छोटे ट्रेड में विभाजित करें. जितने अधिक sub-swaps, उतना बेहतर मूल्य निष्पादन. शून्य पर सेट करने पर, प्रोटोकॉल आपके लिए sub-swaps की संख्या की गणना करेगा ताकि प्रत्येक का Slippage 5 bps हो. डिफ़ॉल्ट मान शून्य है.",
+      "timeBetweenSubSwaps": "sub-swaps के बीच का समय",
+      "timeBetweenSubSwapsTooltip": "blocks में मापा गया प्रत्येक sub-swap के बीच का समय. प्रत्येक sub-swap के बीच जितने अधिक blocks, उतना बेहतर मूल्य निष्पादन. शून्य blocks चुनने पर तेज़ निष्पादन के लिए प्रत्येक block में कई sub-swaps किए जाएंगे. डिफ़ॉल्ट मान शून्य blocks है.",
+      "blocksCount": "{count, plural, one {# block} other {# block}}",
+      "rapidSwap": "तीव्र स्वैप",
+      "seconds": "~{count, plural, one {# सेकंड} other {# सेकंड}}",
+      "reset": "रीसेट करें",
+      "save": "सहेजें"
+    }
+  },
+  "send": {
+    "title": "भेजें",
+    "send": "भेजें",
+    "amount": "राशि",
+    "clear": "साफ़ करें",
+    "balanceLabel": "शेष राशि:",
+    "to": "को",
+    "addressPlaceholder": "{chain} पता",
+    "paste": "पेस्ट करें",
+    "transactionFee": "लेन-देन शुल्क",
+    "selectCoin": "कॉइन चुनें",
+    "connectThorchainWallet": "THORChain वॉलेट कनेक्ट करें",
+    "enterMemo": "memo दर्ज करें",
+    "enterAmount": "राशि दर्ज करें",
+    "toast": {
+      "submitting": "लेन-देन सबमिट किया जा रहा है...",
+      "submitted": "लेन-देन सबमिट किया गया",
+      "submitError": "लेन-देन सबमिट करने में त्रुटि"
+    },
+    "error": {
+      "walletNotConnectedReconnect": "वॉलेट कनेक्ट नहीं है. कृपया पुनः कनेक्ट करें.",
+      "walletNotConnected": "वॉलेट कनेक्ट नहीं है.",
+      "invalidAddress": "अमान्य {chain} पता",
+      "noRuneBalance": "कोई RUNE शेष राशि नहीं मिली.",
+      "noTcyBalance": "कोई TCY शेष राशि नहीं मिली."
+    },
+    "beta": {
+      "title": "यह एक बीटा फ़ीचर है",
+      "description": "इसमें अनदेखे बग हो सकते हैं. अपने जोखिम पर उपयोग करें!"
+    },
+    "memo": {
+      "title": "Memo",
+      "examplesButton": "Memo उदाहरण",
+      "placeholder": "memo दर्ज करें",
+      "noPayloadInfo": "इस ऑपरेशन के लिए किसी payload की आवश्यकता नहीं है. केवल 0.02 RUNE नेटवर्क शुल्क लागू होता है."
+    },
+    "bond": {
+      "bondAmount": "Bond राशि",
+      "rebondAmount": "Rebond राशि",
+      "nodeAddress": "Node पता",
+      "newAddress": "नया पता",
+      "enterNodeAddress": "Node पता दर्ज करें",
+      "invalidNodeAddress": "अमान्य Node पता",
+      "validatingNode": "node सत्यापित किया जा रहा है...",
+      "nodeNotFound": "Node नहीं मिला",
+      "enterNewAddress": "नया पता दर्ज करें",
+      "invalidNewAddress": "अमान्य नया पता",
+      "bond": "Bond",
+      "unbond": "Unbond",
+      "rebond": "Rebond",
+      "nodeNotFoundOrUnavailable": "Node नहीं मिला या अनुपलब्ध है.",
+      "tab": {
+        "bond": "Bond",
+        "unbond": "Unbond",
+        "rebond": "Rebond",
+        "track": "ट्रैक करें"
+      },
+      "node": {
+        "version": "संस्करण",
+        "ipAddress": "IP पता",
+        "status": "स्थिति",
+        "providers": "प्रदाता",
+        "yourShare": "आपका हिस्सा",
+        "slashPoints": "Slash Points",
+        "operatorFee": "ऑपरेटर शुल्क",
+        "information": "Node जानकारी",
+        "bond": "Bond",
+        "nextReward": "अगला रिवॉर्ड"
+      }
+    },
+    "stake": {
+      "stakeAmount": "Stake राशि",
+      "unstakeAmount": "Unstake राशि",
+      "compound": "कंपाउंड",
+      "checking": "जांच की जा रही है...",
+      "claim": "क्लेम करें",
+      "nothingToClaim": "क्लेम करने के लिए कुछ नहीं",
+      "stake": "Stake",
+      "unstake": "Unstake",
+      "stakedLabel": "Stake किया गया:",
+      "wallet": "वॉलेट",
+      "availableToClaim": "क्लेम के लिए उपलब्ध",
+      "staked": "Stake किया गया",
+      "claimAmount": "क्लेम राशि",
+      "compoundInfo": "अपने लंबित TCY staking रिवॉर्ड को वापस अपनी stake स्थिति में कंपाउंड करें.",
+      "tab": {
+        "stake": "Stake",
+        "unstake": "Unstake",
+        "compound": "कंपाउंड",
+        "claim": "क्लेम करें"
+      }
+    },
+    "examples": {
+      "back": "वापस",
+      "copied": "क्लिपबोर्ड में कॉपी किया गया",
+      "copyMemo": "{label} memo कॉपी करें",
+      "fillInValues": "मान भरें →",
+      "learnMore": "और जानें",
+      "optional": "वैकल्पिक",
+      "optionalPlaceholder": "{hint} (छोड़ने के लिए खाली रखें)",
+      "preview": "पूर्वावलोकन",
+      "useMemo": "Memo का उपयोग करें",
+      "badgeNoPayload": "कोई payload नहीं",
+      "badgeDust": "dust",
+      "items": {
+        "stakeTcy": "TCY Stake करें",
+        "unstakeTcy": "TCY Unstake करें",
+        "claimTcy": "TCY क्लेम करें",
+        "depositRunepool": "RUNEPool जमा करें",
+        "withdrawRunepool": "RUNEPool निकालें",
+        "bond": "Bond",
+        "unbond": "Unbond",
+        "rebond": "Rebond",
+        "leave": "छोड़ें",
+        "whitelistBondProvider": "Bond प्रदाता को व्हाइटलिस्ट करें",
+        "unwhitelistBondProvider": "Bond प्रदाता को अनव्हाइटलिस्ट करें",
+        "addLpSingle": "LP जोड़ें (single-sided)",
+        "addLpDual": "LP जोड़ें (dual-sided)",
+        "withdrawLp": "LP निकालें",
+        "donateToPool": "Pool में दान करें"
+      },
+      "placeholder": {
+        "nodeAddress": "Node पता",
+        "providerAddress": "प्रदाता पता",
+        "newAddress": "नया पता",
+        "thorAddress": "THORChain पता",
+        "pairedAddress": "युग्मित पता",
+        "affiliate": "Affiliate",
+        "pool": "Pool",
+        "asset": "एसेट",
+        "amount": "राशि",
+        "basisPoints": "Basis Points",
+        "fee": "शुल्क (basis points)",
+        "thorPrefix": "thor1…",
+        "pairedAddressHint": "बाहरी chain पता",
+        "affiliateHint": "THORName या thor1… पता",
+        "poolHint": "उदा. BTC.BTC या ETH/ETH",
+        "assetHint": "उदा. BTC.BTC या RUNE (single-sided)",
+        "amountHint": "1e8 प्रारूप — उदा. 100000000 = 1 RUNE",
+        "basisPointsHint": "0 – 10000 (10000 = 100%)",
+        "feeHint": "0 – 10000"
+      }
+    }
+  },
+  "wallet": {
+    "chains": "Chains",
+    "deselectAll": "सभी अचयनित करें",
+    "selectAll": "सभी चुनें",
+    "soon": "जल्द ही",
+    "connectNamed": "{name} कनेक्ट करें",
+    "connected": "कनेक्ट किया गया",
+    "disconnected": "डिस्कनेक्ट किया गया",
+    "install": "इंस्टॉल करें",
+    "connectWallet": "वॉलेट कनेक्ट करें",
+    "derivationPath": "Derivation Path",
+    "selectAccountType": "खाता प्रकार चुनें",
+    "index": "इंडेक्स",
+    "ledgerUnlockHint": "कनेक्ट करने से पहले सुनिश्चित करें कि आपका Ledger अनलॉक है और {app} ऐप खुला है.",
+    "correspondingApp": "संगत",
+    "createNewWallet": "नया वॉलेट बनाएं",
+    "createWalletInstructions": "इन 12 शब्दों को लिख लें और इन्हें सुरक्षित रूप से ऑफ़लाइन संग्रहीत करें. इस 12 शब्द वाले वाक्यांश का उपयोग आपके वॉलेट की निजी कुंजियों को पुनर्प्राप्त करने के लिए किया जाता है.",
+    "copyPhrase": "वाक्यांश कॉपी करें",
+    "confirmSavedPassphrase": "मैं पुष्टि करता हूं कि मैंने भविष्य में अपने खाते को पुनर्प्राप्त करने के लिए passphrase को सुरक्षित रूप से सहेज लिया है.",
+    "back": "वापस",
+    "next": "अगला",
+    "setupDecryptionPassword": "डिक्रिप्शन पासवर्ड सेट करें",
+    "setupPasswordInstructions": "अपने बनाए गए वॉलेट को एन्क्रिप्ट करने के लिए एक मज़बूत पासवर्ड दर्ज करें. इसी से आप अपने वॉलेट तक पहुंचेंगे.",
+    "enterPassword": "पासवर्ड दर्ज करें",
+    "confirmPassword": "पासवर्ड की पुष्टि करें",
+    "passwordMustMatch": "पासवर्ड मेल खाना चाहिए",
+    "create": "बनाएं",
+    "error": {
+      "invalidFileType": "अमान्य फ़ाइल प्रकार. कृपया एक JSON या TXT फ़ाइल अपलोड करें."
+    },
+    "importKeystore": "Keystore आयात करें",
+    "selectOrDragKeystore": "अपलोड करने के लिए अपनी keystore फ़ाइल चुनें या खींचें",
+    "decryptionPassword": "डिक्रिप्शन पासवर्ड",
+    "password": "पासवर्ड",
+    "import": "आयात करें",
+    "importSeedPhrase": "Seed Phrase आयात करें",
+    "typeSeedPhrase": "अपना seed phrase टाइप करें",
+    "openKeystore": "Keystore खोलें",
+    "noTokensFound": "कोई टोकन नहीं मिला",
+    "addressCopied": "पता कॉपी किया गया",
+    "copyAddress": "पता कॉपी करें",
+    "disconnectWallet": "{name} डिस्कनेक्ट करें",
+    "noCoins": "कोई कॉइन नहीं",
+    "sidebar": {
+      "title": "वॉलेट"
+    },
+    "sortWallets": "वॉलेट क्रमबद्ध करें",
+    "sortBy": "इसके अनुसार क्रमबद्ध करें",
+    "sortByName": "नाम (A-Z)",
+    "sortByBalance": "शेष राशि (अधिक → कम)",
+    "externalWalletMode": "बाहरी वॉलेट मोड",
+    "externalWalletModeDescription": "अपना ऑर्डर दर्ज करें, स्वैप बटन पर क्लिक करें, और निर्देशों का पालन करें",
+    "externalWalletAssetUnsupported": "यह एसेट बाहरी वॉलेट मोड में समर्थित नहीं है. यदि आप जारी रखना चाहते हैं तो एक ब्राउज़र वॉलेट कनेक्ट करें.",
+    "close": "बंद करें",
+    "sendToken": "{ticker} भेजें"
+  },
+  "common": {
+    "close": "बंद करें"
+  },
+  "tx": {
+    "title": "इतिहास",
+    "today": "आज",
+    "yesterday": "कल",
+    "onlyCreatorModify": "केवल मूल स्वैप निर्माता ही संशोधित कर सकता है",
+    "limitPrice": "लिमिट मूल्य",
+    "expiresIn": "समाप्त होगा",
+    "showQr": "QR दिखाएं",
+    "modify": "संशोधित करें",
+    "cancelOrder": "ऑर्डर रद्द करें",
+    "sourceAddress": "स्रोत पता",
+    "destinationAddress": "गंतव्य पता",
+    "remaining": "{time} शेष",
+    "status": {
+      "not_started": "जमा लंबित",
+      "pending": "लंबित",
+      "swapping": "स्वैप किया जा रहा है",
+      "completed": "पूर्ण",
+      "failed": "विफल",
+      "expired": "समाप्त",
+      "refunded": "रिफंड किया गया",
+      "unknown": "अज्ञात"
+    },
+    "leg": {
+      "deposit": "{ticker} जमा करें",
+      "send": "{ticker} भेजें",
+      "swap": "{from} को {to} में स्वैप करें"
+    }
+  }
+}

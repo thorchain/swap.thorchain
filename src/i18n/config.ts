@@ -1,5 +1,29 @@
 // i18n configuration — cookie-based locale
-export const locales = ['en', 'zh', 'zh-Hant', 'ko', 'ru', 'es', 'fa', 'tr'] as const
+export const locales = [
+  'en',
+  'zh',
+  'es',
+  'hi',
+  'ar',
+  'pt',
+  'fr',
+  'ru',
+  'de',
+  'ja',
+  'bn',
+  'id',
+  'ur',
+  'tr',
+  'ko',
+  'it',
+  'vi',
+  'fa',
+  'th',
+  'zh-Hant',
+  'arz',
+  'pcm',
+  'lah'
+] as const
 
 export type Locale = (typeof locales)[number]
 
@@ -16,11 +40,26 @@ export const localeNames: Record<Locale, string> = {
   ru: 'Русский',
   es: 'Español',
   fa: 'فارسی',
-  tr: 'Türkçe'
+  tr: 'Türkçe',
+  hi: 'हिन्दी',
+  ar: 'العربية',
+  fr: 'Français',
+  bn: 'বাংলা',
+  pt: 'Português',
+  ja: '日本語',
+  lah: 'لہندا',
+  ur: 'اردو',
+  id: 'Bahasa Indonesia',
+  de: 'Deutsch',
+  it: 'Italiano',
+  pcm: 'Naijá',
+  arz: 'العربية المصرية',
+  vi: 'Tiếng Việt',
+  th: 'ไทย'
 }
 
 // Right-to-left locales need dir="rtl" on the <html> element.
-const rtlLocales: Locale[] = ['fa']
+const rtlLocales: Locale[] = ['fa', 'ar', 'arz', 'ur', 'lah']
 
 export const getLangDir = (locale: Locale): 'rtl' | 'ltr' => (rtlLocales.includes(locale) ? 'rtl' : 'ltr')
 

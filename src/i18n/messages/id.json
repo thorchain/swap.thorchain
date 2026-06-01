@@ -1,0 +1,465 @@
+{
+  "menu": {
+    "swap": "Tukar",
+    "bond": "Bond",
+    "memo": "Memo",
+    "launchApp": "Buka aplikasi",
+    "socials": "Media sosial",
+    "language": "Bahasa",
+    "newsletterPitch": "Cara terbaik untuk tetap mengikuti perkembangan THORChain",
+    "emailPlaceholder": "Masukkan email Anda",
+    "signUp": "Daftar",
+    "signingUp": "Mendaftar…",
+    "subscribed": "Terima kasih telah berlangganan!",
+    "genericError": "Terjadi kesalahan"
+  },
+  "header": {
+    "wallet": "DOMPET",
+    "history": "RIWAYAT"
+  },
+  "footer": {
+    "privacyPolicy": "Kebijakan privasi",
+    "termsOfUse": "Ketentuan penggunaan",
+    "riskPolicy": "Kebijakan risiko",
+    "riskTooltip": "Meskipun situs web ini dibuat dengan cermat, mungkin masih ada bug yang tidak disengaja yang dapat menyebabkan situs tidak berfungsi dan bahkan kehilangan dana. Lanjutkan hanya jika Anda memahami dan menerima risiko ini.",
+    "builtBy": "Dibuat oleh",
+    "reportBug": "Laporkan bug / minta fitur",
+    "getSupport": "Dapatkan dukungan di Discord",
+    "bug": {
+      "title": "Laporkan bug / minta fitur",
+      "success": "Terima kasih! Laporan Anda telah dikirim.",
+      "close": "Tutup",
+      "emailLabel": "Email (opsional)",
+      "descriptionLabel": "Deskripsi",
+      "descriptionPlaceholder": "Jelaskan bug / fitur",
+      "attachmentLabel": "Lampiran (opsional)",
+      "attachFile": "Lampirkan file",
+      "sending": "Mengirim...",
+      "send": "Kirim laporan",
+      "failed": "Gagal mengirim laporan"
+    }
+  },
+  "swap": {
+    "tab": {
+      "swap": "Tukar",
+      "limit": "Limit"
+    },
+    "input": {
+      "sell": "Jual",
+      "buy": "Beli",
+      "clear": "Bersihkan"
+    },
+    "balance": {
+      "label": "Saldo:"
+    },
+    "button": {
+      "limitNotSupported": "Limit order tidak didukung",
+      "temporarilyUnavailable": "Sementara tidak tersedia",
+      "enterAmount": "Masukkan jumlah",
+      "quoting": "Mengambil kuotasi...",
+      "noValidQuotes": "Tidak ada kuotasi yang valid",
+      "enterLimitPrice": "Masukkan harga limit",
+      "enterLimitOrder": "Masukkan limit order",
+      "swap": "Tukar",
+      "connectWallet": "Hubungkan dompet {chain}",
+      "insufficientBalance": "Saldo tidak mencukupi",
+      "approve": "Setujui {ticker}"
+    },
+    "toast": {
+      "approvalTransaction": "Transaksi persetujuan",
+      "success": "Berhasil",
+      "errorSubmitting": "Gagal mengirim transaksi",
+      "submittingTransaction": "Mengirim transaksi",
+      "transactionSubmitted": "Transaksi terkirim"
+    },
+    "confirm": {
+      "titleLimit": "Konfirmasi limit order",
+      "titleSwap": "Konfirmasi swap",
+      "notAvailable": "n/a",
+      "swapArrowLabel": "tukar",
+      "chainAddress": "Alamat {chain}",
+      "sourceAddressTooltip": "Alamat dompet yang mengirim dana untuk swap ini.",
+      "destinationAddressTooltip": "Alamat dompet yang akan menerima dana hasil swap.",
+      "refundAddress": "Alamat pengembalian",
+      "refundAddressTooltip": "Alamat tempat dana akan dikembalikan jika swap tidak dapat diselesaikan.",
+      "limitPrice": "Harga limit",
+      "limitPriceTooltip": "Harga per unit saat limit order Anda akan dieksekusi. Order hanya akan terisi ketika pasar mencapai harga ini.",
+      "targetAmount": "Jumlah target",
+      "targetAmountTooltip": "Jumlah pasti yang akan Anda terima ketika limit order Anda dieksekusi pada harga yang ditentukan.",
+      "minimumPayout": "Pembayaran minimum",
+      "minimumPayoutTooltip": "Ini adalah jumlah minimum yang dijamin Anda terima pada pengaturan price protection {protection}. Jika pasar bergerak cukup jauh sehingga Anda akan menerima lebih sedikit, swap akan dibatalkan dan dikembalikan.",
+      "notProtected": "Tidak dilindungi",
+      "priceImpact": "Price impact",
+      "priceImpactTooltip": "Seberapa besar swap Anda menggeser harga pool. Semakin besar swap Anda dibandingkan likuiditas yang tersedia, semakin tinggi price impact.",
+      "slippageTolerance": "Toleransi slippage",
+      "slippageToleranceTooltip1": "Selisih antara price protection {protection} Anda dan price impact.",
+      "slippageToleranceTooltip2": "Selama jeda antara melihat kuotasi dan swap Anda selesai, harga dapat berubah. Toleransi slippage adalah perubahan harga maksimum yang akan Anda terima sebelum swap dibatalkan.",
+      "includedFees": "Biaya termasuk",
+      "includedFeesTooltip": "Biaya ini sudah termasuk dalam kurs — Anda tidak membayarnya secara terpisah.",
+      "estimatedTime": "Perkiraan waktu",
+      "gasFee": "Biaya gas {chain}",
+      "exchange": "Tukar",
+      "button": "Konfirmasi",
+      "buttonLimit": "Konfirmasi limit order",
+      "confirming": "Mengonfirmasi"
+    },
+    "warning": {
+      "highPriceImpact": "Saya memahami bahwa price impact merupakan tambahan dari toleransi slippage. Saya menerima price impact tinggi pada swap ini",
+      "sendExact": "Saya memahami bahwa saya harus mengirim tepat sebesar jumlah yang ditentukan dari dompet self-custody. Saya memahami bahwa mengirim dari dompet smart contract, alamat bursa, alamat yang didelegasikan, atau dompet EIP 7702, akan mengakibatkan",
+      "lossOfFunds": "kehilangan dana.",
+      "ltcMweb": "Saya memahami bahwa menggunakan alamat LTC MWEB akan mengakibatkan",
+      "selfCustody": "Saya memahami bahwa saya harus menggunakan dompet self-custody. Saya memahami bahwa menggunakan dompet smart contract, alamat bursa, alamat yang didelegasikan, atau dompet EIP 7702, akan mengakibatkan"
+    },
+    "instant": {
+      "sendTitle": "Kirim {asset}",
+      "sendDescription": "Kirim tepat <b>{amount} {ticker}</b> ke alamat di bawah ini dari dompet self-custody.",
+      "qrCodeAlt": "Kode QR",
+      "expiresIn": "Kedaluwarsa dalam"
+    },
+    "error": {
+      "memoMissing": "Memo tidak ada",
+      "calculateSuggestedAmount": "Gagal menghitung jumlah yang disarankan",
+      "preflightRequest": "Gagal melakukan preflight permintaan",
+      "preflightMemoless": "Gagal melakukan preflight permintaan tanpa memo",
+      "minAmountNoWallet": "Jumlah swap minimum tanpa dompet yang terhubung adalah {amount} {ticker}",
+      "unknown": "Kesalahan tidak diketahui"
+    },
+    "feeDialog": {
+      "title": "Biaya termasuk dalam kurs",
+      "description": "Biaya ini sudah termasuk dalam kurs — Anda tidak membayarnya secara terpisah.",
+      "liquidityFee": "Liquidity fee",
+      "liquidityFeeInfo": "Biaya untuk penyedia likuiditas pada rute",
+      "outboundFee": "Outbound fee",
+      "outboundFeeInfo": "Biaya untuk mengirim transaksi keluar",
+      "platformFee": "Biaya platform",
+      "platformFeeInfo": "Biaya yang dikenakan oleh {app}"
+    },
+    "expiry": {
+      "title": "Atur waktu kedaluwarsa",
+      "days": "Hari",
+      "hours": "Jam",
+      "minutes": "Menit",
+      "maxExpiry": "Kedaluwarsa maksimum adalah {days} hari",
+      "apply": "Terapkan"
+    },
+    "limit": {
+      "whenWorth": "Ketika 1 {ticker} bernilai",
+      "expiresIn": "Kedaluwarsa dalam",
+      "oneHour": "1 jam",
+      "oneDay": "1 hari",
+      "threeDays": "3 hari",
+      "custom": "Khusus",
+      "market": "Pasar"
+    },
+    "limitCancel": {
+      "titleModify": "Ubah limit order",
+      "titleCancel": "Batalkan limit order",
+      "descriptionModify": "Mengubah limit order ini akan memperbarui harga target. Biaya jaringan kecil akan dikenakan untuk memproses perubahan ini.",
+      "descriptionCancel": "Membatalkan limit order ini akan mengembalikan dana yang Anda setorkan ke dompet Anda. Biaya jaringan kecil akan dikenakan untuk memproses pembatalan ini.",
+      "fromCurrent": "{percent}% dari harga saat ini",
+      "youWillGet": "Anda akan menerima",
+      "button": {
+        "modifying": "Mengubah...",
+        "cancelling": "Membatalkan...",
+        "loading": "Memuat...",
+        "modifyOrder": "Ubah order",
+        "cancelOrder": "Batalkan order"
+      },
+      "error": {
+        "loadInboundAddresses": "Gagal memuat alamat masuk",
+        "cancelFailed": "Gagal membatalkan limit swap",
+        "modifyFailed": "Gagal mengubah limit swap"
+      },
+      "toast": {
+        "sendToCancel": "Kirim {amount} {ticker} dari dompet asli untuk membatalkan",
+        "sendToModify": "Kirim {amount} {ticker} dari dompet asli untuk mengubah",
+        "cancelSubmitted": "Transaksi pembatalan terkirim",
+        "modifySubmitted": "Transaksi perubahan terkirim"
+      },
+      "warning": {
+        "memolessDeposit": "Untuk {mode} order ini, kirim deposit dari dompet {chain} asli yang membuatnya",
+        "connectOrMemoless": "Hubungkan dompet {chain} atau gunakan deposit tanpa memo untuk {mode} order ini",
+        "connect": "Hubungkan dompet {chain} untuk {mode} order ini",
+        "switch": "Beralih ke dompet {chain} untuk {mode} order ini",
+        "addressMismatch": "Dompet yang terhubung tidak cocok dengan alamat yang membuat order ini",
+        "tradingPaused": "Trading {chain} saat ini sedang dijeda"
+      }
+    },
+    "quoteTimer": {
+      "refresh": "Segarkan"
+    },
+    "recipient": {
+      "addressPlaceholder": "Alamat {chain}",
+      "paste": "Tempel",
+      "invalidAddress": "Alamat {chain} tidak valid",
+      "titleAddresses": "Masukkan alamat",
+      "titleReceiving": "Masukkan alamat penerima",
+      "enterRefundAddress": "Masukkan alamat pengembalian:",
+      "enterReceivingAddress": "Masukkan alamat penerima:",
+      "preparingSwap": "Menyiapkan swap",
+      "next": "Berikutnya"
+    },
+    "selectAsset": {
+      "title": "Pilih koin",
+      "allChains": "Semua chain",
+      "search": "Cari",
+      "secured": "Secured",
+      "showSecuredAssets": "Tampilkan aset secured",
+      "trade": "Trade",
+      "currentlyUnavailable": "Saat ini tidak tersedia",
+      "selected": "Dipilih"
+    },
+    "settings": {
+      "noProtection": "Tanpa perlindungan",
+      "priceProtection": "Price protection",
+      "priceProtectionTooltip1": "Price impact adalah seberapa besar swap Anda menggeser harga pool. Semakin besar swap Anda dibandingkan likuiditas yang tersedia, semakin tinggi dampaknya.",
+      "priceProtectionTooltip2": "Selama jeda antara melihat kuotasi dan swap Anda selesai, harga dapat berubah. Toleransi slippage adalah perubahan harga maksimum yang akan Anda terima sebelum swap dibatalkan.",
+      "priceProtectionDescription": "Jumlah maksimum yang bersedia Anda keluarkan untuk sebuah swap. Ini termasuk price impact swap Anda dan slippage apa pun pada harga token sebelum swap dieksekusi.",
+      "twapTitle": "Time Weighted Average Price (TWAP)",
+      "twapTooltip1": "Trading TWAP di THORChain disebut \"streaming swaps\" dalam dokumentasi dan kode.",
+      "twapTooltip2": "Untuk membuat order jual instan, yang akan menghasilkan eksekusi harga terburuk, masukkan 1 untuk jumlah sub-swap dan 1 blok untuk waktu antara sub-swap.",
+      "twapDescription": "Sebagian besar pengguna sebaiknya menggunakan pengaturan default. Hanya trader ahli yang sebaiknya mengubah pengaturan ini",
+      "numberOfSubSwaps": "Jumlah sub-swap",
+      "numberOfSubSwapsTooltip": "Bagi order Anda menjadi trading-trading lebih kecil yang disebut sub-swap. Semakin banyak sub-swap, semakin baik eksekusi harganya. Jika diatur ke nol, protokol akan menghitung jumlah sub-swap untuk Anda sehingga masing-masing memiliki slippage 5 bps. Nilai default adalah nol.",
+      "timeBetweenSubSwaps": "Waktu antara sub-swap",
+      "timeBetweenSubSwapsTooltip": "Waktu antara setiap sub-swap diukur dalam blok. Semakin banyak blok antara setiap sub-swap, semakin baik eksekusi harganya. Memilih nol blok akan melakukan beberapa sub-swap setiap blok untuk eksekusi lebih cepat. Nilai default adalah nol blok.",
+      "blocksCount": "{count, plural, other {# blok}}",
+      "rapidSwap": "Rapid Swap",
+      "seconds": "~{count, plural, other {# detik}}",
+      "reset": "Atur ulang",
+      "save": "Simpan"
+    }
+  },
+  "send": {
+    "title": "Kirim",
+    "send": "Kirim",
+    "amount": "Jumlah",
+    "clear": "Bersihkan",
+    "balanceLabel": "Saldo:",
+    "to": "Ke",
+    "addressPlaceholder": "Alamat {chain}",
+    "paste": "Tempel",
+    "transactionFee": "Biaya transaksi",
+    "selectCoin": "Pilih koin",
+    "connectThorchainWallet": "Hubungkan dompet THORChain",
+    "enterMemo": "Masukkan memo",
+    "enterAmount": "Masukkan jumlah",
+    "toast": {
+      "submitting": "Mengirim transaksi...",
+      "submitted": "Transaksi terkirim",
+      "submitError": "Gagal mengirim transaksi"
+    },
+    "error": {
+      "walletNotConnectedReconnect": "Dompet tidak terhubung. Silakan hubungkan kembali.",
+      "walletNotConnected": "Dompet tidak terhubung.",
+      "invalidAddress": "Alamat {chain} tidak valid",
+      "noRuneBalance": "Saldo RUNE tidak ditemukan.",
+      "noTcyBalance": "Saldo TCY tidak ditemukan."
+    },
+    "beta": {
+      "title": "Ini adalah fitur beta",
+      "description": "Mungkin ada bug yang belum ditemukan. Gunakan dengan risiko Anda sendiri!"
+    },
+    "memo": {
+      "title": "Memo",
+      "examplesButton": "Contoh memo",
+      "placeholder": "Masukkan memo",
+      "noPayloadInfo": "Operasi ini tidak memerlukan payload. Hanya biaya jaringan 0,02 RUNE yang berlaku."
+    },
+    "bond": {
+      "bondAmount": "Jumlah bond",
+      "rebondAmount": "Jumlah rebond",
+      "nodeAddress": "Alamat node",
+      "newAddress": "Alamat baru",
+      "enterNodeAddress": "Masukkan alamat node",
+      "invalidNodeAddress": "Alamat node tidak valid",
+      "validatingNode": "Memvalidasi node...",
+      "nodeNotFound": "Node tidak ditemukan",
+      "enterNewAddress": "Masukkan alamat baru",
+      "invalidNewAddress": "Alamat baru tidak valid",
+      "bond": "Bond",
+      "unbond": "Unbond",
+      "rebond": "Rebond",
+      "nodeNotFoundOrUnavailable": "Node tidak ditemukan atau tidak tersedia.",
+      "tab": {
+        "bond": "Bond",
+        "unbond": "Unbond",
+        "rebond": "Rebond",
+        "track": "Lacak"
+      },
+      "node": {
+        "version": "Versi",
+        "ipAddress": "Alamat IP",
+        "status": "Status",
+        "providers": "Penyedia",
+        "yourShare": "Bagian Anda",
+        "slashPoints": "Slash Points",
+        "operatorFee": "Biaya operator",
+        "information": "Informasi node",
+        "bond": "Bond",
+        "nextReward": "Reward berikutnya"
+      }
+    },
+    "stake": {
+      "stakeAmount": "Jumlah stake",
+      "unstakeAmount": "Jumlah unstake",
+      "compound": "Compound",
+      "checking": "Memeriksa...",
+      "claim": "Klaim",
+      "nothingToClaim": "Tidak ada yang dapat diklaim",
+      "stake": "Stake",
+      "unstake": "Unstake",
+      "stakedLabel": "Di-stake:",
+      "wallet": "Dompet",
+      "availableToClaim": "Tersedia untuk diklaim",
+      "staked": "Di-stake",
+      "claimAmount": "Jumlah klaim",
+      "compoundInfo": "Compound reward staking TCY Anda yang tertunda kembali ke posisi stake Anda.",
+      "tab": {
+        "stake": "Stake",
+        "unstake": "Unstake",
+        "compound": "Compound",
+        "claim": "Klaim"
+      }
+    },
+    "examples": {
+      "back": "Kembali",
+      "copied": "Disalin ke papan klip",
+      "copyMemo": "Salin memo {label}",
+      "fillInValues": "isi nilai →",
+      "learnMore": "Pelajari lebih lanjut",
+      "optional": "opsional",
+      "optionalPlaceholder": "{hint} (kosongkan untuk menghilangkan)",
+      "preview": "Pratinjau",
+      "useMemo": "Gunakan memo",
+      "badgeNoPayload": "tanpa payload",
+      "badgeDust": "dust",
+      "items": {
+        "stakeTcy": "Stake TCY",
+        "unstakeTcy": "Unstake TCY",
+        "claimTcy": "Klaim TCY",
+        "depositRunepool": "Deposit RUNEPool",
+        "withdrawRunepool": "Tarik RUNEPool",
+        "bond": "Bond",
+        "unbond": "Unbond",
+        "rebond": "Rebond",
+        "leave": "Keluar",
+        "whitelistBondProvider": "Whitelist bond provider",
+        "unwhitelistBondProvider": "Unwhitelist bond provider",
+        "addLpSingle": "Tambah LP (satu sisi)",
+        "addLpDual": "Tambah LP (dua sisi)",
+        "withdrawLp": "Tarik LP",
+        "donateToPool": "Donasikan ke Pool"
+      },
+      "placeholder": {
+        "nodeAddress": "Alamat node",
+        "providerAddress": "Alamat penyedia",
+        "newAddress": "Alamat baru",
+        "thorAddress": "Alamat THORChain",
+        "pairedAddress": "Alamat berpasangan",
+        "affiliate": "Affiliate",
+        "pool": "Pool",
+        "asset": "Aset",
+        "amount": "Jumlah",
+        "basisPoints": "Basis Points",
+        "fee": "Biaya (basis points)",
+        "thorPrefix": "thor1…",
+        "pairedAddressHint": "Alamat chain eksternal",
+        "affiliateHint": "THORName atau alamat thor1…",
+        "poolHint": "mis. BTC.BTC atau ETH/ETH",
+        "assetHint": "mis. BTC.BTC atau RUNE (satu sisi)",
+        "amountHint": "Format 1e8 — mis. 100000000 = 1 RUNE",
+        "basisPointsHint": "0 – 10000 (10000 = 100%)",
+        "feeHint": "0 – 10000"
+      }
+    }
+  },
+  "wallet": {
+    "chains": "Chain",
+    "deselectAll": "Batalkan semua pilihan",
+    "selectAll": "Pilih semua",
+    "soon": "Segera",
+    "connectNamed": "Hubungkan {name}",
+    "connected": "Terhubung",
+    "disconnected": "Terputus",
+    "install": "Pasang",
+    "connectWallet": "Hubungkan dompet",
+    "derivationPath": "Derivation Path",
+    "selectAccountType": "Pilih tipe akun",
+    "index": "Indeks",
+    "ledgerUnlockHint": "Pastikan Ledger Anda tidak terkunci dan aplikasi {app} terbuka sebelum menghubungkan.",
+    "correspondingApp": "yang sesuai",
+    "createNewWallet": "Buat dompet baru",
+    "createWalletInstructions": "Tulis 12 kata ini dan simpan dengan aman secara offline. Frasa 12 kata ini digunakan untuk memulihkan private key dompet Anda.",
+    "copyPhrase": "Salin frasa",
+    "confirmSavedPassphrase": "Saya mengonfirmasi bahwa saya telah menyimpan passphrase dengan aman untuk memulihkan akun saya di masa mendatang.",
+    "back": "Kembali",
+    "next": "Berikutnya",
+    "setupDecryptionPassword": "Atur kata sandi dekripsi",
+    "setupPasswordInstructions": "Masukkan kata sandi yang kuat untuk mengenkripsi dompet yang Anda buat. Inilah cara Anda mengakses dompet Anda.",
+    "enterPassword": "Masukkan kata sandi",
+    "confirmPassword": "Konfirmasi kata sandi",
+    "passwordMustMatch": "Kata sandi harus cocok",
+    "create": "Buat",
+    "error": {
+      "invalidFileType": "Tipe file tidak valid. Silakan unggah file JSON atau TXT."
+    },
+    "importKeystore": "Impor Keystore",
+    "selectOrDragKeystore": "Pilih atau seret file keystore Anda untuk mengunggahnya",
+    "decryptionPassword": "Kata sandi dekripsi",
+    "password": "Kata sandi",
+    "import": "Impor",
+    "importSeedPhrase": "Impor seed phrase",
+    "typeSeedPhrase": "Ketik seed phrase Anda",
+    "openKeystore": "Buka Keystore",
+    "noTokensFound": "Tidak ada token ditemukan",
+    "addressCopied": "Alamat disalin",
+    "copyAddress": "Salin alamat",
+    "disconnectWallet": "Putuskan {name}",
+    "noCoins": "Tidak ada koin",
+    "sidebar": {
+      "title": "Dompet"
+    },
+    "sortWallets": "Urutkan dompet",
+    "sortBy": "Urutkan menurut",
+    "sortByName": "Nama (A-Z)",
+    "sortByBalance": "Saldo (Tinggi → Rendah)",
+    "externalWalletMode": "Mode dompet eksternal",
+    "externalWalletModeDescription": "Masukkan order Anda, klik tombol Tukar, dan ikuti instruksinya",
+    "externalWalletAssetUnsupported": "Aset ini tidak didukung dalam mode dompet eksternal. Hubungkan dompet browser jika Anda ingin melanjutkan.",
+    "close": "Tutup",
+    "sendToken": "Kirim {ticker}"
+  },
+  "common": {
+    "close": "Tutup"
+  },
+  "tx": {
+    "title": "Riwayat",
+    "today": "Hari ini",
+    "yesterday": "Kemarin",
+    "onlyCreatorModify": "Hanya pembuat swap asli yang dapat mengubah",
+    "limitPrice": "Harga limit",
+    "expiresIn": "Kedaluwarsa dalam",
+    "showQr": "Tampilkan QR",
+    "modify": "Ubah",
+    "cancelOrder": "Batalkan order",
+    "sourceAddress": "Alamat sumber",
+    "destinationAddress": "Alamat tujuan",
+    "remaining": "{time} tersisa",
+    "status": {
+      "not_started": "Deposit tertunda",
+      "pending": "Tertunda",
+      "swapping": "Menukar",
+      "completed": "Selesai",
+      "failed": "Gagal",
+      "expired": "Kedaluwarsa",
+      "refunded": "Dikembalikan",
+      "unknown": "Tidak diketahui"
+    },
+    "leg": {
+      "deposit": "Deposit {ticker}",
+      "send": "Kirim {ticker}",
+      "swap": "Tukar {from} ke {to}"
+    }
+  }
+}

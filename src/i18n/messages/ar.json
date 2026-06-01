@@ -1,0 +1,465 @@
+{
+  "menu": {
+    "swap": "تبادل",
+    "bond": "Bond",
+    "memo": "Memo",
+    "launchApp": "تشغيل التطبيق",
+    "socials": "وسائل التواصل",
+    "language": "اللغة",
+    "newsletterPitch": "أفضل طريقة للبقاء على اطلاع بأحدث مستجدات THORChain",
+    "emailPlaceholder": "أدخل بريدك الإلكتروني",
+    "signUp": "الاشتراك",
+    "signingUp": "جارٍ الاشتراك…",
+    "subscribed": "شكرًا لاشتراكك!",
+    "genericError": "حدث خطأ ما"
+  },
+  "header": {
+    "wallet": "المحفظة",
+    "history": "السجل"
+  },
+  "footer": {
+    "privacyPolicy": "سياسة الخصوصية",
+    "termsOfUse": "شروط الاستخدام",
+    "riskPolicy": "سياسة المخاطر",
+    "riskTooltip": "رغم أن هذا الموقع مُصمَّم بعناية، فقد يحتوي على أخطاء غير مقصودة قد تؤدي إلى خلل في الموقع وحتى إلى خسارة الأموال. تابِع فقط إذا كنت تفهم هذه المخاطر وتقبلها.",
+    "builtBy": "تطوير",
+    "reportBug": "الإبلاغ عن خطأ / طلب ميزة",
+    "getSupport": "الحصول على الدعم عبر Discord",
+    "bug": {
+      "title": "الإبلاغ عن خطأ / طلب ميزة",
+      "success": "شكرًا لك! تم إرسال بلاغك.",
+      "close": "إغلاق",
+      "emailLabel": "البريد الإلكتروني (اختياري)",
+      "descriptionLabel": "الوصف",
+      "descriptionPlaceholder": "صِف الخطأ / الميزة",
+      "attachmentLabel": "مرفق (اختياري)",
+      "attachFile": "إرفاق ملف",
+      "sending": "جارٍ الإرسال...",
+      "send": "إرسال البلاغ",
+      "failed": "فشل إرسال البلاغ"
+    }
+  },
+  "swap": {
+    "tab": {
+      "swap": "تبادل",
+      "limit": "أمر محدد"
+    },
+    "input": {
+      "sell": "بيع",
+      "buy": "شراء",
+      "clear": "مسح"
+    },
+    "balance": {
+      "label": "الرصيد:"
+    },
+    "button": {
+      "limitNotSupported": "الأمر المحدد غير مدعوم",
+      "temporarilyUnavailable": "غير متاح مؤقتًا",
+      "enterAmount": "أدخل المبلغ",
+      "quoting": "جارٍ التسعير...",
+      "noValidQuotes": "لا توجد عروض أسعار صالحة",
+      "enterLimitPrice": "أدخل السعر المحدد",
+      "enterLimitOrder": "أدخل الأمر المحدد",
+      "swap": "تبادل",
+      "connectWallet": "ربط محفظة {chain}",
+      "insufficientBalance": "الرصيد غير كافٍ",
+      "approve": "الموافقة على {ticker}"
+    },
+    "toast": {
+      "approvalTransaction": "معاملة الموافقة",
+      "success": "نجاح",
+      "errorSubmitting": "خطأ في إرسال المعاملة",
+      "submittingTransaction": "جارٍ إرسال المعاملة",
+      "transactionSubmitted": "تم إرسال المعاملة"
+    },
+    "confirm": {
+      "titleLimit": "تأكيد الأمر المحدد",
+      "titleSwap": "تأكيد التبادل",
+      "notAvailable": "n/a",
+      "swapArrowLabel": "تبادل",
+      "chainAddress": "عنوان {chain}",
+      "sourceAddressTooltip": "عنوان المحفظة التي تُرسِل الأموال لهذا التبادل.",
+      "destinationAddressTooltip": "عنوان المحفظة التي ستستلم الأموال المُبادَلة.",
+      "refundAddress": "عنوان الاسترداد",
+      "refundAddressTooltip": "العنوان الذي ستُعاد إليه الأموال إذا تعذّر إتمام التبادل.",
+      "limitPrice": "السعر المحدد",
+      "limitPriceTooltip": "السعر لكل وحدة الذي سيُنفَّذ عنده أمرك المحدد. لن يُنفَّذ الأمر إلا عندما يبلغ السوق هذا السعر.",
+      "targetAmount": "المبلغ المستهدف",
+      "targetAmountTooltip": "المبلغ الدقيق الذي ستستلمه عند تنفيذ أمرك المحدد بالسعر الذي حددته.",
+      "minimumPayout": "الحد الأدنى للمبلغ المستلَم",
+      "minimumPayoutTooltip": "هذا هو الحد الأدنى المضمون استلامه وفق إعداد حماية السعر {protection} لديك. إذا تحرّك السوق بما يكفي ليصبح ما تستلمه أقل، يُلغى التبادل وتُسترَد الأموال.",
+      "notProtected": "غير محمي",
+      "priceImpact": "تأثير السعر",
+      "priceImpactTooltip": "مقدار تحريك تبادلك لسعر الـ Pool. كلما كبر تبادلك مقارنة بالسيولة المتاحة، زاد تأثير السعر.",
+      "slippageTolerance": "حد تحمّل الـ Slippage",
+      "slippageToleranceTooltip1": "الفرق بين حماية السعر {protection} وتأثير السعر.",
+      "slippageToleranceTooltip2": "خلال الفترة بين رؤية عرض السعر وإتمام تبادلك، قد تتغير الأسعار. حد تحمّل الـ Slippage هو أقصى تغيّر في السعر تقبله قبل إلغاء التبادل.",
+      "includedFees": "الرسوم المضمّنة",
+      "includedFeesTooltip": "هذه الرسوم مضمّنة بالفعل في السعر — أنت لا تدفعها بشكل منفصل.",
+      "estimatedTime": "الوقت المُقدَّر",
+      "gasFee": "رسوم Gas لشبكة {chain}",
+      "exchange": "التبادل",
+      "button": "تأكيد",
+      "buttonLimit": "تأكيد الأمر المحدد",
+      "confirming": "جارٍ التأكيد"
+    },
+    "warning": {
+      "highPriceImpact": "أُدرِك أن تأثير السعر يُضاف إلى حد تحمّل الـ Slippage. أقبل تأثير السعر المرتفع على هذا التبادل",
+      "sendExact": "أُدرِك أنه يجب أن أُرسِل المبلغ المحدد بالضبط من محفظة ذاتية الحفظ. أُدرِك أن الإرسال من محفظة عقد ذكي، أو عنوان منصة تداول، أو عنوان مُفوَّض، أو محفظة EIP 7702، سيؤدي إلى",
+      "lossOfFunds": "خسارة الأموال.",
+      "ltcMweb": "أُدرِك أن استخدام عنوان LTC MWEB سيؤدي إلى",
+      "selfCustody": "أُدرِك أنه يجب أن أستخدم محفظة ذاتية الحفظ. أُدرِك أن استخدام محفظة عقد ذكي، أو عنوان منصة تداول، أو عنوان مُفوَّض، أو محفظة EIP 7702، سيؤدي إلى"
+    },
+    "instant": {
+      "sendTitle": "إرسال {asset}",
+      "sendDescription": "أرسِل بالضبط <b>{amount} {ticker}</b> إلى العنوان أدناه من محفظة ذاتية الحفظ.",
+      "qrCodeAlt": "رمز QR",
+      "expiresIn": "ينتهي خلال"
+    },
+    "error": {
+      "memoMissing": "الـ Memo مفقود",
+      "calculateSuggestedAmount": "تعذّر حساب المبلغ المقترح",
+      "preflightRequest": "تعذّر التحقق المسبق من الطلب",
+      "preflightMemoless": "تعذّر التحقق المسبق من الطلب بلا Memo",
+      "minAmountNoWallet": "الحد الأدنى لمبلغ التبادل بدون محفظة متصلة هو {amount} {ticker}",
+      "unknown": "خطأ غير معروف"
+    },
+    "feeDialog": {
+      "title": "الرسوم المضمّنة في السعر",
+      "description": "هذه الرسوم مضمّنة بالفعل في السعر — أنت لا تدفعها بشكل منفصل.",
+      "liquidityFee": "رسوم السيولة",
+      "liquidityFeeInfo": "رسوم لمزوّدي السيولة على المسار",
+      "outboundFee": "رسوم الإرسال الصادر",
+      "outboundFeeInfo": "رسوم إرسال المعاملة الصادرة",
+      "platformFee": "رسوم المنصة",
+      "platformFeeInfo": "رسوم يفرضها {app}"
+    },
+    "expiry": {
+      "title": "إعداد وقت الانتهاء",
+      "days": "أيام",
+      "hours": "ساعات",
+      "minutes": "دقائق",
+      "maxExpiry": "أقصى مدة انتهاء هي {days} يومًا",
+      "apply": "تطبيق"
+    },
+    "limit": {
+      "whenWorth": "عندما تساوي 1 {ticker}",
+      "expiresIn": "ينتهي خلال",
+      "oneHour": "ساعة واحدة",
+      "oneDay": "يوم واحد",
+      "threeDays": "3 أيام",
+      "custom": "مخصص",
+      "market": "السوق"
+    },
+    "limitCancel": {
+      "titleModify": "تعديل الأمر المحدد",
+      "titleCancel": "إلغاء الأمر المحدد",
+      "descriptionModify": "سيؤدي تعديل هذا الأمر المحدد إلى تحديث السعر المستهدف. ستُفرَض رسوم شبكة بسيطة لمعالجة التعديل.",
+      "descriptionCancel": "سيؤدي إلغاء هذا الأمر المحدد إلى إعادة أموالك المودَعة إلى محفظتك. ستُفرَض رسوم شبكة بسيطة لمعالجة الإلغاء.",
+      "fromCurrent": "{percent}% عن السعر الحالي",
+      "youWillGet": "ستحصل على",
+      "button": {
+        "modifying": "جارٍ التعديل...",
+        "cancelling": "جارٍ الإلغاء...",
+        "loading": "جارٍ التحميل...",
+        "modifyOrder": "تعديل الأمر",
+        "cancelOrder": "إلغاء الأمر"
+      },
+      "error": {
+        "loadInboundAddresses": "تعذّر تحميل العناوين الواردة",
+        "cancelFailed": "تعذّر إلغاء التبادل المحدد",
+        "modifyFailed": "تعذّر تعديل التبادل المحدد"
+      },
+      "toast": {
+        "sendToCancel": "أرسِل {amount} {ticker} من المحفظة الأصلية للإلغاء",
+        "sendToModify": "أرسِل {amount} {ticker} من المحفظة الأصلية للتعديل",
+        "cancelSubmitted": "تم إرسال معاملة الإلغاء",
+        "modifySubmitted": "تم إرسال معاملة التعديل"
+      },
+      "warning": {
+        "memolessDeposit": "لـ {mode} هذا الأمر، أرسِل الإيداع من محفظة {chain} الأصلية التي أنشأته",
+        "connectOrMemoless": "اربط محفظة {chain} أو استخدم الإيداع بلا Memo لـ {mode} هذا الأمر",
+        "connect": "اربط محفظة {chain} لـ {mode} هذا الأمر",
+        "switch": "بدّل إلى محفظة {chain} لـ {mode} هذا الأمر",
+        "addressMismatch": "المحفظة المتصلة لا تطابق العنوان الذي أنشأ هذا الأمر",
+        "tradingPaused": "تداول {chain} متوقف مؤقتًا حاليًا"
+      }
+    },
+    "quoteTimer": {
+      "refresh": "تحديث"
+    },
+    "recipient": {
+      "addressPlaceholder": "عنوان {chain}",
+      "paste": "لصق",
+      "invalidAddress": "عنوان {chain} غير صالح",
+      "titleAddresses": "أدخل العناوين",
+      "titleReceiving": "أدخل عنوان الاستلام",
+      "enterRefundAddress": "أدخل عنوان الاسترداد:",
+      "enterReceivingAddress": "أدخل عنوان الاستلام:",
+      "preparingSwap": "جارٍ تحضير التبادل",
+      "next": "التالي"
+    },
+    "selectAsset": {
+      "title": "اختر العملة",
+      "allChains": "كل الشبكات",
+      "search": "بحث",
+      "secured": "مؤمَّن",
+      "showSecuredAssets": "عرض الأصول المؤمَّنة",
+      "trade": "تداول",
+      "currentlyUnavailable": "غير متاح حاليًا",
+      "selected": "محدد"
+    },
+    "settings": {
+      "noProtection": "بلا حماية",
+      "priceProtection": "حماية السعر",
+      "priceProtectionTooltip1": "تأثير السعر هو مقدار تحريك تبادلك لسعر الـ Pool. كلما كبر تبادلك مقارنة بالسيولة المتاحة، زاد التأثير.",
+      "priceProtectionTooltip2": "خلال الفترة بين رؤية عرض السعر وإتمام تبادلك، قد تتغير الأسعار. حد تحمّل الـ Slippage هو أقصى تغيّر في السعر تقبله قبل إلغاء التبادل.",
+      "priceProtectionDescription": "أقصى ما أنت مستعد لإنفاقه على تبادل. يشمل ذلك تأثير سعر تبادلك وأي Slippage في أسعار العملات قبل تنفيذ التبادل.",
+      "twapTitle": "متوسط السعر المرجّح زمنيًا (TWAP)",
+      "twapTooltip1": "تُسمَّى تداولات TWAP على THORChain \"streaming swaps\" في الوثائق والشيفرة.",
+      "twapTooltip2": "لوضع أمر بيع فوري، ما سيؤدي إلى أسوأ تنفيذ للسعر، أدخل 1 لعدد عمليات التبادل الفرعية و1 block للمدة بين عمليات التبادل الفرعية.",
+      "twapDescription": "ينبغي للغالبية العظمى من المستخدمين استخدام الإعدادات الافتراضية. لا ينبغي تغيير هذه الإعدادات إلا للمتداولين الخبراء",
+      "numberOfSubSwaps": "عدد عمليات التبادل الفرعية",
+      "numberOfSubSwapsTooltip": "قسّم أمرك إلى تداولات أصغر تُسمَّى عمليات تبادل فرعية. كلما زاد عددها، تحسّن تنفيذ السعر. عند تعيينها على صفر، سيحسب البروتوكول عدد عمليات التبادل الفرعية لك بحيث يكون لكل منها Slippage مقداره 5 bps. القيمة الافتراضية هي صفر.",
+      "timeBetweenSubSwaps": "المدة بين عمليات التبادل الفرعية",
+      "timeBetweenSubSwapsTooltip": "المدة بين كل عملية تبادل فرعية مقيسة بالـ blocks. كلما زاد عدد الـ blocks بين كل عملية، تحسّن تنفيذ السعر. اختيار صفر blocks سيُجري عدة عمليات تبادل فرعية في كل block لتنفيذ أسرع. القيمة الافتراضية هي صفر blocks.",
+      "blocksCount": "{count, plural, zero {# block} one {# block} two {# blocks} few {# blocks} many {# block} other {# block}}",
+      "rapidSwap": "تبادل سريع",
+      "seconds": "~{count, plural, zero {# ثانية} one {# ثانية} two {# ثانيتان} few {# ثوانٍ} many {# ثانية} other {# ثانية}}",
+      "reset": "إعادة تعيين",
+      "save": "حفظ"
+    }
+  },
+  "send": {
+    "title": "إرسال",
+    "send": "إرسال",
+    "amount": "المبلغ",
+    "clear": "مسح",
+    "balanceLabel": "الرصيد:",
+    "to": "إلى",
+    "addressPlaceholder": "عنوان {chain}",
+    "paste": "لصق",
+    "transactionFee": "رسوم المعاملة",
+    "selectCoin": "اختر العملة",
+    "connectThorchainWallet": "ربط محفظة THORChain",
+    "enterMemo": "أدخل الـ Memo",
+    "enterAmount": "أدخل المبلغ",
+    "toast": {
+      "submitting": "جارٍ إرسال المعاملة...",
+      "submitted": "تم إرسال المعاملة",
+      "submitError": "خطأ في إرسال المعاملة"
+    },
+    "error": {
+      "walletNotConnectedReconnect": "المحفظة غير متصلة. يرجى إعادة الاتصال.",
+      "walletNotConnected": "المحفظة غير متصلة.",
+      "invalidAddress": "عنوان {chain} غير صالح",
+      "noRuneBalance": "لم يُعثَر على رصيد RUNE.",
+      "noTcyBalance": "لم يُعثَر على رصيد TCY."
+    },
+    "beta": {
+      "title": "هذه ميزة تجريبية",
+      "description": "قد توجد أخطاء غير مكتشفة. استخدمها على مسؤوليتك الخاصة!"
+    },
+    "memo": {
+      "title": "Memo",
+      "examplesButton": "أمثلة Memo",
+      "placeholder": "أدخل الـ Memo",
+      "noPayloadInfo": "هذه العملية لا تتطلب أي حمولة. تُطبَّق فقط رسوم الشبكة البالغة 0.02 RUNE."
+    },
+    "bond": {
+      "bondAmount": "مبلغ الـ Bond",
+      "rebondAmount": "مبلغ إعادة الـ Bond",
+      "nodeAddress": "عنوان الـ Node",
+      "newAddress": "العنوان الجديد",
+      "enterNodeAddress": "أدخل عنوان الـ Node",
+      "invalidNodeAddress": "عنوان Node غير صالح",
+      "validatingNode": "جارٍ التحقق من الـ Node...",
+      "nodeNotFound": "لم يُعثَر على الـ Node",
+      "enterNewAddress": "أدخل العنوان الجديد",
+      "invalidNewAddress": "عنوان جديد غير صالح",
+      "bond": "Bond",
+      "unbond": "Unbond",
+      "rebond": "Rebond",
+      "nodeNotFoundOrUnavailable": "لم يُعثَر على الـ Node أو أنه غير متاح.",
+      "tab": {
+        "bond": "Bond",
+        "unbond": "Unbond",
+        "rebond": "Rebond",
+        "track": "تتبّع"
+      },
+      "node": {
+        "version": "الإصدار",
+        "ipAddress": "عنوان IP",
+        "status": "الحالة",
+        "providers": "المزوّدون",
+        "yourShare": "حصتك",
+        "slashPoints": "Slash Points",
+        "operatorFee": "رسوم المشغّل",
+        "information": "معلومات الـ Node",
+        "bond": "Bond",
+        "nextReward": "المكافأة التالية"
+      }
+    },
+    "stake": {
+      "stakeAmount": "مبلغ الـ Stake",
+      "unstakeAmount": "مبلغ إلغاء الـ Stake",
+      "compound": "إعادة الاستثمار",
+      "checking": "جارٍ التحقق...",
+      "claim": "مطالبة",
+      "nothingToClaim": "لا شيء للمطالبة به",
+      "stake": "Stake",
+      "unstake": "Unstake",
+      "stakedLabel": "مُجمَّد:",
+      "wallet": "المحفظة",
+      "availableToClaim": "متاح للمطالبة",
+      "staked": "مُجمَّد",
+      "claimAmount": "مبلغ المطالبة",
+      "compoundInfo": "أعِد استثمار مكافآت TCY المعلّقة من الـ Stake في مركز الـ Stake الخاص بك.",
+      "tab": {
+        "stake": "Stake",
+        "unstake": "Unstake",
+        "compound": "إعادة الاستثمار",
+        "claim": "مطالبة"
+      }
+    },
+    "examples": {
+      "back": "رجوع",
+      "copied": "تم النسخ إلى الحافظة",
+      "copyMemo": "نسخ Memo الخاص بـ {label}",
+      "fillInValues": "املأ القيم ←",
+      "learnMore": "اعرف المزيد",
+      "optional": "اختياري",
+      "optionalPlaceholder": "{hint} (اتركه فارغًا للإغفال)",
+      "preview": "معاينة",
+      "useMemo": "استخدام الـ Memo",
+      "badgeNoPayload": "بلا حمولة",
+      "badgeDust": "dust",
+      "items": {
+        "stakeTcy": "Stake TCY",
+        "unstakeTcy": "Unstake TCY",
+        "claimTcy": "مطالبة TCY",
+        "depositRunepool": "إيداع RUNEPool",
+        "withdrawRunepool": "سحب RUNEPool",
+        "bond": "Bond",
+        "unbond": "Unbond",
+        "rebond": "Rebond",
+        "leave": "مغادرة",
+        "whitelistBondProvider": "إضافة مزوّد Bond إلى القائمة البيضاء",
+        "unwhitelistBondProvider": "إزالة مزوّد Bond من القائمة البيضاء",
+        "addLpSingle": "إضافة LP (أحادي الجانب)",
+        "addLpDual": "إضافة LP (ثنائي الجانب)",
+        "withdrawLp": "سحب LP",
+        "donateToPool": "التبرع للـ Pool"
+      },
+      "placeholder": {
+        "nodeAddress": "عنوان الـ Node",
+        "providerAddress": "عنوان المزوّد",
+        "newAddress": "العنوان الجديد",
+        "thorAddress": "عنوان THORChain",
+        "pairedAddress": "العنوان المقترن",
+        "affiliate": "Affiliate",
+        "pool": "Pool",
+        "asset": "الأصل",
+        "amount": "المبلغ",
+        "basisPoints": "Basis Points",
+        "fee": "الرسوم (Basis Points)",
+        "thorPrefix": "thor1…",
+        "pairedAddressHint": "عنوان على شبكة خارجية",
+        "affiliateHint": "THORName أو عنوان thor1…",
+        "poolHint": "مثال: BTC.BTC أو ETH/ETH",
+        "assetHint": "مثال: BTC.BTC أو RUNE (أحادي الجانب)",
+        "amountHint": "تنسيق 1e8 — مثال: 100000000 = 1 RUNE",
+        "basisPointsHint": "0 – 10000 (10000 = 100%)",
+        "feeHint": "0 – 10000"
+      }
+    }
+  },
+  "wallet": {
+    "chains": "الشبكات",
+    "deselectAll": "إلغاء تحديد الكل",
+    "selectAll": "تحديد الكل",
+    "soon": "قريبًا",
+    "connectNamed": "ربط {name}",
+    "connected": "متصل",
+    "disconnected": "غير متصل",
+    "install": "تثبيت",
+    "connectWallet": "ربط المحفظة",
+    "derivationPath": "مسار الاشتقاق",
+    "selectAccountType": "اختر نوع الحساب",
+    "index": "الفهرس",
+    "ledgerUnlockHint": "تأكد من أن جهاز Ledger مفتوح وأن تطبيق {app} مفتوح قبل الاتصال.",
+    "correspondingApp": "المقابل",
+    "createNewWallet": "إنشاء محفظة جديدة",
+    "createWalletInstructions": "اكتب هذه الكلمات الـ 12 واحفظها بأمان دون اتصال بالإنترنت. تُستخدم عبارة الـ 12 كلمة هذه لاستعادة مفاتيح محفظتك الخاصة.",
+    "copyPhrase": "نسخ العبارة",
+    "confirmSavedPassphrase": "أؤكد أنني حفظت عبارة المرور بأمان لاستعادة حسابي في المستقبل.",
+    "back": "رجوع",
+    "next": "التالي",
+    "setupDecryptionPassword": "إعداد كلمة مرور فك التشفير",
+    "setupPasswordInstructions": "أدخل كلمة مرور قوية لتشفير محفظتك المُنشأة. هكذا ستصل إلى محفظتك.",
+    "enterPassword": "أدخل كلمة المرور",
+    "confirmPassword": "أكّد كلمة المرور",
+    "passwordMustMatch": "يجب أن تتطابق كلمتا المرور",
+    "create": "إنشاء",
+    "error": {
+      "invalidFileType": "نوع ملف غير صالح. يرجى رفع ملف JSON أو TXT."
+    },
+    "importKeystore": "استيراد Keystore",
+    "selectOrDragKeystore": "اختر ملف الـ Keystore أو اسحبه لرفعه",
+    "decryptionPassword": "كلمة مرور فك التشفير",
+    "password": "كلمة المرور",
+    "import": "استيراد",
+    "importSeedPhrase": "استيراد عبارة الاستعادة",
+    "typeSeedPhrase": "اكتب عبارة الاستعادة الخاصة بك",
+    "openKeystore": "فتح الـ Keystore",
+    "noTokensFound": "لم يُعثَر على عملات",
+    "addressCopied": "تم نسخ العنوان",
+    "copyAddress": "نسخ العنوان",
+    "disconnectWallet": "قطع اتصال {name}",
+    "noCoins": "لا توجد عملات",
+    "sidebar": {
+      "title": "المحافظ"
+    },
+    "sortWallets": "ترتيب المحافظ",
+    "sortBy": "ترتيب حسب",
+    "sortByName": "الاسم (أ-ي)",
+    "sortByBalance": "الرصيد (مرتفع ← منخفض)",
+    "externalWalletMode": "وضع المحفظة الخارجية",
+    "externalWalletModeDescription": "أدخل أمرك، وانقر زر التبادل، واتبع التعليمات",
+    "externalWalletAssetUnsupported": "هذا الأصل غير مدعوم في وضع المحفظة الخارجية. اربط محفظة متصفح إذا كنت تريد المتابعة.",
+    "close": "إغلاق",
+    "sendToken": "إرسال {ticker}"
+  },
+  "common": {
+    "close": "إغلاق"
+  },
+  "tx": {
+    "title": "السجل",
+    "today": "اليوم",
+    "yesterday": "أمس",
+    "onlyCreatorModify": "يمكن لمُنشئ التبادل الأصلي فقط إجراء التعديل",
+    "limitPrice": "السعر المحدد",
+    "expiresIn": "ينتهي خلال",
+    "showQr": "عرض QR",
+    "modify": "تعديل",
+    "cancelOrder": "إلغاء الأمر",
+    "sourceAddress": "عنوان المصدر",
+    "destinationAddress": "عنوان الوجهة",
+    "remaining": "متبقٍّ {time}",
+    "status": {
+      "not_started": "الإيداع معلّق",
+      "pending": "معلّق",
+      "swapping": "جارٍ التبادل",
+      "completed": "مكتمل",
+      "failed": "فشل",
+      "expired": "منتهٍ",
+      "refunded": "تمت إعادته",
+      "unknown": "غير معروف"
+    },
+    "leg": {
+      "deposit": "إيداع {ticker}",
+      "send": "إرسال {ticker}",
+      "swap": "تبادل {from} إلى {to}"
+    }
+  }
+}

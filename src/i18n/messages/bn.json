@@ -1,0 +1,465 @@
+{
+  "menu": {
+    "swap": "সোয়াপ",
+    "bond": "Bond",
+    "memo": "Memo",
+    "launchApp": "অ্যাপ চালু করুন",
+    "socials": "সোশ্যাল",
+    "language": "ভাষা",
+    "newsletterPitch": "THORChain সম্পর্কে আপডেট থাকার সেরা উপায়",
+    "emailPlaceholder": "আপনার ইমেল লিখুন",
+    "signUp": "সাইন আপ করুন",
+    "signingUp": "সাইন আপ করা হচ্ছে…",
+    "subscribed": "সাবস্ক্রাইব করার জন্য ধন্যবাদ!",
+    "genericError": "কিছু একটা ভুল হয়েছে"
+  },
+  "header": {
+    "wallet": "ওয়ালেট",
+    "history": "ইতিহাস"
+  },
+  "footer": {
+    "privacyPolicy": "গোপনীয়তা নীতি",
+    "termsOfUse": "ব্যবহারের শর্তাবলি",
+    "riskPolicy": "ঝুঁকি নীতি",
+    "riskTooltip": "যদিও এই ওয়েবসাইটটি যত্নসহকারে তৈরি করা হয়েছে, এতে অনিচ্ছাকৃত বাগ থাকতে পারে যা সাইটের ত্রুটি এমনকি তহবিল হারানোর কারণ হতে পারে। কেবল তখনই এগিয়ে যান যদি আপনি এই ঝুঁকিগুলি বোঝেন এবং মেনে নেন।",
+    "builtBy": "তৈরি করেছে",
+    "reportBug": "একটি বাগ রিপোর্ট করুন / একটি ফিচার অনুরোধ করুন",
+    "getSupport": "Discord-এ সহায়তা নিন",
+    "bug": {
+      "title": "একটি বাগ রিপোর্ট করুন / একটি ফিচার অনুরোধ করুন",
+      "success": "ধন্যবাদ! আপনার রিপোর্ট পাঠানো হয়েছে।",
+      "close": "বন্ধ করুন",
+      "emailLabel": "ইমেল (ঐচ্ছিক)",
+      "descriptionLabel": "বিবরণ",
+      "descriptionPlaceholder": "বাগ / ফিচারের বর্ণনা দিন",
+      "attachmentLabel": "সংযুক্তি (ঐচ্ছিক)",
+      "attachFile": "একটি ফাইল সংযুক্ত করুন",
+      "sending": "পাঠানো হচ্ছে...",
+      "send": "রিপোর্ট পাঠান",
+      "failed": "রিপোর্ট পাঠাতে ব্যর্থ হয়েছে"
+    }
+  },
+  "swap": {
+    "tab": {
+      "swap": "সোয়াপ",
+      "limit": "লিমিট"
+    },
+    "input": {
+      "sell": "বিক্রি",
+      "buy": "ক্রয়",
+      "clear": "মুছুন"
+    },
+    "balance": {
+      "label": "ব্যালেন্স:"
+    },
+    "button": {
+      "limitNotSupported": "লিমিট অর্ডার সমর্থিত নয়",
+      "temporarilyUnavailable": "সাময়িকভাবে উপলব্ধ নয়",
+      "enterAmount": "পরিমাণ লিখুন",
+      "quoting": "কোট নেওয়া হচ্ছে...",
+      "noValidQuotes": "কোনো বৈধ কোট নেই",
+      "enterLimitPrice": "লিমিট মূল্য লিখুন",
+      "enterLimitOrder": "লিমিট অর্ডার লিখুন",
+      "swap": "সোয়াপ করুন",
+      "connectWallet": "{chain} ওয়ালেট সংযুক্ত করুন",
+      "insufficientBalance": "অপর্যাপ্ত ব্যালেন্স",
+      "approve": "{ticker} অনুমোদন করুন"
+    },
+    "toast": {
+      "approvalTransaction": "অনুমোদন লেনদেন",
+      "success": "সফল হয়েছে",
+      "errorSubmitting": "লেনদেন জমা দিতে ত্রুটি হয়েছে",
+      "submittingTransaction": "লেনদেন জমা দেওয়া হচ্ছে",
+      "transactionSubmitted": "লেনদেন জমা দেওয়া হয়েছে"
+    },
+    "confirm": {
+      "titleLimit": "লিমিট অর্ডার নিশ্চিত করুন",
+      "titleSwap": "সোয়াপ নিশ্চিত করুন",
+      "notAvailable": "n/a",
+      "swapArrowLabel": "সোয়াপ",
+      "chainAddress": "{chain} ঠিকানা",
+      "sourceAddressTooltip": "এই সোয়াপের জন্য তহবিল পাঠানো ওয়ালেট ঠিকানা।",
+      "destinationAddressTooltip": "যে ওয়ালেট ঠিকানা সোয়াপ করা তহবিল গ্রহণ করবে।",
+      "refundAddress": "রিফান্ড ঠিকানা",
+      "refundAddressTooltip": "সোয়াপ সম্পূর্ণ করা না গেলে যে ঠিকানায় তহবিল ফেরত দেওয়া হবে।",
+      "limitPrice": "লিমিট মূল্য",
+      "limitPriceTooltip": "যে মূল্যে আপনার লিমিট অর্ডার কার্যকর হবে তা প্রতি ইউনিট হিসেবে। বাজার এই মূল্যে পৌঁছালেই কেবল অর্ডারটি পূরণ হবে।",
+      "targetAmount": "লক্ষ্য পরিমাণ",
+      "targetAmountTooltip": "আপনার নির্ধারিত মূল্যে লিমিট অর্ডার কার্যকর হলে আপনি যে সঠিক পরিমাণ গ্রহণ করবেন।",
+      "minimumPayout": "সর্বনিম্ন পরিশোধ",
+      "minimumPayoutTooltip": "এটি আপনার {protection} মূল্য সুরক্ষা সেটিংয়ে আপনি গ্রহণ করার নিশ্চয়তাপ্রাপ্ত সর্বনিম্ন পরিমাণ। বাজার যদি এতটা পরিবর্তিত হয় যে আপনি কম পাবেন, তবে সোয়াপ বাতিল করে ফেরত দেওয়া হয়।",
+      "notProtected": "সুরক্ষিত নয়",
+      "priceImpact": "মূল্য প্রভাব",
+      "priceImpactTooltip": "আপনার সোয়াপ পুলের মূল্য কতটা পরিবর্তন করে। উপলব্ধ Liquidity-এর তুলনায় আপনার সোয়াপ যত বড়, মূল্য প্রভাব তত বেশি।",
+      "slippageTolerance": "Slippage সহনশীলতা",
+      "slippageToleranceTooltip1": "আপনার {protection} মূল্য সুরক্ষা এবং মূল্য প্রভাবের মধ্যকার পার্থক্য।",
+      "slippageToleranceTooltip2": "একটি কোট দেখা এবং আপনার সোয়াপ সম্পূর্ণ হওয়ার মধ্যবর্তী সময়ে মূল্য পরিবর্তিত হতে পারে। Slippage সহনশীলতা হলো সোয়াপ বাতিল হওয়ার আগে আপনি যে সর্বোচ্চ মূল্য পরিবর্তন মেনে নেবেন।",
+      "includedFees": "অন্তর্ভুক্ত ফি",
+      "includedFeesTooltip": "এই ফিগুলি ইতিমধ্যে রেটে অন্তর্ভুক্ত আছে — আপনি সেগুলি আলাদাভাবে পরিশোধ করেন না।",
+      "estimatedTime": "আনুমানিক সময়",
+      "gasFee": "{chain} Gas ফি",
+      "exchange": "এক্সচেঞ্জ",
+      "button": "নিশ্চিত করুন",
+      "buttonLimit": "লিমিট অর্ডার নিশ্চিত করুন",
+      "confirming": "নিশ্চিত করা হচ্ছে"
+    },
+    "warning": {
+      "highPriceImpact": "আমি বুঝি যে মূল্য প্রভাব Slippage সহনশীলতার অতিরিক্ত। আমি এই সোয়াপে উচ্চ মূল্য প্রভাব মেনে নিচ্ছি",
+      "sendExact": "আমি বুঝি যে আমাকে অবশ্যই একটি সেলফ-কাস্টডি ওয়ালেট থেকে নির্দিষ্ট সঠিক পরিমাণ পাঠাতে হবে। আমি বুঝি যে কোনো স্মার্ট কন্ট্রাক্ট ওয়ালেট, এক্সচেঞ্জ ঠিকানা, ডেলিগেটেড ঠিকানা, অথবা একটি EIP 7702 ওয়ালেট থেকে পাঠালে তার ফলাফল হবে",
+      "lossOfFunds": "তহবিল হারানো।",
+      "ltcMweb": "আমি বুঝি যে একটি LTC MWEB ঠিকানা ব্যবহার করার ফলাফল হবে",
+      "selfCustody": "আমি বুঝি যে আমাকে অবশ্যই একটি সেলফ-কাস্টডি ওয়ালেট ব্যবহার করতে হবে। আমি বুঝি যে কোনো স্মার্ট কন্ট্রাক্ট ওয়ালেট, এক্সচেঞ্জ ঠিকানা, ডেলিগেটেড ঠিকানা, অথবা একটি EIP 7702 ওয়ালেট ব্যবহার করার ফলাফল হবে"
+    },
+    "instant": {
+      "sendTitle": "{asset} পাঠান",
+      "sendDescription": "একটি সেলফ কাস্টডি ওয়ালেট থেকে নিচের ঠিকানায় ঠিক <b>{amount} {ticker}</b> পাঠান।",
+      "qrCodeAlt": "QR কোড",
+      "expiresIn": "মেয়াদ শেষ হবে"
+    },
+    "error": {
+      "memoMissing": "Memo অনুপস্থিত",
+      "calculateSuggestedAmount": "প্রস্তাবিত পরিমাণ গণনা করতে ব্যর্থ হয়েছে",
+      "preflightRequest": "প্রিফ্লাইট অনুরোধ করতে ব্যর্থ হয়েছে",
+      "preflightMemoless": "Memo-বিহীন প্রিফ্লাইট অনুরোধ করতে ব্যর্থ হয়েছে",
+      "minAmountNoWallet": "সংযুক্ত ওয়ালেট ছাড়া সর্বনিম্ন সোয়াপ পরিমাণ হলো {amount} {ticker}",
+      "unknown": "অজানা ত্রুটি"
+    },
+    "feeDialog": {
+      "title": "রেটে অন্তর্ভুক্ত ফি",
+      "description": "এই ফিগুলি ইতিমধ্যে রেটে অন্তর্ভুক্ত আছে — আপনি সেগুলি আলাদাভাবে পরিশোধ করেন না।",
+      "liquidityFee": "Liquidity ফি",
+      "liquidityFeeInfo": "রুটে Liquidity প্রদানকারীদের জন্য ফি",
+      "outboundFee": "আউটবাউন্ড ফি",
+      "outboundFeeInfo": "আউটবাউন্ড লেনদেন পাঠানোর জন্য ফি",
+      "platformFee": "প্ল্যাটফর্ম ফি",
+      "platformFeeInfo": "{app} দ্বারা ধার্যকৃত ফি"
+    },
+    "expiry": {
+      "title": "মেয়াদ শেষের সময় সেট আপ করুন",
+      "days": "দিন",
+      "hours": "ঘণ্টা",
+      "minutes": "মিনিট",
+      "maxExpiry": "সর্বোচ্চ মেয়াদ {days} দিন",
+      "apply": "প্রয়োগ করুন"
+    },
+    "limit": {
+      "whenWorth": "যখন 1 {ticker}-এর মূল্য হবে",
+      "expiresIn": "মেয়াদ শেষ হবে",
+      "oneHour": "1 ঘণ্টা",
+      "oneDay": "1 দিন",
+      "threeDays": "3 দিন",
+      "custom": "কাস্টম",
+      "market": "বাজার"
+    },
+    "limitCancel": {
+      "titleModify": "লিমিট অর্ডার পরিবর্তন করুন",
+      "titleCancel": "লিমিট অর্ডার বাতিল করুন",
+      "descriptionModify": "এই লিমিট অর্ডার পরিবর্তন করলে লক্ষ্য মূল্য আপডেট হবে। পরিবর্তনটি প্রক্রিয়া করতে একটি ছোট নেটওয়ার্ক ফি ধার্য করা হবে।",
+      "descriptionCancel": "এই লিমিট অর্ডার বাতিল করলে আপনার জমাকৃত তহবিল আপনার ওয়ালেটে ফেরত আসবে। বাতিলকরণটি প্রক্রিয়া করতে একটি ছোট নেটওয়ার্ক ফি ধার্য করা হবে।",
+      "fromCurrent": "বর্তমান থেকে {percent}%",
+      "youWillGet": "আপনি পাবেন",
+      "button": {
+        "modifying": "পরিবর্তন করা হচ্ছে...",
+        "cancelling": "বাতিল করা হচ্ছে...",
+        "loading": "লোড হচ্ছে...",
+        "modifyOrder": "অর্ডার পরিবর্তন করুন",
+        "cancelOrder": "অর্ডার বাতিল করুন"
+      },
+      "error": {
+        "loadInboundAddresses": "ইনবাউন্ড ঠিকানা লোড করতে ব্যর্থ হয়েছে",
+        "cancelFailed": "লিমিট সোয়াপ বাতিল করতে ব্যর্থ হয়েছে",
+        "modifyFailed": "লিমিট সোয়াপ পরিবর্তন করতে ব্যর্থ হয়েছে"
+      },
+      "toast": {
+        "sendToCancel": "বাতিল করতে মূল ওয়ালেট থেকে {amount} {ticker} পাঠান",
+        "sendToModify": "পরিবর্তন করতে মূল ওয়ালেট থেকে {amount} {ticker} পাঠান",
+        "cancelSubmitted": "বাতিল লেনদেন জমা দেওয়া হয়েছে",
+        "modifySubmitted": "পরিবর্তন লেনদেন জমা দেওয়া হয়েছে"
+      },
+      "warning": {
+        "memolessDeposit": "এই অর্ডারটি {mode} করতে, যে মূল {chain} ওয়ালেট এটি স্থাপন করেছিল সেখান থেকে ডিপোজিট পাঠান",
+        "connectOrMemoless": "এই অর্ডারটি {mode} করতে একটি {chain} ওয়ালেট সংযুক্ত করুন অথবা Memo-বিহীন ডিপোজিট ব্যবহার করুন",
+        "connect": "এই অর্ডারটি {mode} করতে একটি {chain} ওয়ালেট সংযুক্ত করুন",
+        "switch": "এই অর্ডারটি {mode} করতে একটি {chain} ওয়ালেটে স্যুইচ করুন",
+        "addressMismatch": "সংযুক্ত ওয়ালেট এই অর্ডার স্থাপনকারী ঠিকানার সাথে মেলে না",
+        "tradingPaused": "{chain} ট্রেডিং বর্তমানে স্থগিত রয়েছে"
+      }
+    },
+    "quoteTimer": {
+      "refresh": "রিফ্রেশ করুন"
+    },
+    "recipient": {
+      "addressPlaceholder": "{chain} ঠিকানা",
+      "paste": "পেস্ট করুন",
+      "invalidAddress": "অবৈধ {chain} ঠিকানা",
+      "titleAddresses": "ঠিকানা লিখুন",
+      "titleReceiving": "গ্রহণকারী ঠিকানা লিখুন",
+      "enterRefundAddress": "রিফান্ড ঠিকানা লিখুন:",
+      "enterReceivingAddress": "গ্রহণকারী ঠিকানা লিখুন:",
+      "preparingSwap": "সোয়াপ প্রস্তুত করা হচ্ছে",
+      "next": "পরবর্তী"
+    },
+    "selectAsset": {
+      "title": "কয়েন নির্বাচন করুন",
+      "allChains": "সকল Chain",
+      "search": "অনুসন্ধান করুন",
+      "secured": "Secured",
+      "showSecuredAssets": "Secured অ্যাসেট দেখান",
+      "trade": "Trade",
+      "currentlyUnavailable": "বর্তমানে উপলব্ধ নয়",
+      "selected": "নির্বাচিত"
+    },
+    "settings": {
+      "noProtection": "কোনো সুরক্ষা নেই",
+      "priceProtection": "মূল্য সুরক্ষা",
+      "priceProtectionTooltip1": "মূল্য প্রভাব হলো আপনার সোয়াপ পুলের মূল্য কতটা পরিবর্তন করে। উপলব্ধ Liquidity-এর তুলনায় আপনার সোয়াপ যত বড়, প্রভাব তত বেশি।",
+      "priceProtectionTooltip2": "একটি কোট দেখা এবং আপনার সোয়াপ সম্পূর্ণ হওয়ার মধ্যবর্তী সময়ে মূল্য পরিবর্তিত হতে পারে। Slippage সহনশীলতা হলো সোয়াপ বাতিল হওয়ার আগে আপনি যে সর্বোচ্চ মূল্য পরিবর্তন মেনে নেবেন।",
+      "priceProtectionDescription": "একটি সোয়াপে আপনি সর্বোচ্চ যত ব্যয় করতে ইচ্ছুক। এর মধ্যে আপনার সোয়াপের মূল্য প্রভাব এবং সোয়াপ কার্যকর হওয়ার আগে টোকেন মূল্যের যেকোনো Slippage অন্তর্ভুক্ত।",
+      "twapTitle": "টাইম ওয়েটেড অ্যাভারেজ প্রাইস (TWAP)",
+      "twapTooltip1": "THORChain-এ TWAP ট্রেডকে ডকুমেন্ট ও কোডে \"streaming swaps\" বলা হয়।",
+      "twapTooltip2": "একটি তাৎক্ষণিক বিক্রয় অর্ডার স্থাপন করতে, যার ফলে সবচেয়ে খারাপ মূল্যে কার্যকর হবে, সাব-সোয়াপের সংখ্যার জন্য 1 এবং সাব-সোয়াপের মধ্যবর্তী সময়ের জন্য 1 block লিখুন।",
+      "twapDescription": "অধিকাংশ ব্যবহারকারীর ডিফল্ট সেটিংস ব্যবহার করা উচিত। কেবল দক্ষ ট্রেডারদের এই সেটিংস পরিবর্তন করা উচিত",
+      "numberOfSubSwaps": "সাব-সোয়াপের সংখ্যা",
+      "numberOfSubSwapsTooltip": "আপনার অর্ডারকে সাব-সোয়াপ নামক ছোট ট্রেডে ভাগ করুন। যত বেশি সাব-সোয়াপ, তত ভালো মূল্যে কার্যকর হয়। শূন্যে সেট করা হলে, প্রোটোকল আপনার জন্য সাব-সোয়াপের সংখ্যা গণনা করবে যাতে প্রতিটির Slippage 5 bps হয়। ডিফল্ট মান শূন্য।",
+      "timeBetweenSubSwaps": "সাব-সোয়াপের মধ্যবর্তী সময়",
+      "timeBetweenSubSwapsTooltip": "block-এ পরিমাপকৃত প্রতিটি সাব-সোয়াপের মধ্যবর্তী সময়। প্রতিটি সাব-সোয়াপের মধ্যে যত বেশি block, তত ভালো মূল্যে কার্যকর হয়। শূন্য block বেছে নিলে দ্রুত কার্যকর করার জন্য প্রতি block-এ একাধিক সাব-সোয়াপ হবে। ডিফল্ট মান শূন্য block।",
+      "blocksCount": "{count, plural, one {# block} other {# blocks}}",
+      "rapidSwap": "র‍্যাপিড সোয়াপ",
+      "seconds": "~{count, plural, one {# সেকেন্ড} other {# সেকেন্ড}}",
+      "reset": "রিসেট করুন",
+      "save": "সংরক্ষণ করুন"
+    }
+  },
+  "send": {
+    "title": "পাঠান",
+    "send": "পাঠান",
+    "amount": "পরিমাণ",
+    "clear": "মুছুন",
+    "balanceLabel": "ব্যালেন্স:",
+    "to": "প্রাপক",
+    "addressPlaceholder": "{chain} ঠিকানা",
+    "paste": "পেস্ট করুন",
+    "transactionFee": "লেনদেন ফি",
+    "selectCoin": "কয়েন নির্বাচন করুন",
+    "connectThorchainWallet": "THORChain ওয়ালেট সংযুক্ত করুন",
+    "enterMemo": "Memo লিখুন",
+    "enterAmount": "পরিমাণ লিখুন",
+    "toast": {
+      "submitting": "লেনদেন জমা দেওয়া হচ্ছে...",
+      "submitted": "লেনদেন জমা দেওয়া হয়েছে",
+      "submitError": "লেনদেন জমা দিতে ত্রুটি হয়েছে"
+    },
+    "error": {
+      "walletNotConnectedReconnect": "ওয়ালেট সংযুক্ত নয়। অনুগ্রহ করে পুনরায় সংযুক্ত করুন।",
+      "walletNotConnected": "ওয়ালেট সংযুক্ত নয়।",
+      "invalidAddress": "অবৈধ {chain} ঠিকানা",
+      "noRuneBalance": "কোনো RUNE ব্যালেন্স পাওয়া যায়নি।",
+      "noTcyBalance": "কোনো TCY ব্যালেন্স পাওয়া যায়নি।"
+    },
+    "beta": {
+      "title": "এটি একটি বিটা ফিচার",
+      "description": "অপ্রকাশিত বাগ থাকতে পারে। নিজের ঝুঁকিতে ব্যবহার করুন!"
+    },
+    "memo": {
+      "title": "Memo",
+      "examplesButton": "Memo উদাহরণ",
+      "placeholder": "Memo লিখুন",
+      "noPayloadInfo": "এই অপারেশনে কোনো পেলোড প্রয়োজন নেই। কেবল 0.02 RUNE নেটওয়ার্ক ফি প্রযোজ্য।"
+    },
+    "bond": {
+      "bondAmount": "Bond পরিমাণ",
+      "rebondAmount": "Rebond পরিমাণ",
+      "nodeAddress": "Node ঠিকানা",
+      "newAddress": "নতুন ঠিকানা",
+      "enterNodeAddress": "Node ঠিকানা লিখুন",
+      "invalidNodeAddress": "অবৈধ Node ঠিকানা",
+      "validatingNode": "Node যাচাই করা হচ্ছে...",
+      "nodeNotFound": "Node পাওয়া যায়নি",
+      "enterNewAddress": "নতুন ঠিকানা লিখুন",
+      "invalidNewAddress": "অবৈধ নতুন ঠিকানা",
+      "bond": "Bond",
+      "unbond": "Unbond",
+      "rebond": "Rebond",
+      "nodeNotFoundOrUnavailable": "Node পাওয়া যায়নি বা উপলব্ধ নেই।",
+      "tab": {
+        "bond": "Bond",
+        "unbond": "Unbond",
+        "rebond": "Rebond",
+        "track": "ট্র্যাক"
+      },
+      "node": {
+        "version": "সংস্করণ",
+        "ipAddress": "IP ঠিকানা",
+        "status": "স্ট্যাটাস",
+        "providers": "প্রদানকারী",
+        "yourShare": "আপনার শেয়ার",
+        "slashPoints": "Slash Points",
+        "operatorFee": "অপারেটর ফি",
+        "information": "Node তথ্য",
+        "bond": "Bond",
+        "nextReward": "পরবর্তী পুরস্কার"
+      }
+    },
+    "stake": {
+      "stakeAmount": "Stake পরিমাণ",
+      "unstakeAmount": "Unstake পরিমাণ",
+      "compound": "কম্পাউন্ড",
+      "checking": "যাচাই করা হচ্ছে...",
+      "claim": "ক্লেইম করুন",
+      "nothingToClaim": "ক্লেইম করার কিছু নেই",
+      "stake": "Stake",
+      "unstake": "Unstake",
+      "stakedLabel": "Staked:",
+      "wallet": "ওয়ালেট",
+      "availableToClaim": "ক্লেইম করার জন্য উপলব্ধ",
+      "staked": "Staked",
+      "claimAmount": "ক্লেইম পরিমাণ",
+      "compoundInfo": "আপনার মুলতুবি TCY staking পুরস্কার আপনার stake পজিশনে পুনরায় যুক্ত করুন।",
+      "tab": {
+        "stake": "Stake",
+        "unstake": "Unstake",
+        "compound": "কম্পাউন্ড",
+        "claim": "ক্লেইম"
+      }
+    },
+    "examples": {
+      "back": "পেছনে",
+      "copied": "ক্লিপবোর্ডে কপি হয়েছে",
+      "copyMemo": "{label} memo কপি করুন",
+      "fillInValues": "মান পূরণ করুন →",
+      "learnMore": "আরও জানুন",
+      "optional": "ঐচ্ছিক",
+      "optionalPlaceholder": "{hint} (বাদ দিতে খালি রাখুন)",
+      "preview": "প্রিভিউ",
+      "useMemo": "Memo ব্যবহার করুন",
+      "badgeNoPayload": "কোনো পেলোড নেই",
+      "badgeDust": "dust",
+      "items": {
+        "stakeTcy": "TCY Stake করুন",
+        "unstakeTcy": "TCY Unstake করুন",
+        "claimTcy": "TCY ক্লেইম করুন",
+        "depositRunepool": "RUNEPool ডিপোজিট করুন",
+        "withdrawRunepool": "RUNEPool উত্তোলন করুন",
+        "bond": "Bond",
+        "unbond": "Unbond",
+        "rebond": "Rebond",
+        "leave": "Leave",
+        "whitelistBondProvider": "Bond Provider হোয়াইটলিস্ট করুন",
+        "unwhitelistBondProvider": "Bond Provider আনহোয়াইটলিস্ট করুন",
+        "addLpSingle": "LP যোগ করুন (single-sided)",
+        "addLpDual": "LP যোগ করুন (dual-sided)",
+        "withdrawLp": "LP উত্তোলন করুন",
+        "donateToPool": "Pool-এ দান করুন"
+      },
+      "placeholder": {
+        "nodeAddress": "Node ঠিকানা",
+        "providerAddress": "Provider ঠিকানা",
+        "newAddress": "নতুন ঠিকানা",
+        "thorAddress": "THORChain ঠিকানা",
+        "pairedAddress": "Paired ঠিকানা",
+        "affiliate": "Affiliate",
+        "pool": "Pool",
+        "asset": "অ্যাসেট",
+        "amount": "পরিমাণ",
+        "basisPoints": "Basis Points",
+        "fee": "ফি (basis points)",
+        "thorPrefix": "thor1…",
+        "pairedAddressHint": "বহিরাগত chain ঠিকানা",
+        "affiliateHint": "THORName বা thor1… ঠিকানা",
+        "poolHint": "যেমন BTC.BTC বা ETH/ETH",
+        "assetHint": "যেমন BTC.BTC বা RUNE (single-sided)",
+        "amountHint": "1e8 ফরম্যাট — যেমন 100000000 = 1 RUNE",
+        "basisPointsHint": "0 – 10000 (10000 = 100%)",
+        "feeHint": "0 – 10000"
+      }
+    }
+  },
+  "wallet": {
+    "chains": "Chain",
+    "deselectAll": "সব নির্বাচন বাতিল করুন",
+    "selectAll": "সব নির্বাচন করুন",
+    "soon": "শীঘ্রই",
+    "connectNamed": "{name} সংযুক্ত করুন",
+    "connected": "সংযুক্ত",
+    "disconnected": "সংযোগ বিচ্ছিন্ন",
+    "install": "ইনস্টল করুন",
+    "connectWallet": "ওয়ালেট সংযুক্ত করুন",
+    "derivationPath": "Derivation Path",
+    "selectAccountType": "অ্যাকাউন্টের ধরন নির্বাচন করুন",
+    "index": "ইনডেক্স",
+    "ledgerUnlockHint": "সংযুক্ত করার আগে নিশ্চিত করুন যে আপনার Ledger আনলক করা আছে এবং {app} অ্যাপটি খোলা আছে।",
+    "correspondingApp": "সংশ্লিষ্ট",
+    "createNewWallet": "নতুন ওয়ালেট তৈরি করুন",
+    "createWalletInstructions": "এই 12টি শব্দ লিখে রাখুন এবং নিরাপদে অফলাইনে সংরক্ষণ করুন। এই 12 শব্দের বাক্যাংশটি আপনার ওয়ালেটের প্রাইভেট কী পুনরুদ্ধার করতে ব্যবহৃত হয়।",
+    "copyPhrase": "বাক্যাংশ কপি করুন",
+    "confirmSavedPassphrase": "আমি নিশ্চিত করছি যে ভবিষ্যতে আমার অ্যাকাউন্ট পুনরুদ্ধার করার জন্য আমি পাসফ্রেজটি নিরাপদে সংরক্ষণ করেছি।",
+    "back": "পেছনে",
+    "next": "পরবর্তী",
+    "setupDecryptionPassword": "ডিক্রিপশন পাসওয়ার্ড সেট আপ করুন",
+    "setupPasswordInstructions": "আপনার তৈরি ওয়ালেট এনক্রিপ্ট করতে একটি শক্তিশালী পাসওয়ার্ড লিখুন। এভাবেই আপনি আপনার ওয়ালেটে অ্যাক্সেস করবেন।",
+    "enterPassword": "পাসওয়ার্ড লিখুন",
+    "confirmPassword": "পাসওয়ার্ড নিশ্চিত করুন",
+    "passwordMustMatch": "পাসওয়ার্ড মিলতে হবে",
+    "create": "তৈরি করুন",
+    "error": {
+      "invalidFileType": "অবৈধ ফাইলের ধরন। অনুগ্রহ করে একটি JSON বা TXT ফাইল আপলোড করুন।"
+    },
+    "importKeystore": "Keystore আমদানি করুন",
+    "selectOrDragKeystore": "আপলোড করতে আপনার keystore ফাইল নির্বাচন করুন বা টেনে আনুন",
+    "decryptionPassword": "ডিক্রিপশন পাসওয়ার্ড",
+    "password": "পাসওয়ার্ড",
+    "import": "আমদানি করুন",
+    "importSeedPhrase": "Seed Phrase আমদানি করুন",
+    "typeSeedPhrase": "আপনার seed phrase টাইপ করুন",
+    "openKeystore": "Keystore খুলুন",
+    "noTokensFound": "কোনো টোকেন পাওয়া যায়নি",
+    "addressCopied": "ঠিকানা কপি হয়েছে",
+    "copyAddress": "ঠিকানা কপি করুন",
+    "disconnectWallet": "{name} সংযোগ বিচ্ছিন্ন করুন",
+    "noCoins": "কোনো কয়েন নেই",
+    "sidebar": {
+      "title": "ওয়ালেট"
+    },
+    "sortWallets": "ওয়ালেট সাজান",
+    "sortBy": "সাজানোর ভিত্তি",
+    "sortByName": "নাম (A-Z)",
+    "sortByBalance": "ব্যালেন্স (বেশি → কম)",
+    "externalWalletMode": "বহিরাগত ওয়ালেট মোড",
+    "externalWalletModeDescription": "আপনার অর্ডার লিখুন, সোয়াপ বোতামে ক্লিক করুন এবং নির্দেশাবলি অনুসরণ করুন",
+    "externalWalletAssetUnsupported": "এই অ্যাসেটটি বহিরাগত ওয়ালেট মোডে সমর্থিত নয়। আপনি যদি চালিয়ে যেতে চান তবে একটি ব্রাউজার ওয়ালেট সংযুক্ত করুন।",
+    "close": "বন্ধ করুন",
+    "sendToken": "{ticker} পাঠান"
+  },
+  "common": {
+    "close": "বন্ধ করুন"
+  },
+  "tx": {
+    "title": "ইতিহাস",
+    "today": "আজ",
+    "yesterday": "গতকাল",
+    "onlyCreatorModify": "কেবল মূল সোয়াপ নির্মাতা পরিবর্তন করতে পারবেন",
+    "limitPrice": "লিমিট মূল্য",
+    "expiresIn": "মেয়াদ শেষ হবে",
+    "showQr": "QR দেখান",
+    "modify": "পরিবর্তন করুন",
+    "cancelOrder": "অর্ডার বাতিল করুন",
+    "sourceAddress": "উৎস ঠিকানা",
+    "destinationAddress": "গন্তব্য ঠিকানা",
+    "remaining": "{time} বাকি",
+    "status": {
+      "not_started": "ডিপোজিট মুলতুবি",
+      "pending": "মুলতুবি",
+      "swapping": "সোয়াপ করা হচ্ছে",
+      "completed": "সম্পন্ন হয়েছে",
+      "failed": "ব্যর্থ হয়েছে",
+      "expired": "মেয়াদ শেষ",
+      "refunded": "ফেরত দেওয়া হয়েছে",
+      "unknown": "অজানা"
+    },
+    "leg": {
+      "deposit": "{ticker} ডিপোজিট করুন",
+      "send": "{ticker} পাঠান",
+      "swap": "{from} থেকে {to} সোয়াপ করুন"
+    }
+  }
+}

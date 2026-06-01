@@ -1,0 +1,465 @@
+{
+  "menu": {
+    "swap": "تبادلہ",
+    "bond": "Bond",
+    "memo": "Memo",
+    "launchApp": "ایپ لانچ کریں",
+    "socials": "سوشلز",
+    "language": "زبان",
+    "newsletterPitch": "THORChain سے باخبر رہنے کا بہترین طریقہ",
+    "emailPlaceholder": "اپنا ای میل درج کریں",
+    "signUp": "سائن اپ کریں",
+    "signingUp": "سائن اپ ہو رہا ہے…",
+    "subscribed": "سبسکرائب کرنے کا شکریہ!",
+    "genericError": "کچھ غلط ہو گیا"
+  },
+  "header": {
+    "wallet": "والٹ",
+    "history": "تاریخ"
+  },
+  "footer": {
+    "privacyPolicy": "پرائیویسی پالیسی",
+    "termsOfUse": "شرائطِ استعمال",
+    "riskPolicy": "رسک پالیسی",
+    "riskTooltip": "اگرچہ یہ ویب سائٹ احتیاط سے بنائی گئی ہے، اس میں غیر متوقع بگز ہو سکتے ہیں جو سائٹ کی خرابی اور حتیٰ کہ فنڈز کے نقصان کا باعث بن سکتے ہیں۔ صرف اسی صورت میں آگے بڑھیں جب آپ ان خطرات کو سمجھتے اور قبول کرتے ہوں۔",
+    "builtBy": "بنایا گیا از",
+    "reportBug": "بگ رپورٹ کریں / فیچر کی درخواست کریں",
+    "getSupport": "Discord میں سپورٹ حاصل کریں",
+    "bug": {
+      "title": "بگ رپورٹ کریں / فیچر کی درخواست کریں",
+      "success": "شکریہ! آپ کی رپورٹ بھیج دی گئی ہے۔",
+      "close": "بند کریں",
+      "emailLabel": "ای میل (اختیاری)",
+      "descriptionLabel": "تفصیل",
+      "descriptionPlaceholder": "بگ / فیچر کی تفصیل بیان کریں",
+      "attachmentLabel": "منسلکہ (اختیاری)",
+      "attachFile": "فائل منسلک کریں",
+      "sending": "بھیجا جا رہا ہے...",
+      "send": "رپورٹ بھیجیں",
+      "failed": "رپورٹ بھیجنے میں ناکامی"
+    }
+  },
+  "swap": {
+    "tab": {
+      "swap": "تبادلہ",
+      "limit": "Limit"
+    },
+    "input": {
+      "sell": "فروخت کریں",
+      "buy": "خریدیں",
+      "clear": "صاف کریں"
+    },
+    "balance": {
+      "label": "بیلنس:"
+    },
+    "button": {
+      "limitNotSupported": "Limit Order سپورٹڈ نہیں ہے",
+      "temporarilyUnavailable": "عارضی طور پر دستیاب نہیں",
+      "enterAmount": "رقم درج کریں",
+      "quoting": "قیمت معلوم ہو رہی ہے...",
+      "noValidQuotes": "کوئی درست قیمت نہیں",
+      "enterLimitPrice": "limit قیمت درج کریں",
+      "enterLimitOrder": "Limit Order درج کریں",
+      "swap": "تبادلہ کریں",
+      "connectWallet": "{chain} والٹ کنیکٹ کریں",
+      "insufficientBalance": "ناکافی بیلنس",
+      "approve": "{ticker} منظور کریں"
+    },
+    "toast": {
+      "approvalTransaction": "منظوری کی Tx",
+      "success": "کامیاب",
+      "errorSubmitting": "Tx جمع کرانے میں خرابی",
+      "submittingTransaction": "Tx جمع کرائی جا رہی ہے",
+      "transactionSubmitted": "Tx جمع کرا دی گئی"
+    },
+    "confirm": {
+      "titleLimit": "Limit Order کی تصدیق کریں",
+      "titleSwap": "تبادلے کی تصدیق کریں",
+      "notAvailable": "n/a",
+      "swapArrowLabel": "تبادلہ",
+      "chainAddress": "{chain} پتہ",
+      "sourceAddressTooltip": "وہ والٹ پتہ جو اس تبادلے کے لیے فنڈز بھیج رہا ہے۔",
+      "destinationAddressTooltip": "وہ والٹ پتہ جو تبادلہ شدہ فنڈز وصول کرے گا۔",
+      "refundAddress": "ری فنڈ پتہ",
+      "refundAddressTooltip": "وہ پتہ جہاں تبادلہ مکمل نہ ہونے کی صورت میں فنڈز واپس کیے جائیں گے۔",
+      "limitPrice": "Limit قیمت",
+      "limitPriceTooltip": "وہ فی یونٹ قیمت جس پر آپ کا limit order عمل میں آئے گا۔ آرڈر صرف اسی وقت پورا ہوگا جب مارکیٹ اس قیمت تک پہنچے گی۔",
+      "targetAmount": "ہدف رقم",
+      "targetAmountTooltip": "وہ درست رقم جو آپ کو اس وقت موصول ہوگی جب آپ کا limit order آپ کی مقررہ قیمت پر عمل میں آئے گا۔",
+      "minimumPayout": "کم از کم ادائیگی",
+      "minimumPayoutTooltip": "یہ وہ کم از کم رقم ہے جس کی آپ کو آپ کی {protection} قیمت تحفظ ترتیب پر ضمانت دی جاتی ہے۔ اگر مارکیٹ اتنی تبدیل ہو جائے کہ آپ کو کم موصول ہو، تو تبادلہ منسوخ کر کے رقم واپس کر دی جاتی ہے۔",
+      "notProtected": "محفوظ نہیں",
+      "priceImpact": "قیمت پر اثر",
+      "priceImpactTooltip": "آپ کا تبادلہ Pool کی قیمت کو کتنا تبدیل کرتا ہے۔ دستیاب Liquidity کے مقابلے میں آپ کا تبادلہ جتنا بڑا ہوگا، قیمت پر اثر اتنا ہی زیادہ ہوگا۔",
+      "slippageTolerance": "Slippage برداشت",
+      "slippageToleranceTooltip1": "آپ کے {protection} قیمت تحفظ اور قیمت پر اثر کے درمیان فرق۔",
+      "slippageToleranceTooltip2": "قیمت دیکھنے اور آپ کا تبادلہ مکمل ہونے کے درمیانی وقت میں قیمتیں تبدیل ہو سکتی ہیں۔ Slippage برداشت وہ زیادہ سے زیادہ قیمت تبدیلی ہے جسے آپ تبادلہ منسوخ ہونے سے پہلے قبول کریں گے۔",
+      "includedFees": "شامل فیس",
+      "includedFeesTooltip": "یہ فیس پہلے ہی ریٹ میں شامل ہے — آپ انہیں الگ سے ادا نہیں کرتے۔",
+      "estimatedTime": "تخمینی وقت",
+      "gasFee": "{chain} Gas فیس",
+      "exchange": "ایکسچینج",
+      "button": "تصدیق کریں",
+      "buttonLimit": "Limit Order کی تصدیق کریں",
+      "confirming": "تصدیق ہو رہی ہے"
+    },
+    "warning": {
+      "highPriceImpact": "میں سمجھتا ہوں کہ قیمت پر اثر slippage برداشت کے علاوہ ہے۔ میں اس تبادلے پر زیادہ قیمت اثر قبول کرتا ہوں",
+      "sendExact": "میں سمجھتا ہوں کہ مجھے سیلف کسٹڈی والٹ سے بالکل مخصوص رقم بھیجنی ہوگی۔ میں سمجھتا ہوں کہ اسمارٹ کنٹریکٹ والٹ، ایکسچینج پتہ، تفویض شدہ پتہ، یا EIP 7702 والٹ سے بھیجنے کا نتیجہ ہوگا",
+      "lossOfFunds": "فنڈز کا نقصان۔",
+      "ltcMweb": "میں سمجھتا ہوں کہ LTC MWEB پتہ استعمال کرنے کا نتیجہ ہوگا",
+      "selfCustody": "میں سمجھتا ہوں کہ مجھے سیلف کسٹڈی والٹ استعمال کرنا ہوگا۔ میں سمجھتا ہوں کہ اسمارٹ کنٹریکٹ والٹ، ایکسچینج پتہ، تفویض شدہ پتہ، یا EIP 7702 والٹ استعمال کرنے کا نتیجہ ہوگا"
+    },
+    "instant": {
+      "sendTitle": "{asset} بھیجیں",
+      "sendDescription": "سیلف کسٹڈی والٹ سے نیچے دیے گئے پتے پر بالکل <b>{amount} {ticker}</b> بھیجیں۔",
+      "qrCodeAlt": "QR Code",
+      "expiresIn": "اس میں ختم ہوگا"
+    },
+    "error": {
+      "memoMissing": "Memo موجود نہیں ہے",
+      "calculateSuggestedAmount": "تجویز کردہ رقم کا حساب لگانے میں ناکامی",
+      "preflightRequest": "preflight درخواست میں ناکامی",
+      "preflightMemoless": "memoless preflight درخواست میں ناکامی",
+      "minAmountNoWallet": "کنیکٹ شدہ والٹ کے بغیر کم از کم تبادلہ رقم {amount} {ticker} ہے",
+      "unknown": "نامعلوم خرابی"
+    },
+    "feeDialog": {
+      "title": "ریٹ میں شامل فیس",
+      "description": "یہ فیس پہلے ہی ریٹ میں شامل ہے — آپ انہیں الگ سے ادا نہیں کرتے۔",
+      "liquidityFee": "Liquidity فیس",
+      "liquidityFeeInfo": "روٹ پر Liquidity فراہم کنندگان کے لیے فیس",
+      "outboundFee": "Outbound فیس",
+      "outboundFeeInfo": "outbound Tx بھیجنے کی فیس",
+      "platformFee": "پلیٹ فارم فیس",
+      "platformFeeInfo": "{app} کی جانب سے وصول کی گئی فیس"
+    },
+    "expiry": {
+      "title": "میعاد ختم ہونے کا وقت ترتیب دیں",
+      "days": "دن",
+      "hours": "گھنٹے",
+      "minutes": "منٹ",
+      "maxExpiry": "زیادہ سے زیادہ میعاد {days} دن ہے",
+      "apply": "لاگو کریں"
+    },
+    "limit": {
+      "whenWorth": "جب 1 {ticker} کی قیمت ہو",
+      "expiresIn": "اس میں ختم ہوگا",
+      "oneHour": "1 گھنٹہ",
+      "oneDay": "1 دن",
+      "threeDays": "3 دن",
+      "custom": "حسبِ ضرورت",
+      "market": "مارکیٹ"
+    },
+    "limitCancel": {
+      "titleModify": "Limit Order میں ترمیم کریں",
+      "titleCancel": "Limit Order منسوخ کریں",
+      "descriptionModify": "اس limit order میں ترمیم کرنے سے ہدف قیمت اپ ڈیٹ ہو جائے گی۔ ترمیم کو پروسیس کرنے کے لیے ایک معمولی نیٹ ورک فیس وصول کی جائے گی۔",
+      "descriptionCancel": "اس limit order کو منسوخ کرنے سے آپ کے جمع کردہ فنڈز آپ کے والٹ میں واپس آ جائیں گے۔ منسوخی کو پروسیس کرنے کے لیے ایک معمولی نیٹ ورک فیس وصول کی جائے گی۔",
+      "fromCurrent": "موجودہ سے {percent}%",
+      "youWillGet": "آپ کو ملے گا",
+      "button": {
+        "modifying": "ترمیم ہو رہی ہے...",
+        "cancelling": "منسوخ ہو رہا ہے...",
+        "loading": "لوڈ ہو رہا ہے...",
+        "modifyOrder": "آرڈر میں ترمیم کریں",
+        "cancelOrder": "آرڈر منسوخ کریں"
+      },
+      "error": {
+        "loadInboundAddresses": "inbound پتے لوڈ کرنے میں ناکامی",
+        "cancelFailed": "limit تبادلہ منسوخ کرنے میں ناکامی",
+        "modifyFailed": "limit تبادلے میں ترمیم کرنے میں ناکامی"
+      },
+      "toast": {
+        "sendToCancel": "منسوخ کرنے کے لیے اصل والٹ سے {amount} {ticker} بھیجیں",
+        "sendToModify": "ترمیم کرنے کے لیے اصل والٹ سے {amount} {ticker} بھیجیں",
+        "cancelSubmitted": "منسوخی کی Tx جمع کرا دی گئی",
+        "modifySubmitted": "ترمیم کی Tx جمع کرا دی گئی"
+      },
+      "warning": {
+        "memolessDeposit": "اس آرڈر کو {mode} کرنے کے لیے، وہی اصل {chain} والٹ سے ڈپازٹ بھیجیں جس نے یہ رکھا تھا",
+        "connectOrMemoless": "اس آرڈر کو {mode} کرنے کے لیے ایک {chain} والٹ کنیکٹ کریں یا memoless ڈپازٹ استعمال کریں",
+        "connect": "اس آرڈر کو {mode} کرنے کے لیے ایک {chain} والٹ کنیکٹ کریں",
+        "switch": "اس آرڈر کو {mode} کرنے کے لیے ایک {chain} والٹ پر سوئچ کریں",
+        "addressMismatch": "کنیکٹ شدہ والٹ اس پتے سے مطابقت نہیں رکھتا جس نے یہ آرڈر رکھا تھا",
+        "tradingPaused": "{chain} ٹریڈنگ اس وقت روکی ہوئی ہے"
+      }
+    },
+    "quoteTimer": {
+      "refresh": "ریفریش کریں"
+    },
+    "recipient": {
+      "addressPlaceholder": "{chain} پتہ",
+      "paste": "پیسٹ کریں",
+      "invalidAddress": "غلط {chain} پتہ",
+      "titleAddresses": "پتے درج کریں",
+      "titleReceiving": "وصول کنندہ پتہ درج کریں",
+      "enterRefundAddress": "ری فنڈ پتہ درج کریں:",
+      "enterReceivingAddress": "وصول کنندہ پتہ درج کریں:",
+      "preparingSwap": "تبادلہ تیار ہو رہا ہے",
+      "next": "اگلا"
+    },
+    "selectAsset": {
+      "title": "کوائن منتخب کریں",
+      "allChains": "تمام چینز",
+      "search": "تلاش کریں",
+      "secured": "Secured",
+      "showSecuredAssets": "Secured اثاثے دکھائیں",
+      "trade": "Trade",
+      "currentlyUnavailable": "اس وقت دستیاب نہیں",
+      "selected": "منتخب شدہ"
+    },
+    "settings": {
+      "noProtection": "کوئی تحفظ نہیں",
+      "priceProtection": "قیمت تحفظ",
+      "priceProtectionTooltip1": "قیمت پر اثر یہ ہے کہ آپ کا تبادلہ Pool کی قیمت کو کتنا تبدیل کرتا ہے۔ دستیاب Liquidity کے مقابلے میں آپ کا تبادلہ جتنا بڑا ہوگا، اثر اتنا ہی زیادہ ہوگا۔",
+      "priceProtectionTooltip2": "قیمت دیکھنے اور آپ کا تبادلہ مکمل ہونے کے درمیانی وقت میں قیمتیں تبدیل ہو سکتی ہیں۔ Slippage برداشت وہ زیادہ سے زیادہ قیمت تبدیلی ہے جسے آپ تبادلہ منسوخ ہونے سے پہلے قبول کریں گے۔",
+      "priceProtectionDescription": "وہ زیادہ سے زیادہ رقم جو آپ تبادلے پر خرچ کرنے کے لیے تیار ہیں۔ اس میں آپ کے تبادلے کا قیمت پر اثر اور تبادلہ عمل میں آنے سے پہلے ٹوکن کی قیمتوں پر کوئی بھی slippage شامل ہے۔",
+      "twapTitle": "Time Weighted Average Price (TWAP)",
+      "twapTooltip1": "THORChain پر TWAP ٹریڈز کو دستاویزات اور کوڈ میں \"streaming swaps\" کہا جاتا ہے۔",
+      "twapTooltip2": "فوری فروخت آرڈر دینے کے لیے، جس کا نتیجہ بدترین قیمت پر عمل درآمد ہوگا، sub-swaps کی تعداد کے لیے 1 اور sub-swaps کے درمیانی وقت کے لیے 1 block درج کریں۔",
+      "twapDescription": "صارفین کی بڑی اکثریت کو ڈیفالٹ ترتیبات استعمال کرنی چاہئیں۔ صرف ماہر ٹریڈرز کو ہی یہ ترتیبات تبدیل کرنی چاہئیں",
+      "numberOfSubSwaps": "sub-swaps کی تعداد",
+      "numberOfSubSwapsTooltip": "اپنے آرڈر کو sub-swaps نامی چھوٹے ٹریڈز میں تقسیم کریں۔ جتنے زیادہ sub-swaps، اتنا بہتر قیمت پر عمل درآمد۔ جب صفر پر سیٹ کیا جائے، تو پروٹوکول آپ کے لیے sub-swaps کی تعداد کا حساب لگائے گا تاکہ ہر ایک میں 5 bps کا slippage ہو۔ ڈیفالٹ ویلیو صفر ہے۔",
+      "timeBetweenSubSwaps": "sub-swaps کے درمیان وقت",
+      "timeBetweenSubSwapsTooltip": "ہر sub-swap کے درمیان وقت جو blocks میں ناپا جاتا ہے۔ ہر sub-swap کے درمیان جتنے زیادہ blocks، اتنا بہتر قیمت پر عمل درآمد۔ صفر blocks منتخب کرنے سے تیز تر عمل درآمد کے لیے ہر block میں متعدد sub-swaps ہوں گے۔ ڈیفالٹ ویلیو صفر blocks ہے۔",
+      "blocksCount": "{count, plural, one {# block} other {# blocks}}",
+      "rapidSwap": "Rapid Swap",
+      "seconds": "~{count, plural, one {# سیکنڈ} other {# سیکنڈ}}",
+      "reset": "ری سیٹ کریں",
+      "save": "محفوظ کریں"
+    }
+  },
+  "send": {
+    "title": "بھیجیں",
+    "send": "بھیجیں",
+    "amount": "رقم",
+    "clear": "صاف کریں",
+    "balanceLabel": "بیلنس:",
+    "to": "بنام",
+    "addressPlaceholder": "{chain} پتہ",
+    "paste": "پیسٹ کریں",
+    "transactionFee": "Tx فیس",
+    "selectCoin": "کوائن منتخب کریں",
+    "connectThorchainWallet": "THORChain والٹ کنیکٹ کریں",
+    "enterMemo": "memo درج کریں",
+    "enterAmount": "رقم درج کریں",
+    "toast": {
+      "submitting": "Tx جمع کرائی جا رہی ہے...",
+      "submitted": "Tx جمع کرا دی گئی",
+      "submitError": "Tx جمع کرانے میں خرابی"
+    },
+    "error": {
+      "walletNotConnectedReconnect": "والٹ کنیکٹ نہیں ہے۔ براہِ کرم دوبارہ کنیکٹ کریں۔",
+      "walletNotConnected": "والٹ کنیکٹ نہیں ہے۔",
+      "invalidAddress": "غلط {chain} پتہ",
+      "noRuneBalance": "کوئی RUNE بیلنس نہیں ملا۔",
+      "noTcyBalance": "کوئی TCY بیلنس نہیں ملا۔"
+    },
+    "beta": {
+      "title": "یہ ایک beta فیچر ہے",
+      "description": "اس میں نامعلوم بگز ہو سکتے ہیں۔ اپنے خطرے پر استعمال کریں!"
+    },
+    "memo": {
+      "title": "Memo",
+      "examplesButton": "Memo کی مثالیں",
+      "placeholder": "memo درج کریں",
+      "noPayloadInfo": "اس کارروائی کے لیے کوئی payload درکار نہیں۔ صرف 0.02 RUNE نیٹ ورک فیس لاگو ہوتی ہے۔"
+    },
+    "bond": {
+      "bondAmount": "Bond رقم",
+      "rebondAmount": "Rebond رقم",
+      "nodeAddress": "Node پتہ",
+      "newAddress": "نیا پتہ",
+      "enterNodeAddress": "Node پتہ درج کریں",
+      "invalidNodeAddress": "غلط Node پتہ",
+      "validatingNode": "node کی توثیق ہو رہی ہے...",
+      "nodeNotFound": "Node نہیں ملا",
+      "enterNewAddress": "نیا پتہ درج کریں",
+      "invalidNewAddress": "غلط نیا پتہ",
+      "bond": "Bond",
+      "unbond": "Unbond",
+      "rebond": "Rebond",
+      "nodeNotFoundOrUnavailable": "Node نہیں ملا یا دستیاب نہیں۔",
+      "tab": {
+        "bond": "Bond",
+        "unbond": "Unbond",
+        "rebond": "Rebond",
+        "track": "ٹریک کریں"
+      },
+      "node": {
+        "version": "ورژن",
+        "ipAddress": "IP پتہ",
+        "status": "حیثیت",
+        "providers": "فراہم کنندگان",
+        "yourShare": "آپ کا حصہ",
+        "slashPoints": "Slash Points",
+        "operatorFee": "آپریٹر فیس",
+        "information": "Node معلومات",
+        "bond": "Bond",
+        "nextReward": "اگلا انعام"
+      }
+    },
+    "stake": {
+      "stakeAmount": "Stake رقم",
+      "unstakeAmount": "Unstake رقم",
+      "compound": "Compound",
+      "checking": "جانچا جا رہا ہے...",
+      "claim": "Claim کریں",
+      "nothingToClaim": "claim کرنے کے لیے کچھ نہیں",
+      "stake": "Stake کریں",
+      "unstake": "Unstake کریں",
+      "stakedLabel": "Staked:",
+      "wallet": "والٹ",
+      "availableToClaim": "claim کے لیے دستیاب",
+      "staked": "Staked",
+      "claimAmount": "Claim رقم",
+      "compoundInfo": "اپنے زیرِ التواء TCY staking انعامات کو واپس اپنی stake پوزیشن میں compound کریں۔",
+      "tab": {
+        "stake": "Stake",
+        "unstake": "Unstake",
+        "compound": "Compound",
+        "claim": "Claim"
+      }
+    },
+    "examples": {
+      "back": "واپس",
+      "copied": "کلپ بورڈ پر کاپی ہو گیا",
+      "copyMemo": "{label} memo کاپی کریں",
+      "fillInValues": "ویلیوز بھریں ←",
+      "learnMore": "مزید جانیں",
+      "optional": "اختیاری",
+      "optionalPlaceholder": "{hint} (چھوڑنے کے لیے خالی رکھیں)",
+      "preview": "پیش منظر",
+      "useMemo": "Memo استعمال کریں",
+      "badgeNoPayload": "کوئی payload نہیں",
+      "badgeDust": "dust",
+      "items": {
+        "stakeTcy": "TCY کو Stake کریں",
+        "unstakeTcy": "TCY کو Unstake کریں",
+        "claimTcy": "TCY کو Claim کریں",
+        "depositRunepool": "RUNEPool ڈپازٹ کریں",
+        "withdrawRunepool": "RUNEPool واپس نکالیں",
+        "bond": "Bond",
+        "unbond": "Unbond",
+        "rebond": "Rebond",
+        "leave": "چھوڑیں",
+        "whitelistBondProvider": "Bond فراہم کنندہ کو whitelist کریں",
+        "unwhitelistBondProvider": "Bond فراہم کنندہ کو unwhitelist کریں",
+        "addLpSingle": "LP شامل کریں (single-sided)",
+        "addLpDual": "LP شامل کریں (dual-sided)",
+        "withdrawLp": "LP واپس نکالیں",
+        "donateToPool": "Pool میں عطیہ کریں"
+      },
+      "placeholder": {
+        "nodeAddress": "Node پتہ",
+        "providerAddress": "فراہم کنندہ پتہ",
+        "newAddress": "نیا پتہ",
+        "thorAddress": "THORChain پتہ",
+        "pairedAddress": "جوڑا شدہ پتہ",
+        "affiliate": "Affiliate",
+        "pool": "Pool",
+        "asset": "اثاثہ",
+        "amount": "رقم",
+        "basisPoints": "Basis Points",
+        "fee": "فیس (basis points)",
+        "thorPrefix": "thor1…",
+        "pairedAddressHint": "بیرونی چین پتہ",
+        "affiliateHint": "THORName یا thor1… پتہ",
+        "poolHint": "مثلاً BTC.BTC یا ETH/ETH",
+        "assetHint": "مثلاً BTC.BTC یا RUNE (single-sided)",
+        "amountHint": "1e8 فارمیٹ — مثلاً 100000000 = 1 RUNE",
+        "basisPointsHint": "0 – 10000 (10000 = 100%)",
+        "feeHint": "0 – 10000"
+      }
+    }
+  },
+  "wallet": {
+    "chains": "چینز",
+    "deselectAll": "سب کو غیر منتخب کریں",
+    "selectAll": "سب کو منتخب کریں",
+    "soon": "جلد",
+    "connectNamed": "{name} کنیکٹ کریں",
+    "connected": "کنیکٹڈ",
+    "disconnected": "ڈسکنیکٹڈ",
+    "install": "انسٹال کریں",
+    "connectWallet": "والٹ کنیکٹ کریں",
+    "derivationPath": "Derivation Path",
+    "selectAccountType": "اکاؤنٹ کی قسم منتخب کریں",
+    "index": "انڈیکس",
+    "ledgerUnlockHint": "کنیکٹ کرنے سے پہلے یقینی بنائیں کہ آپ کا Ledger ان لاک ہے اور {app} ایپ کھلی ہوئی ہے۔",
+    "correspondingApp": "متعلقہ",
+    "createNewWallet": "نیا والٹ بنائیں",
+    "createWalletInstructions": "ان 12 الفاظ کو لکھ لیں اور آف لائن محفوظ طریقے سے رکھیں۔ یہ 12 الفاظ کا جملہ آپ کے والٹ کی نجی کلیدوں کو بحال کرنے کے لیے استعمال ہوتا ہے۔",
+    "copyPhrase": "جملہ کاپی کریں",
+    "confirmSavedPassphrase": "میں تصدیق کرتا ہوں کہ میں نے مستقبل میں اپنا اکاؤنٹ بحال کرنے کے لیے passphrase کو محفوظ طریقے سے محفوظ کر لیا ہے۔",
+    "back": "واپس",
+    "next": "اگلا",
+    "setupDecryptionPassword": "ڈیکرپشن پاس ورڈ سیٹ اپ کریں",
+    "setupPasswordInstructions": "اپنے بنائے گئے والٹ کو خفیہ کرنے کے لیے ایک مضبوط پاس ورڈ درج کریں۔ اسی طرح آپ اپنے والٹ تک رسائی حاصل کریں گے۔",
+    "enterPassword": "پاس ورڈ درج کریں",
+    "confirmPassword": "پاس ورڈ کی تصدیق کریں",
+    "passwordMustMatch": "پاس ورڈ مطابقت رکھتا ہونا چاہیے",
+    "create": "بنائیں",
+    "error": {
+      "invalidFileType": "غلط فائل کی قسم۔ براہِ کرم JSON یا TXT فائل اپ لوڈ کریں۔"
+    },
+    "importKeystore": "Keystore امپورٹ کریں",
+    "selectOrDragKeystore": "اپ لوڈ کرنے کے لیے اپنی keystore فائل منتخب کریں یا گھسیٹیں",
+    "decryptionPassword": "ڈیکرپشن پاس ورڈ",
+    "password": "پاس ورڈ",
+    "import": "امپورٹ کریں",
+    "importSeedPhrase": "Seed Phrase امپورٹ کریں",
+    "typeSeedPhrase": "اپنا seed phrase ٹائپ کریں",
+    "openKeystore": "Keystore کھولیں",
+    "noTokensFound": "کوئی ٹوکن نہیں ملا",
+    "addressCopied": "پتہ کاپی ہو گیا",
+    "copyAddress": "پتہ کاپی کریں",
+    "disconnectWallet": "{name} ڈسکنیکٹ کریں",
+    "noCoins": "کوئی کوائن نہیں",
+    "sidebar": {
+      "title": "والٹس"
+    },
+    "sortWallets": "والٹس ترتیب دیں",
+    "sortBy": "ترتیب بلحاظ",
+    "sortByName": "نام (A-Z)",
+    "sortByBalance": "بیلنس (زیادہ → کم)",
+    "externalWalletMode": "External Wallet موڈ",
+    "externalWalletModeDescription": "اپنا آرڈر درج کریں، Swap بٹن پر کلک کریں، اور ہدایات پر عمل کریں",
+    "externalWalletAssetUnsupported": "یہ اثاثہ External Wallet موڈ میں سپورٹڈ نہیں ہے۔ اگر آپ جاری رکھنا چاہتے ہیں تو براؤزر والٹ کنیکٹ کریں۔",
+    "close": "بند کریں",
+    "sendToken": "{ticker} بھیجیں"
+  },
+  "common": {
+    "close": "بند کریں"
+  },
+  "tx": {
+    "title": "تاریخ",
+    "today": "آج",
+    "yesterday": "کل",
+    "onlyCreatorModify": "صرف اصل تبادلہ بنانے والا ہی ترمیم کر سکتا ہے",
+    "limitPrice": "Limit قیمت",
+    "expiresIn": "اس میں ختم ہوگا",
+    "showQr": "QR دکھائیں",
+    "modify": "ترمیم کریں",
+    "cancelOrder": "آرڈر منسوخ کریں",
+    "sourceAddress": "ماخذ پتہ",
+    "destinationAddress": "منزل پتہ",
+    "remaining": "{time} باقی",
+    "status": {
+      "not_started": "ڈپازٹ زیرِ التواء",
+      "pending": "زیرِ التواء",
+      "swapping": "تبادلہ ہو رہا ہے",
+      "completed": "مکمل",
+      "failed": "ناکام",
+      "expired": "میعاد ختم",
+      "refunded": "رقم واپس",
+      "unknown": "نامعلوم"
+    },
+    "leg": {
+      "deposit": "{ticker} ڈپازٹ کریں",
+      "send": "{ticker} بھیجیں",
+      "swap": "{from} کا {to} میں تبادلہ کریں"
+    }
+  }
+}

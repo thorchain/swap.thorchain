@@ -1,0 +1,465 @@
+{
+  "menu": {
+    "swap": "تبادلہ",
+    "bond": "Bond",
+    "memo": "Memo",
+    "launchApp": "ایپ کھولو",
+    "socials": "سوشل میڈیا",
+    "language": "زبان",
+    "newsletterPitch": "THORChain دی تازہ خبراں نال جُڑے رہن دا ودھیا طریقہ",
+    "emailPlaceholder": "اپݨی ای میل پاؤ",
+    "signUp": "سائن اپ کرو",
+    "signingUp": "سائن اپ پیا ہوندا اے…",
+    "subscribed": "سبسکرائب کرݨ تے مہربانی!",
+    "genericError": "کجھ غلط ہو گیا"
+  },
+  "header": {
+    "wallet": "والٹ",
+    "history": "تاریخ"
+  },
+  "footer": {
+    "privacyPolicy": "پرائیویسی پالیسی",
+    "termsOfUse": "ورتݨ دیاں شرطاں",
+    "riskPolicy": "رسک پالیسی",
+    "riskTooltip": "ایہ ویب سائٹ بڑے دھیان نال بݨائی گئی اے پر اوہدے وچ اݨ ڈِٹھے بگ ہو سکدے نیں جیہڑے سائٹ نوں خراب کر سکدے نیں تے رقم دے نقصان دا سبب وی بݨ سکدے نیں۔ صرف اوسے ویلے اگے ودھو جدوں تُسی ایہناں خطریاں نوں سمجھدے تے قبول کردے او۔",
+    "builtBy": "بݨاؤݨ والے",
+    "reportBug": "بگ دی رپورٹ دیو / فیچر دی درخواست کرو",
+    "getSupport": "Discord تے سپورٹ لوو",
+    "bug": {
+      "title": "بگ دی رپورٹ دیو / فیچر دی درخواست کرو",
+      "success": "مہربانی! تُہاݙی رپورٹ بھیج دِتی گئی اے۔",
+      "close": "بند کرو",
+      "emailLabel": "ای میل (اختیاری)",
+      "descriptionLabel": "تفصیل",
+      "descriptionPlaceholder": "بگ / فیچر دی تفصیل لکھو",
+      "attachmentLabel": "اٹیچمنٹ (اختیاری)",
+      "attachFile": "فائل لاؤ",
+      "sending": "بھیجیا پیا ہوندا اے...",
+      "send": "رپورٹ بھیجو",
+      "failed": "رپورٹ بھیجݨ وچ ناکامی"
+    }
+  },
+  "swap": {
+    "tab": {
+      "swap": "تبادلہ",
+      "limit": "Limit"
+    },
+    "input": {
+      "sell": "ویچو",
+      "buy": "خریدو",
+      "clear": "صاف کرو"
+    },
+    "balance": {
+      "label": "بیلنس:"
+    },
+    "button": {
+      "limitNotSupported": "Limit آرڈر سپورٹ نئیں اے",
+      "temporarilyUnavailable": "فی الحال دستیاب نئیں",
+      "enterAmount": "رقم پاؤ",
+      "quoting": "قیمت لئی پئی جاندی اے...",
+      "noValidQuotes": "کوئی درست قیمت نئیں",
+      "enterLimitPrice": "limit قیمت پاؤ",
+      "enterLimitOrder": "Limit آرڈر پاؤ",
+      "swap": "تبادلہ کرو",
+      "connectWallet": "{chain} والٹ کنیکٹ کرو",
+      "insufficientBalance": "بیلنس کافی نئیں",
+      "approve": "{ticker} منظور کرو"
+    },
+    "toast": {
+      "approvalTransaction": "منظوری دی Tx",
+      "success": "کامیابی",
+      "errorSubmitting": "Tx جمع کرݨ وچ خرابی",
+      "submittingTransaction": "Tx جمع کیتی پئی جاندی اے",
+      "transactionSubmitted": "Tx جمع ہو گئی"
+    },
+    "confirm": {
+      "titleLimit": "Limit آرڈر دی تصدیق کرو",
+      "titleSwap": "تبادلے دی تصدیق کرو",
+      "notAvailable": "n/a",
+      "swapArrowLabel": "تبادلہ",
+      "chainAddress": "{chain} پتہ",
+      "sourceAddressTooltip": "اوہ والٹ پتہ جیہڑا ایس تبادلے لئی رقم بھیجدا اے۔",
+      "destinationAddressTooltip": "اوہ والٹ پتہ جیہڑا تبادلہ ہوئی رقم وصول کرے گا۔",
+      "refundAddress": "واپسی والا پتہ",
+      "refundAddressTooltip": "اوہ پتہ جِتھے تبادلہ مکمل نہ ہوݨ دی صورت وچ رقم واپس کیتی جائے گی۔",
+      "limitPrice": "Limit قیمت",
+      "limitPriceTooltip": "اوہ فی یونٹ قیمت جِتھے تُہاݙا limit آرڈر چلے گا۔ آرڈر صرف اوسے ویلے پورا ہوے گا جدوں مارکیٹ ایس قیمت تے پہنچے گی۔",
+      "targetAmount": "ٹارگٹ رقم",
+      "targetAmountTooltip": "اوہ ٹھیک رقم جیہڑی تُسی اپݨی مقرر قیمت تے limit آرڈر چلݨ ویلے وصول کرو گے۔",
+      "minimumPayout": "کم از کم ادائیگی",
+      "minimumPayoutTooltip": "ایہ اوہ کم از کم رقم اے جیہڑی تُہانوں تُہاݙی {protection} قیمت تحفظ سیٹنگ تے وصول ہوݨ دی ضمانت اے۔ جے مارکیٹ اینی بدل جائے کہ تُہانوں گھٹ ملے، تے تبادلہ منسوخ کر کے رقم واپس کر دِتی جاندی اے۔",
+      "notProtected": "محفوظ نئیں",
+      "priceImpact": "قیمت تے اثر",
+      "priceImpactTooltip": "تُہاݙا تبادلہ پول دی قیمت نوں کِنا ہلاؤندا اے۔ دستیاب liquidity دے مقابلے تُہاݙا تبادلہ جِنا وݙا ہوے گا، قیمت تے اثر اوݨا ای ودھ ہوے گا۔",
+      "slippageTolerance": "Slippage برداشت",
+      "slippageToleranceTooltip1": "تُہاݙی {protection} قیمت تحفظ تے قیمت تے اثر دے وچکار فرق۔",
+      "slippageToleranceTooltip2": "قیمت ویکھݨ تے تبادلہ مکمل ہوݨ دے وچکار ویلے دوران قیمتاں بدل سکدیاں نیں۔ Slippage برداشت اوہ زیادہ سے زیادہ قیمت بدلاؤ اے جیہڑا تُسی تبادلہ منسوخ ہوݨ توں پہلاں قبول کرو گے۔",
+      "includedFees": "شامل فیساں",
+      "includedFeesTooltip": "ایہ فیساں ریٹ وچ پہلاں ای شامل نیں — تُسی ایہناں نوں ولکھ نئیں دیندے۔",
+      "estimatedTime": "اندازاً ویلہ",
+      "gasFee": "{chain} Gas فیس",
+      "exchange": "ایکسچینج",
+      "button": "تصدیق کرو",
+      "buttonLimit": "Limit آرڈر دی تصدیق کرو",
+      "confirming": "تصدیق پئی ہوندی اے"
+    },
+    "warning": {
+      "highPriceImpact": "میں سمجھدا واں کہ قیمت تے اثر slippage برداشت توں علاوہ اے۔ میں ایس تبادلے تے ودھ قیمت اثر نوں قبول کردا واں",
+      "sendExact": "میں سمجھدا واں کہ مینوں سیلف کسٹڈی والٹ توں ٹھیک اوہی مقرر رقم بھیجݨی ضروری اے۔ میں سمجھدا واں کہ smart contract والٹ، ایکسچینج پتے، delegated پتے، یا EIP 7702 والٹ توں بھیجݨ نال",
+      "lossOfFunds": "رقم دا نقصان ہوے گا۔",
+      "ltcMweb": "میں سمجھدا واں کہ LTC MWEB پتہ ورتݨ نال",
+      "selfCustody": "میں سمجھدا واں کہ مینوں سیلف کسٹڈی والٹ ورتݨا ضروری اے۔ میں سمجھدا واں کہ smart contract والٹ، ایکسچینج پتے، delegated پتے، یا EIP 7702 والٹ ورتݨ نال"
+    },
+    "instant": {
+      "sendTitle": "{asset} بھیجو",
+      "sendDescription": "سیلف کسٹڈی والٹ توں ٹھیک <b>{amount} {ticker}</b> تھلے دِتے پتے تے بھیجو۔",
+      "qrCodeAlt": "QR کوڈ",
+      "expiresIn": "ختم ہوݨ وچ"
+    },
+    "error": {
+      "memoMissing": "Memo غائب اے",
+      "calculateSuggestedAmount": "تجویز کردہ رقم کڈھݨ وچ ناکامی",
+      "preflightRequest": "preflight درخواست وچ ناکامی",
+      "preflightMemoless": "memoless preflight درخواست وچ ناکامی",
+      "minAmountNoWallet": "بغیر کنیکٹ کیتے والٹ دے کم از کم تبادلہ رقم {amount} {ticker} اے",
+      "unknown": "اݨ جاݨی خرابی"
+    },
+    "feeDialog": {
+      "title": "ریٹ وچ شامل فیساں",
+      "description": "ایہ فیساں ریٹ وچ پہلاں ای شامل نیں — تُسی ایہناں نوں ولکھ نئیں دیندے۔",
+      "liquidityFee": "Liquidity فیس",
+      "liquidityFeeInfo": "روٹ تے liquidity فراہم کرݨ والیاں لئی فیس",
+      "outboundFee": "آؤٹ باؤنڈ فیس",
+      "outboundFeeInfo": "آؤٹ باؤنڈ Tx بھیجݨ دی فیس",
+      "platformFee": "پلیٹ فارم فیس",
+      "platformFeeInfo": "{app} ولوں لئی جاݨ والی فیس"
+    },
+    "expiry": {
+      "title": "ختم ہوݨ دا ویلہ سیٹ کرو",
+      "days": "دن",
+      "hours": "گھنٹے",
+      "minutes": "منٹ",
+      "maxExpiry": "زیادہ سے زیادہ ختم ہوݨ دا ویلہ {days} دن اے",
+      "apply": "لاگو کرو"
+    },
+    "limit": {
+      "whenWorth": "جدوں 1 {ticker} دی قیمت ہوے",
+      "expiresIn": "ختم ہوݨ وچ",
+      "oneHour": "1 گھنٹہ",
+      "oneDay": "1 دن",
+      "threeDays": "3 دن",
+      "custom": "اپݨی مرضی",
+      "market": "مارکیٹ"
+    },
+    "limitCancel": {
+      "titleModify": "Limit آرڈر بدلو",
+      "titleCancel": "Limit آرڈر منسوخ کرو",
+      "descriptionModify": "ایہ limit آرڈر بدلݨ نال ٹارگٹ قیمت اپ ڈیٹ ہو جائے گی۔ تبدیلی کارروائی لئی نِکی جئی نیٹ ورک فیس لئی جائے گی۔",
+      "descriptionCancel": "ایہ limit آرڈر منسوخ کرݨ نال تُہاݙی جمع کیتی رقم تُہاݙے والٹ وچ واپس آ جائے گی۔ منسوخی کارروائی لئی نِکی جئی نیٹ ورک فیس لئی جائے گی۔",
+      "fromCurrent": "موجودہ توں {percent}%",
+      "youWillGet": "تُہانوں ملے گا",
+      "button": {
+        "modifying": "بدلیا پیا ہوندا اے...",
+        "cancelling": "منسوخ پیا ہوندا اے...",
+        "loading": "لوڈ پیا ہوندا اے...",
+        "modifyOrder": "آرڈر بدلو",
+        "cancelOrder": "آرڈر منسوخ کرو"
+      },
+      "error": {
+        "loadInboundAddresses": "inbound پتے لوڈ کرݨ وچ ناکامی",
+        "cancelFailed": "limit تبادلہ منسوخ کرݨ وچ ناکامی",
+        "modifyFailed": "limit تبادلہ بدلݨ وچ ناکامی"
+      },
+      "toast": {
+        "sendToCancel": "منسوخ کرݨ لئی اصل والٹ توں {amount} {ticker} بھیجو",
+        "sendToModify": "بدلݨ لئی اصل والٹ توں {amount} {ticker} بھیجو",
+        "cancelSubmitted": "منسوخی Tx جمع ہو گئی",
+        "modifySubmitted": "تبدیلی Tx جمع ہو گئی"
+      },
+      "warning": {
+        "memolessDeposit": "ایہ آرڈر {mode} کرݨ لئی، اوسے اصل {chain} والٹ توں ڈیپازٹ بھیجو جیہڑے ایہ رکھیا سی",
+        "connectOrMemoless": "ایہ آرڈر {mode} کرݨ لئی {chain} والٹ کنیکٹ کرو یا memoless ڈیپازٹ ورتو",
+        "connect": "ایہ آرڈر {mode} کرݨ لئی {chain} والٹ کنیکٹ کرو",
+        "switch": "ایہ آرڈر {mode} کرݨ لئی {chain} والٹ تے سوئچ کرو",
+        "addressMismatch": "کنیکٹ کیتا والٹ اوس پتے نال نئیں ملدا جیہڑے ایہ آرڈر رکھیا سی",
+        "tradingPaused": "{chain} ٹریڈنگ فی الحال روکی گئی اے"
+      }
+    },
+    "quoteTimer": {
+      "refresh": "ریفریش کرو"
+    },
+    "recipient": {
+      "addressPlaceholder": "{chain} پتہ",
+      "paste": "پیسٹ کرو",
+      "invalidAddress": "غلط {chain} پتہ",
+      "titleAddresses": "پتے پاؤ",
+      "titleReceiving": "وصول کرݨ والا پتہ پاؤ",
+      "enterRefundAddress": "واپسی والا پتہ پاؤ:",
+      "enterReceivingAddress": "وصول کرݨ والا پتہ پاؤ:",
+      "preparingSwap": "تبادلہ تیار پیا ہوندا اے",
+      "next": "اگلا"
+    },
+    "selectAsset": {
+      "title": "کوائن چُݨو",
+      "allChains": "سارے Chains",
+      "search": "ڳولو",
+      "secured": "Secured",
+      "showSecuredAssets": "Secured اثاثے وکھاؤ",
+      "trade": "Trade",
+      "currentlyUnavailable": "فی الحال دستیاب نئیں",
+      "selected": "چُݨیا گیا"
+    },
+    "settings": {
+      "noProtection": "کوئی تحفظ نئیں",
+      "priceProtection": "قیمت تحفظ",
+      "priceProtectionTooltip1": "قیمت تے اثر ایہ اے کہ تُہاݙا تبادلہ پول دی قیمت نوں کِنا ہلاؤندا اے۔ دستیاب liquidity دے مقابلے تُہاݙا تبادلہ جِنا وݙا ہوے گا، اثر اوݨا ای ودھ ہوے گا۔",
+      "priceProtectionTooltip2": "قیمت ویکھݨ تے تبادلہ مکمل ہوݨ دے وچکار ویلے دوران قیمتاں بدل سکدیاں نیں۔ Slippage برداشت اوہ زیادہ سے زیادہ قیمت بدلاؤ اے جیہڑا تُسی تبادلہ منسوخ ہوݨ توں پہلاں قبول کرو گے۔",
+      "priceProtectionDescription": "اوہ زیادہ سے زیادہ رقم جیہڑی تُسی تبادلے تے خرچ کرݨ لئی تیار او۔ ایہدے وچ تُہاݙے تبادلے دا قیمت تے اثر تے تبادلہ چلݨ توں پہلاں ٹوکن قیمتاں تے کوئی وی slippage شامل اے۔",
+      "twapTitle": "Time Weighted Average Price (TWAP)",
+      "twapTooltip1": "THORChain تے TWAP ٹریڈاں نوں دستاویزاں تے کوڈ وچ \"streaming swaps\" آکھیا جاندا اے۔",
+      "twapTooltip2": "فوری ویچ آرڈر رکھݨ لئی، جیہڑا سب توں بھیڑی قیمت نال چلے گا، sub-swaps دی گݨتی لئی 1 تے sub-swaps دے وچکار ویلے لئی 1 block پاؤ۔",
+      "twapDescription": "ودھ تر ورتݨ والیاں نوں ڈیفالٹ سیٹنگاں ای ورتݨیاں چاہیدیاں نیں۔ صرف ماہر ٹریڈر ای ایہناں سیٹنگاں نوں بدلݨ",
+      "numberOfSubSwaps": "sub-swaps دی گݨتی",
+      "numberOfSubSwapsTooltip": "اپݨے آرڈر نوں نِکیاں ٹریڈاں وچ ونڈو جیہناں نوں sub-swaps آکھدے نیں۔ جِنے ودھ sub-swaps، اوݨی ای ودھیا قیمت۔ صفر تے سیٹ کرݨ تے، پروٹوکول تُہاݙے لئی sub-swaps دی گݨتی کڈھے گا تاں جو ہر اِک دا slippage 5 bps ہوے۔ ڈیفالٹ ویلیو صفر اے۔",
+      "timeBetweenSubSwaps": "sub-swaps دے وچکار ویلہ",
+      "timeBetweenSubSwapsTooltip": "ہر sub-swap دے وچکار ویلہ blocks وچ ماپیا جاندا اے۔ ہر sub-swap دے وچکار جِنے ودھ blocks، اوݨی ای ودھیا قیمت۔ صفر blocks چُݨݨ نال تیز چلاوݨ لئی ہر block وچ کئی sub-swaps ہوݨ گے۔ ڈیفالٹ ویلیو صفر blocks اے۔",
+      "blocksCount": "{count, plural, one {# block} other {# blocks}}",
+      "rapidSwap": "تیز تبادلہ",
+      "seconds": "~{count, plural, one {# سیکنڈ} other {# سیکنڈ}}",
+      "reset": "ری سیٹ کرو",
+      "save": "محفوظ کرو"
+    }
+  },
+  "send": {
+    "title": "بھیجو",
+    "send": "بھیجو",
+    "amount": "رقم",
+    "clear": "صاف کرو",
+    "balanceLabel": "بیلنس:",
+    "to": "ول",
+    "addressPlaceholder": "{chain} پتہ",
+    "paste": "پیسٹ کرو",
+    "transactionFee": "Tx فیس",
+    "selectCoin": "کوائن چُݨو",
+    "connectThorchainWallet": "THORChain والٹ کنیکٹ کرو",
+    "enterMemo": "memo پاؤ",
+    "enterAmount": "رقم پاؤ",
+    "toast": {
+      "submitting": "Tx جمع کیتی پئی جاندی اے...",
+      "submitted": "Tx جمع ہو گئی",
+      "submitError": "Tx جمع کرݨ وچ خرابی"
+    },
+    "error": {
+      "walletNotConnectedReconnect": "والٹ کنیکٹ نئیں۔ مہربانی کر کے دوبارہ کنیکٹ کرو۔",
+      "walletNotConnected": "والٹ کنیکٹ نئیں۔",
+      "invalidAddress": "غلط {chain} پتہ",
+      "noRuneBalance": "کوئی RUNE بیلنس نئیں لبھیا۔",
+      "noTcyBalance": "کوئی TCY بیلنس نئیں لبھیا۔"
+    },
+    "beta": {
+      "title": "ایہ اِک بیٹا فیچر اے",
+      "description": "کجھ اݨ ڈِٹھے بگ ہو سکدے نیں۔ اپݨے خطرے تے ورتو!"
+    },
+    "memo": {
+      "title": "Memo",
+      "examplesButton": "Memo مثالاں",
+      "placeholder": "memo پاؤ",
+      "noPayloadInfo": "ایس کم لئی کوئی payload دی لوڑ نئیں۔ صرف 0.02 RUNE نیٹ ورک فیس لگدی اے۔"
+    },
+    "bond": {
+      "bondAmount": "Bond رقم",
+      "rebondAmount": "Rebond رقم",
+      "nodeAddress": "Node پتہ",
+      "newAddress": "نواں پتہ",
+      "enterNodeAddress": "Node پتہ پاؤ",
+      "invalidNodeAddress": "غلط Node پتہ",
+      "validatingNode": "node دی تصدیق پئی ہوندی اے...",
+      "nodeNotFound": "Node نئیں لبھیا",
+      "enterNewAddress": "نواں پتہ پاؤ",
+      "invalidNewAddress": "غلط نواں پتہ",
+      "bond": "Bond",
+      "unbond": "Unbond",
+      "rebond": "Rebond",
+      "nodeNotFoundOrUnavailable": "Node نئیں لبھیا یا دستیاب نئیں۔",
+      "tab": {
+        "bond": "Bond",
+        "unbond": "Unbond",
+        "rebond": "Rebond",
+        "track": "Track"
+      },
+      "node": {
+        "version": "ورژن",
+        "ipAddress": "IP پتہ",
+        "status": "حالت",
+        "providers": "فراہم کرݨ والے",
+        "yourShare": "تُہاݙا حصہ",
+        "slashPoints": "Slash پوائنٹ",
+        "operatorFee": "آپریٹر فیس",
+        "information": "Node معلومات",
+        "bond": "Bond",
+        "nextReward": "اگلا انعام"
+      }
+    },
+    "stake": {
+      "stakeAmount": "Stake رقم",
+      "unstakeAmount": "Unstake رقم",
+      "compound": "Compound",
+      "checking": "چیک پیا ہوندا اے...",
+      "claim": "Claim کرو",
+      "nothingToClaim": "claim کرݨ لئی کجھ نئیں",
+      "stake": "Stake کرو",
+      "unstake": "Unstake کرو",
+      "stakedLabel": "Stake کیتا:",
+      "wallet": "والٹ",
+      "availableToClaim": "claim کرݨ لئی دستیاب",
+      "staked": "Stake کیتا",
+      "claimAmount": "Claim رقم",
+      "compoundInfo": "اپݨے بقایا TCY staking انعاماں نوں واپس اپݨی stake پوزیشن وچ compound کرو۔",
+      "tab": {
+        "stake": "Stake",
+        "unstake": "Unstake",
+        "compound": "Compound",
+        "claim": "Claim"
+      }
+    },
+    "examples": {
+      "back": "واپس",
+      "copied": "کلپ بورڈ تے کاپی ہو گیا",
+      "copyMemo": "{label} memo کاپی کرو",
+      "fillInValues": "ویلیوز بھرو ←",
+      "learnMore": "ودھیرے سِکھو",
+      "optional": "اختیاری",
+      "optionalPlaceholder": "{hint} (چھوڑݨ لئی خالی رہݨ دیو)",
+      "preview": "پہلاں ویکھو",
+      "useMemo": "Memo ورتو",
+      "badgeNoPayload": "کوئی payload نئیں",
+      "badgeDust": "dust",
+      "items": {
+        "stakeTcy": "TCY Stake کرو",
+        "unstakeTcy": "TCY Unstake کرو",
+        "claimTcy": "TCY Claim کرو",
+        "depositRunepool": "RUNEPool ڈیپازٹ کرو",
+        "withdrawRunepool": "RUNEPool کڈھو",
+        "bond": "Bond",
+        "unbond": "Unbond",
+        "rebond": "Rebond",
+        "leave": "Leave",
+        "whitelistBondProvider": "Bond Provider نوں Whitelist کرو",
+        "unwhitelistBondProvider": "Bond Provider نوں Unwhitelist کرو",
+        "addLpSingle": "LP لاؤ (اِک طرفہ)",
+        "addLpDual": "LP لاؤ (دو طرفہ)",
+        "withdrawLp": "LP کڈھو",
+        "donateToPool": "Pool نوں عطیہ دیو"
+      },
+      "placeholder": {
+        "nodeAddress": "Node پتہ",
+        "providerAddress": "Provider پتہ",
+        "newAddress": "نواں پتہ",
+        "thorAddress": "THORChain پتہ",
+        "pairedAddress": "جوڑا پتہ",
+        "affiliate": "Affiliate",
+        "pool": "Pool",
+        "asset": "اثاثہ",
+        "amount": "رقم",
+        "basisPoints": "Basis Points",
+        "fee": "فیس (basis points)",
+        "thorPrefix": "thor1…",
+        "pairedAddressHint": "بیرونی chain پتہ",
+        "affiliateHint": "THORName یا thor1… پتہ",
+        "poolHint": "مثلاً BTC.BTC یا ETH/ETH",
+        "assetHint": "مثلاً BTC.BTC یا RUNE (اِک طرفہ)",
+        "amountHint": "1e8 فارمیٹ — مثلاً 100000000 = 1 RUNE",
+        "basisPointsHint": "0 – 10000 (10000 = 100%)",
+        "feeHint": "0 – 10000"
+      }
+    }
+  },
+  "wallet": {
+    "chains": "Chains",
+    "deselectAll": "سارے ہٹاؤ",
+    "selectAll": "سارے چُݨو",
+    "soon": "چھیتی",
+    "connectNamed": "{name} کنیکٹ کرو",
+    "connected": "کنیکٹ ہو گیا",
+    "disconnected": "ڈسکنیکٹ ہو گیا",
+    "install": "انسٹال کرو",
+    "connectWallet": "والٹ کنیکٹ کرو",
+    "derivationPath": "Derivation Path",
+    "selectAccountType": "اکاؤنٹ دی قسم چُݨو",
+    "index": "Index",
+    "ledgerUnlockHint": "کنیکٹ کرݨ توں پہلاں یقینی بݨاؤ کہ تُہاݙا Ledger اَن لاک اے تے {app} ایپ کھلی ہوئی اے۔",
+    "correspondingApp": "متعلقہ",
+    "createNewWallet": "نواں والٹ بݨاؤ",
+    "createWalletInstructions": "ایہ 12 لفظ لکھ لوو تے کِسے محفوظ تھاں آف لائن رکھو۔ ایہ 12 لفظاں دا جملہ تُہاݙی والٹ پرائیویٹ کیز بحال کرݨ لئی ورتیا جاندا اے۔",
+    "copyPhrase": "جملہ کاپی کرو",
+    "confirmSavedPassphrase": "میں تصدیق کردا واں کہ میں اپݨا اکاؤنٹ اگے بحال کرݨ لئی passphrase نوں محفوظ طریقے نال سنبھال لیا اے۔",
+    "back": "واپس",
+    "next": "اگلا",
+    "setupDecryptionPassword": "Decryption پاس ورڈ سیٹ کرو",
+    "setupPasswordInstructions": "اپݨے بݨائے والٹ نوں encrypt کرݨ لئی اِک مضبوط پاس ورڈ پاؤ۔ ایہی طریقہ اے جیہدے نال تُسی اپݨے والٹ تک پہنچو گے۔",
+    "enterPassword": "پاس ورڈ پاؤ",
+    "confirmPassword": "پاس ورڈ دی تصدیق کرو",
+    "passwordMustMatch": "پاس ورڈ رلدے ہوݨے چاہیدے نیں",
+    "create": "بݨاؤ",
+    "error": {
+      "invalidFileType": "غلط فائل قسم۔ مہربانی کر کے JSON یا TXT فائل اپ لوڈ کرو۔"
+    },
+    "importKeystore": "Keystore امپورٹ کرو",
+    "selectOrDragKeystore": "اپ لوڈ کرݨ لئی اپݨی keystore فائل چُݨو یا کھِچ کے چھݙو",
+    "decryptionPassword": "Decryption پاس ورڈ",
+    "password": "پاس ورڈ",
+    "import": "امپورٹ کرو",
+    "importSeedPhrase": "Seed Phrase امپورٹ کرو",
+    "typeSeedPhrase": "اپݨا seed phrase ٹائپ کرو",
+    "openKeystore": "Keystore کھولو",
+    "noTokensFound": "کوئی ٹوکن نئیں لبھے",
+    "addressCopied": "پتہ کاپی ہو گیا",
+    "copyAddress": "پتہ کاپی کرو",
+    "disconnectWallet": "{name} ڈسکنیکٹ کرو",
+    "noCoins": "کوئی کوائن نئیں",
+    "sidebar": {
+      "title": "والٹ"
+    },
+    "sortWallets": "والٹ ترتیب دیو",
+    "sortBy": "ترتیب دیو",
+    "sortByName": "ناں (A-Z)",
+    "sortByBalance": "بیلنس (ودھ → گھٹ)",
+    "externalWalletMode": "بیرونی والٹ موڈ",
+    "externalWalletModeDescription": "اپݨا آرڈر پاؤ، Swap بٹن دباؤ، تے ہدایتاں تے عمل کرو",
+    "externalWalletAssetUnsupported": "ایہ اثاثہ بیرونی والٹ موڈ وچ سپورٹ نئیں اے۔ جے تُسی اگے ودھݨا چاہندے او تے براؤزر والٹ کنیکٹ کرو۔",
+    "close": "بند کرو",
+    "sendToken": "{ticker} بھیجو"
+  },
+  "common": {
+    "close": "بند کرو"
+  },
+  "tx": {
+    "title": "تاریخ",
+    "today": "اج",
+    "yesterday": "کل",
+    "onlyCreatorModify": "صرف اصل تبادلہ بݨاؤݨ والا ای بدل سکدا اے",
+    "limitPrice": "Limit قیمت",
+    "expiresIn": "ختم ہوݨ وچ",
+    "showQr": "QR وکھاؤ",
+    "modify": "بدلو",
+    "cancelOrder": "آرڈر منسوخ کرو",
+    "sourceAddress": "Source پتہ",
+    "destinationAddress": "Destination پتہ",
+    "remaining": "{time} باقی",
+    "status": {
+      "not_started": "ڈیپازٹ بقایا",
+      "pending": "بقایا",
+      "swapping": "تبادلہ پیا ہوندا اے",
+      "completed": "مکمل",
+      "failed": "ناکام",
+      "expired": "ختم ہو گیا",
+      "refunded": "واپس کیتا",
+      "unknown": "اݨ جاݨیا"
+    },
+    "leg": {
+      "deposit": "{ticker} ڈیپازٹ کرو",
+      "send": "{ticker} بھیجو",
+      "swap": "{from} نوں {to} وچ تبادلہ کرو"
+    }
+  }
+}

@@ -1,0 +1,465 @@
+{
+  "menu": {
+    "swap": "Swap",
+    "bond": "Bond",
+    "memo": "Memo",
+    "launchApp": "App starten",
+    "socials": "Soziale Netzwerke",
+    "language": "Sprache",
+    "newsletterPitch": "Der beste Weg, um über THORChain auf dem Laufenden zu bleiben",
+    "emailPlaceholder": "E-Mail-Adresse eingeben",
+    "signUp": "Anmelden",
+    "signingUp": "Anmeldung läuft…",
+    "subscribed": "Vielen Dank für Ihr Abonnement!",
+    "genericError": "Ein Fehler ist aufgetreten"
+  },
+  "header": {
+    "wallet": "WALLET",
+    "history": "VERLAUF"
+  },
+  "footer": {
+    "privacyPolicy": "Datenschutzrichtlinie",
+    "termsOfUse": "Nutzungsbedingungen",
+    "riskPolicy": "Risikorichtlinie",
+    "riskTooltip": "Diese Website wird mit Sorgfalt entwickelt, kann jedoch unbeabsichtigte Fehler enthalten, die zu Fehlfunktionen der Website und sogar zum Verlust von Geldern führen können. Fahren Sie nur fort, wenn Sie diese Risiken verstehen und akzeptieren.",
+    "builtBy": "Entwickelt von",
+    "reportBug": "Fehler melden / Funktion anfragen",
+    "getSupport": "Support in Discord erhalten",
+    "bug": {
+      "title": "Fehler melden / Funktion anfragen",
+      "success": "Vielen Dank! Ihre Meldung wurde gesendet.",
+      "close": "Schließen",
+      "emailLabel": "E-Mail (optional)",
+      "descriptionLabel": "Beschreibung",
+      "descriptionPlaceholder": "Beschreiben Sie den Fehler / die Funktion",
+      "attachmentLabel": "Anhang (optional)",
+      "attachFile": "Datei anhängen",
+      "sending": "Wird gesendet...",
+      "send": "Meldung senden",
+      "failed": "Meldung konnte nicht gesendet werden"
+    }
+  },
+  "swap": {
+    "tab": {
+      "swap": "Swap",
+      "limit": "Limit"
+    },
+    "input": {
+      "sell": "Verkaufen",
+      "buy": "Kaufen",
+      "clear": "Löschen"
+    },
+    "balance": {
+      "label": "Guthaben:"
+    },
+    "button": {
+      "limitNotSupported": "Limit-Order nicht unterstützt",
+      "temporarilyUnavailable": "Vorübergehend nicht verfügbar",
+      "enterAmount": "Betrag eingeben",
+      "quoting": "Angebot wird erstellt...",
+      "noValidQuotes": "Keine gültigen Angebote",
+      "enterLimitPrice": "Limit-Preis eingeben",
+      "enterLimitOrder": "Limit-Order eingeben",
+      "swap": "Swap",
+      "connectWallet": "{chain}-Wallet verbinden",
+      "insufficientBalance": "Unzureichendes Guthaben",
+      "approve": "{ticker} genehmigen"
+    },
+    "toast": {
+      "approvalTransaction": "Genehmigungstransaktion",
+      "success": "Erfolgreich",
+      "errorSubmitting": "Fehler beim Senden der Transaktion",
+      "submittingTransaction": "Transaktion wird gesendet",
+      "transactionSubmitted": "Transaktion gesendet"
+    },
+    "confirm": {
+      "titleLimit": "Limit-Order bestätigen",
+      "titleSwap": "Swap bestätigen",
+      "notAvailable": "n/a",
+      "swapArrowLabel": "swap",
+      "chainAddress": "{chain}-Adresse",
+      "sourceAddressTooltip": "Die Wallet-Adresse, die die Gelder für diesen Swap sendet.",
+      "destinationAddressTooltip": "Die Wallet-Adresse, die die getauschten Gelder empfängt.",
+      "refundAddress": "Rückerstattungsadresse",
+      "refundAddressTooltip": "Die Adresse, an die die Gelder zurückgesendet werden, falls der Swap nicht abgeschlossen werden kann.",
+      "limitPrice": "Limit-Preis",
+      "limitPriceTooltip": "Der Preis pro Einheit, zu dem Ihre Limit-Order ausgeführt wird. Die Order wird nur ausgeführt, wenn der Markt diesen Preis erreicht.",
+      "targetAmount": "Zielbetrag",
+      "targetAmountTooltip": "Der genaue Betrag, den Sie erhalten, wenn Ihre Limit-Order zu Ihrem angegebenen Preis ausgeführt wird.",
+      "minimumPayout": "Mindestauszahlung",
+      "minimumPayoutTooltip": "Dies ist der Mindestbetrag, den Sie bei Ihrer {protection}-Preisschutzeinstellung garantiert erhalten. Falls sich der Markt so stark bewegt, dass Sie weniger erhalten würden, wird der Swap abgebrochen und erstattet.",
+      "notProtected": "Nicht geschützt",
+      "priceImpact": "Preisauswirkung",
+      "priceImpactTooltip": "Wie stark Ihr Swap den Preis des Pools bewegt. Je größer Ihr Swap im Verhältnis zur verfügbaren Liquidity, desto höher die Preisauswirkung.",
+      "slippageTolerance": "Slippage-Toleranz",
+      "slippageToleranceTooltip1": "Die Differenz zwischen Ihrem {protection}-Preisschutz und der Preisauswirkung.",
+      "slippageToleranceTooltip2": "In der Zeit zwischen dem Anzeigen eines Angebots und dem Abschluss Ihres Swaps können sich die Preise ändern. Die Slippage-Toleranz ist die maximale Preisänderung, die Sie akzeptieren, bevor der Swap abgebrochen wird.",
+      "includedFees": "Enthaltene Gebühren",
+      "includedFeesTooltip": "Diese Gebühren sind bereits im Kurs enthalten – Sie zahlen sie nicht separat.",
+      "estimatedTime": "Geschätzte Zeit",
+      "gasFee": "{chain}-Gas-Gebühr",
+      "exchange": "Tausch",
+      "button": "Bestätigen",
+      "buttonLimit": "Limit-Order bestätigen",
+      "confirming": "Wird bestätigt"
+    },
+    "warning": {
+      "highPriceImpact": "Ich verstehe, dass die Preisauswirkung zusätzlich zur Slippage-Toleranz hinzukommt. Ich akzeptiere die hohe Preisauswirkung bei diesem Swap",
+      "sendExact": "Ich verstehe, dass ich genau den angegebenen Betrag aus einer Self-Custody-Wallet senden muss. Ich verstehe, dass das Senden von einer Smart-Contract-Wallet, einer Exchange-Adresse, einer delegierten Adresse oder einer EIP-7702-Wallet zum",
+      "lossOfFunds": "Verlust von Geldern führt.",
+      "ltcMweb": "Ich verstehe, dass die Verwendung einer LTC-MWEB-Adresse zum",
+      "selfCustody": "Ich verstehe, dass ich eine Self-Custody-Wallet verwenden muss. Ich verstehe, dass die Verwendung einer Smart-Contract-Wallet, einer Exchange-Adresse, einer delegierten Adresse oder einer EIP-7702-Wallet zum"
+    },
+    "instant": {
+      "sendTitle": "{asset} senden",
+      "sendDescription": "Senden Sie genau <b>{amount} {ticker}</b> an die untenstehende Adresse von einer Self-Custody-Wallet.",
+      "qrCodeAlt": "QR-Code",
+      "expiresIn": "Läuft ab in"
+    },
+    "error": {
+      "memoMissing": "Memo fehlt",
+      "calculateSuggestedAmount": "Vorgeschlagener Betrag konnte nicht berechnet werden",
+      "preflightRequest": "Preflight-Anfrage fehlgeschlagen",
+      "preflightMemoless": "Memolose Preflight-Anfrage fehlgeschlagen",
+      "minAmountNoWallet": "Der Mindest-Swap-Betrag ohne verbundene Wallet beträgt {amount} {ticker}",
+      "unknown": "Unbekannter Fehler"
+    },
+    "feeDialog": {
+      "title": "Im Kurs enthaltene Gebühren",
+      "description": "Diese Gebühren sind bereits im Kurs enthalten – Sie zahlen sie nicht separat.",
+      "liquidityFee": "Liquidity-Gebühr",
+      "liquidityFeeInfo": "Gebühr für Liquidity-Provider auf der Route",
+      "outboundFee": "Outbound-Gebühr",
+      "outboundFeeInfo": "Gebühr für das Senden der Outbound-Transaktion",
+      "platformFee": "Plattformgebühr",
+      "platformFeeInfo": "Gebühr erhoben von {app}"
+    },
+    "expiry": {
+      "title": "Ablaufzeit festlegen",
+      "days": "Tage",
+      "hours": "Stunden",
+      "minutes": "Minuten",
+      "maxExpiry": "Die maximale Ablaufzeit beträgt {days} Tage",
+      "apply": "Anwenden"
+    },
+    "limit": {
+      "whenWorth": "Wenn 1 {ticker} wert ist",
+      "expiresIn": "Läuft ab in",
+      "oneHour": "1 Stunde",
+      "oneDay": "1 Tag",
+      "threeDays": "3 Tage",
+      "custom": "Benutzerdefiniert",
+      "market": "Markt"
+    },
+    "limitCancel": {
+      "titleModify": "Limit-Order ändern",
+      "titleCancel": "Limit-Order stornieren",
+      "descriptionModify": "Durch das Ändern dieser Limit-Order wird der Zielpreis aktualisiert. Für die Bearbeitung der Änderung wird eine kleine Netzwerkgebühr erhoben.",
+      "descriptionCancel": "Durch das Stornieren dieser Limit-Order werden Ihre eingezahlten Gelder an Ihre Wallet zurückgesendet. Für die Bearbeitung der Stornierung wird eine kleine Netzwerkgebühr erhoben.",
+      "fromCurrent": "{percent}% vom aktuellen Wert",
+      "youWillGet": "Sie erhalten",
+      "button": {
+        "modifying": "Wird geändert...",
+        "cancelling": "Wird storniert...",
+        "loading": "Wird geladen...",
+        "modifyOrder": "Order ändern",
+        "cancelOrder": "Order stornieren"
+      },
+      "error": {
+        "loadInboundAddresses": "Inbound-Adressen konnten nicht geladen werden",
+        "cancelFailed": "Limit-Swap konnte nicht storniert werden",
+        "modifyFailed": "Limit-Swap konnte nicht geändert werden"
+      },
+      "toast": {
+        "sendToCancel": "Senden Sie {amount} {ticker} von der ursprünglichen Wallet, um zu stornieren",
+        "sendToModify": "Senden Sie {amount} {ticker} von der ursprünglichen Wallet, um zu ändern",
+        "cancelSubmitted": "Stornierungstransaktion gesendet",
+        "modifySubmitted": "Änderungstransaktion gesendet"
+      },
+      "warning": {
+        "memolessDeposit": "Um diese Order zu {mode}, senden Sie die Einzahlung von der ursprünglichen {chain}-Wallet, die sie platziert hat",
+        "connectOrMemoless": "Verbinden Sie eine {chain}-Wallet oder verwenden Sie die memolose Einzahlung, um diese Order zu {mode}",
+        "connect": "Verbinden Sie eine {chain}-Wallet, um diese Order zu {mode}",
+        "switch": "Wechseln Sie zu einer {chain}-Wallet, um diese Order zu {mode}",
+        "addressMismatch": "Die verbundene Wallet stimmt nicht mit der Adresse überein, die diese Order platziert hat",
+        "tradingPaused": "{chain}-Handel ist derzeit pausiert"
+      }
+    },
+    "quoteTimer": {
+      "refresh": "Aktualisieren"
+    },
+    "recipient": {
+      "addressPlaceholder": "{chain}-Adresse",
+      "paste": "Einfügen",
+      "invalidAddress": "Ungültige {chain}-Adresse",
+      "titleAddresses": "Adressen eingeben",
+      "titleReceiving": "Empfangsadresse eingeben",
+      "enterRefundAddress": "Rückerstattungsadresse eingeben:",
+      "enterReceivingAddress": "Empfangsadresse eingeben:",
+      "preparingSwap": "Swap wird vorbereitet",
+      "next": "Weiter"
+    },
+    "selectAsset": {
+      "title": "Coin auswählen",
+      "allChains": "Alle Chains",
+      "search": "Suchen",
+      "secured": "Secured",
+      "showSecuredAssets": "Secured Assets anzeigen",
+      "trade": "Trade",
+      "currentlyUnavailable": "Derzeit nicht verfügbar",
+      "selected": "Ausgewählt"
+    },
+    "settings": {
+      "noProtection": "Kein Schutz",
+      "priceProtection": "Preisschutz",
+      "priceProtectionTooltip1": "Die Preisauswirkung gibt an, wie stark Ihr Swap den Preis des Pools bewegt. Je größer Ihr Swap im Verhältnis zur verfügbaren Liquidity, desto höher die Auswirkung.",
+      "priceProtectionTooltip2": "In der Zeit zwischen dem Anzeigen eines Angebots und dem Abschluss Ihres Swaps können sich die Preise ändern. Die Slippage-Toleranz ist die maximale Preisänderung, die Sie akzeptieren, bevor der Swap abgebrochen wird.",
+      "priceProtectionDescription": "Der Höchstbetrag, den Sie bereit sind, für einen Swap auszugeben. Dies umfasst die Preisauswirkung Ihres Swaps und jegliche Slippage bei den Token-Preisen, bevor der Swap ausgeführt wird.",
+      "twapTitle": "Time Weighted Average Price (TWAP)",
+      "twapTooltip1": "TWAP-Trades auf THORChain werden in der Dokumentation und im Code „Streaming Swaps“ genannt.",
+      "twapTooltip2": "Um eine Sofort-Verkaufsorder zu platzieren, die zur schlechtesten Preisausführung führt, geben Sie 1 für die Anzahl der Sub-Swaps und 1 Block für die Zeit zwischen den Sub-Swaps ein.",
+      "twapDescription": "Die überwiegende Mehrheit der Nutzer sollte die Standardeinstellungen verwenden. Nur erfahrene Trader sollten diese Einstellungen ändern",
+      "numberOfSubSwaps": "Anzahl der Sub-Swaps",
+      "numberOfSubSwapsTooltip": "Teilen Sie Ihre Order in kleinere Trades, sogenannte Sub-Swaps, auf. Je mehr Sub-Swaps, desto besser die Preisausführung. Bei null berechnet das Protokoll die Anzahl der Sub-Swaps für Sie, sodass jeder eine Slippage von 5 bps hat. Der Standardwert ist null.",
+      "timeBetweenSubSwaps": "Zeit zwischen Sub-Swaps",
+      "timeBetweenSubSwapsTooltip": "Die Zeit zwischen den einzelnen Sub-Swaps, gemessen in Blöcken. Je mehr Blöcke zwischen den Sub-Swaps liegen, desto besser die Preisausführung. Die Wahl von null Blöcken führt mehrere Sub-Swaps pro Block für eine schnellere Ausführung aus. Der Standardwert ist null Blöcke.",
+      "blocksCount": "{count, plural, one {# Block} other {# Blöcke}}",
+      "rapidSwap": "Rapid Swap",
+      "seconds": "~{count, plural, one {# Sekunde} other {# Sekunden}}",
+      "reset": "Zurücksetzen",
+      "save": "Speichern"
+    }
+  },
+  "send": {
+    "title": "Senden",
+    "send": "Senden",
+    "amount": "Betrag",
+    "clear": "Löschen",
+    "balanceLabel": "Guthaben:",
+    "to": "An",
+    "addressPlaceholder": "{chain}-Adresse",
+    "paste": "Einfügen",
+    "transactionFee": "Transaktionsgebühr",
+    "selectCoin": "Coin auswählen",
+    "connectThorchainWallet": "THORChain-Wallet verbinden",
+    "enterMemo": "Memo eingeben",
+    "enterAmount": "Betrag eingeben",
+    "toast": {
+      "submitting": "Transaktion wird gesendet...",
+      "submitted": "Transaktion gesendet",
+      "submitError": "Fehler beim Senden der Transaktion"
+    },
+    "error": {
+      "walletNotConnectedReconnect": "Wallet nicht verbunden. Bitte erneut verbinden.",
+      "walletNotConnected": "Wallet nicht verbunden.",
+      "invalidAddress": "Ungültige {chain}-Adresse",
+      "noRuneBalance": "Kein RUNE-Guthaben gefunden.",
+      "noTcyBalance": "Kein TCY-Guthaben gefunden."
+    },
+    "beta": {
+      "title": "Dies ist eine Beta-Funktion",
+      "description": "Es können unentdeckte Fehler vorhanden sein. Nutzung auf eigenes Risiko!"
+    },
+    "memo": {
+      "title": "Memo",
+      "examplesButton": "Memo-Beispiele",
+      "placeholder": "Memo eingeben",
+      "noPayloadInfo": "Dieser Vorgang erfordert keine Payload. Es fällt nur die Netzwerkgebühr von 0,02 RUNE an."
+    },
+    "bond": {
+      "bondAmount": "Bond-Betrag",
+      "rebondAmount": "Rebond-Betrag",
+      "nodeAddress": "Node-Adresse",
+      "newAddress": "Neue Adresse",
+      "enterNodeAddress": "Node-Adresse eingeben",
+      "invalidNodeAddress": "Ungültige Node-Adresse",
+      "validatingNode": "Node wird validiert...",
+      "nodeNotFound": "Node nicht gefunden",
+      "enterNewAddress": "Neue Adresse eingeben",
+      "invalidNewAddress": "Ungültige neue Adresse",
+      "bond": "Bond",
+      "unbond": "Unbond",
+      "rebond": "Rebond",
+      "nodeNotFoundOrUnavailable": "Node nicht gefunden oder nicht verfügbar.",
+      "tab": {
+        "bond": "Bond",
+        "unbond": "Unbond",
+        "rebond": "Rebond",
+        "track": "Verfolgen"
+      },
+      "node": {
+        "version": "Version",
+        "ipAddress": "IP-Adresse",
+        "status": "Status",
+        "providers": "Provider",
+        "yourShare": "Ihr Anteil",
+        "slashPoints": "Slash Points",
+        "operatorFee": "Operator-Gebühr",
+        "information": "Node-Informationen",
+        "bond": "Bond",
+        "nextReward": "Nächste Belohnung"
+      }
+    },
+    "stake": {
+      "stakeAmount": "Stake-Betrag",
+      "unstakeAmount": "Unstake-Betrag",
+      "compound": "Compound",
+      "checking": "Wird geprüft...",
+      "claim": "Claim",
+      "nothingToClaim": "Nichts zum Beanspruchen",
+      "stake": "Stake",
+      "unstake": "Unstake",
+      "stakedLabel": "Gestaked:",
+      "wallet": "Wallet",
+      "availableToClaim": "Verfügbar zum Beanspruchen",
+      "staked": "Gestaked",
+      "claimAmount": "Claim-Betrag",
+      "compoundInfo": "Reinvestieren Sie Ihre ausstehenden TCY-Staking-Belohnungen zurück in Ihre Stake-Position.",
+      "tab": {
+        "stake": "Stake",
+        "unstake": "Unstake",
+        "compound": "Compound",
+        "claim": "Claim"
+      }
+    },
+    "examples": {
+      "back": "Zurück",
+      "copied": "In die Zwischenablage kopiert",
+      "copyMemo": "{label}-Memo kopieren",
+      "fillInValues": "Werte eintragen →",
+      "learnMore": "Mehr erfahren",
+      "optional": "optional",
+      "optionalPlaceholder": "{hint} (leer lassen, um wegzulassen)",
+      "preview": "Vorschau",
+      "useMemo": "Memo verwenden",
+      "badgeNoPayload": "keine Payload",
+      "badgeDust": "Dust",
+      "items": {
+        "stakeTcy": "TCY staken",
+        "unstakeTcy": "TCY unstaken",
+        "claimTcy": "TCY beanspruchen",
+        "depositRunepool": "In RUNEPool einzahlen",
+        "withdrawRunepool": "Aus RUNEPool abheben",
+        "bond": "Bond",
+        "unbond": "Unbond",
+        "rebond": "Rebond",
+        "leave": "Verlassen",
+        "whitelistBondProvider": "Bond-Provider auf Whitelist setzen",
+        "unwhitelistBondProvider": "Bond-Provider von Whitelist entfernen",
+        "addLpSingle": "LP hinzufügen (einseitig)",
+        "addLpDual": "LP hinzufügen (zweiseitig)",
+        "withdrawLp": "LP abheben",
+        "donateToPool": "An Pool spenden"
+      },
+      "placeholder": {
+        "nodeAddress": "Node-Adresse",
+        "providerAddress": "Provider-Adresse",
+        "newAddress": "Neue Adresse",
+        "thorAddress": "THORChain-Adresse",
+        "pairedAddress": "Gepaarte Adresse",
+        "affiliate": "Affiliate",
+        "pool": "Pool",
+        "asset": "Asset",
+        "amount": "Betrag",
+        "basisPoints": "Basis Points",
+        "fee": "Gebühr (Basis Points)",
+        "thorPrefix": "thor1…",
+        "pairedAddressHint": "Adresse einer externen Chain",
+        "affiliateHint": "THORName oder thor1…-Adresse",
+        "poolHint": "z. B. BTC.BTC oder ETH/ETH",
+        "assetHint": "z. B. BTC.BTC oder RUNE (einseitig)",
+        "amountHint": "1e8-Format – z. B. 100000000 = 1 RUNE",
+        "basisPointsHint": "0 – 10000 (10000 = 100%)",
+        "feeHint": "0 – 10000"
+      }
+    }
+  },
+  "wallet": {
+    "chains": "Chains",
+    "deselectAll": "Alle abwählen",
+    "selectAll": "Alle auswählen",
+    "soon": "Bald",
+    "connectNamed": "{name} verbinden",
+    "connected": "Verbunden",
+    "disconnected": "Getrennt",
+    "install": "Installieren",
+    "connectWallet": "Wallet verbinden",
+    "derivationPath": "Ableitungspfad",
+    "selectAccountType": "Kontotyp auswählen",
+    "index": "Index",
+    "ledgerUnlockHint": "Stellen Sie sicher, dass Ihr Ledger entsperrt und die {app}-App geöffnet ist, bevor Sie eine Verbindung herstellen.",
+    "correspondingApp": "entsprechende",
+    "createNewWallet": "Neue Wallet erstellen",
+    "createWalletInstructions": "Schreiben Sie diese 12 Wörter auf und bewahren Sie sie sicher offline auf. Diese 12-Wörter-Phrase wird verwendet, um die privaten Schlüssel Ihrer Wallet wiederherzustellen.",
+    "copyPhrase": "Phrase kopieren",
+    "confirmSavedPassphrase": "Ich bestätige, dass ich die Passphrase zur Wiederherstellung meines Kontos sicher gespeichert habe.",
+    "back": "Zurück",
+    "next": "Weiter",
+    "setupDecryptionPassword": "Entschlüsselungspasswort einrichten",
+    "setupPasswordInstructions": "Geben Sie ein starkes Passwort ein, um Ihre erstellte Wallet zu verschlüsseln. So greifen Sie auf Ihre Wallet zu.",
+    "enterPassword": "Passwort eingeben",
+    "confirmPassword": "Passwort bestätigen",
+    "passwordMustMatch": "Passwörter müssen übereinstimmen",
+    "create": "Erstellen",
+    "error": {
+      "invalidFileType": "Ungültiger Dateityp. Bitte laden Sie eine JSON- oder TXT-Datei hoch."
+    },
+    "importKeystore": "Keystore importieren",
+    "selectOrDragKeystore": "Wählen Sie Ihre Keystore-Datei aus oder ziehen Sie sie hierher, um sie hochzuladen",
+    "decryptionPassword": "Entschlüsselungspasswort",
+    "password": "Passwort",
+    "import": "Importieren",
+    "importSeedPhrase": "Seed-Phrase importieren",
+    "typeSeedPhrase": "Geben Sie Ihre Seed-Phrase ein",
+    "openKeystore": "Keystore öffnen",
+    "noTokensFound": "Keine Tokens gefunden",
+    "addressCopied": "Adresse kopiert",
+    "copyAddress": "Adresse kopieren",
+    "disconnectWallet": "{name} trennen",
+    "noCoins": "Keine Coins",
+    "sidebar": {
+      "title": "Wallets"
+    },
+    "sortWallets": "Wallets sortieren",
+    "sortBy": "Sortieren nach",
+    "sortByName": "Name (A-Z)",
+    "sortByBalance": "Guthaben (Hoch → Niedrig)",
+    "externalWalletMode": "Externer Wallet-Modus",
+    "externalWalletModeDescription": "Geben Sie Ihre Order ein, klicken Sie auf die Swap-Schaltfläche und folgen Sie den Anweisungen",
+    "externalWalletAssetUnsupported": "Dieses Asset wird im externen Wallet-Modus nicht unterstützt. Verbinden Sie eine Browser-Wallet, wenn Sie fortfahren möchten.",
+    "close": "Schließen",
+    "sendToken": "{ticker} senden"
+  },
+  "common": {
+    "close": "Schließen"
+  },
+  "tx": {
+    "title": "Verlauf",
+    "today": "Heute",
+    "yesterday": "Gestern",
+    "onlyCreatorModify": "Nur der ursprüngliche Ersteller des Swaps kann Änderungen vornehmen",
+    "limitPrice": "Limit-Preis",
+    "expiresIn": "Läuft ab in",
+    "showQr": "QR anzeigen",
+    "modify": "Ändern",
+    "cancelOrder": "Order stornieren",
+    "sourceAddress": "Quelladresse",
+    "destinationAddress": "Zieladresse",
+    "remaining": "{time} verbleibend",
+    "status": {
+      "not_started": "Einzahlung ausstehend",
+      "pending": "Ausstehend",
+      "swapping": "Swap läuft",
+      "completed": "Abgeschlossen",
+      "failed": "Fehlgeschlagen",
+      "expired": "Abgelaufen",
+      "refunded": "Erstattet",
+      "unknown": "Unbekannt"
+    },
+    "leg": {
+      "deposit": "{ticker} einzahlen",
+      "send": "{ticker} senden",
+      "swap": "{from} zu {to} swappen"
+    }
+  }
+}

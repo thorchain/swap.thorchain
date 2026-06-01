@@ -1,0 +1,465 @@
+{
+  "menu": {
+    "swap": "แลกเปลี่ยน",
+    "bond": "Bond",
+    "memo": "Memo",
+    "launchApp": "เปิดแอป",
+    "socials": "โซเชียล",
+    "language": "ภาษา",
+    "newsletterPitch": "วิธีที่ดีที่สุดในการติดตามข่าวสารของ THORChain",
+    "emailPlaceholder": "กรอกอีเมลของคุณ",
+    "signUp": "สมัคร",
+    "signingUp": "กำลังสมัคร…",
+    "subscribed": "ขอบคุณที่สมัครรับข่าวสาร",
+    "genericError": "เกิดข้อผิดพลาดบางอย่าง"
+  },
+  "header": {
+    "wallet": "กระเป๋าเงิน",
+    "history": "ประวัติ"
+  },
+  "footer": {
+    "privacyPolicy": "นโยบายความเป็นส่วนตัว",
+    "termsOfUse": "ข้อกำหนดการใช้งาน",
+    "riskPolicy": "นโยบายความเสี่ยง",
+    "riskTooltip": "แม้ว่าเว็บไซต์นี้จะสร้างขึ้นอย่างระมัดระวัง แต่อาจมีข้อบกพร่องที่ไม่ได้ตั้งใจซึ่งอาจทำให้เว็บไซต์ทำงานผิดพลาดและอาจถึงขั้นสูญเสียเงินทุน ดำเนินการต่อก็ต่อเมื่อคุณเข้าใจและยอมรับความเสี่ยงเหล่านี้",
+    "builtBy": "สร้างโดย",
+    "reportBug": "รายงานข้อบกพร่อง / ขอฟีเจอร์",
+    "getSupport": "รับการสนับสนุนใน Discord",
+    "bug": {
+      "title": "รายงานข้อบกพร่อง / ขอฟีเจอร์",
+      "success": "ขอบคุณ รายงานของคุณถูกส่งแล้ว",
+      "close": "ปิด",
+      "emailLabel": "อีเมล (ไม่บังคับ)",
+      "descriptionLabel": "คำอธิบาย",
+      "descriptionPlaceholder": "อธิบายข้อบกพร่อง / ฟีเจอร์",
+      "attachmentLabel": "ไฟล์แนบ (ไม่บังคับ)",
+      "attachFile": "แนบไฟล์",
+      "sending": "กำลังส่ง...",
+      "send": "ส่งรายงาน",
+      "failed": "ส่งรายงานไม่สำเร็จ"
+    }
+  },
+  "swap": {
+    "tab": {
+      "swap": "แลกเปลี่ยน",
+      "limit": "Limit"
+    },
+    "input": {
+      "sell": "ขาย",
+      "buy": "ซื้อ",
+      "clear": "ล้าง"
+    },
+    "balance": {
+      "label": "ยอดคงเหลือ:"
+    },
+    "button": {
+      "limitNotSupported": "ไม่รองรับคำสั่ง Limit",
+      "temporarilyUnavailable": "ไม่พร้อมใช้งานชั่วคราว",
+      "enterAmount": "กรอกจำนวน",
+      "quoting": "กำลังคำนวณราคา...",
+      "noValidQuotes": "ไม่มีราคาที่ใช้ได้",
+      "enterLimitPrice": "กรอกราคา Limit",
+      "enterLimitOrder": "กรอกคำสั่ง Limit",
+      "swap": "แลกเปลี่ยน",
+      "connectWallet": "เชื่อมต่อกระเป๋าเงิน {chain}",
+      "insufficientBalance": "ยอดคงเหลือไม่เพียงพอ",
+      "approve": "อนุมัติ {ticker}"
+    },
+    "toast": {
+      "approvalTransaction": "ธุรกรรมการอนุมัติ",
+      "success": "สำเร็จ",
+      "errorSubmitting": "เกิดข้อผิดพลาดในการส่งธุรกรรม",
+      "submittingTransaction": "กำลังส่งธุรกรรม",
+      "transactionSubmitted": "ส่งธุรกรรมแล้ว"
+    },
+    "confirm": {
+      "titleLimit": "ยืนยันคำสั่ง Limit",
+      "titleSwap": "ยืนยันการแลกเปลี่ยน",
+      "notAvailable": "n/a",
+      "swapArrowLabel": "แลกเปลี่ยน",
+      "chainAddress": "ที่อยู่ {chain}",
+      "sourceAddressTooltip": "ที่อยู่กระเป๋าเงินที่ส่งเงินทุนสำหรับการแลกเปลี่ยนนี้",
+      "destinationAddressTooltip": "ที่อยู่กระเป๋าเงินที่จะได้รับเงินทุนที่แลกเปลี่ยนแล้ว",
+      "refundAddress": "ที่อยู่สำหรับการคืนเงิน",
+      "refundAddressTooltip": "ที่อยู่ที่เงินทุนจะถูกส่งคืนหากไม่สามารถดำเนินการแลกเปลี่ยนได้",
+      "limitPrice": "ราคา Limit",
+      "limitPriceTooltip": "ราคาต่อหน่วยที่คำสั่ง Limit ของคุณจะถูกดำเนินการ คำสั่งจะถูกเติมเต็มก็ต่อเมื่อตลาดถึงราคานี้",
+      "targetAmount": "จำนวนเป้าหมาย",
+      "targetAmountTooltip": "จำนวนที่แน่นอนที่คุณจะได้รับเมื่อคำสั่ง Limit ของคุณถูกดำเนินการที่ราคาที่คุณระบุไว้",
+      "minimumPayout": "การจ่ายเงินต่ำสุด",
+      "minimumPayoutTooltip": "นี่คือจำนวนต่ำสุดที่คุณรับประกันว่าจะได้รับที่การตั้งค่าการป้องกันราคา {protection} ของคุณ หากตลาดเคลื่อนไหวมากพอจนคุณจะได้รับน้อยลง การแลกเปลี่ยนจะถูกยกเลิกและคืนเงิน",
+      "notProtected": "ไม่ได้รับการป้องกัน",
+      "priceImpact": "ผลกระทบต่อราคา",
+      "priceImpactTooltip": "การแลกเปลี่ยนของคุณเคลื่อนราคาของ Pool มากเพียงใด ยิ่งการแลกเปลี่ยนของคุณใหญ่เมื่อเทียบกับ Liquidity ที่มี ผลกระทบต่อราคาก็ยิ่งสูง",
+      "slippageTolerance": "ความคลาดเคลื่อนของ Slippage",
+      "slippageToleranceTooltip1": "ความแตกต่างระหว่างการป้องกันราคา {protection} ของคุณกับผลกระทบต่อราคา",
+      "slippageToleranceTooltip2": "ในช่วงเวลาระหว่างการเห็นราคาและการแลกเปลี่ยนเสร็จสมบูรณ์ ราคาสามารถเปลี่ยนแปลงได้ ความคลาดเคลื่อนของ Slippage คือการเปลี่ยนแปลงราคาสูงสุดที่คุณจะยอมรับก่อนที่การแลกเปลี่ยนจะถูกยกเลิก",
+      "includedFees": "ค่าธรรมเนียมที่รวมแล้ว",
+      "includedFeesTooltip": "ค่าธรรมเนียมเหล่านี้รวมอยู่ในอัตราแล้ว คุณไม่ต้องจ่ายแยกต่างหาก",
+      "estimatedTime": "เวลาโดยประมาณ",
+      "gasFee": "ค่า Gas {chain}",
+      "exchange": "แลกเปลี่ยน",
+      "button": "ยืนยัน",
+      "buttonLimit": "ยืนยันคำสั่ง Limit",
+      "confirming": "กำลังยืนยัน"
+    },
+    "warning": {
+      "highPriceImpact": "ฉันเข้าใจว่าผลกระทบต่อราคาเป็นส่วนเพิ่มเติมจากความคลาดเคลื่อนของ Slippage ฉันยอมรับผลกระทบต่อราคาที่สูงในการแลกเปลี่ยนนี้",
+      "sendExact": "ฉันเข้าใจว่าฉันต้องส่งจำนวนตามที่ระบุไว้อย่างแม่นยำจากกระเป๋าเงินแบบ self-custody ฉันเข้าใจว่าการส่งจากกระเป๋าเงิน smart contract ที่อยู่ของ exchange ที่อยู่ที่มอบหมาย หรือกระเป๋าเงิน EIP 7702 จะส่งผลให้",
+      "lossOfFunds": "สูญเสียเงินทุน",
+      "ltcMweb": "ฉันเข้าใจว่าการใช้ที่อยู่ LTC MWEB จะส่งผลให้",
+      "selfCustody": "ฉันเข้าใจว่าฉันต้องใช้กระเป๋าเงินแบบ self-custody ฉันเข้าใจว่าการใช้กระเป๋าเงิน smart contract ที่อยู่ของ exchange ที่อยู่ที่มอบหมาย หรือกระเป๋าเงิน EIP 7702 จะส่งผลให้"
+    },
+    "instant": {
+      "sendTitle": "ส่ง {asset}",
+      "sendDescription": "ส่ง <b>{amount} {ticker}</b> ตามจำนวนที่ระบุไว้อย่างแม่นยำไปยังที่อยู่ด้านล่างจากกระเป๋าเงินแบบ self-custody",
+      "qrCodeAlt": "QR Code",
+      "expiresIn": "หมดอายุใน"
+    },
+    "error": {
+      "memoMissing": "ไม่มี Memo",
+      "calculateSuggestedAmount": "คำนวณจำนวนที่แนะนำไม่สำเร็จ",
+      "preflightRequest": "ตรวจสอบคำขอล่วงหน้าไม่สำเร็จ",
+      "preflightMemoless": "ตรวจสอบคำขอแบบไม่มี Memo ล่วงหน้าไม่สำเร็จ",
+      "minAmountNoWallet": "จำนวนแลกเปลี่ยนต่ำสุดเมื่อไม่ได้เชื่อมต่อกระเป๋าเงินคือ {amount} {ticker}",
+      "unknown": "ข้อผิดพลาดที่ไม่ทราบสาเหตุ"
+    },
+    "feeDialog": {
+      "title": "ค่าธรรมเนียมที่รวมอยู่ในอัตรา",
+      "description": "ค่าธรรมเนียมเหล่านี้รวมอยู่ในอัตราแล้ว คุณไม่ต้องจ่ายแยกต่างหาก",
+      "liquidityFee": "Liquidity Fee",
+      "liquidityFeeInfo": "ค่าธรรมเนียมสำหรับผู้ให้ Liquidity บนเส้นทาง",
+      "outboundFee": "Outbound Fee",
+      "outboundFeeInfo": "ค่าธรรมเนียมสำหรับการส่งธุรกรรมขาออก",
+      "platformFee": "Platform Fee",
+      "platformFeeInfo": "ค่าธรรมเนียมที่เรียกเก็บโดย {app}"
+    },
+    "expiry": {
+      "title": "ตั้งค่าเวลาหมดอายุ",
+      "days": "วัน",
+      "hours": "ชั่วโมง",
+      "minutes": "นาที",
+      "maxExpiry": "การหมดอายุสูงสุดคือ {days} วัน",
+      "apply": "ใช้งาน"
+    },
+    "limit": {
+      "whenWorth": "เมื่อ 1 {ticker} มีมูลค่า",
+      "expiresIn": "หมดอายุใน",
+      "oneHour": "1 ชั่วโมง",
+      "oneDay": "1 วัน",
+      "threeDays": "3 วัน",
+      "custom": "กำหนดเอง",
+      "market": "ตลาด"
+    },
+    "limitCancel": {
+      "titleModify": "แก้ไขคำสั่ง Limit",
+      "titleCancel": "ยกเลิกคำสั่ง Limit",
+      "descriptionModify": "การแก้ไขคำสั่ง Limit นี้จะอัปเดตราคาเป้าหมาย จะมีการเรียกเก็บค่าธรรมเนียมเครือข่ายเล็กน้อยเพื่อดำเนินการแก้ไข",
+      "descriptionCancel": "การยกเลิกคำสั่ง Limit นี้จะคืนเงินทุนที่ฝากไว้กลับสู่กระเป๋าเงินของคุณ จะมีการเรียกเก็บค่าธรรมเนียมเครือข่ายเล็กน้อยเพื่อดำเนินการยกเลิก",
+      "fromCurrent": "{percent}% จากปัจจุบัน",
+      "youWillGet": "คุณจะได้รับ",
+      "button": {
+        "modifying": "กำลังแก้ไข...",
+        "cancelling": "กำลังยกเลิก...",
+        "loading": "กำลังโหลด...",
+        "modifyOrder": "แก้ไขคำสั่ง",
+        "cancelOrder": "ยกเลิกคำสั่ง"
+      },
+      "error": {
+        "loadInboundAddresses": "โหลดที่อยู่ขาเข้าไม่สำเร็จ",
+        "cancelFailed": "ยกเลิกการแลกเปลี่ยน Limit ไม่สำเร็จ",
+        "modifyFailed": "แก้ไขการแลกเปลี่ยน Limit ไม่สำเร็จ"
+      },
+      "toast": {
+        "sendToCancel": "ส่ง {amount} {ticker} จากกระเป๋าเงินเดิมเพื่อยกเลิก",
+        "sendToModify": "ส่ง {amount} {ticker} จากกระเป๋าเงินเดิมเพื่อแก้ไข",
+        "cancelSubmitted": "ส่งธุรกรรมยกเลิกแล้ว",
+        "modifySubmitted": "ส่งธุรกรรมแก้ไขแล้ว"
+      },
+      "warning": {
+        "memolessDeposit": "หาก {mode} คำสั่งนี้ ให้ส่งเงินฝากจากกระเป๋าเงิน {chain} เดิมที่วางคำสั่งไว้",
+        "connectOrMemoless": "เชื่อมต่อกระเป๋าเงิน {chain} หรือใช้เงินฝากแบบไม่มี Memo เพื่อ {mode} คำสั่งนี้",
+        "connect": "เชื่อมต่อกระเป๋าเงิน {chain} เพื่อ {mode} คำสั่งนี้",
+        "switch": "สลับไปยังกระเป๋าเงิน {chain} เพื่อ {mode} คำสั่งนี้",
+        "addressMismatch": "กระเป๋าเงินที่เชื่อมต่อไม่ตรงกับที่อยู่ที่วางคำสั่งนี้",
+        "tradingPaused": "การซื้อขาย {chain} ถูกหยุดชั่วคราวในขณะนี้"
+      }
+    },
+    "quoteTimer": {
+      "refresh": "รีเฟรช"
+    },
+    "recipient": {
+      "addressPlaceholder": "ที่อยู่ {chain}",
+      "paste": "วาง",
+      "invalidAddress": "ที่อยู่ {chain} ไม่ถูกต้อง",
+      "titleAddresses": "กรอกที่อยู่",
+      "titleReceiving": "กรอกที่อยู่ผู้รับ",
+      "enterRefundAddress": "กรอกที่อยู่สำหรับการคืนเงิน:",
+      "enterReceivingAddress": "กรอกที่อยู่ผู้รับ:",
+      "preparingSwap": "กำลังเตรียมการแลกเปลี่ยน",
+      "next": "ถัดไป"
+    },
+    "selectAsset": {
+      "title": "เลือกเหรียญ",
+      "allChains": "ทุกเครือข่าย",
+      "search": "ค้นหา",
+      "secured": "Secured",
+      "showSecuredAssets": "แสดงสินทรัพย์ Secured",
+      "trade": "Trade",
+      "currentlyUnavailable": "ไม่พร้อมใช้งานในขณะนี้",
+      "selected": "เลือกแล้ว"
+    },
+    "settings": {
+      "noProtection": "ไม่มีการป้องกัน",
+      "priceProtection": "การป้องกันราคา",
+      "priceProtectionTooltip1": "ผลกระทบต่อราคาคือการแลกเปลี่ยนของคุณเคลื่อนราคาของ Pool มากเพียงใด ยิ่งการแลกเปลี่ยนของคุณใหญ่เมื่อเทียบกับ Liquidity ที่มี ผลกระทบก็ยิ่งสูง",
+      "priceProtectionTooltip2": "ในช่วงเวลาระหว่างการเห็นราคาและการแลกเปลี่ยนเสร็จสมบูรณ์ ราคาสามารถเปลี่ยนแปลงได้ ความคลาดเคลื่อนของ Slippage คือการเปลี่ยนแปลงราคาสูงสุดที่คุณจะยอมรับก่อนที่การแลกเปลี่ยนจะถูกยกเลิก",
+      "priceProtectionDescription": "จำนวนสูงสุดที่คุณยินดีจ่ายในการแลกเปลี่ยน ซึ่งรวมถึงผลกระทบต่อราคาของการแลกเปลี่ยนและ Slippage ใดๆ ของราคาโทเคนก่อนที่การแลกเปลี่ยนจะถูกดำเนินการ",
+      "twapTitle": "Time Weighted Average Price (TWAP)",
+      "twapTooltip1": "การซื้อขาย TWAP บน THORChain เรียกว่า \"streaming swaps\" ในเอกสารและโค้ด",
+      "twapTooltip2": "หากต้องการวางคำสั่งขายทันที ซึ่งจะส่งผลให้ได้การดำเนินการที่ราคาแย่ที่สุด ให้กรอก 1 สำหรับจำนวน sub-swaps และ 1 บล็อกสำหรับเวลาระหว่าง sub-swaps",
+      "twapDescription": "ผู้ใช้ส่วนใหญ่ควรใช้การตั้งค่าเริ่มต้น เฉพาะเทรดเดอร์ผู้เชี่ยวชาญเท่านั้นที่ควรเปลี่ยนการตั้งค่าเหล่านี้",
+      "numberOfSubSwaps": "จำนวน sub-swaps",
+      "numberOfSubSwapsTooltip": "แบ่งคำสั่งของคุณออกเป็นการซื้อขายย่อยๆ ที่เรียกว่า sub-swaps ยิ่งมี sub-swaps มาก การดำเนินการที่ราคาก็ยิ่งดี เมื่อตั้งค่าเป็นศูนย์ โปรโตคอลจะคำนวณจำนวน sub-swaps ให้คุณเพื่อให้แต่ละครั้งมี Slippage 5 bps ค่าเริ่มต้นคือศูนย์",
+      "timeBetweenSubSwaps": "เวลาระหว่าง sub-swaps",
+      "timeBetweenSubSwapsTooltip": "เวลาระหว่างแต่ละ sub-swap วัดเป็นบล็อก ยิ่งมีบล็อกระหว่างแต่ละ sub-swap มาก การดำเนินการที่ราคาก็ยิ่งดี การเลือกศูนย์บล็อกจะทำ sub-swaps หลายครั้งในทุกบล็อกเพื่อการดำเนินการที่เร็วขึ้น ค่าเริ่มต้นคือศูนย์บล็อก",
+      "blocksCount": "{count, plural, other {# บล็อก}}",
+      "rapidSwap": "Rapid Swap",
+      "seconds": "~{count, plural, other {# วินาที}}",
+      "reset": "รีเซ็ต",
+      "save": "บันทึก"
+    }
+  },
+  "send": {
+    "title": "ส่ง",
+    "send": "ส่ง",
+    "amount": "จำนวน",
+    "clear": "ล้าง",
+    "balanceLabel": "ยอดคงเหลือ:",
+    "to": "ไปยัง",
+    "addressPlaceholder": "ที่อยู่ {chain}",
+    "paste": "วาง",
+    "transactionFee": "ค่าธรรมเนียมธุรกรรม",
+    "selectCoin": "เลือกเหรียญ",
+    "connectThorchainWallet": "เชื่อมต่อกระเป๋าเงิน THORChain",
+    "enterMemo": "กรอก Memo",
+    "enterAmount": "กรอกจำนวน",
+    "toast": {
+      "submitting": "กำลังส่งธุรกรรม...",
+      "submitted": "ส่งธุรกรรมแล้ว",
+      "submitError": "เกิดข้อผิดพลาดในการส่งธุรกรรม"
+    },
+    "error": {
+      "walletNotConnectedReconnect": "กระเป๋าเงินไม่ได้เชื่อมต่อ กรุณาเชื่อมต่อใหม่",
+      "walletNotConnected": "กระเป๋าเงินไม่ได้เชื่อมต่อ",
+      "invalidAddress": "ที่อยู่ {chain} ไม่ถูกต้อง",
+      "noRuneBalance": "ไม่พบยอดคงเหลือ RUNE",
+      "noTcyBalance": "ไม่พบยอดคงเหลือ TCY"
+    },
+    "beta": {
+      "title": "นี่คือฟีเจอร์เบต้า",
+      "description": "อาจมีข้อบกพร่องที่ยังไม่ถูกค้นพบ ใช้งานด้วยความเสี่ยงของคุณเอง"
+    },
+    "memo": {
+      "title": "Memo",
+      "examplesButton": "ตัวอย่าง Memo",
+      "placeholder": "กรอก Memo",
+      "noPayloadInfo": "การดำเนินการนี้ไม่ต้องใช้ payload มีเพียงค่าธรรมเนียมเครือข่าย 0.02 RUNE เท่านั้นที่นำมาใช้"
+    },
+    "bond": {
+      "bondAmount": "จำนวน Bond",
+      "rebondAmount": "จำนวน Rebond",
+      "nodeAddress": "ที่อยู่ Node",
+      "newAddress": "ที่อยู่ใหม่",
+      "enterNodeAddress": "กรอกที่อยู่ Node",
+      "invalidNodeAddress": "ที่อยู่ Node ไม่ถูกต้อง",
+      "validatingNode": "กำลังตรวจสอบ node...",
+      "nodeNotFound": "ไม่พบ node",
+      "enterNewAddress": "กรอกที่อยู่ใหม่",
+      "invalidNewAddress": "ที่อยู่ใหม่ไม่ถูกต้อง",
+      "bond": "Bond",
+      "unbond": "Unbond",
+      "rebond": "Rebond",
+      "nodeNotFoundOrUnavailable": "ไม่พบ node หรือไม่พร้อมใช้งาน",
+      "tab": {
+        "bond": "Bond",
+        "unbond": "Unbond",
+        "rebond": "Rebond",
+        "track": "ติดตาม"
+      },
+      "node": {
+        "version": "เวอร์ชัน",
+        "ipAddress": "ที่อยู่ IP",
+        "status": "สถานะ",
+        "providers": "ผู้ให้บริการ",
+        "yourShare": "ส่วนแบ่งของคุณ",
+        "slashPoints": "Slash Points",
+        "operatorFee": "ค่าธรรมเนียมผู้ดำเนินการ",
+        "information": "ข้อมูล Node",
+        "bond": "Bond",
+        "nextReward": "รางวัลถัดไป"
+      }
+    },
+    "stake": {
+      "stakeAmount": "จำนวน Stake",
+      "unstakeAmount": "จำนวน Unstake",
+      "compound": "Compound",
+      "checking": "กำลังตรวจสอบ...",
+      "claim": "เคลม",
+      "nothingToClaim": "ไม่มีสิ่งใดให้เคลม",
+      "stake": "Stake",
+      "unstake": "Unstake",
+      "stakedLabel": "Stake แล้ว:",
+      "wallet": "กระเป๋าเงิน",
+      "availableToClaim": "พร้อมให้เคลม",
+      "staked": "Stake แล้ว",
+      "claimAmount": "จำนวนที่เคลม",
+      "compoundInfo": "นำรางวัล TCY staking ที่ค้างอยู่กลับเข้าสู่สถานะ stake ของคุณ",
+      "tab": {
+        "stake": "Stake",
+        "unstake": "Unstake",
+        "compound": "Compound",
+        "claim": "เคลม"
+      }
+    },
+    "examples": {
+      "back": "ย้อนกลับ",
+      "copied": "คัดลอกไปยังคลิปบอร์ดแล้ว",
+      "copyMemo": "คัดลอก Memo {label}",
+      "fillInValues": "กรอกค่า →",
+      "learnMore": "เรียนรู้เพิ่มเติม",
+      "optional": "ไม่บังคับ",
+      "optionalPlaceholder": "{hint} (เว้นว่างไว้เพื่อละเว้น)",
+      "preview": "ดูตัวอย่าง",
+      "useMemo": "ใช้ Memo",
+      "badgeNoPayload": "ไม่มี payload",
+      "badgeDust": "dust",
+      "items": {
+        "stakeTcy": "Stake TCY",
+        "unstakeTcy": "Unstake TCY",
+        "claimTcy": "เคลม TCY",
+        "depositRunepool": "ฝาก RUNEPool",
+        "withdrawRunepool": "ถอน RUNEPool",
+        "bond": "Bond",
+        "unbond": "Unbond",
+        "rebond": "Rebond",
+        "leave": "ออก",
+        "whitelistBondProvider": "Whitelist Bond Provider",
+        "unwhitelistBondProvider": "Unwhitelist Bond Provider",
+        "addLpSingle": "เพิ่ม LP (ด้านเดียว)",
+        "addLpDual": "เพิ่ม LP (สองด้าน)",
+        "withdrawLp": "ถอน LP",
+        "donateToPool": "บริจาคให้ Pool"
+      },
+      "placeholder": {
+        "nodeAddress": "ที่อยู่ Node",
+        "providerAddress": "ที่อยู่ผู้ให้บริการ",
+        "newAddress": "ที่อยู่ใหม่",
+        "thorAddress": "ที่อยู่ THORChain",
+        "pairedAddress": "ที่อยู่ที่จับคู่",
+        "affiliate": "Affiliate",
+        "pool": "Pool",
+        "asset": "สินทรัพย์",
+        "amount": "จำนวน",
+        "basisPoints": "Basis Points",
+        "fee": "ค่าธรรมเนียม (basis points)",
+        "thorPrefix": "thor1…",
+        "pairedAddressHint": "ที่อยู่เครือข่ายภายนอก",
+        "affiliateHint": "THORName หรือที่อยู่ thor1…",
+        "poolHint": "เช่น BTC.BTC หรือ ETH/ETH",
+        "assetHint": "เช่น BTC.BTC หรือ RUNE (ด้านเดียว)",
+        "amountHint": "รูปแบบ 1e8 — เช่น 100000000 = 1 RUNE",
+        "basisPointsHint": "0 – 10000 (10000 = 100%)",
+        "feeHint": "0 – 10000"
+      }
+    }
+  },
+  "wallet": {
+    "chains": "เครือข่าย",
+    "deselectAll": "ยกเลิกการเลือกทั้งหมด",
+    "selectAll": "เลือกทั้งหมด",
+    "soon": "เร็วๆ นี้",
+    "connectNamed": "เชื่อมต่อ {name}",
+    "connected": "เชื่อมต่อแล้ว",
+    "disconnected": "ยกเลิกการเชื่อมต่อแล้ว",
+    "install": "ติดตั้ง",
+    "connectWallet": "เชื่อมต่อกระเป๋าเงิน",
+    "derivationPath": "Derivation Path",
+    "selectAccountType": "เลือกประเภทบัญชี",
+    "index": "Index",
+    "ledgerUnlockHint": "ตรวจสอบให้แน่ใจว่า Ledger ของคุณปลดล็อกแล้วและแอป {app} เปิดอยู่ก่อนเชื่อมต่อ",
+    "correspondingApp": "ที่สอดคล้อง",
+    "createNewWallet": "สร้างกระเป๋าเงินใหม่",
+    "createWalletInstructions": "จดคำ 12 คำเหล่านี้และเก็บไว้อย่างปลอดภัยแบบออฟไลน์ วลี 12 คำนี้ใช้สำหรับกู้คืน private keys ของกระเป๋าเงินของคุณ",
+    "copyPhrase": "คัดลอกวลี",
+    "confirmSavedPassphrase": "ฉันยืนยันว่าได้บันทึก passphrase สำหรับกู้คืนบัญชีของฉันในอนาคตไว้อย่างปลอดภัยแล้ว",
+    "back": "ย้อนกลับ",
+    "next": "ถัดไป",
+    "setupDecryptionPassword": "ตั้งค่ารหัสผ่านสำหรับถอดรหัส",
+    "setupPasswordInstructions": "กรอกรหัสผ่านที่แข็งแกร่งเพื่อเข้ารหัสกระเป๋าเงินที่คุณสร้างขึ้น นี่คือวิธีที่คุณจะเข้าถึงกระเป๋าเงินของคุณ",
+    "enterPassword": "กรอกรหัสผ่าน",
+    "confirmPassword": "ยืนยันรหัสผ่าน",
+    "passwordMustMatch": "รหัสผ่านต้องตรงกัน",
+    "create": "สร้าง",
+    "error": {
+      "invalidFileType": "ประเภทไฟล์ไม่ถูกต้อง กรุณาอัปโหลดไฟล์ JSON หรือ TXT"
+    },
+    "importKeystore": "นำเข้า Keystore",
+    "selectOrDragKeystore": "เลือกหรือลากไฟล์ keystore ของคุณเพื่ออัปโหลด",
+    "decryptionPassword": "รหัสผ่านสำหรับถอดรหัส",
+    "password": "รหัสผ่าน",
+    "import": "นำเข้า",
+    "importSeedPhrase": "นำเข้า Seed Phrase",
+    "typeSeedPhrase": "พิมพ์ seed phrase ของคุณ",
+    "openKeystore": "เปิด Keystore",
+    "noTokensFound": "ไม่พบโทเคน",
+    "addressCopied": "คัดลอกที่อยู่แล้ว",
+    "copyAddress": "คัดลอกที่อยู่",
+    "disconnectWallet": "ยกเลิกการเชื่อมต่อ {name}",
+    "noCoins": "ไม่มีเหรียญ",
+    "sidebar": {
+      "title": "กระเป๋าเงิน"
+    },
+    "sortWallets": "จัดเรียงกระเป๋าเงิน",
+    "sortBy": "จัดเรียงตาม",
+    "sortByName": "ชื่อ (A-Z)",
+    "sortByBalance": "ยอดคงเหลือ (สูง → ต่ำ)",
+    "externalWalletMode": "โหมดกระเป๋าเงินภายนอก",
+    "externalWalletModeDescription": "กรอกคำสั่งของคุณ คลิกปุ่มแลกเปลี่ยน และทำตามคำแนะนำ",
+    "externalWalletAssetUnsupported": "สินทรัพย์นี้ไม่รองรับในโหมดกระเป๋าเงินภายนอก เชื่อมต่อกระเป๋าเงินบนเบราว์เซอร์หากคุณต้องการดำเนินการต่อ",
+    "close": "ปิด",
+    "sendToken": "ส่ง {ticker}"
+  },
+  "common": {
+    "close": "ปิด"
+  },
+  "tx": {
+    "title": "ประวัติ",
+    "today": "วันนี้",
+    "yesterday": "เมื่อวาน",
+    "onlyCreatorModify": "เฉพาะผู้สร้างการแลกเปลี่ยนเดิมเท่านั้นที่สามารถแก้ไขได้",
+    "limitPrice": "ราคา Limit",
+    "expiresIn": "หมดอายุใน",
+    "showQr": "แสดง QR",
+    "modify": "แก้ไข",
+    "cancelOrder": "ยกเลิกคำสั่ง",
+    "sourceAddress": "ที่อยู่ต้นทาง",
+    "destinationAddress": "ที่อยู่ปลายทาง",
+    "remaining": "เหลืออีก {time}",
+    "status": {
+      "not_started": "รอการฝากเงิน",
+      "pending": "รอดำเนินการ",
+      "swapping": "กำลังแลกเปลี่ยน",
+      "completed": "เสร็จสมบูรณ์",
+      "failed": "ล้มเหลว",
+      "expired": "หมดอายุ",
+      "refunded": "คืนเงินแล้ว",
+      "unknown": "ไม่ทราบ"
+    },
+    "leg": {
+      "deposit": "ฝาก {ticker}",
+      "send": "ส่ง {ticker}",
+      "swap": "แลกเปลี่ยน {from} เป็น {to}"
+    }
+  }
+}
