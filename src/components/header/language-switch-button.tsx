@@ -3,6 +3,7 @@
 import { useTransition } from 'react'
 import { useLocale, useTranslations } from 'next-intl'
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu'
+import { ScrollArea } from '@/components/ui/scroll-area'
 import { Icon } from '@/components/icons'
 import { ThemeButton } from '@/components/theme-button'
 import { defaultLocale, isLocale, type Locale, localeNames, locales } from '@/i18n/config'
@@ -31,7 +32,7 @@ export const LanguageSwitchButton = () => {
         </ThemeButton>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="rounded-xl">
-        <div>
+        <ScrollArea className="h-80">
           {locales.map(locale => (
             <DropdownMenuItem
               key={locale}
@@ -44,7 +45,7 @@ export const LanguageSwitchButton = () => {
               {locale === current && <Icon name="check" className="text-green-contrast size-4" />}
             </DropdownMenuItem>
           ))}
-        </div>
+        </ScrollArea>
       </DropdownMenuContent>
     </DropdownMenu>
   )
