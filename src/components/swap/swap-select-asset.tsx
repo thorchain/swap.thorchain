@@ -64,11 +64,16 @@ export const SwapSelectAsset = ({ isOpen, onOpenChange, selected, onSelectAsset 
   const isAssetHalted = (asset: Asset) => {
     const tickerKey = `HALT${asset.ticker}TRADING`
     const isThorOnly = asset.isSecuredAsset // Secured assets are THORChain-only; Maya can't serve them
-    const thorCanServe = isThorOnly || tickerKey in mimir
-    const mayaCanServe = !isThorOnly && tickerKey in mayaMimir
 
+    // THORChain
+    const thorCanServe = isThorOnly || tickerKey in mimir
     const haltedOnThor = !thorCanServe || mimir[tickerKey] === 1 || mimir['HALTTRADING'] === 1
-    const haltedOnMaya = !mayaCanServe || mayaMimir[tickerKey] === 1 || mayaMimir['HALTTRADING'] === 1
+
+    // MAYAChain — halt-trading keys are chain-level and per-pool, not per-ticker.
+    const mayaChainKey = `HALT${asset.chain}TRADING`
+    const mayaPoolKey = `HALTTRADING-${asset.identifier.replace('.', '-')}`.toUpperCase()
+    const mayaCanServe = !isThorOnly && mayaChainKey in mayaMimir
+    const haltedOnMaya = !mayaCanServe || mayaMimir['HALTTRADING'] === 1 || mayaMimir[mayaChainKey] === 1 || mayaMimir[mayaPoolKey] === 1
 
     return haltedOnThor && haltedOnMaya
   }
