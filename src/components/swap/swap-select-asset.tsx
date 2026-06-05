@@ -3,6 +3,7 @@ import { Fragment, useEffect, useMemo, useRef, useState } from 'react'
 import { useTranslations } from 'next-intl'
 import { useVirtualizer } from '@tanstack/react-virtual'
 import { Chain } from '@tcswap/core'
+import { ProviderName } from '@tcswap/helpers'
 import { Search } from 'lucide-react'
 import { Credenza, CredenzaContent, CredenzaHeader, CredenzaTitle } from '@/components/ui/credenza'
 import { Input } from '@/components/ui/input'
@@ -63,19 +64,12 @@ export const SwapSelectAsset = ({ isOpen, onOpenChange, selected, onSelectAsset 
 
   const isAssetHalted = (asset: Asset) => {
     const tickerKey = `HALT${asset.ticker}TRADING`
-    const isThorOnly = asset.isSecuredAsset // Secured assets are THORChain-only; Maya can't serve them
+    const haltedOn: Partial<Record<ProviderName, boolean>> = {
+      [ProviderName.THORCHAIN]: mimir['HALTTRADING'] === 1 || mimir[tickerKey] === 1,
+      [ProviderName.MAYACHAIN]: mayaMimir['HALTTRADING'] === 1 || mayaMimir[tickerKey] === 1
+    }
 
-    // THORChain
-    const thorCanServe = isThorOnly || tickerKey in mimir
-    const haltedOnThor = !thorCanServe || mimir[tickerKey] === 1 || mimir['HALTTRADING'] === 1
-
-    // MAYAChain — halt-trading keys are chain-level and per-pool, not per-ticker.
-    const mayaChainKey = `HALT${asset.chain}TRADING`
-    const mayaPoolKey = `HALTTRADING-${asset.identifier.replace('.', '-')}`.toUpperCase()
-    const mayaCanServe = !isThorOnly && mayaChainKey in mayaMimir
-    const haltedOnMaya = !mayaCanServe || mayaMimir['HALTTRADING'] === 1 || mayaMimir[mayaChainKey] === 1 || mayaMimir[mayaPoolKey] === 1
-
-    return haltedOnThor && haltedOnMaya
+    return asset.providers.length > 0 && asset.providers.every(provider => haltedOn[provider])
   }
 
   const chainMap: Map<FilterChain, Asset[]> = useMemo(() => {
