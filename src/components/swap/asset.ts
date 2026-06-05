@@ -1,4 +1,5 @@
 import { Chain } from '@tcswap/core'
+import { ProviderName } from '@tcswap/helpers'
 
 export interface Asset {
   address?: string
@@ -11,6 +12,7 @@ export interface Asset {
   isTradeAsset?: boolean
   logoURI?: string
   name?: string
+  providers: ProviderName[]
   shortCode?: string
   ticker: string
 }
