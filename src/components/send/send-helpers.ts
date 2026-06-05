@@ -24,6 +24,7 @@ export function tokenToAsset(token: TokenBalance): Asset {
     identifier: assetIdentifierStr(balance),
     logoURI: logoURI || undefined,
     chainId: balance.chain,
-    decimals: balance.decimal ?? 8
+    decimals: balance.decimal ?? 8,
+    providers: []
   }
 }
