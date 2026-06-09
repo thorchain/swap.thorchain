@@ -3,7 +3,9 @@ import { NextRequest, NextResponse } from 'next/server'
 const SUBDOMAIN_ROUTES = [
   { path: '/tcy', host: 'tcy.thorchain.org' },
   { path: '/bond', host: 'bond.thorchain.org' },
-  { path: '/memo', host: 'memo.thorchain.org' }
+  { path: '/memo', host: 'memo.thorchain.org' },
+  { path: '/pool', host: 'pool.thorchain.org' },
+  { path: '/thorname', host: 'thorname.thorchain.org' }
 ]
 
 const PRIMARY_HOST = 'swap.thorchain.org'
