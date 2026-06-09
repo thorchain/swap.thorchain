@@ -4,7 +4,9 @@ import createNextIntlPlugin from 'next-intl/plugin'
 const SUBDOMAIN_ROUTES = [
   { host: 'tcy.thorchain.org', destination: '/tcy' },
   { host: 'bond.thorchain.org', destination: '/bond' },
-  { host: 'memo.thorchain.org', destination: '/memo' }
+  { host: 'memo.thorchain.org', destination: '/memo' },
+  { host: 'pool.thorchain.org', destination: '/pool' },
+  { host: 'thorname.thorchain.org', destination: '/thorname' }
 ]
 
 const withNextIntl = createNextIntlPlugin('./src/i18n/request.ts')

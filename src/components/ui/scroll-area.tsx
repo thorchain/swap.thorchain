@@ -7,21 +7,27 @@ import { cn } from '@/lib/utils'
 function ScrollArea({
   className,
   classNameViewport,
+  orientation = 'vertical',
   children,
   ...props
-}: React.ComponentProps<typeof ScrollAreaPrimitive.Root> & { classNameViewport?: string }) {
+}: React.ComponentProps<typeof ScrollAreaPrimitive.Root> & {
+  classNameViewport?: string
+  orientation?: 'vertical' | 'horizontal'
+}) {
   return (
     <ScrollAreaPrimitive.Root data-slot="scroll-area" className={cn('relative', className)} {...props}>
       <ScrollAreaPrimitive.Viewport
         data-slot="scroll-area-viewport"
         className={cn(
           'focus-visible:ring-ring/50 size-full rounded-[inherit] transition-[color,box-shadow] outline-none focus-visible:ring-[3px] focus-visible:outline-1',
+          // Let content lay out at its natural width so it can overflow horizontally.
+          orientation === 'horizontal' && '[&>div]:!w-max',
           classNameViewport
         )}
       >
         {children}
       </ScrollAreaPrimitive.Viewport>
-      <ScrollBar />
+      <ScrollBar orientation={orientation} />
       <ScrollAreaPrimitive.Corner />
     </ScrollAreaPrimitive.Root>
   )

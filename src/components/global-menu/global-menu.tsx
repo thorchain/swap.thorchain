@@ -10,7 +10,7 @@ import { X } from 'lucide-react'
 import { Dialog, DialogPortal } from '@/components/ui/dialog'
 import { AppConfig } from '@/config'
 import { cn } from '@/lib/utils'
-import { bondAnim, memoAnim, swapAnim, tcyAnim } from './animations'
+import { bondAnim, memoAnim, swapAnim, tcyAnim, poolsAnim, thornameAnim } from './animations'
 
 const SOCIAL_LINKS = [
   {
@@ -156,7 +156,9 @@ const SUBDOMAIN_HOSTS: Record<string, string> = {
   '/': 'swap.thorchain.org',
   '/tcy': 'tcy.thorchain.org',
   '/bond': 'bond.thorchain.org',
-  '/memo': 'memo.thorchain.org'
+  '/memo': 'memo.thorchain.org',
+  '/pool': 'pool.thorchain.org',
+  '/thorname': 'thorname.thorchain.org'
 }
 
 function resolveHref(path: string): string {
@@ -206,7 +208,9 @@ export function GlobalMenu({ isOpen, onOpenChange }: SendMemoMenuProps) {
     { label: t('swap'), animationData: swapAnim, href: resolveHref('/'), onClick: closeMenu },
     { label: '$TCY', animationData: tcyAnim, href: resolveHref('/tcy'), onClick: closeMenu },
     { label: t('bond'), animationData: bondAnim, href: resolveHref('/bond'), onClick: closeMenu },
-    { label: t('memo'), animationData: memoAnim, href: resolveHref('/memo'), onClick: closeMenu }
+    { label: t('memo'), animationData: memoAnim, href: resolveHref('/memo'), onClick: closeMenu },
+    { label: t('pool'), animationData: poolsAnim, href: resolveHref('/pool'), onClick: closeMenu },
+    { label: t('thorname'), animationData: thornameAnim, href: resolveHref('/thorname'), onClick: closeMenu }
   ]
 
   return (

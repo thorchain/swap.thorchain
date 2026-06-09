@@ -13,7 +13,7 @@ export default function TcyPage() {
   return (
     <main className="min-h-screen">
       <Header />
-      <div className="container mx-auto max-w-lg px-4 py-12">
+      <div className="container mx-auto max-w-xl px-4 py-12">
         <Suspense>
           <SendMemoStake />
         </Suspense>

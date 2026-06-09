@@ -3,19 +3,19 @@ import { Suspense } from 'react'
 import { Footer } from '@/components/footer/footer'
 import { GlobalDialog } from '@/components/global-dialog'
 import { Header } from '@/components/header/header'
-import { SendMemo } from '@/components/send-memo/send-memo'
+import { SendMemoThorname } from '@/components/send-memo/send-memo-thorname'
 
 export const metadata: Metadata = {
-  title: 'Memo | THORChain'
+  title: 'THORName | THORChain'
 }
 
-export default function MemoPage() {
+export default function ThornamePage() {
   return (
     <main className="min-h-screen">
       <Header />
       <div className="container mx-auto max-w-xl px-4 py-12">
         <Suspense>
-          <SendMemo />
+          <SendMemoThorname />
         </Suspense>
       </div>
       <GlobalDialog />
