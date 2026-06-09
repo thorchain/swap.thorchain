@@ -1,14 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
-
-const SUBDOMAIN_ROUTES = [
-  { path: '/tcy', host: 'tcy.thorchain.org' },
-  { path: '/bond', host: 'bond.thorchain.org' },
-  { path: '/memo', host: 'memo.thorchain.org' },
-  { path: '/pool', host: 'pool.thorchain.org' },
-  { path: '/thorname', host: 'thorname.thorchain.org' }
-]
-
-const PRIMARY_HOST = 'swap.thorchain.org'
+import { PRIMARY_HOST, SUBDOMAIN_ROUTES } from '@/config'
 
 export function proxy(req: NextRequest) {
   const host = (req.headers.get('host') || '').split(':')[0]

@@ -4,13 +4,14 @@ import Image from 'next/image'
 import * as DialogPrimitive from '@radix-ui/react-dialog'
 import Lottie, { LottieRefCurrentProps } from 'lottie-react'
 import { useRef, useState } from 'react'
+import { cn } from '@/lib/utils'
+import { X } from 'lucide-react'
 import { useTranslations } from 'next-intl'
 import { VisuallyHidden } from '@radix-ui/react-visually-hidden'
-import { X } from 'lucide-react'
 import { Dialog, DialogPortal } from '@/components/ui/dialog'
-import { AppConfig } from '@/config'
-import { cn } from '@/lib/utils'
-import { bondAnim, memoAnim, swapAnim, tcyAnim, poolsAnim, thornameAnim } from './animations'
+import { HeaderLogoText } from '@/components/header/header-logo-text'
+import { AppConfig, PRIMARY_HOST, SUBDOMAIN_ROUTES } from '@/config'
+import { bondAnim, memoAnim, poolsAnim, swapAnim, tcyAnim, thornameAnim } from './animations'
 
 const SOCIAL_LINKS = [
   {
@@ -153,12 +154,8 @@ interface SendMemoMenuProps {
 }
 
 const SUBDOMAIN_HOSTS: Record<string, string> = {
-  '/': 'swap.thorchain.org',
-  '/tcy': 'tcy.thorchain.org',
-  '/bond': 'bond.thorchain.org',
-  '/memo': 'memo.thorchain.org',
-  '/pool': 'pool.thorchain.org',
-  '/thorname': 'thorname.thorchain.org'
+  '/': PRIMARY_HOST,
+  ...Object.fromEntries(SUBDOMAIN_ROUTES.map(({ path, host }) => [path, host]))
 }
 
 function resolveHref(path: string): string {
@@ -240,7 +237,7 @@ export function GlobalMenu({ isOpen, onOpenChange }: SendMemoMenuProps) {
               >
                 <Image src={AppConfig.logo} alt={AppConfig.title} width={32} height={32} priority />
                 <span className="hidden md:inline-flex [&_path]:fill-white">
-                  <AppConfig.LogoText />
+                  <HeaderLogoText />
                 </span>
               </a>
 

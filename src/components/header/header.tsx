@@ -11,6 +11,7 @@ import { TransactionHistoryButton } from '@/components/header/transaction-histor
 import { useDialog } from '@/components/global-dialog'
 import { ThemeButton } from '@/components/theme-button'
 import { WalletSidebar } from '@/components/wallet-sidebar/wallet-sidebar'
+import { HeaderLogoText } from '@/components/header/header-logo-text'
 import { AppConfig } from '@/config'
 import { useConnectedWallets } from '@/hooks/use-wallets'
 import { cn } from '@/lib/utils'
@@ -44,7 +45,7 @@ export function Header() {
           target={AppConfig.logoLink ? '_blank' : '_self'}
         >
           <Image src={AppConfig.logo} alt={AppConfig.title} width={32} height={32} priority />
-          <AppConfig.LogoText />
+          <HeaderLogoText />
         </a>
 
         <div className="flex flex-1 flex-wrap items-center justify-end gap-2">

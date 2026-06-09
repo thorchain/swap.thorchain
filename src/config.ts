@@ -1,5 +1,4 @@
 import { ProviderName } from '@tcswap/helpers'
-import { HeaderLogoText } from '@/components/header/header-logo-text'
 
 export const AppConfig = {
   id: 'thorchain',
@@ -10,7 +9,6 @@ export const AppConfig = {
   providers: [ProviderName.THORCHAIN, ProviderName.MAYACHAIN],
   favicon: '/favicon.ico',
   logo: '/logo.svg',
-  LogoText: HeaderLogoText,
   logoLink: 'https://www.thorchain.org',
   gtag: 'G-VZ0FQ1WC7G',
   pixelId: 'qki4a',
@@ -21,3 +19,13 @@ export const AppConfig = {
   tosLink: 'https://www.thorchain.org/terms-of-use',
   supportEmail: 'contact@thorchain.org'
 }
+
+export const PRIMARY_HOST = 'swap.thorchain.org'
+
+export const SUBDOMAIN_ROUTES = [
+  { path: '/tcy', host: 'tcy.thorchain.org' },
+  { path: '/bond', host: 'bond.thorchain.org' },
+  { path: '/memo', host: 'memo.thorchain.org' },
+  { path: '/pool', host: 'pool.thorchain.org' },
+  { path: '/thorname', host: 'thorname.thorchain.org' }
+] as const
