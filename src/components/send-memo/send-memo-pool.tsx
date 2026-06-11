@@ -500,12 +500,6 @@ export function SendMemoPool() {
 
         {tab === 'runepool' && (
           <>
-            <div className="bg-swap-bloc rounded-15 border p-7">
-              <div className="text-txt-label-small flex items-start gap-2 text-sm">
-                <Info className="mt-0.5 size-4 shrink-0" />
-                <span>{t('pool.runepoolInfo')}</span>
-              </div>
-            </div>
             <PercentBlock
               label={t('pool.withdrawPercent')}
               percent={percent}

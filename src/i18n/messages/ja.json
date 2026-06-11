@@ -261,7 +261,6 @@
       "affiliatePair": "アフィリエイトと手数料の両方を設定するか、両方を空のままにしてください。",
       "withdrawAs": "引き出し形式",
       "bothSides": "両方",
-      "runepoolInfo": "RUNEPoolポジションを引き出します。RUNEPoolへの追加は非推奨であり、ここでは利用できません。",
       "inboundUnavailable": "このチェーンではインバウンドアドレスを利用できません。",
       "chainHalted": "このチェーンは現在、流動性操作が停止されています。",
       "connectWallet": "ウォレットを接続",

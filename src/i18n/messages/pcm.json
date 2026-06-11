@@ -261,7 +261,6 @@
       "affiliatePair": "Set both affiliate and fee, or leave di two empty.",
       "withdrawAs": "Withdraw as",
       "bothSides": "Both",
-      "runepoolInfo": "Withdraw your RUNEPool position. To add to RUNEPool don stop and e no dey available here.",
       "inboundUnavailable": "Inbound address no dey available for dis chain.",
       "chainHalted": "Dis chain don halt for liquidity actions right now.",
       "connectWallet": "Connect Wallet",

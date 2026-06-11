@@ -406,7 +406,6 @@
       "affiliatePair": "Set both an affiliate and a fee, or leave both empty.",
       "withdrawAs": "Withdraw as",
       "bothSides": "Both",
-      "runepoolInfo": "Withdraw your RUNEPool position. Adding to RUNEPool is deprecated and unavailable here.",
       "inboundUnavailable": "Inbound address unavailable for this chain.",
       "chainHalted": "This chain is currently halted for liquidity actions.",
       "connectWallet": "Connect Wallet",

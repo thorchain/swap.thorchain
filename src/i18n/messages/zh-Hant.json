@@ -261,7 +261,6 @@
       "affiliatePair": "請同時設定聯盟和費用，或將兩者都留空。",
       "withdrawAs": "提取形式",
       "bothSides": "雙邊",
-      "runepoolInfo": "提取您的 RUNEPool 倉位。向 RUNEPool 新增已棄用，此處無法使用。",
       "inboundUnavailable": "此鏈的入站地址無法使用。",
       "chainHalted": "此鏈目前已暫停流動性操作。",
       "connectWallet": "連接錢包",

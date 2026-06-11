@@ -261,7 +261,6 @@
       "affiliatePair": "제휴와 수수료를 모두 설정하거나 둘 다 비워 두세요.",
       "withdrawAs": "출금 형식",
       "bothSides": "양쪽",
-      "runepoolInfo": "RUNEPool 포지션을 출금합니다. RUNEPool에 추가하는 기능은 더 이상 사용되지 않으며 여기서 사용할 수 없습니다.",
       "inboundUnavailable": "이 체인에서는 인바운드 주소를 사용할 수 없습니다.",
       "chainHalted": "이 체인은 현재 유동성 작업이 중단되었습니다.",
       "connectWallet": "지갑 연결",

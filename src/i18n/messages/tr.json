@@ -261,7 +261,6 @@
       "affiliatePair": "Hem bir ortak hem de bir ücret belirleyin ya da ikisini de boş bırakın.",
       "withdrawAs": "Şu şekilde çek",
       "bothSides": "Her ikisi",
-      "runepoolInfo": "RUNEPool pozisyonunuzu çekin. RUNEPool'a ekleme kullanımdan kaldırılmıştır ve burada mevcut değildir.",
       "inboundUnavailable": "Bu chain için gelen adres mevcut değil.",
       "chainHalted": "Bu chain şu anda likidite işlemleri için durdurulmuştur.",
       "connectWallet": "Cüzdan Bağla",
