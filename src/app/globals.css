@@ -4,7 +4,7 @@
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {
-  --font-sans: var(--font-crit), ui-sans-serif, system-ui, sans-serif;
+  --font-sans: var(--font-crit), var(--font-runic), ui-sans-serif, system-ui, sans-serif;
 
   --radius-15: 0.9375rem;
   --radius-20: 1.25rem;

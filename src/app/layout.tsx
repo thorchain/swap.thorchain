@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
-import localFont from 'next/font/local'
 import Script from 'next/script'
+import localFont from 'next/font/local'
+import { Noto_Sans_Runic } from 'next/font/google'
 import { GoogleAnalytics, GoogleTagManager } from '@next/third-parties/google'
 import { ThemeProvider } from 'next-themes'
 import { NextIntlClientProvider } from 'next-intl'
@@ -74,6 +75,13 @@ const crit = localFont({
   ]
 })
 
+const notoRunic = Noto_Sans_Runic({
+  variable: '--font-runic',
+  display: 'swap',
+  weight: '400',
+  subsets: ['runic']
+})
+
 export default async function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   const locale = (await getLocale()) as Locale
   const messages = await getMessages()
@@ -96,7 +104,7 @@ export default async function RootLayout({ children }: Readonly<{ children: Reac
           }}
         />
       )}
-      <body className={`${crit.variable} bg-body font-sans antialiased`}>
+      <body className={`${crit.variable} ${notoRunic.variable} bg-body font-sans antialiased`}>
         <ReactQueryProvider>
           <NextIntlClientProvider locale={locale} messages={messages}>
             <ThemeProvider defaultTheme="light" attribute="class">

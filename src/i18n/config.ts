@@ -22,7 +22,8 @@ export const locales = [
   'zh-Hant',
   'arz',
   'pcm',
-  'lah'
+  'lah',
+  'en-Runr'
 ] as const
 
 export type Locale = (typeof locales)[number]
@@ -55,7 +56,8 @@ export const localeNames: Record<Locale, string> = {
   pcm: 'Naijá',
   arz: 'العربية المصرية',
   vi: 'Tiếng Việt',
-  th: 'ไทย'
+  th: 'ไทย',
+  'en-Runr': 'ᚠᚢᚦᚨᚱᚲ'
 }
 
 // Right-to-left locales need dir="rtl" on the <html> element.
