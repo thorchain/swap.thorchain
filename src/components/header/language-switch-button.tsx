@@ -32,7 +32,7 @@ export const LanguageSwitchButton = () => {
         </ThemeButton>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="rounded-xl">
-        <ScrollArea className="h-80">
+        <ScrollArea type="always" className="h-80">
           {locales.map(locale => (
             <DropdownMenuItem
               key={locale}

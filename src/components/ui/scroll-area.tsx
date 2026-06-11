@@ -21,7 +21,7 @@ function ScrollArea({
         className={cn(
           'focus-visible:ring-ring/50 size-full rounded-[inherit] transition-[color,box-shadow] outline-none focus-visible:ring-[3px] focus-visible:outline-1',
           // Let content lay out at its natural width so it can overflow horizontally.
-          orientation === 'horizontal' && '[&>div]:!w-max',
+          orientation === 'horizontal' && '[&>div]:w-max!',
           classNameViewport
         )}
       >
