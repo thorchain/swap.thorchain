@@ -7,27 +7,27 @@
     "socials": "Redes sociales",
     "language": "Idioma",
     "newsletterPitch": "La mejor forma de estar al día con THORChain",
-    "emailPlaceholder": "Ingresa tu email",
+    "emailPlaceholder": "Añade tu email",
     "signUp": "Suscribirse",
     "signingUp": "Suscribiendo…",
     "subscribed": "¡Gracias por suscribirte!",
     "genericError": "Algo salió mal"
   },
   "header": {
-    "wallet": "BILLETERA",
+    "wallet": "Monedero",
     "history": "HISTORIAL"
   },
   "footer": {
     "privacyPolicy": "Política de privacidad",
     "termsOfUse": "Términos de uso",
     "riskPolicy": "Política de riesgos",
-    "riskTooltip": "Aunque este sitio está creado con cuidado, puede tener errores no intencionados que provoquen fallos en el sitio e incluso la pérdida de fondos. Continúa solo si entiendes y aceptas estos riesgos.",
+    "riskTooltip": "Aunque esta web ha sido creada con cuidado, puede contener errores que provoquen fallos en la web e incluso la pérdida de fondos. Continúa sólo si entiendes y aceptas los riesgos que conlleva el uso de esta web.",
     "builtBy": "Desarrollado por",
-    "reportBug": "Reportar error / función",
+    "reportBug": "Notificar un error / Solicitar una función",
     "getSupport": "Obtener soporte en Discord",
     "bug": {
-      "title": "Reportar error / función",
-      "success": "¡Gracias! Tu reporte ha sido enviado.",
+      "title": "Notificar un error / Solicitar una función",
+      "success": "¡Gracias! Tu notificación ha sido enviada.",
       "close": "Cerrar",
       "emailLabel": "Email (opcional)",
       "descriptionLabel": "Descripción",
@@ -35,8 +35,8 @@
       "attachmentLabel": "Adjunto (opcional)",
       "attachFile": "Adjuntar un archivo",
       "sending": "Enviando…",
-      "send": "Enviar reporte",
-      "failed": "Error al enviar el reporte"
+      "send": "Enviar notificación",
+      "failed": "Error al enviar notificación"
     }
   },
   "swap": {
@@ -55,13 +55,13 @@
     "button": {
       "limitNotSupported": "Orden límite no admitida",
       "temporarilyUnavailable": "No disponible temporalmente",
-      "enterAmount": "Ingresa el monto",
+      "enterAmount": "Ingresa la cantidad",
       "quoting": "Cotizando…",
       "noValidQuotes": "No hay cotizaciones válidas",
       "enterLimitPrice": "Ingresa el precio límite",
       "enterLimitOrder": "Ingresa la orden límite",
       "swap": "Intercambiar",
-      "connectWallet": "Conectar billetera {chain}",
+      "connectWallet": "Conectar monedero {chain}",
       "insufficientBalance": "Saldo insuficiente",
       "approve": "Aprobar {ticker}"
     },
@@ -446,7 +446,7 @@
         "pool": "Pool",
         "asset": "Activo",
         "amount": "Monto",
-        "basisPoints": "Puntos básicos",
+        "basisPoints": "Puntos Base",
         "fee": "Comisión (puntos básicos)",
         "thorPrefix": "thor1…",
         "pairedAddressHint": "Dirección de cadena externa",
