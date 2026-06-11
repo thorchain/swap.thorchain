@@ -510,7 +510,7 @@
     "sortByName": "Nome (A-Z)",
     "sortByBalance": "Saldo (Alto → Basso)",
     "externalWalletMode": "Modalità portafoglio esterno",
-    "externalWalletModeDescription": "Inserisca il suo ordine, clicchi sul pulsante Scambia e segua le istruzioni",
+    "externalWalletModeDescription": "Utilizzi un portafoglio self-custody senza collegarlo al sito web",
     "externalWalletAssetUnsupported": "Questo asset non è supportato in modalità portafoglio esterno. Connetta un portafoglio del browser se desidera continuare.",
     "close": "Chiudi",
     "sendToken": "Invia {ticker}"

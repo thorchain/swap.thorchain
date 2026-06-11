@@ -510,7 +510,7 @@
     "sortByName": "Имени (А-Я)",
     "sortByBalance": "Балансу (по убыванию)",
     "externalWalletMode": "Режим внешнего кошелька",
-    "externalWalletModeDescription": "Введите свой ордер, нажмите кнопку обмена и следуйте инструкциям",
+    "externalWalletModeDescription": "Используйте некастодиальный кошелёк, не подключая его к сайту",
     "externalWalletAssetUnsupported": "Этот актив не поддерживается в режиме внешнего кошелька. Подключите браузерный кошелёк, чтобы продолжить.",
     "close": "Закрыть",
     "sendToken": "Отправить {ticker}"

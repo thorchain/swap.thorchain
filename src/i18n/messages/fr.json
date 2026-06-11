@@ -510,7 +510,7 @@
     "sortByName": "Nom (A-Z)",
     "sortByBalance": "Solde (élevé → faible)",
     "externalWalletMode": "Mode portefeuille externe",
-    "externalWalletModeDescription": "Saisissez votre ordre, cliquez sur le bouton Échanger et suivez les instructions",
+    "externalWalletModeDescription": "Utilisez un portefeuille auto-hébergé sans le connecter au site web",
     "externalWalletAssetUnsupported": "Cet actif n'est pas pris en charge en mode portefeuille externe. Connectez un portefeuille de navigateur si vous souhaitez continuer.",
     "close": "Fermer",
     "sendToken": "Envoyer {ticker}"

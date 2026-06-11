@@ -510,7 +510,7 @@
     "sortByName": "Ad (A-Z)",
     "sortByBalance": "Bakiye (Yüksek → Düşük)",
     "externalWalletMode": "Harici Cüzdan Modu",
-    "externalWalletModeDescription": "Emrini gir, Takas düğmesine tıkla ve talimatları izle",
+    "externalWalletModeDescription": "Öz saklamalı bir cüzdanı web sitesine bağlamadan kullan",
     "externalWalletAssetUnsupported": "Bu varlık Harici Cüzdan modunda desteklenmiyor. Devam etmek istiyorsanız tarayıcı içi bir cüzdan bağlayın.",
     "close": "Kapat",
     "sendToken": "{ticker} Gönder"

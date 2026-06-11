@@ -513,7 +513,7 @@
     "sortByName": "Name (A-Z)",
     "sortByBalance": "Balance (High → Low)",
     "externalWalletMode": "External Wallet Mode",
-    "externalWalletModeDescription": "Enter your order, click the Swap button, and follow the instructions",
+    "externalWalletModeDescription": "Use a self custody wallet without connecting it to the website",
     "externalWalletAssetUnsupported": "This asset is not supported in External Wallet mode. Connect a browser wallet if you want to continue.",
     "close": "Close",
     "sendToken": "Send {ticker}"

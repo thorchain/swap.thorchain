@@ -510,7 +510,7 @@
     "sortByName": "Name (A-Z)",
     "sortByBalance": "Guthaben (Hoch → Niedrig)",
     "externalWalletMode": "Externer Wallet-Modus",
-    "externalWalletModeDescription": "Geben Sie Ihre Order ein, klicken Sie auf die Swap-Schaltfläche und folgen Sie den Anweisungen",
+    "externalWalletModeDescription": "Verwenden Sie eine Self-Custody-Wallet, ohne sie mit der Website zu verbinden",
     "externalWalletAssetUnsupported": "Dieses Asset wird im externen Wallet-Modus nicht unterstützt. Verbinden Sie eine Browser-Wallet, wenn Sie fortfahren möchten.",
     "close": "Schließen",
     "sendToken": "{ticker} senden"

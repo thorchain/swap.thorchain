@@ -510,7 +510,7 @@
     "sortByName": "नाम (A-Z)",
     "sortByBalance": "शेष राशि (अधिक → कम)",
     "externalWalletMode": "बाहरी वॉलेट मोड",
-    "externalWalletModeDescription": "अपना ऑर्डर दर्ज करें, स्वैप बटन पर क्लिक करें, और निर्देशों का पालन करें",
+    "externalWalletModeDescription": "अपने सेल्फ-कस्टडी वॉलेट को वेबसाइट से कनेक्ट किए बिना उसका उपयोग करें",
     "externalWalletAssetUnsupported": "यह एसेट बाहरी वॉलेट मोड में समर्थित नहीं है. यदि आप जारी रखना चाहते हैं तो एक ब्राउज़र वॉलेट कनेक्ट करें.",
     "close": "बंद करें",
     "sendToken": "{ticker} भेजें"

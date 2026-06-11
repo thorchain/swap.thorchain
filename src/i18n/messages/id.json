@@ -510,7 +510,7 @@
     "sortByName": "Nama (A-Z)",
     "sortByBalance": "Saldo (Tinggi → Rendah)",
     "externalWalletMode": "Mode dompet eksternal",
-    "externalWalletModeDescription": "Masukkan order Anda, klik tombol Tukar, dan ikuti instruksinya",
+    "externalWalletModeDescription": "Gunakan dompet self-custody tanpa menghubungkannya ke situs web",
     "externalWalletAssetUnsupported": "Aset ini tidak didukung dalam mode dompet eksternal. Hubungkan dompet browser jika Anda ingin melanjutkan.",
     "close": "Tutup",
     "sendToken": "Kirim {ticker}"

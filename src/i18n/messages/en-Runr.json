@@ -513,7 +513,7 @@
     "sortByName": "ᚾᚨᛗᛖ (ᚨ-ᛉ)",
     "sortByBalance": "ᛒᚨᛚᚨᚾᚲᛖ (ᚺᛁᚷᚺ → ᛚᛟᚹ)",
     "externalWalletMode": "ᛖᚲᛊᛏᛖᚱᚾᚨᛚ ᚹᚨᛚᛚᛖᛏ ᛗᛟᛞᛖ",
-    "externalWalletModeDescription": "ᛖᚾᛏᛖᚱ ᛁᛟᚢᚱ ᛟᚱᛞᛖᚱ, ᚲᛚᛁᚲᚲ ᚦᛖ ᛊᚹᚨᛈ ᛒᚢᛏᛏᛟᚾ, ᚨᚾᛞ ᚠᛟᛚᛚᛟᚹ ᚦᛖ ᛁᚾᛊᛏᚱᚢᚲᛏᛁᛟᚾᛊ",
+    "externalWalletModeDescription": "ᚢᛊᛖ ᚨ ᛊᛖᛚᚠ ᚲᚢᛊᛏᛟᛞᛁ ᚹᚨᛚᛚᛖᛏ ᚹᛁᚦᛟᚢᛏ ᚲᛟᚾᚾᛖᚲᛏᛁᛜ ᛁᛏ ᛏᛟ ᚦᛖ ᚹᛖᛒᛊᛁᛏᛖ",
     "externalWalletAssetUnsupported": "ᚦᛁᛊ ᚨᛊᛊᛖᛏ ᛁᛊ ᚾᛟᛏ ᛊᚢᛈᛈᛟᚱᛏᛖᛞ ᛁᚾ ᛖᚲᛊᛏᛖᚱᚾᚨᛚ ᚹᚨᛚᛚᛖᛏ ᛗᛟᛞᛖ. ᚲᛟᚾᚾᛖᚲᛏ ᚨ ᛒᚱᛟᚹᛊᛖᚱ ᚹᚨᛚᛚᛖᛏ ᛁᚠ ᛁᛟᚢ ᚹᚨᚾᛏ ᛏᛟ ᚲᛟᚾᛏᛁᚾᚢᛖ.",
     "close": "ᚲᛚᛟᛊᛖ",
     "sendToken": "ᛊᛖᚾᛞ {ticker}"

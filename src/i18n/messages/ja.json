@@ -510,7 +510,7 @@
     "sortByName": "名前（A-Z）",
     "sortByBalance": "残高（高 → 低）",
     "externalWalletMode": "外部ウォレットモード",
-    "externalWalletModeDescription": "注文を入力し、スワップボタンをクリックして、指示に従ってください",
+    "externalWalletModeDescription": "セルフカストディウォレットをウェブサイトに接続せずに使用します",
     "externalWalletAssetUnsupported": "この資産は外部ウォレットモードでは対応していません。続行する場合はブラウザウォレットを接続してください。",
     "close": "閉じる",
     "sendToken": "{ticker} を送信"

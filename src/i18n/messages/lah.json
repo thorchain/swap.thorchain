@@ -510,7 +510,7 @@
     "sortByName": "ناں (A-Z)",
     "sortByBalance": "بیلنس (ودھ → گھٹ)",
     "externalWalletMode": "بیرونی والٹ موڈ",
-    "externalWalletModeDescription": "اپݨا آرڈر پاؤ، Swap بٹن دباؤ، تے ہدایتاں تے عمل کرو",
+    "externalWalletModeDescription": "سیلف کسٹڈی والٹ نوں ویب سائٹ نال جوڑے بغیر ورتو",
     "externalWalletAssetUnsupported": "ایہ اثاثہ بیرونی والٹ موڈ وچ سپورٹ نئیں اے۔ جے تُسی اگے ودھݨا چاہندے او تے براؤزر والٹ کنیکٹ کرو۔",
     "close": "بند کرو",
     "sendToken": "{ticker} بھیجو"

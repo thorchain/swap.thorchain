@@ -510,7 +510,7 @@
     "sortByName": "名称（A-Z）",
     "sortByBalance": "余额（高 → 低）",
     "externalWalletMode": "外部钱包模式",
-    "externalWalletModeDescription": "输入您的订单，点击兑换按钮，然后按照说明操作",
+    "externalWalletModeDescription": "使用自托管钱包，无需将其连接到网站",
     "externalWalletAssetUnsupported": "此资产在外部钱包模式下不受支持。如要继续，请连接浏览器钱包。",
     "close": "关闭",
     "sendToken": "发送{ticker}"

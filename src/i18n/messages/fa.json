@@ -510,7 +510,7 @@
     "sortByName": "نام (A-Z)",
     "sortByBalance": "موجودی (زیاد به کم)",
     "externalWalletMode": "حالت کیف پول خارجی",
-    "externalWalletModeDescription": "سفارش خود را وارد کنید، دکمه تبادل را بزنید و دستورالعمل‌ها را دنبال کنید",
+    "externalWalletModeDescription": "از یک کیف پول خودنگهدار بدون اتصال آن به وب‌سایت استفاده کنید",
     "externalWalletAssetUnsupported": "این دارایی در حالت کیف پول خارجی پشتیبانی نمی‌شود. برای ادامه، یک کیف پول مرورگر متصل کنید.",
     "close": "بستن",
     "sendToken": "ارسال {ticker}"

@@ -510,7 +510,7 @@
     "sortByName": "الاسم (أ-ي)",
     "sortByBalance": "الرصيد (مرتفع ← منخفض)",
     "externalWalletMode": "وضع المحفظة الخارجية",
-    "externalWalletModeDescription": "أدخل أمرك، وانقر زر التبادل، واتبع التعليمات",
+    "externalWalletModeDescription": "استخدم محفظة ذاتية الحفظ دون ربطها بالموقع",
     "externalWalletAssetUnsupported": "هذا الأصل غير مدعوم في وضع المحفظة الخارجية. اربط محفظة متصفح إذا كنت تريد المتابعة.",
     "close": "إغلاق",
     "sendToken": "إرسال {ticker}"

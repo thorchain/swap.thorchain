@@ -510,7 +510,7 @@
     "sortByName": "نام (A-Z)",
     "sortByBalance": "بیلنس (زیادہ → کم)",
     "externalWalletMode": "External Wallet موڈ",
-    "externalWalletModeDescription": "اپنا آرڈر درج کریں، Swap بٹن پر کلک کریں، اور ہدایات پر عمل کریں",
+    "externalWalletModeDescription": "سیلف کسٹڈی والٹ کو ویب سائٹ سے منسلک کیے بغیر استعمال کریں",
     "externalWalletAssetUnsupported": "یہ اثاثہ External Wallet موڈ میں سپورٹڈ نہیں ہے۔ اگر آپ جاری رکھنا چاہتے ہیں تو براؤزر والٹ کنیکٹ کریں۔",
     "close": "بند کریں",
     "sendToken": "{ticker} بھیجیں"

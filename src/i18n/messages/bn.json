@@ -510,7 +510,7 @@
     "sortByName": "নাম (A-Z)",
     "sortByBalance": "ব্যালেন্স (বেশি → কম)",
     "externalWalletMode": "বহিরাগত ওয়ালেট মোড",
-    "externalWalletModeDescription": "আপনার অর্ডার লিখুন, সোয়াপ বোতামে ক্লিক করুন এবং নির্দেশাবলি অনুসরণ করুন",
+    "externalWalletModeDescription": "ওয়েবসাইটে সংযুক্ত না করেই একটি সেলফ-কাস্টডি ওয়ালেট ব্যবহার করুন",
     "externalWalletAssetUnsupported": "এই অ্যাসেটটি বহিরাগত ওয়ালেট মোডে সমর্থিত নয়। আপনি যদি চালিয়ে যেতে চান তবে একটি ব্রাউজার ওয়ালেট সংযুক্ত করুন।",
     "close": "বন্ধ করুন",
     "sendToken": "{ticker} পাঠান"

@@ -510,7 +510,7 @@
     "sortByName": "Nombre (A-Z)",
     "sortByBalance": "Saldo (mayor → menor)",
     "externalWalletMode": "Modo de billetera externa",
-    "externalWalletModeDescription": "Ingresa tu orden, haz clic en el botón de intercambio y sigue las instrucciones",
+    "externalWalletModeDescription": "Usa una billetera de autocustodia sin conectarla al sitio web",
     "externalWalletAssetUnsupported": "Este activo no es compatible en el modo de billetera externa. Conecta una billetera del navegador si quieres continuar.",
     "close": "Cerrar",
     "sendToken": "Enviar {ticker}"

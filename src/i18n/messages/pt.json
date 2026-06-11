@@ -510,7 +510,7 @@
     "sortByName": "Nome (A-Z)",
     "sortByBalance": "Saldo (Maior → Menor)",
     "externalWalletMode": "Modo de carteira externa",
-    "externalWalletModeDescription": "Insira sua ordem, clique no botão Trocar e siga as instruções",
+    "externalWalletModeDescription": "Use uma carteira de autocustódia sem conectá-la ao site",
     "externalWalletAssetUnsupported": "Este ativo não é suportado no modo de carteira externa. Conecte uma carteira de navegador se quiser continuar.",
     "close": "Fechar",
     "sendToken": "Enviar {ticker}"

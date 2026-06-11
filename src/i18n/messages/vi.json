@@ -510,7 +510,7 @@
     "sortByName": "Tên (A-Z)",
     "sortByBalance": "Số dư (Cao → Thấp)",
     "externalWalletMode": "Chế độ ví bên ngoài",
-    "externalWalletModeDescription": "Nhập lệnh của bạn, nhấn nút Hoán đổi và làm theo hướng dẫn",
+    "externalWalletModeDescription": "Sử dụng ví tự lưu ký mà không cần kết nối với trang web",
     "externalWalletAssetUnsupported": "Tài sản này không được hỗ trợ ở chế độ ví bên ngoài. Kết nối ví trình duyệt nếu bạn muốn tiếp tục.",
     "close": "Đóng",
     "sendToken": "Gửi {ticker}"
