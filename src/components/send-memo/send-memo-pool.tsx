@@ -5,7 +5,6 @@ import { useTranslations } from 'next-intl'
 import { Chain, FeeOption, USwapNumber } from '@tcswap/core'
 import { ChevronDown, Info, LoaderCircle } from 'lucide-react'
 import { toast } from 'sonner'
-import { Input } from '@/components/ui/input'
 import { ConnectWallet } from '@/components/connect-wallet/connect-wallet'
 import { chainLabel } from '@/components/connect-wallet/config'
 import { AssetIcon } from '@/components/asset-icon'
@@ -18,9 +17,8 @@ import { assetIdentifierStr, tokenToAsset } from '@/components/send/send-helpers
 import { SendSelectToken } from '@/components/send/send-select-token'
 import { SendMemoBeta } from '@/components/send-memo/send-memo-beta'
 import { PoolSelect } from '@/components/send-memo/pool-select'
-import { parsePoolAsset, poolToAsset } from '@/components/send-memo/pool-helpers'
+import { poolToAsset } from '@/components/send-memo/pool-helpers'
 import { isRuneToken } from '@/components/send-memo/send-memo-helpers'
-import { AddressInput } from '@/components/address-input'
 import { SwapAddressFrom } from '@/components/swap/swap-address-from'
 import { ScrollArea } from '@/components/ui/scroll-area'
 import { TokenBalance, useWalletBalances } from '@/hooks/use-wallet-balances'
@@ -64,17 +62,11 @@ export function SendMemoPool() {
   const [selectedToken, setSelectedToken] = useState<TokenBalance | undefined>(undefined)
   const [targetPool, setTargetPool] = useState('')
   const [amount, setAmount] = useState('')
-  const [pairedAddress, setPairedAddress] = useState('')
-  const [showAdvanced, setShowAdvanced] = useState(false)
 
   // Withdraw / RUNEPool state
   const [withdrawPool, setWithdrawPool] = useState('')
   const [percent, setPercent] = useState('')
   const [singleSidedAsset, setSingleSidedAsset] = useState('')
-
-  // Shared affiliate fields
-  const [affiliate, setAffiliate] = useState('')
-  const [fee, setFee] = useState('')
 
   const [submitting, setSubmitting] = useState(false)
 
@@ -123,11 +115,6 @@ export function SendMemoPool() {
   const isRuneDeposit = selectedToken ? isRuneToken(selectedToken) : false
   const addPool = isRuneDeposit ? targetPool : selectedToken ? assetIdentifierStr(selectedToken.balance) : ''
 
-  // The paired address is on the opposite side of the deposit: the asset chain
-  // for a RUNE deposit, THORChain for an asset deposit.
-  const pairedChain = isRuneDeposit ? parsePoolAsset(targetPool).chain : Chain.THORChain
-  const thorAccounts = useMemo(() => accounts.filter(a => a.network === Chain.THORChain), [accounts])
-
   const numericPercent = parseFloat(percent) || 0
   const basisPoints = Math.min(10000, Math.max(0, Math.round(numericPercent * 100)))
 
@@ -158,23 +145,13 @@ export function SendMemoPool() {
     }
   }, [runeProvider])
 
-  // Affiliate fee must be a whole number of basis points (0–10000), and an
-  // affiliate and fee must be supplied together — otherwise the memo is rejected.
-  const feeNum = Number(fee.trim())
-  const feeInvalid = fee.trim() !== '' && (!Number.isInteger(feeNum) || feeNum < 0 || feeNum > 10000)
-  const hasAffiliate = affiliate.trim() !== ''
-  const hasFee = fee.trim() !== ''
-  const affiliateFeeMismatch = hasAffiliate !== hasFee
-
   const selectedAsset = selectedToken ? tokenToAsset(selectedToken) : null
 
   // Build the memo for the current tab so it can be previewed and broadcast.
   const memo = useMemo(() => {
     if (tab === 'add') {
       if (!addPool) return ''
-      const parts = ['+', addPool, pairedAddress.trim(), affiliate.trim(), fee.trim()]
-      while (parts.length > 1 && parts[parts.length - 1] === '') parts.pop()
-      return parts.join(':')
+      return `+:${addPool}`
     }
     if (tab === 'withdraw') {
       if (!withdrawPool) return ''
@@ -183,23 +160,17 @@ export function SendMemoPool() {
       return parts.join(':')
     }
     // runepool withdraw
-    const parts = ['POOL-', String(basisPoints), affiliate.trim(), fee.trim()]
-    while (parts.length > 1 && parts[parts.length - 1] === '') parts.pop()
-    return parts.join(':')
-  }, [tab, addPool, pairedAddress, affiliate, fee, withdrawPool, basisPoints, singleSidedAsset])
+    return `POOL-:${basisPoints}`
+  }, [tab, addPool, withdrawPool, basisPoints, singleSidedAsset])
 
   const resetForm = () => {
     setAmount('')
     setPercent('')
-    setPairedAddress('')
     setSingleSidedAsset('')
-    setAffiliate('')
-    setFee('')
   }
 
   const canSend = useMemo(() => {
     if (submitting) return false
-    if (feeInvalid || affiliateFeeMismatch) return false
     if (tab === 'add') {
       if (!selectedToken || !addAccount || numericAmount <= 0) return false
       if (isRuneDeposit && !targetPool) return false
@@ -212,20 +183,7 @@ export function SendMemoPool() {
     // runepool
     if (!thorAccount) return false
     return basisPoints > 0
-  }, [
-    submitting,
-    feeInvalid,
-    affiliateFeeMismatch,
-    tab,
-    selectedToken,
-    addAccount,
-    numericAmount,
-    isRuneDeposit,
-    targetPool,
-    thorAccount,
-    withdrawPool,
-    basisPoints
-  ])
+  }, [submitting, tab, selectedToken, addAccount, numericAmount, isRuneDeposit, targetPool, thorAccount, withdrawPool, basisPoints])
 
   const broadcast = (promise: Promise<unknown>) => {
     toast.promise(
@@ -420,30 +378,6 @@ export function SendMemoPool() {
                 </div>
               )}
             </div>
-
-            <AdvancedToggle open={showAdvanced} onToggle={() => setShowAdvanced(v => !v)} label={t('pool.advanced')} />
-            {showAdvanced && (
-              <div className="bg-swap-bloc rounded-15 space-y-3 border p-4">
-                <FieldInput
-                  label={t('pool.pairedAddress')}
-                  hint={t('pool.pairedAddressHint')}
-                  value={pairedAddress}
-                  onChange={setPairedAddress}
-                  addressOptions={accounts.filter(a => a.network === pairedChain)}
-                />
-                <FieldInput label={t('pool.affiliate')} hint={t('pool.affiliateHint')} value={affiliate} onChange={setAffiliate} addressOptions={thorAccounts} />
-                <FieldInput
-                  label={t('pool.fee')}
-                  hint={t('pool.feeHint')}
-                  value={fee}
-                  onChange={setFee}
-                  inputMode="numeric"
-                  invalid={feeInvalid}
-                  error={t('pool.feeRange')}
-                />
-                {affiliateFeeMismatch && <p className="text-jacob text-xs">{t('pool.affiliatePair')}</p>}
-              </div>
-            )}
           </>
         )}
 
@@ -514,22 +448,6 @@ export function SendMemoPool() {
               ) : (
                 <NoPositionNotice text={t('pool.noRunepoolPosition')} />
               ))}
-            <AdvancedToggle open={showAdvanced} onToggle={() => setShowAdvanced(v => !v)} label={t('pool.advanced')} />
-            {showAdvanced && (
-              <div className="bg-swap-bloc rounded-15 space-y-3 border p-4">
-                <FieldInput label={t('pool.affiliate')} hint={t('pool.affiliateHint')} value={affiliate} onChange={setAffiliate} addressOptions={thorAccounts} />
-                <FieldInput
-                  label={t('pool.fee')}
-                  hint={t('pool.feeHint')}
-                  value={fee}
-                  onChange={setFee}
-                  inputMode="numeric"
-                  invalid={feeInvalid}
-                  error={t('pool.feeRange')}
-                />
-                {affiliateFeeMismatch && <p className="text-jacob text-xs">{t('pool.affiliatePair')}</p>}
-              </div>
-            )}
           </>
         )}
 
@@ -558,58 +476,6 @@ export function SendMemoPool() {
       )}
 
       <SendMemoBeta />
-    </div>
-  )
-}
-
-function AdvancedToggle({ open, onToggle, label }: { open: boolean; onToggle: () => void; label: string }) {
-  return (
-    <button
-      onClick={onToggle}
-      className="text-txt-label-small hover:text-txt-high-contrast flex w-full items-center justify-between px-2 py-1 text-xs transition-colors"
-    >
-      <span>{label}</span>
-      <ChevronDown className={cn('size-4 transition-transform', open && 'rotate-180')} />
-    </button>
-  )
-}
-
-function FieldInput({
-  label,
-  hint,
-  value,
-  onChange,
-  inputMode = 'text',
-  invalid,
-  error,
-  addressOptions
-}: {
-  label: string
-  hint?: string
-  value: string
-  onChange: (v: string) => void
-  inputMode?: 'text' | 'numeric'
-  invalid?: boolean
-  error?: string
-  // When provided, render an address input with connected-wallet quick-fill + paste.
-  addressOptions?: WalletAccount[]
-}) {
-  return (
-    <div className="flex flex-col gap-1.5">
-      <label className="text-txt-high-contrast text-sm font-semibold">{label}</label>
-      {addressOptions ? (
-        <AddressInput value={value} onChange={onChange} options={addressOptions} placeholder={hint} invalid={invalid} />
-      ) : (
-        <Input
-          value={value}
-          inputMode={inputMode}
-          placeholder={hint}
-          aria-invalid={invalid}
-          onChange={e => onChange(e.target.value)}
-          className="bg-input-modal-bg-active border-border-sub-container-modal-low"
-        />
-      )}
-      {invalid && error && <p className="text-jacob text-xs">{error}</p>}
     </div>
   )
 }
