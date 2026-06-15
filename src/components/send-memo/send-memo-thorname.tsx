@@ -3,7 +3,7 @@
 import { useEffect, useMemo, useState } from 'react'
 import { useTranslations } from 'next-intl'
 import { Chain } from '@tcswap/core'
-import { Check, ChevronDown, LoaderCircle, Search, X } from 'lucide-react'
+import { Check, LoaderCircle, Search, X } from 'lucide-react'
 import { toast } from 'sonner'
 import { Input } from '@/components/ui/input'
 import { ConnectWallet } from '@/components/connect-wallet/connect-wallet'
@@ -12,7 +12,6 @@ import { useDialog } from '@/components/global-dialog'
 import { ThemeButton } from '@/components/theme-button'
 import { AddressInput } from '@/components/address-input'
 import { SendMemoBeta } from '@/components/send-memo/send-memo-beta'
-import { PoolSelect } from '@/components/send-memo/pool-select'
 import { poolToAsset } from '@/components/send-memo/pool-helpers'
 import { assetIdentifierStr } from '@/components/send/send-helpers'
 import { isRuneToken, isThorAddress } from '@/components/send-memo/send-memo-helpers'
@@ -67,9 +66,6 @@ export function SendMemoThorname() {
 
   const [tab, setTab] = useState<ThornameTab>('thorname')
   const [name, setName] = useState('')
-  const [aliasChain, setAliasChain] = useState('THOR')
-  const [aliasAddress, setAliasAddress] = useState('')
-  const [preferredAsset, setPreferredAsset] = useState('')
   const [years, setYears] = useState(1)
   const [renewAmount, setRenewAmount] = useState('')
   const [newOwner, setNewOwner] = useState('')
@@ -86,11 +82,10 @@ export function SendMemoThorname() {
 
   const memo = useMemo(() => {
     if (tab === 'register') {
-      if (!name) return ''
-      const owner = thorAccount?.address ?? ''
-      const parts = ['~', name, aliasChain.trim(), aliasAddress.trim(), owner, preferredAsset.trim()]
-      while (parts.length > 1 && parts[parts.length - 1] === '') parts.pop()
-      return parts.join(':')
+      if (!name || !thorAccount) return ''
+      // Register the name pointing to the owner's THOR address.
+      const owner = thorAccount.address
+      return `~:${name}:THOR:${owner}:${owner}`
     }
     if (tab === 'renew') {
       if (!name || !thorAccount) return ''
@@ -99,14 +94,14 @@ export function SendMemoThorname() {
     // transfer
     if (!name || !newOwner) return ''
     return `~:${name}:THOR:${newOwner.trim()}:${newOwner.trim()}`
-  }, [tab, name, aliasChain, aliasAddress, preferredAsset, thorAccount, newOwner])
+  }, [tab, name, thorAccount, newOwner])
 
   const canSend = useMemo(() => {
     if (!thorAccount || submitting || !memo) return false
-    if (tab === 'register') return isValidName(name) && aliasAddress.trim().length > 0 && registrationCost > 0
+    if (tab === 'register') return isValidName(name) && registrationCost > 0
     if (tab === 'renew') return isValidName(name) && renewNumeric > 0
     return isValidName(name) && isThorAddress(newOwner)
-  }, [thorAccount, submitting, memo, tab, name, aliasAddress, registrationCost, renewNumeric, newOwner])
+  }, [thorAccount, submitting, memo, tab, name, registrationCost, renewNumeric, newOwner])
 
   const handleSend = () => {
     if (!canSend || !thorAccount || !runeToken) {
@@ -267,60 +262,6 @@ export function SendMemoThorname() {
 
             {tab === 'register' && (
               <>
-                <Field
-                  label={t('thorname.aliasChain')}
-                  hint={t('thorname.aliasChainHint')}
-                  value={aliasChain}
-                  onChange={v => {
-                    // Switching chains invalidates the prefilled address; clear it so a
-                    // THOR address can't be submitted as e.g. a BTC alias.
-                    setAliasChain(v.toUpperCase())
-                    setAliasAddress('')
-                  }}
-                />
-                <Field
-                  label={t('thorname.aliasAddress')}
-                  hint={t('thorname.aliasAddressHint')}
-                  value={aliasAddress}
-                  onChange={setAliasAddress}
-                  addressOptions={accounts.filter(a => a.network === aliasChain)}
-                />
-
-                <div className="flex flex-col gap-1.5">
-                  <label className="text-txt-high-contrast text-sm font-semibold">
-                    {t('thorname.preferredAsset')} <span className="text-txt-label-small text-xs font-normal">({t('examples.optional')})</span>
-                  </label>
-                  <button
-                    onClick={() => openDialog(PoolSelect, { selected: preferredAsset, onSelect: setPreferredAsset })}
-                    className="bg-input-modal-bg-active border-border-sub-container-modal-low flex items-center justify-between rounded-xl border p-4"
-                  >
-                    {preferredAsset ? (
-                      <div className="flex items-center gap-2">
-                        <AssetIcon asset={poolToAsset(preferredAsset, assets)} className="size-6" />
-                        <span className="text-txt-high-contrast text-sm font-semibold">{preferredAsset}</span>
-                      </div>
-                    ) : (
-                      <span className="text-andy text-sm">{t('thorname.preferredAssetHint')}</span>
-                    )}
-                    <div className="flex items-center gap-1">
-                      {preferredAsset && (
-                        <span
-                          role="button"
-                          tabIndex={0}
-                          className="text-txt-label-small hover:text-txt-high-contrast"
-                          onClick={e => {
-                            e.stopPropagation()
-                            setPreferredAsset('')
-                          }}
-                        >
-                          <X className="size-4" />
-                        </span>
-                      )}
-                      <ChevronDown className="text-txt-label-small size-4" />
-                    </div>
-                  </button>
-                </div>
-
                 <div className="flex flex-col gap-1.5">
                   <label className="text-txt-high-contrast text-sm font-semibold">{t('thorname.duration')}</label>
                   <div className="flex gap-2">
