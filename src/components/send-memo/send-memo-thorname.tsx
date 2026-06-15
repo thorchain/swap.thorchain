@@ -29,9 +29,9 @@ import { getUSwap } from '@/lib/wallets'
 import { WalletAccount } from '@/store/wallets-store'
 import { cn, toCurrencyFixed, truncate } from '@/lib/utils'
 
-type ThornameTab = 'thorname' | 'create' | 'renew' | 'transfer'
+type ThornameTab = 'thorname' | 'register' | 'renew' | 'transfer'
 
-const THORNAME_TABS: ThornameTab[] = ['thorname', 'create', 'renew', 'transfer']
+const THORNAME_TABS: ThornameTab[] = ['thorname', 'register', 'renew', 'transfer']
 
 // 1-30 chars, letters/digits and - _ + (matches THORChain validation).
 const isValidName = (name: string) => /^[a-zA-Z0-9\-_+]{1,30}$/.test(name)
@@ -85,7 +85,7 @@ export function SendMemoThorname() {
   const renewDays = (renewBlocks * 6) / 86400
 
   const memo = useMemo(() => {
-    if (tab === 'create') {
+    if (tab === 'register') {
       if (!name) return ''
       const owner = thorAccount?.address ?? ''
       const parts = ['~', name, aliasChain.trim(), aliasAddress.trim(), owner, preferredAsset.trim()]
@@ -103,7 +103,7 @@ export function SendMemoThorname() {
 
   const canSend = useMemo(() => {
     if (!thorAccount || submitting || !memo) return false
-    if (tab === 'create') return isValidName(name) && aliasAddress.trim().length > 0 && registrationCost > 0
+    if (tab === 'register') return isValidName(name) && aliasAddress.trim().length > 0 && registrationCost > 0
     if (tab === 'renew') return isValidName(name) && renewNumeric > 0
     return isValidName(name) && isThorAddress(newOwner)
   }, [thorAccount, submitting, memo, tab, name, aliasAddress, registrationCost, renewNumeric, newOwner])
@@ -114,7 +114,7 @@ export function SendMemoThorname() {
       return
     }
 
-    const depositRune = tab === 'create' ? registrationCost : tab === 'renew' ? renewNumeric : 0
+    const depositRune = tab === 'register' ? registrationCost : tab === 'renew' ? renewNumeric : 0
     const assetValue = runeToken.balance.set(depositRune)
 
     setSubmitting(true)
@@ -145,7 +145,7 @@ export function SendMemoThorname() {
   }
 
   const submitLabel = (() => {
-    if (tab === 'create') {
+    if (tab === 'register') {
       if (!name) return t('thorname.enterName')
       if (!isValidName(name)) return t('thorname.invalidName')
       return t('thorname.create')
@@ -220,7 +220,7 @@ export function SendMemoThorname() {
                       variant="primarySmall"
                       className="rounded-full"
                       onClick={() => {
-                        setTab('create')
+                        setTab('register')
                         setName(search.trim())
                       }}
                     >
@@ -265,7 +265,7 @@ export function SendMemoThorname() {
               invalid={!!name && !isValidName(name)}
             />
 
-            {tab === 'create' && (
+            {tab === 'register' && (
               <>
                 <Field
                   label={t('thorname.aliasChain')}
@@ -367,7 +367,7 @@ export function SendMemoThorname() {
             )}
           </div>
 
-          {tab === 'create' && (
+          {tab === 'register' && (
             <div className="text-txt-label-small flex items-center justify-between px-2 text-sm">
               <span>{t('thorname.estimatedCost')}</span>
               <span className="text-txt-high-contrast font-semibold">
