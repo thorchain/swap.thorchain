@@ -276,40 +276,22 @@
       "noRunepoolPosition": "No RUNEPool position found for this wallet."
     },
     "thorname": {
-      "title": "THORName",
       "searchPlaceholder": "Tìm kiếm một THORName",
-      "available": "{name} khả dụng",
       "register": "Đăng ký",
-      "taken": "đã được sử dụng",
-      "yourNames": "THORNames của bạn",
       "tab": {
-        "thorname": "THORName",
-        "register": "Đăng ký",
-        "renew": "Gia hạn",
-        "transfer": "Chuyển"
+        "thorname": "THORName"
       },
       "name": "Tên",
-      "nameHint": "1–30 ký tự: a–z, 0–9, - _ +",
       "invalidName": "Tên không hợp lệ",
       "enterName": "Nhập một tên",
-      "preferredAsset": "Tài sản ưu tiên",
       "duration": "Thời hạn",
       "years": "{count, plural, other {# năm}}",
-      "renewAmount": "RUNE cần thêm",
-      "renewAmountHint": "Số lượng RUNE để gia hạn đăng ký",
-      "renewEstimate": "Gia hạn đăng ký khoảng {days} ngày",
       "enterAmount": "Nhập số lượng",
-      "newOwner": "Chủ sở hữu mới",
-      "newOwnerHint": "Địa chỉ thor1… để chuyển quyền sở hữu cho",
       "enterNewOwner": "Nhập địa chỉ chủ sở hữu mới",
-      "create": "Tạo THORName",
       "renew": "Gia hạn",
       "transfer": "Chuyển",
-      "estimatedCost": "Chi phí ước tính",
-      "owner": "Chủ sở hữu",
-      "expires": "Hết hạn",
-      "collected": "Đã thu",
-      "aliases": "Bí danh"
+      "cost": "Chi phí",
+      "expires": "Hết hạn"
     },
     "title": "Gửi",
     "send": "Gửi",

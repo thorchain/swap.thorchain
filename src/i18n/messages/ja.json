@@ -276,40 +276,22 @@
       "noRunepoolPosition": "No RUNEPool position found for this wallet."
     },
     "thorname": {
-      "title": "THORName",
       "searchPlaceholder": "THORNameを検索",
-      "available": "{name} は利用可能です",
       "register": "登録",
-      "taken": "使用済み",
-      "yourNames": "あなたのTHORNames",
       "tab": {
-        "thorname": "THORName",
-        "register": "登録",
-        "renew": "更新",
-        "transfer": "譲渡"
+        "thorname": "THORName"
       },
       "name": "名前",
-      "nameHint": "1–30 文字: a–z, 0–9, - _ +",
       "invalidName": "無効な名前",
       "enterName": "名前を入力",
-      "preferredAsset": "優先アセット",
       "duration": "期間",
       "years": "{count, plural, other {#年}}",
-      "renewAmount": "追加するRUNE",
-      "renewAmountHint": "登録を延長するRUNEの量",
-      "renewEstimate": "登録を約{days}日延長します",
       "enterAmount": "金額を入力",
-      "newOwner": "新しい所有者",
-      "newOwnerHint": "所有権を譲渡する thor1… アドレス",
       "enterNewOwner": "新しい所有者のアドレスを入力",
-      "create": "THORNameを作成",
       "renew": "更新",
       "transfer": "譲渡",
-      "estimatedCost": "推定費用",
-      "owner": "所有者",
-      "expires": "有効期限",
-      "collected": "回収済み",
-      "aliases": "エイリアス"
+      "cost": "費用",
+      "expires": "有効期限"
     },
     "title": "送信",
     "send": "送信",

@@ -276,40 +276,22 @@
       "noRunepoolPosition": "No RUNEPool position found for this wallet."
     },
     "thorname": {
-      "title": "THORName",
       "searchPlaceholder": "THORName 검색",
-      "available": "{name} 사용 가능합니다",
       "register": "등록",
-      "taken": "사용 중",
-      "yourNames": "내 THORNames",
       "tab": {
-        "thorname": "THORName",
-        "register": "등록",
-        "renew": "갱신",
-        "transfer": "이전"
+        "thorname": "THORName"
       },
       "name": "이름",
-      "nameHint": "1–30 문자: a–z, 0–9, - _ +",
       "invalidName": "유효하지 않은 이름",
       "enterName": "이름 입력",
-      "preferredAsset": "선호 자산",
       "duration": "기간",
       "years": "{count, plural, other {#년}}",
-      "renewAmount": "추가할 RUNE",
-      "renewAmountHint": "등록을 연장할 RUNE 수량",
-      "renewEstimate": "등록을 약 {days}일 연장합니다",
       "enterAmount": "금액 입력",
-      "newOwner": "새 소유자",
-      "newOwnerHint": "소유권을 이전할 thor1… 주소",
       "enterNewOwner": "새 소유자 주소 입력",
-      "create": "THORName 생성",
       "renew": "갱신",
       "transfer": "이전",
-      "estimatedCost": "예상 비용",
-      "owner": "소유자",
-      "expires": "만료",
-      "collected": "수집됨",
-      "aliases": "별칭"
+      "cost": "비용",
+      "expires": "만료"
     },
     "title": "보내기",
     "send": "보내기",

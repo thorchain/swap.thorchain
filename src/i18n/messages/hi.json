@@ -276,40 +276,22 @@
       "noRunepoolPosition": "No RUNEPool position found for this wallet."
     },
     "thorname": {
-      "title": "THORName",
       "searchPlaceholder": "THORName खोजें",
-      "available": "{name} उपलब्ध है",
       "register": "रजिस्टर करें",
-      "taken": "लिया गया",
-      "yourNames": "आपके THORNames",
       "tab": {
-        "thorname": "THORName",
-        "register": "रजिस्टर करें",
-        "renew": "नवीनीकरण",
-        "transfer": "स्थानांतरण"
+        "thorname": "THORName"
       },
       "name": "नाम",
-      "nameHint": "1–30 अक्षर: a–z, 0–9, - _ +",
       "invalidName": "अमान्य नाम",
       "enterName": "एक नाम दर्ज करें",
-      "preferredAsset": "पसंदीदा एसेट",
       "duration": "अवधि",
       "years": "{count, plural, one {# वर्ष} other {# वर्ष}}",
-      "renewAmount": "जोड़ने के लिए RUNE",
-      "renewAmountHint": "रजिस्ट्रेशन बढ़ाने के लिए RUNE की राशि",
-      "renewEstimate": "रजिस्ट्रेशन को ~{days} दिन बढ़ाता है",
       "enterAmount": "राशि दर्ज करें",
-      "newOwner": "नया मालिक",
-      "newOwnerHint": "स्वामित्व स्थानांतरित करने के लिए thor1… पता",
       "enterNewOwner": "नए मालिक का पता दर्ज करें",
-      "create": "THORName बनाएं",
       "renew": "नवीनीकरण",
       "transfer": "स्थानांतरण",
-      "estimatedCost": "अनुमानित लागत",
-      "owner": "मालिक",
-      "expires": "समाप्ति",
-      "collected": "एकत्रित",
-      "aliases": "उपनाम"
+      "cost": "लागत",
+      "expires": "समाप्ति"
     },
     "title": "भेजें",
     "send": "भेजें",

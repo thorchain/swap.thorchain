@@ -276,40 +276,22 @@
       "noRunepoolPosition": "No RUNEPool position found for this wallet."
     },
     "thorname": {
-      "title": "THORName",
       "searchPlaceholder": "Buscar un THORName",
-      "available": "{name} está disponible",
       "register": "Registrar",
-      "taken": "ocupado",
-      "yourNames": "Tus THORNames",
       "tab": {
-        "thorname": "THORName",
-        "register": "Registrar",
-        "renew": "Renovar",
-        "transfer": "Transferir"
+        "thorname": "THORName"
       },
       "name": "Nombre",
-      "nameHint": "1–30 caracteres: a–z, 0–9, - _ +",
       "invalidName": "Nombre no válido",
       "enterName": "Introduce un nombre",
-      "preferredAsset": "Activo preferido",
       "duration": "Duración",
       "years": "{count, plural, one {# año} other {# años}}",
-      "renewAmount": "RUNE a añadir",
-      "renewAmountHint": "Cantidad de RUNE para extender el registro",
-      "renewEstimate": "Extiende el registro en ~{days} días",
       "enterAmount": "Introduce la cantidad",
-      "newOwner": "Nuevo propietario",
-      "newOwnerHint": "Dirección thor1… a la que transferir la propiedad",
       "enterNewOwner": "Introduce la dirección del nuevo propietario",
-      "create": "Crear THORName",
       "renew": "Renovar",
       "transfer": "Transferir",
-      "estimatedCost": "Coste estimado",
-      "owner": "Propietario",
-      "expires": "Expira",
-      "collected": "Recaudado",
-      "aliases": "Alias"
+      "cost": "Coste",
+      "expires": "Expira"
     },
     "title": "Enviar",
     "send": "Enviar",

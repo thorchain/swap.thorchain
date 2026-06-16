@@ -276,40 +276,22 @@
       "noRunepoolPosition": "No RUNEPool position found for this wallet."
     },
     "thorname": {
-      "title": "THORName",
       "searchPlaceholder": "Поиск THORName",
-      "available": "{name} доступно",
       "register": "Зарегистрировать",
-      "taken": "занято",
-      "yourNames": "Ваши THORNames",
       "tab": {
-        "thorname": "THORName",
-        "register": "Зарегистрировать",
-        "renew": "Продлить",
-        "transfer": "Передать"
+        "thorname": "THORName"
       },
       "name": "Имя",
-      "nameHint": "1–30 символов: a–z, 0–9, - _ +",
       "invalidName": "Недопустимое имя",
       "enterName": "Введите имя",
-      "preferredAsset": "Предпочитаемый актив",
       "duration": "Длительность",
       "years": "{count, plural, one {# год} few {# года} many {# лет} other {# года}}",
-      "renewAmount": "RUNE для добавления",
-      "renewAmountHint": "Количество RUNE для продления регистрации",
-      "renewEstimate": "Продлевает регистрацию примерно на {days} дней",
       "enterAmount": "Введите сумму",
-      "newOwner": "Новый владелец",
-      "newOwnerHint": "адрес thor1… для передачи прав владения",
       "enterNewOwner": "Введите адрес нового владельца",
-      "create": "Создать THORName",
       "renew": "Продлить",
       "transfer": "Передать",
-      "estimatedCost": "Ориентировочная стоимость",
-      "owner": "Владелец",
-      "expires": "Истекает",
-      "collected": "Собрано",
-      "aliases": "Алиасы"
+      "cost": "Стоимость",
+      "expires": "Истекает"
     },
     "title": "Отправить",
     "send": "Отправить",

@@ -276,40 +276,22 @@
       "noRunepoolPosition": "No RUNEPool position found for this wallet."
     },
     "thorname": {
-      "title": "THORName",
       "searchPlaceholder": "THORName لبھو",
-      "available": "{name} دستیاب اے",
       "register": "رجسٹر کرو",
-      "taken": "لیا ہویا",
-      "yourNames": "تُہاڈے THORNames",
       "tab": {
-        "thorname": "THORName",
-        "register": "رجسٹر",
-        "renew": "نواں کرو",
-        "transfer": "منتقل کرو"
+        "thorname": "THORName"
       },
       "name": "ناں",
-      "nameHint": "1–30 اکھر: a–z, 0–9, - _ +",
       "invalidName": "غلط ناں",
       "enterName": "اِک ناں پاؤ",
-      "preferredAsset": "ترجیحی اثاثہ",
       "duration": "مدت",
       "years": "{count, plural, one {# ورھا} other {# ورھے}}",
-      "renewAmount": "شامل کرݨ لئی RUNE",
-      "renewAmountHint": "رجسٹریشن ودھاوݨ لئی RUNE دی رقم",
-      "renewEstimate": "رجسٹریشن نوں تقریباً {days} دن ودھاندا اے",
       "enterAmount": "رقم پاؤ",
-      "newOwner": "نواں مالک",
-      "newOwnerHint": "ملکیت منتقل کرݨ لئی thor1… پتہ",
       "enterNewOwner": "نویں مالک دا پتہ پاؤ",
-      "create": "THORName بݨاؤ",
       "renew": "نواں کرو",
       "transfer": "منتقل کرو",
-      "estimatedCost": "اندازاً لاگت",
-      "owner": "مالک",
-      "expires": "میعاد ختم",
-      "collected": "جمع کیتا",
-      "aliases": "عرفی ناں"
+      "cost": "لاگت",
+      "expires": "میعاد ختم"
     },
     "title": "بھیجو",
     "send": "بھیجو",

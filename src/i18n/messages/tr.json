@@ -276,40 +276,22 @@
       "noRunepoolPosition": "No RUNEPool position found for this wallet."
     },
     "thorname": {
-      "title": "THORName",
       "searchPlaceholder": "THORName ara",
-      "available": "{name} müsait",
       "register": "Kaydet",
-      "taken": "alınmış",
-      "yourNames": "THORNames listeniz",
       "tab": {
-        "thorname": "THORName",
-        "register": "Kaydet",
-        "renew": "Yenile",
-        "transfer": "Aktar"
+        "thorname": "THORName"
       },
       "name": "İsim",
-      "nameHint": "1–30 karakter: a–z, 0–9, - _ +",
       "invalidName": "Geçersiz isim",
       "enterName": "Bir isim girin",
-      "preferredAsset": "Tercih Edilen Varlık",
       "duration": "Süre",
       "years": "{count, plural, other {# yıl}}",
-      "renewAmount": "Eklenecek RUNE",
-      "renewAmountHint": "Kaydı uzatmak için RUNE miktarı",
-      "renewEstimate": "Kaydı yaklaşık {days} gün uzatır",
       "enterAmount": "Tutar girin",
-      "newOwner": "Yeni Sahip",
-      "newOwnerHint": "Sahipliği aktaracağınız thor1… adresi",
       "enterNewOwner": "Yeni sahip adresini girin",
-      "create": "THORName Oluştur",
       "renew": "Yenile",
       "transfer": "Aktar",
-      "estimatedCost": "Tahmini maliyet",
-      "owner": "Sahip",
-      "expires": "Sona eriyor",
-      "collected": "Toplanan",
-      "aliases": "Takma adlar"
+      "cost": "Maliyet",
+      "expires": "Sona eriyor"
     },
     "title": "Gönder",
     "send": "Gönder",

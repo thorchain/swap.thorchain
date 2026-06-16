@@ -276,40 +276,22 @@
       "noRunepoolPosition": "No RUNEPool position found for this wallet."
     },
     "thorname": {
-      "title": "THORName",
       "searchPlaceholder": "একটি THORName খুঁজুন",
-      "available": "{name} উপলব্ধ",
       "register": "নিবন্ধন করুন",
-      "taken": "নেওয়া হয়েছে",
-      "yourNames": "আপনার THORNames",
       "tab": {
-        "thorname": "THORName",
-        "register": "নিবন্ধন করুন",
-        "renew": "নবায়ন",
-        "transfer": "স্থানান্তর"
+        "thorname": "THORName"
       },
       "name": "নাম",
-      "nameHint": "1–30 অক্ষর: a–z, 0–9, - _ +",
       "invalidName": "অবৈধ নাম",
       "enterName": "একটি নাম লিখুন",
-      "preferredAsset": "পছন্দের অ্যাসেট",
       "duration": "সময়কাল",
       "years": "{count, plural, one {# বছর} other {# বছর}}",
-      "renewAmount": "যোগ করার জন্য RUNE",
-      "renewAmountHint": "নিবন্ধন বাড়ানোর জন্য RUNE-এর পরিমাণ",
-      "renewEstimate": "নিবন্ধন ~{days} দিন বাড়ায়",
       "enterAmount": "পরিমাণ লিখুন",
-      "newOwner": "নতুন মালিক",
-      "newOwnerHint": "মালিকানা স্থানান্তর করার জন্য thor1… ঠিকানা",
       "enterNewOwner": "নতুন মালিকের ঠিকানা লিখুন",
-      "create": "THORName তৈরি করুন",
       "renew": "নবায়ন",
       "transfer": "স্থানান্তর",
-      "estimatedCost": "আনুমানিক খরচ",
-      "owner": "মালিক",
-      "expires": "মেয়াদ শেষ",
-      "collected": "সংগৃহীত",
-      "aliases": "উপনাম"
+      "cost": "খরচ",
+      "expires": "মেয়াদ শেষ"
     },
     "title": "পাঠান",
     "send": "পাঠান",

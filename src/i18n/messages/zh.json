@@ -276,40 +276,22 @@
       "noRunepoolPosition": "No RUNEPool position found for this wallet."
     },
     "thorname": {
-      "title": "THORName",
       "searchPlaceholder": "搜索 THORName",
-      "available": "{name} 可用",
       "register": "注册",
-      "taken": "已被占用",
-      "yourNames": "您的 THORNames",
       "tab": {
-        "thorname": "THORName",
-        "register": "注册",
-        "renew": "续期",
-        "transfer": "转移"
+        "thorname": "THORName"
       },
       "name": "名称",
-      "nameHint": "1–30 个字符: a–z, 0–9, - _ +",
       "invalidName": "无效名称",
       "enterName": "输入名称",
-      "preferredAsset": "首选资产",
       "duration": "期限",
       "years": "{count, plural, other {#年}}",
-      "renewAmount": "要添加的 RUNE",
-      "renewAmountHint": "用于延长注册的 RUNE 数量",
-      "renewEstimate": "将注册延长约 {days} 天",
       "enterAmount": "输入金额",
-      "newOwner": "新所有者",
-      "newOwnerHint": "用于转移所有权的 thor1… 地址",
       "enterNewOwner": "输入新所有者地址",
-      "create": "创建 THORName",
       "renew": "续期",
       "transfer": "转移",
-      "estimatedCost": "预计费用",
-      "owner": "所有者",
-      "expires": "到期时间",
-      "collected": "已收集",
-      "aliases": "别名"
+      "cost": "费用",
+      "expires": "到期时间"
     },
     "title": "发送",
     "send": "发送",

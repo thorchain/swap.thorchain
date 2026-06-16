@@ -276,40 +276,22 @@
       "noRunepoolPosition": "No RUNEPool position found for this wallet."
     },
     "thorname": {
-      "title": "THORName",
       "searchPlaceholder": "ایک THORName تلاش کریں",
-      "available": "{name} دستیاب ہے",
       "register": "رجسٹر کریں",
-      "taken": "لیا گیا",
-      "yourNames": "آپ کے THORNames",
       "tab": {
-        "thorname": "THORName",
-        "register": "رجسٹر کریں",
-        "renew": "تجدید کریں",
-        "transfer": "منتقل کریں"
+        "thorname": "THORName"
       },
       "name": "نام",
-      "nameHint": "1–30 حروف: a–z, 0–9, - _ +",
       "invalidName": "غلط نام",
       "enterName": "ایک نام درج کریں",
-      "preferredAsset": "ترجیحی اثاثہ",
       "duration": "مدت",
       "years": "{count, plural, one {# سال} other {# سال}}",
-      "renewAmount": "شامل کرنے کے لیے RUNE",
-      "renewAmountHint": "رجسٹریشن بڑھانے کے لیے RUNE کی مقدار",
-      "renewEstimate": "رجسٹریشن کو تقریباً {days} دن بڑھاتا ہے",
       "enterAmount": "رقم درج کریں",
-      "newOwner": "نیا مالک",
-      "newOwnerHint": "ملکیت منتقل کرنے کے لیے thor1… پتہ",
       "enterNewOwner": "نئے مالک کا پتہ درج کریں",
-      "create": "THORName بنائیں",
       "renew": "تجدید کریں",
       "transfer": "منتقل کریں",
-      "estimatedCost": "تخمینی لاگت",
-      "owner": "مالک",
-      "expires": "ختم ہوتا ہے",
-      "collected": "جمع شدہ",
-      "aliases": "عرفی نام"
+      "cost": "لاگت",
+      "expires": "ختم ہوتا ہے"
     },
     "title": "بھیجیں",
     "send": "بھیجیں",

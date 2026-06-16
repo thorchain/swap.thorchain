@@ -276,40 +276,22 @@
       "noRunepoolPosition": "No RUNEPool position found for this wallet."
     },
     "thorname": {
-      "title": "THORName",
       "searchPlaceholder": "Cari THORName",
-      "available": "{name} tersedia",
       "register": "Daftar",
-      "taken": "telah diambil",
-      "yourNames": "THORNames Anda",
       "tab": {
-        "thorname": "THORName",
-        "register": "Daftar",
-        "renew": "Perpanjang",
-        "transfer": "Transfer"
+        "thorname": "THORName"
       },
       "name": "Nama",
-      "nameHint": "1–30 karakter: a–z, 0–9, - _ +",
       "invalidName": "Nama tidak valid",
       "enterName": "Masukkan nama",
-      "preferredAsset": "Aset Pilihan",
       "duration": "Durasi",
       "years": "{count, plural, other {# tahun}}",
-      "renewAmount": "RUNE untuk ditambahkan",
-      "renewAmountHint": "Jumlah RUNE untuk memperpanjang pendaftaran",
-      "renewEstimate": "Memperpanjang pendaftaran sekitar {days} hari",
       "enterAmount": "Masukkan jumlah",
-      "newOwner": "Pemilik Baru",
-      "newOwnerHint": "alamat thor1… untuk mentransfer kepemilikan",
       "enterNewOwner": "Masukkan alamat pemilik baru",
-      "create": "Buat THORName",
       "renew": "Perpanjang",
       "transfer": "Transfer",
-      "estimatedCost": "Perkiraan biaya",
-      "owner": "Pemilik",
-      "expires": "Kedaluwarsa",
-      "collected": "Terkumpul",
-      "aliases": "Alias"
+      "cost": "Biaya",
+      "expires": "Kedaluwarsa"
     },
     "title": "Kirim",
     "send": "Kirim",

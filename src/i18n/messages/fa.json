@@ -276,40 +276,22 @@
       "noRunepoolPosition": "No RUNEPool position found for this wallet."
     },
     "thorname": {
-      "title": "THORName",
       "searchPlaceholder": "جستجوی یک THORName",
-      "available": "{name} در دسترس است",
       "register": "ثبت",
-      "taken": "گرفته‌شده",
-      "yourNames": "THORNames شما",
       "tab": {
-        "thorname": "THORName",
-        "register": "ثبت",
-        "renew": "تمدید",
-        "transfer": "انتقال"
+        "thorname": "THORName"
       },
       "name": "نام",
-      "nameHint": "1–30 کاراکتر: a–z, 0–9, - _ +",
       "invalidName": "نام نامعتبر",
       "enterName": "یک نام وارد کنید",
-      "preferredAsset": "دارایی ترجیحی",
       "duration": "مدت",
       "years": "{count, plural, one {# سال} other {# سال}}",
-      "renewAmount": "RUNE برای افزودن",
-      "renewAmountHint": "مقدار RUNE برای تمدید ثبت",
-      "renewEstimate": "ثبت را حدوداً {days} روز تمدید می‌کند",
       "enterAmount": "مبلغ را وارد کنید",
-      "newOwner": "مالک جدید",
-      "newOwnerHint": "آدرس thor1… برای انتقال مالکیت به آن",
       "enterNewOwner": "آدرس مالک جدید را وارد کنید",
-      "create": "ایجاد THORName",
       "renew": "تمدید",
       "transfer": "انتقال",
-      "estimatedCost": "هزینه تخمینی",
-      "owner": "مالک",
-      "expires": "انقضا",
-      "collected": "جمع‌آوری‌شده",
-      "aliases": "نام‌های مستعار"
+      "cost": "هزینه",
+      "expires": "انقضا"
     },
     "title": "ارسال",
     "send": "ارسال",

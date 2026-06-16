@@ -276,40 +276,22 @@
       "noRunepoolPosition": "No RUNEPool position found for this wallet."
     },
     "thorname": {
-      "title": "THORName",
       "searchPlaceholder": "دوّر على THORName",
-      "available": "{name} متاح",
       "register": "سجّل",
-      "taken": "محجوز",
-      "yourNames": "أسماء THORNames بتاعتك",
       "tab": {
-        "thorname": "THORName",
-        "register": "تسجيل",
-        "renew": "تجديد",
-        "transfer": "نقل"
+        "thorname": "THORName"
       },
       "name": "الاسم",
-      "nameHint": "1–30 حرف: a–z, 0–9, - _ +",
       "invalidName": "اسم غلط",
       "enterName": "اكتب اسم",
-      "preferredAsset": "الأصل المفضّل",
       "duration": "المدة",
       "years": "{count, plural, zero {# سنة} one {# سنة} two {# سنتين} few {# سنين} many {# سنة} other {# سنة}}",
-      "renewAmount": "RUNE اللي هيتضاف",
-      "renewAmountHint": "مقدار RUNE علشان تمدّد التسجيل",
-      "renewEstimate": "بيمدّد التسجيل بحوالي {days} يوم",
       "enterAmount": "اكتب المبلغ",
-      "newOwner": "المالك الجديد",
-      "newOwnerHint": "عنوان thor1… علشان تنقله الملكية",
       "enterNewOwner": "اكتب عنوان المالك الجديد",
-      "create": "إنشاء THORName",
       "renew": "تجديد",
       "transfer": "نقل",
-      "estimatedCost": "التكلفة المقدّرة",
-      "owner": "المالك",
-      "expires": "بينتهي",
-      "collected": "المُحصّل",
-      "aliases": "الأسماء البديلة"
+      "cost": "التكلفة",
+      "expires": "بينتهي"
     },
     "title": "إرسال",
     "send": "إرسال",

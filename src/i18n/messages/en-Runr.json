@@ -421,40 +421,22 @@
       "noRunepoolPosition": "ᚾᛟ ᚱᚢᚾᛖᛈᛟᛟᛚ ᛈᛟᛊᛁᛏᛁᛟᚾ ᚠᛟᚢᚾᛞ ᚠᛟᚱ ᚦᛁᛊ ᚹᚨᛚᛚᛖᛏ."
     },
     "thorname": {
-      "title": "ᚦᛟᚱᚾᚨᛗᛖ",
       "searchPlaceholder": "ᛊᛖᚨᚱᚲᚺ ᚨ ᚦᛟᚱᚾᚨᛗᛖ",
-      "available": "{name} ᛁᛊ ᚨᚹᚨᛁᛚᚨᛒᛚᛖ",
       "register": "ᚱᛖᚷᛁᛊᛏᛖᚱ",
-      "taken": "ᛏᚨᚲᛖᚾ",
-      "yourNames": "ᛁᛟᚢᚱ ᚦᛟᚱᚾᚨᛗᛖᛊ",
       "tab": {
-        "thorname": "ᚦᛟᚱᚾᚨᛗᛖ",
-        "register": "ᚱᛖᚷᛁᛊᛏᛖᚱ",
-        "renew": "ᚱᛖᚾᛖᚹ",
-        "transfer": "ᛏᚱᚨᚾᛊᚠᛖᚱ"
+        "thorname": "ᚦᛟᚱᚾᚨᛗᛖ"
       },
       "name": "ᚾᚨᛗᛖ",
-      "nameHint": "1–30 ᚲᚺᚨᚱᛊ: ᚨ–ᛉ, 0–9, - _ +",
       "invalidName": "ᛁᚾᚹᚨᛚᛁᛞ ᚾᚨᛗᛖ",
       "enterName": "ᛖᚾᛏᛖᚱ ᚨ ᚾᚨᛗᛖ",
-      "preferredAsset": "ᛈᚱᛖᚠᛖᚱᚱᛖᛞ ᚨᛊᛊᛖᛏ",
       "duration": "ᛞᚢᚱᚨᛏᛁᛟᚾ",
       "years": "{count, plural, one {# year} other {# years}}",
-      "renewAmount": "ᚱᚢᚾᛖ ᛏᛟ ᚨᛞᛞ",
-      "renewAmountHint": "ᚨᛗᛟᚢᚾᛏ ᛟᚠ ᚱᚢᚾᛖ ᛏᛟ ᛖᚲᛊᛏᛖᚾᛞ ᚱᛖᚷᛁᛊᛏᚱᚨᛏᛁᛟᚾ",
-      "renewEstimate": "ᛖᚲᛊᛏᛖᚾᛞᛊ ᚱᛖᚷᛁᛊᛏᚱᚨᛏᛁᛟᚾ ᛒᛁ ~{days} ᛞᚨᛁᛊ",
       "enterAmount": "ᛖᚾᛏᛖᚱ ᚨᛗᛟᚢᚾᛏ",
-      "newOwner": "ᚾᛖᚹ ᛟᚹᚾᛖᚱ",
-      "newOwnerHint": "ᚦᛟᚱ1… ᚨᛞᛞᚱᛖᛊᛊ ᛏᛟ ᛏᚱᚨᚾᛊᚠᛖᚱ ᛟᚹᚾᛖᚱᛊᚺᛁᛈ ᛏᛟ",
       "enterNewOwner": "ᛖᚾᛏᛖᚱ ᚾᛖᚹ ᛟᚹᚾᛖᚱ ᚨᛞᛞᚱᛖᛊᛊ",
-      "create": "ᚲᚱᛖᚨᛏᛖ ᚦᛟᚱᚾᚨᛗᛖ",
       "renew": "ᚱᛖᚾᛖᚹ",
       "transfer": "ᛏᚱᚨᚾᛊᚠᛖᚱ",
-      "estimatedCost": "ᛖᛊᛏᛁᛗᚨᛏᛖᛞ ᚲᛟᛊᛏ",
-      "owner": "ᛟᚹᚾᛖᚱ",
-      "expires": "ᛖᚲᛊᛈᛁᚱᛖᛊ",
-      "collected": "ᚲᛟᛚᛚᛖᚲᛏᛖᛞ",
-      "aliases": "ᚨᛚᛁᚨᛊᛖᛊ"
+      "cost": "ᚲᛟᛊᛏ",
+      "expires": "ᛖᚲᛊᛈᛁᚱᛖᛊ"
     }
   },
   "wallet": {

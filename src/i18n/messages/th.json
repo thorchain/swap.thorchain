@@ -276,40 +276,22 @@
       "noRunepoolPosition": "No RUNEPool position found for this wallet."
     },
     "thorname": {
-      "title": "THORName",
       "searchPlaceholder": "ค้นหา THORName",
-      "available": "{name} พร้อมใช้งาน",
       "register": "ลงทะเบียน",
-      "taken": "ถูกใช้แล้ว",
-      "yourNames": "THORNames ของคุณ",
       "tab": {
-        "thorname": "THORName",
-        "register": "ลงทะเบียน",
-        "renew": "ต่ออายุ",
-        "transfer": "โอน"
+        "thorname": "THORName"
       },
       "name": "ชื่อ",
-      "nameHint": "1–30 ตัวอักษร: a–z, 0–9, - _ +",
       "invalidName": "ชื่อไม่ถูกต้อง",
       "enterName": "กรอกชื่อ",
-      "preferredAsset": "สินทรัพย์ที่ต้องการ",
       "duration": "ระยะเวลา",
       "years": "{count, plural, other {# ปี}}",
-      "renewAmount": "RUNE ที่จะเพิ่ม",
-      "renewAmountHint": "จำนวน RUNE เพื่อขยายการลงทะเบียน",
-      "renewEstimate": "ขยายการลงทะเบียนประมาณ {days} วัน",
       "enterAmount": "กรอกจำนวน",
-      "newOwner": "เจ้าของใหม่",
-      "newOwnerHint": "ที่อยู่ thor1… เพื่อโอนความเป็นเจ้าของให้",
       "enterNewOwner": "กรอกที่อยู่เจ้าของใหม่",
-      "create": "สร้าง THORName",
       "renew": "ต่ออายุ",
       "transfer": "โอน",
-      "estimatedCost": "ค่าใช้จ่ายโดยประมาณ",
-      "owner": "เจ้าของ",
-      "expires": "หมดอายุ",
-      "collected": "เก็บรวบรวมแล้ว",
-      "aliases": "นามแฝง"
+      "cost": "ค่าใช้จ่าย",
+      "expires": "หมดอายุ"
     },
     "title": "ส่ง",
     "send": "ส่ง",

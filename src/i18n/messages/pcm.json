@@ -276,40 +276,22 @@
       "noRunepoolPosition": "No RUNEPool position found for this wallet."
     },
     "thorname": {
-      "title": "THORName",
       "searchPlaceholder": "Find a THORName",
-      "available": "{name} dey available",
       "register": "Register",
-      "taken": "don take",
-      "yourNames": "Your THORNames",
       "tab": {
-        "thorname": "THORName",
-        "register": "Register",
-        "renew": "Renew",
-        "transfer": "Transfer"
+        "thorname": "THORName"
       },
       "name": "Name",
-      "nameHint": "1–30 chars: a–z, 0–9, - _ +",
       "invalidName": "Name no correct",
       "enterName": "Put a name",
-      "preferredAsset": "Preferred Asset",
       "duration": "Duration",
       "years": "{count, plural, one {# year} other {# years}}",
-      "renewAmount": "RUNE to add",
-      "renewAmountHint": "Amount of RUNE to extend registration",
-      "renewEstimate": "E dey extend registration by ~{days} days",
       "enterAmount": "Put amount",
-      "newOwner": "New Owner",
-      "newOwnerHint": "thor1… address to transfer ownership give",
       "enterNewOwner": "Put new owner address",
-      "create": "Create THORName",
       "renew": "Renew",
       "transfer": "Transfer",
-      "estimatedCost": "Estimated cost",
-      "owner": "Owner",
-      "expires": "Expires",
-      "collected": "Collected",
-      "aliases": "Aliases"
+      "cost": "Cost",
+      "expires": "Expires"
     },
     "title": "Send",
     "send": "Send",
