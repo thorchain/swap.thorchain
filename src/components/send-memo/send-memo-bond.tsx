@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useMemo, useState } from 'react'
+import { useMemo, useState } from 'react'
 import { useTranslations } from 'next-intl'
 import { Chain, USwapNumber } from '@tcswap/core'
 import { LoaderCircle } from 'lucide-react'
@@ -18,7 +18,8 @@ import { ThemeButton } from '@/components/theme-button'
 import { assetIdentifierStr, tokenToAsset } from '@/components/send/send-helpers'
 import { isRuneToken, isThorAddress } from '@/components/send-memo/send-memo-helpers'
 import { useWalletBalances } from '@/hooks/use-wallet-balances'
-import { useAccounts, useSelectAccount } from '@/hooks/use-wallets'
+import { useSelectedAccount } from '@/hooks/use-wallets'
+import { useResolveThorAccount } from '@/hooks/use-resolve-thor-account'
 import { useRates } from '@/hooks/use-rates'
 import { useNodeInfo } from '@/hooks/use-node-info'
 import { getUSwap } from '@/lib/wallets'
@@ -37,17 +38,14 @@ interface BondFormProps {
 export function SendMemoBond({ account, initialTab = 'bond' }: BondFormProps) {
   const t = useTranslations('send')
   const uSwap = getUSwap()
-  const accounts = useAccounts()
   const { openDialog } = useDialog()
   const { walletData } = useWalletBalances()
 
-  const runeToken = useMemo(() => walletData.flatMap(({ tokens }) => tokens.filter(isRuneToken)).find(Boolean), [walletData])
-  const thorAccount = account ?? accounts.find(a => a.network === Chain.THORChain)
+  useResolveThorAccount()
 
-  const selectAccount = useSelectAccount()
-  useEffect(() => {
-    if (thorAccount) selectAccount(thorAccount)
-  }, [thorAccount])
+  const runeToken = useMemo(() => walletData.flatMap(({ tokens }) => tokens.filter(isRuneToken)).find(Boolean), [walletData])
+  const selectedAccount = useSelectedAccount()
+  const thorAccount = account ?? selectedAccount
 
   const [tab, setTab] = useState<BondTab>(initialTab)
   const [nodeAddress, setNodeAddress] = useState('')

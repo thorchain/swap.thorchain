@@ -104,8 +104,7 @@ export function SendMemoPool() {
   useEffect(() => {
     const wanted = tab === 'add' ? selectedToken?.balance.chain : Chain.THORChain
     if (wanted && activeAccount?.network !== wanted) {
-      const next = accounts.find(a => a.network === wanted)
-      if (next) selectAccount(next)
+      selectAccount(accounts.find(a => a.network === wanted))
     }
   }, [tab, selectedToken, activeAccount, accounts])
 
