@@ -1,8 +1,9 @@
 'use client'
 
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { useTranslations } from 'next-intl'
 import { Chain } from '@tcswap/core'
+import { getAddressValidator } from '@tcswap/toolboxes'
 import { LoaderCircle } from 'lucide-react'
 import { toast } from 'sonner'
 import { Credenza, CredenzaContent, CredenzaHeader, CredenzaTitle } from '@/components/ui/credenza'
@@ -11,56 +12,75 @@ import { AddressInput } from '@/components/address-input'
 import { DecimalInput } from '@/components/decimal/decimal-input'
 import { ThemeButton } from '@/components/theme-button'
 import { assetIdentifierStr } from '@/components/send/send-helpers'
-import { isRuneToken, isThorAddress } from '@/components/send-memo/send-memo-helpers'
+import { ThornameConfig } from '@/components/send-memo/thorname/thorname-config'
 import { useWalletBalances } from '@/hooks/use-wallet-balances'
 import { useAccounts } from '@/hooks/use-wallets'
 import { useRates } from '@/hooks/use-rates'
-import { BLOCKS_PER_YEAR, useThorNetwork } from '@/hooks/use-thor-network'
+import { BLOCKS_PER_YEAR, SECONDS_PER_BLOCK } from '@/components/send-memo/send-memo-helpers'
 import { getUSwap } from '@/lib/wallets'
 import { WalletAccount } from '@/store/wallets-store'
 import { toCurrencyFixed } from '@/lib/utils'
 
-// 1-30 chars, letters/digits and - _ + (matches THORChain validation).
+// 1-30 chars, letters/digits and - _ + (matches THORChain/MAYAChain validation).
 const isValidName = (name: string) => /^[a-zA-Z0-9\-_+]{1,30}$/.test(name)
 
+function useValidAddress(address: string, chain: Chain): boolean {
+  const [valid, setValid] = useState(false)
+
+  useEffect(() => {
+    const trimmed = address.trim()
+    if (!trimmed) return setValid(false)
+
+    let cancelled = false
+    getAddressValidator()
+      .then(validate => !cancelled && setValid(validate({ address: trimmed, chain })))
+      .catch(() => !cancelled && setValid(false))
+    return () => {
+      cancelled = true
+    }
+  }, [address, chain])
+
+  return valid
+}
+
 interface DialogBase {
+  config: ThornameConfig
   name: string
-  thorAccount: WalletAccount
+  account: WalletAccount
   isOpen: boolean
   onOpenChange: (open: boolean) => void
 }
 
-// Shared RUNE token + rate lookup used by every THORName action dialog.
-function useRuneContext() {
+// Shared native-token + rate lookup used by every name action dialog.
+function useTokenContext(config: ThornameConfig) {
   const { walletData } = useWalletBalances()
-  const runeToken = useMemo(() => walletData.flatMap(({ tokens }) => tokens.filter(isRuneToken)).find(Boolean), [walletData])
-  const rateIds = useMemo(() => (runeToken ? [assetIdentifierStr(runeToken.balance)] : []), [runeToken])
-  const { rates } = useRates(rateIds)
-  const runeRate = runeToken ? rates[assetIdentifierStr(runeToken.balance)] : undefined
-  return { runeToken, runeRate }
+  const token = useMemo(() => walletData.flatMap(({ tokens }) => tokens.filter(config.isToken)).find(Boolean), [walletData, config])
+  const rateIds = useMemo(() => (token ? [assetIdentifierStr(token.balance)] : []), [token])
+  const { rates } = useRates(rateIds, config.rateProvider)
+  const rate = token ? rates[assetIdentifierStr(token.balance)] : undefined
+  return { token, rate }
 }
 
 // Shared deposit + toast flow. Closes the dialog when broadcast succeeds.
-function useThornameDeposit(thorAccount: WalletAccount, onDone: () => void) {
+function useThornameDeposit(config: ThornameConfig, account: WalletAccount, onDone: () => void) {
   const t = useTranslations('send')
   const uSwap = getUSwap()
-  const { walletData } = useWalletBalances()
-  const runeToken = useMemo(() => walletData.flatMap(({ tokens }) => tokens.filter(isRuneToken)).find(Boolean), [walletData])
+  const { token } = useTokenContext(config)
   const [submitting, setSubmitting] = useState(false)
 
-  const submit = (memo: string, depositRune: number) => {
-    if (!runeToken) {
-      toast.error(t('error.noRuneBalance'))
+  const submit = (memo: string, depositAmount: number) => {
+    if (!token) {
+      toast.error(t('error.noBalance', { asset: config.ticker }))
       return
     }
 
-    const wallet = uSwap.getWallet(thorAccount.provider, Chain.THORChain)
+    const wallet = uSwap.getWallet(account.provider, config.chain)
     if (!wallet) {
       toast.error(t('error.walletNotConnected'))
       return
     }
 
-    const assetValue = runeToken.balance.set(depositRune)
+    const assetValue = token.balance.set(depositAmount)
     setSubmitting(true)
 
     const promise = (wallet as { deposit: (a: unknown) => Promise<string> })
@@ -84,14 +104,14 @@ function useThornameDeposit(thorAccount: WalletAccount, onDone: () => void) {
   return { submit, submitting }
 }
 
-function TransactionFee({ runeRate }: { runeRate?: ReturnType<typeof useRuneContext>['runeRate'] }) {
+function TransactionFee({ config, rate }: { config: ThornameConfig; rate?: ReturnType<typeof useTokenContext>['rate'] }) {
   const t = useTranslations('send')
   return (
     <div className="text-txt-label-small flex items-center justify-between text-sm">
       <div className="flex items-center gap-1">{t('transactionFee')}</div>
       <span className="text-txt-high-contrast font-semibold">
-        0.02 RUNE
-        {runeRate && ` (${toCurrencyFixed(runeRate.mul(0.02).toCurrency('$', { trimTrailingZeros: false }))})`}
+        {config.nativeFee} {config.ticker}
+        {rate && ` (${toCurrencyFixed(rate.mul(config.nativeFee).toCurrency('$', { trimTrailingZeros: false }))})`}
       </span>
     </div>
   )
@@ -112,18 +132,18 @@ function NameField({ value, onChange }: { value: string; onChange: (v: string) =
   )
 }
 
-export function ThornameRegisterDialog({ name: initialName, thorAccount, isOpen, onOpenChange }: DialogBase) {
+export function ThornameRegisterDialog({ config, name: initialName, account, isOpen, onOpenChange }: DialogBase) {
   const t = useTranslations('send')
-  const { runeRate } = useRuneContext()
-  const { registerFeeRune, feePerBlockRune } = useThorNetwork()
-  const { submit, submitting } = useThornameDeposit(thorAccount, () => onOpenChange(false))
+  const { rate } = useTokenContext(config)
+  const { registerFee, feePerBlock } = config.useNetwork()
+  const { submit, submitting } = useThornameDeposit(config, account, () => onOpenChange(false))
 
   const [name, setName] = useState(initialName)
   const [years, setYears] = useState(1)
 
-  const cost = registerFeeRune + feePerBlockRune * BLOCKS_PER_YEAR * years
-  const owner = thorAccount.address
-  const memo = `~:${name}:THOR:${owner}:${owner}`
+  const cost = registerFee + feePerBlock * BLOCKS_PER_YEAR * years
+  const owner = account.address
+  const memo = `~:${name}:${config.aliasChain}:${owner}:${owner}`
   const canSend = isValidName(name) && cost > 0 && !submitting
 
   const submitLabel = !name ? t('thorname.enterName') : !isValidName(name) ? t('thorname.invalidName') : t('thorname.register')
@@ -132,7 +152,7 @@ export function ThornameRegisterDialog({ name: initialName, thorAccount, isOpen,
     <Credenza open={isOpen} onOpenChange={onOpenChange}>
       <CredenzaContent className="h-auto rounded-2xl md:max-w-md">
         <CredenzaHeader>
-          <CredenzaTitle>{t('thorname.registerTitle')}</CredenzaTitle>
+          <CredenzaTitle>{t('thorname.registerTitle', { name: config.label })}</CredenzaTitle>
         </CredenzaHeader>
 
         <div className="flex flex-col gap-5 p-4 pt-2 md:p-8 md:pt-0">
@@ -157,12 +177,12 @@ export function ThornameRegisterDialog({ name: initialName, thorAccount, isOpen,
           <div className="text-txt-label-small flex items-center justify-between text-sm">
             <div className="flex items-center gap-1">{t('thorname.cost')}</div>
             <span className="text-txt-high-contrast font-semibold">
-              {cost.toFixed(2)} RUNE
-              {runeRate && ` (${toCurrencyFixed(runeRate.mul(cost).toCurrency('$', { trimTrailingZeros: false }))})`}
+              {cost.toFixed(2)} {config.ticker}
+              {rate && ` (${toCurrencyFixed(rate.mul(cost).toCurrency('$', { trimTrailingZeros: false }))})`}
             </span>
           </div>
 
-          <TransactionFee runeRate={runeRate} />
+          <TransactionFee config={config} rate={rate} />
 
           <ThemeButton variant="primaryMedium" className="w-full" onClick={() => submit(memo, cost)} disabled={!canSend}>
             {submitting ? <LoaderCircle size={20} className="animate-spin" /> : submitLabel}
@@ -173,29 +193,29 @@ export function ThornameRegisterDialog({ name: initialName, thorAccount, isOpen,
   )
 }
 
-export function ThornameRenewDialog({ name: initialName, thorAccount, isOpen, onOpenChange }: DialogBase) {
+export function ThornameRenewDialog({ config, name: initialName, account, isOpen, onOpenChange }: DialogBase) {
   const t = useTranslations('send')
-  const { runeToken, runeRate } = useRuneContext()
-  const { feePerBlockRune } = useThorNetwork()
-  const { submit, submitting } = useThornameDeposit(thorAccount, () => onOpenChange(false))
+  const { token, rate } = useTokenContext(config)
+  const { feePerBlock } = config.useNetwork()
+  const { submit, submitting } = useThornameDeposit(config, account, () => onOpenChange(false))
 
   const [name, setName] = useState(initialName)
   const [amount, setAmount] = useState('')
 
   const numeric = parseFloat(amount) || 0
-  const balance = runeToken?.amount ?? 0
-  const blocks = feePerBlockRune > 0 ? Math.floor(numeric / feePerBlockRune) : 0
-  const days = Math.round((blocks * 6) / 86400)
-  const fiat = runeRate ? runeRate.mul(numeric) : undefined
+  const balance = token?.amount ?? 0
+  const blocks = feePerBlock > 0 ? Math.floor(numeric / feePerBlock) : 0
+  const days = Math.round((blocks * SECONDS_PER_BLOCK) / 86400)
+  const fiat = rate ? rate.mul(numeric) : undefined
 
-  const memo = `~:${name}:THOR:${thorAccount.address}`
+  const memo = `~:${name}:${config.aliasChain}:${account.address}`
   const canSend = isValidName(name) && numeric > 0 && !submitting
 
   return (
     <Credenza open={isOpen} onOpenChange={onOpenChange}>
       <CredenzaContent className="h-auto rounded-2xl md:max-w-md">
         <CredenzaHeader>
-          <CredenzaTitle>{t('thorname.renewTitle')}</CredenzaTitle>
+          <CredenzaTitle>{t('thorname.renewTitle', { name: config.label })}</CredenzaTitle>
         </CredenzaHeader>
 
         <div className="flex flex-col gap-5 p-4 pt-2 md:p-8 md:pt-0">
@@ -226,7 +246,7 @@ export function ThornameRenewDialog({ name: initialName, thorAccount, isOpen, on
                 </ThemeButton>
               </div>
               <div className="text-txt-label-small text-xs">
-                {t('balanceLabel')} {balance.toLocaleString(undefined, { maximumFractionDigits: 4 })} RUNE
+                {t('balanceLabel')} {balance.toLocaleString(undefined, { maximumFractionDigits: 4 })} {config.ticker}
               </div>
             </div>
           </div>
@@ -236,7 +256,7 @@ export function ThornameRenewDialog({ name: initialName, thorAccount, isOpen, on
             <span className="text-txt-high-contrast font-semibold">{t('thorname.extendsDays', { days: days.toLocaleString() })}</span>
           </div>
 
-          <TransactionFee runeRate={runeRate} />
+          <TransactionFee config={config} rate={rate} />
 
           <ThemeButton variant="primaryMedium" className="w-full" onClick={() => submit(memo, numeric)} disabled={!canSend}>
             {submitting ? <LoaderCircle size={20} className="animate-spin" /> : numeric <= 0 ? t('thorname.enterAmount') : t('thorname.renew')}
@@ -247,26 +267,27 @@ export function ThornameRenewDialog({ name: initialName, thorAccount, isOpen, on
   )
 }
 
-export function ThornameTransferDialog({ name: initialName, thorAccount, isOpen, onOpenChange }: DialogBase) {
+export function ThornameTransferDialog({ config, name: initialName, account, isOpen, onOpenChange }: DialogBase) {
   const t = useTranslations('send')
   const accounts = useAccounts()
-  const { runeRate } = useRuneContext()
-  const { submit, submitting } = useThornameDeposit(thorAccount, () => onOpenChange(false))
+  const { rate } = useTokenContext(config)
+  const { submit, submitting } = useThornameDeposit(config, account, () => onOpenChange(false))
 
   const [name, setName] = useState(initialName)
   const [newOwner, setNewOwner] = useState('')
 
   const recipient = newOwner.trim()
-  const memo = `~:${name}:THOR:${recipient}:${recipient}`
-  const canSend = isValidName(name) && isThorAddress(recipient) && !submitting
+  const isValidRecipient = useValidAddress(newOwner, config.chain)
+  const memo = `~:${name}:${config.aliasChain}:${recipient}:${recipient}`
+  const canSend = isValidName(name) && isValidRecipient && !submitting
 
-  const thorOptions = accounts.filter(a => a.network === Chain.THORChain)
+  const options = accounts.filter(a => a.network === config.chain)
 
   return (
     <Credenza open={isOpen} onOpenChange={onOpenChange}>
       <CredenzaContent className="h-auto rounded-2xl md:max-w-md">
         <CredenzaHeader>
-          <CredenzaTitle>{t('thorname.transferTitle')}</CredenzaTitle>
+          <CredenzaTitle>{t('thorname.transferTitle', { name: config.label })}</CredenzaTitle>
         </CredenzaHeader>
 
         <div className="flex flex-col gap-5 p-4 pt-2 md:p-8 md:pt-0">
@@ -277,18 +298,18 @@ export function ThornameTransferDialog({ name: initialName, thorAccount, isOpen,
             <AddressInput
               value={newOwner}
               onChange={setNewOwner}
-              options={thorOptions}
+              options={options}
               placeholder={t('thorname.recipientPlaceholder')}
-              invalid={!!recipient && !isThorAddress(recipient)}
+              invalid={!!recipient && !isValidRecipient}
             />
           </div>
 
-          <TransactionFee runeRate={runeRate} />
+          <TransactionFee config={config} rate={rate} />
 
           <ThemeButton variant="primaryMedium" className="w-full" onClick={() => submit(memo, 0)} disabled={!canSend}>
             {submitting ? (
               <LoaderCircle size={20} className="animate-spin" />
-            ) : !isThorAddress(recipient) ? (
+            ) : !isValidRecipient ? (
               t('thorname.enterNewOwner')
             ) : (
               t('thorname.transfer')

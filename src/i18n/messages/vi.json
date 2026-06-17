@@ -276,11 +276,19 @@
       "noRunepoolPosition": "No RUNEPool position found for this wallet."
     },
     "thorname": {
-      "searchPlaceholder": "Tìm kiếm một THORName",
+      "searchPlaceholder": "Tìm kiếm một {name}",
       "register": "Đăng ký",
-      "tab": {
-        "thorname": "THORName"
-      },
+      "yours": "là của bạn",
+      "availableLabel": "Khả dụng",
+      "takenLabel": "Đã được sử dụng",
+      "registerTitle": "Đăng ký {name}",
+      "renewTitle": "Gia hạn {name}",
+      "transferTitle": "Chuyển {name}",
+      "amount": "Số lượng",
+      "aliasesChain": "Bí danh {chain}",
+      "recipientPlaceholder": "Địa chỉ người nhận",
+      "extendsLabel": "Gia hạn đăng ký",
+      "extendsDays": "~{days} ngày",
       "name": "Tên",
       "invalidName": "Tên không hợp lệ",
       "enterName": "Nhập một tên",
@@ -316,7 +324,8 @@
       "walletNotConnected": "Ví chưa kết nối.",
       "invalidAddress": "Địa chỉ {chain} không hợp lệ",
       "noRuneBalance": "Không tìm thấy số dư RUNE.",
-      "noTcyBalance": "Không tìm thấy số dư TCY."
+      "noTcyBalance": "Không tìm thấy số dư TCY.",
+      "noBalance": "Không tìm thấy số dư {asset}."
     },
     "beta": {
       "title": "Đây là tính năng beta",

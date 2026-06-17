@@ -257,7 +257,8 @@
       "walletNotConnected": "ᚹᚨᛚᛚᛖᛏ ᚾᛟᛏ ᚲᛟᚾᚾᛖᚲᛏᛖᛞ.",
       "invalidAddress": "ᛁᚾᚹᚨᛚᛁᛞ {chain} ᚨᛞᛞᚱᛖᛊᛊ",
       "noRuneBalance": "ᚾᛟ ᚱᚢᚾᛖ ᛒᚨᛚᚨᚾᚲᛖ ᚠᛟᚢᚾᛞ.",
-      "noTcyBalance": "ᚾᛟ ᛏᚲᛁ ᛒᚨᛚᚨᚾᚲᛖ ᚠᛟᚢᚾᛞ."
+      "noTcyBalance": "ᚾᛟ ᛏᚲᛁ ᛒᚨᛚᚨᚾᚲᛖ ᚠᛟᚢᚾᛞ.",
+      "noBalance": "ᚾᛟ {asset} ᛒᚨᛚᚨᚾᚲᛖ ᚠᛟᚢᚾᛞ."
     },
     "beta": {
       "title": "ᚦᛁᛊ ᛁᛊ ᚨ ᛒᛖᛏᚨ ᚠᛖᚨᛏᚢᚱᛖ",
@@ -421,11 +422,19 @@
       "noRunepoolPosition": "ᚾᛟ ᚱᚢᚾᛖᛈᛟᛟᛚ ᛈᛟᛊᛁᛏᛁᛟᚾ ᚠᛟᚢᚾᛞ ᚠᛟᚱ ᚦᛁᛊ ᚹᚨᛚᛚᛖᛏ."
     },
     "thorname": {
-      "searchPlaceholder": "ᛊᛖᚨᚱᚲᚺ ᚨ ᚦᛟᚱᚾᚨᛗᛖ",
+      "searchPlaceholder": "ᛊᛖᚨᚱᚲᚺ ᚨ {name}",
       "register": "ᚱᛖᚷᛁᛊᛏᛖᚱ",
-      "tab": {
-        "thorname": "ᚦᛟᚱᚾᚨᛗᛖ"
-      },
+      "yours": "ᛁᛊ ᛁᛟᚢᚱᛊ",
+      "availableLabel": "ᚨᚹᚨᛁᛚᚨᛒᛚᛖ",
+      "takenLabel": "ᛏᚨᚲᛖᚾ",
+      "registerTitle": "ᚱᛖᚷᛁᛊᛏᛖᚱ {name}",
+      "renewTitle": "ᚱᛖᚾᛖᚹ {name}",
+      "transferTitle": "ᛏᚱᚨᚾᛊᚠᛖᚱ {name}",
+      "amount": "ᚨᛗᛟᚢᚾᛏ",
+      "aliasesChain": "ᚨᛚᛁᚨᛊᛖᛊ {chain}",
+      "recipientPlaceholder": "ᚱᛖᚲᛁᛈᛁᛖᚾᛏ ᚨᛞᛞᚱᛖᛊᛊ",
+      "extendsLabel": "ᛖᚲᛊᛏᛖᚾᛞᛊ ᚱᛖᚷᛁᛊᛏᚱᚨᛏᛁᛟᚾ ᛒᛁ",
+      "extendsDays": "~{days} ᛞᚨᛁᛊ",
       "name": "ᚾᚨᛗᛖ",
       "invalidName": "ᛁᚾᚹᚨᛚᛁᛞ ᚾᚨᛗᛖ",
       "enterName": "ᛖᚾᛏᛖᚱ ᚨ ᚾᚨᛗᛖ",

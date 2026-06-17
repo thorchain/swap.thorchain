@@ -257,7 +257,8 @@
       "walletNotConnected": "Wallet not connected.",
       "invalidAddress": "Invalid {chain} address",
       "noRuneBalance": "No RUNE balance found.",
-      "noTcyBalance": "No TCY balance found."
+      "noTcyBalance": "No TCY balance found.",
+      "noBalance": "No {asset} balance found."
     },
     "beta": {
       "title": "This is a beta feature",
@@ -421,18 +422,14 @@
       "noRunepoolPosition": "No RUNEPool position found for this wallet."
     },
     "thorname": {
-      "searchPlaceholder": "Search a THORName",
+      "searchPlaceholder": "Search a {name}",
       "register": "Register",
-      "tab": {
-        "thorname": "THORName",
-        "mayaname": "MAYAName"
-      },
       "yours": "is yours",
       "availableLabel": "Available",
       "takenLabel": "Taken",
-      "registerTitle": "Register THORName",
-      "renewTitle": "Renew THORName",
-      "transferTitle": "Transfer THORName",
+      "registerTitle": "Register {name}",
+      "renewTitle": "Renew {name}",
+      "transferTitle": "Transfer {name}",
       "amount": "Amount",
       "aliasesChain": "Aliases {chain}",
       "recipientPlaceholder": "Recipient address",

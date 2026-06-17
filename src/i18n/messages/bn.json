@@ -276,11 +276,19 @@
       "noRunepoolPosition": "No RUNEPool position found for this wallet."
     },
     "thorname": {
-      "searchPlaceholder": "একটি THORName খুঁজুন",
+      "searchPlaceholder": "একটি {name} খুঁজুন",
       "register": "নিবন্ধন করুন",
-      "tab": {
-        "thorname": "THORName"
-      },
+      "yours": "আপনার",
+      "availableLabel": "উপলব্ধ",
+      "takenLabel": "নেওয়া হয়েছে",
+      "registerTitle": "{name} নিবন্ধন করুন",
+      "renewTitle": "{name} নবায়ন করুন",
+      "transferTitle": "{name} স্থানান্তর করুন",
+      "amount": "পরিমাণ",
+      "aliasesChain": "উপনাম {chain}",
+      "recipientPlaceholder": "প্রাপকের ঠিকানা",
+      "extendsLabel": "নিবন্ধন বাড়ায়",
+      "extendsDays": "~{days} দিন",
       "name": "নাম",
       "invalidName": "অবৈধ নাম",
       "enterName": "একটি নাম লিখুন",
@@ -316,7 +324,8 @@
       "walletNotConnected": "ওয়ালেট সংযুক্ত নয়।",
       "invalidAddress": "অবৈধ {chain} ঠিকানা",
       "noRuneBalance": "কোনো RUNE ব্যালেন্স পাওয়া যায়নি।",
-      "noTcyBalance": "কোনো TCY ব্যালেন্স পাওয়া যায়নি।"
+      "noTcyBalance": "কোনো TCY ব্যালেন্স পাওয়া যায়নি।",
+      "noBalance": "কোনো {asset} ব্যালেন্স পাওয়া যায়নি।"
     },
     "beta": {
       "title": "এটি একটি বিটা ফিচার",

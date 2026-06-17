@@ -276,11 +276,19 @@
       "noRunepoolPosition": "No RUNEPool position found for this wallet."
     },
     "thorname": {
-      "searchPlaceholder": "THORNameを検索",
+      "searchPlaceholder": "{name}を検索",
       "register": "登録",
-      "tab": {
-        "thorname": "THORName"
-      },
+      "yours": "はあなたのものです",
+      "availableLabel": "利用可能",
+      "takenLabel": "使用済み",
+      "registerTitle": "{name}を登録",
+      "renewTitle": "{name}を更新",
+      "transferTitle": "{name}を譲渡",
+      "amount": "数量",
+      "aliasesChain": "エイリアス {chain}",
+      "recipientPlaceholder": "受取人アドレス",
+      "extendsLabel": "登録を延長",
+      "extendsDays": "~{days}日",
       "name": "名前",
       "invalidName": "無効な名前",
       "enterName": "名前を入力",
@@ -316,7 +324,8 @@
       "walletNotConnected": "ウォレットが接続されていません。",
       "invalidAddress": "無効な{chain}アドレスです",
       "noRuneBalance": "RUNE残高が見つかりません。",
-      "noTcyBalance": "TCY残高が見つかりません。"
+      "noTcyBalance": "TCY残高が見つかりません。",
+      "noBalance": "{asset}残高が見つかりません。"
     },
     "beta": {
       "title": "これはベータ機能です",

@@ -276,11 +276,19 @@
       "noRunepoolPosition": "No RUNEPool position found for this wallet."
     },
     "thorname": {
-      "searchPlaceholder": "Cari THORName",
+      "searchPlaceholder": "Cari {name}",
       "register": "Daftar",
-      "tab": {
-        "thorname": "THORName"
-      },
+      "yours": "milik Anda",
+      "availableLabel": "Tersedia",
+      "takenLabel": "Telah diambil",
+      "registerTitle": "Daftarkan {name}",
+      "renewTitle": "Perpanjang {name}",
+      "transferTitle": "Transfer {name}",
+      "amount": "Jumlah",
+      "aliasesChain": "Alias {chain}",
+      "recipientPlaceholder": "Alamat penerima",
+      "extendsLabel": "Memperpanjang pendaftaran",
+      "extendsDays": "~{days} hari",
       "name": "Nama",
       "invalidName": "Nama tidak valid",
       "enterName": "Masukkan nama",
@@ -316,7 +324,8 @@
       "walletNotConnected": "Dompet tidak terhubung.",
       "invalidAddress": "Alamat {chain} tidak valid",
       "noRuneBalance": "Saldo RUNE tidak ditemukan.",
-      "noTcyBalance": "Saldo TCY tidak ditemukan."
+      "noTcyBalance": "Saldo TCY tidak ditemukan.",
+      "noBalance": "Saldo {asset} tidak ditemukan."
     },
     "beta": {
       "title": "Ini adalah fitur beta",

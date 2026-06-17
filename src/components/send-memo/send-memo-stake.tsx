@@ -19,7 +19,7 @@ import { SendMemoBeta } from '@/components/send-memo/send-memo-beta'
 import { isRuneToken, isTcyToken } from '@/components/send-memo/send-memo-helpers'
 import { useWalletBalances } from '@/hooks/use-wallet-balances'
 import { useAccounts, useSelectedAccount } from '@/hooks/use-wallets'
-import { useResolveThorAccount } from '@/hooks/use-resolve-thor-account'
+import { useResolveAccount } from '@/hooks/use-resolve-account'
 import { useRates } from '@/hooks/use-rates'
 import { useTcyStaker } from '@/hooks/use-tcy-staker'
 import { useTcyClaimer } from '@/hooks/use-tcy-claimer'
@@ -47,7 +47,7 @@ export function SendMemoStake({ account, initialTab = 'stake', stakedAmount }: S
   const tcyToken = useMemo(() => walletData.flatMap(({ tokens }) => tokens.filter(isTcyToken)).find(Boolean), [walletData])
   const runeToken = useMemo(() => walletData.flatMap(({ tokens }) => tokens.filter(isRuneToken)).find(Boolean), [walletData])
 
-  useResolveThorAccount()
+  useResolveAccount()
 
   const selectedAccount = useSelectedAccount()
   const thorAccount = account ?? selectedAccount

@@ -276,11 +276,19 @@
       "noRunepoolPosition": "No RUNEPool position found for this wallet."
     },
     "thorname": {
-      "searchPlaceholder": "THORName 검색",
+      "searchPlaceholder": "{name} 검색",
       "register": "등록",
-      "tab": {
-        "thorname": "THORName"
-      },
+      "yours": "내 소유입니다",
+      "availableLabel": "사용 가능",
+      "takenLabel": "사용 중",
+      "registerTitle": "{name} 등록",
+      "renewTitle": "{name} 갱신",
+      "transferTitle": "{name} 이전",
+      "amount": "수량",
+      "aliasesChain": "별칭 {chain}",
+      "recipientPlaceholder": "수신자 주소",
+      "extendsLabel": "등록 연장",
+      "extendsDays": "~{days}일",
       "name": "이름",
       "invalidName": "유효하지 않은 이름",
       "enterName": "이름 입력",
@@ -316,7 +324,8 @@
       "walletNotConnected": "지갑이 연결되지 않았습니다.",
       "invalidAddress": "유효하지 않은 {chain} 주소",
       "noRuneBalance": "RUNE 잔액이 없습니다.",
-      "noTcyBalance": "TCY 잔액이 없습니다."
+      "noTcyBalance": "TCY 잔액이 없습니다.",
+      "noBalance": "{asset} 잔액이 없습니다."
     },
     "beta": {
       "title": "베타 기능입니다",

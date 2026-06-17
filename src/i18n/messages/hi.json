@@ -276,11 +276,19 @@
       "noRunepoolPosition": "No RUNEPool position found for this wallet."
     },
     "thorname": {
-      "searchPlaceholder": "THORName खोजें",
+      "searchPlaceholder": "{name} खोजें",
       "register": "रजिस्टर करें",
-      "tab": {
-        "thorname": "THORName"
-      },
+      "yours": "आपका है",
+      "availableLabel": "उपलब्ध",
+      "takenLabel": "लिया गया",
+      "registerTitle": "{name} रजिस्टर करें",
+      "renewTitle": "{name} नवीनीकरण करें",
+      "transferTitle": "{name} स्थानांतरित करें",
+      "amount": "राशि",
+      "aliasesChain": "उपनाम {chain}",
+      "recipientPlaceholder": "प्राप्तकर्ता का पता",
+      "extendsLabel": "रजिस्ट्रेशन बढ़ाता है",
+      "extendsDays": "~{days} दिन",
       "name": "नाम",
       "invalidName": "अमान्य नाम",
       "enterName": "एक नाम दर्ज करें",
@@ -316,7 +324,8 @@
       "walletNotConnected": "वॉलेट कनेक्ट नहीं है.",
       "invalidAddress": "अमान्य {chain} पता",
       "noRuneBalance": "कोई RUNE शेष राशि नहीं मिली.",
-      "noTcyBalance": "कोई TCY शेष राशि नहीं मिली."
+      "noTcyBalance": "कोई TCY शेष राशि नहीं मिली.",
+      "noBalance": "कोई {asset} शेष राशि नहीं मिली."
     },
     "beta": {
       "title": "यह एक बीटा फ़ीचर है",

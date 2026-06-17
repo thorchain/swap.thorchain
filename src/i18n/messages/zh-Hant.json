@@ -276,11 +276,19 @@
       "noRunepoolPosition": "No RUNEPool position found for this wallet."
     },
     "thorname": {
-      "searchPlaceholder": "搜尋 THORName",
+      "searchPlaceholder": "搜尋 {name}",
       "register": "註冊",
-      "tab": {
-        "thorname": "THORName"
-      },
+      "yours": "是您的",
+      "availableLabel": "可用",
+      "takenLabel": "已被佔用",
+      "registerTitle": "註冊 {name}",
+      "renewTitle": "續期 {name}",
+      "transferTitle": "轉移 {name}",
+      "amount": "數量",
+      "aliasesChain": "別名 {chain}",
+      "recipientPlaceholder": "接收地址",
+      "extendsLabel": "延長註冊",
+      "extendsDays": "~{days} 天",
       "name": "名稱",
       "invalidName": "無效名稱",
       "enterName": "輸入名稱",
@@ -316,7 +324,8 @@
       "walletNotConnected": "錢包未連接。",
       "invalidAddress": "無效的{chain}地址",
       "noRuneBalance": "未找到RUNE餘額。",
-      "noTcyBalance": "未找到TCY餘額。"
+      "noTcyBalance": "未找到TCY餘額。",
+      "noBalance": "未找到{asset}餘額。"
     },
     "beta": {
       "title": "這是一項測試功能",

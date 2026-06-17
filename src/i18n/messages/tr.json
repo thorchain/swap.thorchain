@@ -276,11 +276,19 @@
       "noRunepoolPosition": "No RUNEPool position found for this wallet."
     },
     "thorname": {
-      "searchPlaceholder": "THORName ara",
+      "searchPlaceholder": "{name} ara",
       "register": "Kaydet",
-      "tab": {
-        "thorname": "THORName"
-      },
+      "yours": "size ait",
+      "availableLabel": "Müsait",
+      "takenLabel": "Alınmış",
+      "registerTitle": "{name} kaydet",
+      "renewTitle": "{name} yenile",
+      "transferTitle": "{name} aktar",
+      "amount": "Tutar",
+      "aliasesChain": "Takma adlar {chain}",
+      "recipientPlaceholder": "Alıcı adresi",
+      "extendsLabel": "Kaydı uzatır",
+      "extendsDays": "~{days} gün",
       "name": "İsim",
       "invalidName": "Geçersiz isim",
       "enterName": "Bir isim girin",
@@ -316,7 +324,8 @@
       "walletNotConnected": "Cüzdan bağlı değil.",
       "invalidAddress": "Geçersiz {chain} adresi",
       "noRuneBalance": "RUNE bakiyesi bulunamadı.",
-      "noTcyBalance": "TCY bakiyesi bulunamadı."
+      "noTcyBalance": "TCY bakiyesi bulunamadı.",
+      "noBalance": "{asset} bakiyesi bulunamadı."
     },
     "beta": {
       "title": "Bu bir beta özelliğidir",

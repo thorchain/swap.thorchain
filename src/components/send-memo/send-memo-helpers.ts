@@ -1,6 +1,9 @@
 import { Chain } from '@tcswap/core'
 import { TokenBalance } from '@/hooks/use-wallet-balances'
 
+export const SECONDS_PER_BLOCK = 6
+export const BLOCKS_PER_YEAR = (365 * 24 * 60 * 60) / SECONDS_PER_BLOCK // ≈ 5,256,000
+
 export function isRuneToken(t: TokenBalance): boolean {
   return t.balance.chain === Chain.THORChain && t.balance.ticker === 'RUNE'
 }
@@ -11,6 +14,10 @@ export function isTcyToken(t: TokenBalance): boolean {
 
 export function isMemoToken(t: TokenBalance): boolean {
   return t.balance.chain === Chain.THORChain && (t.balance.ticker === 'RUNE' || t.balance.ticker === 'TCY')
+}
+
+export function isCacaoToken(t: TokenBalance): boolean {
+  return t.balance.chain === Chain.Maya && t.balance.ticker === 'CACAO'
 }
 
 const ZERO_PAYLOAD_PREFIXES = ['unbond', 'leave', 'rebond', 'pool-', 'tcy-', 'withdraw', 'wd:', '-:', 'operator', 'm=<']
@@ -57,4 +64,9 @@ export function composeMemo(template: string, values: Record<string, string>): s
   }
 
   return parts.join(':')
+}
+
+export function blockHeightToDate(targetHeight: number, currentBlock: number): Date | null {
+  if (!targetHeight || !currentBlock) return null
+  return new Date(Date.now() + (targetHeight - currentBlock) * SECONDS_PER_BLOCK * 1000)
 }

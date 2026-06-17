@@ -19,7 +19,7 @@ import { assetIdentifierStr, tokenToAsset } from '@/components/send/send-helpers
 import { isRuneToken, isThorAddress } from '@/components/send-memo/send-memo-helpers'
 import { useWalletBalances } from '@/hooks/use-wallet-balances'
 import { useSelectedAccount } from '@/hooks/use-wallets'
-import { useResolveThorAccount } from '@/hooks/use-resolve-thor-account'
+import { useResolveAccount } from '@/hooks/use-resolve-account'
 import { useRates } from '@/hooks/use-rates'
 import { useNodeInfo } from '@/hooks/use-node-info'
 import { getUSwap } from '@/lib/wallets'
@@ -41,7 +41,7 @@ export function SendMemoBond({ account, initialTab = 'bond' }: BondFormProps) {
   const { openDialog } = useDialog()
   const { walletData } = useWalletBalances()
 
-  useResolveThorAccount()
+  useResolveAccount()
 
   const runeToken = useMemo(() => walletData.flatMap(({ tokens }) => tokens.filter(isRuneToken)).find(Boolean), [walletData])
   const selectedAccount = useSelectedAccount()
