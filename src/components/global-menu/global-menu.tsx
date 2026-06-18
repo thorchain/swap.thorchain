@@ -11,7 +11,7 @@ import { VisuallyHidden } from '@radix-ui/react-visually-hidden'
 import { Dialog, DialogPortal } from '@/components/ui/dialog'
 import { HeaderLogoText } from '@/components/header/header-logo-text'
 import { AppConfig, PRIMARY_HOST, SUBDOMAIN_ROUTES } from '@/config'
-import { bondAnim, memoAnim, poolsAnim, swapAnim, tcyAnim, thornameAnim } from './animations'
+import { bondAnim, memoAnim, nodeAnim, poolsAnim, swapAnim, tcyAnim, thornameAnim } from './animations'
 
 const SOCIAL_LINKS = [
   {
@@ -207,7 +207,8 @@ export function GlobalMenu({ isOpen, onOpenChange }: SendMemoMenuProps) {
     { label: t('bond'), animationData: bondAnim, href: resolveHref('/bond'), onClick: closeMenu },
     { label: t('memo'), animationData: memoAnim, href: resolveHref('/memo'), onClick: closeMenu },
     { label: t('pool'), animationData: poolsAnim, href: resolveHref('/pool'), onClick: closeMenu },
-    { label: t('thorname'), animationData: thornameAnim, href: resolveHref('/thorname'), onClick: closeMenu }
+    { label: t('thorname'), animationData: thornameAnim, href: resolveHref('/thorname'), onClick: closeMenu },
+    { label: t('affiliate'), animationData: nodeAnim, href: resolveHref('/affiliate'), onClick: closeMenu }
   ]
 
   return (
@@ -216,7 +217,7 @@ export function GlobalMenu({ isOpen, onOpenChange }: SendMemoMenuProps) {
         <DialogPrimitive.Content
           className={cn(
             'fixed inset-0 z-50 overflow-y-auto bg-black text-white',
-            '[scrollbar-width:none] [&::-webkit-scrollbar]:hidden',
+            'scrollbar-none [&::-webkit-scrollbar]:hidden',
             'data-[state=open]:animate-in data-[state=closed]:animate-out',
             'data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0',
             'duration-200'
