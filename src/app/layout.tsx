@@ -8,6 +8,7 @@ import { NextIntlClientProvider } from 'next-intl'
 import { getLocale, getMessages } from 'next-intl/server'
 import { Toaster } from '@/components/ui/sonner'
 import { ReactQueryProvider } from '@/components/react-query/react-query-provider'
+import { WalletStoreHydration } from '@/components/wallet-store-hydration'
 import { AppConfig } from '@/config'
 import { getLangDir, type Locale } from '@/i18n/config'
 import './globals.css'
@@ -105,6 +106,7 @@ export default async function RootLayout({ children }: Readonly<{ children: Reac
         />
       )}
       <body className={`${crit.variable} ${notoRunic.variable} bg-body font-sans antialiased`}>
+        <WalletStoreHydration />
         <ReactQueryProvider>
           <NextIntlClientProvider locale={locale} messages={messages}>
             <ThemeProvider defaultTheme="light" attribute="class">
