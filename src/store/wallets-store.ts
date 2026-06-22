@@ -2,6 +2,7 @@ import { Chain, WalletOption } from '@tcswap/core'
 import { toast } from 'sonner'
 import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
+import { readWalletLink, writeWalletLink } from '@/store/wallets-store-cookie'
 import { getAccounts, getUSwap, supportedChains } from '@/lib/wallets'
 
 export interface WalletAccount {
@@ -89,18 +90,16 @@ export const useWalletStore = create<WalletState>()(
         connectedWallets: state.connectedWallets,
         externalWalletMode: state.externalWalletMode
       }),
-      onRehydrateStorage: () => async (state, error) => {
-        if (error || !state) {
-          console.log(error)
-          useWalletStore.setState({ hasHydrated: true })
+      onRehydrateStorage: () => async (_state, error) => {
+        if (error) console.log(error)
+
+        const link = readWalletLink()
+        if (link.length === 0) {
+          useWalletStore.setState({ accounts: [], connectedWallets: [], selected: undefined, hasHydrated: true })
           return
         }
 
-        Promise.allSettled(
-          (state.accounts ?? []).map(w => {
-            return getAccounts(w.provider, [w.network])
-          })
-        )
+        Promise.allSettled(link.map(w => getAccounts(w.provider, w.chains)))
           .then(res => {
             const accounts = res.reduce((a: WalletAccount[], v) => (v.status === 'fulfilled' ? [...v.value, ...a] : a), [])
 
@@ -115,6 +114,8 @@ export const useWalletStore = create<WalletState>()(
   )
 )
 
-useWalletStore.subscribe(_state => {
-  // todo
+// Mirror connected providers/chains to the shared cookie when they change.
+useWalletStore.subscribe(state => {
+  if (!state.hasHydrated) return
+  writeWalletLink(state.accounts)
 })
