@@ -8,7 +8,7 @@ import { ScrollArea } from '@/components/ui/scroll-area'
 import { AssetIcon } from '@/components/asset-icon'
 import { chainLabel } from '@/components/connect-wallet/config'
 import { poolToAsset } from '@/components/send-memo/pool-helpers'
-import { useThorPools } from '@/hooks/use-thor-pools'
+import { useThorPools } from '@/hooks/pool/use-thor-pools'
 import { useAssets } from '@/hooks/use-assets'
 import { cn } from '@/lib/utils'
 
