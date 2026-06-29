@@ -44,7 +44,8 @@ export function ThornameView({ config }: { config: ThornameConfig }) {
   }
 
   const openRegister = (name: string) => withWallet(acc => openDialog(ThornameRegisterDialog, { config, name, account: acc }))
-  const openRenew = (name: string) => withWallet(acc => openDialog(ThornameRenewDialog, { config, name, account: acc }))
+  const openRenew = (name: string, expireBlockHeight: number) =>
+    withWallet(acc => openDialog(ThornameRenewDialog, { config, name, account: acc, expireBlockHeight }))
   const openTransfer = (name: string) => withWallet(acc => openDialog(ThornameTransferDialog, { config, name, account: acc }))
 
   return (
@@ -94,7 +95,7 @@ export function ThornameView({ config }: { config: ThornameConfig }) {
               status={account && found.owner === account.address ? 'owned' : 'taken'}
               record={found}
               expiryDate={blockHeightToDate(found.expire_block_height, currentBlock)}
-              onRenew={() => openRenew(found.name)}
+              onRenew={() => openRenew(found.name, found.expire_block_height)}
               onTransfer={() => openTransfer(found.name)}
             />
           ) : null}
@@ -112,7 +113,7 @@ export function ThornameView({ config }: { config: ThornameConfig }) {
             status="owned"
             record={n}
             expiryDate={blockHeightToDate(n.expire_block_height, currentBlock)}
-            onRenew={() => openRenew(n.name)}
+            onRenew={() => openRenew(n.name, n.expire_block_height)}
             onTransfer={() => openTransfer(n.name)}
           />
         ))}

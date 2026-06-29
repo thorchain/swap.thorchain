@@ -16,7 +16,7 @@ import { ThornameConfig } from '@/components/send-memo/thorname/thorname-config'
 import { useWalletBalances } from '@/hooks/use-wallet-balances'
 import { useAccounts } from '@/hooks/use-wallets'
 import { useRates } from '@/hooks/use-rates'
-import { BLOCKS_PER_YEAR, SECONDS_PER_BLOCK } from '@/components/send-memo/send-memo-helpers'
+import { BLOCKS_PER_YEAR, blockHeightToDate } from '@/components/send-memo/send-memo-helpers'
 import { getUSwap } from '@/lib/wallets'
 import { WalletAccount } from '@/store/wallets-store'
 import { toCurrencyFixed } from '@/lib/utils'
@@ -193,10 +193,10 @@ export function ThornameRegisterDialog({ config, name: initialName, account, isO
   )
 }
 
-export function ThornameRenewDialog({ config, name: initialName, account, isOpen, onOpenChange }: DialogBase) {
+export function ThornameRenewDialog({ config, name: initialName, account, expireBlockHeight, isOpen, onOpenChange }: DialogBase & { expireBlockHeight: number }) {
   const t = useTranslations('send')
   const { token, rate } = useTokenContext(config)
-  const { feePerBlock } = config.useNetwork()
+  const { feePerBlock, currentBlock } = config.useNetwork()
   const { submit, submitting } = useThornameDeposit(config, account, () => onOpenChange(false))
 
   const [name, setName] = useState(initialName)
@@ -205,7 +205,7 @@ export function ThornameRenewDialog({ config, name: initialName, account, isOpen
   const numeric = parseFloat(amount) || 0
   const balance = token?.amount ?? 0
   const blocks = feePerBlock > 0 ? Math.floor(numeric / feePerBlock) : 0
-  const days = Math.round((blocks * SECONDS_PER_BLOCK) / 86400)
+  const newExpiry = blockHeightToDate(expireBlockHeight + blocks, currentBlock)
   const fiat = rate ? rate.mul(numeric) : undefined
 
   const memo = `~:${name}:${config.aliasChain}:${account.address}`
@@ -253,7 +253,9 @@ export function ThornameRenewDialog({ config, name: initialName, account, isOpen
 
           <div className="text-txt-label-small flex items-center justify-between text-sm">
             <div className="flex items-center gap-1">{t('thorname.extendsLabel')}</div>
-            <span className="text-txt-high-contrast font-semibold">{t('thorname.extendsDays', { days: days.toLocaleString() })}</span>
+            <span className="text-txt-high-contrast font-semibold">
+              {newExpiry ? newExpiry.toLocaleDateString(undefined, { year: 'numeric', month: 'long', day: 'numeric' }) : '—'}
+            </span>
           </div>
 
           <TransactionFee config={config} rate={rate} />
