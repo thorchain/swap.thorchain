@@ -17,6 +17,7 @@ export const useMayaName = (names: string[]) => {
   const mayaNames = results.map(r => r.data ?? null)
   const details = mayaNames.filter((d): d is MayaName => !!d)
   const isLoading = results.some((r, i) => normalized[i].length > 0 && (r.isLoading || r.isFetching))
+  const isError = results.some((r, i) => normalized[i].length > 0 && r.isError)
 
-  return { mayaNames, details, isLoading }
+  return { mayaNames, details, isLoading, isError }
 }

@@ -30,11 +30,12 @@ export function ThornameView({ config }: { config: ThornameConfig }) {
 
   const { names: ownedNames } = config.useNamesOwned(account?.address)
   const { details: ownedDetails } = config.useName(ownedNames)
-  const { items, isLoading: lookupLoading } = config.useName(search ? [search] : [])
+  const { items, isLoading: lookupLoading, isError: lookupError } = config.useName(search ? [search] : [])
   const found = items[0] ?? null
 
   const trimmed = search.trim()
-  const isAvailable = trimmed.length > 0 && !lookupLoading && !found
+  // Available only once the lookup confirms it's unregistered — never on error.
+  const isAvailable = trimmed.length > 0 && !lookupLoading && !lookupError && !found
 
   const withWallet = (proceed: (account: WalletAccount) => void) => {
     if (externalWalletMode) setExternalWalletMode(false)
@@ -78,6 +79,11 @@ export function ThornameView({ config }: { config: ThornameConfig }) {
           {lookupLoading ? (
             <div className="bg-swap-bloc rounded-15 flex items-center justify-center border py-8">
               <LoaderCircle size={18} className="text-txt-label-small animate-spin" />
+            </div>
+          ) : lookupError ? (
+            <div className="bg-swap-bloc rounded-15 text-txt-label-small flex items-center justify-center gap-2 border py-8 text-sm">
+              <Info className="size-4" />
+              {t('thorname.lookupError')}
             </div>
           ) : isAvailable ? (
             <NameCard config={config} name={trimmed} status="available" onRegister={() => openRegister(trimmed)} />

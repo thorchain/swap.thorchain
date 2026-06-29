@@ -17,6 +17,7 @@ export const useThorName = (names: string[]) => {
   const thorNames = results.map(r => r.data ?? null)
   const details = thorNames.filter((d): d is ThorName => !!d)
   const isLoading = results.some((r, i) => normalized[i].length > 0 && (r.isLoading || r.isFetching))
+  const isError = results.some((r, i) => normalized[i].length > 0 && r.isError)
 
-  return { thorNames, details, isLoading }
+  return { thorNames, details, isLoading, isError }
 }

@@ -41,7 +41,7 @@ export interface ThornameConfig {
   /** Picks the native fee token out of the wallet balances. */
   isToken: (token: TokenBalance) => boolean
   /** Looks up one or more names; returns the normalized list + loaded details. */
-  useName: (names: string[]) => { items: (NameRecord | null)[]; details: NameRecord[]; isLoading: boolean }
+  useName: (names: string[]) => { items: (NameRecord | null)[]; details: NameRecord[]; isLoading: boolean; isError: boolean }
   /** Reverse-lookup of names owned by an address. */
   useNamesOwned: (address?: string) => { names: string[]; isLoading: boolean }
   /** Current block height + TNS fees, normalized across chains. */
@@ -58,8 +58,8 @@ export const THORNAME_CONFIG: ThornameConfig = {
   rateProvider: ProviderName.THORCHAIN,
   isToken: isRuneToken,
   useName: names => {
-    const { thorNames, details, isLoading } = useThorName(names)
-    return { items: thorNames, details, isLoading }
+    const { thorNames, details, isLoading, isError } = useThorName(names)
+    return { items: thorNames, details, isLoading, isError }
   },
   useNamesOwned: useThorNamesOwned,
   useNetwork: () => {
@@ -78,8 +78,8 @@ export const MAYANAME_CONFIG: ThornameConfig = {
   rateProvider: ProviderName.MAYACHAIN,
   isToken: isCacaoToken,
   useName: names => {
-    const { mayaNames, details, isLoading } = useMayaName(names)
-    return { items: mayaNames, details, isLoading }
+    const { mayaNames, details, isLoading, isError } = useMayaName(names)
+    return { items: mayaNames, details, isLoading, isError }
   },
   useNamesOwned: useMayaNamesOwned,
   useNetwork: useMayaNetwork

@@ -427,6 +427,7 @@
       "yours": "is yours",
       "availableLabel": "Available",
       "takenLabel": "Taken",
+      "lookupError": "Couldn't check availability. Please try again.",
       "registerTitle": "Register {name}",
       "renewTitle": "Renew {name}",
       "transferTitle": "Transfer {name}",
