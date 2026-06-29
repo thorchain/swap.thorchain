@@ -10,7 +10,7 @@ import { WalletAccount } from '@/store/wallets-store'
 
 const ETH_RPC_URL = process.env.NEXT_PUBLIC_ALCHEMY_ETH_RPC_URL || 'https://eth.llamarpc.com'
 
-const ETH_SCAM_TICKERS = new Set(['HEX', 'AICC'])
+const ETH_SCAM_TICKERS = new Set(['HEX', 'AICC', 'ETHG'])
 
 function assetIdentifier(b: AssetValue): string {
   // Secured Asset canonical identifier is the bare "<CHAIN>-<SYMBOL>" form (no "THOR." prefix).
