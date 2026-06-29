@@ -16,7 +16,8 @@ import { ThornameConfig } from '@/components/send-memo/thorname/thorname-config'
 import { useWalletBalances } from '@/hooks/use-wallet-balances'
 import { useAccounts } from '@/hooks/use-wallets'
 import { useRates } from '@/hooks/use-rates'
-import { BLOCKS_PER_YEAR, blockHeightToDate } from '@/components/send-memo/send-memo-helpers'
+import { addDays, addYears, format } from 'date-fns'
+import { SECONDS_PER_BLOCK, blockHeightToDate } from '@/components/send-memo/send-memo-helpers'
 import { getUSwap } from '@/lib/wallets'
 import { WalletAccount } from '@/store/wallets-store'
 import { toCurrencyFixed } from '@/lib/utils'
@@ -138,13 +139,16 @@ export function ThornameRegisterDialog({ config, name: initialName, account, isO
   const { registerFee, feePerBlock } = config.useNetwork()
   const { submit, submitting } = useThornameDeposit(config, account, () => onOpenChange(false))
 
+  const now = useMemo(() => new Date(), [])
   const [name, setName] = useState(initialName)
-  const [years, setYears] = useState(1)
+  const [expiry, setExpiry] = useState(() => addYears(now, 1))
 
-  const cost = registerFee + feePerBlock * BLOCKS_PER_YEAR * years
+  // Cost scales with the number of blocks between now and the chosen expiry.
+  const blocks = Math.max(0, Math.floor((expiry.getTime() - now.getTime()) / 1000 / SECONDS_PER_BLOCK))
+  const cost = registerFee + feePerBlock * blocks
   const owner = account.address
   const memo = `~:${name}:${config.aliasChain}:${owner}:${owner}`
-  const canSend = isValidName(name) && cost > 0 && !submitting
+  const canSend = isValidName(name) && blocks > 0 && !submitting
 
   const submitLabel = !name ? t('thorname.enterName') : !isValidName(name) ? t('thorname.invalidName') : t('thorname.register')
 
@@ -161,17 +165,27 @@ export function ThornameRegisterDialog({ config, name: initialName, account, isO
           <div className="flex flex-col gap-1.5">
             <label className="text-txt-label-small text-sm">{t('thorname.duration')}</label>
             <div className="flex gap-2">
-              {[1, 2, 5, 10].map(y => (
-                <ThemeButton
-                  key={y}
-                  variant={years === y ? 'primarySmall' : 'secondarySmall'}
-                  className="h-9 flex-1 rounded-full"
-                  onClick={() => setYears(y)}
-                >
-                  {t('thorname.years', { count: y })}
-                </ThemeButton>
-              ))}
+              {[1, 2, 5, 10].map(y => {
+                const presetExpiry = addYears(now, y)
+                return (
+                  <ThemeButton
+                    key={y}
+                    variant={expiry.getTime() === presetExpiry.getTime() ? 'primarySmall' : 'secondarySmall'}
+                    className="h-9 flex-1 rounded-full"
+                    onClick={() => setExpiry(presetExpiry)}
+                  >
+                    {t('thorname.years', { count: y })}
+                  </ThemeButton>
+                )
+              })}
             </div>
+            <Input
+              type="date"
+              value={format(expiry, 'yyyy-MM-dd')}
+              min={format(addDays(now, 1), 'yyyy-MM-dd')}
+              onChange={e => e.target.value && setExpiry(new Date(`${e.target.value}T00:00:00`))}
+              className="bg-input-modal-bg-active border-border-sub-container-modal-low mt-1"
+            />
           </div>
 
           <div className="text-txt-label-small flex items-center justify-between text-sm">
