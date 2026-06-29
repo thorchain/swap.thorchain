@@ -23,6 +23,10 @@ export const useAssets = (): { assets?: Asset[]; isLoading: boolean } => {
           continue
         }
 
+        if (token.chain === Chain.Radix) {
+          continue
+        }
+
         const isSecured = isSecuredAssetIdentifier(token.identifier)
         const isTrade = !isSecured && token.identifier.includes('~')
 
