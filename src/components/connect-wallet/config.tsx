@@ -29,6 +29,7 @@ export const ALL_CHAINS = [
   Chain.Ethereum,
   Chain.Litecoin,
   Chain.Maya,
+  Chain.Ripple,
   Chain.Solana,
   Chain.THORChain,
   Chain.Tron,
