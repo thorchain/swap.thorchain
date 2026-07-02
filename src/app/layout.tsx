@@ -7,6 +7,7 @@ import { ThemeProvider } from 'next-themes'
 import { NextIntlClientProvider } from 'next-intl'
 import { getLocale, getMessages } from 'next-intl/server'
 import { Toaster } from '@/components/ui/sonner'
+import { WebMcpTools } from '@/components/webmcp-tools'
 import { ReactQueryProvider } from '@/components/react-query/react-query-provider'
 import { WalletStoreHydration } from '@/components/wallet-store-hydration'
 import { AppConfig } from '@/config'
@@ -106,6 +107,7 @@ export default async function RootLayout({ children }: Readonly<{ children: Reac
         />
       )}
       <body className={`${crit.variable} ${notoRunic.variable} bg-body font-sans antialiased`}>
+        <WebMcpTools />
         <WalletStoreHydration />
         <ReactQueryProvider>
           <NextIntlClientProvider locale={locale} messages={messages}>
