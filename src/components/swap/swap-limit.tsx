@@ -8,7 +8,8 @@ import { Select, SelectContent, SelectItem, SelectTrigger } from '@/components/u
 import { DecimalInput } from '@/components/decimal/decimal-input'
 import { SwapLimitExpiry } from './swap-limit-expiry'
 import { useDialog } from '@/components/global-dialog'
-import { buttonVariants, ThemeButton } from '@/components/theme-button'
+import { GenericButton } from '@/components/generic-button'
+import { buttonVariants } from '@/components/theme-button'
 import { useAssetFrom, useAssetTo } from '@/hooks/use-swap'
 import { cn } from '@/lib/utils'
 import { useLimitSwapExpiry, useSetLimitSwapBuyAmount, useSetLimitSwapExpiry } from '@/store/limit-swap-store'
@@ -171,55 +172,41 @@ export const SwapLimit = ({ quote }: SwapLimitProps) => {
         <div className="text-txt-label-small text-2xl font-medium">{assetTo?.ticker}</div>
       </div>
 
-      <div className="flex items-center space-x-1">
+      <div className="flex items-center gap-2">
         {activePreset === 'custom' && differencePercent ? (
           <div className="flex items-center">
-            <ThemeButton
-              className="border-stroke-btn-low-contrast bg-green-default h-6 rounded-r-none border-r px-2 text-xs"
-              variant="secondarySmall"
-            >
+            <GenericButton size="small" colorType="3" className="border-stroke-btn-low-contrast rounded-r-none border-r">
               {differencePercent.gte(0) ? '+' : ''}
               {differencePercent.toFixed(1)}%
-            </ThemeButton>
-            <ThemeButton
-              className="bg-green-default h-6 rounded-l-none px-1"
-              variant="secondarySmall"
+            </GenericButton>
+            <GenericButton
+              size="small"
+              colorType="3"
+              className="rounded-l-none"
+              icon={<X className="size-4" />}
               onClick={() => {
                 setInputStr(undefined)
                 expectedBuyAmountPerUnit && setPricePerUnit(expectedBuyAmountPerUnit)
               }}
-            >
-              <X className="size-4" />
-            </ThemeButton>
+            />
           </div>
         ) : (
-          <ThemeButton
-            className={cn(
-              'h-6',
-              activePreset === 'market' && pricePerUnit?.gt(0) ? 'bg-green-default text-txt-green-default' : 'text-txt-btn-small-default'
-            )}
-            variant="secondarySmall"
+          <GenericButton
+            size="small"
+            colorType={activePreset === 'market' && pricePerUnit?.gt(0) ? '3' : '1'}
             onClick={() => applyPreset(0)}
           >
             {t('limit.market')}
-          </ThemeButton>
+          </GenericButton>
         )}
 
-        <ThemeButton
-          className={cn('h-6', activePreset === 5 ? 'bg-green-default text-txt-green-default' : 'text-txt-btn-small-default')}
-          variant="secondarySmall"
-          onClick={() => applyPreset(5)}
-        >
+        <GenericButton size="small" colorType={activePreset === 5 ? '3' : '1'} onClick={() => applyPreset(5)}>
           +5%
-        </ThemeButton>
+        </GenericButton>
 
-        <ThemeButton
-          className={cn('h-6', activePreset === 10 ? 'bg-green-default text-txt-green-default' : 'text-txt-btn-small-default')}
-          variant="secondarySmall"
-          onClick={() => applyPreset(10)}
-        >
+        <GenericButton size="small" colorType={activePreset === 10 ? '3' : '1'} onClick={() => applyPreset(10)}>
           +10%
-        </ThemeButton>
+        </GenericButton>
       </div>
     </div>
   )

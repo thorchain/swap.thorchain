@@ -154,7 +154,7 @@ export function SendMemoStake({ account, initialTab = 'stake', stakedAmount }: S
 
   return (
     <div className="flex flex-col gap-5">
-      <div className="flex items-center gap-6">
+      <div className="flex items-center gap-4 text-2xl font-medium">
         {STAKE_TABS.map(key => (
           <button
             key={key}
@@ -162,10 +162,7 @@ export function SendMemoStake({ account, initialTab = 'stake', stakedAmount }: S
               setTab(key)
               setAmount('')
             }}
-            className={cn(
-              'cursor-pointer text-2xl transition-colors',
-              tab === key ? 'text-txt-high-contrast font-bold' : 'text-txt-label-small hover:text-txt-high-contrast/70 font-normal'
-            )}
+            className={cn('cursor-pointer transition-colors', tab === key ? 'text-txt-contrast-1-default' : 'text-txt-text-modal')}
           >
             {t(`stake.tab.${key}`)}
           </button>
