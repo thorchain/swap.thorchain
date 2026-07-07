@@ -48,6 +48,15 @@ export const getMayaNamesOwned = async (address: string): Promise<string[]> => {
   }
 }
 
+export interface MayaPool {
+  asset: string
+  status: string
+}
+
+export const getMayaPools = async (): Promise<MayaPool[]> => {
+  return mayanode.get('/mayachain/pools').then(res => res.data)
+}
+
 export const getMayaLastBlock = async (): Promise<number> => {
   const data = await mayanode.get('/mayachain/lastblock').then(res => res.data)
   const first = Array.isArray(data) ? data[0] : data

@@ -299,7 +299,16 @@
       "renew": "Yenile",
       "transfer": "Aktar",
       "cost": "Maliyet",
-      "expires": "Sona eriyor"
+      "expires": "Sona eriyor",
+      "preferredAsset": "Tercih edilen varlık",
+      "preferredAssetTitle": "Tercih edilen varlığı ayarla",
+      "preferredAssetInfo": "{name} tarafından kazanılan ortaklık ücretleri otomatik olarak tercih edilen varlığa takas edilir ve o zincirdeki takma ad adresine gönderilir.",
+      "asset": "Varlık",
+      "selectAsset": "Varlık seç",
+      "aliasAddress": "Takma ad adresi ({chain})",
+      "enterAliasAddress": "Geçerli bir adres girin",
+      "preferredAssetOptional": "Tercih edilen varlık (isteğe bağlı)",
+      "assetDefault": "{ticker} (varsayılan)"
     },
     "title": "Gönder",
     "send": "Gönder",

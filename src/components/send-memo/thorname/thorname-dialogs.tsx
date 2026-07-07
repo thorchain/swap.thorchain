@@ -8,11 +8,12 @@ import { LoaderCircle } from 'lucide-react'
 import { toast } from 'sonner'
 import { Credenza, CredenzaContent, CredenzaHeader, CredenzaTitle } from '@/components/ui/credenza'
 import { Input } from '@/components/ui/input'
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 import { AddressInput } from '@/components/address-input'
 import { DecimalInput } from '@/components/decimal/decimal-input'
 import { ThemeButton } from '@/components/theme-button'
 import { assetIdentifierStr } from '@/components/send/send-helpers'
-import { ThornameConfig } from '@/components/send-memo/thorname/thorname-config'
+import { NameRecord, ThornameConfig, formatPreferredAsset, preferredAssetOf } from '@/components/send-memo/thorname/thorname-config'
 import { useWalletBalances } from '@/hooks/use-wallet-balances'
 import { useAccounts } from '@/hooks/use-wallets'
 import { useRates } from '@/hooks/use-rates'
@@ -118,6 +119,40 @@ function TransactionFee({ config, rate }: { config: ThornameConfig; rate?: Retur
   )
 }
 
+function PreferredAssetSelect({
+  assets,
+  value,
+  onChange,
+  disabled,
+  defaultAsset
+}: {
+  assets: string[]
+  value: string
+  onChange: (asset: string) => void
+  disabled?: boolean
+  /** Native asset — the protocol's default payout, labeled "(default)". */
+  defaultAsset?: string
+}) {
+  const t = useTranslations('send')
+  // Keeps the current selection visible even if its pool dropped out of the active list.
+  const items = value && !assets.includes(value) ? [value, ...assets] : assets
+
+  return (
+    <Select value={value} onValueChange={onChange} disabled={disabled}>
+      <SelectTrigger className="bg-input-modal-bg-active border-border-sub-container-modal-low w-full">
+        <SelectValue placeholder={t('thorname.selectAsset')} />
+      </SelectTrigger>
+      <SelectContent>
+        {items.map(a => (
+          <SelectItem key={a} value={a}>
+            {a === defaultAsset ? t('thorname.assetDefault', { ticker: a.split('.')[1] }) : formatPreferredAsset(a)}
+          </SelectItem>
+        ))}
+      </SelectContent>
+    </Select>
+  )
+}
+
 function NameField({ value, onChange }: { value: string; onChange: (v: string) => void }) {
   const t = useTranslations('send')
   return (
@@ -135,22 +170,52 @@ function NameField({ value, onChange }: { value: string; onChange: (v: string) =
 
 export function ThornameRegisterDialog({ config, name: initialName, account, isOpen, onOpenChange }: DialogBase) {
   const t = useTranslations('send')
+  const accounts = useAccounts()
   const { rate } = useTokenContext(config)
   const { registerFee, feePerBlock } = config.useNetwork()
+  const { assets, isLoading: assetsLoading } = config.usePreferredAssets()
   const { submit, submitting } = useThornameDeposit(config, account, () => onOpenChange(false))
+
+  // Fees pay out in the native asset unless a preferred asset is set, so the
+  // native asset is the pre-selected default and is omitted from the memo.
+  const nativeAsset = `${config.aliasChain}.${config.ticker}`
 
   const now = useMemo(() => new Date(), [])
   const [name, setName] = useState(initialName)
   const [expiry, setExpiry] = useState(() => addYears(now, 1))
+  const [preferredAsset, setPreferredAsset] = useState(nativeAsset)
+  const [payoutAlias, setPayoutAlias] = useState('')
+
+  // Picking an asset re-seeds the payout address from a connected wallet on its chain.
+  const selectAsset = (next: string) => {
+    setPreferredAsset(next)
+    setPayoutAlias(accounts.find(a => a.network === next.split('.')[0])?.address ?? '')
+  }
+
+  // A non-native preferred asset pays out to the name's alias on its own chain,
+  // so the form collects that address and the memo's alias pair carries it. The
+  // native alias can still be added later (e.g. renewing sets it).
+  const needsPayoutAlias = !preferredAsset.startsWith(`${config.aliasChain}.`)
+  const payoutChain = (needsPayoutAlias ? preferredAsset.split('.')[0] : config.aliasChain) as Chain
+  const trimmedAlias = payoutAlias.trim()
+  const isValidAlias = useValidAddress(payoutAlias, payoutChain)
 
   // Cost scales with the number of blocks between now and the chosen expiry.
   const blocks = Math.max(0, Math.floor((expiry.getTime() - now.getTime()) / 1000 / SECONDS_PER_BLOCK))
   const cost = registerFee + feePerBlock * blocks
   const owner = account.address
-  const memo = `~:${name}:${config.aliasChain}:${owner}:${owner}`
-  const canSend = isValidName(name) && blocks > 0 && !submitting
+  const memo = needsPayoutAlias
+    ? `~:${name}:${payoutChain}:${trimmedAlias}:${owner}:${preferredAsset}`
+    : `~:${name}:${config.aliasChain}:${owner}:${owner}`
+  const canSend = isValidName(name) && blocks > 0 && (!needsPayoutAlias || isValidAlias) && !submitting
 
-  const submitLabel = !name ? t('thorname.enterName') : !isValidName(name) ? t('thorname.invalidName') : t('thorname.register')
+  const submitLabel = !name
+    ? t('thorname.enterName')
+    : !isValidName(name)
+      ? t('thorname.invalidName')
+      : needsPayoutAlias && !isValidAlias
+        ? t('thorname.enterAliasAddress')
+        : t('thorname.register')
 
   return (
     <Credenza open={isOpen} onOpenChange={onOpenChange}>
@@ -187,6 +252,30 @@ export function ThornameRegisterDialog({ config, name: initialName, account, isO
               className="bg-input-modal-bg-active border-border-sub-container-modal-low mt-1"
             />
           </div>
+
+          <div className="flex flex-col gap-1.5">
+            <label className="text-txt-label-small text-sm">{t('thorname.preferredAssetOptional')}</label>
+            <PreferredAssetSelect
+              assets={assets}
+              value={preferredAsset}
+              onChange={selectAsset}
+              disabled={assetsLoading}
+              defaultAsset={nativeAsset}
+            />
+          </div>
+
+          {needsPayoutAlias && (
+            <div className="flex flex-col gap-1.5">
+              <label className="text-txt-label-small text-sm">{t('thorname.aliasAddress', { chain: payoutChain })}</label>
+              <AddressInput
+                value={payoutAlias}
+                onChange={setPayoutAlias}
+                options={accounts.filter(a => a.network === payoutChain)}
+                placeholder={t('thorname.recipientPlaceholder')}
+                invalid={!!trimmedAlias && !isValidAlias}
+              />
+            </div>
+          )}
 
           <div className="text-txt-label-small flex items-center justify-between text-sm">
             <div className="flex items-center gap-1">{t('thorname.cost')}</div>
@@ -276,6 +365,83 @@ export function ThornameRenewDialog({ config, name: initialName, account, expire
 
           <ThemeButton variant="primaryMedium" className="w-full" onClick={() => submit(memo, numeric)} disabled={!canSend}>
             {submitting ? <LoaderCircle size={20} className="animate-spin" /> : numeric <= 0 ? t('thorname.enterAmount') : t('thorname.renew')}
+          </ThemeButton>
+        </div>
+      </CredenzaContent>
+    </Credenza>
+  )
+}
+
+export function ThornamePreferredAssetDialog({ config, name, account, record, isOpen, onOpenChange }: DialogBase & { record: NameRecord }) {
+  const t = useTranslations('send')
+  const accounts = useAccounts()
+  const { rate } = useTokenContext(config)
+  const { assets, isLoading: assetsLoading } = config.usePreferredAssets()
+  const { submit, submitting } = useThornameDeposit(config, account, () => onOpenChange(false))
+
+  const aliasFor = (chain: string) =>
+    record.aliases?.find(a => a.chain === chain)?.address ?? accounts.find(a => a.network === chain)?.address ?? ''
+
+  const [asset, setAsset] = useState(() => preferredAssetOf(record))
+  const [alias, setAlias] = useState(() => (asset ? aliasFor(asset.split('.')[0]) : ''))
+
+  // The payout goes to the name's alias on the asset's chain, so picking an
+  // asset re-seeds the alias from the record (or a connected wallet).
+  const selectAsset = (next: string) => {
+    setAsset(next)
+    setAlias(aliasFor(next.split('.')[0]))
+  }
+
+  const assetChain = (asset ? asset.split('.')[0] : config.aliasChain) as Chain
+  const trimmedAlias = alias.trim()
+  const isValidAlias = useValidAddress(alias, assetChain)
+  // ~:name:chain:address:owner:preferredAsset — the chain/address pair also
+  // registers the alias the payout is sent to.
+  const memo = `~:${name}:${assetChain}:${trimmedAlias}:${account.address}:${asset}`
+  const canSend = !!asset && isValidAlias && !submitting
+
+  const options = accounts.filter(a => a.network === assetChain)
+
+  const submitLabel = !asset ? t('thorname.selectAsset') : !isValidAlias ? t('thorname.enterAliasAddress') : t('thorname.preferredAssetTitle')
+
+  return (
+    <Credenza open={isOpen} onOpenChange={onOpenChange}>
+      <CredenzaContent className="h-auto rounded-2xl md:max-w-md">
+        <CredenzaHeader>
+          <CredenzaTitle>{t('thorname.preferredAssetTitle')}</CredenzaTitle>
+        </CredenzaHeader>
+
+        <div className="flex flex-col gap-5 p-4 pt-2 md:p-8 md:pt-0">
+          <p className="text-txt-label-small text-sm">{t('thorname.preferredAssetInfo', { name })}</p>
+
+          <div className="flex flex-col gap-1.5">
+            <label className="text-txt-label-small text-sm">{t('thorname.asset')}</label>
+            <PreferredAssetSelect
+              assets={assets}
+              value={asset}
+              onChange={selectAsset}
+              disabled={assetsLoading}
+              defaultAsset={`${config.aliasChain}.${config.ticker}`}
+            />
+          </div>
+
+          {asset && (
+            <div className="flex flex-col gap-1.5">
+              <label className="text-txt-label-small text-sm">{t('thorname.aliasAddress', { chain: assetChain })}</label>
+              <AddressInput
+                value={alias}
+                onChange={setAlias}
+                options={options}
+                placeholder={t('thorname.recipientPlaceholder')}
+                invalid={!!trimmedAlias && !isValidAlias}
+              />
+            </div>
+          )}
+
+          <TransactionFee config={config} rate={rate} />
+
+          <ThemeButton variant="primaryMedium" className="w-full" onClick={() => submit(memo, 0)} disabled={!canSend}>
+            {submitting ? <LoaderCircle size={20} className="animate-spin" /> : submitLabel}
           </ThemeButton>
         </div>
       </CredenzaContent>

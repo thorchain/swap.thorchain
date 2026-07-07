@@ -445,7 +445,16 @@
       "renew": "ᚱᛖᚾᛖᚹ",
       "transfer": "ᛏᚱᚨᚾᛊᚠᛖᚱ",
       "cost": "ᚲᛟᛊᛏ",
-      "expires": "ᛖᚲᛊᛈᛁᚱᛖᛊ"
+      "expires": "ᛖᚲᛊᛈᛁᚱᛖᛊ",
+      "preferredAsset": "ᛈᚱᛖᚠᛖᚱᚱᛖᛞ ᚨᛊᛊᛖᛏ",
+      "preferredAssetTitle": "ᛊᛖᛏ ᛈᚱᛖᚠᛖᚱᚱᛖᛞ ᚨᛊᛊᛖᛏ",
+      "preferredAssetInfo": "ᚨᚠᚠᛁᛚᛁᚨᛏᛖ ᚠᛖᛖᛊ ᛖᚨᚱᚾᛖᛞ ᛒᛁ {name} ᚨᚱᛖ ᚨᚢᛏᛟᛗᚨᛏᛁᚲᚨᛚᛚᛁ ᛊᚹᚨᛈᛈᛖᛞ ᛏᛟ ᛏᚺᛖ ᛈᚱᛖᚠᛖᚱᚱᛖᛞ ᚨᛊᛊᛖᛏ ᚨᚾᛞ ᛊᛖᚾᛏ ᛏᛟ ᛁᛏᛊ ᚨᛚᛁᚨᛊ ᚨᛞᛞᚱᛖᛊᛊ ᛟᚾ ᛏᚺᚨᛏ ᚲᚺᚨᛁᚾ.",
+      "asset": "ᚨᛊᛊᛖᛏ",
+      "selectAsset": "ᛊᛖᛚᛖᚲᛏ ᚨᛊᛊᛖᛏ",
+      "aliasAddress": "ᚨᛚᛁᚨᛊ ᚨᛞᛞᚱᛖᛊᛊ ({chain})",
+      "enterAliasAddress": "ᛖᚾᛏᛖᚱ ᚨ ᚹᚨᛚᛁᛞ ᚨᛞᛞᚱᛖᛊᛊ",
+      "preferredAssetOptional": "ᛈᚱᛖᚠᛖᚱᚱᛖᛞ ᚨᛊᛊᛖᛏ (ᛟᛈᛏᛁᛟᚾᚨᛚ)",
+      "assetDefault": "{ticker} (ᛞᛖᚠᚨᚢᛚᛏ)"
     }
   },
   "wallet": {

@@ -299,7 +299,16 @@
       "renew": "Perpanjang",
       "transfer": "Transfer",
       "cost": "Biaya",
-      "expires": "Kedaluwarsa"
+      "expires": "Kedaluwarsa",
+      "preferredAsset": "Aset pilihan",
+      "preferredAssetTitle": "Atur aset pilihan",
+      "preferredAssetInfo": "Biaya afiliasi yang diperoleh {name} otomatis ditukar ke aset pilihan dan dikirim ke alamat alias di chain tersebut.",
+      "asset": "Aset",
+      "selectAsset": "Pilih aset",
+      "aliasAddress": "Alamat alias ({chain})",
+      "enterAliasAddress": "Masukkan alamat yang valid",
+      "preferredAssetOptional": "Aset pilihan (opsional)",
+      "assetDefault": "{ticker} (default)"
     },
     "title": "Kirim",
     "send": "Kirim",

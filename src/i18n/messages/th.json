@@ -299,7 +299,16 @@
       "renew": "ต่ออายุ",
       "transfer": "โอน",
       "cost": "ค่าใช้จ่าย",
-      "expires": "หมดอายุ"
+      "expires": "หมดอายุ",
+      "preferredAsset": "สินทรัพย์ที่ต้องการ",
+      "preferredAssetTitle": "ตั้งค่าสินทรัพย์ที่ต้องการ",
+      "preferredAssetInfo": "ค่าธรรมเนียมพันธมิตรที่ {name} ได้รับจะถูกสวอปเป็นสินทรัพย์ที่ต้องการโดยอัตโนมัติ และส่งไปยังที่อยู่แฝง (alias) บนเชนนั้น",
+      "asset": "สินทรัพย์",
+      "selectAsset": "เลือกสินทรัพย์",
+      "aliasAddress": "ที่อยู่แฝง ({chain})",
+      "enterAliasAddress": "กรอกที่อยู่ที่ถูกต้อง",
+      "preferredAssetOptional": "สินทรัพย์ที่ต้องการ (ไม่บังคับ)",
+      "assetDefault": "{ticker} (ค่าเริ่มต้น)"
     },
     "title": "ส่ง",
     "send": "ส่ง",

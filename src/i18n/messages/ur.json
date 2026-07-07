@@ -299,7 +299,16 @@
       "renew": "تجدید کریں",
       "transfer": "منتقل کریں",
       "cost": "لاگت",
-      "expires": "ختم ہوتا ہے"
+      "expires": "ختم ہوتا ہے",
+      "preferredAsset": "ترجیحی اثاثہ",
+      "preferredAssetTitle": "ترجیحی اثاثہ مقرر کریں",
+      "preferredAssetInfo": "{name} کی کمائی گئی ایفیلیئیٹ فیس خودکار طور پر ترجیحی اثاثے میں تبدیل ہو کر اُس چین پر اس کے عرفی پتے پر بھیج دی جاتی ہے۔",
+      "asset": "اثاثہ",
+      "selectAsset": "اثاثہ منتخب کریں",
+      "aliasAddress": "عرفی پتہ ({chain})",
+      "enterAliasAddress": "درست پتہ درج کریں",
+      "preferredAssetOptional": "ترجیحی اثاثہ (اختیاری)",
+      "assetDefault": "{ticker} (ڈیفالٹ)"
     },
     "title": "بھیجیں",
     "send": "بھیجیں",

@@ -299,7 +299,16 @@
       "renew": "নবায়ন",
       "transfer": "স্থানান্তর",
       "cost": "খরচ",
-      "expires": "মেয়াদ শেষ"
+      "expires": "মেয়াদ শেষ",
+      "preferredAsset": "পছন্দের অ্যাসেট",
+      "preferredAssetTitle": "পছন্দের অ্যাসেট সেট করুন",
+      "preferredAssetInfo": "{name} এর অর্জিত অ্যাফিলিয়েট ফি স্বয়ংক্রিয়ভাবে পছন্দের অ্যাসেটে রূপান্তরিত হয়ে সেই চেইনের অ্যালিয়াস ঠিকানায় পাঠানো হয়।",
+      "asset": "অ্যাসেট",
+      "selectAsset": "অ্যাসেট নির্বাচন করুন",
+      "aliasAddress": "অ্যালিয়াস ঠিকানা ({chain})",
+      "enterAliasAddress": "একটি বৈধ ঠিকানা লিখুন",
+      "preferredAssetOptional": "পছন্দের অ্যাসেট (ঐচ্ছিক)",
+      "assetDefault": "{ticker} (ডিফল্ট)"
     },
     "title": "পাঠান",
     "send": "পাঠান",

@@ -299,7 +299,16 @@
       "renew": "تجديد",
       "transfer": "نقل",
       "cost": "التكلفة",
-      "expires": "بينتهي"
+      "expires": "بينتهي",
+      "preferredAsset": "الأصل المفضّل",
+      "preferredAssetTitle": "حدّد الأصل المفضّل",
+      "preferredAssetInfo": "رسوم الإحالة اللي بيكسبها {name} بتتحوّل تلقائيًا للأصل المفضّل وبتتبعت لعنوان الاسم البديل على الشبكة دي.",
+      "asset": "الأصل",
+      "selectAsset": "اختار الأصل",
+      "aliasAddress": "عنوان الاسم البديل ({chain})",
+      "enterAliasAddress": "اكتب عنوان صحيح",
+      "preferredAssetOptional": "الأصل المفضّل (اختياري)",
+      "assetDefault": "{ticker} (افتراضي)"
     },
     "title": "إرسال",
     "send": "إرسال",

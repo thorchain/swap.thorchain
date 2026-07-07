@@ -299,7 +299,16 @@
       "renew": "Verlängern",
       "transfer": "Übertragen",
       "cost": "Kosten",
-      "expires": "Läuft ab"
+      "expires": "Läuft ab",
+      "preferredAsset": "Bevorzugtes Asset",
+      "preferredAssetTitle": "Bevorzugtes Asset festlegen",
+      "preferredAssetInfo": "Von {name} verdiente Affiliate-Gebühren werden automatisch in das bevorzugte Asset getauscht und an dessen Alias-Adresse auf dieser Chain gesendet.",
+      "asset": "Asset",
+      "selectAsset": "Asset auswählen",
+      "aliasAddress": "Alias-Adresse ({chain})",
+      "enterAliasAddress": "Gültige Adresse eingeben",
+      "preferredAssetOptional": "Bevorzugtes Asset (optional)",
+      "assetDefault": "{ticker} (Standard)"
     },
     "title": "Senden",
     "send": "Senden",

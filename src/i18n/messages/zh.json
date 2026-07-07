@@ -299,7 +299,16 @@
       "renew": "续期",
       "transfer": "转移",
       "cost": "费用",
-      "expires": "到期时间"
+      "expires": "到期时间",
+      "preferredAsset": "偏好资产",
+      "preferredAssetTitle": "设置偏好资产",
+      "preferredAssetInfo": "{name} 赚取的联盟费用会自动兑换为偏好资产，并发送到该链上的别名地址。",
+      "asset": "资产",
+      "selectAsset": "选择资产",
+      "aliasAddress": "别名地址（{chain}）",
+      "enterAliasAddress": "请输入有效地址",
+      "preferredAssetOptional": "偏好资产（选填）",
+      "assetDefault": "{ticker}（默认）"
     },
     "title": "发送",
     "send": "发送",

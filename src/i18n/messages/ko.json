@@ -299,7 +299,16 @@
       "renew": "갱신",
       "transfer": "이전",
       "cost": "비용",
-      "expires": "만료"
+      "expires": "만료",
+      "preferredAsset": "선호 자산",
+      "preferredAssetTitle": "선호 자산 설정",
+      "preferredAssetInfo": "{name}이(가) 얻은 제휴 수수료는 자동으로 선호 자산으로 스왑되어 해당 체인의 별칭 주소로 전송됩니다.",
+      "asset": "자산",
+      "selectAsset": "자산 선택",
+      "aliasAddress": "별칭 주소 ({chain})",
+      "enterAliasAddress": "유효한 주소를 입력하세요",
+      "preferredAssetOptional": "선호 자산 (선택 사항)",
+      "assetDefault": "{ticker} (기본값)"
     },
     "title": "보내기",
     "send": "보내기",

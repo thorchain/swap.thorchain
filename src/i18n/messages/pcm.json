@@ -299,7 +299,16 @@
       "renew": "Renew",
       "transfer": "Transfer",
       "cost": "Cost",
-      "expires": "Expires"
+      "expires": "Expires",
+      "preferredAsset": "Preferred asset",
+      "preferredAssetTitle": "Set preferred asset",
+      "preferredAssetInfo": "Affiliate fees wey {name} earn go automatically swap to di preferred asset and go send go im alias address for dat chain.",
+      "asset": "Asset",
+      "selectAsset": "Choose asset",
+      "aliasAddress": "Alias address ({chain})",
+      "enterAliasAddress": "Put correct address",
+      "preferredAssetOptional": "Preferred asset (optional)",
+      "assetDefault": "{ticker} (default)"
     },
     "title": "Send",
     "send": "Send",

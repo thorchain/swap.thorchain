@@ -8,12 +8,27 @@ import { useThorNetwork } from '@/hooks/thorname/use-thor-network'
 import { useMayaName } from '@/hooks/thorname/use-mayaname'
 import { useMayaNamesOwned } from '@/hooks/thorname/use-mayanames-owned'
 import { useMayaNetwork } from '@/hooks/thorname/use-maya-network'
+import { useThorPreferredAssets, useMayaPreferredAssets } from '@/hooks/thorname/use-preferred-assets'
 
 export interface NameRecord {
   name: string
   expire_block_height: number
   owner: string
+  preferred_asset?: string
   aliases: { chain: string; address: string }[]
+}
+
+/** Nodes return "" (or "." on some versions) when no preferred asset is set. */
+export const preferredAssetOf = (record?: NameRecord): string => {
+  const asset = record?.preferred_asset ?? ''
+  return asset === '.' ? '' : asset
+}
+
+/** "ETH.USDC-0XA0B8…" → "USDC (ETH)", "BTC.BTC" → "BTC". */
+export const formatPreferredAsset = (asset: string): string => {
+  const [chain, symbol = ''] = asset.split('.')
+  const ticker = symbol.split('-')[0]
+  return ticker === chain ? ticker : `${ticker} (${chain})`
 }
 
 export interface NetworkInfo {
@@ -46,6 +61,8 @@ export interface ThornameConfig {
   useNamesOwned: (address?: string) => { names: string[]; isLoading: boolean }
   /** Current block height + TNS fees, normalized across chains. */
   useNetwork: () => NetworkInfo
+  /** Assets eligible as preferred asset: native asset + active pools. */
+  usePreferredAssets: () => { assets: string[]; isLoading: boolean }
 }
 
 export const THORNAME_CONFIG: ThornameConfig = {
@@ -65,7 +82,8 @@ export const THORNAME_CONFIG: ThornameConfig = {
   useNetwork: () => {
     const { currentBlock, registerFeeRune, feePerBlockRune } = useThorNetwork()
     return { currentBlock, registerFee: registerFeeRune, feePerBlock: feePerBlockRune }
-  }
+  },
+  usePreferredAssets: useThorPreferredAssets
 }
 
 export const MAYANAME_CONFIG: ThornameConfig = {
@@ -82,7 +100,8 @@ export const MAYANAME_CONFIG: ThornameConfig = {
     return { items: mayaNames, details, isLoading, isError }
   },
   useNamesOwned: useMayaNamesOwned,
-  useNetwork: useMayaNetwork
+  useNetwork: useMayaNetwork,
+  usePreferredAssets: useMayaPreferredAssets
 }
 
 export const THORNAME_CONFIGS: Record<ThornameConfig['key'], ThornameConfig> = {

@@ -299,7 +299,16 @@
       "renew": "नवीनीकरण",
       "transfer": "स्थानांतरण",
       "cost": "लागत",
-      "expires": "समाप्ति"
+      "expires": "समाप्ति",
+      "preferredAsset": "पसंदीदा एसेट",
+      "preferredAssetTitle": "पसंदीदा एसेट सेट करें",
+      "preferredAssetInfo": "{name} द्वारा अर्जित एफ़िलिएट शुल्क अपने आप पसंदीदा एसेट में बदलकर उस चेन पर उसके उपनाम पते पर भेज दिए जाते हैं।",
+      "asset": "एसेट",
+      "selectAsset": "एसेट चुनें",
+      "aliasAddress": "उपनाम पता ({chain})",
+      "enterAliasAddress": "मान्य पता दर्ज करें",
+      "preferredAssetOptional": "पसंदीदा एसेट (वैकल्पिक)",
+      "assetDefault": "{ticker} (डिफ़ॉल्ट)"
     },
     "title": "भेजें",
     "send": "भेजें",

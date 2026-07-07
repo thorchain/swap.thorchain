@@ -299,7 +299,16 @@
       "renew": "Renovar",
       "transfer": "Transferir",
       "cost": "Custo",
-      "expires": "Expira"
+      "expires": "Expira",
+      "preferredAsset": "Ativo preferido",
+      "preferredAssetTitle": "Definir ativo preferido",
+      "preferredAssetInfo": "As taxas de afiliado ganhas por {name} são automaticamente trocadas pelo ativo preferido e enviadas para o seu endereço de alias nessa chain.",
+      "asset": "Ativo",
+      "selectAsset": "Selecionar ativo",
+      "aliasAddress": "Endereço de alias ({chain})",
+      "enterAliasAddress": "Insira um endereço válido",
+      "preferredAssetOptional": "Ativo preferido (opcional)",
+      "assetDefault": "{ticker} (padrão)"
     },
     "title": "Enviar",
     "send": "Enviar",

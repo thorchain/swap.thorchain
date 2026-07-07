@@ -445,7 +445,16 @@
       "renew": "Renew",
       "transfer": "Transfer",
       "cost": "Cost",
-      "expires": "Expires"
+      "expires": "Expires",
+      "preferredAsset": "Preferred asset",
+      "preferredAssetTitle": "Set preferred asset",
+      "preferredAssetInfo": "Affiliate fees earned by {name} are automatically swapped to the preferred asset and sent to its alias address on that chain.",
+      "asset": "Asset",
+      "selectAsset": "Select asset",
+      "aliasAddress": "Alias address ({chain})",
+      "enterAliasAddress": "Enter a valid address",
+      "preferredAssetOptional": "Preferred asset (optional)",
+      "assetDefault": "{ticker} (default)"
     }
   },
   "wallet": {

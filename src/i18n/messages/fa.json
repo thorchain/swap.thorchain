@@ -299,7 +299,16 @@
       "renew": "تمدید",
       "transfer": "انتقال",
       "cost": "هزینه",
-      "expires": "انقضا"
+      "expires": "انقضا",
+      "preferredAsset": "دارایی ترجیحی",
+      "preferredAssetTitle": "تنظیم دارایی ترجیحی",
+      "preferredAssetInfo": "کارمزدهای معرفی که {name} کسب می‌کند به‌طور خودکار به دارایی ترجیحی تبدیل شده و به آدرس مستعار آن در همان شبکه ارسال می‌شود.",
+      "asset": "دارایی",
+      "selectAsset": "انتخاب دارایی",
+      "aliasAddress": "آدرس مستعار ({chain})",
+      "enterAliasAddress": "یک آدرس معتبر وارد کنید",
+      "preferredAssetOptional": "دارایی ترجیحی (اختیاری)",
+      "assetDefault": "{ticker} (پیش‌فرض)"
     },
     "title": "ارسال",
     "send": "ارسال",

@@ -299,7 +299,16 @@
       "renew": "更新",
       "transfer": "譲渡",
       "cost": "費用",
-      "expires": "有効期限"
+      "expires": "有効期限",
+      "preferredAsset": "優先アセット",
+      "preferredAssetTitle": "優先アセットを設定",
+      "preferredAssetInfo": "{name} が獲得したアフィリエイト手数料は自動的に優先アセットにスワップされ、そのチェーンのエイリアスアドレスに送られます。",
+      "asset": "アセット",
+      "selectAsset": "アセットを選択",
+      "aliasAddress": "エイリアスアドレス（{chain}）",
+      "enterAliasAddress": "有効なアドレスを入力してください",
+      "preferredAssetOptional": "優先アセット（任意）",
+      "assetDefault": "{ticker}（デフォルト）"
     },
     "title": "送信",
     "send": "送信",

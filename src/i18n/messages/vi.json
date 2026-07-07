@@ -299,7 +299,16 @@
       "renew": "Gia hạn",
       "transfer": "Chuyển",
       "cost": "Chi phí",
-      "expires": "Hết hạn"
+      "expires": "Hết hạn",
+      "preferredAsset": "Tài sản ưu tiên",
+      "preferredAssetTitle": "Đặt tài sản ưu tiên",
+      "preferredAssetInfo": "Phí liên kết mà {name} kiếm được sẽ tự động được hoán đổi sang tài sản ưu tiên và gửi đến địa chỉ bí danh trên chuỗi đó.",
+      "asset": "Tài sản",
+      "selectAsset": "Chọn tài sản",
+      "aliasAddress": "Địa chỉ bí danh ({chain})",
+      "enterAliasAddress": "Nhập địa chỉ hợp lệ",
+      "preferredAssetOptional": "Tài sản ưu tiên (không bắt buộc)",
+      "assetDefault": "{ticker} (mặc định)"
     },
     "title": "Gửi",
     "send": "Gửi",

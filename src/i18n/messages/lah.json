@@ -299,7 +299,16 @@
       "renew": "نواں کرو",
       "transfer": "منتقل کرو",
       "cost": "لاگت",
-      "expires": "میعاد ختم"
+      "expires": "میعاد ختم",
+      "preferredAsset": "پسندیدہ اثاثہ",
+      "preferredAssetTitle": "پسندیدہ اثاثہ مقرر کرو",
+      "preferredAssetInfo": "{name} دی کمائی ہوئی ایفیلیئیٹ فیس آپے ای پسندیدہ اثاثے وچ سویپ ہو کے اوس چین اُتے ایس دے عرفی پتے تے بھیجی جاندی اے۔",
+      "asset": "اثاثہ",
+      "selectAsset": "اثاثہ چنو",
+      "aliasAddress": "عرفی پتہ ({chain})",
+      "enterAliasAddress": "ٹھیک پتہ لکھو",
+      "preferredAssetOptional": "پسندیدہ اثاثہ (اختیاری)",
+      "assetDefault": "{ticker} (ڈیفالٹ)"
     },
     "title": "بھیجو",
     "send": "بھیجو",

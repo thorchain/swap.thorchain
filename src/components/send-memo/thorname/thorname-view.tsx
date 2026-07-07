@@ -7,8 +7,13 @@ import { Input } from '@/components/ui/input'
 import { useDialog } from '@/components/global-dialog'
 import { ConnectWallet } from '@/components/connect-wallet/connect-wallet'
 import { ThemeButton } from '@/components/theme-button'
-import { NameRecord, ThornameConfig } from '@/components/send-memo/thorname/thorname-config'
-import { ThornameRegisterDialog, ThornameRenewDialog, ThornameTransferDialog } from '@/components/send-memo/thorname/thorname-dialogs'
+import { NameRecord, ThornameConfig, formatPreferredAsset, preferredAssetOf } from '@/components/send-memo/thorname/thorname-config'
+import {
+  ThornamePreferredAssetDialog,
+  ThornameRegisterDialog,
+  ThornameRenewDialog,
+  ThornameTransferDialog
+} from '@/components/send-memo/thorname/thorname-dialogs'
 import { useExternalWalletMode, useSelectedAccount, useSetExternalWalletMode } from '@/hooks/use-wallets'
 import { useResolveAccount } from '@/hooks/use-resolve-account'
 import { blockHeightToDate } from '@/components/send-memo/send-memo-helpers'
@@ -28,7 +33,7 @@ export function ThornameView({ config }: { config: ThornameConfig }) {
 
   const [search, setSearch] = useState('')
 
-  const { names: ownedNames } = config.useNamesOwned(account?.address)
+  const { names: ownedNames } = config.useNamesOwned('thor1usj8cqjmjea32csxn5fma96ffeulln40gyrahn')
   const { details: ownedDetails } = config.useName(ownedNames)
   const { items, isLoading: lookupLoading, isError: lookupError } = config.useName(search ? [search] : [])
   const found = items[0] ?? null
@@ -47,6 +52,8 @@ export function ThornameView({ config }: { config: ThornameConfig }) {
   const openRenew = (name: string, expireBlockHeight: number) =>
     withWallet(acc => openDialog(ThornameRenewDialog, { config, name, account: acc, expireBlockHeight }))
   const openTransfer = (name: string) => withWallet(acc => openDialog(ThornameTransferDialog, { config, name, account: acc }))
+  const openPreferredAsset = (record: NameRecord) =>
+    withWallet(acc => openDialog(ThornamePreferredAssetDialog, { config, name: record.name, account: acc, record }))
 
   return (
     <div className="bg-modal rounded-20 space-y-2.5 border p-2.5">
@@ -97,6 +104,7 @@ export function ThornameView({ config }: { config: ThornameConfig }) {
               expiryDate={blockHeightToDate(found.expire_block_height, currentBlock)}
               onRenew={() => openRenew(found.name, found.expire_block_height)}
               onTransfer={() => openTransfer(found.name)}
+              onPreferredAsset={() => openPreferredAsset(found)}
             />
           ) : null}
         </>
@@ -115,6 +123,7 @@ export function ThornameView({ config }: { config: ThornameConfig }) {
             expiryDate={blockHeightToDate(n.expire_block_height, currentBlock)}
             onRenew={() => openRenew(n.name, n.expire_block_height)}
             onTransfer={() => openTransfer(n.name)}
+            onPreferredAsset={() => openPreferredAsset(n)}
           />
         ))}
     </div>
@@ -130,11 +139,13 @@ type NameCardProps = {
   onRegister?: () => void
   onRenew?: () => void
   onTransfer?: () => void
+  onPreferredAsset?: () => void
 }
 
 function NameCard({ config, name, status, record, expiryDate, onRegister, onRenew, onTransfer }: NameCardProps) {
   const t = useTranslations('send')
   const alias = record?.aliases?.find(a => a.chain === config.aliasChain)?.address ?? record?.owner
+  const preferredAsset = preferredAssetOf(record)
 
   return (
     <div className="bg-swap-bloc rounded-15 space-y-3 border p-4">
@@ -164,11 +175,12 @@ function NameCard({ config, name, status, record, expiryDate, onRegister, onRene
         <div className="space-y-2">
           {expiryDate && <Row label={t('thorname.expires')} value={expiryDate.toLocaleDateString()} />}
           {alias && <Row label={t('thorname.aliasesChain', { chain: config.aliasChain })} value={truncate(alias)} />}
+          {preferredAsset && <Row label={t('thorname.preferredAsset')} value={formatPreferredAsset(preferredAsset)} />}
         </div>
       )}
 
       {status === 'owned' && (
-        <div className="flex justify-end gap-2">
+        <div className="flex flex-wrap justify-end gap-2">
           <ThemeButton variant="secondarySmall" className="rounded-full" onClick={onRenew}>
             {t('thorname.renew')}
           </ThemeButton>
