@@ -13,6 +13,7 @@ import { DecimalInput } from '@/components/decimal/decimal-input'
 import { DecimalText } from '@/components/decimal/decimal-text'
 import { Icon } from '@/components/icons'
 import { ThemeButton } from '@/components/theme-button'
+import { GenericButton } from '@/components/generic-button'
 import { assetIdentifierStr, tokenToAsset } from '@/components/send/send-helpers'
 import { SwapAddressFrom } from '@/components/swap/swap-address-from'
 import { SendMemoBeta } from '@/components/send-memo/send-memo-beta'
@@ -204,15 +205,15 @@ export function SendMemoStake({ account, initialTab = 'stake', stakedAmount }: S
             {thorAccount && (
               <div className="mt-3 flex items-center justify-between">
                 <div className="flex gap-2">
-                  <ThemeButton className="h-7 rounded-full" variant="secondarySmall" onClick={() => setAmount('')} disabled={amount === ''}>
+                  <GenericButton size="small" onClick={() => setAmount('')} disabled={amount === ''}>
                     {t('clear')}
-                  </ThemeButton>
-                  <ThemeButton className="h-7 rounded-full" variant="secondarySmall" onClick={() => setAmount(String(referenceAmount * 0.5))}>
+                  </GenericButton>
+                  <GenericButton size="small" onClick={() => setAmount(String(referenceAmount * 0.5))}>
                     50%
-                  </ThemeButton>
-                  <ThemeButton className="h-7 rounded-full" variant="secondarySmall" onClick={() => setAmount(String(referenceAmount))}>
+                  </GenericButton>
+                  <GenericButton size="small" onClick={() => setAmount(String(referenceAmount))}>
                     100%
-                  </ThemeButton>
+                  </GenericButton>
                 </div>
                 <div className="text-txt-label-small text-xs">
                   {tab === 'unstake' ? (

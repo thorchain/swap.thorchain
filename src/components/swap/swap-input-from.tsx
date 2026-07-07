@@ -8,7 +8,7 @@ import { useDialog } from '@/components/global-dialog'
 import { Icon } from '@/components/icons'
 import { SwapBalance } from '@/components/swap/swap-balance'
 import { SwapSelectAsset } from '@/components/swap/swap-select-asset'
-import { ThemeButton } from '@/components/theme-button'
+import { GenericButton } from '@/components/generic-button'
 import { useBalance } from '@/hooks/use-balance'
 import { useSwapRates } from '@/hooks/use-rates'
 import { useAssetFrom, useSetAssetFrom, useSwap } from '@/hooks/use-swap'
@@ -70,25 +70,15 @@ export const SwapInputFrom = () => {
 
       <div className="mt-2 flex items-end justify-between">
         <div className="flex gap-2">
-          <ThemeButton className="h-6" variant="secondarySmall" onClick={() => setAmountFrom('')} disabled={amountFrom === ''}>
+          <GenericButton size="small" onClick={() => setAmountFrom('')} disabled={amountFrom === ''}>
             {t('input.clear')}
-          </ThemeButton>
-          <ThemeButton
-            className="h-6"
-            variant="secondarySmall"
-            onClick={() => handleSetPercent(50)}
-            disabled={!balance || balance.spendable.eqValue(0)}
-          >
+          </GenericButton>
+          <GenericButton size="small" onClick={() => handleSetPercent(50)} disabled={!balance || balance.spendable.eqValue(0)}>
             50%
-          </ThemeButton>
-          <ThemeButton
-            className="h-6"
-            variant="secondarySmall"
-            onClick={() => handleSetPercent(100)}
-            disabled={!balance || balance.spendable.eqValue(0)}
-          >
+          </GenericButton>
+          <GenericButton size="small" onClick={() => handleSetPercent(100)} disabled={!balance || balance.spendable.eqValue(0)}>
             100%
-          </ThemeButton>
+          </GenericButton>
         </div>
 
         <SwapBalance />

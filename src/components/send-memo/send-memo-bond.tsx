@@ -15,6 +15,7 @@ import { DecimalText } from '@/components/decimal/decimal-text'
 import { SendMemoBeta } from '@/components/send-memo/send-memo-beta'
 import { Icon } from '@/components/icons'
 import { ThemeButton } from '@/components/theme-button'
+import { GenericButton } from '@/components/generic-button'
 import { assetIdentifierStr, tokenToAsset } from '@/components/send/send-helpers'
 import { isRuneToken, isThorAddress } from '@/components/send-memo/send-memo-helpers'
 import { useWalletBalances } from '@/hooks/use-wallet-balances'
@@ -188,6 +189,12 @@ export function SendMemoBond({ account, initialTab = 'bond' }: BondFormProps) {
         </div>
 
         {needsNewAddress && (
+          <div className="flex justify-center">
+            <Icon name="arrow-m-down" className="text-txt-label-small size-5" />
+          </div>
+        )}
+
+        {needsNewAddress && (
           <div className="relative">
             <Textarea
               placeholder={t('bond.newAddress')}
@@ -246,15 +253,15 @@ export function SendMemoBond({ account, initialTab = 'bond' }: BondFormProps) {
             {runeToken && (
               <div className="mt-3 flex items-center justify-between">
                 <div className="flex gap-2">
-                  <ThemeButton className="h-7 rounded-full" variant="secondarySmall" onClick={() => setAmount('')} disabled={amount === ''}>
+                  <GenericButton size="small" onClick={() => setAmount('')} disabled={amount === ''}>
                     {t('clear')}
-                  </ThemeButton>
-                  <ThemeButton className="h-7 rounded-full" variant="secondarySmall" onClick={() => setAmount(String(runeToken.amount * 0.5))}>
+                  </GenericButton>
+                  <GenericButton size="small" onClick={() => setAmount(String(runeToken.amount * 0.5))}>
                     50%
-                  </ThemeButton>
-                  <ThemeButton className="h-7 rounded-full" variant="secondarySmall" onClick={() => setAmount(String(runeToken.amount))}>
+                  </GenericButton>
+                  <GenericButton size="small" onClick={() => setAmount(String(runeToken.amount))}>
                     100%
-                  </ThemeButton>
+                  </GenericButton>
                 </div>
                 <div className="text-txt-label-small text-xs">
                   {t('balanceLabel')} <DecimalText amount={runeToken.balance.toSignificant()} symbol={runeToken.balance.ticker} />

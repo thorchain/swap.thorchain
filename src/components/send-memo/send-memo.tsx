@@ -13,6 +13,7 @@ import { DecimalText } from '@/components/decimal/decimal-text'
 import { useDialog } from '@/components/global-dialog'
 import { Icon } from '@/components/icons'
 import { ThemeButton } from '@/components/theme-button'
+import { GenericButton } from '@/components/generic-button'
 import { assetIdentifierStr, tokenToAsset } from '@/components/send/send-helpers'
 import { SendMemoExamples } from '@/components/send-memo/send-memo-examples'
 import { SendSelectToken } from '@/components/send/send-select-token'
@@ -131,30 +132,26 @@ export function SendMemo() {
       </div>
 
       <div className="bg-modal rounded-20 relative space-y-1.25 border p-2.5">
-        <div className="bg-swap-bloc rounded-15 border p-7">
-          <div className="relative">
-            <Textarea
-              placeholder={t('memo.placeholder')}
-              value={memo}
-              maxLength={250}
-              onChange={e => setMemo(e.target.value)}
-              className="border-0 bg-transparent"
-            />
-            {memo ? (
-              <ThemeButton variant="circleSmall" className="absolute end-3 top-3" onClick={() => setMemo('')}>
-                <Icon name="trash" />
-              </ThemeButton>
-            ) : (
-              <ThemeButton
-                variant="secondarySmall"
-                className="absolute end-3 top-3 rounded-full"
-                onClick={() => navigator.clipboard.readText().then(text => setMemo(text.slice(0, 250)))}
-              >
-                {t('paste')}
-              </ThemeButton>
-            )}
-          </div>
-          {memo.length > 200 && <div className="text-txt-label-small mt-1 text-right text-xs">{memo.length}/250</div>}
+        <div className="relative">
+          <Textarea
+            placeholder={t('memo.placeholder')}
+            value={memo}
+            maxLength={250}
+            onChange={e => setMemo(e.target.value)}
+            className="bg-input-modal-bg border-border-sub-container-modal-low placeholder:text-txt-text-modal min-h-24 py-3 pe-20"
+          />
+          {memo ? (
+            <GenericButton size="small" className="absolute end-3 top-3" icon={<Icon name="trash" />} onClick={() => setMemo('')} />
+          ) : (
+            <GenericButton
+              size="small"
+              className="absolute end-3 top-3"
+              onClick={() => navigator.clipboard.readText().then(text => setMemo(text.slice(0, 250)))}
+            >
+              {t('paste')}
+            </GenericButton>
+          )}
+          {memo.length > 200 && <div className="text-txt-label-small absolute end-4 bottom-2 text-xs">{memo.length}/250</div>}
         </div>
 
         {zeroPayload ? (
@@ -196,15 +193,15 @@ export function SendMemo() {
             {effectiveToken && (
               <div className="mt-3 flex items-center justify-between">
                 <div className="flex gap-2">
-                  <ThemeButton className="h-7 rounded-full" variant="secondarySmall" onClick={() => setAmount('')} disabled={amount === ''}>
+                  <GenericButton size="small" onClick={() => setAmount('')} disabled={amount === ''}>
                     {t('clear')}
-                  </ThemeButton>
-                  <ThemeButton className="h-7 rounded-full" variant="secondarySmall" onClick={() => setAmount(String(effectiveToken.amount * 0.5))}>
+                  </GenericButton>
+                  <GenericButton size="small" onClick={() => setAmount(String(effectiveToken.amount * 0.5))}>
                     50%
-                  </ThemeButton>
-                  <ThemeButton className="h-7 rounded-full" variant="secondarySmall" onClick={() => setAmount(String(effectiveToken.amount))}>
+                  </GenericButton>
+                  <GenericButton size="small" onClick={() => setAmount(String(effectiveToken.amount))}>
                     100%
-                  </ThemeButton>
+                  </GenericButton>
                 </div>
                 <div className="text-txt-label-small text-xs">
                   {t('balanceLabel')} <DecimalText amount={effectiveToken.balance.toSignificant()} symbol={effectiveToken.balance.ticker} />

@@ -12,6 +12,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { AddressInput } from '@/components/address-input'
 import { DecimalInput } from '@/components/decimal/decimal-input'
 import { ThemeButton } from '@/components/theme-button'
+import { GenericButton } from '@/components/generic-button'
 import { assetIdentifierStr } from '@/components/send/send-helpers'
 import { NameRecord, ThornameConfig, formatPreferredAsset, preferredAssetOf } from '@/components/send-memo/thorname/thorname-config'
 import { useWalletBalances } from '@/hooks/use-wallet-balances'
@@ -338,15 +339,15 @@ export function ThornameRenewDialog({ config, name: initialName, account, expire
 
             <div className="mt-3 flex items-center justify-between">
               <div className="flex gap-2">
-                <ThemeButton className="h-7 rounded-full" variant="secondarySmall" onClick={() => setAmount('')} disabled={amount === ''}>
+                <GenericButton size="small" onClick={() => setAmount('')} disabled={amount === ''}>
                   {t('clear')}
-                </ThemeButton>
-                <ThemeButton className="h-7 rounded-full" variant="secondarySmall" onClick={() => setAmount(String(balance * 0.5))}>
+                </GenericButton>
+                <GenericButton size="small" onClick={() => setAmount(String(balance * 0.5))}>
                   50%
-                </ThemeButton>
-                <ThemeButton className="h-7 rounded-full" variant="secondarySmall" onClick={() => setAmount(String(balance))}>
+                </GenericButton>
+                <GenericButton size="small" onClick={() => setAmount(String(balance))}>
                   100%
-                </ThemeButton>
+                </GenericButton>
               </div>
               <div className="text-txt-label-small text-xs">
                 {t('balanceLabel')} {balance.toLocaleString(undefined, { maximumFractionDigits: 4 })} {config.ticker}

@@ -17,6 +17,7 @@ import { DecimalInput } from '@/components/decimal/decimal-input'
 import { useDialog } from '@/components/global-dialog'
 import { Icon } from '@/components/icons'
 import { ThemeButton } from '@/components/theme-button'
+import { GenericButton } from '@/components/generic-button'
 import { Tooltip } from '@/components/tooltip'
 import { assetIdentifierStr, tokenToAsset } from '@/components/send/send-helpers'
 import { SendSelectToken } from '@/components/send/send-select-token'
@@ -215,15 +216,15 @@ export function Send({ isOpen, onOpenChange, initialToken, account }: SendDialog
 
               <div className="mt-2 flex items-end justify-between">
                 <div className="flex gap-2">
-                  <ThemeButton className="h-6" variant="secondarySmall" onClick={() => setAmount('')} disabled={amount === ''}>
+                  <GenericButton size="small" onClick={() => setAmount('')} disabled={amount === ''}>
                     {t('clear')}
-                  </ThemeButton>
-                  <ThemeButton className="h-6" variant="secondarySmall" onClick={() => setAmount(String(selectedToken.amount * 0.5))}>
+                  </GenericButton>
+                  <GenericButton size="small" onClick={() => setAmount(String(selectedToken.amount * 0.5))}>
                     50%
-                  </ThemeButton>
-                  <ThemeButton className="h-6" variant="secondarySmall" onClick={() => setAmount(String(selectedToken.amount))}>
+                  </GenericButton>
+                  <GenericButton size="small" onClick={() => setAmount(String(selectedToken.amount))}>
                     100%
-                  </ThemeButton>
+                  </GenericButton>
                 </div>
                 <div className="text-txt-label-small flex gap-1 text-[10px]">
                   <span>{t('balanceLabel')}</span>
