@@ -36,6 +36,7 @@
   --color-btn-modal-hover: var(--btn-modal-hover);
   --color-btn-small-darker: var(--btn-small-darker);
   --color-btn-small-default: var(--btn-small-default);
+  --color-btn-small-focus: var(--btn-small-focus);
   --color-btn-small-hover: var(--btn-small-hover);
   --color-btn-small-inactive: var(--btn-small-inactive);
   --color-btn-style-1-bg: var(--btn-style-1-bg);
@@ -77,6 +78,7 @@
   --color-swap-global: var(--swap-global);
   --color-txt-amount: var(--txt-amount);
   --color-txt-btn-small-default: var(--txt-btn-small-default);
+  --color-txt-btn-small-focus: var(--txt-btn-small-focus);
   --color-txt-btn-small-hover: var(--txt-btn-small-hover);
   --color-txt-btn-small-inactive: var(--txt-btn-small-inactive);
   --color-txt-contrast-1-default: var(--txt-contrast-1-default);
