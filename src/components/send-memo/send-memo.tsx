@@ -120,7 +120,7 @@ export function SendMemo() {
   return (
     <div className="flex flex-col gap-5">
       <div className="flex items-center justify-between">
-        <h1 className="text-txt-high-contrast text-xl font-bold">{t('memo.title')}</h1>
+        <h1 className="text-txt-high-contrast text-2xl font-bold">{t('memo.title')}</h1>
         <ThemeButton
           variant="secondarySmall"
           className="rounded-full"
@@ -165,54 +165,52 @@ export function SendMemo() {
             </div>
           </div>
         ) : (
-          <div className="flex flex-col gap-1.5">
-            <div className="text-txt-label-small px-2 text-xs font-normal">{t('amount')}</div>
-            <div className="bg-swap-bloc rounded-15 border p-7">
-              <div className="flex items-center justify-between">
-                <div className="flex-1">
-                  <DecimalInput
-                    className="text-txt-high-contrast w-full bg-transparent text-4xl font-medium outline-none"
-                    amount={amount}
-                    onAmountChange={v => setAmount(v)}
-                    autoComplete="off"
-                  />
-                  <div className="text-txt-label-small text-sm">{toCurrencyFixed(fiatValue.toCurrency('$', { trimTrailingZeros: false }))}</div>
-                </div>
-
-                {selectedAsset && effectiveToken && (
-                  <div
-                    className={cn('flex items-center gap-2', availableMemoTokenCount > 1 ? 'cursor-pointer' : 'cursor-default')}
-                    onClick={openTokenSelector}
-                  >
-                    <AssetIcon asset={selectedAsset} />
-                    <div className="flex flex-col items-start">
-                      <span className="text-txt-high-contrast text-sm font-bold">{selectedAsset.ticker}</span>
-                      <span className="text-txt-label-small text-xs">{effectiveToken.balance.chain}</span>
-                    </div>
-                    <Icon name="arrow-s-down" className="text-txt-label-small size-4" />
-                  </div>
-                )}
+          <div className="bg-swap-bloc rounded-15 border p-7">
+            <div className="text-txt-label-small mb-3 font-semibold">{t('amount')}</div>
+            <div className="flex items-center justify-between">
+              <div className="flex-1">
+                <DecimalInput
+                  className="text-txt-high-contrast w-full bg-transparent text-2xl font-medium outline-none"
+                  amount={amount}
+                  onAmountChange={v => setAmount(v)}
+                  autoComplete="off"
+                />
+                <div className="text-txt-label-small text-sm">{toCurrencyFixed(fiatValue.toCurrency('$', { trimTrailingZeros: false }))}</div>
               </div>
 
-              {effectiveToken && (
-                <div className="mt-3 flex items-center justify-between">
-                  <div className="flex gap-2">
-                    <ThemeButton className="h-7 rounded-full" variant="secondarySmall" onClick={() => setAmount('')} disabled={amount === ''}>
-                      {t('clear')}
-                    </ThemeButton>
-                    <ThemeButton className="h-7 rounded-full" variant="secondarySmall" onClick={() => setAmount(String(effectiveToken.amount * 0.5))}>
-                      50%
-                    </ThemeButton>
-                    <ThemeButton className="h-7 rounded-full" variant="secondarySmall" onClick={() => setAmount(String(effectiveToken.amount))}>
-                      100%
-                    </ThemeButton>
+              {selectedAsset && effectiveToken && (
+                <div
+                  className={cn('flex items-center gap-2', availableMemoTokenCount > 1 ? 'cursor-pointer' : 'cursor-default')}
+                  onClick={openTokenSelector}
+                >
+                  <AssetIcon asset={selectedAsset} />
+                  <div className="flex flex-col items-start">
+                    <span className="text-txt-high-contrast text-sm font-bold">{selectedAsset.ticker}</span>
+                    <span className="text-txt-label-small text-xs">{effectiveToken.balance.chain}</span>
                   </div>
-                  <div className="text-txt-label-small text-xs">
-                    {t('balanceLabel')} <DecimalText amount={effectiveToken.balance.toSignificant()} symbol={effectiveToken.balance.ticker} />
-                  </div>
+                  <Icon name="arrow-s-down" className="text-txt-label-small size-4" />
                 </div>
               )}
             </div>
+
+            {effectiveToken && (
+              <div className="mt-3 flex items-center justify-between">
+                <div className="flex gap-2">
+                  <ThemeButton className="h-7 rounded-full" variant="secondarySmall" onClick={() => setAmount('')} disabled={amount === ''}>
+                    {t('clear')}
+                  </ThemeButton>
+                  <ThemeButton className="h-7 rounded-full" variant="secondarySmall" onClick={() => setAmount(String(effectiveToken.amount * 0.5))}>
+                    50%
+                  </ThemeButton>
+                  <ThemeButton className="h-7 rounded-full" variant="secondarySmall" onClick={() => setAmount(String(effectiveToken.amount))}>
+                    100%
+                  </ThemeButton>
+                </div>
+                <div className="text-txt-label-small text-xs">
+                  {t('balanceLabel')} <DecimalText amount={effectiveToken.balance.toSignificant()} symbol={effectiveToken.balance.ticker} />
+                </div>
+              </div>
+            )}
           </div>
         )}
 

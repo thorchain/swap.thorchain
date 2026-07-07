@@ -286,7 +286,7 @@ export function SendMemoPool() {
     <div className="flex flex-col gap-5">
       <div className="flex items-center justify-between gap-4">
         <ScrollArea orientation="horizontal" className="min-w-0 flex-1">
-          <div className="flex items-center gap-4 text-xl font-medium">
+          <div className="flex items-center gap-4 text-2xl font-medium">
             {POOL_TABS.map(key => (
               <span
                 key={key}
@@ -331,11 +331,11 @@ export function SendMemoPool() {
             )}
 
             <div className="bg-swap-bloc rounded-15 border p-7">
-              <div className="text-txt-label-small mb-2 text-xs font-normal">{t('pool.depositAmount')}</div>
+              <div className="text-txt-label-small mb-3 font-semibold">{t('pool.depositAmount')}</div>
               <div className="flex items-center justify-between">
                 <div className="flex-1">
                   <DecimalInput
-                    className="text-txt-high-contrast w-full bg-transparent text-4xl font-medium outline-none"
+                    className="text-txt-high-contrast w-full bg-transparent text-2xl font-medium outline-none"
                     amount={amount}
                     onAmountChange={setAmount}
                     autoComplete="off"
@@ -496,11 +496,11 @@ function PercentBlock({
 }) {
   return (
     <div className="bg-swap-bloc rounded-15 border p-7">
-      <div className="text-txt-label-small mb-2 text-xs font-normal">{label}</div>
+      <div className="text-txt-label-small mb-3 font-semibold">{label}</div>
       <div className="flex items-end justify-between">
         <div className="flex-1">
           <DecimalInput
-            className="text-txt-high-contrast w-full bg-transparent text-4xl font-medium outline-none"
+            className="text-txt-high-contrast w-full bg-transparent text-2xl font-medium outline-none"
             amount={percent}
             onAmountChange={v => {
               const n = parseFloat(v)

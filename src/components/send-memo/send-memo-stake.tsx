@@ -162,7 +162,7 @@ export function SendMemoStake({ account, initialTab = 'stake', stakedAmount }: S
               setAmount('')
             }}
             className={cn(
-              'cursor-pointer text-xl transition-colors',
+              'cursor-pointer text-2xl transition-colors',
               tab === key ? 'text-txt-high-contrast font-bold' : 'text-txt-label-small hover:text-txt-high-contrast/70 font-normal'
             )}
           >
@@ -174,12 +174,12 @@ export function SendMemoStake({ account, initialTab = 'stake', stakedAmount }: S
       <div className="bg-modal rounded-20 relative space-y-1.25 border p-2.5">
         {(tab === 'stake' || tab === 'unstake') && (
           <div className="bg-swap-bloc rounded-15 border p-7">
-            <div className="text-txt-label-small mb-2 text-xs font-normal">{amountLabel}</div>
+            <div className="text-txt-label-small mb-3 font-semibold">{amountLabel}</div>
 
             <div className="flex items-center justify-between">
               <div className="flex-1">
                 <DecimalInput
-                  className="text-txt-high-contrast w-full bg-transparent text-4xl font-medium outline-none"
+                  className="text-txt-high-contrast w-full bg-transparent text-2xl font-medium outline-none"
                   amount={amount}
                   onAmountChange={v => setAmount(v)}
                   autoComplete="off"
@@ -250,10 +250,10 @@ export function SendMemoStake({ account, initialTab = 'stake', stakedAmount }: S
             </div>
 
             <div className="bg-swap-bloc rounded-15 border p-7">
-              <div className="text-txt-label-small mb-2 text-xs font-normal">{t('stake.claimAmount')}</div>
+              <div className="text-txt-label-small mb-3 font-semibold">{t('stake.claimAmount')}</div>
               <div className="flex items-center justify-between">
                 <div className="flex-1">
-                  <p className="text-txt-high-contrast text-4xl font-medium">
+                  <p className="text-txt-high-contrast text-2xl font-medium">
                     <DecimalText amount={String(totalClaimable)} />
                   </p>
                   {tcyRate && totalClaimable > 0 && (
