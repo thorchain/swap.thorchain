@@ -33,7 +33,7 @@ export function ThornameView({ config }: { config: ThornameConfig }) {
 
   const [search, setSearch] = useState('')
 
-  const { names: ownedNames } = config.useNamesOwned('thor1usj8cqjmjea32csxn5fma96ffeulln40gyrahn')
+  const { names: ownedNames } = config.useNamesOwned(account?.address)
   const { details: ownedDetails } = config.useName(ownedNames)
   const { items, isLoading: lookupLoading, isError: lookupError } = config.useName(search ? [search] : [])
   const found = items[0] ?? null
