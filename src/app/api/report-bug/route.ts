@@ -1,6 +1,15 @@
 import { NextRequest, NextResponse } from 'next/server'
+import { rateLimit } from '@/lib/rate-limit'
 
 export async function POST(req: NextRequest) {
+  const retryAfter = rateLimit(req, 'report-bug', 5)
+  if (retryAfter !== null) {
+    return NextResponse.json(
+      { error: 'Too many requests' },
+      { status: 429, headers: { 'Retry-After': String(retryAfter) } }
+    )
+  }
+
   const { email, description, attachment } = await req.json()
 
   if (!description || typeof description !== 'string' || !description.trim()) {

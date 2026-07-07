@@ -80,7 +80,8 @@ export function WebMcpTools() {
         execute: (input) => {
           const route = readRoute(input)
           const target = publicRoutes[route]
-          window.location.assign(target)
+          // Defer navigation so the tool result is delivered before the page unloads.
+          setTimeout(() => window.location.assign(target), 0)
           return { route, url: target }
         }
       }
@@ -97,7 +98,13 @@ export function WebMcpTools() {
 
     return () => {
       controller.abort()
-      for (const unregister of unregisters) unregister()
+      for (const unregister of unregisters) {
+        try {
+          unregister()
+        } catch {
+          // Already unregistered via the abort signal.
+        }
+      }
     }
   }, [])
 

@@ -16,6 +16,9 @@ THORChain Swap is the public swap interface for THORChain powered cross-chain sw
 
 ## Machine-Readable Discovery
 
+- [llms.txt](${AppConfig.baseUrl}/llms.txt)
+- [AGENTS.md](${AppConfig.baseUrl}/AGENTS.md)
+- [MCP server card](${AppConfig.baseUrl}/.well-known/mcp-server-card)
 - [robots.txt](${AppConfig.baseUrl}/robots.txt)
 - [sitemap.xml](${AppConfig.baseUrl}/sitemap.xml)
 - [API catalog](${AppConfig.baseUrl}/.well-known/api-catalog)
@@ -24,8 +27,22 @@ THORChain Swap is the public swap interface for THORChain powered cross-chain sw
 - [Auth.md](${AppConfig.baseUrl}/auth.md)
 `
 
-function acceptsMarkdown(req: NextRequest) {
-  return req.headers.get('accept')?.toLowerCase().includes('text/markdown') ?? false
+function prefersMarkdown(req: NextRequest) {
+  const accept = req.headers.get('accept')?.toLowerCase()
+  if (!accept || !accept.includes('text/markdown')) return false
+
+  let markdownQ = 0
+  let htmlQ = 0
+  for (const entry of accept.split(',')) {
+    const [type, ...params] = entry.split(';').map(part => part.trim())
+    let q = 1
+    for (const param of params) {
+      if (param.startsWith('q=')) q = Number(param.slice(2)) || 0
+    }
+    if (type === 'text/markdown') markdownQ = Math.max(markdownQ, q)
+    if (type === 'text/html') htmlQ = Math.max(htmlQ, q)
+  }
+  return markdownQ > 0 && markdownQ >= htmlQ
 }
 
 export function proxy(req: NextRequest) {
@@ -34,10 +51,15 @@ export function proxy(req: NextRequest) {
 
   const { pathname, search } = req.nextUrl
 
-  if (host === PRIMARY_HOST && pathname === '/' && acceptsMarkdown(req)) {
+  if (host === PRIMARY_HOST && pathname === '/' && prefersMarkdown(req)) {
+    // no-store: this URL serves HTML to browsers, and CDNs don't reliably
+    // key their cache on Accept, so the markdown variant must never land
+    // in a shared cache.
     return new NextResponse(homeMarkdown, {
       headers: {
         'Content-Type': 'text/markdown; charset=utf-8',
+        'Vary': 'Accept',
+        'Cache-Control': 'no-store',
         'x-markdown-tokens': String(Math.ceil(homeMarkdown.split(/\s+/).length * 1.35))
       }
     })

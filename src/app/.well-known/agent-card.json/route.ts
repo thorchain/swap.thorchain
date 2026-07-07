@@ -16,6 +16,11 @@ export function GET() {
           url: AppConfig.baseUrl,
           protocolBinding: 'HTTP+JSON',
           protocolVersion: '1.0.0'
+        },
+        {
+          url: `${AppConfig.baseUrl}/mcp`,
+          protocolBinding: 'MCP',
+          protocolVersion: '2025-06-18'
         }
       ],
       defaultInputModes: ['text/plain', 'application/json'],

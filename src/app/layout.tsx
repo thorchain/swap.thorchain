@@ -107,6 +107,9 @@ export default async function RootLayout({ children }: Readonly<{ children: Reac
         />
       )}
       <body className={`${crit.variable} ${notoRunic.variable} bg-body font-sans antialiased`}>
+        {/* Agent discovery links; React hoists them into <head>. */}
+        <link rel="mcp-server-card" type="application/json" href="/.well-known/mcp-server-card.json" />
+        <link rel="alternate" type="text/markdown" title="llms.txt" href="/llms.txt" />
         <WebMcpTools />
         <WalletStoreHydration />
         <ReactQueryProvider>

@@ -1,29 +1,9 @@
 # THORChain Swap public crawl policy.
 #
-# Public pages may be crawled for search and user-directed agent retrieval.
-# API endpoints are not crawl targets.
+# All public pages may be crawled by search and AI agents. Each bot group
+# declares the same permissive Content-Signal AI policy.
 
-User-agent: *
-Allow: /
-Disallow: /api/
-Content-Signal: search=yes, ai-input=yes, ai-train=no
-
-# OpenAI search and user-requested retrieval.
-User-agent: OAI-SearchBot
-User-agent: ChatGPT-User
-Allow: /
-Disallow: /api/
-Content-Signal: search=yes, ai-input=yes, ai-train=no
-
-# Anthropic search and user-requested retrieval.
-User-agent: Claude-SearchBot
-User-agent: Claude-User
-User-agent: Claude-Web
-Allow: /
-Disallow: /api/
-Content-Signal: search=yes, ai-input=yes, ai-train=no
-
-# Model-training crawlers are not granted permission.
+# AI model crawlers.
 User-agent: GPTBot
 User-agent: ClaudeBot
 User-agent: Google-Extended
@@ -32,7 +12,32 @@ User-agent: anthropic-ai
 User-agent: Bytespider
 User-agent: CCBot
 User-agent: Applebot-Extended
-Disallow: /
-Content-Signal: search=no, ai-input=no, ai-train=no
+User-agent: Meta-ExternalAgent
+User-agent: cohere-ai
+User-agent: cohere-training-data-crawler
+User-agent: Diffbot
+User-agent: omgili
+User-agent: Timpibot
+User-agent: PanguBot
+Allow: /
+Content-Signal: search=yes, ai-input=yes, ai-train=yes
+
+# Search and user-requested retrieval agents.
+User-agent: OAI-SearchBot
+User-agent: ChatGPT-User
+User-agent: Claude-SearchBot
+User-agent: Claude-User
+User-agent: Claude-Web
+User-agent: PerplexityBot
+User-agent: Perplexity-User
+User-agent: DuckAssistBot
+User-agent: MistralAI-User
+User-agent: Meta-ExternalFetcher
+Allow: /
+Content-Signal: search=yes, ai-input=yes, ai-train=yes
+
+User-agent: *
+Allow: /
+Content-Signal: search=yes, ai-input=yes, ai-train=yes
 
 Sitemap: https://swap.thorchain.org/sitemap.xml

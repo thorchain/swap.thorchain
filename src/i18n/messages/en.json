@@ -27,6 +27,7 @@
     "riskTooltip": "While this website is built with care it may have unintended bugs which may lead to site malfunctioning and even loss of funds. Proceed only if you understand and accept these risks.",
     "builtBy": "Built by",
     "reportBug": "Report a Bug / Request a Feature",
+    "forAgents": "For AI Agents",
     "getSupport": "Get Support in Discord",
     "bug": {
       "title": "Report a Bug / Request a Feature",

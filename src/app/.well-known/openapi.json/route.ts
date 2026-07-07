@@ -32,6 +32,7 @@ export function GET() {
           responses: {
             '200': { description: 'Subscription accepted.' },
             '400': { description: 'Invalid email address.' },
+            '429': { description: 'Rate limit exceeded. Retry after the number of seconds in the Retry-After header.' },
             '500': { description: 'Server misconfiguration or upstream provider error.' }
           }
         }
@@ -67,6 +68,7 @@ export function GET() {
           responses: {
             '200': { description: 'Report accepted.' },
             '400': { description: 'Missing or invalid description.' },
+            '429': { description: 'Rate limit exceeded. Retry after the number of seconds in the Retry-After header.' },
             '500': { description: 'Server misconfiguration or upstream provider error.' }
           }
         }

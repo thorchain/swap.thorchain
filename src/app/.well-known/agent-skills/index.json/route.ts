@@ -1,5 +1,5 @@
 import { AppConfig } from '@/config'
-import { agentSkillMarkdown, sha256Digest } from '@/lib/agent-discovery'
+import { agentSkillDigest } from '@/lib/agent-discovery'
 
 export function GET() {
   return Response.json({
@@ -10,7 +10,7 @@ export function GET() {
         type: 'skill-md',
         description: 'Navigate and inspect the public THORChain Swap interface safely.',
         url: `${AppConfig.baseUrl}/.well-known/agent-skills/thorchain-swap/SKILL.md`,
-        digest: sha256Digest(agentSkillMarkdown)
+        digest: agentSkillDigest
       }
     ]
   })
