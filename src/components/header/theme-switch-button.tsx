@@ -2,21 +2,25 @@
 
 import { useTheme } from 'next-themes'
 import { Icon } from '@/components/icons'
-import { ThemeButton } from '@/components/theme-button'
+import { GenericButton } from '@/components/generic-button'
 
 export const ThemeSwitchButton = () => {
   const { resolvedTheme, setTheme } = useTheme()
-  const isDark = resolvedTheme === 'dark'
 
   return (
-    <ThemeButton
-      variant="circleSmallOutline"
+    <GenericButton
+      size="medium"
+      aria-label="Toggle theme"
+      icon={
+        // Both icons render and CSS picks one — a theme-dependent branch here would break hydration
+        <>
+          <Icon name="light-mode" className="dark:hidden" />
+          <Icon name="dark-mode" className="hidden dark:block" />
+        </>
+      }
       onClick={() => {
-        setTheme(isDark ? 'light' : 'dark')
+        setTheme(resolvedTheme === 'dark' ? 'light' : 'dark')
       }}
-      suppressHydrationWarning
-    >
-      <span suppressHydrationWarning>{isDark ? <Icon name="dark-mode" /> : <Icon name="light-mode" />}</span>
-    </ThemeButton>
+    />
   )
 }

@@ -17,8 +17,8 @@
     "genericError": "Something went wrong"
   },
   "header": {
-    "wallet": "WALLET",
-    "history": "HISTORY"
+    "wallet": "Wallet",
+    "history": "History"
   },
   "footer": {
     "privacyPolicy": "Privacy Policy",

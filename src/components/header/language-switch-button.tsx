@@ -5,8 +5,8 @@ import { useLocale, useTranslations } from 'next-intl'
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu'
 import { ScrollArea } from '@/components/ui/scroll-area'
 import { Icon } from '@/components/icons'
-import { ThemeButton } from '@/components/theme-button'
-import { defaultLocale, isLocale, type Locale, localeNames, locales } from '@/i18n/config'
+import { GenericButton } from '@/components/generic-button'
+import { defaultLocale, isLocale, type Locale, localeFlags, localeNames, locales } from '@/i18n/config'
 import { setUserLocale } from '@/i18n/locale'
 import { cn } from '@/lib/utils'
 
@@ -26,23 +26,28 @@ export const LanguageSwitchButton = () => {
   return (
     <DropdownMenu modal={false}>
       <DropdownMenuTrigger asChild>
-        <ThemeButton variant="outlineSmall" aria-label={t('language')} className="px-2.5 sm:px-4 uppercase">
-          <span className="sm:hidden">{current}</span>
-          <span className="hidden sm:inline">{localeNames[current]}</span>
-        </ThemeButton>
+        <GenericButton size="medium" aria-label={t('language')} className="uppercase">
+          {localeFlags[current]} {current}
+        </GenericButton>
       </DropdownMenuTrigger>
-      <DropdownMenuContent align="end" className="rounded-xl">
+      <DropdownMenuContent
+        align="end"
+        className="bg-menu border-stroke-menu w-54 rounded-[12px] border p-2 shadow-[0px_15px_30px_0px_rgba(13,13,13,0.2)]"
+      >
+        <div className="text-txt-text-modal py-[11px] pr-4.5 pl-3 text-xs leading-none font-medium">{t('language')}</div>
         <ScrollArea type="always" className="h-80">
           {locales.map(locale => (
             <DropdownMenuItem
               key={locale}
-              className="bg-btn-style-1-bg focus:bg-sub-container-modal/50 flex cursor-pointer items-center justify-between gap-4 rounded-none px-5 py-3"
+              className="bg-label-menu focus:bg-label-menu-hover flex cursor-pointer items-center gap-2 rounded-lg py-[11px] pr-4.5 pl-3"
               disabled={isPending}
               aria-current={locale === current}
               onSelect={() => onSelect(locale)}
             >
-              <span className={cn('text-xs font-semibold', { 'text-green-contrast': locale === current })}>{localeNames[locale]}</span>
-              {locale === current && <Icon name="check" className="text-green-contrast size-4" />}
+              <Icon name="check" className={cn('text-green-contrast size-4.5 shrink-0', { 'opacity-0': locale !== current })} />
+              <span className="text-btn-style-1-text text-xs leading-none font-medium">
+                {localeFlags[locale]} {localeNames[locale]}
+              </span>
             </DropdownMenuItem>
           ))}
         </ScrollArea>

@@ -37,10 +37,6 @@ export function FooterContent({ className }: { className?: string }) {
           </div>
         </div>
         <div className="flex h-4 items-center gap-2">
-          <a className="underline" href="/AGENTS.md" rel="noopener noreferrer" target="_blank">
-            {t('forAgents')}
-          </a>
-          <Separator orientation="vertical" className="h-full" />
           <div onClick={() => openDialog(ReportBug, {})} className="flex cursor-pointer items-center gap-1 underline transition-colors">
             {t('reportBug')}
           </div>

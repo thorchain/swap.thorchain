@@ -228,25 +228,25 @@ export function GlobalMenu({ isOpen, onOpenChange }: SendMemoMenuProps) {
           </VisuallyHidden>
 
           <div className="flex min-h-full flex-col">
-            {/* Header */}
-            <div className="flex shrink-0 items-center justify-between px-7.5 py-4.5 md:px-15 xl:px-22.5">
+            {/* Header — mirrors the site header layout so the close button sits exactly on the burger button */}
+            <div className="container mx-auto flex shrink-0 items-start justify-between gap-4 p-4">
               <a
                 href={AppConfig.logoLink || '/'}
-                className="flex items-center gap-3"
+                className="flex items-center gap-2.5"
                 rel="noopener noreferrer"
                 target={AppConfig.logoLink ? '_blank' : '_self'}
               >
-                <Image src={AppConfig.logo} alt={AppConfig.title} width={32} height={32} priority />
+                <Image src={AppConfig.logo} alt={AppConfig.title} width={36} height={41} priority />
                 <span className="hidden md:inline-flex [&_path]:fill-white">
                   <HeaderLogoText />
                 </span>
               </a>
 
-              <div className="flex items-center gap-2.5">
+              <div className="flex items-center gap-3">
                 <a
                   href={resolveHref('/')}
                   onClick={closeMenu}
-                  className="group bg-green-default hidden items-center gap-2.5 rounded-full border border-transparent px-4.5 py-2.5 text-[15px] font-medium text-black transition-colors hover:bg-white md:flex"
+                  className="group bg-green-default hidden h-10 items-center gap-2.5 rounded-full border border-transparent px-4.5 text-[15px] font-medium text-black transition-colors hover:bg-white md:flex"
                 >
                   <RollingText text={t('launchApp')} />
                   <span className="relative flex size-4.25 shrink-0 items-center justify-center overflow-hidden rounded-full border border-black transition-all duration-300 group-hover:scale-150 group-hover:bg-black">
@@ -269,7 +269,7 @@ export function GlobalMenu({ isOpen, onOpenChange }: SendMemoMenuProps) {
                   </span>
                 </a>
                 <DialogPrimitive.Close
-                  className="flex size-10.5 cursor-pointer items-center justify-center rounded-full bg-white text-black transition-colors hover:bg-neutral-200 focus:outline-none"
+                  className="flex size-10 cursor-pointer items-center justify-center rounded-full bg-white text-black transition-colors hover:bg-neutral-200 focus:outline-none"
                   aria-label="Close"
                 >
                   <X className="size-4.5" strokeWidth={2.5} />

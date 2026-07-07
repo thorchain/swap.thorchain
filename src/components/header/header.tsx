@@ -3,23 +3,20 @@
 import Image from 'next/image'
 import { useEffect, useState } from 'react'
 import { useTranslations } from 'next-intl'
-import { WalletIcon } from '@/components/wallet-icon'
 import { GlobalMenuButton } from '@/components/global-menu/global-menu-button'
 import { ThemeSwitchButton } from '@/components/header/theme-switch-button'
 import { LanguageSwitchButton } from '@/components/header/language-switch-button'
 import { TransactionHistoryButton } from '@/components/header/transaction-history-button'
 import { useDialog } from '@/components/global-dialog'
-import { ThemeButton } from '@/components/theme-button'
+import { GenericButton } from '@/components/generic-button'
 import { WalletSidebar } from '@/components/wallet-sidebar/wallet-sidebar'
 import { HeaderLogoText } from '@/components/header/header-logo-text'
 import { AppConfig } from '@/config'
-import { useConnectedWallets } from '@/hooks/use-wallets'
 import { cn } from '@/lib/utils'
 
 export function Header() {
   const t = useTranslations('header')
   const { openDialog } = useDialog()
-  const connectedProviders = useConnectedWallets()
   const [isScrolled, setIsScrolled] = useState(false)
 
   useEffect(() => {
@@ -40,31 +37,21 @@ export function Header() {
       <div className="flex items-start justify-between gap-4">
         <a
           href={AppConfig.logoLink || '/'}
-          className="flex items-center gap-2"
+          className="flex items-center gap-2.5"
           rel="noopener noreferrer"
           target={AppConfig.logoLink ? '_blank' : '_self'}
         >
-          <Image src={AppConfig.logo} alt={AppConfig.title} width={32} height={32} priority />
+          <Image src={AppConfig.logo} alt={AppConfig.title} width={36} height={41} priority />
           <HeaderLogoText />
         </a>
 
-        <div className="flex flex-1 flex-wrap items-center justify-end gap-2">
+        <div className="flex flex-1 flex-wrap items-center justify-end gap-3">
           <ThemeSwitchButton />
           <LanguageSwitchButton />
           <TransactionHistoryButton />
-          {connectedProviders.length > 0 ? (
-            <div className="flex items-center gap-1">
-              {connectedProviders.map((provider, i) => (
-                <ThemeButton key={i} variant="circleSmall" className="rounded-xl" onClick={() => openDialog(WalletSidebar, {})}>
-                  <WalletIcon walletKey={provider.toLowerCase()} width={24} height={24} alt={provider} />
-                </ThemeButton>
-              ))}
-            </div>
-          ) : (
-            <ThemeButton variant="outlineSmall" onClick={() => openDialog(WalletSidebar, {})}>
-              {t('wallet')}
-            </ThemeButton>
-          )}
+          <GenericButton size="medium" onClick={() => openDialog(WalletSidebar, {})}>
+            {t('wallet')}
+          </GenericButton>
           <GlobalMenuButton />
         </div>
       </div>

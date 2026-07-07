@@ -4,7 +4,7 @@ import { useTranslations } from 'next-intl'
 import { useDialog } from '@/components/global-dialog'
 import { TransactionHistoryDialog } from '@/components/header/transaction-history-dialog'
 import { Icon } from '@/components/icons'
-import { ThemeButton } from '@/components/theme-button'
+import { GenericButton } from '@/components/generic-button'
 import { useHasTransactions, usePendingTransactions } from '@/store/transaction-store'
 
 export const TransactionHistoryButton = () => {
@@ -24,12 +24,10 @@ export const TransactionHistoryButton = () => {
 
   return (
     <div className="relative">
-      <ThemeButton variant="outlineSmall" className="hidden md:flex" onClick={onClick}>
-        <Icon name="clock" /> {t('history')}
-      </ThemeButton>
-      <ThemeButton variant="circleSmall" className="flex md:hidden" onClick={onClick}>
-        <Icon name="clock" />
-      </ThemeButton>
+      <GenericButton size="medium" className="hidden md:flex" onClick={onClick}>
+        {t('history')}
+      </GenericButton>
+      <GenericButton size="medium" icon={<Icon name="clock" />} className="flex md:hidden" onClick={onClick} />
 
       {pendingTransactions.length > 0 && <div className="bg-green-default absolute top-0 right-0 -mr-1 size-3 rounded-full" />}
     </div>
