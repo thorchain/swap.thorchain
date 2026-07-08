@@ -1,6 +1,6 @@
 'use client'
 
-import { usePathname } from 'next/navigation'
+import { usePathname, useSearchParams } from 'next/navigation'
 import { useEffect, useRef } from 'react'
 import { Asset } from '@/components/swap/asset'
 import { useAssets } from '@/hooks/use-assets'
@@ -39,17 +39,19 @@ function resolveAsset(assets: Asset[], token: string | null, fallback: string): 
 }
 
 export const useUrlParams = () => {
-  const pathname = usePathname()
-  const { assets } = useAssets()
-  const { assetFrom, assetTo, hasHydrated, setAssetFrom, setAssetTo } = useSwapStore()
   const initialized = useRef(false)
   const skipNextSync = useRef(true)
+  const pathname = usePathname()
+  const searchParams = useSearchParams()
+  const isWidget = pathname.startsWith('/widget')
+  const { assets } = useAssets()
+  const { assetFrom, assetTo, hasHydrated, setAssetFrom, setAssetTo } = useSwapStore()
 
   // Init store from URL (once)
   useEffect(() => {
     if (!assets?.length || !hasHydrated || initialized.current) return
 
-    const { sell, buy } = parsePath(pathname)
+    const { sell, buy } = isWidget ? { sell: searchParams.get('from'), buy: searchParams.get('to') } : parsePath(pathname)
     const sellAsset = resolveAsset(assets, sell, DEFAULT_SELL)
     const buyAsset = resolveAsset(assets, buy, DEFAULT_BUY)
 
@@ -57,10 +59,11 @@ export const useUrlParams = () => {
     if (buyAsset && buyAsset.identifier !== sellAsset?.identifier) setAssetTo(buyAsset)
 
     initialized.current = true
-  }, [assets, hasHydrated, pathname, setAssetFrom, setAssetTo])
+  }, [assets, hasHydrated, pathname, searchParams, isWidget, setAssetFrom, setAssetTo])
 
   // Sync URL on user-driven asset changes (skip the first sync after init so `/` stays clean)
   useEffect(() => {
+    if (isWidget) return
     if (!initialized.current || !assetFrom || !assetTo) return
     if (skipNextSync.current) {
       skipNextSync.current = false
@@ -71,5 +74,5 @@ export const useUrlParams = () => {
     if (window.location.pathname + window.location.search !== newUrl) {
       window.history.replaceState(window.history.state, '', newUrl)
     }
-  }, [assetFrom, assetTo])
+  }, [assetFrom, assetTo, isWidget])
 }

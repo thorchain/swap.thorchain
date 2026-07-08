@@ -61,6 +61,11 @@ function createUSwap(config: Parameters<typeof USwap>[0] = {}) {
 }
 
 let instance: ReturnType<typeof createUSwap> | undefined = undefined
+let apiKeyOverride: string | undefined = undefined
+
+export function setUSwapApiKey(apiKey: string) {
+  apiKeyOverride = apiKey
+}
 
 export function getUSwap() {
   if (instance) return instance
@@ -69,7 +74,7 @@ export function getUSwap() {
     config: {
       apiKeys: {
         blockchair: process.env.NEXT_PUBLIC_BLOCKCHAIR_API_KEY,
-        uSwap: process.env.NEXT_PUBLIC_USWAP_API_KEY
+        uSwap: apiKeyOverride || process.env.NEXT_PUBLIC_USWAP_API_KEY
       },
       rpcUrls: {
         [Chain.Ethereum]: ['https://ethereum-rpc.publicnode.com', 'https://eth.llamarpc.com']
