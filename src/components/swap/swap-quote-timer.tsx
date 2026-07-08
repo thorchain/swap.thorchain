@@ -84,7 +84,7 @@ export const SwapQuoteTimer = ({ quote, isLoading, refetch }: SwapQuoteTimerProp
   return (
     <Tooltip content={t('quoteTimer.refresh')}>
       <div className="relative cursor-pointer" onClick={() => refetch()}>
-        <svg width="32" height="32" viewBox="0 0 28 28" className="-rotate-90">
+        <svg width="24" height="24" viewBox="0 0 28 28" className="-rotate-90">
           <circle cx="14" cy="14" r="12" fill="none" strokeWidth="2" className="stroke-sub-container-modal" />
           <circle
             cx="14"
@@ -98,7 +98,7 @@ export const SwapQuoteTimer = ({ quote, isLoading, refetch }: SwapQuoteTimerProp
             className="stroke-txt-med-contrast transition-all duration-100"
           />
         </svg>
-        <span className="text-txt-label-small absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 transform text-[12px] font-semibold">
+        <span className="text-txt-label-small absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 transform text-[10px] font-semibold">
           {seconds}
         </span>
       </div>

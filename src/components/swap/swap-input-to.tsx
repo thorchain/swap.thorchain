@@ -7,6 +7,7 @@ import { DecimalInput } from '@/components/decimal/decimal-input'
 import { useDialog } from '@/components/global-dialog'
 import { Icon } from '@/components/icons'
 import { PriceImpact } from '@/components/swap/price-impact'
+import { SwapQuoteTimer } from '@/components/swap/swap-quote-timer'
 import { SwapSelectAsset } from '@/components/swap/swap-select-asset'
 import { Tooltip } from '@/components/tooltip'
 import { useQuote } from '@/hooks/use-quote'
@@ -19,7 +20,7 @@ export const SwapInputTo = ({ priceImpact }: { priceImpact?: USwapNumber }) => {
   const t = useTranslations('swap')
   const assetTo = useAssetTo()
   const setAssetTo = useSetAssetTo()
-  const { quote } = useQuote()
+  const { quote, isLoading, refetch } = useQuote()
   const { openDialog } = useDialog()
   const { rateTo } = useSwapRates()
   const isLimitSwap = useIsLimitSwap()
@@ -40,7 +41,10 @@ export const SwapInputTo = ({ priceImpact }: { priceImpact?: USwapNumber }) => {
 
   return (
     <div className="bg-swap-bloc rounded-15 border p-7">
-      <div className="text-txt-label-small mb-3 font-semibold">{t('input.buy')}</div>
+      <div className="mb-3 flex items-center justify-between">
+        <div className="text-txt-label-small font-semibold">{t('input.buy')}</div>
+        <SwapQuoteTimer quote={quote} isLoading={isLoading} refetch={refetch} />
+      </div>
 
       <div className="flex items-center justify-between">
         <div className="flex-1">

@@ -11,7 +11,6 @@ import { SwapError } from '@/components/swap/swap-error'
 import { SwapInputFrom } from '@/components/swap/swap-input-from'
 import { SwapInputTo } from '@/components/swap/swap-input-to'
 import { SwapLimit } from '@/components/swap/swap-limit'
-import { SwapQuoteTimer } from '@/components/swap/swap-quote-timer'
 import { SwapSettings } from '@/components/swap/swap-settings'
 import { SwapToggleAssets } from '@/components/swap/swap-toggle-assets'
 import { useMemolessAssets } from '@/hooks/use-memoless-assets'
@@ -32,7 +31,7 @@ export const Swap = () => {
   const isLimitSwap = useIsLimitSwap()
   const setIsLimitSwap = useSetIsLimitSwap()
   const { valueFrom } = useSwap()
-  const { quote, isLoading, refetch } = useQuote()
+  const { quote } = useQuote()
   const { assets: memolessAssets } = useMemolessAssets()
   const { rateFrom, rateTo } = useSwapRates()
 
@@ -75,7 +74,6 @@ export const Swap = () => {
             </span>
           </div>
           <div className="flex items-center gap-4">
-            <SwapQuoteTimer quote={quote} isLoading={isLoading} refetch={refetch} />
             <SwapAddressFrom />
             <SwapSettings />
           </div>
