@@ -19,6 +19,7 @@ import { InstantSwapChannelDialog } from '@/components/swap/instant-swap-channel
 import { DepositChannel } from '@/components/swap/instant-swap-dialog'
 import { SwapLimitCancel } from '@/components/swap/swap-limit-cancel'
 import { ThemeButton } from '@/components/theme-button'
+import { GenericButton } from '@/components/generic-button'
 import { useRates } from '@/hooks/use-rates'
 import { useSyncTransactions } from '@/hooks/use-sync-transactions'
 import { useSelectedAccount } from '@/hooks/use-wallets'
@@ -284,9 +285,9 @@ export const TransactionHistoryDialog = ({ isOpen, onOpenChange }: HistoryDialog
                         rel="noopener noreferrer"
                         target="_blank"
                       >
-                        <ThemeButton variant="secondarySmall">
-                          <Icon name="globe" className="size-5" /> thorchain.net
-                        </ThemeButton>
+                        <GenericButton size="small" icon={<Icon name="globe" className="size-5" />}>
+                          thorchain.net
+                        </GenericButton>
                       </a>
                     )}
                   </div>

@@ -5,6 +5,7 @@ import { Separator } from '@/components/ui/separator'
 import { Slider } from '@/components/ui/slider'
 import { Icon } from '@/components/icons'
 import { ThemeButton } from '@/components/theme-button'
+import { GenericButton } from '@/components/generic-button'
 import { InfoTooltip } from '@/components/tooltip'
 import { useCustomInterval, useCustomQuantity, useSetCustomInterval, useSetCustomQuantity, useSetSlippage, useSlippage } from '@/hooks/use-swap'
 import { cn } from '@/lib/utils'
@@ -192,8 +193,8 @@ export const SwapSettings = () => {
           <Separator />
 
           <div className="flex gap-6">
-            <ThemeButton
-              variant="secondarySmall"
+            <GenericButton
+              size="small"
               className="flex-1"
               onClick={() => {
                 setSlippage(INITIAL_SLIPPAGE)
@@ -204,10 +205,11 @@ export const SwapSettings = () => {
               disabled={slippage === INITIAL_SLIPPAGE && customInterval === INITIAL_CUSTOM_INTERVAL && customQuantity === INITIAL_CUSTOM_QUANTITY}
             >
               {t('settings.reset')}
-            </ThemeButton>
+            </GenericButton>
 
-            <ThemeButton
-              variant="primarySmall"
+            <GenericButton
+              colorType="3"
+              size="small"
               className="flex-1"
               onClick={() => {
                 setSlippage(currentSlippage)
@@ -218,7 +220,7 @@ export const SwapSettings = () => {
               disabled={currentSlippage === slippage && localCustomInterval === customInterval && localCustomQuantity === customQuantity}
             >
               {t('settings.save')}
-            </ThemeButton>
+            </GenericButton>
           </div>
         </div>
       </DropdownMenuContent>

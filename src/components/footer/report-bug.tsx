@@ -6,7 +6,7 @@ import { CheckCircle, Paperclip, X } from 'lucide-react'
 import { Dialog, DialogContent, DialogTitle } from '@/components/ui/dialog'
 import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
-import { ThemeButton } from '@/components/theme-button'
+import { GenericButton } from '@/components/generic-button'
 
 type ReportBugProps = {
   isOpen: boolean
@@ -84,9 +84,9 @@ export function ReportBug({ isOpen, onOpenChange }: ReportBugProps) {
           <div className="flex flex-col items-center gap-4 py-6 text-center">
             <CheckCircle className="size-12 text-green-500" />
             <p className="text-txt-high-contrast font-medium">{t('success')}</p>
-            <ThemeButton variant="primarySmall" className="w-full rounded-xl py-5 text-lg" onClick={handleClose}>
+            <GenericButton colorType="3" size="small" className="w-full rounded-xl py-5 text-lg" onClick={handleClose}>
               {t('close')}
-            </ThemeButton>
+            </GenericButton>
           </div>
         ) : (
           <div className="flex flex-col gap-4">
@@ -137,14 +137,15 @@ export function ReportBug({ isOpen, onOpenChange }: ReportBugProps) {
 
             {error && <p className="text-sm text-red-500">{error}</p>}
 
-            <ThemeButton
-              variant="primarySmall"
+            <GenericButton
+              colorType="3"
+              size="small"
               className="w-full rounded-xl py-5 text-lg"
               onClick={handleSubmit}
               disabled={!description.trim() || isSubmitting}
             >
               {isSubmitting ? t('sending') : t('send')}
-            </ThemeButton>
+            </GenericButton>
           </div>
         )}
       </DialogContent>

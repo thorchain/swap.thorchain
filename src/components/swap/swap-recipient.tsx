@@ -13,7 +13,7 @@ import { Icon } from '@/components/icons'
 import { Asset } from '@/components/swap/asset'
 import { SwapAddressWarning } from '@/components/swap/swap-address-warning'
 import { SwapError } from '@/components/swap/swap-error'
-import { ThemeButton } from '@/components/theme-button'
+import { GenericButton } from '@/components/generic-button'
 import { Tooltip } from '@/components/tooltip'
 import { useIsMobile } from '@/hooks/use-mobile'
 import { useAssetFrom, useAssetTo, useCustomInterval, useCustomQuantity, useSlippage, useSwap } from '@/hooks/use-swap'
@@ -150,27 +150,29 @@ export const SwapRecipient = ({ provider, onFetchQuote }: SwapRecipientProps) =>
           )}
 
           {address.length ? (
-            <ThemeButton
-              variant="circleSmall"
+            <GenericButton
+              size="small"
+              icon={<Icon name="trash" />}
               className="absolute end-4 top-1/2 -translate-y-1/2"
               onClick={() => {
                 setAddress('')
               }}
-            >
-              <Icon name="trash" />
-            </ThemeButton>
+            />
           ) : (
             <div className="absolute end-4 top-1/2 flex -translate-y-1/2 gap-2">
               {[...options].map((account, index) => (
                 <Tooltip key={index} content={truncate(account.address)}>
-                  <ThemeButton variant="circleSmall" className="rounded-xl" onClick={() => setDestinationAddress(account.address)}>
-                    <WalletIcon walletKey={account.provider.toLowerCase()} alt={account.provider} width={24} height={24} />
-                  </ThemeButton>
+                  <GenericButton
+                    size="small"
+                    className="rounded-xl"
+                    icon={<WalletIcon walletKey={account.provider.toLowerCase()} alt={account.provider} width={24} height={24} />}
+                    onClick={() => setDestinationAddress(account.address)}
+                  />
                 </Tooltip>
               ))}
 
-              <ThemeButton
-                variant="secondarySmall"
+              <GenericButton
+                size="small"
                 className="hidden md:block"
                 onClick={() => {
                   navigator.clipboard.readText().then(text => {
@@ -179,7 +181,7 @@ export const SwapRecipient = ({ provider, onFetchQuote }: SwapRecipientProps) =>
                 }}
               >
                 {t('recipient.paste')}
-              </ThemeButton>
+              </GenericButton>
             </div>
           )}
         </div>
@@ -236,15 +238,16 @@ export const SwapRecipient = ({ provider, onFetchQuote }: SwapRecipientProps) =>
       </ScrollArea>
 
       <div className="p-4 pt-2 md:p-8 md:pt-2">
-        <ThemeButton
-          variant="primaryMedium"
+        <GenericButton
+          colorType="3"
+          size="large"
           className="w-full"
           onClick={fetchQuote}
           disabled={!buttonEnabled || !warningChecked || (isLTC && !warningCheckedLTC)}
         >
           {quoting && <LoaderCircle size={20} className="animate-spin" />}
           <span>{quoting ? t('recipient.preparingSwap') : t('recipient.next')}</span>
-        </ThemeButton>
+        </GenericButton>
       </div>
     </>
   )

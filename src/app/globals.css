@@ -231,7 +231,7 @@
     --btn-small-default: var(--neutral-00);
     --btn-small-focus: var(--neutral-560);
     --btn-small-hover: var(--neutral-950);
-    --btn-small-inactive: var(--neutral-00);
+    --btn-small-inactive: var(--neutral-150);
     --btn-style-1-bg: var(--neutral-00);
     --btn-style-1-bg-hover: var(--neutral-450);
     --btn-style-1-bg-pressed: var(--neutral-850);

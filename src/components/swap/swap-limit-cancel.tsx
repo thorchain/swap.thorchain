@@ -16,7 +16,7 @@ import { useDialog } from '@/components/global-dialog'
 import { Asset } from '@/components/swap/asset'
 import { InstantSwapChannelDialog } from '@/components/swap/instant-swap-channel-dialog'
 import { SwapError } from '@/components/swap/swap-error'
-import { ThemeButton } from '@/components/theme-button'
+import { GenericButton } from '@/components/generic-button'
 import { useMemolessAssets } from '@/hooks/use-memoless-assets'
 import { useSelectedAccount } from '@/hooks/use-wallets'
 import { getInboundAddresses } from '@/lib/api'
@@ -340,15 +340,16 @@ export const SwapLimitCancel = ({ isOpen, onOpenChange, mode, transaction }: Swa
         </ScrollArea>
 
         <div className="p-4 pt-2 md:p-8 md:pt-2">
-          <ThemeButton
-            variant="primaryMedium"
+          <GenericButton
+            colorType="3"
+            size="large"
             className="w-full"
             onClick={onSubmit}
             disabled={!canSubmit || submitting || (loading && !useMemolessPath)}
           >
             {(submitting || (loading && !useMemolessPath)) && <LoaderCircle size={20} className="animate-spin" />}
             <span>{buttonLabel}</span>
-          </ThemeButton>
+          </GenericButton>
         </div>
       </CredenzaContent>
     </Credenza>

@@ -16,7 +16,6 @@ import { AssetIcon } from '@/components/asset-icon'
 import { DecimalInput } from '@/components/decimal/decimal-input'
 import { useDialog } from '@/components/global-dialog'
 import { Icon } from '@/components/icons'
-import { ThemeButton } from '@/components/theme-button'
 import { GenericButton } from '@/components/generic-button'
 import { Tooltip } from '@/components/tooltip'
 import { assetIdentifierStr, tokenToAsset } from '@/components/send/send-helpers'
@@ -264,22 +263,23 @@ export function Send({ isOpen, onOpenChange, initialToken, account }: SendDialog
                   }
                 })()}
                 {recipient.length > 0 ? (
-                  <ThemeButton variant="circleSmall" className="absolute end-4 top-1/2 -translate-y-1/2" onClick={() => setRecipient('')}>
-                    <Icon name="trash" />
-                  </ThemeButton>
+                  <GenericButton size="small" icon={<Icon name="trash" />} className="absolute end-4 top-1/2 -translate-y-1/2" onClick={() => setRecipient('')} />
                 ) : (
                   <div className="absolute end-4 top-1/2 flex -translate-y-1/2 gap-2">
                     {accounts
                       .filter(a => a.network === selectedToken.balance.chain)
                       .map((a, i) => (
                         <Tooltip key={i} content={truncate(a.address)}>
-                          <ThemeButton variant="circleSmall" className="rounded-xl" onClick={() => setRecipient(a.address)}>
-                            <WalletIcon walletKey={a.provider.toLowerCase()} alt={a.provider} width={24} height={24} />
-                          </ThemeButton>
+                          <GenericButton
+                            size="small"
+                            className="rounded-xl"
+                            icon={<WalletIcon walletKey={a.provider.toLowerCase()} alt={a.provider} width={24} height={24} />}
+                            onClick={() => setRecipient(a.address)}
+                          />
                         </Tooltip>
                       ))}
-                    <ThemeButton
-                      variant="secondarySmall"
+                    <GenericButton
+                      size="small"
                       className="hidden md:block"
                       onClick={() => {
                         navigator.clipboard.readText().then(text => {
@@ -288,7 +288,7 @@ export function Send({ isOpen, onOpenChange, initialToken, account }: SendDialog
                       }}
                     >
                       {t('paste')}
-                    </ThemeButton>
+                    </GenericButton>
                   </div>
                 )}
               </div>
@@ -316,9 +316,9 @@ export function Send({ isOpen, onOpenChange, initialToken, account }: SendDialog
         </ScrollArea>
 
         <div className="p-4 pt-2 md:p-8 md:pt-2">
-          <ThemeButton variant="primaryMedium" className="w-full" onClick={handleSend} disabled={!canSend}>
+          <GenericButton colorType="3" size="large" className="w-full" onClick={handleSend} disabled={!canSend}>
             {submitting ? <LoaderCircle size={20} className="animate-spin" /> : t('send')}
-          </ThemeButton>
+          </GenericButton>
         </div>
       </CredenzaContent>
     </Credenza>

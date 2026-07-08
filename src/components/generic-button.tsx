@@ -4,7 +4,7 @@ import { cva, type VariantProps } from 'class-variance-authority'
 import { cn } from '@/lib/utils'
 
 const genericButtonVariants = cva(
-  'inline-flex items-center justify-center rounded-full font-medium whitespace-nowrap shrink-0 cursor-pointer outline-none transition-colors duration-300 ease-in-out hover:bg-btn-small-hover hover:text-txt-btn-small-hover disabled:bg-btn-small-inactive disabled:text-txt-btn-small-inactive disabled:pointer-events-none [&_svg]:pointer-events-none [&_svg]:shrink-0',
+  'inline-flex items-center justify-center gap-1 rounded-full font-medium whitespace-nowrap shrink-0 cursor-pointer outline-none transition-colors duration-300 ease-in-out hover:bg-btn-small-hover hover:text-txt-btn-small-hover disabled:bg-btn-small-inactive disabled:text-txt-btn-small-inactive disabled:pointer-events-none [&_svg]:pointer-events-none [&_svg]:shrink-0',
   {
     variants: {
       colorType: {
@@ -19,7 +19,7 @@ const genericButtonVariants = cva(
       },
       iconMode: {
         none: '',
-        left: 'gap-1',
+        left: '',
         only: ''
       }
     },

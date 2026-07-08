@@ -4,7 +4,7 @@ import { useTranslations } from 'next-intl'
 import { Input } from '@/components/ui/input'
 import { WalletIcon } from '@/components/wallet-icon'
 import { Icon } from '@/components/icons'
-import { ThemeButton } from '@/components/theme-button'
+import { GenericButton } from '@/components/generic-button'
 import { Tooltip } from '@/components/tooltip'
 import { WalletAccount } from '@/store/wallets-store'
 import { cn, truncate } from '@/lib/utils'
@@ -44,21 +44,22 @@ export function AddressInput({ value, onChange, options = [], placeholder, inval
       )}
 
       {value.length ? (
-        <ThemeButton variant="circleSmall" className="absolute end-3 top-1/2 -translate-y-1/2" onClick={() => onChange('')}>
-          <Icon name="trash" />
-        </ThemeButton>
+        <GenericButton size="small" icon={<Icon name="trash" />} className="absolute end-3 top-1/2 -translate-y-1/2" onClick={() => onChange('')} />
       ) : (
         <div className="absolute end-3 top-1/2 flex -translate-y-1/2 items-center gap-2">
           {options.map((account, index) => (
             <Tooltip key={index} content={truncate(account.address)}>
-              <ThemeButton variant="circleSmall" className="rounded-xl" onClick={() => onChange(account.address)}>
-                <WalletIcon walletKey={account.provider.toLowerCase()} alt={account.provider} width={24} height={24} />
-              </ThemeButton>
+              <GenericButton
+                size="small"
+                className="rounded-xl"
+                icon={<WalletIcon walletKey={account.provider.toLowerCase()} alt={account.provider} width={24} height={24} />}
+                onClick={() => onChange(account.address)}
+              />
             </Tooltip>
           ))}
-          <ThemeButton variant="secondarySmall" onClick={() => navigator.clipboard.readText().then(text => onChange(text.trim()))}>
+          <GenericButton size="small" onClick={() => navigator.clipboard.readText().then(text => onChange(text.trim()))}>
             {t('paste')}
-          </ThemeButton>
+          </GenericButton>
         </div>
       )}
     </div>

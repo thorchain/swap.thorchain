@@ -5,7 +5,7 @@ import { LoaderCircle } from 'lucide-react'
 import { useTranslations } from 'next-intl'
 import { ScrollArea } from '@/components/ui/scroll-area'
 import { ALL_CHAINS, chainLabel, COMING_SOON_CHAINS, WalletParams } from '@/components/connect-wallet/config'
-import { ThemeButton } from '@/components/theme-button'
+import { GenericButton } from '@/components/generic-button'
 import { useWallets } from '@/hooks/use-wallets'
 import { cn } from '@/lib/utils'
 
@@ -83,19 +83,20 @@ export const BrowserWallet = ({ wallet, chains, onConnect }: { wallet: WalletPar
           </div>
         </ScrollArea>
 
-        <div className="from-modal pointer-events-none absolute inset-x-0 -bottom-[1px] h-4 bg-linear-to-t to-transparent" />
+        <div className="from-modal pointer-events-none absolute inset-x-0 -bottom-px h-4 bg-linear-to-t to-transparent" />
       </div>
 
       <div className="flex p-4 pt-2 md:justify-end md:px-8 md:pb-8">
-        <ThemeButton
-          variant="primaryMedium"
+        <GenericButton
+          colorType="3"
+          size="large"
           className="w-full md:w-auto"
           disabled={connecting || selectedChains.length === 0}
           onClick={() => handleConnect()}
         >
           {connecting && <LoaderCircle size={20} className="animate-spin" />}
           {t('connectNamed', { name: wallet.label })}
-        </ThemeButton>
+        </GenericButton>
       </div>
     </>
   )

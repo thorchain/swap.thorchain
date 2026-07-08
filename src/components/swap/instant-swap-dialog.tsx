@@ -10,7 +10,7 @@ import { SwapAddressWarning } from '@/components/swap/swap-address-warning'
 import { SwapConfirm } from '@/components/swap/swap-confirm'
 import { SwapError } from '@/components/swap/swap-error'
 import { SwapRecipient } from '@/components/swap/swap-recipient'
-import { ThemeButton } from '@/components/theme-button'
+import { GenericButton } from '@/components/generic-button'
 import { useSwapRates } from '@/hooks/use-rates'
 import { useAssetFrom, useAssetTo, useSwap } from '@/hooks/use-swap'
 import { resolvePriceImpact } from '@/lib/swap-helpers'
@@ -182,15 +182,16 @@ export const InstantSwapDialog = ({ provider, isOpen, onOpenChange }: InstantSwa
                   text={t('warning.highPriceImpact')}
                 />
               )}
-              <ThemeButton
-                variant={channel ? 'secondaryMedium' : 'primaryMedium'}
+              <GenericButton
+                colorType={channel ? '1' : '3'}
+                size="large"
                 className="w-full"
                 onClick={() => onConfirm()}
                 disabled={creatingChannel || confirmBlocked}
               >
                 {creatingChannel && <LoaderCircle size={20} className="animate-spin" />}
                 <span>{creatingChannel ? t('confirm.confirming') : t('confirm.button')}</span>
-              </ThemeButton>
+              </GenericButton>
             </div>
           </>
         ) : (

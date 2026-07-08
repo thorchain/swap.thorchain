@@ -7,7 +7,7 @@ import { Input } from '@/components/ui/input'
 import { ScrollArea } from '@/components/ui/scroll-area'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 import { chainLabel, WalletParams } from '@/components/connect-wallet/config'
-import { ThemeButton } from '@/components/theme-button'
+import { GenericButton } from '@/components/generic-button'
 import { useAccounts, useWallets } from '@/hooks/use-wallets'
 import { cn } from '@/lib/utils'
 
@@ -209,10 +209,10 @@ export const Ledger = ({ wallet }: { wallet: WalletParams; onConnect: () => void
       </div>
 
       <div className="flex p-4 md:justify-end md:px-8 md:pt-0 md:pb-8">
-        <ThemeButton variant="primaryMedium" className="w-full md:w-auto" disabled={connecting || !selectedChain} onClick={() => handleConnect()}>
+        <GenericButton colorType="3" size="large" className="w-full md:w-auto" disabled={connecting || !selectedChain} onClick={() => handleConnect()}>
           {connecting && <LoaderCircle size={20} className="animate-spin" />}
           {t('connectNamed', { name: wallet.label })}
-        </ThemeButton>
+        </GenericButton>
       </div>
     </>
   )

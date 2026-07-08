@@ -9,7 +9,7 @@ import { Credenza, CredenzaContent } from '@/components/ui/credenza'
 import { SwapConfirm } from '@/components/swap/swap-confirm'
 import { SwapRecipient } from '@/components/swap/swap-recipient'
 import { SwapAddressWarning } from '@/components/swap/swap-address-warning'
-import { ThemeButton } from '@/components/theme-button'
+import { GenericButton } from '@/components/generic-button'
 import { useBalance } from '@/hooks/use-balance'
 import { useSwapRates } from '@/hooks/use-rates'
 import { useAssetFrom, useAssetTo, useSwap } from '@/hooks/use-swap'
@@ -122,9 +122,9 @@ export const SwapDialog = ({ provider, isOpen, onOpenChange }: SwapDialogProps) 
                   text={t('warning.highPriceImpact')}
                 />
               )}
-              <ThemeButton variant="primaryMedium" className="w-full" onClick={() => onConfirm()} disabled={!quote || submitting || confirmBlocked}>
+              <GenericButton colorType="3" size="large" className="w-full" onClick={() => onConfirm()} disabled={!quote || submitting || confirmBlocked}>
                 {submitting ? <LoaderCircle size={20} className="animate-spin" /> : <span>{isLimitSwap ? t('confirm.buttonLimit') : t('confirm.button')}</span>}
-              </ThemeButton>
+              </GenericButton>
             </div>
           </>
         ) : (

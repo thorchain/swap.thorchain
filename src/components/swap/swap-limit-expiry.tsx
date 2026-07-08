@@ -2,7 +2,7 @@ import { useMemo, useState } from 'react'
 import { useTranslations } from 'next-intl'
 import { AlertTriangle, X } from 'lucide-react'
 import { Dialog, DialogContent, DialogTitle } from '@/components/ui/dialog'
-import { ThemeButton } from '@/components/theme-button'
+import { GenericButton } from '@/components/generic-button'
 import { Input } from '@/components/ui/input'
 
 const BLOCKS_PER_MINUTE = 10
@@ -98,14 +98,15 @@ export const SwapLimitExpiry = ({
           </div>
         )}
 
-        <ThemeButton
+        <GenericButton
           className="w-full rounded-xl py-5 text-lg"
-          variant="primarySmall"
+          colorType="3"
+          size="small"
           onClick={handleApply}
           disabled={(!customDays && !customHours && !customMinutes) || exceedsMax}
         >
           {t('expiry.apply')}
-        </ThemeButton>
+        </GenericButton>
       </DialogContent>
     </Dialog>
   )

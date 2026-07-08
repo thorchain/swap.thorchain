@@ -7,7 +7,7 @@ import { ScrollArea } from '@/components/ui/scroll-area'
 import { ALL_CHAINS } from '@/components/connect-wallet/config'
 import { Icon } from '@/components/icons'
 import { SwapError } from '@/components/swap/swap-error'
-import { ThemeButton } from '@/components/theme-button'
+import { GenericButton } from '@/components/generic-button'
 import { useWallets } from '@/hooks/use-wallets'
 import { cn } from '@/lib/utils'
 
@@ -158,13 +158,13 @@ export function ImportKeystore({ onBack, onConnect }: { onBack: () => void; onCo
       </div>
 
       <div className="flex gap-3 p-4 pt-2 md:justify-end md:gap-6 md:px-8 md:pb-8">
-        <ThemeButton variant="secondaryMedium" onClick={onBack}>
+        <GenericButton size="large" onClick={onBack}>
           {t('back')}
-        </ThemeButton>
+        </GenericButton>
 
-        <ThemeButton variant="primaryMedium" className="flex-1 md:flex-0" onClick={onImport} disabled={connecting || !file || !password}>
+        <GenericButton colorType="3" size="large" className="flex-1 md:flex-0" onClick={onImport} disabled={connecting || !file || !password}>
           {connecting && <LoaderCircle size={20} className="animate-spin" />} {t('import')}
-        </ThemeButton>
+        </GenericButton>
       </div>
     </>
   )

@@ -7,7 +7,7 @@ import { toast } from 'sonner'
 import { Credenza, CredenzaContent, CredenzaHeader, CredenzaTitle } from '@/components/ui/credenza'
 import { Input } from '@/components/ui/input'
 import { ScrollArea } from '@/components/ui/scroll-area'
-import { ThemeButton } from '@/components/theme-button'
+import { GenericButton } from '@/components/generic-button'
 import { composeMemo, parsePlaceholders, previewMemo } from '@/components/send-memo/send-memo-helpers'
 import { cn } from '@/lib/utils'
 
@@ -116,9 +116,7 @@ export function SendMemoExamples({ isOpen, onOpenChange, onSelect }: SendMemoExa
         <CredenzaContent className="flex h-auto max-h-5/6 flex-col rounded-2xl md:max-w-xl">
           <CredenzaHeader>
             <div className="flex items-center gap-3">
-              <ThemeButton variant="circleSmall" onClick={() => setEditing(null)} aria-label={t('examples.back')}>
-                <ArrowLeft className="size-4" />
-              </ThemeButton>
+              <GenericButton size="small" icon={<ArrowLeft className="size-4" />} onClick={() => setEditing(null)} aria-label={t('examples.back')} />
               <CredenzaTitle>{t(`examples.items.${editing.key}`)}</CredenzaTitle>
             </div>
           </CredenzaHeader>
@@ -160,9 +158,9 @@ export function SendMemoExamples({ isOpen, onOpenChange, onSelect }: SendMemoExa
           </ScrollArea>
 
           <div className="p-4 pt-2 md:p-8 md:pt-2">
-            <ThemeButton variant="primaryMedium" className="w-full" onClick={handleApply} disabled={!canApply}>
+            <GenericButton colorType="3" size="large" className="w-full" onClick={handleApply} disabled={!canApply}>
               {t('examples.useMemo')}
-            </ThemeButton>
+            </GenericButton>
           </div>
         </CredenzaContent>
       </Credenza>
@@ -200,9 +198,7 @@ export function SendMemoExamples({ isOpen, onOpenChange, onSelect }: SendMemoExa
                   </div>
                   <div className="flex shrink-0 items-center gap-2">
                     <span className="text-txt-label-small max-w-40 truncate font-mono text-xs">{template}</span>
-                    <ThemeButton variant="circleSmall" onClick={e => handleCopy(e, template)} aria-label={t('examples.copyMemo', { label })}>
-                      <Copy className="size-4" />
-                    </ThemeButton>
+                    <GenericButton size="small" icon={<Copy className="size-4" />} onClick={e => handleCopy(e, template)} aria-label={t('examples.copyMemo', { label })} />
                   </div>
                 </div>
               )

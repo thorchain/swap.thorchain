@@ -15,7 +15,7 @@ import { WalletProviderGroup, WalletSortBy } from '@/components/wallet-sidebar/w
 import { useAccounts, useConnectedWallets, useDisconnect, useExternalWalletMode, useSetExternalWalletMode } from '@/hooks/use-wallets'
 import { cn } from '@/lib/utils'
 import { WalletAccount } from '@/store/wallets-store'
-import { ThemeButton } from '@/components/theme-button'
+import { GenericButton } from '@/components/generic-button'
 
 const SORT_OPTIONS: { value: WalletSortBy; labelKey: 'sortByName' | 'sortByBalance' }[] = [
   { value: 'name', labelKey: 'sortByName' },
@@ -121,9 +121,9 @@ export function WalletSidebar({ isOpen, onOpenChange }: WalletSidebarProps) {
             </div>
           </div>
 
-          <ThemeButton onClick={handleConnectWallet} disabled={externalWalletMode} variant="primaryMedium" className="w-full">
+          <GenericButton colorType="3" size="large" onClick={handleConnectWallet} disabled={externalWalletMode} className="w-full">
             {t('connectWallet')}
-          </ThemeButton>
+          </GenericButton>
 
           {accountsByProvider.size > 0 && (
             <div className={cn('flex flex-col', externalWalletMode && 'pointer-events-none')}>

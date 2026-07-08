@@ -7,7 +7,7 @@ import { ScrollArea } from '@/components/ui/scroll-area'
 import { Textarea } from '@/components/ui/textarea'
 import { ALL_CHAINS } from '@/components/connect-wallet/config'
 import { SwapError } from '@/components/swap/swap-error'
-import { ThemeButton } from '@/components/theme-button'
+import { GenericButton } from '@/components/generic-button'
 import { useWallets } from '@/hooks/use-wallets'
 
 export function ImportPhrase({ onBack, onConnect }: { onBack: () => void; onConnect: () => void }) {
@@ -63,13 +63,13 @@ export function ImportPhrase({ onBack, onConnect }: { onBack: () => void; onConn
       </div>
 
       <div className="flex gap-3 p-4 pt-2 md:justify-end md:gap-6 md:px-8 md:pb-8">
-        <ThemeButton variant="secondaryMedium" onClick={onBack}>
+        <GenericButton size="large" onClick={onBack}>
           {t('back')}
-        </ThemeButton>
+        </GenericButton>
 
-        <ThemeButton variant="primaryMedium" className="flex-1 md:flex-0" onClick={onImport} disabled={connecting || !phrase}>
+        <GenericButton colorType="3" size="large" className="flex-1 md:flex-0" onClick={onImport} disabled={connecting || !phrase}>
           {connecting && <LoaderCircle size={20} className="animate-spin" />} {t('import')}
-        </ThemeButton>
+        </GenericButton>
       </div>
     </>
   )

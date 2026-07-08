@@ -6,7 +6,7 @@ import { WalletParams } from '@/components/connect-wallet/config'
 import { CreateWallet } from '@/components/connect-wallet/keystore/create-wallet'
 import { ImportKeystore } from '@/components/connect-wallet/keystore/import-keystore'
 import { ImportPhrase } from '@/components/connect-wallet/keystore/import-phrase'
-import { ThemeButton } from '@/components/theme-button'
+import { GenericButton } from '@/components/generic-button'
 
 export const Keystore = ({ onConnect }: { wallet: WalletParams; onConnect: () => void }) => {
   const t = useTranslations('wallet')
@@ -28,15 +28,15 @@ export const Keystore = ({ onConnect }: { wallet: WalletParams; onConnect: () =>
 
   return (
     <div className="mb-8 flex flex-1 flex-col items-center justify-center gap-3 px-8 md:mb-0 md:px-16">
-      <ThemeButton className="w-full" variant="primaryMedium" onClick={() => setWalletType('import_keystore')}>
+      <GenericButton colorType="3" size="large" className="w-full" onClick={() => setWalletType('import_keystore')}>
         {t('openKeystore')}
-      </ThemeButton>
-      <ThemeButton className="w-full" variant="secondaryMedium" onClick={() => setWalletType('create')}>
+      </GenericButton>
+      <GenericButton size="large" className="w-full" onClick={() => setWalletType('create')}>
         {t('createNewWallet')}
-      </ThemeButton>
-      <ThemeButton className="w-full" variant="secondaryMedium" onClick={() => setWalletType('import_phrase')}>
+      </GenericButton>
+      <GenericButton size="large" className="w-full" onClick={() => setWalletType('import_phrase')}>
         {t('importSeedPhrase')}
-      </ThemeButton>
+      </GenericButton>
     </div>
   )
 }

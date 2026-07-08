@@ -7,7 +7,7 @@ import { Input } from '@/components/ui/input'
 import { ScrollArea } from '@/components/ui/scroll-area'
 import { ALL_CHAINS } from '@/components/connect-wallet/config'
 import { Icon } from '@/components/icons'
-import { ThemeButton } from '@/components/theme-button'
+import { GenericButton } from '@/components/generic-button'
 import { useWallets } from '@/hooks/use-wallets'
 import { cn } from '@/lib/utils'
 
@@ -79,9 +79,9 @@ export function CreateWallet({ onBack, onConnect }: { onBack: () => void; onConn
                 ))}
               </div>
 
-              <ThemeButton variant="secondarySmall" onClick={handleCopy}>
+              <GenericButton size="small" onClick={handleCopy}>
                 {t('copyPhrase')}
-              </ThemeButton>
+              </GenericButton>
             </div>
 
             <div className="flex cursor-pointer items-center gap-4 py-4" onClick={() => setAccepted(!accepted)}>
@@ -100,12 +100,12 @@ export function CreateWallet({ onBack, onConnect }: { onBack: () => void; onConn
       </div>
 
       <div className="flex gap-6 p-4 pt-2 md:justify-end md:px-8 md:pb-8">
-        <ThemeButton variant="secondaryMedium" onClick={onBack}>
+        <GenericButton size="large" onClick={onBack}>
           {t('back')}
-        </ThemeButton>
-        <ThemeButton variant="primaryMedium" className="flex-1 md:flex-0" disabled={connecting || !accepted} onClick={() => setShowPassword(true)}>
+        </GenericButton>
+        <GenericButton colorType="3" size="large" className="flex-1 md:flex-0" disabled={connecting || !accepted} onClick={() => setShowPassword(true)}>
           {connecting && <LoaderCircle size={20} className="animate-spin" />} {t('next')}
-        </ThemeButton>
+        </GenericButton>
       </div>
     </>
   )
@@ -147,17 +147,18 @@ export function SetupPassword({ onBack, onSetup, connecting }: { onBack: () => v
       </div>
 
       <div className="flex gap-3 p-4 pt-2 md:justify-end md:gap-6 md:px-8 md:pb-8">
-        <ThemeButton variant="secondaryMedium" onClick={onBack}>
+        <GenericButton size="large" onClick={onBack}>
           {t('back')}
-        </ThemeButton>
-        <ThemeButton
-          variant="primaryMedium"
+        </GenericButton>
+        <GenericButton
+          colorType="3"
+          size="large"
           className="flex-1 md:flex-0"
           disabled={!password1.length || !password2.length || password1 !== password2 || connecting}
           onClick={() => onSetup(password1)}
         >
           {connecting && <LoaderCircle size={20} className="animate-spin" />} {t('create')}
-        </ThemeButton>
+        </GenericButton>
       </div>
     </>
   )
