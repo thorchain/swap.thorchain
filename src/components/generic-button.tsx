@@ -26,13 +26,13 @@ const genericButtonVariants = cva(
     compoundVariants: [
       { size: 'small', iconMode: 'none', class: 'p-3' },
       { size: 'small', iconMode: 'left', class: "pl-3 pr-4 py-[11px] [&_svg:not([class*='size-'])]:size-3.5" },
-      { size: 'small', iconMode: 'only', class: "size-9 p-3 [&_svg:not([class*='size-'])]:size-5" },
+      { size: 'small', iconMode: 'only', class: "size-9 [&_svg:not([class*='size-'])]:size-5" },
       { size: 'medium', iconMode: 'none', class: 'p-3' },
       { size: 'medium', iconMode: 'left', class: "pl-3 pr-4 py-2.5 [&_svg:not([class*='size-'])]:size-5" },
       { size: 'medium', iconMode: 'only', class: "size-10 p-2.5 [&_svg:not([class*='size-'])]:size-6" },
       { size: 'large', iconMode: 'none', class: 'p-5' },
       { size: 'large', iconMode: 'left', class: "pl-5 pr-6 py-[18px] [&_svg:not([class*='size-'])]:size-7" },
-      { size: 'large', iconMode: 'only', class: "p-3.5 [&_svg:not([class*='size-'])]:size-9" }
+      { size: 'large', iconMode: 'only', class: "p-3 [&_svg:not([class*='size-'])]:size-9" }
     ],
     defaultVariants: {
       colorType: '1',
