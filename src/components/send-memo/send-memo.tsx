@@ -13,7 +13,6 @@ import { DecimalInput } from '@/components/decimal/decimal-input'
 import { DecimalText } from '@/components/decimal/decimal-text'
 import { useDialog } from '@/components/global-dialog'
 import { Icon } from '@/components/icons'
-import { ThemeButton } from '@/components/theme-button'
 import { GenericButton } from '@/components/generic-button'
 import { assetIdentifierStr, tokenToAsset } from '@/components/send/send-helpers'
 import { SendMemoExamples } from '@/components/send-memo/send-memo-examples'
@@ -123,13 +122,9 @@ export function SendMemo() {
     <div className="flex flex-col gap-5">
       <div className="flex items-center justify-between">
         <h1 className="text-txt-contrast-1-default text-2xl font-medium">{t('memo.title')}</h1>
-        <ThemeButton
-          variant="secondarySmall"
-          className="rounded-full"
-          onClick={() => openDialog(SendMemoExamples, { onSelect: (value: string) => setMemo(value) })}
-        >
+        <GenericButton size="small" onClick={() => openDialog(SendMemoExamples, { onSelect: (value: string) => setMemo(value) })}>
           {t('memo.examplesButton')}
-        </ThemeButton>
+        </GenericButton>
       </div>
 
       <div className="bg-modal rounded-20 relative space-y-1.25 border p-2.5">

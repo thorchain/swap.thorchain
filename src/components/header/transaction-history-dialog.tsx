@@ -18,7 +18,6 @@ import { Icon } from '@/components/icons'
 import { InstantSwapChannelDialog } from '@/components/swap/instant-swap-channel-dialog'
 import { DepositChannel } from '@/components/swap/instant-swap-dialog'
 import { SwapLimitCancel } from '@/components/swap/swap-limit-cancel'
-import { ThemeButton } from '@/components/theme-button'
 import { GenericButton } from '@/components/generic-button'
 import { useRates } from '@/hooks/use-rates'
 import { useSyncTransactions } from '@/hooks/use-sync-transactions'
@@ -230,19 +229,19 @@ export const TransactionHistoryDialog = ({ isOpen, onOpenChange }: HistoryDialog
                               </div>
                             )}
                             {showRQ && (
-                              <ThemeButton variant="primarySmallTransparent" onClick={showQrCode}>
+                              <GenericButton size="small" className="text-green-contrast h-8 bg-transparent" onClick={showQrCode}>
                                 {t('showQr')}
-                              </ThemeButton>
+                              </GenericButton>
                             )}
                             {showLimitSwapActions && (
-                              <ThemeButton className="rounded-none" variant="primarySmallTransparent" onClick={() => onLimitModify('modify', tx)}>
+                              <GenericButton size="small" className="text-green-contrast h-8 rounded-none bg-transparent" onClick={() => onLimitModify('modify', tx)}>
                                 {t('modify')}
-                              </ThemeButton>
+                              </GenericButton>
                             )}
                             {showLimitSwapActions && (
-                              <ThemeButton className="rounded-none" variant="primarySmallTransparent" onClick={() => onLimitModify('cancel', tx)}>
+                              <GenericButton size="small" className="text-green-contrast h-8 rounded-none bg-transparent" onClick={() => onLimitModify('cancel', tx)}>
                                 {t('cancelOrder')}
-                              </ThemeButton>
+                              </GenericButton>
                             )}
                           </div>
                         )}

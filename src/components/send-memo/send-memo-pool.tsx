@@ -13,7 +13,6 @@ import { useDialog } from '@/components/global-dialog'
 import { DecimalInput } from '@/components/decimal/decimal-input'
 import { DecimalText } from '@/components/decimal/decimal-text'
 import { Icon } from '@/components/icons'
-import { ThemeButton } from '@/components/theme-button'
 import { GenericButton } from '@/components/generic-button'
 import { assetIdentifierStr, tokenToAsset } from '@/components/send/send-helpers'
 import { SendSelectToken } from '@/components/send/send-select-token'
@@ -518,9 +517,9 @@ function PercentBlock({
       </div>
       <div className="mt-3 flex gap-2">
         {buttons.map(b => (
-          <ThemeButton key={b} className="h-7 rounded-full" variant="secondarySmall" onClick={() => onPercentChange(String(b))}>
+          <GenericButton key={b} size="small" className="h-7" onClick={() => onPercentChange(String(b))}>
             {b}%
-          </ThemeButton>
+          </GenericButton>
         ))}
       </div>
     </div>
@@ -650,14 +649,15 @@ function SingleSidedToggle({
       <div className="text-txt-label-small mb-2 text-xs">{labels.title}</div>
       <div className="flex gap-2">
         {options.map(o => (
-          <ThemeButton
+          <GenericButton
             key={o.key || 'both'}
-            variant={value === o.key ? 'primarySmall' : 'secondarySmall'}
-            className="h-8 flex-1 rounded-full"
+            colorType={value === o.key ? '3' : '1'}
+            size="small"
+            className="h-8 flex-1"
             onClick={() => onChange(o.key)}
           >
             {o.label}
-          </ThemeButton>
+          </GenericButton>
         ))}
       </div>
     </div>

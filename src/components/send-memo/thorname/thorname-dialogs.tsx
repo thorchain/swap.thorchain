@@ -11,7 +11,6 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { AddressInput } from '@/components/address-input'
 import { AnimatedButton } from '@/components/animated-button'
 import { DecimalInput } from '@/components/decimal/decimal-input'
-import { ThemeButton } from '@/components/theme-button'
 import { GenericButton } from '@/components/generic-button'
 import { assetIdentifierStr } from '@/components/send/send-helpers'
 import { NameRecord, ThornameConfig, formatPreferredAsset, preferredAssetOf } from '@/components/send-memo/thorname/thorname-config'
@@ -234,14 +233,15 @@ export function ThornameRegisterDialog({ config, name: initialName, account, isO
               {[1, 2, 5, 10].map(y => {
                 const presetExpiry = addYears(now, y)
                 return (
-                  <ThemeButton
+                  <GenericButton
                     key={y}
-                    variant={expiry.getTime() === presetExpiry.getTime() ? 'primarySmall' : 'secondarySmall'}
-                    className="h-9 flex-1 rounded-full"
+                    colorType={expiry.getTime() === presetExpiry.getTime() ? '3' : '1'}
+                    size="small"
+                    className="h-9 flex-1"
                     onClick={() => setExpiry(presetExpiry)}
                   >
                     {t('thorname.years', { count: y })}
-                  </ThemeButton>
+                  </GenericButton>
                 )
               })}
             </div>

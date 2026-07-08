@@ -15,7 +15,6 @@ import { DecimalInput } from '@/components/decimal/decimal-input'
 import { DecimalText } from '@/components/decimal/decimal-text'
 import { SendMemoBeta } from '@/components/send-memo/send-memo-beta'
 import { Icon } from '@/components/icons'
-import { ThemeButton } from '@/components/theme-button'
 import { GenericButton } from '@/components/generic-button'
 import { assetIdentifierStr, tokenToAsset } from '@/components/send/send-helpers'
 import { isRuneToken, isThorAddress } from '@/components/send-memo/send-memo-helpers'
@@ -172,17 +171,15 @@ export function SendMemoBond({ account, initialTab = 'bond' }: BondFormProps) {
             )}
           />
           {nodeAddress ? (
-            <ThemeButton variant="circleSmall" className="absolute end-3 top-3" onClick={() => setNodeAddress('')}>
-              <Icon name="trash" />
-            </ThemeButton>
+            <GenericButton size="small" icon={<Icon name="trash" />} className="absolute end-3 top-3" onClick={() => setNodeAddress('')} />
           ) : (
-            <ThemeButton
-              variant="secondarySmall"
-              className="absolute end-3 top-3 shrink-0 rounded-full"
+            <GenericButton
+              size="small"
+              className="absolute end-3 top-3 shrink-0"
               onClick={() => navigator.clipboard.readText().then(text => setNodeAddress(text.trim()))}
             >
               {t('paste')}
-            </ThemeButton>
+            </GenericButton>
           )}
         </div>
 
@@ -204,17 +201,15 @@ export function SendMemoBond({ account, initialTab = 'bond' }: BondFormProps) {
               )}
             />
             {newAddress ? (
-              <ThemeButton variant="circleSmall" className="absolute end-3 top-3" onClick={() => setNewAddress('')}>
-                <Icon name="trash" />
-              </ThemeButton>
+              <GenericButton size="small" icon={<Icon name="trash" />} className="absolute end-3 top-3" onClick={() => setNewAddress('')} />
             ) : (
-              <ThemeButton
-                variant="secondarySmall"
-                className="absolute end-3 top-3 shrink-0 rounded-full"
+              <GenericButton
+                size="small"
+                className="absolute end-3 top-3 shrink-0"
                 onClick={() => navigator.clipboard.readText().then(text => setNewAddress(text.trim()))}
               >
                 {t('paste')}
-              </ThemeButton>
+              </GenericButton>
             )}
           </div>
         )}

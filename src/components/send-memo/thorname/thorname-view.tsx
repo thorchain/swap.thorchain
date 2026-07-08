@@ -6,7 +6,7 @@ import { CheckCircle2, Info, LoaderCircle, Search, X } from 'lucide-react'
 import { Input } from '@/components/ui/input'
 import { useDialog } from '@/components/global-dialog'
 import { ConnectWallet } from '@/components/connect-wallet/connect-wallet'
-import { ThemeButton } from '@/components/theme-button'
+import { GenericButton } from '@/components/generic-button'
 import { NameRecord, ThornameConfig, formatPreferredAsset, preferredAssetOf } from '@/components/send-memo/thorname/thorname-config'
 import {
   ThornamePreferredAssetDialog,
@@ -67,17 +67,15 @@ export function ThornameView({ config }: { config: ThornameConfig }) {
           className="bg-swap-bloc border-border-sub-container-modal-low pr-20 pl-11"
         />
         {search ? (
-          <ThemeButton variant="circleSmall" className="absolute end-3 top-1/2 -translate-y-1/2" onClick={() => setSearch('')}>
-            <X className="size-4" />
-          </ThemeButton>
+          <GenericButton size="small" icon={<X className="size-4" />} className="absolute end-3 top-1/2 -translate-y-1/2" onClick={() => setSearch('')} />
         ) : (
-          <ThemeButton
-            variant="secondarySmall"
+          <GenericButton
+            size="small"
             className="absolute end-3 top-1/2 -translate-y-1/2"
             onClick={() => navigator.clipboard.readText().then(text => setSearch(text.trim().toLowerCase()))}
           >
             {t('paste')}
-          </ThemeButton>
+          </GenericButton>
         )}
       </div>
 
@@ -181,20 +179,20 @@ function NameCard({ config, name, status, record, expiryDate, onRegister, onRene
 
       {status === 'owned' && (
         <div className="flex flex-wrap justify-end gap-2">
-          <ThemeButton variant="secondarySmall" className="rounded-full" onClick={onRenew}>
+          <GenericButton size="small" onClick={onRenew}>
             {t('thorname.renew')}
-          </ThemeButton>
-          <ThemeButton variant="secondarySmall" className="rounded-full" onClick={onTransfer}>
+          </GenericButton>
+          <GenericButton size="small" onClick={onTransfer}>
             {t('thorname.transfer')}
-          </ThemeButton>
+          </GenericButton>
         </div>
       )}
 
       {status === 'available' && (
         <div className="flex justify-end">
-          <ThemeButton variant="primarySmall" className="rounded-full" onClick={onRegister}>
+          <GenericButton colorType="3" size="small" onClick={onRegister}>
             {t('thorname.register')}
-          </ThemeButton>
+          </GenericButton>
         </div>
       )}
     </div>

@@ -4,7 +4,6 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuTrigger } from '@/compon
 import { Separator } from '@/components/ui/separator'
 import { Slider } from '@/components/ui/slider'
 import { Icon } from '@/components/icons'
-import { ThemeButton } from '@/components/theme-button'
 import { GenericButton } from '@/components/generic-button'
 import { InfoTooltip } from '@/components/tooltip'
 import { useCustomInterval, useCustomQuantity, useSetCustomInterval, useSetCustomQuantity, useSetSlippage, useSlippage } from '@/hooks/use-swap'
@@ -75,9 +74,7 @@ export const SwapSettings = () => {
       }}
     >
       <DropdownMenuTrigger asChild>
-        <ThemeButton variant="circleSmall" className="bg-btn-style-1-bg">
-          <Icon name="manage" />
-        </ThemeButton>
+        <GenericButton size="small" icon={<Icon name="manage" />} className="bg-btn-style-1-bg" />
       </DropdownMenuTrigger>
       <DropdownMenuContent className="max-w-sm p-8">
         <div className="flex flex-col gap-6">
