@@ -56,7 +56,7 @@
       "limitNotSupported": "Limit-Order nicht unterstützt",
       "temporarilyUnavailable": "Vorübergehend nicht verfügbar",
       "enterAmount": "Betrag eingeben",
-      "quoting": "Angebot wird erstellt...",
+      "quoting": "Angebot wird erstellt",
       "noValidQuotes": "Keine gültigen Angebote",
       "enterLimitPrice": "Limit-Preis eingeben",
       "enterLimitOrder": "Limit-Order eingeben",

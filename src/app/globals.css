@@ -9,6 +9,19 @@
   --radius-15: 0.9375rem;
   --radius-20: 1.25rem;
 
+  --animate-loading-dot: loading-dot 900ms ease-in-out infinite;
+
+  @keyframes loading-dot {
+    0%,
+    33.4%,
+    100% {
+      transform: translateY(0);
+    }
+    16.7% {
+      transform: translateY(-4px);
+    }
+  }
+
   --color-gray: var(--gray);
 
   --color-tyler: var(--tyler);
@@ -30,6 +43,10 @@
   --color-border-btn-modal-hover: var(--border-btn-modal-hover);
   --color-border-sub-container-modal: var(--border-sub-container-modal);
   --color-border-sub-container-modal-hover: var(--border-sub-container-modal-hover);
+  --color-btn-animated-default: var(--btn-animated-default);
+  --color-btn-animated-dots: var(--btn-animated-dots);
+  --color-btn-animated-hover: var(--btn-animated-hover);
+  --color-btn-animated-inactive: var(--btn-animated-inactive);
   --color-btn-arrow-default: var(--btn-arrow-default);
   --color-btn-arrow-hover: var(--btn-arrow-hover);
   --color-btn-modal-default: var(--btn-modal-default);
@@ -77,6 +94,9 @@
   --color-swap-bloc: var(--swap-bloc);
   --color-swap-global: var(--swap-global);
   --color-txt-amount: var(--txt-amount);
+  --color-txt-btn-animated-default: var(--txt-btn-animated-default);
+  --color-txt-btn-animated-hover: var(--txt-btn-animated-hover);
+  --color-txt-btn-animated-inactive: var(--txt-btn-animated-inactive);
   --color-txt-btn-small-default: var(--txt-btn-small-default);
   --color-txt-btn-small-focus: var(--txt-btn-small-focus);
   --color-txt-btn-small-hover: var(--txt-btn-small-hover);
@@ -199,6 +219,10 @@
     --border-sub-container-modal: var(--neutral-200);
     --border-sub-container-modal-hover: var(--neutral-350);
     --border-sub-container-modal-low: var(--neutral-250);
+    --btn-animated-default: var(--neutral-50);
+    --btn-animated-dots: var(--neutral-565);
+    --btn-animated-hover: var(--neutral-950);
+    --btn-animated-inactive: var(--neutral-150);
     --btn-arrow-default: var(--neutral-00);
     --btn-arrow-hover: var(--neutral-1000);
     --btn-modal-default: var(--neutral-00);
@@ -247,6 +271,9 @@
     --swap-bloc: var(--neutral-50);
     --swap-global: var(--neutral-00);
     --txt-amount: var(--neutral-950);
+    --txt-btn-animated-default: var(--neutral-950);
+    --txt-btn-animated-hover: var(--neutral-00);
+    --txt-btn-animated-inactive: var(--neutral-550);
     --txt-btn-small-default: var(--neutral-570);
     --txt-btn-small-focus: var(--neutral-50);
     --txt-btn-small-hover: var(--neutral-50);
@@ -337,6 +364,10 @@
     --border-sub-container-modal: var(--neutral-700);
     --border-sub-container-modal-hover: var(--neutral-700);
     --border-sub-container-modal-low: var(--neutral-800);
+    --btn-animated-default: var(--neutral-950);
+    --btn-animated-dots: var(--neutral-565);
+    --btn-animated-hover: var(--neutral-50);
+    --btn-animated-inactive: var(--neutral-850);
     --btn-arrow-default: var(--neutral-950);
     --btn-arrow-hover: var(--neutral-00);
     --btn-modal-default: var(--neutral-900);
@@ -385,6 +416,9 @@
     --swap-bloc: var(--neutral-850);
     --swap-global: var(--neutral-1000);
     --txt-amount: var(--neutral-50);
+    --txt-btn-animated-default: var(--neutral-50);
+    --txt-btn-animated-hover: var(--neutral-900);
+    --txt-btn-animated-inactive: var(--neutral-650);
     --txt-btn-small-default: var(--neutral-200);
     --txt-btn-small-focus: var(--neutral-900);
     --txt-btn-small-hover: var(--neutral-900);

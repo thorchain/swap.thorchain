@@ -1,11 +1,12 @@
+import { useEffect, useState } from 'react'
 import { useTranslations } from 'next-intl'
 import { USwapNumber } from '@tcswap/core'
 import { Skeleton } from '@/components/ui/skeleton'
 import { AssetIcon } from '@/components/asset-icon'
 import { chainLabel } from '@/components/connect-wallet/config'
 import { DecimalInput } from '@/components/decimal/decimal-input'
+import { DropdownCoinButton } from '@/components/dropdown-coin-button'
 import { useDialog } from '@/components/global-dialog'
-import { Icon } from '@/components/icons'
 import { SwapBalance } from '@/components/swap/swap-balance'
 import { SwapSelectAsset } from '@/components/swap/swap-select-asset'
 import { GenericButton } from '@/components/generic-button'
@@ -31,7 +32,15 @@ export const SwapInputFrom = () => {
   const rateFrom = rate || new USwapNumber(0)
   const fiatValueFrom = valueFrom.mul(rateFrom)
 
+  const [isSelectOpen, setIsSelectOpen] = useState(false)
+  const hasOpenDialogs = useDialog(state => state.dialogs.length > 0)
+
+  useEffect(() => {
+    if (!hasOpenDialogs) setIsSelectOpen(false)
+  }, [hasOpenDialogs])
+
   const onClick = () => {
+    setIsSelectOpen(true)
     openDialog(SwapSelectAsset, {
       selected: assetFrom,
       onSelectAsset: asset => {
@@ -52,20 +61,23 @@ export const SwapInputFrom = () => {
             onAmountChange={e => setAmountFrom(e)}
             autoComplete="off"
           />
-          <div className="text-txt-label-small text-sm font-medium">{toCurrencyFixed(fiatValueFrom.toCurrency('$', { trimTrailingZeros: false }))}</div>
-        </div>
-        <div className="flex cursor-pointer items-center gap-2" onClick={onClick}>
-          <AssetIcon asset={assetFrom} />
-          <div className="flex w-16 flex-col items-start">
-            <span className="text-txt-high-contrast inline-block w-full truncate text-base font-semibold">
-              {assetFrom ? assetFrom.ticker : <Skeleton className="mb-0.5 h-6 w-12" />}
-            </span>
-            <span className="text-txt-label-small inline-block w-full truncate text-xs">
-              {assetFrom?.chain ? chainLabel(assetFrom.chain) : <Skeleton className="mt-0.5 h-3 w-16" />}
-            </span>
+          <div className="text-txt-label-small text-sm font-medium">
+            {toCurrencyFixed(fiatValueFrom.toCurrency('$', { trimTrailingZeros: false }))}
           </div>
-          <Icon name="arrow-s-down" className="text-txt-label-small size-5" />
         </div>
+        <DropdownCoinButton open={isSelectOpen} onClick={onClick}>
+          <span className="flex items-center gap-2">
+            <AssetIcon asset={assetFrom} />
+            <span className="flex w-16 flex-col items-start gap-1 text-left">
+              <span className="inline-block w-full truncate text-base leading-none font-medium">
+                {assetFrom ? assetFrom.ticker : <Skeleton className="h-4 w-12" />}
+              </span>
+              <span className="text-icon-btn-default inline-block w-full truncate text-xs leading-none font-medium">
+                {assetFrom?.chain ? chainLabel(assetFrom.chain) : <Skeleton className="h-3 w-16" />}
+              </span>
+            </span>
+          </span>
+        </DropdownCoinButton>
       </div>
 
       <div className="mt-2 flex items-end justify-between">

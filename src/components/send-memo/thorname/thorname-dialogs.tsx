@@ -4,12 +4,12 @@ import { useEffect, useMemo, useState } from 'react'
 import { useTranslations } from 'next-intl'
 import { Chain } from '@tcswap/core'
 import { getAddressValidator } from '@tcswap/toolboxes'
-import { LoaderCircle } from 'lucide-react'
 import { toast } from 'sonner'
 import { Credenza, CredenzaContent, CredenzaHeader, CredenzaTitle } from '@/components/ui/credenza'
 import { Input } from '@/components/ui/input'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 import { AddressInput } from '@/components/address-input'
+import { AnimatedButton } from '@/components/animated-button'
 import { DecimalInput } from '@/components/decimal/decimal-input'
 import { ThemeButton } from '@/components/theme-button'
 import { GenericButton } from '@/components/generic-button'
@@ -288,9 +288,9 @@ export function ThornameRegisterDialog({ config, name: initialName, account, isO
 
           <TransactionFee config={config} rate={rate} />
 
-          <ThemeButton variant="primaryMedium" className="w-full" onClick={() => submit(memo, cost)} disabled={!canSend}>
-            {submitting ? <LoaderCircle size={20} className="animate-spin" /> : submitLabel}
-          </ThemeButton>
+          <AnimatedButton colorType="accent" className="w-full" onClick={() => submit(memo, cost)} disabled={!canSend} loading={submitting}>
+            {submitLabel}
+          </AnimatedButton>
         </div>
       </CredenzaContent>
     </Credenza>
@@ -364,9 +364,9 @@ export function ThornameRenewDialog({ config, name: initialName, account, expire
 
           <TransactionFee config={config} rate={rate} />
 
-          <ThemeButton variant="primaryMedium" className="w-full" onClick={() => submit(memo, numeric)} disabled={!canSend}>
-            {submitting ? <LoaderCircle size={20} className="animate-spin" /> : numeric <= 0 ? t('thorname.enterAmount') : t('thorname.renew')}
-          </ThemeButton>
+          <AnimatedButton colorType="accent" className="w-full" onClick={() => submit(memo, numeric)} disabled={!canSend} loading={submitting}>
+            {numeric <= 0 ? t('thorname.enterAmount') : t('thorname.renew')}
+          </AnimatedButton>
         </div>
       </CredenzaContent>
     </Credenza>
@@ -441,9 +441,9 @@ export function ThornamePreferredAssetDialog({ config, name, account, record, is
 
           <TransactionFee config={config} rate={rate} />
 
-          <ThemeButton variant="primaryMedium" className="w-full" onClick={() => submit(memo, 0)} disabled={!canSend}>
-            {submitting ? <LoaderCircle size={20} className="animate-spin" /> : submitLabel}
-          </ThemeButton>
+          <AnimatedButton colorType="accent" className="w-full" onClick={() => submit(memo, 0)} disabled={!canSend} loading={submitting}>
+            {submitLabel}
+          </AnimatedButton>
         </div>
       </CredenzaContent>
     </Credenza>
@@ -489,15 +489,9 @@ export function ThornameTransferDialog({ config, name: initialName, account, isO
 
           <TransactionFee config={config} rate={rate} />
 
-          <ThemeButton variant="primaryMedium" className="w-full" onClick={() => submit(memo, 0)} disabled={!canSend}>
-            {submitting ? (
-              <LoaderCircle size={20} className="animate-spin" />
-            ) : !isValidRecipient ? (
-              t('thorname.enterNewOwner')
-            ) : (
-              t('thorname.transfer')
-            )}
-          </ThemeButton>
+          <AnimatedButton colorType="accent" className="w-full" onClick={() => submit(memo, 0)} disabled={!canSend} loading={submitting}>
+            {!isValidRecipient ? t('thorname.enterNewOwner') : t('thorname.transfer')}
+          </AnimatedButton>
         </div>
       </CredenzaContent>
     </Credenza>

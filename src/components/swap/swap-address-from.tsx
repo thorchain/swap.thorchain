@@ -2,8 +2,7 @@ import { Chain } from '@tcswap/core'
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu'
 import { wallet } from '@/components/connect-wallet/config'
 import { WalletIcon } from '@/components/wallet-icon'
-import { Icon } from '@/components/icons'
-import { ThemeButton } from '@/components/theme-button'
+import { DropdownWalletButton } from '@/components/dropdown-wallet-button'
 import { useAssetFrom } from '@/hooks/use-swap'
 import { useAccounts, useSelectAccount, useSelectedAccount } from '@/hooks/use-wallets'
 import { cn, truncate } from '@/lib/utils'
@@ -28,10 +27,12 @@ export const SwapAddressFrom = ({ minOptions = 2, chain, showAddress = true }: S
   return (
     <DropdownMenu modal={false}>
       <DropdownMenuTrigger asChild>
-        <ThemeButton variant="secondarySmall" className="bg-btn-style-1-bg gap-2 pr-2">
-          <WalletIcon walletKey={selectedAccount.provider.toLowerCase()} width={16} height={16} /> {showAddress && truncate(selectedAccount.address)}
-          <Icon name="arrow-s-down" className="size-4" />
-        </ThemeButton>
+        <DropdownWalletButton>
+          <span className="flex items-center gap-1">
+            <WalletIcon walletKey={selectedAccount.provider.toLowerCase()} width={18} height={18} />
+            {showAddress && truncate(selectedAccount.address)}
+          </span>
+        </DropdownWalletButton>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
         <div>

@@ -6,6 +6,7 @@ import { Chain, USwapNumber } from '@tcswap/core'
 import { LoaderCircle } from 'lucide-react'
 import { toast } from 'sonner'
 import { Textarea } from '@/components/ui/textarea'
+import { AnimatedButton } from '@/components/animated-button'
 import { ConnectWallet } from '@/components/connect-wallet/connect-wallet'
 import { chainLabel } from '@/components/connect-wallet/config'
 import { AssetIcon } from '@/components/asset-icon'
@@ -283,14 +284,15 @@ export function SendMemoBond({ account, initialTab = 'bond' }: BondFormProps) {
         )}
 
         {tab !== 'track' && (
-          <ThemeButton
-            variant={!thorAccount ? 'secondaryMedium' : 'primaryMedium'}
+          <AnimatedButton
+            colorType={!thorAccount ? 'default' : 'accent'}
             className="w-full"
             onClick={!thorAccount ? () => openDialog(ConnectWallet, { chain: Chain.THORChain }) : handleSend}
             disabled={!!thorAccount && !canSend}
+            loading={submitting}
           >
-            {submitting ? <LoaderCircle size={20} className="animate-spin" /> : !thorAccount ? t('connectThorchainWallet') : submitLabel}
-          </ThemeButton>
+            {!thorAccount ? t('connectThorchainWallet') : submitLabel}
+          </AnimatedButton>
         )}
       </div>
       {tab !== 'track' && (

@@ -3,8 +3,9 @@
 import { ReactNode, useEffect, useMemo, useState } from 'react'
 import { useTranslations } from 'next-intl'
 import { Chain, FeeOption, USwapNumber } from '@tcswap/core'
-import { ChevronDown, Info, LoaderCircle } from 'lucide-react'
+import { ChevronDown, Info } from 'lucide-react'
 import { toast } from 'sonner'
+import { AnimatedButton } from '@/components/animated-button'
 import { ConnectWallet } from '@/components/connect-wallet/connect-wallet'
 import { chainLabel } from '@/components/connect-wallet/config'
 import { AssetIcon } from '@/components/asset-icon'
@@ -458,14 +459,15 @@ export function SendMemoPool() {
           </div>
         )}
 
-        <ThemeButton
-          variant={needConnect ? 'secondaryMedium' : 'primaryMedium'}
+        <AnimatedButton
+          colorType={needConnect ? 'default' : 'accent'}
           className="w-full"
           onClick={needConnect ? () => openDialog(ConnectWallet, { chain: Chain.THORChain }) : handleSend}
           disabled={!needConnect && !canSend}
+          loading={submitting}
         >
-          {submitting ? <LoaderCircle size={20} className="animate-spin" /> : needConnect ? t('pool.connectWallet') : submitLabel}
-        </ThemeButton>
+          {needConnect ? t('pool.connectWallet') : submitLabel}
+        </AnimatedButton>
       </div>
 
       {tab !== 'add' && (

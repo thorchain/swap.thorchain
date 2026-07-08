@@ -56,7 +56,7 @@
       "limitNotSupported": "지정가 주문 미지원",
       "temporarilyUnavailable": "일시적으로 사용할 수 없음",
       "enterAmount": "금액 입력",
-      "quoting": "견적 조회 중…",
+      "quoting": "견적 조회 중",
       "noValidQuotes": "유효한 견적 없음",
       "enterLimitPrice": "지정가 입력",
       "enterLimitOrder": "지정가 주문 입력",

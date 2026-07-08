@@ -56,7 +56,7 @@
       "limitNotSupported": "Лимитный ордер не поддерживается",
       "temporarilyUnavailable": "Временно недоступно",
       "enterAmount": "Введите сумму",
-      "quoting": "Расчёт котировки…",
+      "quoting": "Расчёт котировки",
       "noValidQuotes": "Нет доступных котировок",
       "enterLimitPrice": "Введите лимитную цену",
       "enterLimitOrder": "Введите лимитный ордер",

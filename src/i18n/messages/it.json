@@ -56,7 +56,7 @@
       "limitNotSupported": "Ordine limite non supportato",
       "temporarilyUnavailable": "Temporaneamente non disponibile",
       "enterAmount": "Inserisca l'importo",
-      "quoting": "Quotazione in corso...",
+      "quoting": "Quotazione in corso",
       "noValidQuotes": "Nessuna quotazione valida",
       "enterLimitPrice": "Inserisca il prezzo limite",
       "enterLimitOrder": "Inserisca l'ordine limite",

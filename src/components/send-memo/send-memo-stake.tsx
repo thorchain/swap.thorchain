@@ -3,8 +3,9 @@
 import { useMemo, useState } from 'react'
 import { useTranslations } from 'next-intl'
 import { AssetValue, Chain, USwapNumber } from '@tcswap/core'
-import { Info, LoaderCircle } from 'lucide-react'
+import { Info } from 'lucide-react'
 import { toast } from 'sonner'
+import { AnimatedButton } from '@/components/animated-button'
 import { ConnectWallet } from '@/components/connect-wallet/connect-wallet'
 import { chainLabel } from '@/components/connect-wallet/config'
 import { AssetIcon } from '@/components/asset-icon'
@@ -12,7 +13,6 @@ import { useDialog } from '@/components/global-dialog'
 import { DecimalInput } from '@/components/decimal/decimal-input'
 import { DecimalText } from '@/components/decimal/decimal-text'
 import { Icon } from '@/components/icons'
-import { ThemeButton } from '@/components/theme-button'
 import { GenericButton } from '@/components/generic-button'
 import { assetIdentifierStr, tokenToAsset } from '@/components/send/send-helpers'
 import { SwapAddressFrom } from '@/components/swap/swap-address-from'
@@ -283,14 +283,15 @@ export function SendMemoStake({ account, initialTab = 'stake', stakedAmount }: S
           </div>
         )}
 
-        <ThemeButton
-          variant={!thorAccount ? 'secondaryMedium' : 'primaryMedium'}
+        <AnimatedButton
+          colorType={!thorAccount ? 'default' : 'accent'}
           className="w-full"
           onClick={!thorAccount ? () => openDialog(ConnectWallet, { chain: Chain.THORChain }) : handleSend}
           disabled={!!thorAccount && !canSend}
+          loading={submitting}
         >
-          {submitting ? <LoaderCircle size={20} className="animate-spin" /> : !thorAccount ? t('connectThorchainWallet') : submitLabel}
-        </ThemeButton>
+          {!thorAccount ? t('connectThorchainWallet') : submitLabel}
+        </AnimatedButton>
       </div>
 
       <div className="text-txt-label-small flex items-center justify-between px-4 text-xs">

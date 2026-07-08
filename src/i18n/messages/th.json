@@ -56,7 +56,7 @@
       "limitNotSupported": "ไม่รองรับคำสั่ง Limit",
       "temporarilyUnavailable": "ไม่พร้อมใช้งานชั่วคราว",
       "enterAmount": "กรอกจำนวน",
-      "quoting": "กำลังคำนวณราคา...",
+      "quoting": "กำลังคำนวณราคา",
       "noValidQuotes": "ไม่มีราคาที่ใช้ได้",
       "enterLimitPrice": "กรอกราคา Limit",
       "enterLimitOrder": "กรอกคำสั่ง Limit",

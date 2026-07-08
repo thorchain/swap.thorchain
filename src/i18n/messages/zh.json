@@ -56,7 +56,7 @@
       "limitNotSupported": "不支持限价订单",
       "temporarilyUnavailable": "暂时不可用",
       "enterAmount": "输入金额",
-      "quoting": "报价中…",
+      "quoting": "报价中",
       "noValidQuotes": "无有效报价",
       "enterLimitPrice": "输入限价",
       "enterLimitOrder": "输入限价订单",

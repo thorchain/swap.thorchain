@@ -56,7 +56,7 @@
       "limitNotSupported": "指値注文は対応していません",
       "temporarilyUnavailable": "一時的に利用できません",
       "enterAmount": "金額を入力",
-      "quoting": "見積もり中…",
+      "quoting": "見積もり中",
       "noValidQuotes": "有効な見積もりがありません",
       "enterLimitPrice": "指値価格を入力",
       "enterLimitOrder": "指値注文を入力",

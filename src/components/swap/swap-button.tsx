@@ -1,14 +1,13 @@
 import { EVMChain } from '@tcswap/core'
 import { QuoteResponseRoute } from '@tcswap/helpers/api'
 import { useTranslations } from 'next-intl'
-import { LoaderCircle } from 'lucide-react'
 import { toast } from 'sonner'
+import { AnimatedButton } from '@/components/animated-button'
 import { chainLabel } from '@/components/connect-wallet/config'
 import { ConnectWallet } from '@/components/connect-wallet/connect-wallet'
 import { useDialog } from '@/components/global-dialog'
 import { InstantSwapDialog } from '@/components/swap/instant-swap-dialog'
 import { SwapDialog } from '@/components/swap/swap-dialog'
-import { ThemeButton } from '@/components/theme-button'
 import { useBalance } from '@/hooks/use-balance'
 import { useMimir } from '@/hooks/use-mimir'
 import { useQuote } from '@/hooks/use-quote'
@@ -147,14 +146,14 @@ export const SwapButton = ({ instantSwapSupported, instantSwapAvailable }: SwapB
   const state = getState()
 
   return (
-    <ThemeButton
-      variant={state.accent ? 'primaryMedium' : 'secondaryMedium'}
-      className="rounded-15 w-full"
+    <AnimatedButton
+      colorType={state.accent ? 'accent' : 'default'}
+      className="w-full"
       onClick={state.onClick}
       disabled={!state.onClick}
+      loading={state.spinner}
     >
-      {state.spinner && <LoaderCircle size={20} className="animate-spin" />}
       {state.text}
-    </ThemeButton>
+    </AnimatedButton>
   )
 }

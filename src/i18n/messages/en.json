@@ -60,7 +60,7 @@
       "limitNotSupported": "Limit Order Not Supported",
       "temporarilyUnavailable": "Temporarily Not Available",
       "enterAmount": "Enter Amount",
-      "quoting": "Quoting...",
+      "quoting": "Quoting",
       "noValidQuotes": "No Valid Quotes",
       "enterLimitPrice": "Enter limit price",
       "enterLimitOrder": "Enter Limit Order",

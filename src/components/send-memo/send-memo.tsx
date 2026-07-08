@@ -3,9 +3,10 @@
 import { useMemo, useState } from 'react'
 import { useTranslations } from 'next-intl'
 import { Chain, USwapNumber } from '@tcswap/core'
-import { Info, LoaderCircle } from 'lucide-react'
+import { Info } from 'lucide-react'
 import { toast } from 'sonner'
 import { Textarea } from '@/components/ui/textarea'
+import { AnimatedButton } from '@/components/animated-button'
 import { ConnectWallet } from '@/components/connect-wallet/connect-wallet'
 import { AssetIcon } from '@/components/asset-icon'
 import { DecimalInput } from '@/components/decimal/decimal-input'
@@ -211,15 +212,14 @@ export function SendMemo() {
           </div>
         )}
 
-        <ThemeButton
-          variant={!thorAccount ? 'secondaryMedium' : 'primaryMedium'}
+        <AnimatedButton
+          colorType={!thorAccount ? 'default' : 'accent'}
           className="w-full"
           onClick={!thorAccount ? () => openDialog(ConnectWallet, { chain: Chain.THORChain }) : handleSend}
           disabled={!!thorAccount && !canSend}
+          loading={submitting}
         >
-          {submitting ? (
-            <LoaderCircle size={20} className="animate-spin" />
-          ) : !thorAccount ? (
+          {!thorAccount ? (
             t('connectThorchainWallet')
           ) : !memo.trim() ? (
             t('enterMemo')
@@ -228,7 +228,7 @@ export function SendMemo() {
           ) : (
             t('send')
           )}
-        </ThemeButton>
+        </AnimatedButton>
       </div>
 
       <div className="text-txt-label-small flex items-center justify-between px-4 text-xs">
