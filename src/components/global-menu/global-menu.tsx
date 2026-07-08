@@ -278,7 +278,7 @@ export function GlobalMenu({ isOpen, onOpenChange }: SendMemoMenuProps) {
             </div>
 
             {/* Main content */}
-            <div className="flex flex-1 flex-wrap gap-12.5 px-7.5 pt-12.5 pb-7.5 md:px-15 md:pb-7.5 xl:flex-nowrap xl:px-22.5 xl:pb-15">
+            <div className="container mx-auto flex flex-1 flex-wrap gap-12.5 px-4 pt-12.5 pb-7.5 xl:flex-nowrap xl:pb-15">
               {/* Tiles nav */}
               <nav className="w-full shrink-0 xl:w-2/3">
                 <ul className="w-full md:grid md:w-fit md:grid-cols-4 md:gap-5">
@@ -358,7 +358,7 @@ export function GlobalMenu({ isOpen, onOpenChange }: SendMemoMenuProps) {
             </div>
 
             {/* Mobile: Launch App full-width button at bottom */}
-            <div className="px-7.5 pb-7.5 md:hidden">
+            <div className="container mx-auto px-4 pb-7.5 md:hidden">
               <a
                 href={resolveHref('/')}
                 onClick={closeMenu}
