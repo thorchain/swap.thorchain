@@ -14,8 +14,8 @@
     "genericError": "Une erreur est survenue"
   },
   "header": {
-    "wallet": "PORTEFEUILLE",
-    "history": "HISTORIQUE"
+    "wallet": "Portefeuille",
+    "history": "Historique"
   },
   "footer": {
     "privacyPolicy": "Politique de confidentialité",

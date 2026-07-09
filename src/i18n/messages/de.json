@@ -14,8 +14,8 @@
     "genericError": "Ein Fehler ist aufgetreten"
   },
   "header": {
-    "wallet": "WALLET",
-    "history": "VERLAUF"
+    "wallet": "Wallet",
+    "history": "Verlauf"
   },
   "footer": {
     "privacyPolicy": "Datenschutzrichtlinie",

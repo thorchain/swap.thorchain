@@ -14,8 +14,8 @@
     "genericError": "Something no work well"
   },
   "header": {
-    "wallet": "WALLET",
-    "history": "HISTORY"
+    "wallet": "Wallet",
+    "history": "History"
   },
   "footer": {
     "privacyPolicy": "Privacy Policy",

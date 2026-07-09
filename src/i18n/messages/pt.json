@@ -14,8 +14,8 @@
     "genericError": "Algo deu errado"
   },
   "header": {
-    "wallet": "CARTEIRA",
-    "history": "HISTÓRICO"
+    "wallet": "Carteira",
+    "history": "Histórico"
   },
   "footer": {
     "privacyPolicy": "Política de privacidade",

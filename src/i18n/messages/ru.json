@@ -14,8 +14,8 @@
     "genericError": "Что-то пошло не так"
   },
   "header": {
-    "wallet": "КОШЕЛЁК",
-    "history": "ИСТОРИЯ"
+    "wallet": "Кошелёк",
+    "history": "История"
   },
   "footer": {
     "privacyPolicy": "Политика конфиденциальности",

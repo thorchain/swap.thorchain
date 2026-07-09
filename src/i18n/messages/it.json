@@ -14,8 +14,8 @@
     "genericError": "Si è verificato un errore"
   },
   "header": {
-    "wallet": "PORTAFOGLIO",
-    "history": "CRONOLOGIA"
+    "wallet": "Portafoglio",
+    "history": "Cronologia"
   },
   "footer": {
     "privacyPolicy": "Informativa sulla privacy",
