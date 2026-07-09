@@ -139,7 +139,7 @@ export async function getAccounts(
   option: WalletOption,
   chains: Chain[],
   config?: any
-): Promise<{ address: string; network: Chain; provider: WalletOption }[]> {
+): Promise<{ address: string; network: Chain; provider: WalletOption; derivationPath?: number[] }[]> {
   const uSwap = getUSwap()
 
   const connected = await connectWallet(option, chains, config)
@@ -149,7 +149,8 @@ export async function getAccounts(
     .map(chain => {
       const raw = uSwap.getAddress(chain)
       const address = Array.isArray(raw) ? raw[0] : raw
-      return address ? { address, network: chain, provider: option } : null
+      if (!address) return null
+      return { address, network: chain, provider: option, ...(config?.derivationPath ? { derivationPath: config.derivationPath } : {}) }
     })
     .filter(acc => acc !== null)
 }

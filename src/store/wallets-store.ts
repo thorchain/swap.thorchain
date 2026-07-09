@@ -9,6 +9,7 @@ export interface WalletAccount {
   address: string
   network: Chain
   provider: WalletOption
+  derivationPath?: number[]
 }
 
 interface WalletState {
@@ -97,13 +98,33 @@ export const useWalletStore = create<WalletState>()(
           return
         }
 
-        Promise.allSettled(link.map(w => getAccounts(w.provider, w.chains)))
-          .then(res => {
-            const accounts = res.reduce((a: WalletAccount[], v) => (v.status === 'fulfilled' ? [...v.value, ...a] : a), [])
+        // Chains with a stored derivation path reconnect one by one — hardware wallets share a single transport.
+        const reconnect = async (w: (typeof link)[number]) => {
+          const pathChains = w.chains.filter(chain => w.paths?.[chain])
+          const defaultChains = w.chains.filter(chain => !w.paths?.[chain])
 
-            useWalletStore.setState({
-              accounts,
-              connectedWallets: Array.from(new Set(accounts.map(w => w.provider)))
+          const accounts: WalletAccount[] = []
+          if (defaultChains.length > 0) accounts.push(...(await getAccounts(w.provider, defaultChains)))
+          for (const chain of pathChains) {
+            accounts.push(...(await getAccounts(w.provider, [chain], { derivationPath: w.paths?.[chain] })))
+          }
+
+          return accounts
+        }
+
+        Promise.allSettled(link.map(reconnect))
+          .then(res => {
+            const rehydrated = res.reduce((a: WalletAccount[], v) => (v.status === 'fulfilled' ? [...v.value, ...a] : a), [])
+
+            // Accounts connected while rehydration was in flight win.
+            useWalletStore.setState(state => {
+              const connected = new Set(state.accounts.map(a => `${a.provider}:${a.network}`))
+              const accounts = [...state.accounts, ...rehydrated.filter(a => !connected.has(`${a.provider}:${a.network}`))]
+
+              return {
+                accounts,
+                connectedWallets: Array.from(new Set(accounts.map(w => w.provider)))
+              }
             })
           })
           .finally(() => useWalletStore.setState({ hasHydrated: true }))

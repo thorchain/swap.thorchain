@@ -194,7 +194,7 @@ export const Ledger = ({ wallet }: { wallet: WalletParams; onConnect: () => void
           </div>
           <div className="col-span-1">
             <div className="text-txt-label-small mb-2 font-semibold">{t('index')}</div>
-            <Input placeholder="0" onChange={v => setIndex(parseInt(v.target.value || '0'))} disabled={connecting} />
+            <Input placeholder="0" onChange={v => setIndex(parseInt(v.target.value, 10) || 0)} disabled={connecting} />
           </div>
         </div>
       )}

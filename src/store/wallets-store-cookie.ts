@@ -31,6 +31,8 @@ function deleteCookie(name: string): void {
 export interface WalletLink {
   provider: WalletOption
   chains: Chain[]
+  // Per-chain derivation path so hardware wallets rehydrate the same account
+  paths?: Partial<Record<Chain, number[]>>
 }
 
 export function readWalletLink(): WalletLink[] {
@@ -43,12 +45,13 @@ export function readWalletLink(): WalletLink[] {
 }
 
 // Group accounts by provider into the shared cookie, or clear it when empty.
-export function writeWalletLink(accounts: Array<{ provider: WalletOption; network: Chain }>): void {
-  const byProvider = new Map<WalletOption, Set<Chain>>()
-  for (const { provider, network } of accounts) {
-    const chains = byProvider.get(provider) ?? new Set<Chain>()
-    chains.add(network)
-    byProvider.set(provider, chains)
+export function writeWalletLink(accounts: Array<{ provider: WalletOption; network: Chain; derivationPath?: number[] }>): void {
+  const byProvider = new Map<WalletOption, { chains: Set<Chain>; paths: Partial<Record<Chain, number[]>> }>()
+  for (const { provider, network, derivationPath } of accounts) {
+    const entry = byProvider.get(provider) ?? { chains: new Set<Chain>(), paths: {} }
+    entry.chains.add(network)
+    if (derivationPath) entry.paths[network] = derivationPath
+    byProvider.set(provider, entry)
   }
 
   if (byProvider.size === 0) {
@@ -56,6 +59,10 @@ export function writeWalletLink(accounts: Array<{ provider: WalletOption; networ
     return
   }
 
-  const link: WalletLink[] = Array.from(byProvider, ([provider, chains]) => ({ provider, chains: [...chains] }))
+  const link: WalletLink[] = Array.from(byProvider, ([provider, { chains, paths }]) => ({
+    provider,
+    chains: [...chains],
+    ...(Object.keys(paths).length > 0 ? { paths } : {})
+  }))
   writeCookie(WALLET_LINK_COOKIE, JSON.stringify(link))
 }
