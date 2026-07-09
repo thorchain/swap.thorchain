@@ -3,7 +3,7 @@ import { useQuery, useQueryClient } from '@tanstack/react-query'
 import { AssetValue, Chain, USwapNumber } from '@tcswap/core'
 import { useAssets } from '@/hooks/use-assets'
 import { useRates } from '@/hooks/use-rates'
-import { useAccounts, useHasHydrated } from '@/hooks/use-wallets'
+import { useAccounts } from '@/hooks/use-wallets'
 import { getAlchemyTokenBalances, getThorBankBalances } from '@/lib/api'
 import { getUSwap } from '@/lib/wallets'
 import { WalletAccount } from '@/store/wallets-store'
@@ -36,7 +36,6 @@ export interface ChainWalletData {
 export const useWalletBalances = () => {
   const { assets } = useAssets()
   const accounts = useAccounts()
-  const hasHydrated = useHasHydrated()
   const uSwap = getUSwap()
   const queryClient = useQueryClient()
 
@@ -52,7 +51,7 @@ export const useWalletBalances = () => {
     return { iconMap, curatedIdentifiers }
   }, [assets])
 
-  const queryKey = accounts.map(a => `${a.provider}-${a.network}`).join(',')
+  const queryKey = accounts.map(a => `${a.provider}-${a.network}-${a.address}`).join(',')
 
   const { data: allBalances, isLoading } = useQuery({
     queryKey: ['wallet-all-balances', queryKey],
@@ -117,7 +116,9 @@ export const useWalletBalances = () => {
         alchemyLogoMap: r.status === 'fulfilled' ? r.value.alchemyLogoMap : new Map<string, string>()
       }))
     },
-    enabled: accounts.length > 0 && hasHydrated,
+    // Not gated on hasHydrated — rehydration can hang (e.g. a hardware wallet waiting on the
+    // device) and accounts connected in the meantime must still fetch.
+    enabled: accounts.length > 0,
     staleTime: 30_000,
     retry: false,
     refetchOnMount: false
@@ -138,7 +139,7 @@ export const useWalletBalances = () => {
 
   const walletData: ChainWalletData[] = useMemo(() => {
     if (!allBalances) {
-      return accounts.map(account => ({ account, tokens: [], totalUsd: undefined, isLoading: true }))
+      return accounts.map(account => ({ account, tokens: [], totalUsd: undefined, isLoading }))
     }
 
     return allBalances.map(({ account, balances, alchemyLogoMap }) => {
@@ -163,7 +164,7 @@ export const useWalletBalances = () => {
 
       return { account, tokens, totalUsd, isLoading: false }
     })
-  }, [allBalances, rates, accounts, iconMap, curatedIdentifiers, dexScreenerLogos])
+  }, [allBalances, rates, accounts, iconMap, curatedIdentifiers, dexScreenerLogos, isLoading])
 
   return { walletData, isLoading }
 }
