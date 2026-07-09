@@ -350,7 +350,7 @@
       "bondAmount": "Bond 금액",
       "rebondAmount": "Rebond 금액",
       "nodeAddress": "노드 주소",
-      "newAddress": "새 주소",
+      "newAddress": "새 지갑 주소",
       "enterNodeAddress": "노드 주소 입력",
       "invalidNodeAddress": "유효하지 않은 노드 주소",
       "validatingNode": "노드 확인 중…",

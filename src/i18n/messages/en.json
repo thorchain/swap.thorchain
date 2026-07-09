@@ -275,7 +275,7 @@
       "bondAmount": "Bond Amount",
       "rebondAmount": "Rebond Amount",
       "nodeAddress": "Node Address",
-      "newAddress": "New Address",
+      "newAddress": "New Wallet Address",
       "enterNodeAddress": "Enter Node Address",
       "invalidNodeAddress": "Invalid Node Address",
       "validatingNode": "Validating node...",

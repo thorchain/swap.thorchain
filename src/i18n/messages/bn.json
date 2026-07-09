@@ -350,7 +350,7 @@
       "bondAmount": "Bond পরিমাণ",
       "rebondAmount": "Rebond পরিমাণ",
       "nodeAddress": "Node ঠিকানা",
-      "newAddress": "নতুন ঠিকানা",
+      "newAddress": "নতুন ওয়ালেট ঠিকানা",
       "enterNodeAddress": "Node ঠিকানা লিখুন",
       "invalidNodeAddress": "অবৈধ Node ঠিকানা",
       "validatingNode": "Node যাচাই করা হচ্ছে...",

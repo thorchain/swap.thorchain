@@ -350,7 +350,7 @@
       "bondAmount": "Bond額",
       "rebondAmount": "Rebond額",
       "nodeAddress": "Nodeアドレス",
-      "newAddress": "新しいアドレス",
+      "newAddress": "新しいウォレットアドレス",
       "enterNodeAddress": "Nodeアドレスを入力",
       "invalidNodeAddress": "無効なNodeアドレスです",
       "validatingNode": "Nodeを検証中…",

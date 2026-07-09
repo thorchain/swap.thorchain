@@ -350,7 +350,7 @@
       "bondAmount": "จำนวน Bond",
       "rebondAmount": "จำนวน Rebond",
       "nodeAddress": "ที่อยู่ Node",
-      "newAddress": "ที่อยู่ใหม่",
+      "newAddress": "ที่อยู่วอลเล็ตใหม่",
       "enterNodeAddress": "กรอกที่อยู่ Node",
       "invalidNodeAddress": "ที่อยู่ Node ไม่ถูกต้อง",
       "validatingNode": "กำลังตรวจสอบ node...",

@@ -350,7 +350,7 @@
       "bondAmount": "Số lượng Bond",
       "rebondAmount": "Số lượng Rebond",
       "nodeAddress": "Địa chỉ Node",
-      "newAddress": "Địa chỉ mới",
+      "newAddress": "Địa chỉ ví mới",
       "enterNodeAddress": "Nhập địa chỉ Node",
       "invalidNodeAddress": "Địa chỉ Node không hợp lệ",
       "validatingNode": "Đang xác thực node...",

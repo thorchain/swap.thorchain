@@ -350,7 +350,7 @@
       "bondAmount": "Bond رقم",
       "rebondAmount": "Rebond رقم",
       "nodeAddress": "Node پتہ",
-      "newAddress": "نیا پتہ",
+      "newAddress": "نیا والٹ پتہ",
       "enterNodeAddress": "Node پتہ درج کریں",
       "invalidNodeAddress": "غلط Node پتہ",
       "validatingNode": "node کی توثیق ہو رہی ہے...",

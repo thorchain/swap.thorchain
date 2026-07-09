@@ -350,7 +350,7 @@
       "bondAmount": "Bond राशि",
       "rebondAmount": "Rebond राशि",
       "nodeAddress": "Node पता",
-      "newAddress": "नया पता",
+      "newAddress": "नया वॉलेट पता",
       "enterNodeAddress": "Node पता दर्ज करें",
       "invalidNodeAddress": "अमान्य Node पता",
       "validatingNode": "node सत्यापित किया जा रहा है...",

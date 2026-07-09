@@ -350,7 +350,7 @@
       "bondAmount": "Bond數量",
       "rebondAmount": "Rebond數量",
       "nodeAddress": "節點地址",
-      "newAddress": "新地址",
+      "newAddress": "新錢包地址",
       "enterNodeAddress": "輸入節點地址",
       "invalidNodeAddress": "無效的節點地址",
       "validatingNode": "正在驗證節點…",

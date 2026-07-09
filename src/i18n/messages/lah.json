@@ -350,7 +350,7 @@
       "bondAmount": "Bond رقم",
       "rebondAmount": "Rebond رقم",
       "nodeAddress": "Node پتہ",
-      "newAddress": "نواں پتہ",
+      "newAddress": "نواں والٹ پتہ",
       "enterNodeAddress": "Node پتہ پاؤ",
       "invalidNodeAddress": "غلط Node پتہ",
       "validatingNode": "node دی تصدیق پئی ہوندی اے...",

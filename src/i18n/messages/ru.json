@@ -350,7 +350,7 @@
       "bondAmount": "Сумма Bond",
       "rebondAmount": "Сумма Rebond",
       "nodeAddress": "Адрес узла",
-      "newAddress": "Новый адрес",
+      "newAddress": "Новый адрес кошелька",
       "enterNodeAddress": "Введите адрес узла",
       "invalidNodeAddress": "Недействительный адрес узла",
       "validatingNode": "Проверка узла…",

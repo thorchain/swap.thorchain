@@ -350,7 +350,7 @@
       "bondAmount": "Montant du Bond",
       "rebondAmount": "Montant du Rebond",
       "nodeAddress": "Adresse du Node",
-      "newAddress": "Nouvelle adresse",
+      "newAddress": "Nouvelle adresse de wallet",
       "enterNodeAddress": "Saisir l'adresse du Node",
       "invalidNodeAddress": "Adresse de Node invalide",
       "validatingNode": "Validation du node...",

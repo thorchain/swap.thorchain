@@ -350,7 +350,7 @@
       "bondAmount": "Bond Tutarı",
       "rebondAmount": "Rebond Tutarı",
       "nodeAddress": "Node Adresi",
-      "newAddress": "Yeni Adres",
+      "newAddress": "Yeni Cüzdan Adresi",
       "enterNodeAddress": "Node Adresi Gir",
       "invalidNodeAddress": "Geçersiz Node Adresi",
       "validatingNode": "Node doğrulanıyor…",

@@ -350,7 +350,7 @@
       "bondAmount": "مقدار Bond",
       "rebondAmount": "مقدار Rebond",
       "nodeAddress": "آدرس نود",
-      "newAddress": "آدرس جدید",
+      "newAddress": "آدرس جدید کیف پول",
       "enterNodeAddress": "آدرس نود را وارد کنید",
       "invalidNodeAddress": "آدرس نود نامعتبر",
       "validatingNode": "در حال اعتبارسنجی نود…",

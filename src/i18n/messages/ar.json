@@ -350,7 +350,7 @@
       "bondAmount": "مبلغ الـ Bond",
       "rebondAmount": "مبلغ إعادة الـ Bond",
       "nodeAddress": "عنوان الـ Node",
-      "newAddress": "العنوان الجديد",
+      "newAddress": "عنوان المحفظة الجديد",
       "enterNodeAddress": "أدخل عنوان الـ Node",
       "invalidNodeAddress": "عنوان Node غير صالح",
       "validatingNode": "جارٍ التحقق من الـ Node...",

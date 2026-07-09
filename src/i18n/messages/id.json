@@ -350,7 +350,7 @@
       "bondAmount": "Jumlah bond",
       "rebondAmount": "Jumlah rebond",
       "nodeAddress": "Alamat node",
-      "newAddress": "Alamat baru",
+      "newAddress": "Alamat wallet baru",
       "enterNodeAddress": "Masukkan alamat node",
       "invalidNodeAddress": "Alamat node tidak valid",
       "validatingNode": "Memvalidasi node...",
