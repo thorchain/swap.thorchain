@@ -1,20 +1,13 @@
 import type { Chain, WalletOption } from '@tcswap/core'
+import { parentCookieDomain } from '@/lib/cookie-domain'
 
 const ONE_YEAR = 60 * 60 * 24 * 365
 const WALLET_LINK_COOKIE = 'tc-wallet-link'
 
-// A real TLD is never all-digits, so an all-digit last label means a bare IP.
-function isIpHost(host: string): boolean {
-  const lastLabel = host.slice(host.lastIndexOf('.') + 1)
-  return lastLabel.length > 0 && [...lastLabel].every(c => c >= '0' && c <= '9')
-}
-
 // "; Domain=.domain.org" so the cookie is shared across subdomains; empty for localhost / IPs
 function domainAttr(): string {
-  const host = window.location.hostname
-  const parts = host.split('.')
-  if (host === 'localhost' || isIpHost(host) || parts.length < 2) return ''
-  return `; Domain=.${parts.slice(-2).join('.')}`
+  const domain = parentCookieDomain(window.location.hostname)
+  return domain ? `; Domain=${domain}` : ''
 }
 
 function readCookie(name: string): string | null {

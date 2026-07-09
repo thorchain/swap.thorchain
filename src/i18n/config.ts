@@ -30,7 +30,7 @@ export type Locale = (typeof locales)[number]
 
 export const defaultLocale: Locale = 'en'
 
-export const COOKIE_NAME = 'NEXT_LOCALE'
+export const COOKIE_NAME = 'tc-next-locale'
 
 // Native language names shown in the language switcher.
 export const localeNames: Record<Locale, string> = {

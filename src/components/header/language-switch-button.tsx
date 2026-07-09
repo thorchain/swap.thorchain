@@ -6,7 +6,7 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigge
 import { ScrollArea } from '@/components/ui/scroll-area'
 import { Icon } from '@/components/icons'
 import { GenericButton } from '@/components/generic-button'
-import { defaultLocale, isLocale, type Locale, localeFlags, localeNames, locales } from '@/i18n/config'
+import { COOKIE_NAME, defaultLocale, isLocale, type Locale, localeFlags, localeNames, locales } from '@/i18n/config'
 import { setUserLocale } from '@/i18n/locale'
 import { cn } from '@/lib/utils'
 
@@ -18,6 +18,8 @@ export const LanguageSwitchButton = () => {
 
   const onSelect = (locale: Locale) => {
     if (locale === current) return
+    // A stale host-only cookie would shadow the domain-wide one setUserLocale writes.
+    document.cookie = `${COOKIE_NAME}=; Path=/; Max-Age=0; SameSite=Lax`
     startTransition(() => {
       setUserLocale(locale)
     })
