@@ -12,6 +12,8 @@ import { AssetIcon } from '@/components/asset-icon'
 import { chainLabel } from '@/components/connect-wallet/config'
 import { Asset } from '@/components/swap/asset'
 import { useAssets } from '@/hooks/use-assets'
+import { useIsWidget } from '@/hooks/use-is-widget'
+import { useMemolessAssets } from '@/hooks/use-memoless-assets'
 import { useMimir } from '@/hooks/use-mimir'
 import { useIsMobile } from '@/hooks/use-mobile'
 import { cn } from '@/lib/utils'
@@ -55,12 +57,16 @@ type FilterChain = Chain | Filter
 export const SwapSelectAsset = ({ isOpen, onOpenChange, selected, onSelectAsset }: SwapSelectAssetProps) => {
   const t = useTranslations('swap')
   const isMobile = useIsMobile()
+  const isWidget = useIsWidget()
   const [selectedChain, setSelectedChain] = useState<FilterChain>(Filter.All)
   const [searchQuery, setSearchQuery] = useState('')
   const [showSecuredAssets, setShowSecuredAssets] = useState(false)
 
   const { assets } = useAssets()
   const { mimir, mayaMimir } = useMimir()
+  const { assets: memolessAssets } = useMemolessAssets()
+
+  const memolessIdentifiers = useMemo(() => memolessAssets && new Set(memolessAssets.map(a => a.asset)), [memolessAssets])
 
   const isAssetHalted = (asset: Asset) => {
     const tickerKey = `HALT${asset.ticker}TRADING`
@@ -80,6 +86,7 @@ export const SwapSelectAsset = ({ isOpen, onOpenChange, selected, onSelectAsset 
 
     for (const asset of assets) {
       if (asset.isSecuredAsset && !showSecuredAssets) continue
+      if (isWidget && !memolessIdentifiers?.has(asset.identifier)) continue
 
       allAssets.push(asset)
 
@@ -94,7 +101,7 @@ export const SwapSelectAsset = ({ isOpen, onOpenChange, selected, onSelectAsset 
     chainMap.set(Filter.All, allAssets)
 
     return chainMap
-  }, [assets, showSecuredAssets])
+  }, [assets, showSecuredAssets, isWidget, memolessIdentifiers])
 
   const chains = useMemo(() => {
     return Array.from(chainMap.keys()).sort((a, b) => {
