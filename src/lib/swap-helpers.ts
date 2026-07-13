@@ -1,4 +1,4 @@
-import { assetFromString, Chain, USwapNumber } from '@tcswap/core'
+import { assetFromString, Chain, getThorFactoryAssetDenom, getThorFactoryAssetTicker, USwapNumber } from '@tcswap/core'
 import { ProviderName } from '@tcswap/helpers'
 import { QuoteResponseRoute } from '@tcswap/helpers/api'
 import { intervalToDuration } from 'date-fns'
@@ -88,21 +88,38 @@ export const formatExpiration = (seconds: number) => {
   return parts.join(' ')
 }
 
+// Pool-less THORChain natives (sTCY, LQDY, …) have no USD rate and aren't in the curated
+// token list, so the wallet sidebar filter allows them explicitly.
+export function isThorNativeToken(b: { chain: string; symbol: string }): boolean {
+  return b.chain === Chain.THORChain && getThorFactoryAssetTicker(b.symbol) !== undefined
+}
+
+// Dedupe key derived from the underlying denom — balance sources disagree on symbols for the
+// same coin (node and bank report "x/ruji", the balance API "RUJI").
+export function thorBalanceKey(b: { chain: string; symbol: string }): string {
+  const denom = b.symbol.toLowerCase()
+  const factoryDenom = getThorFactoryAssetDenom(denom)
+  if (factoryDenom) {
+    return `${Chain.THORChain}.${getThorFactoryAssetTicker(factoryDenom) ?? factoryDenom}`.toLowerCase()
+  }
+  return (normalizeThorBankDenom(denom) ?? `${b.chain}.${b.symbol}`).toLowerCase()
+}
+
 // Fetches all bank-module balances for a THORChain address. Includes Secured Asset denoms
 // (e.g. "btc-btc", "eth-usdc-0x…") which the wallet toolbox may or may not surface depending
 // on its scam-filter heuristics. Decimals on THORChain bank are always 8.
 //
 // Bank denoms come back in several shapes — we normalise each one so it parses cleanly:
 //   rune, tcy            → THOR.RUNE / THOR.TCY  (THORChain natives, missing chain prefix)
-//   x/ruji               → THOR.RUJI            (factory denom, strip the "x/" prefix)
-//   btc/btc              → THOR.BTC/BTC          (synth)
-//   btc~btc              → THOR.BTC~BTC          (trade)
-//   eth-eth, eth-usdc-0x → ETH-ETH               (secured, bare canonical form)
+//   x/ruji, thor.lqdy    → THOR.x/ruji            (factory denom, kept whole)
+//   btc/btc              → THOR.BTC/BTC           (synth)
+//   btc~btc              → THOR.BTC~BTC           (trade)
+//   eth-eth, eth-usdc-0x → ETH-ETH                (secured, bare canonical form)
 export function normalizeThorBankDenom(denom: string): string | null {
   const lower = denom.toLowerCase()
 
-  // Factory-style denoms (x/<symbol>) collapse to THOR.<SYMBOL> for now (only RUJI exists today).
-  if (lower.startsWith('x/')) return `${Chain.THORChain}.${lower.slice(2).toUpperCase()}`
+  const factoryDenom = getThorFactoryAssetDenom(lower)
+  if (factoryDenom) return `${Chain.THORChain}.${factoryDenom}`
 
   // Synth or trade — both live under THOR.<DENOM>.
   if (lower.includes('/') || lower.includes('~')) return `${Chain.THORChain}.${lower.toUpperCase()}`

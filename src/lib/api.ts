@@ -119,7 +119,7 @@ export const getThorBankBalances = async (address: string): Promise<AssetValue[]
       try {
         out.push(AssetValue.from({ asset, fromBaseDecimal: 8, value: amount }))
       } catch {
-        // skip unparseable denoms (e.g. unknown factory tokens)
+        // skip unparseable denoms
       }
     }
     return out

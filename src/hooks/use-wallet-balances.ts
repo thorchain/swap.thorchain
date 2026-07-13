@@ -5,6 +5,7 @@ import { useAssets } from '@/hooks/use-assets'
 import { useRates } from '@/hooks/use-rates'
 import { useAccounts } from '@/hooks/use-wallets'
 import { getAlchemyTokenBalances, getThorBankBalances } from '@/lib/api'
+import { isThorNativeToken, thorBalanceKey } from '@/lib/swap-helpers'
 import { getUSwap } from '@/lib/wallets'
 import { WalletAccount } from '@/store/wallets-store'
 
@@ -65,20 +66,15 @@ export const useWalletBalances = () => {
             queryFn: () => (wallet as any).getBalance(wallet.address, false),
             staleTime: 30_000
           })
-          const balances: AssetValue[] = rawBalances ? [...rawBalances] : []
+          let balances: AssetValue[] = rawBalances ? [...rawBalances] : []
 
           // For THORChain, also pull bank-module balances directly so Secured Asset denoms
-          // (btc-btc, eth-eth, eth-usdc-0x…) are always surfaced. Merge by chain+symbol.
+          // (btc-btc, eth-usdc-0x…) and pool-less natives (sTCY, LQDY…) are always surfaced.
+          // On collisions the bank entry wins.
           if (account.network === Chain.THORChain) {
             const bankBalances = await getThorBankBalances(account.address)
-            const seen = new Set(balances.map(b => `${b.chain}.${b.symbol}`.toLowerCase()))
-            for (const b of bankBalances) {
-              const key = `${b.chain}.${b.symbol}`.toLowerCase()
-              if (!seen.has(key)) {
-                balances.push(b)
-                seen.add(key)
-              }
-            }
+            const bankKeys = new Set(bankBalances.map(thorBalanceKey))
+            balances = [...balances.filter(b => !bankKeys.has(thorBalanceKey(b))), ...bankBalances]
           }
 
           // For Ethereum, supplement with Alchemy to discover meme coins not in the curated API list
@@ -156,7 +152,7 @@ export const useWalletBalances = () => {
         })
         .filter(t => {
           const key = `${assetIdentifier(t.balance)}`.toLowerCase()
-          return curatedIdentifiers.has(key) || t.usdValue !== undefined
+          return curatedIdentifiers.has(key) || t.usdValue !== undefined || isThorNativeToken(t.balance)
         })
 
       const pricedTokens = tokens.filter(t => t.usdValue !== undefined)
