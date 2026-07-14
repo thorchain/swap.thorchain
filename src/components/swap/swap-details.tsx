@@ -1,22 +1,23 @@
 import { USwapNumber } from '@tcswap/core'
 import { Icon } from '@/components/icons'
 import { useQuote } from '@/hooks/use-quote'
-import { useAssetFrom, useAssetTo, useSwap } from '@/hooks/use-swap'
+import { useAssetFrom, useAssetTo } from '@/hooks/use-swap'
 import { formatExpiration } from '@/lib/swap-helpers'
 import { cn } from '@/lib/utils'
 
 export function SwapDetails() {
   const assetFrom = useAssetFrom()
   const assetTo = useAssetTo()
-  const { valueFrom } = useSwap()
   const { quote } = useQuote()
 
   const estimatedTime = quote?.estimatedTime
 
   if (!assetFrom || !assetTo || !quote) return null
 
-  const valueTo = new USwapNumber(quote.expectedBuyAmount)
-  const price = valueTo.div(valueFrom)
+  // Add buy-asset fees back to the expected output to get the pool price
+  const buyAssetFees = quote.fees.filter(fee => fee.asset.toUpperCase() === quote.buyAsset.toUpperCase()).map(fee => fee.amount)
+  const totalBuyAmount = new USwapNumber(quote.expectedBuyAmount).add(...buyAssetFees)
+  const price = totalBuyAmount.div(quote.sellAmount)
 
   return (
     <div className="text-txt-high-contrast flex justify-between text-[13px] font-semibold">
