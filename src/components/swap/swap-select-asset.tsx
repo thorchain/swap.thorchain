@@ -41,6 +41,13 @@ const FEATURED_ASSETS = [
   'NEAR.NEAR'
 ]
 
+// Halt flags are keyed by source chain; for secured/trade assets it's the identifier prefix (BASE-USDC-0X...)
+const sourceChain = (asset: Asset) => {
+  if (asset.isSecuredAsset) return asset.identifier.split('-')[0]
+  if (asset.isTradeAsset) return asset.identifier.split('~')[0]
+  return asset.chain
+}
+
 interface SwapSelectAssetProps {
   isOpen: boolean
   onOpenChange: (isOpen: boolean) => void
@@ -69,10 +76,12 @@ export const SwapSelectAsset = ({ isOpen, onOpenChange, selected, onSelectAsset 
   const memolessIdentifiers = useMemo(() => memolessAssets && new Set(memolessAssets.map(a => a.asset)), [memolessAssets])
 
   const isAssetHalted = (asset: Asset) => {
-    const tickerKey = `HALT${asset.ticker}TRADING`
+    const chain = sourceChain(asset)
+    const isHalted = (m: Record<string, number>) => m['HALTTRADING'] > 0 || m[`HALT${chain}TRADING`] > 0 || m[`HALT${chain}CHAIN`] > 0
+
     const haltedOn: Partial<Record<ProviderName, boolean>> = {
-      [ProviderName.THORCHAIN]: mimir['HALTTRADING'] === 1 || mimir[tickerKey] === 1,
-      [ProviderName.MAYACHAIN]: mayaMimir['HALTTRADING'] === 1 || mayaMimir[tickerKey] === 1
+      [ProviderName.THORCHAIN]: isHalted(mimir),
+      [ProviderName.MAYACHAIN]: isHalted(mayaMimir)
     }
 
     return asset.providers.length > 0 && asset.providers.every(provider => haltedOn[provider])
