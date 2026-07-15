@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { MCP_UI_RESOURCES, SWAP_QUOTE_UI_READ_RESULT, SWAP_QUOTE_UI_URI } from '@/lib/mcp-ui'
+import { MCP_UI_RESOURCES, SWAP_QUOTE_UI_READ_RESULT, SWAP_QUOTE_UI_URI } from '@/lib/agent/mcp-ui'
 import { rateLimit } from '@/lib/rate-limit'
 
 // Same THORNode gateway the app itself uses (see src/lib/thorchain-api.ts).
@@ -31,8 +31,7 @@ export const MCP_TOOLS = [
       },
       additionalProperties: false
     },
-    // MCP Apps (io.modelcontextprotocol/ui): hosts that support it render the
-    // quote in the swap-quote view; others ignore _meta.
+    // MCP Apps hosts render the quote in the swap-quote view; others ignore _meta.
     _meta: {
       ui: {
         resourceUri: SWAP_QUOTE_UI_URI,
@@ -208,7 +207,7 @@ export async function handleMcpPost(req: NextRequest) {
     try {
       const data = await callTool(name, toolArgs)
       const result: Record<string, unknown> = { content: [{ type: 'text', text: JSON.stringify(data, null, 2) }] }
-      // The swap-quote view consumes structuredContent (ui/notifications/tool-result).
+      // The swap-quote UI view consumes structuredContent.
       if (name === 'get_swap_quote' && data && typeof data === 'object' && !Array.isArray(data)) {
         result.structuredContent = data
       }

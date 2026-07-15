@@ -1,7 +1,6 @@
-// MCP Apps (io.modelcontextprotocol/ui) support for the MCP server: a
-// predeclared ui:// resource rendering swap quotes, linked from the
-// get_swap_quote tool via _meta.ui.resourceUri. Spec:
-// https://github.com/modelcontextprotocol/ext-apps (2026-01-26).
+// MCP Apps quote view (spec 2026-01-26:
+// https://github.com/modelcontextprotocol/ext-apps), linked from the
+// get_swap_quote tool via _meta.ui.resourceUri.
 
 export const SWAP_QUOTE_UI_URI = 'ui://thorchain-swap/swap-quote'
 
@@ -15,9 +14,8 @@ export const MCP_UI_RESOURCES = [
   }
 ]
 
-// Self-contained (no external scripts/styles, empty CSP domains). Hand-rolled
-// ui/initialize → ui/notifications/initialized handshake instead of the
-// @modelcontextprotocol/ext-apps SDK to keep the template a single string.
+// Hand-rolled host handshake instead of the ext-apps SDK so the template
+// stays a single self-contained string (no external assets; CSP stays empty).
 export const SWAP_QUOTE_UI_HTML = `<!DOCTYPE html>
 <html>
 <head>

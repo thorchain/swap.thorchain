@@ -8,7 +8,7 @@ import {
   developerScopes,
   errorExample,
   mcpQuoteExample
-} from '@/lib/developer-portal'
+} from '@/lib/agent/developer-portal'
 
 export const metadata: Metadata = {
   title: 'THORChain Developer Resources | Swap API Docs, MCP Server & Agent Tools',

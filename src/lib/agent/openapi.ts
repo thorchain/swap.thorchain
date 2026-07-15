@@ -6,8 +6,6 @@ const errorContent = {
   }
 }
 
-// Declared on every write operation: retries with the same key replay the
-// original response instead of re-executing (see src/lib/idempotency.ts).
 const idempotencyKeyParameter = {
   name: 'Idempotency-Key',
   in: 'header',
@@ -17,7 +15,9 @@ const idempotencyKeyParameter = {
   schema: { type: 'string', maxLength: 255 }
 }
 
-export function GET() {
+// Served at /.well-known/openapi.json and /openapi.json via the
+// discovery-file registry.
+export function buildOpenApiDocument() {
   const openapi = {
     openapi: '3.1.0',
     info: {
@@ -198,9 +198,5 @@ export function GET() {
     }
   }
 
-  return new Response(JSON.stringify(openapi, null, 2), {
-    headers: {
-      'Content-Type': 'application/vnd.oai.openapi+json; charset=utf-8'
-    }
-  })
+  return openapi
 }

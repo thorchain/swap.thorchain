@@ -226,9 +226,8 @@ Teams that need authenticated integration access should coordinate with the THOR
 Full developer documentation lives at ${AppConfig.baseUrl}/developers (markdown: ${AppConfig.baseUrl}/developers.md).
 `
 
-// The complete single-file agent reference served at /llms-full.md and
-// /llms-full.txt (llmstxt.org convention). Aggregates everything an agent
-// needs without following links.
+// Complete single-file agent reference (llmstxt.org convention), served at
+// /llms-full.md and /llms-full.txt.
 export const llmsFullMarkdown = `# THORChain Swap — Agent Library
 
 The complete reference for AI agents using THORChain Swap (${AppConfig.baseUrl}), the public web interface for native cross-chain swaps powered by THORChain and Maya Protocol. Everything here is public; nothing requires authentication.

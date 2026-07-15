@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { apiError, methodNotAllowed } from '@/lib/api-error'
-import { withIdempotency } from '@/lib/idempotency'
+import { withIdempotency } from '@/lib/agent/idempotency'
 import { rateLimit } from '@/lib/rate-limit'
 
 async function handlePost(req: NextRequest) {

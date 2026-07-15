@@ -1,9 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { apiError } from '@/lib/api-error'
 
-// In-memory Idempotency-Key store, sufficient for the single-instance
-// standalone deployment (same trade-off as src/lib/rate-limit.ts). Keys are
-// retained for one hour or until restart — document this as best-effort.
+// In-memory store, same single-instance trade-off as src/lib/rate-limit.ts.
+// Keys last one hour or until restart.
 
 const TTL_MS = 60 * 60 * 1000
 const MAX_KEYS = 10_000
@@ -18,10 +17,9 @@ function sweep(now: number) {
 }
 
 /**
- * Wraps a POST handler with Idempotency-Key support: a repeated request with
- * the same key replays the original JSON response (marked with an
- * `Idempotency-Replayed: true` header) instead of re-executing the operation.
- * 429 and 5xx outcomes are not cached so retries can succeed.
+ * Repeats of a request with the same Idempotency-Key replay the original JSON
+ * response (marked `Idempotency-Replayed: true`) instead of re-executing.
+ * 429/5xx outcomes are never cached so retries can succeed.
  */
 export function withIdempotency(scope: string, handler: (req: NextRequest) => Promise<Response>) {
   return async (req: NextRequest): Promise<Response> => {

@@ -1,36 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { AppConfig, PRIMARY_HOST, SUBDOMAIN_ROUTES } from '@/config'
-
-const homeMarkdown = `# THORChain Swap
-
-THORChain Swap is the public swap interface for THORChain powered cross-chain swaps.
-
-## Public Pages
-
-- [Swap interface](${AppConfig.baseUrl}/)
-- [Pool interface](https://pool.thorchain.org/)
-- [Bond interface](https://bond.thorchain.org/)
-- [Memo interface](https://memo.thorchain.org/)
-- [TCY interface](https://tcy.thorchain.org/)
-- [THORName interface](https://thorname.thorchain.org/)
-
-## Developer Resources
-
-- [Developer portal](${AppConfig.baseUrl}/developers)
-- [Developer portal (markdown)](${AppConfig.baseUrl}/developers.md)
-
-## Machine-Readable Discovery
-
-- [llms.txt](${AppConfig.baseUrl}/llms.txt)
-- [AGENTS.md](${AppConfig.baseUrl}/AGENTS.md)
-- [MCP server card](${AppConfig.baseUrl}/.well-known/mcp-server-card)
-- [robots.txt](${AppConfig.baseUrl}/robots.txt)
-- [sitemap.xml](${AppConfig.baseUrl}/sitemap.xml)
-- [API catalog](${AppConfig.baseUrl}/.well-known/api-catalog)
-- [OpenAPI description](${AppConfig.baseUrl}/.well-known/openapi.json)
-- [Agent skills index](${AppConfig.baseUrl}/.well-known/agent-skills/index.json)
-- [Auth.md](${AppConfig.baseUrl}/auth.md)
-`
+import { PRIMARY_HOST, SUBDOMAIN_ROUTES } from '@/config'
+import { discoveryFiles, homeMarkdown } from '@/lib/agent/discovery-files'
 
 function prefersMarkdown(req: NextRequest) {
   const accept = req.headers.get('accept')?.toLowerCase()
@@ -51,6 +21,16 @@ function prefersMarkdown(req: NextRequest) {
 }
 
 export function proxy(req: NextRequest) {
+  // Registered discovery files are served ahead of the filesystem routes.
+  if (req.method === 'GET' || req.method === 'HEAD') {
+    const file = discoveryFiles[req.nextUrl.pathname]
+    if (file) {
+      return new NextResponse(req.method === 'HEAD' ? null : file.body, {
+        headers: { 'Content-Type': file.contentType }
+      })
+    }
+  }
+
   const host = (req.headers.get('host') || '').split(':')[0]
   if (!host.endsWith('.thorchain.org')) return NextResponse.next()
 
