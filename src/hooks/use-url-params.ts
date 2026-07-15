@@ -12,7 +12,15 @@ const SELL = 'sell-'
 const BUY = '-buy-'
 
 const isNativeAsset = (asset: Asset) => asset.chain === asset.ticker && !asset.isSecuredAsset && !asset.isTradeAsset
-const toSlug = (asset: Asset) => (isNativeAsset(asset) ? asset.ticker : asset.identifier)
+
+// URL slug: bare ticker for gas assets, identifier without the contract-address suffix otherwise
+const toSlug = (asset: Asset) => {
+  if (isNativeAsset(asset)) return asset.ticker
+  const { address, identifier } = asset
+  if (!address) return identifier
+  const suffix = `-${address.toLowerCase()}`
+  return identifier.toLowerCase().endsWith(suffix) ? identifier.slice(0, identifier.length - suffix.length) : identifier
+}
 
 function parsePath(pathname: string): { sell: string | null; buy: string | null } {
   if (!pathname.startsWith(`/${SELL}`)) return { sell: null, buy: null }
@@ -30,10 +38,8 @@ function resolveAsset(assets: Asset[], token: string | null, fallback: string): 
     const lower = token.toLowerCase()
     const exact = assets.find(a => a.identifier.toLowerCase() === lower)
     if (exact) return exact
-    if (!token.includes('.')) {
-      const nativeAsset = assets.find(a => a.ticker.toLowerCase() === lower && isNativeAsset(a))
-      if (nativeAsset) return nativeAsset
-    }
+    const slugMatch = assets.find(a => toSlug(a).toLowerCase() === lower)
+    if (slugMatch) return slugMatch
   }
   return assets.find(a => a.identifier === fallback)
 }

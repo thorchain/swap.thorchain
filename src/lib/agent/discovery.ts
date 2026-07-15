@@ -259,10 +259,10 @@ Hand users a prefilled swap URL:
 
 \`\`\`
 ${AppConfig.baseUrl}/sell-BTC-buy-ETH
-${AppConfig.baseUrl}/sell-BTC.BTC-buy-ETH.USDC-0XA0B86991C6218B36C1D19D4A2E9EB0CE3606EB48
+${AppConfig.baseUrl}/sell-BTC.BTC-buy-ETH.USDC
 \`\`\`
 
-The path pattern is \`/sell-<asset>-buy-<asset>\`. Native gas assets may use just the ticker; any asset may use its full \`CHAIN.SYMBOL\` identifier.
+The path pattern is \`/sell-<asset>-buy-<asset>\`. Native gas assets may use just the ticker; tokens use \`CHAIN.TICKER\` (the full identifier with the contract-address suffix is also accepted).
 
 ## Asset Notation and Amounts
 
