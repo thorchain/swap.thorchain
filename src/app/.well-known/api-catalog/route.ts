@@ -13,6 +13,10 @@ export function GET() {
         ],
         'service-doc': [
           {
+            href: `${AppConfig.baseUrl}/developers.md`,
+            type: 'text/markdown'
+          },
+          {
             href: `${AppConfig.baseUrl}/auth.md`,
             type: 'text/markdown'
           }
@@ -33,6 +37,10 @@ export function GET() {
           }
         ],
         'service-doc': [
+          {
+            href: `${AppConfig.baseUrl}/developers.md`,
+            type: 'text/markdown'
+          },
           {
             href: `${AppConfig.baseUrl}/auth.md`,
             type: 'text/markdown'

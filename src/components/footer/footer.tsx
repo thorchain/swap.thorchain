@@ -37,6 +37,9 @@ export function FooterContent({ className }: { className?: string }) {
           </div>
         </div>
         <div className="flex h-4 items-center gap-2">
+          <a className="sr-only" href="/developers">
+            {t('developers')}
+          </a>
           <div onClick={() => openDialog(ReportBug, {})} className="flex cursor-pointer items-center gap-1 underline transition-colors">
             {t('reportBug')}
           </div>

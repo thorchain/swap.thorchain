@@ -1,25 +1,31 @@
 import { NextRequest, NextResponse } from 'next/server'
+import { apiError, methodNotAllowed } from '@/lib/api-error'
+import { withIdempotency } from '@/lib/idempotency'
 import { rateLimit } from '@/lib/rate-limit'
 
-export async function POST(req: NextRequest) {
+async function handlePost(req: NextRequest) {
   const retryAfter = rateLimit(req, 'report-bug', 5)
   if (retryAfter !== null) {
-    return NextResponse.json(
-      { error: 'Too many requests' },
-      { status: 429, headers: { 'Retry-After': String(retryAfter) } }
-    )
+    return apiError(429, 'rate_limited', 'Too many requests', `Retry after ${retryAfter} seconds (see the Retry-After header).`, {
+      'Retry-After': String(retryAfter)
+    })
   }
 
-  const { email, description, attachment } = await req.json()
+  const body = await req.json().catch(() => null)
+  if (body === null) {
+    return apiError(400, 'invalid_json', 'Invalid JSON body', 'Send a JSON object like {"description": "..."} with Content-Type: application/json.')
+  }
+
+  const { email, description, attachment } = body
 
   if (!description || typeof description !== 'string' || !description.trim()) {
-    return NextResponse.json({ error: 'Description is required' }, { status: 400 })
+    return apiError(400, 'missing_description', 'Description is required', 'Provide a non-empty "description" string describing the bug or feature request.')
   }
 
   const { BREVO_API_KEY, BREVO_EMAIL, REPORT_TO_EMAIL } = process.env
   if (!BREVO_API_KEY || !BREVO_EMAIL || !REPORT_TO_EMAIL) {
     console.error('[report-bug] Missing BREVO_API_KEY, BREVO_EMAIL or REPORT_TO_EMAIL')
-    return NextResponse.json({ error: 'Internal server error' }, { status: 500 })
+    return apiError(500, 'server_misconfigured', 'Internal server error', 'The report delivery provider is not configured. Retry later.')
   }
 
   const userEmail = email && typeof email === 'string' && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim()) ? email.trim() : null
@@ -55,7 +61,7 @@ export async function POST(req: NextRequest) {
     if (!res.ok) {
       const body = await res.json().catch(() => ({}))
       console.error('[report-bug] Failed to send:', res.status, (body as { message?: string }).message)
-      return NextResponse.json({ error: 'Failed to send report' }, { status: 500 })
+      return apiError(500, 'delivery_failed', 'Failed to send report', 'The report could not be delivered. Retry later.')
     }
 
     const info = await res.json().catch(() => ({}))
@@ -63,6 +69,12 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ success: true })
   } catch (err: any) {
     console.error('[report-bug] Failed to send:', err.message)
-    return NextResponse.json({ error: 'Failed to send report' }, { status: 500 })
+    return apiError(500, 'delivery_failed', 'Failed to send report', 'The report could not be delivered. Retry later.')
   }
 }
+
+export const POST = withIdempotency('report-bug', handlePost)
+export const GET = methodNotAllowed(['POST'])
+export const PUT = methodNotAllowed(['POST'])
+export const PATCH = methodNotAllowed(['POST'])
+export const DELETE = methodNotAllowed(['POST'])

@@ -14,6 +14,11 @@ THORChain Swap is the public swap interface for THORChain powered cross-chain sw
 - [TCY interface](https://tcy.thorchain.org/)
 - [THORName interface](https://thorname.thorchain.org/)
 
+## Developer Resources
+
+- [Developer portal](${AppConfig.baseUrl}/developers)
+- [Developer portal (markdown)](${AppConfig.baseUrl}/developers.md)
+
 ## Machine-Readable Discovery
 
 - [llms.txt](${AppConfig.baseUrl}/llms.txt)

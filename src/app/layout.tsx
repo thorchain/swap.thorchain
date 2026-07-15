@@ -60,6 +60,51 @@ export const metadata: Metadata = {
   }
 }
 
+// JSON-LD structured data so search engines and AI agents can parse the
+// site's identity programmatically.
+const structuredData = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'Organization',
+      '@id': `${AppConfig.baseUrl}/#organization`,
+      name: 'THORChain',
+      url: 'https://www.thorchain.org',
+      logo: `${AppConfig.baseUrl}/logo.svg`,
+      sameAs: ['https://www.thorchain.org', 'https://x.com/THORChain', AppConfig.discordLink, AppConfig.telegramLink],
+      contactPoint: {
+        '@type': 'ContactPoint',
+        email: AppConfig.supportEmail,
+        contactType: 'customer support'
+      }
+    },
+    {
+      '@type': 'WebSite',
+      '@id': `${AppConfig.baseUrl}/#website`,
+      name: 'THORChain Swap',
+      url: AppConfig.baseUrl,
+      publisher: { '@id': `${AppConfig.baseUrl}/#organization` }
+    },
+    {
+      '@type': 'WebApplication',
+      '@id': `${AppConfig.baseUrl}/#webapplication`,
+      name: 'THORChain Swap',
+      url: AppConfig.baseUrl,
+      description: AppConfig.description,
+      applicationCategory: 'FinanceApplication',
+      operatingSystem: 'Any',
+      browserRequirements: 'Requires JavaScript',
+      image: `${AppConfig.baseUrl}/og-image.png`,
+      offers: {
+        '@type': 'Offer',
+        price: '0',
+        priceCurrency: 'USD'
+      },
+      publisher: { '@id': `${AppConfig.baseUrl}/#organization` }
+    }
+  ]
+}
+
 const crit = localFont({
   variable: '--font-crit',
   display: 'swap',
@@ -110,6 +155,7 @@ export default async function RootLayout({ children }: Readonly<{ children: Reac
         {/* Agent discovery links; React hoists them into <head>. */}
         <link rel="mcp-server-card" type="application/json" href="/.well-known/mcp-server-card.json" />
         <link rel="alternate" type="text/markdown" title="llms.txt" href="/llms.txt" />
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }} />
         <WebMcpTools />
         <WalletStoreHydration />
         <ReactQueryProvider>

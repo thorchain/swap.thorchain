@@ -1,24 +1,30 @@
 import { NextRequest, NextResponse } from 'next/server'
+import { apiError, methodNotAllowed } from '@/lib/api-error'
+import { withIdempotency } from '@/lib/idempotency'
 import { rateLimit } from '@/lib/rate-limit'
 
-export async function POST(req: NextRequest) {
+async function handlePost(req: NextRequest) {
   const retryAfter = rateLimit(req, 'newsletter', 5)
   if (retryAfter !== null) {
-    return NextResponse.json(
-      { error: 'Too many requests' },
-      { status: 429, headers: { 'Retry-After': String(retryAfter) } }
-    )
+    return apiError(429, 'rate_limited', 'Too many requests', `Retry after ${retryAfter} seconds (see the Retry-After header).`, {
+      'Retry-After': String(retryAfter)
+    })
   }
 
-  const { email } = await req.json()
+  const body = await req.json().catch(() => null)
+  if (body === null) {
+    return apiError(400, 'invalid_json', 'Invalid JSON body', 'Send a JSON object like {"email": "user@example.com"} with Content-Type: application/json.')
+  }
+
+  const { email } = body
 
   if (!email || typeof email !== 'string' || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-    return NextResponse.json({ error: 'Invalid email' }, { status: 400 })
+    return apiError(400, 'invalid_email', 'Invalid email', 'Provide a valid email address in the "email" field.')
   }
 
   const apiKey = process.env.BREVO_API_KEY
   if (!apiKey) {
-    return NextResponse.json({ error: 'Server misconfiguration' }, { status: 500 })
+    return apiError(500, 'server_misconfigured', 'Server misconfiguration', 'The subscription provider is not configured. Retry later or report the issue via POST /api/report-bug.')
   }
 
   const res = await fetch('https://api.brevo.com/v3/contacts', {
@@ -37,8 +43,14 @@ export async function POST(req: NextRequest) {
   if (!res.ok && res.status !== 204) {
     const body = await res.json().catch(() => ({}))
     const message = (body as { message?: string }).message ?? 'Failed to subscribe'
-    return NextResponse.json({ error: message }, { status: res.status })
+    return apiError(res.status, 'upstream_error', message, 'The subscription provider rejected the request. Verify the email address and retry later.')
   }
 
   return NextResponse.json({ success: true })
 }
+
+export const POST = withIdempotency('newsletter', handlePost)
+export const GET = methodNotAllowed(['POST'])
+export const PUT = methodNotAllowed(['POST'])
+export const PATCH = methodNotAllowed(['POST'])
+export const DELETE = methodNotAllowed(['POST'])

@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
+import { MCP_UI_RESOURCES, SWAP_QUOTE_UI_READ_RESULT, SWAP_QUOTE_UI_URI } from '@/lib/mcp-ui'
 import { rateLimit } from '@/lib/rate-limit'
 
 // Same THORNode gateway the app itself uses (see src/lib/thorchain-api.ts).
@@ -9,7 +10,7 @@ const SUPPORTED_PROTOCOL_VERSIONS = ['2025-06-18', '2025-03-26', '2024-11-05']
 export const MCP_SERVER_INFO = {
   name: 'thorchain-swap',
   title: 'THORChain Swap',
-  version: '0.2.0'
+  version: '0.3.0'
 }
 
 export const MCP_TOOLS = [
@@ -29,6 +30,14 @@ export const MCP_TOOLS = [
         streaming_interval: { type: 'string', description: 'Optional streaming swap interval in blocks' }
       },
       additionalProperties: false
+    },
+    // MCP Apps (io.modelcontextprotocol/ui): hosts that support it render the
+    // quote in the swap-quote view; others ignore _meta.
+    _meta: {
+      ui: {
+        resourceUri: SWAP_QUOTE_UI_URI,
+        visibility: ['model', 'app']
+      }
     }
   },
   {
@@ -163,7 +172,7 @@ export async function handleMcpPost(req: NextRequest) {
         : SUPPORTED_PROTOCOL_VERSIONS[0]
     return jsonRpcResult(id, {
       protocolVersion,
-      capabilities: { tools: { listChanged: false } },
+      capabilities: { tools: { listChanged: false }, resources: { listChanged: false, subscribe: false } },
       serverInfo: MCP_SERVER_INFO,
       instructions:
         'Read-only THORChain data tools. Quotes are indicative and time-sensitive. This server never holds keys, signs, or submits transactions; users sign in their own wallets.'
@@ -178,13 +187,32 @@ export async function handleMcpPost(req: NextRequest) {
     return jsonRpcResult(id, { tools: MCP_TOOLS })
   }
 
+  if (method === 'resources/list') {
+    return jsonRpcResult(id, { resources: MCP_UI_RESOURCES })
+  }
+
+  if (method === 'resources/templates/list') {
+    return jsonRpcResult(id, { resourceTemplates: [] })
+  }
+
+  if (method === 'resources/read') {
+    const uri = (params as { uri?: unknown } | undefined)?.uri
+    if (uri !== SWAP_QUOTE_UI_URI) return jsonRpcError(id, -32002, `Resource not found: ${String(uri)}`)
+    return jsonRpcResult(id, SWAP_QUOTE_UI_READ_RESULT)
+  }
+
   if (method === 'tools/call') {
     const { name, arguments: args } = (params ?? {}) as { name?: unknown; arguments?: unknown }
     if (typeof name !== 'string') return jsonRpcError(id, -32602, '"name" is required')
     const toolArgs = args && typeof args === 'object' && !Array.isArray(args) ? (args as Record<string, unknown>) : {}
     try {
       const data = await callTool(name, toolArgs)
-      return jsonRpcResult(id, { content: [{ type: 'text', text: JSON.stringify(data, null, 2) }] })
+      const result: Record<string, unknown> = { content: [{ type: 'text', text: JSON.stringify(data, null, 2) }] }
+      // The swap-quote view consumes structuredContent (ui/notifications/tool-result).
+      if (name === 'get_swap_quote' && data && typeof data === 'object' && !Array.isArray(data)) {
+        result.structuredContent = data
+      }
+      return jsonRpcResult(id, result)
     } catch (err) {
       if (err instanceof McpInvalidParams) return jsonRpcError(id, -32602, err.message)
       const text = err instanceof Error ? err.message : 'Tool execution failed'
