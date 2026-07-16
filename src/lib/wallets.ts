@@ -1,6 +1,5 @@
 import { Chain, getEIP6963Wallets, USwap, WalletOption } from '@tcswap/core'
 import { EVMPlugin } from '@tcswap/plugins/evm'
-import { NearPlugin } from '@tcswap/plugins/near'
 import { SolanaPlugin } from '@tcswap/plugins/solana'
 import { MayachainPlugin, ThorchainPlugin } from '@tcswap/plugins/thorchain'
 import { evmWallet } from '@tcswap/wallets/evm-extensions'
@@ -17,8 +16,7 @@ const defaultPlugins = {
   ...EVMPlugin,
   ...MayachainPlugin,
   ...ThorchainPlugin,
-  ...SolanaPlugin,
-  ...NearPlugin
+  ...SolanaPlugin
 }
 
 const defaultWallets = {
