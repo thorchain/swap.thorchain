@@ -66,7 +66,7 @@ export const useWalletStore = create<WalletState>()(
 
       disconnect: (wallet: WalletOption) => {
         const uSwap = getUSwap()
-        supportedChains[wallet].forEach(chain => {
+        supportedChains[wallet as keyof typeof supportedChains]?.forEach(chain => {
           uSwap.disconnectChain(chain)
         })
 

@@ -3,7 +3,6 @@ import { EVMPlugin } from '@tcswap/plugins/evm'
 import { NearPlugin } from '@tcswap/plugins/near'
 import { SolanaPlugin } from '@tcswap/plugins/solana'
 import { MayachainPlugin, ThorchainPlugin } from '@tcswap/plugins/thorchain'
-import { ctrlWallet } from '@tcswap/wallets/ctrl'
 import { evmWallet } from '@tcswap/wallets/evm-extensions'
 import { keplrWallet } from '@tcswap/wallets/keplr'
 import { keystoreWallet } from '@tcswap/wallets/keystore'
@@ -23,7 +22,6 @@ const defaultPlugins = {
 }
 
 const defaultWallets = {
-  ...ctrlWallet,
   ...evmWallet,
   ...keplrWallet,
   ...keystoreWallet,
@@ -113,8 +111,6 @@ export async function connectWallet(option: WalletOption, chains: Chain[], confi
       return connectEach(c => uSwap.connectPhantom(c))
     case WalletOption.KEPLR:
       return connectEach(c => uSwap.connectKeplr(c))
-    case WalletOption.CTRL:
-      return connectEach(c => uSwap.connectCtrl(c))
     case WalletOption.OKX:
     case WalletOption.OKX_MOBILE:
       return connectEach(c => uSwap.connectOkx(c))
@@ -155,10 +151,9 @@ export async function getAccounts(
     .filter(acc => acc !== null)
 }
 
-export const supportedChains: Record<WalletOption, Chain[]> = {
+export const supportedChains = {
   [WalletOption.BRAVE]: evmWallet.connectEVMWallet.supportedChains,
   [WalletOption.COINBASE_WEB]: evmWallet.connectEVMWallet.supportedChains,
-  [WalletOption.CTRL]: ctrlWallet.connectCtrl.supportedChains,
   [WalletOption.EIP6963]: evmWallet.connectEVMWallet.supportedChains,
   [WalletOption.KEPLR]: keplrWallet.connectKeplr.supportedChains,
   [WalletOption.KEYSTORE]: keystoreWallet.connectKeystore.supportedChains,
@@ -172,19 +167,5 @@ export const supportedChains: Record<WalletOption, Chain[]> = {
   [WalletOption.TRONLINK]: tronlinkWallet.connectTronLink.supportedChains,
   [WalletOption.TRUSTWALLET_WEB]: evmWallet.connectEVMWallet.supportedChains,
   [WalletOption.VULTISIG]: vultisigWallet.connectVultisig.supportedChains,
-  [WalletOption.WALLET_SELECTOR]: [Chain.Near],
-  [WalletOption.BITGET]: [],
-  [WalletOption.COINBASE_MOBILE]: [],
-  [WalletOption.COSMOSTATION]: [],
-  [WalletOption.EXODUS]: [],
-  [WalletOption.KEEPKEY]: [],
-  [WalletOption.KEEPKEY_BEX]: [],
-  [WalletOption.ONEKEY]: [],
-  [WalletOption.POLKADOT_JS]: [],
-  [WalletOption.PASSKEYS]: [],
-  [WalletOption.RADIX_WALLET]: [],
-  [WalletOption.TALISMAN]: [],
-  [WalletOption.TREZOR]: [],
-  [WalletOption.WALLETCONNECT]: [],
-  [WalletOption.XAMAN]: []
-}
+  [WalletOption.WALLET_SELECTOR]: [Chain.Near]
+} satisfies Partial<Record<WalletOption, Chain[]>>
