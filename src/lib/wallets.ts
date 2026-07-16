@@ -107,6 +107,9 @@ export async function connectWallet(option: WalletOption, chains: Chain[], confi
       return connectEach(c => uSwap.connectEVMWallet(c, WalletOption.METAMASK, metamask?.provider))
     case WalletOption.PHANTOM:
       return connectEach(c => uSwap.connectPhantom(c))
+    case WalletOption.TRUSTWALLET_WEB:
+      const trust = getEIP6963Wallets().providers.find(p => p.info.name === 'Trust Wallet')
+      return connectEach(c => uSwap.connectEVMWallet(c, WalletOption.TRUSTWALLET_WEB, trust?.provider))
     case WalletOption.KEPLR:
       return connectEach(c => uSwap.connectKeplr(c))
     case WalletOption.OKX:

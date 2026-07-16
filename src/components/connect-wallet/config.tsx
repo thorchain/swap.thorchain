@@ -64,6 +64,14 @@ export const WALLETS: WalletParams[] = [
     supportedChains: supportedChains[WalletOption.PHANTOM]
   },
   {
+    key: 'trustwallet',
+    type: WalletType.browser,
+    label: 'Trust Wallet',
+    option: WalletOption.TRUSTWALLET_WEB,
+    link: 'https://trustwallet.com',
+    supportedChains: supportedChains[WalletOption.TRUSTWALLET_WEB]
+  },
+  {
     key: 'keplr',
     type: WalletType.browser,
     label: 'Keplr',
