@@ -54,6 +54,7 @@
     },
     "button": {
       "limitNotSupported": "不支援限價訂單",
+      "taprootNotSupported": "不支援 Taproot",
       "temporarilyUnavailable": "暫時無法使用",
       "enterAmount": "輸入金額",
       "quoting": "報價中",
@@ -192,6 +193,7 @@
       "addressPlaceholder": "{chain}地址",
       "paste": "貼上",
       "invalidAddress": "無效的{chain}地址",
+      "taprootNotSupported": "Maya Protocol 不支援 Taproot 地址",
       "titleAddresses": "輸入地址",
       "titleReceiving": "輸入接收地址",
       "enterRefundAddress": "輸入退款地址：",

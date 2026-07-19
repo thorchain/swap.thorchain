@@ -54,6 +54,7 @@
     },
     "button": {
       "limitNotSupported": "Limit Emri Desteklenmiyor",
+      "taprootNotSupported": "Taproot Desteklenmiyor",
       "temporarilyUnavailable": "Geçici Olarak Kullanılamıyor",
       "enterAmount": "Tutar Gir",
       "quoting": "Fiyat alınıyor",
@@ -192,6 +193,7 @@
       "addressPlaceholder": "{chain} adresi",
       "paste": "Yapıştır",
       "invalidAddress": "Geçersiz {chain} adresi",
+      "taprootNotSupported": "Maya Protocol, Taproot adreslerini desteklemiyor",
       "titleAddresses": "Adresleri Gir",
       "titleReceiving": "Alıcı Adresi Gir",
       "enterRefundAddress": "İade adresini gir:",

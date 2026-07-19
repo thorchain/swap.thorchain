@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import { useTranslations } from 'next-intl'
+import { Chain } from '@tcswap/core'
 import { WalletIcon } from '@/components/wallet-icon'
 import { ProviderName, USwapError } from '@tcswap/helpers'
 import { QuoteResponseRoute } from '@tcswap/helpers/api'
@@ -20,6 +21,7 @@ import { useAssetFrom, useAssetTo, useCustomInterval, useCustomQuantity, useSlip
 import { useAccounts, useSelectedAccount } from '@/hooks/use-wallets'
 import { getQuotes } from '@/lib/api'
 import { prepareQuoteForLimitSwap } from '@/lib/memo-helpers'
+import { isMayaProvider, isTaprootAddress } from '@/lib/swap-helpers'
 import { cn, truncate } from '@/lib/utils'
 import { useIsLimitSwap, useLimitSwapBuyAmount, useLimitSwapExpiry } from '@/store/limit-swap-store'
 import { WalletAccount } from '@/store/wallets-store'
@@ -58,6 +60,8 @@ export const SwapRecipient = ({ provider, onFetchQuote }: SwapRecipientProps) =>
 
   const refundRequired = !selectedAccount && provider === 'NEAR'
   const options = accounts.filter(a => a.network === assetTo.chain)
+  const isMayachain = isMayaProvider(provider)
+  const isTaprootDestination = isMayachain && assetTo.chain === Chain.Bitcoin && isTaprootAddress(destinationAddress)
 
   useEffect(() => {
     if (destinationAddress.length === 0) return setIsValidDestination(true)
@@ -79,7 +83,6 @@ export const SwapRecipient = ({ provider, onFetchQuote }: SwapRecipientProps) =>
     setQuoting(true)
 
     const isThorchain = provider === 'THORCHAIN' || provider === 'THORCHAIN_STREAMING'
-    const isMayachain = provider === 'MAYACHAIN' || provider === 'MAYACHAIN_STREAMING'
     const supportsStreaming = isThorchain || isMayachain
 
     getQuotes({
@@ -122,7 +125,12 @@ export const SwapRecipient = ({ provider, onFetchQuote }: SwapRecipientProps) =>
   }
 
   const isLTC = assetTo.ticker === 'LTC'
-  const buttonEnabled = isValidDestination && destinationAddress.length && !quoting && (refundRequired ? isValidRefund && refundAddress.length : true)
+  const buttonEnabled =
+    isValidDestination &&
+    destinationAddress.length &&
+    !isTaprootDestination &&
+    !quoting &&
+    (refundRequired ? isValidRefund && refundAddress.length : true)
 
   const addressInput = (asset: Asset, address: string, setAddress: (address: string) => void, isValid: boolean, options: WalletAccount[] = []) => {
     const currentOption = options.find(a => a.address.toLowerCase() === address.toLowerCase())
@@ -211,6 +219,7 @@ export const SwapRecipient = ({ provider, onFetchQuote }: SwapRecipientProps) =>
               <div className="flex flex-col gap-3">
                 {refundRequired && <div className="text-txt-label-small text-sm font-semibold">{t('recipient.enterReceivingAddress')}</div>}
                 {addressInput(assetTo, destinationAddress, setDestinationAddress, isValidDestination, options)}
+                {isTaprootDestination && <div className="text-lucian text-xs font-semibold">{t('recipient.taprootNotSupported')}</div>}
               </div>
             </div>
 

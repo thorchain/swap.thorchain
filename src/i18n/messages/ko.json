@@ -54,6 +54,7 @@
     },
     "button": {
       "limitNotSupported": "지정가 주문 미지원",
+      "taprootNotSupported": "Taproot 미지원",
       "temporarilyUnavailable": "일시적으로 사용할 수 없음",
       "enterAmount": "금액 입력",
       "quoting": "견적 조회 중",
@@ -192,6 +193,7 @@
       "addressPlaceholder": "{chain} 주소",
       "paste": "붙여넣기",
       "invalidAddress": "유효하지 않은 {chain} 주소",
+      "taprootNotSupported": "Maya Protocol은 Taproot 주소를 지원하지 않습니다",
       "titleAddresses": "주소 입력",
       "titleReceiving": "수령 주소 입력",
       "enterRefundAddress": "환불 주소 입력:",

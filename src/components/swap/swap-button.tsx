@@ -1,4 +1,4 @@
-import { EVMChain } from '@tcswap/core'
+import { Chain, EVMChain } from '@tcswap/core'
 import { QuoteResponseRoute } from '@tcswap/helpers/api'
 import { useTranslations } from 'next-intl'
 import { toast } from 'sonner'
@@ -14,6 +14,7 @@ import { useQuote } from '@/hooks/use-quote'
 import { useSimulation } from '@/hooks/use-simulation'
 import { useAssetFrom, useAssetTo, useSwap } from '@/hooks/use-swap'
 import { useExternalWalletMode, useSelectedAccount, useSetExternalWalletMode } from '@/hooks/use-wallets'
+import { isMayaProvider, isTaprootAddress } from '@/lib/swap-helpers'
 import { getUSwap } from '@/lib/wallets'
 import { useIsLimitSwap, useLimitSwapBuyAmount } from '@/store/limit-swap-store'
 
@@ -45,7 +46,7 @@ export const SwapButton = ({ instantSwapSupported, instantSwapAvailable }: SwapB
   const { isLoading: isSimulating, approveData } = useSimulation()
   const { balance, isLoading: isBalanceLoading } = useBalance()
   const { mimir } = useMimir()
-  const isMayaChain = quote?.providers[0] === 'MAYACHAIN' || quote?.providers[0] === 'MAYACHAIN_STREAMING'
+  const isMayaChain = isMayaProvider(quote?.providers[0])
   const isLimitSwapDisabled = mimir['ENABLEADVSWAPQUEUE'] === 2 || isMayaChain
 
   const { openDialog } = useDialog()
@@ -97,6 +98,10 @@ export const SwapButton = ({ instantSwapSupported, instantSwapAvailable }: SwapB
           }
         }
       }
+    }
+
+    if (isMayaChain && selectedAccount.network === Chain.Bitcoin && isTaprootAddress(selectedAccount.address)) {
+      return { text: t('button.taprootNotSupported'), spinner: false, accent: false }
     }
 
     if (isBalanceLoading || !balance || balance.spendable.lt(valueFrom)) {

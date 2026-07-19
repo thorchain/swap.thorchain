@@ -54,6 +54,7 @@
     },
     "button": {
       "limitNotSupported": "الأمر المحدد غير مدعوم",
+      "taprootNotSupported": "Taproot غير مدعوم",
       "temporarilyUnavailable": "غير متاح مؤقتًا",
       "enterAmount": "أدخل المبلغ",
       "quoting": "جارٍ التسعير",
@@ -192,6 +193,7 @@
       "addressPlaceholder": "عنوان {chain}",
       "paste": "لصق",
       "invalidAddress": "عنوان {chain} غير صالح",
+      "taprootNotSupported": "بروتوكول Maya لا يدعم عناوين Taproot",
       "titleAddresses": "أدخل العناوين",
       "titleReceiving": "أدخل عنوان الاستلام",
       "enterRefundAddress": "أدخل عنوان الاسترداد:",

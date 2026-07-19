@@ -59,6 +59,7 @@
     },
     "button": {
       "limitNotSupported": "Limit Order Not Supported",
+      "taprootNotSupported": "Taproot Not Supported",
       "temporarilyUnavailable": "Temporarily Not Available",
       "enterAmount": "Enter Amount",
       "quoting": "Quoting",
@@ -197,6 +198,7 @@
       "addressPlaceholder": "{chain} address",
       "paste": "Paste",
       "invalidAddress": "Invalid {chain} address",
+      "taprootNotSupported": "Maya Protocol does not support Taproot addresses",
       "titleAddresses": "Enter Addresses",
       "titleReceiving": "Enter Receiving Address",
       "enterRefundAddress": "Enter refund address:",

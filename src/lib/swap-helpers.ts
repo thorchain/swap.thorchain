@@ -130,3 +130,8 @@ export function normalizeThorBankDenom(denom: string): string | null {
   // Native single-word THORChain denoms (rune, tcy).
   return `${Chain.THORChain}.${lower.toUpperCase()}`
 }
+
+export const isMayaProvider = (provider?: string) => provider === 'MAYACHAIN' || provider === 'MAYACHAIN_STREAMING'
+
+// Maya Protocol cannot observe or refund Taproot (bech32m) transactions.
+export const isTaprootAddress = (address: string) => address.toLowerCase().startsWith('bc1p')

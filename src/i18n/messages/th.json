@@ -54,6 +54,7 @@
     },
     "button": {
       "limitNotSupported": "ไม่รองรับคำสั่ง Limit",
+      "taprootNotSupported": "ไม่รองรับ Taproot",
       "temporarilyUnavailable": "ไม่พร้อมใช้งานชั่วคราว",
       "enterAmount": "กรอกจำนวน",
       "quoting": "กำลังคำนวณราคา",
@@ -192,6 +193,7 @@
       "addressPlaceholder": "ที่อยู่ {chain}",
       "paste": "วาง",
       "invalidAddress": "ที่อยู่ {chain} ไม่ถูกต้อง",
+      "taprootNotSupported": "Maya Protocol ไม่รองรับที่อยู่ Taproot",
       "titleAddresses": "กรอกที่อยู่",
       "titleReceiving": "กรอกที่อยู่ผู้รับ",
       "enterRefundAddress": "กรอกที่อยู่สำหรับการคืนเงิน:",

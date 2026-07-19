@@ -54,6 +54,7 @@
     },
     "button": {
       "limitNotSupported": "Limit-Order nicht unterstützt",
+      "taprootNotSupported": "Taproot wird nicht unterstützt",
       "temporarilyUnavailable": "Vorübergehend nicht verfügbar",
       "enterAmount": "Betrag eingeben",
       "quoting": "Angebot wird erstellt",
@@ -192,6 +193,7 @@
       "addressPlaceholder": "{chain}-Adresse",
       "paste": "Einfügen",
       "invalidAddress": "Ungültige {chain}-Adresse",
+      "taprootNotSupported": "Maya Protocol unterstützt keine Taproot-Adressen",
       "titleAddresses": "Adressen eingeben",
       "titleReceiving": "Empfangsadresse eingeben",
       "enterRefundAddress": "Rückerstattungsadresse eingeben:",

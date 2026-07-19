@@ -54,6 +54,7 @@
     },
     "button": {
       "limitNotSupported": "Лимитный ордер не поддерживается",
+      "taprootNotSupported": "Taproot не поддерживается",
       "temporarilyUnavailable": "Временно недоступно",
       "enterAmount": "Введите сумму",
       "quoting": "Расчёт котировки",
@@ -192,6 +193,7 @@
       "addressPlaceholder": "Адрес {chain}",
       "paste": "Вставить",
       "invalidAddress": "Недействительный адрес {chain}",
+      "taprootNotSupported": "Maya Protocol не поддерживает Taproot-адреса",
       "titleAddresses": "Введите адреса",
       "titleReceiving": "Введите адрес получения",
       "enterRefundAddress": "Введите адрес возврата:",

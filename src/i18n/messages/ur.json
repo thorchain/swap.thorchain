@@ -54,6 +54,7 @@
     },
     "button": {
       "limitNotSupported": "Limit Order سپورٹڈ نہیں ہے",
+      "taprootNotSupported": "Taproot سپورٹ نہیں ہے",
       "temporarilyUnavailable": "عارضی طور پر دستیاب نہیں",
       "enterAmount": "رقم درج کریں",
       "quoting": "قیمت معلوم ہو رہی ہے",
@@ -192,6 +193,7 @@
       "addressPlaceholder": "{chain} پتہ",
       "paste": "پیسٹ کریں",
       "invalidAddress": "غلط {chain} پتہ",
+      "taprootNotSupported": "Maya Protocol Taproot ایڈریسز کو سپورٹ نہیں کرتا",
       "titleAddresses": "پتے درج کریں",
       "titleReceiving": "وصول کنندہ پتہ درج کریں",
       "enterRefundAddress": "ری فنڈ پتہ درج کریں:",

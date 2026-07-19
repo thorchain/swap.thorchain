@@ -54,6 +54,7 @@
     },
     "button": {
       "limitNotSupported": "指値注文は対応していません",
+      "taprootNotSupported": "Taprootは対応していません",
       "temporarilyUnavailable": "一時的に利用できません",
       "enterAmount": "金額を入力",
       "quoting": "見積もり中",
@@ -192,6 +193,7 @@
       "addressPlaceholder": "{chain} アドレス",
       "paste": "貼り付け",
       "invalidAddress": "無効な{chain}アドレスです",
+      "taprootNotSupported": "Maya ProtocolはTaprootアドレスに対応していません",
       "titleAddresses": "アドレスを入力",
       "titleReceiving": "受取アドレスを入力",
       "enterRefundAddress": "返金アドレスを入力:",

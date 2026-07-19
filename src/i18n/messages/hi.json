@@ -54,6 +54,7 @@
     },
     "button": {
       "limitNotSupported": "लिमिट ऑर्डर समर्थित नहीं है",
+      "taprootNotSupported": "Taproot समर्थित नहीं है",
       "temporarilyUnavailable": "अस्थायी रूप से उपलब्ध नहीं है",
       "enterAmount": "राशि दर्ज करें",
       "quoting": "कोट किया जा रहा है",
@@ -192,6 +193,7 @@
       "addressPlaceholder": "{chain} पता",
       "paste": "पेस्ट करें",
       "invalidAddress": "अमान्य {chain} पता",
+      "taprootNotSupported": "Maya Protocol Taproot पतों का समर्थन नहीं करता",
       "titleAddresses": "पते दर्ज करें",
       "titleReceiving": "प्राप्ति पता दर्ज करें",
       "enterRefundAddress": "रिफंड पता दर्ज करें:",

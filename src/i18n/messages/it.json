@@ -54,6 +54,7 @@
     },
     "button": {
       "limitNotSupported": "Ordine limite non supportato",
+      "taprootNotSupported": "Taproot non supportato",
       "temporarilyUnavailable": "Temporaneamente non disponibile",
       "enterAmount": "Inserisca l'importo",
       "quoting": "Quotazione in corso",
@@ -192,6 +193,7 @@
       "addressPlaceholder": "Indirizzo {chain}",
       "paste": "Incolla",
       "invalidAddress": "Indirizzo {chain} non valido",
+      "taprootNotSupported": "Maya Protocol non supporta gli indirizzi Taproot",
       "titleAddresses": "Inserisca gli indirizzi",
       "titleReceiving": "Inserisca l'indirizzo di ricezione",
       "enterRefundAddress": "Inserisca l'indirizzo di rimborso:",

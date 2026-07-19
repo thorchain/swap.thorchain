@@ -54,6 +54,7 @@
     },
     "button": {
       "limitNotSupported": "Limit آرڈر سپورٹ نئیں اے",
+      "taprootNotSupported": "Taproot سپورٹ نئیں اے",
       "temporarilyUnavailable": "فی الحال دستیاب نئیں",
       "enterAmount": "رقم پاؤ",
       "quoting": "قیمت لئی پئی جاندی اے",
@@ -192,6 +193,7 @@
       "addressPlaceholder": "{chain} پتہ",
       "paste": "پیسٹ کرو",
       "invalidAddress": "غلط {chain} پتہ",
+      "taprootNotSupported": "Maya Protocol Taproot ایڈریساں نوں سپورٹ نئیں کردا",
       "titleAddresses": "پتے پاؤ",
       "titleReceiving": "وصول کرݨ والا پتہ پاؤ",
       "enterRefundAddress": "واپسی والا پتہ پاؤ:",

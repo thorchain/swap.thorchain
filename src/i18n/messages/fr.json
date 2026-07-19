@@ -54,6 +54,7 @@
     },
     "button": {
       "limitNotSupported": "Ordre limite non pris en charge",
+      "taprootNotSupported": "Taproot non pris en charge",
       "temporarilyUnavailable": "Temporairement indisponible",
       "enterAmount": "Saisir le montant",
       "quoting": "Cotation",
@@ -192,6 +193,7 @@
       "addressPlaceholder": "Adresse {chain}",
       "paste": "Coller",
       "invalidAddress": "Adresse {chain} invalide",
+      "taprootNotSupported": "Maya Protocol ne prend pas en charge les adresses Taproot",
       "titleAddresses": "Saisir les adresses",
       "titleReceiving": "Saisir l'adresse de réception",
       "enterRefundAddress": "Saisissez l'adresse de remboursement :",

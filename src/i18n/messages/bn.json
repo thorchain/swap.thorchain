@@ -54,6 +54,7 @@
     },
     "button": {
       "limitNotSupported": "লিমিট অর্ডার সমর্থিত নয়",
+      "taprootNotSupported": "Taproot সমর্থিত নয়",
       "temporarilyUnavailable": "সাময়িকভাবে উপলব্ধ নয়",
       "enterAmount": "পরিমাণ লিখুন",
       "quoting": "কোট নেওয়া হচ্ছে",
@@ -192,6 +193,7 @@
       "addressPlaceholder": "{chain} ঠিকানা",
       "paste": "পেস্ট করুন",
       "invalidAddress": "অবৈধ {chain} ঠিকানা",
+      "taprootNotSupported": "Maya Protocol Taproot ঠিকানা সমর্থন করে না",
       "titleAddresses": "ঠিকানা লিখুন",
       "titleReceiving": "গ্রহণকারী ঠিকানা লিখুন",
       "enterRefundAddress": "রিফান্ড ঠিকানা লিখুন:",

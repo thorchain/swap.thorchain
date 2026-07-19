@@ -54,6 +54,7 @@
     },
     "button": {
       "limitNotSupported": "Limit order tidak didukung",
+      "taprootNotSupported": "Taproot Tidak Didukung",
       "temporarilyUnavailable": "Sementara tidak tersedia",
       "enterAmount": "Masukkan jumlah",
       "quoting": "Mengambil kuotasi",
@@ -192,6 +193,7 @@
       "addressPlaceholder": "Alamat {chain}",
       "paste": "Tempel",
       "invalidAddress": "Alamat {chain} tidak valid",
+      "taprootNotSupported": "Maya Protocol tidak mendukung alamat Taproot",
       "titleAddresses": "Masukkan alamat",
       "titleReceiving": "Masukkan alamat penerima",
       "enterRefundAddress": "Masukkan alamat pengembalian:",

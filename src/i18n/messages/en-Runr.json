@@ -57,6 +57,7 @@
     },
     "button": {
       "limitNotSupported": "ᛚᛁᛗᛁᛏ ᛟᚱᛞᛖᚱ ᚾᛟᛏ ᛊᚢᛈᛈᛟᚱᛏᛖᛞ",
+      "taprootNotSupported": "ᛏᚨᛈᚱᛟᛟᛏ ᚾᛟᛏ ᛊᚢᛈᛈᛟᚱᛏᛖᛞ",
       "temporarilyUnavailable": "ᛏᛖᛗᛈᛟᚱᚨᚱᛁᛚᛁ ᚾᛟᛏ ᚨᚹᚨᛁᛚᚨᛒᛚᛖ",
       "enterAmount": "ᛖᚾᛏᛖᚱ ᚨᛗᛟᚢᚾᛏ",
       "quoting": "ᚲᚢᛟᛏᛁᛜ",
@@ -195,6 +196,7 @@
       "addressPlaceholder": "{chain} ᚨᛞᛞᚱᛖᛊᛊ",
       "paste": "ᛈᚨᛊᛏᛖ",
       "invalidAddress": "ᛁᚾᚹᚨᛚᛁᛞ {chain} ᚨᛞᛞᚱᛖᛊᛊ",
+      "taprootNotSupported": "ᛗᚨᛁᚨ ᛈᚱᛟᛏᛟᚲᛟᛚ ᛞᛟᛖᛊ ᚾᛟᛏ ᛊᚢᛈᛈᛟᚱᛏ ᛏᚨᛈᚱᛟᛟᛏ ᚨᛞᛞᚱᛖᛊᛊᛖᛊ",
       "titleAddresses": "ᛖᚾᛏᛖᚱ ᚨᛞᛞᚱᛖᛊᛊᛖᛊ",
       "titleReceiving": "ᛖᚾᛏᛖᚱ ᚱᛖᚲᛖᛁᚹᛁᛜ ᚨᛞᛞᚱᛖᛊᛊ",
       "enterRefundAddress": "ᛖᚾᛏᛖᚱ ᚱᛖᚠᚢᚾᛞ ᚨᛞᛞᚱᛖᛊᛊ:",

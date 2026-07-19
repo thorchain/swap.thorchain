@@ -54,6 +54,7 @@
     },
     "button": {
       "limitNotSupported": "Ordem limite não suportada",
+      "taprootNotSupported": "Taproot Não Suportado",
       "temporarilyUnavailable": "Temporariamente indisponível",
       "enterAmount": "Inserir quantia",
       "quoting": "Cotando",
@@ -192,6 +193,7 @@
       "addressPlaceholder": "Endereço {chain}",
       "paste": "Colar",
       "invalidAddress": "Endereço {chain} inválido",
+      "taprootNotSupported": "O Maya Protocol não suporta endereços Taproot",
       "titleAddresses": "Inserir endereços",
       "titleReceiving": "Inserir endereço de recebimento",
       "enterRefundAddress": "Inserir endereço de reembolso:",

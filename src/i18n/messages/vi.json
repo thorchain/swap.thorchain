@@ -54,6 +54,7 @@
     },
     "button": {
       "limitNotSupported": "Không hỗ trợ lệnh giới hạn",
+      "taprootNotSupported": "Không hỗ trợ Taproot",
       "temporarilyUnavailable": "Tạm thời không khả dụng",
       "enterAmount": "Nhập số lượng",
       "quoting": "Đang báo giá",
@@ -192,6 +193,7 @@
       "addressPlaceholder": "Địa chỉ {chain}",
       "paste": "Dán",
       "invalidAddress": "Địa chỉ {chain} không hợp lệ",
+      "taprootNotSupported": "Maya Protocol không hỗ trợ địa chỉ Taproot",
       "titleAddresses": "Nhập địa chỉ",
       "titleReceiving": "Nhập địa chỉ nhận",
       "enterRefundAddress": "Nhập địa chỉ hoàn tiền:",

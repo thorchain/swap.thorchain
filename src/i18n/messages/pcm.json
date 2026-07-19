@@ -54,6 +54,7 @@
     },
     "button": {
       "limitNotSupported": "Limit Order No Dey Supported",
+      "taprootNotSupported": "Taproot No Dey Supported",
       "temporarilyUnavailable": "E No Dey Available Now",
       "enterAmount": "Put Amount",
       "quoting": "Dey quote",
@@ -192,6 +193,7 @@
       "addressPlaceholder": "{chain} address",
       "paste": "Paste",
       "invalidAddress": "{chain} address no correct",
+      "taprootNotSupported": "Maya Protocol no dey support Taproot address",
       "titleAddresses": "Put Addresses",
       "titleReceiving": "Put Receiving Address",
       "enterRefundAddress": "Put refund address:",

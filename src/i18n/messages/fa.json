@@ -54,6 +54,7 @@
     },
     "button": {
       "limitNotSupported": "سفارش حد پشتیبانی نمی‌شود",
+      "taprootNotSupported": "Taproot پشتیبانی نمی‌شود",
       "temporarilyUnavailable": "موقتاً در دسترس نیست",
       "enterAmount": "مقدار را وارد کنید",
       "quoting": "در حال دریافت قیمت",
@@ -192,6 +193,7 @@
       "addressPlaceholder": "آدرس {chain}",
       "paste": "چسباندن",
       "invalidAddress": "آدرس {chain} نامعتبر است",
+      "taprootNotSupported": "پروتکل Maya از آدرس‌های Taproot پشتیبانی نمی‌کند",
       "titleAddresses": "آدرس‌ها را وارد کنید",
       "titleReceiving": "آدرس دریافت را وارد کنید",
       "enterRefundAddress": "آدرس بازگشت وجه را وارد کنید:",

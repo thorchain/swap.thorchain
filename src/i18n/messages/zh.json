@@ -54,6 +54,7 @@
     },
     "button": {
       "limitNotSupported": "不支持限价订单",
+      "taprootNotSupported": "不支持 Taproot",
       "temporarilyUnavailable": "暂时不可用",
       "enterAmount": "输入金额",
       "quoting": "报价中",
@@ -192,6 +193,7 @@
       "addressPlaceholder": "{chain}地址",
       "paste": "粘贴",
       "invalidAddress": "无效的{chain}地址",
+      "taprootNotSupported": "Maya Protocol 不支持 Taproot 地址",
       "titleAddresses": "输入地址",
       "titleReceiving": "输入接收地址",
       "enterRefundAddress": "输入退款地址：",
