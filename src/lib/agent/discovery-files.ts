@@ -8,6 +8,7 @@ import {
   llmsTxt
 } from '@/lib/agent/discovery'
 import { developersMarkdown } from '@/lib/agent/developer-portal'
+import { pricingMarkdown } from '@/lib/agent/pricing'
 import { MCP_SERVER_INFO, MCP_TOOLS } from '@/lib/agent/mcp-server'
 import { MCP_UI_RESOURCES } from '@/lib/agent/mcp-ui'
 import { buildOpenApiDocument } from '@/lib/agent/openapi'
@@ -64,7 +65,9 @@ const agentsJson = json({
     agents: `${AppConfig.baseUrl}/AGENTS.md`,
     skills: `${AppConfig.baseUrl}/.well-known/agent-skills/index.json`,
     agentCard: `${AppConfig.baseUrl}/.well-known/agent-card.json`,
-    auth: `${AppConfig.baseUrl}/auth.md`
+    auth: `${AppConfig.baseUrl}/auth.md`,
+    pricing: `${AppConfig.baseUrl}/pricing.md`,
+    agentMode: `${AppConfig.baseUrl}/?mode=agent`
   }
 })
 
@@ -200,6 +203,7 @@ THORChain Swap is the public swap interface for THORChain powered cross-chain sw
 
 - [Developer portal](${AppConfig.baseUrl}/developers)
 - [Developer portal (markdown)](${AppConfig.baseUrl}/developers.md)
+- [Pricing](${AppConfig.baseUrl}/pricing.md)
 - [Source code](https://github.com/thorchain/swap.thorchain)
 
 ## Machine-Readable Discovery
@@ -214,6 +218,7 @@ THORChain Swap is the public swap interface for THORChain powered cross-chain sw
 - [OpenAPI description](${AppConfig.baseUrl}/.well-known/openapi.json)
 - [Agent skills index](${AppConfig.baseUrl}/.well-known/agent-skills/index.json)
 - [Auth.md](${AppConfig.baseUrl}/auth.md)
+- [Agent view of this page](${AppConfig.baseUrl}/?mode=agent)
 `
 
 export interface DiscoveryFile {
@@ -228,6 +233,7 @@ export const discoveryFiles: Record<string, DiscoveryFile> = {
   '/AGENTS.md': { contentType: MARKDOWN, body: agentsMarkdown },
   '/auth.md': { contentType: MARKDOWN, body: authMarkdown },
   '/developers.md': { contentType: MARKDOWN, body: developersMarkdown },
+  '/pricing.md': { contentType: MARKDOWN, body: pricingMarkdown },
   '/agents.json': { contentType: JSON_TYPE, body: agentsJson },
   '/openapi.json': { contentType: 'application/vnd.oai.openapi+json; charset=utf-8', body: openApiBody },
   '/.well-known/openapi.json': { contentType: 'application/vnd.oai.openapi+json; charset=utf-8', body: openApiBody },

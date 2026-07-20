@@ -62,6 +62,8 @@ export const developerDiscoveryLinks = [
   { path: '/.well-known/agent-skills/index.json', summary: 'published agent skills' },
   { path: '/.well-known/oauth-authorization-server', summary: 'OAuth 2.0 authorization server metadata' },
   { path: '/auth.md', summary: 'authentication model for agents' },
+  { path: '/pricing.md', summary: 'pricing and per-swap fee model' },
+  { path: '/?mode=agent', summary: 'structured agent view of the homepage (JSON with Accept: application/json)' },
   { path: '/sitemap.xml', summary: 'sitemap' },
   { path: '/robots.txt', summary: 'crawl policy with AI Content-Signal' }
 ]

@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { PRIMARY_HOST, SUBDOMAIN_ROUTES } from '@/config'
+import { agentModeJson, agentModeMarkdown } from '@/lib/agent/agent-mode'
 import { discoveryFiles, homeMarkdown } from '@/lib/agent/discovery-files'
 
 function prefersMarkdown(req: NextRequest) {
@@ -35,6 +36,19 @@ export function proxy(req: NextRequest) {
   if (!host.endsWith('.thorchain.org')) return NextResponse.next()
 
   const { pathname, search } = req.nextUrl
+
+  // ?mode=agent serves the structured agent view of the homepage instead of
+  // the client-rendered swap UI: capabilities, endpoints, auth, and pricing.
+  if (host === PRIMARY_HOST && pathname === '/' && req.nextUrl.searchParams.get('mode') === 'agent') {
+    const wantsJson = (req.headers.get('accept') || '').toLowerCase().includes('application/json')
+    return new NextResponse(wantsJson ? agentModeJson : agentModeMarkdown, {
+      headers: {
+        'Content-Type': wantsJson ? 'application/json; charset=utf-8' : 'text/markdown; charset=utf-8',
+        'Vary': 'Accept',
+        'Cache-Control': 'no-store'
+      }
+    })
+  }
 
   if (host === PRIMARY_HOST && pathname === '/' && prefersMarkdown(req)) {
     // no-store: this URL serves HTML to browsers, and CDNs don't reliably

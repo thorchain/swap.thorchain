@@ -34,6 +34,7 @@ Users sign transactions in their own wallets, or swap without connecting a walle
 - ${AppConfig.baseUrl}/llms.txt
 - ${AppConfig.baseUrl}/AGENTS.md
 - ${AppConfig.baseUrl}/developers.md
+- ${AppConfig.baseUrl}/pricing.md
 - ${AppConfig.baseUrl}/.well-known/api-catalog
 - ${AppConfig.baseUrl}/.well-known/openapi.json
 - ${AppConfig.baseUrl}/.well-known/mcp-server-card
@@ -127,6 +128,8 @@ These are the site's own support endpoints; swap quotes are not served under ${A
 - ${AppConfig.baseUrl}/auth.md
 - ${AppConfig.baseUrl}/.well-known/agent-skills/index.json
 - ${AppConfig.baseUrl}/.well-known/agent-card.json
+- ${AppConfig.baseUrl}/pricing.md — pricing and per-swap fee model
+- ${AppConfig.baseUrl}/?mode=agent — structured agent view of the homepage (JSON with \`Accept: application/json\`)
 - Source code (with AGENTS.md for coding agents): https://github.com/thorchain/swap.thorchain
 `
 
@@ -157,6 +160,7 @@ Do not use this site for fiat on/off-ramps, NFTs, derivatives, or custodial acco
 
 - [Developer portal](${AppConfig.baseUrl}/developers): THORChain Swap API docs, quickstart, MCP server, auth scopes, and sandbox
 - [Developer portal (markdown)](${AppConfig.baseUrl}/developers.md): the same documentation as markdown
+- [Pricing](${AppConfig.baseUrl}/pricing.md): what THORChain Swap costs to use (free) and how per-swap protocol fees work
 - [Source code](https://github.com/thorchain/swap.thorchain): public repository, with AGENTS.md instructions for AI coding agents
 
 ## Agent Resources
@@ -168,6 +172,7 @@ Do not use this site for fiat on/off-ramps, NFTs, derivatives, or custodial acco
 - [API catalog](${AppConfig.baseUrl}/.well-known/api-catalog): RFC 9727 linkset of public APIs
 - [Agent skills index](${AppConfig.baseUrl}/.well-known/agent-skills/index.json): published agent skills
 - [auth.md](${AppConfig.baseUrl}/auth.md): authentication model for agents
+- [Agent view](${AppConfig.baseUrl}/?mode=agent): the homepage as structured data — capabilities, endpoints, auth, and pricing (JSON with \`Accept: application/json\`, markdown otherwise)
 
 ## Interfaces
 

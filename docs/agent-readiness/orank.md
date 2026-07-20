@@ -1,6 +1,6 @@
 # orank Agent-Readiness (ora.ai)
 
-orank (https://ora.ai) scores domains on how well they support AI-agent use across Discovery, Accessibility, Usability, and Payments. Scan history for swap.thorchain.org (July 2026): 46/100 grade D → 63/100 grade C → 68/100 grade C → 70/100 grade B.
+orank (https://ora.ai) scores domains on how well they support AI-agent use across Discovery, Accessibility, Usability, and Payments. Scan history for swap.thorchain.org (July 2026): 46/100 grade D → 63/100 grade C → 68/100 grade C → 70/100 grade B → 72/100 grade B.
 
 Score page: https://ora.ai/score/swap.thorchain.org
 Rescan: `POST https://ora.ai/api/scan` with `{"url": "swap.thorchain.org"}`
@@ -21,6 +21,9 @@ Cached score: `GET https://ora.ai/api/score/swap.thorchain.org`
 - **Idempotency-Key support** — `src/lib/agent/idempotency.ts` (in-memory, single-instance deploy, 1-hour retention) wraps both POST endpoints; repeated keys replay the original response with `Idempotency-Replayed: true`. Declared as a header parameter on both operations in the OpenAPI description and documented in the developer portal.
 - **REST versioning / deprecation policy** — `/api/v1/` is the canonical path prefix (`src/app/api/v1/*` re-export the handlers); unversioned `/api/*` paths remain stable aliases. Policy documented in the OpenAPI info description and the developer portal: breaking changes ship as a new `/api/vN` with ≥6 months overlap, retirement signaled via `Deprecation`/`Sunset` headers.
 
+- **pricing.md** — `/pricing.md` (content in `src/lib/agent/pricing.ts`, registered in `discovery-files.ts`). States the honest position: the interface is free with no accounts/subscriptions/tiers, the public MCP and REST surfaces need no key, and the aggregator API is by arrangement. Per-swap costs are documented as protocol-level fees (inbound gas, outbound, liquidity, any provider service/affiliate fee) itemised in each quote rather than charged by this site. Linked from llms.txt, AGENTS.md, the agent skill, the developer portal, agents.json, the home markdown response, and sitemap.xml.
+- **Agent mode view** — `https://swap.thorchain.org/?mode=agent` returns a structured view instead of the client-rendered swap UI (`src/lib/agent/agent-mode.ts`, served from `src/proxy.ts` ahead of the markdown-variant branch). JSON when the request Accepts `application/json`, markdown otherwise; both carry capabilities (with per-capability access path and auth), an explicit not-supported list, the authentication model and scopes, MCP + REST endpoints, pricing summary, asset/amount/error conventions, safety rules, and discovery links. Capabilities and endpoints are derived from `MCP_TOOLS` and `developerEndpoints`, so they cannot drift from the MCP server and developer portal. `Vary: Accept` + `no-store` because the two representations share one URL.
+
 ## Gaps deliberately not addressed
 
 - **UCP (Universal Commerce Protocol)** — the Payments layer is scored 0/0 (warning only). A noncustodial swap interface has no checkout: publishing `/.well-known/ucp` and a `POST /checkout-sessions` surface would advertise a commerce capability the site does not have, and the server can neither hold funds nor execute swaps for users. Skip unless the scoring changes and a genuine payment product exists.
@@ -40,3 +43,4 @@ Cached score: `GET https://ora.ai/api/score/swap.thorchain.org`
   1. Collect independent press coverage of THORChain to satisfy Wikipedia notability.
   2. Draft a neutral, well-cited Wikipedia article (avoid self-promotion; disclose any conflict of interest per Wikipedia policy).
   3. Create a Wikidata item for THORChain with property **P856 (official website) = https://swap.thorchain.org** and link it to the article.
+- **ChatGPT app listed** — off-repo submission to the GPT Store / ChatGPT app directory, needs an OpenAI account and a published app listing. The MCP server at `/mcp` is the integration surface a listing would point at; nothing further is needed in this repo.
