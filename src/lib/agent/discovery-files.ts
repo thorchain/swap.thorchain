@@ -1,13 +1,12 @@
 import { AppConfig } from '@/config'
 import {
-  agentSkillDigest,
-  agentSkillMarkdown,
   agentsMarkdown,
   authMarkdown,
   llmsFullMarkdown,
   llmsTxt
 } from '@/lib/agent/discovery'
 import { developersMarkdown } from '@/lib/agent/developer-portal'
+import { AGENT_SKILLS } from '@/lib/agent/skills'
 import { pricingMarkdown } from '@/lib/agent/pricing'
 import { MCP_SERVER_INFO, MCP_TOOLS } from '@/lib/agent/mcp-server'
 import { MCP_UI_RESOURCES } from '@/lib/agent/mcp-ui'
@@ -138,15 +137,14 @@ const apiCatalog = json({
 
 const agentSkillsIndex = json({
   $schema: 'https://schemas.agentskills.io/discovery/0.2.0/schema.json',
-  skills: [
-    {
-      name: 'thorchain-swap',
-      type: 'skill-md',
-      description: 'Navigate and inspect the public THORChain Swap interface safely.',
-      url: `${AppConfig.baseUrl}/.well-known/agent-skills/thorchain-swap/SKILL.md`,
-      digest: agentSkillDigest
-    }
-  ]
+  skills: AGENT_SKILLS.map(skill => ({
+    name: skill.name,
+    type: 'skill-md',
+    description: skill.description,
+    tags: skill.tags,
+    url: skill.url,
+    digest: skill.digest
+  }))
 })
 
 const oauthAuthorizationServer = json({
@@ -227,6 +225,7 @@ export interface DiscoveryFile {
 }
 
 export const discoveryFiles: Record<string, DiscoveryFile> = {
+  '/index.md': { contentType: MARKDOWN, body: homeMarkdown },
   '/llms.txt': { contentType: MARKDOWN, body: llmsTxt },
   '/llms-full.md': { contentType: MARKDOWN, body: llmsFullMarkdown },
   '/llms-full.txt': { contentType: MARKDOWN, body: llmsFullMarkdown },
@@ -242,9 +241,11 @@ export const discoveryFiles: Record<string, DiscoveryFile> = {
   '/.well-known/agent-card.json': { contentType: 'application/a2a+json; charset=utf-8', body: agentCard },
   '/.well-known/api-catalog': { contentType: 'application/linkset+json; charset=utf-8', body: apiCatalog },
   '/.well-known/agent-skills/index.json': { contentType: JSON_TYPE, body: agentSkillsIndex },
-  '/.well-known/agent-skills/thorchain-swap/SKILL.md': { contentType: MARKDOWN, body: agentSkillMarkdown },
   '/.well-known/oauth-authorization-server': { contentType: JSON_TYPE, body: oauthAuthorizationServer },
   '/.well-known/oauth-protected-resource': { contentType: JSON_TYPE, body: oauthProtectedResource },
   '/.well-known/status': { contentType: JSON_TYPE, body: status },
-  '/.well-known/jwks.json': { contentType: JSON_TYPE, body: jwks }
+  '/.well-known/jwks.json': { contentType: JSON_TYPE, body: jwks },
+  ...Object.fromEntries(
+    AGENT_SKILLS.map(skill => [skill.path, { contentType: MARKDOWN, body: skill.markdown }])
+  )
 }

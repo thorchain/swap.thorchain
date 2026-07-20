@@ -1,7 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { PRIMARY_HOST, SUBDOMAIN_ROUTES } from '@/config'
 import { agentModeJson, agentModeMarkdown } from '@/lib/agent/agent-mode'
-import { discoveryFiles, homeMarkdown } from '@/lib/agent/discovery-files'
+import { discoveryFiles } from '@/lib/agent/discovery-files'
+import { markdownForPage, markdownForSuffixPath } from '@/lib/agent/markdown-pages'
 
 function prefersMarkdown(req: NextRequest) {
   const accept = req.headers.get('accept')?.toLowerCase()
@@ -30,6 +31,16 @@ export function proxy(req: NextRequest) {
         headers: { 'Content-Type': file.contentType }
       })
     }
+
+    // Markdown twin for any content page: appending .md to a page URL returns
+    // that page as markdown. Registered files above win, so /developers.md and
+    // /index.md keep their canonical bodies.
+    const twin = markdownForSuffixPath(req.nextUrl.pathname)
+    if (twin) {
+      return new NextResponse(req.method === 'HEAD' ? null : twin, {
+        headers: { 'Content-Type': 'text/markdown; charset=utf-8' }
+      })
+    }
   }
 
   const host = (req.headers.get('host') || '').split(':')[0]
@@ -50,16 +61,17 @@ export function proxy(req: NextRequest) {
     })
   }
 
-  if (host === PRIMARY_HOST && pathname === '/' && prefersMarkdown(req)) {
-    // no-store: this URL serves HTML to browsers, and CDNs don't reliably
+  const negotiated = host === PRIMARY_HOST && prefersMarkdown(req) ? markdownForPage(pathname) : null
+  if (negotiated) {
+    // no-store: these URLs serve HTML to browsers, and CDNs don't reliably
     // key their cache on Accept, so the markdown variant must never land
     // in a shared cache.
-    return new NextResponse(homeMarkdown, {
+    return new NextResponse(negotiated, {
       headers: {
         'Content-Type': 'text/markdown; charset=utf-8',
         'Vary': 'Accept',
         'Cache-Control': 'no-store',
-        'x-markdown-tokens': String(Math.ceil(homeMarkdown.split(/\s+/).length * 1.35))
+        'x-markdown-tokens': String(Math.ceil(negotiated.split(/\s+/).length * 1.35))
       }
     })
   }

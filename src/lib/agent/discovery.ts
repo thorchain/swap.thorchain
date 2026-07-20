@@ -1,45 +1,4 @@
-import { createHash } from 'node:crypto'
 import { AppConfig } from '@/config'
-
-export const agentSkillMarkdown = `# THORChain Swap Agent Skill
-
-Use this skill when an agent needs to understand or navigate the public THORChain Swap interface.
-
-## What This Site Does
-
-THORChain Swap is a public web interface for native cross-chain swaps powered by THORChain and Maya Protocol providers.
-The UI is backed by the THORChain/Maya swap aggregator API (https://api.thorchain.org/v1 for quotes and routing, API-key gated; https://api.thorchain.org/memoless/api/v1 for memoless "instant" swaps, no key) and reads protocol metadata from public THORNode and Midgard APIs.
-Users sign transactions in their own wallets, or swap without connecting a wallet via memoless swaps.
-
-## Safe Public Actions
-
-- Read public discovery documents.
-- Open the swap interface.
-- Open the pool, bond, memo, TCY, and THORName public interfaces.
-- Fetch quotes, pools, and network data through the public MCP server at ${AppConfig.baseUrl}/mcp.
-- Submit feedback only through the documented public API.
-
-## Safety Rules
-
-- Do not request, store, or infer private keys or seed phrases.
-- Do not execute swaps for a user.
-- Do not connect wallets without explicit user action in the browser.
-- Treat quotes, balances, and transaction state as time-sensitive.
-- Confirm destination addresses before any user submits a transaction.
-
-## Discovery URLs
-
-- ${AppConfig.baseUrl}/robots.txt
-- ${AppConfig.baseUrl}/sitemap.xml
-- ${AppConfig.baseUrl}/llms.txt
-- ${AppConfig.baseUrl}/AGENTS.md
-- ${AppConfig.baseUrl}/developers.md
-- ${AppConfig.baseUrl}/pricing.md
-- ${AppConfig.baseUrl}/.well-known/api-catalog
-- ${AppConfig.baseUrl}/.well-known/openapi.json
-- ${AppConfig.baseUrl}/.well-known/mcp-server-card
-- ${AppConfig.baseUrl}/auth.md
-`
 
 export const agentsMarkdown = `# AGENTS.md — THORChain Swap
 
@@ -126,7 +85,8 @@ These are the site's own support endpoints; swap quotes are not served under ${A
 
 - ${AppConfig.baseUrl}/llms.txt
 - ${AppConfig.baseUrl}/auth.md
-- ${AppConfig.baseUrl}/.well-known/agent-skills/index.json
+- ${AppConfig.baseUrl}/.well-known/agent-skills/index.json — published skills: thorchain-swap, thorchain-swap-quotes, thorchain-liquidity-pools, thorchain-memoless-swap
+- ${AppConfig.baseUrl}/index.md — homepage as markdown; append \`.md\` to any content page URL for its markdown twin
 - ${AppConfig.baseUrl}/.well-known/agent-card.json
 - ${AppConfig.baseUrl}/pricing.md — pricing and per-swap fee model
 - ${AppConfig.baseUrl}/?mode=agent — structured agent view of the homepage (JSON with \`Accept: application/json\`)
@@ -172,6 +132,8 @@ Do not use this site for fiat on/off-ramps, NFTs, derivatives, or custodial acco
 - [API catalog](${AppConfig.baseUrl}/.well-known/api-catalog): RFC 9727 linkset of public APIs
 - [Agent skills index](${AppConfig.baseUrl}/.well-known/agent-skills/index.json): published agent skills
 - [auth.md](${AppConfig.baseUrl}/auth.md): authentication model for agents
+- [Markdown twins](${AppConfig.baseUrl}/index.md): append \`.md\` to any content page URL for a markdown version (\`/index.md\`, \`/developers.md\`, \`/sell-btc-buy-eth.md\`), or send \`Accept: text/markdown\`
+- [Agent skills index](${AppConfig.baseUrl}/.well-known/agent-skills/index.json): four published skills — navigation, quotes, pools, and memoless swaps
 - [Agent view](${AppConfig.baseUrl}/?mode=agent): the homepage as structured data — capabilities, endpoints, auth, and pricing (JSON with \`Accept: application/json\`, markdown otherwise)
 
 ## Interfaces
@@ -353,8 +315,3 @@ Browsing, quoting, and the support APIs are anonymous. Wallet connection and sig
 - Bug reports: \`POST /api/v1/report-bug\`
 `
 
-function sha256Digest(value: string) {
-  return `sha256:${createHash('sha256').update(value, 'utf8').digest('hex')}`
-}
-
-export const agentSkillDigest = sha256Digest(agentSkillMarkdown)
