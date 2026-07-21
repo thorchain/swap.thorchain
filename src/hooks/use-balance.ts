@@ -14,6 +14,7 @@ import {
 } from '@tcswap/core'
 import { estimateTransactionFee } from '@tcswap/toolboxes/cosmos'
 import { getProvider } from '@tcswap/toolboxes/evm'
+import { Contract } from 'ethers'
 import { useAssetFrom } from '@/hooks/use-swap'
 import { useWallets } from '@/hooks/use-wallets'
 import { getAssetBalance, getThorBankBalances } from '@/lib/api'
@@ -84,6 +85,20 @@ export const useBalance = (): UseBalance => {
           const bankBalances = await getThorBankBalances(wallet.address)
           const securedBalance = bankBalances.find(finder)
           if (securedBalance) value = securedBalance
+        }
+      }
+
+      // Aggregator /balance omits some ERC-20s (e.g. ETH.THOR); read them directly on-chain.
+      if (!value.gt(0) && EVMChains.includes(assetFrom.chain as EVMChain) && assetFrom.address) {
+        try {
+          const provider = await getProvider(assetFrom.chain as EVMChain)
+          const erc20 = new Contract(assetFrom.address, ['function balanceOf(address owner) view returns (uint256)'], provider)
+          const raw: bigint = await erc20.balanceOf(wallet.address)
+          if (raw > 0n) {
+            value = AssetValue.from({ asset: assetFrom.identifier, fromBaseDecimal: assetFrom.decimals, value: raw.toString() })
+          }
+        } catch {
+          // Leave value as-is if the on-chain read fails; the aggregator result still stands.
         }
       }
 
