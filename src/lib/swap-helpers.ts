@@ -10,6 +10,17 @@ export type FeeData = {
   ticker: string
 }
 
+const APPROVAL_POLL_INTERVAL_MS = 3000
+const APPROVAL_POLL_ATTEMPTS = 40
+
+export const waitForApproval = async (isApproved: () => Promise<boolean>): Promise<boolean> => {
+  for (let i = 0; i < APPROVAL_POLL_ATTEMPTS; i++) {
+    await new Promise(resolve => setTimeout(resolve, APPROVAL_POLL_INTERVAL_MS))
+    if (await isApproved().catch(() => false)) return true
+  }
+  return false
+}
+
 export const resolveFees = (quote: QuoteResponseRoute, rates: AssetRateMap) => {
   const feeData = (type: string): FeeData | undefined => {
     const fee = quote.fees.find(f => f.type === type)

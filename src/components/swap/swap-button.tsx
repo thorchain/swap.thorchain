@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import { Chain, EVMChain } from '@tcswap/core'
 import { QuoteResponseRoute } from '@tcswap/helpers/api'
 import { useTranslations } from 'next-intl'
@@ -14,7 +15,7 @@ import { useQuote } from '@/hooks/use-quote'
 import { useSimulation } from '@/hooks/use-simulation'
 import { useAssetFrom, useAssetTo, useSwap } from '@/hooks/use-swap'
 import { useExternalWalletMode, useSelectedAccount, useSetExternalWalletMode } from '@/hooks/use-wallets'
-import { isMayaProvider, isTaprootAddress } from '@/lib/swap-helpers'
+import { isMayaProvider, isTaprootAddress, waitForApproval } from '@/lib/swap-helpers'
 import { getUSwap } from '@/lib/wallets'
 import { useIsLimitSwap, useLimitSwapBuyAmount } from '@/store/limit-swap-store'
 
@@ -49,6 +50,8 @@ export const SwapButton = ({ instantSwapSupported, instantSwapAvailable }: SwapB
   const isMayaChain = isMayaProvider(quote?.providers[0])
   const isLimitSwapDisabled = mimir['ENABLEADVSWAPQUEUE'] === 2 || isMayaChain
 
+  const [isApproving, setIsApproving] = useState(false)
+
   const { openDialog } = useDialog()
 
   const onSwap = (quote: QuoteResponseRoute) => {
@@ -57,6 +60,33 @@ export const SwapButton = ({ instantSwapSupported, instantSwapAvailable }: SwapB
 
   const onInstantSwap = (quote: QuoteResponseRoute) => {
     openDialog(InstantSwapDialog, { provider: quote.providers[0] })
+  }
+
+  const onApprove = async () => {
+    if (!approveData || !selectedAccount) return
+
+    const wallet = uSwap.getWallet<EVMChain>(selectedAccount.provider, selectedAccount.network as EVMChain)
+    if (!wallet) return
+
+    const { contract, spender, amount } = approveData
+
+    setIsApproving(true)
+
+    const promise = wallet
+      .approve({ assetAddress: contract, spenderAddress: spender, amount })
+      .then(() =>
+        waitForApproval(() => wallet.isApproved({ assetAddress: contract, spenderAddress: spender, from: selectedAccount.address, amount }))
+      )
+      .finally(() => {
+        setIsApproving(false)
+        refetchQuote()
+      })
+
+    toast.promise(promise, {
+      loading: t('toast.approvalTransaction'),
+      success: t('toast.success'),
+      error: (err: any) => err.message || t('toast.errorSubmitting')
+    })
   }
 
   const getState = (): ButtonState => {
@@ -115,28 +145,9 @@ export const SwapButton = ({ instantSwapSupported, instantSwapAvailable }: SwapB
     if (approveData) {
       return {
         text: t('button.approve', { ticker: assetFrom.ticker }),
-        spinner: false,
+        spinner: isApproving,
         accent: false,
-        onClick: async () => {
-          const wallet = uSwap.getWallet<EVMChain>(selectedAccount.provider, selectedAccount.network as EVMChain)
-          if (!wallet) return
-          const promise = wallet
-            .approve({
-              assetAddress: approveData.contract,
-              spenderAddress: approveData.spender,
-              amount: approveData.amount
-            })
-            .then(res => {
-              console.log({ res })
-              refetchQuote()
-            })
-
-          toast.promise(promise, {
-            loading: t('toast.approvalTransaction'),
-            success: t('toast.success'),
-            error: (err: any) => err.message || t('toast.errorSubmitting')
-          })
-        }
+        onClick: isApproving ? undefined : onApprove
       }
     }
 
