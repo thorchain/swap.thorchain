@@ -532,6 +532,7 @@
       "not_started": "預け入れ保留中",
       "pending": "保留中",
       "swapping": "スワップ中",
+      "open": "オープン",
       "completed": "完了",
       "failed": "失敗",
       "expired": "期限切れ",

@@ -532,6 +532,7 @@
       "not_started": "Đang chờ nạp tiền",
       "pending": "Đang chờ",
       "swapping": "Đang hoán đổi",
+      "open": "Đang mở",
       "completed": "Hoàn tất",
       "failed": "Thất bại",
       "expired": "Đã hết hạn",

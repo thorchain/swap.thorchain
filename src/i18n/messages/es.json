@@ -532,6 +532,7 @@
       "not_started": "Depósito pendiente",
       "pending": "Pendiente",
       "swapping": "Intercambiando",
+      "open": "Abierta",
       "completed": "Completado",
       "failed": "Fallido",
       "expired": "Expirado",

@@ -532,6 +532,7 @@
       "not_started": "जमा लंबित",
       "pending": "लंबित",
       "swapping": "स्वैप किया जा रहा है",
+      "open": "खुला",
       "completed": "पूर्ण",
       "failed": "विफल",
       "expired": "समाप्त",

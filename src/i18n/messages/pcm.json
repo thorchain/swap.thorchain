@@ -532,6 +532,7 @@
       "not_started": "Deposit Dey Pending",
       "pending": "Pending",
       "swapping": "Dey Swap",
+      "open": "Open",
       "completed": "Completed",
       "failed": "E Fail",
       "expired": "E Don Expire",

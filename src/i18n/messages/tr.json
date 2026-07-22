@@ -532,6 +532,7 @@
       "not_started": "Yatırma Bekleniyor",
       "pending": "Beklemede",
       "swapping": "Takas ediliyor",
+      "open": "Açık",
       "completed": "Tamamlandı",
       "failed": "Başarısız",
       "expired": "Süresi doldu",

@@ -104,10 +104,13 @@ export const TransactionHistoryDialog = ({ isOpen, onOpenChange }: HistoryDialog
 
               const isExpanded = expandTx === tx.uid
 
-              const statusTitle = t.has(`status.${status}`) ? t(`status.${status}`) : status.replace('_', ' ')
-
               const isLimitSwapPending = !!tx.limitSwapMemo && isTxPending(status)
-              const showRemainingTime = status === 'pending' && tx.estimatedTime
+              const isLimitSwapOpen = isLimitSwapPending && status !== 'not_started'
+
+              const statusKey = isLimitSwapOpen ? 'open' : status
+              const statusTitle = t.has(`status.${statusKey}`) ? t(`status.${statusKey}`) : status.replace('_', ' ')
+
+              const showRemainingTime = status === 'pending' && tx.estimatedTime && !isLimitSwapOpen
               const limitPricePerUnit = tx.limitPrice ? new USwapNumber(tx.limitPrice) : null
               const limitFiatPerUnit = limitPricePerUnit && rateTo ? rateTo.mul(limitPricePerUnit) : null
               const showQrCode = () => {

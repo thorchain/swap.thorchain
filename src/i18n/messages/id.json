@@ -532,6 +532,7 @@
       "not_started": "Deposit tertunda",
       "pending": "Tertunda",
       "swapping": "Menukar",
+      "open": "Terbuka",
       "completed": "Selesai",
       "failed": "Gagal",
       "expired": "Kedaluwarsa",

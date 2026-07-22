@@ -537,6 +537,7 @@
       "not_started": "Deposit Pending",
       "pending": "Pending",
       "swapping": "Swapping",
+      "open": "Open",
       "completed": "Completed",
       "failed": "Failed",
       "expired": "Expired",

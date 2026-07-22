@@ -532,6 +532,7 @@
       "not_started": "الإيداع معلّق",
       "pending": "معلّق",
       "swapping": "جارٍ التبادل",
+      "open": "مفتوح",
       "completed": "مكتمل",
       "failed": "فشل",
       "expired": "منتهٍ",

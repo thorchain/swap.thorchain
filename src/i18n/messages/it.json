@@ -532,6 +532,7 @@
       "not_started": "Deposito in sospeso",
       "pending": "In sospeso",
       "swapping": "Swap in corso",
+      "open": "Aperto",
       "completed": "Completato",
       "failed": "Non riuscito",
       "expired": "Scaduto",

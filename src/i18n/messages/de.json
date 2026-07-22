@@ -532,6 +532,7 @@
       "not_started": "Einzahlung ausstehend",
       "pending": "Ausstehend",
       "swapping": "Swap läuft",
+      "open": "Offen",
       "completed": "Abgeschlossen",
       "failed": "Fehlgeschlagen",
       "expired": "Abgelaufen",

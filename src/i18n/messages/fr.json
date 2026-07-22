@@ -532,6 +532,7 @@
       "not_started": "Dépôt en attente",
       "pending": "En attente",
       "swapping": "Échange en cours",
+      "open": "Ouvert",
       "completed": "Terminé",
       "failed": "Échoué",
       "expired": "Expiré",

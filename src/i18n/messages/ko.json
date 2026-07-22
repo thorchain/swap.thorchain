@@ -532,6 +532,7 @@
       "not_started": "입금 대기 중",
       "pending": "대기 중",
       "swapping": "스왑 중",
+      "open": "미체결",
       "completed": "완료됨",
       "failed": "실패",
       "expired": "만료됨",

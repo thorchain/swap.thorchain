@@ -532,6 +532,7 @@
       "not_started": "等待存款",
       "pending": "处理中",
       "swapping": "兑换中",
+      "open": "挂单中",
       "completed": "已完成",
       "failed": "失败",
       "expired": "已过期",
