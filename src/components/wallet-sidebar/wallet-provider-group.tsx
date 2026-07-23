@@ -26,7 +26,7 @@ export function WalletProviderGroup({ provider, chainDataList, expandedChains, o
   const walletKey = walletInfo?.key || provider.toLowerCase()
   const walletName = walletInfo?.label || provider
 
-  const showAllChains = provider === WalletOption.LEDGER || provider === WalletOption.KEYSTORE
+  const showAllChains = provider === WalletOption.LEDGER || provider === WalletOption.TREZOR || provider === WalletOption.KEYSTORE
 
   const visibleChains = useMemo(() => {
     const filtered = showAllChains ? chainDataList : chainDataList.filter(data => data.isLoading || data.tokens.some(t => t.amount > 0))

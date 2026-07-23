@@ -11,7 +11,10 @@
     "signUp": "S'inscrire",
     "signingUp": "Inscription…",
     "subscribed": "Merci pour votre inscription !",
-    "genericError": "Une erreur est survenue"
+    "genericError": "Une erreur est survenue",
+    "pool": "Pool",
+    "thorname": "THORName",
+    "affiliate": "Affiliation"
   },
   "header": {
     "wallet": "Portefeuille",
@@ -37,7 +40,9 @@
       "sending": "Envoi...",
       "send": "Envoyer le rapport",
       "failed": "Échec de l'envoi du rapport"
-    }
+    },
+    "forAgents": "Pour les agents IA",
+    "developers": "Développeurs"
   },
   "swap": {
     "tab": {
@@ -510,7 +515,8 @@
     "externalWalletModeDescription": "Utilisez un portefeuille auto-hébergé sans le connecter au site web",
     "externalWalletAssetUnsupported": "Cet actif n'est pas pris en charge en mode portefeuille externe. Connectez un portefeuille de navigateur si vous souhaitez continuer.",
     "close": "Fermer",
-    "sendToken": "Envoyer {ticker}"
+    "sendToken": "Envoyer {ticker}",
+    "trezorUnlockHint": "Assurez-vous que votre Trezor est connecté et déverrouillé, puis confirmez dans la fenêtre Trezor Connect et sur votre appareil."
   },
   "common": {
     "close": "Fermer"

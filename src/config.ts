@@ -2,6 +2,7 @@ import { ProviderName } from '@tcswap/helpers'
 
 export const AppConfig = {
   id: 'thorchain',
+  appName: 'THORChain Swap',
   title: 'THORChain Swap | Cross-Chain BTC, ETH & Crypto Swaps',
   description:
     'Swap Bitcoin to Ethereum and other cryptocurrencies instantly with THORChain. Native BTC swaps with no bridges, wrapping, or centralized exchanges.',

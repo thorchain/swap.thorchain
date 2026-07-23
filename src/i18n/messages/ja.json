@@ -11,7 +11,10 @@
     "signUp": "登録",
     "signingUp": "登録中…",
     "subscribed": "ご購読ありがとうございます。",
-    "genericError": "問題が発生しました"
+    "genericError": "問題が発生しました",
+    "pool": "Pool",
+    "thorname": "THORName",
+    "affiliate": "アフィリエイト"
   },
   "header": {
     "wallet": "ウォレット",
@@ -37,7 +40,9 @@
       "sending": "送信中…",
       "send": "報告を送信",
       "failed": "報告の送信に失敗しました"
-    }
+    },
+    "forAgents": "AIエージェント向け",
+    "developers": "開発者"
   },
   "swap": {
     "tab": {
@@ -510,7 +515,8 @@
     "externalWalletModeDescription": "セルフカストディウォレットをウェブサイトに接続せずに使用します",
     "externalWalletAssetUnsupported": "この資産は外部ウォレットモードでは対応していません。続行する場合はブラウザウォレットを接続してください。",
     "close": "閉じる",
-    "sendToken": "{ticker} を送信"
+    "sendToken": "{ticker} を送信",
+    "trezorUnlockHint": "Trezorが接続されロック解除されていることを確認し、Trezor Connectのポップアップとデバイス上で承認してください。"
   },
   "common": {
     "close": "閉じる"

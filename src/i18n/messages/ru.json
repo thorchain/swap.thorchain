@@ -11,7 +11,10 @@
     "signUp": "Подписаться",
     "signingUp": "Подписка…",
     "subscribed": "Спасибо за подписку!",
-    "genericError": "Что-то пошло не так"
+    "genericError": "Что-то пошло не так",
+    "pool": "Pool",
+    "thorname": "THORName",
+    "affiliate": "Партнёрам"
   },
   "header": {
     "wallet": "Кошелёк",
@@ -37,7 +40,9 @@
       "sending": "Отправка…",
       "send": "Отправить сообщение",
       "failed": "Не удалось отправить сообщение"
-    }
+    },
+    "forAgents": "Для ИИ-агентов",
+    "developers": "Разработчикам"
   },
   "swap": {
     "tab": {
@@ -510,7 +515,8 @@
     "externalWalletModeDescription": "Используйте некастодиальный кошелёк, не подключая его к сайту",
     "externalWalletAssetUnsupported": "Этот актив не поддерживается в режиме внешнего кошелька. Подключите браузерный кошелёк, чтобы продолжить.",
     "close": "Закрыть",
-    "sendToken": "Отправить {ticker}"
+    "sendToken": "Отправить {ticker}",
+    "trezorUnlockHint": "Убедитесь, что ваш Trezor подключён и разблокирован, затем подтвердите во всплывающем окне Trezor Connect и на устройстве."
   },
   "common": {
     "close": "Закрыть"

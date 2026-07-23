@@ -104,6 +104,14 @@ export const WALLETS: WalletParams[] = [
     supportedChains: supportedChains[WalletOption.LEDGER]
   },
   {
+    key: 'trezor',
+    type: WalletType.hardware,
+    label: 'Trezor',
+    option: WalletOption.TREZOR,
+    link: 'https://trezor.io',
+    supportedChains: supportedChains[WalletOption.TREZOR]
+  },
+  {
     key: 'keystore',
     type: WalletType.hardware,
     label: 'Keystore',
@@ -127,6 +135,7 @@ export const isWalletAvailable = (option: WalletOption) => {
     case WalletOption.OKX: return window?.okxwallet
     case WalletOption.TRONLINK: return window?.tronLink || window?.tronWeb
     case WalletOption.LEDGER:
+    case WalletOption.TREZOR:
     case WalletOption.KEYSTORE: return true
 
     case WalletOption.BRAVE:

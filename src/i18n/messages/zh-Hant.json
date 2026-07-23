@@ -11,7 +11,10 @@
     "signUp": "訂閱",
     "signingUp": "訂閱中…",
     "subscribed": "感謝您的訂閱！",
-    "genericError": "出現錯誤"
+    "genericError": "出現錯誤",
+    "pool": "Pool",
+    "thorname": "THORName",
+    "affiliate": "聯盟"
   },
   "header": {
     "wallet": "錢包",
@@ -37,7 +40,9 @@
       "sending": "發送中…",
       "send": "發送報告",
       "failed": "報告發送失敗"
-    }
+    },
+    "forAgents": "面向 AI 代理",
+    "developers": "開發者"
   },
   "swap": {
     "tab": {
@@ -510,7 +515,8 @@
     "externalWalletModeDescription": "使用自託管錢包，無需將其連接到網站",
     "externalWalletAssetUnsupported": "此資產在外部錢包模式下不受支援。如要繼續，請連接瀏覽器錢包。",
     "close": "關閉",
-    "sendToken": "發送{ticker}"
+    "sendToken": "發送{ticker}",
+    "trezorUnlockHint": "請確保您的 Trezor 已連接並解鎖，然後在 Trezor Connect 彈出視窗中和您的裝置上確認。"
   },
   "common": {
     "close": "關閉"

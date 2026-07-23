@@ -11,7 +11,10 @@
     "signUp": "Suscribirse",
     "signingUp": "Suscribiendo…",
     "subscribed": "¡Gracias por suscribirte!",
-    "genericError": "Algo salió mal"
+    "genericError": "Algo salió mal",
+    "pool": "Pool",
+    "thorname": "THORName",
+    "affiliate": "Afiliado"
   },
   "header": {
     "wallet": "Monedero",
@@ -37,7 +40,9 @@
       "sending": "Enviando…",
       "send": "Enviar notificación",
       "failed": "Error al enviar notificación"
-    }
+    },
+    "forAgents": "Para agentes de IA",
+    "developers": "Desarrolladores"
   },
   "swap": {
     "tab": {
@@ -510,7 +515,8 @@
     "externalWalletModeDescription": "Usa una billetera de autocustodia sin conectarla al sitio web",
     "externalWalletAssetUnsupported": "Este activo no es compatible en el modo de billetera externa. Conecta una billetera del navegador si quieres continuar.",
     "close": "Cerrar",
-    "sendToken": "Enviar {ticker}"
+    "sendToken": "Enviar {ticker}",
+    "trezorUnlockHint": "Asegúrate de que tu Trezor esté conectado y desbloqueado, luego confirma en la ventana de Trezor Connect y en tu dispositivo."
   },
   "common": {
     "close": "Cerrar"

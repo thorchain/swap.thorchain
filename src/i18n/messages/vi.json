@@ -11,7 +11,10 @@
     "signUp": "Đăng ký",
     "signingUp": "Đang đăng ký…",
     "subscribed": "Cảm ơn bạn đã đăng ký!",
-    "genericError": "Đã xảy ra lỗi"
+    "genericError": "Đã xảy ra lỗi",
+    "pool": "Pool",
+    "thorname": "THORName",
+    "affiliate": "Đối tác liên kết"
   },
   "header": {
     "wallet": "Ví",
@@ -37,7 +40,9 @@
       "sending": "Đang gửi...",
       "send": "Gửi báo cáo",
       "failed": "Gửi báo cáo thất bại"
-    }
+    },
+    "forAgents": "Dành cho AI Agent",
+    "developers": "Nhà phát triển"
   },
   "swap": {
     "tab": {
@@ -510,7 +515,8 @@
     "externalWalletModeDescription": "Sử dụng ví tự lưu ký mà không cần kết nối với trang web",
     "externalWalletAssetUnsupported": "Tài sản này không được hỗ trợ ở chế độ ví bên ngoài. Kết nối ví trình duyệt nếu bạn muốn tiếp tục.",
     "close": "Đóng",
-    "sendToken": "Gửi {ticker}"
+    "sendToken": "Gửi {ticker}",
+    "trezorUnlockHint": "Đảm bảo Trezor của bạn đã được kết nối và mở khóa, sau đó xác nhận trong cửa sổ Trezor Connect và trên thiết bị của bạn."
   },
   "common": {
     "close": "Đóng"

@@ -8,8 +8,10 @@ import { keystoreWallet } from '@tcswap/wallets/keystore'
 import { ledgerWallet } from '@tcswap/wallets/ledger'
 import { okxWallet } from '@tcswap/wallets/okx'
 import { phantomWallet } from '@tcswap/wallets/phantom'
+import { trezorWallet } from '@tcswap/wallets/trezor'
 import { tronlinkWallet } from '@tcswap/wallets/tronlink'
 import { vultisigWallet } from '@tcswap/wallets/vultisig'
+import { AppConfig } from '@/config'
 import { useWalletStore } from '@/store/wallets-store'
 
 const defaultPlugins = {
@@ -26,6 +28,7 @@ const defaultWallets = {
   ...ledgerWallet,
   ...okxWallet,
   ...phantomWallet,
+  ...trezorWallet,
   ...tronlinkWallet,
   ...vultisigWallet
 }
@@ -63,6 +66,13 @@ export function setUSwapApiKey(apiKey: string) {
   apiKeyOverride = apiKey
 }
 
+// Trezor Connect requires a manifest (contact email + app URL) before it will open its popup.
+const trezorManifest = {
+  email: AppConfig.supportEmail,
+  appUrl: AppConfig.baseUrl,
+  appName: AppConfig.appName
+}
+
 export function getUSwap() {
   if (instance) return instance
 
@@ -74,6 +84,9 @@ export function getUSwap() {
       },
       rpcUrls: {
         [Chain.Ethereum]: ['https://ethereum-rpc.publicnode.com', 'https://eth.llamarpc.com']
+      },
+      integrations: {
+        trezor: trezorManifest
       },
       envs: {
         apiUrl: process.env.NEXT_PUBLIC_USWAP_API_URL,
@@ -126,6 +139,8 @@ export async function connectWallet(option: WalletOption, chains: Chain[], confi
       return uSwap.connectKeystore(chains, config?.phrase, config?.derivationPath)
     case WalletOption.LEDGER:
       return connectEach(c => uSwap.connectLedger(c, config?.derivationPath))
+    case WalletOption.TREZOR:
+      return connectEach(c => uSwap.connectTrezor(c, config?.derivationPath))
     default: {
       throw new Error(`Unsupported wallet option: ${option}`)
     }
@@ -165,6 +180,7 @@ export const supportedChains = {
   [WalletOption.OKX]: okxWallet.connectOkx.supportedChains,
   [WalletOption.OKX_MOBILE]: evmWallet.connectEVMWallet.supportedChains,
   [WalletOption.PHANTOM]: phantomWallet.connectPhantom.supportedChains,
+  [WalletOption.TREZOR]: trezorWallet.connectTrezor.supportedChains,
   [WalletOption.TRONLINK]: tronlinkWallet.connectTronLink.supportedChains,
   [WalletOption.TRUSTWALLET_WEB]: evmWallet.connectEVMWallet.supportedChains,
   [WalletOption.VULTISIG]: vultisigWallet.connectVultisig.supportedChains,

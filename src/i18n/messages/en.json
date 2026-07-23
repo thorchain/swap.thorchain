@@ -475,6 +475,7 @@
     "selectAccountType": "Select account type",
     "index": "Index",
     "ledgerUnlockHint": "Make sure your Ledger is unlocked and the {app} app is open before connecting.",
+    "trezorUnlockHint": "Make sure your Trezor is connected and unlocked, then confirm in the Trezor Connect popup and on your device.",
     "correspondingApp": "corresponding",
     "createNewWallet": "Create New Wallet",
     "createWalletInstructions": "Write these 12 words down and store them securely offline. This 12 word phrase is used to recover your wallet private keys.",

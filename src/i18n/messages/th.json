@@ -11,7 +11,10 @@
     "signUp": "สมัคร",
     "signingUp": "กำลังสมัคร…",
     "subscribed": "ขอบคุณที่สมัครรับข่าวสาร",
-    "genericError": "เกิดข้อผิดพลาดบางอย่าง"
+    "genericError": "เกิดข้อผิดพลาดบางอย่าง",
+    "pool": "Pool",
+    "thorname": "THORName",
+    "affiliate": "พันธมิตร"
   },
   "header": {
     "wallet": "กระเป๋าเงิน",
@@ -37,7 +40,9 @@
       "sending": "กำลังส่ง...",
       "send": "ส่งรายงาน",
       "failed": "ส่งรายงานไม่สำเร็จ"
-    }
+    },
+    "forAgents": "สำหรับ AI Agent",
+    "developers": "นักพัฒนา"
   },
   "swap": {
     "tab": {
@@ -510,7 +515,8 @@
     "externalWalletModeDescription": "ใช้กระเป๋าเงินแบบ self-custody โดยไม่ต้องเชื่อมต่อกับเว็บไซต์",
     "externalWalletAssetUnsupported": "สินทรัพย์นี้ไม่รองรับในโหมดกระเป๋าเงินภายนอก เชื่อมต่อกระเป๋าเงินบนเบราว์เซอร์หากคุณต้องการดำเนินการต่อ",
     "close": "ปิด",
-    "sendToken": "ส่ง {ticker}"
+    "sendToken": "ส่ง {ticker}",
+    "trezorUnlockHint": "ตรวจสอบว่า Trezor ของคุณเชื่อมต่อและปลดล็อกแล้ว จากนั้นยืนยันในหน้าต่าง Trezor Connect และบนอุปกรณ์ของคุณ"
   },
   "common": {
     "close": "ปิด"

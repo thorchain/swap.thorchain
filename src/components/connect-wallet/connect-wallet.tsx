@@ -8,6 +8,7 @@ import { BrowserWallet } from '@/components/connect-wallet/browser-wallet'
 import { ALL_CHAINS, chainLabel, COMING_SOON_CHAINS, isWalletAvailable, WalletParams, WALLETS, WalletType } from '@/components/connect-wallet/config'
 import { Keystore } from '@/components/connect-wallet/keystore/keystore'
 import { Ledger } from '@/components/connect-wallet/ledger'
+import { Trezor } from '@/components/connect-wallet/trezor'
 import { WalletIcon } from '@/components/wallet-icon'
 import { Icon } from '@/components/icons'
 import { useWallets } from '@/hooks/use-wallets'
@@ -75,7 +76,8 @@ export const ConnectWallet = ({ isOpen, onOpenChange, chain }: ConnectWalletProp
       const isInstalled = isWalletAvailable(wallet.option)
       const isSelected = wallet === selectedWallet
       const isHighlighted = isWalletHighlighted(wallet.option)
-      const isClickable = isInstalled && isHighlighted && (!isConnected || wallet.option === WalletOption.LEDGER)
+      const isClickable =
+        isInstalled && isHighlighted && (!isConnected || wallet.option === WalletOption.LEDGER || wallet.option === WalletOption.TREZOR)
 
       return (
         <div
@@ -124,6 +126,10 @@ export const ConnectWallet = ({ isOpen, onOpenChange, chain }: ConnectWalletProp
 
     if (wallet.key === 'ledger') {
       return <Ledger key={wallet.key} wallet={wallet} onConnect={onConnect} />
+    }
+
+    if (wallet.key === 'trezor') {
+      return <Trezor key={wallet.key} wallet={wallet} onConnect={onConnect} />
     }
 
     if (wallet.key === 'keystore') {
@@ -190,7 +196,9 @@ export const ConnectWallet = ({ isOpen, onOpenChange, chain }: ConnectWalletProp
                         >
                           <Image src={`/networks/${chain.toLowerCase()}.svg`} alt={chain} width="24" height="24" />
                           <div className="text-sm">{chainLabel(chain)}</div>
-                          {isComingSoon && <div className="text-gray border-gray rounded-full border px-1.5 text-[10px] font-semibold">{t('soon')}</div>}
+                          {isComingSoon && (
+                            <div className="text-gray border-gray rounded-full border px-1.5 text-[10px] font-semibold">{t('soon')}</div>
+                          )}
                         </div>
                       )
                     })}

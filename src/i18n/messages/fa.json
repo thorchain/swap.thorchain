@@ -11,7 +11,10 @@
     "signUp": "عضویت",
     "signingUp": "در حال عضویت…",
     "subscribed": "از عضویت شما متشکریم!",
-    "genericError": "مشکلی پیش آمد"
+    "genericError": "مشکلی پیش آمد",
+    "pool": "Pool",
+    "thorname": "THORName",
+    "affiliate": "همکاری در فروش"
   },
   "header": {
     "wallet": "کیف پول",
@@ -37,7 +40,9 @@
       "sending": "در حال ارسال…",
       "send": "ارسال گزارش",
       "failed": "ارسال گزارش ناموفق بود"
-    }
+    },
+    "forAgents": "برای عامل‌های هوش مصنوعی",
+    "developers": "توسعه‌دهندگان"
   },
   "swap": {
     "tab": {
@@ -510,7 +515,8 @@
     "externalWalletModeDescription": "از یک کیف پول خودنگهدار بدون اتصال آن به وب‌سایت استفاده کنید",
     "externalWalletAssetUnsupported": "این دارایی در حالت کیف پول خارجی پشتیبانی نمی‌شود. برای ادامه، یک کیف پول مرورگر متصل کنید.",
     "close": "بستن",
-    "sendToken": "ارسال {ticker}"
+    "sendToken": "ارسال {ticker}",
+    "trezorUnlockHint": "مطمئن شوید که Trezor شما متصل و باز است، سپس در پنجره Trezor Connect و روی دستگاه خود تأیید کنید."
   },
   "common": {
     "close": "بستن"

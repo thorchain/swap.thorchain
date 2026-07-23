@@ -11,7 +11,10 @@
     "signUp": "اشترك",
     "signingUp": "جاري الاشتراك…",
     "subscribed": "شكراً على اشتراكك!",
-    "genericError": "حصل خطأ ما"
+    "genericError": "حصل خطأ ما",
+    "pool": "Pool",
+    "thorname": "THORName",
+    "affiliate": "الإحالة"
   },
   "header": {
     "wallet": "المحفظة",
@@ -37,7 +40,9 @@
       "sending": "جاري الإرسال...",
       "send": "إرسال البلاغ",
       "failed": "فشل إرسال البلاغ"
-    }
+    },
+    "forAgents": "لوكلاء الذكاء الاصطناعي",
+    "developers": "المطورين"
   },
   "swap": {
     "tab": {
@@ -510,7 +515,8 @@
     "externalWalletModeDescription": "استخدم محفظة بحفظ ذاتي من غير ما تربطها بالموقع",
     "externalWalletAssetUnsupported": "الأصل ده مش مدعوم في وضع المحفظة الخارجية. اربط محفظة متصفح لو عايز تكمّل.",
     "close": "إغلاق",
-    "sendToken": "إرسال {ticker}"
+    "sendToken": "إرسال {ticker}",
+    "trezorUnlockHint": "اتأكد إن جهاز Trezor متوصّل ومفتوح، وبعدين أكّد في نافذة Trezor Connect وعلى جهازك."
   },
   "common": {
     "close": "إغلاق"

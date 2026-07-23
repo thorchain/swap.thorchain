@@ -11,7 +11,10 @@
     "signUp": "Sign Up",
     "signingUp": "Dey sign up…",
     "subscribed": "Thank you for subscribing!",
-    "genericError": "Something no work well"
+    "genericError": "Something no work well",
+    "pool": "Pool",
+    "thorname": "THORName",
+    "affiliate": "Affiliate"
   },
   "header": {
     "wallet": "Wallet",
@@ -37,7 +40,9 @@
       "sending": "Dey send...",
       "send": "Send Report",
       "failed": "E no fit send report"
-    }
+    },
+    "forAgents": "For AI Agents",
+    "developers": "Developers"
   },
   "swap": {
     "tab": {
@@ -510,7 +515,8 @@
     "externalWalletModeDescription": "Use a self-custody wallet without connecting am to di website",
     "externalWalletAssetUnsupported": "Dis asset no dey supported for External Wallet mode. Connect a browser wallet if you wan continue.",
     "close": "Close",
-    "sendToken": "Send {ticker}"
+    "sendToken": "Send {ticker}",
+    "trezorUnlockHint": "Make sure say your Trezor dey connected and unlock, then confirm for di Trezor Connect popup and for your device."
   },
   "common": {
     "close": "Close"

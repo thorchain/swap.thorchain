@@ -11,7 +11,10 @@
     "signUp": "订阅",
     "signingUp": "订阅中…",
     "subscribed": "感谢您的订阅！",
-    "genericError": "出现错误"
+    "genericError": "出现错误",
+    "pool": "Pool",
+    "thorname": "THORName",
+    "affiliate": "联盟"
   },
   "header": {
     "wallet": "钱包",
@@ -37,7 +40,9 @@
       "sending": "发送中…",
       "send": "发送报告",
       "failed": "报告发送失败"
-    }
+    },
+    "forAgents": "面向 AI 智能体",
+    "developers": "开发者"
   },
   "swap": {
     "tab": {
@@ -510,7 +515,8 @@
     "externalWalletModeDescription": "使用自托管钱包，无需将其连接到网站",
     "externalWalletAssetUnsupported": "此资产在外部钱包模式下不受支持。如要继续，请连接浏览器钱包。",
     "close": "关闭",
-    "sendToken": "发送{ticker}"
+    "sendToken": "发送{ticker}",
+    "trezorUnlockHint": "请确保您的 Trezor 已连接并解锁，然后在 Trezor Connect 弹窗中和您的设备上确认。"
   },
   "common": {
     "close": "关闭"

@@ -11,7 +11,10 @@
     "signUp": "साइन अप करें",
     "signingUp": "साइन अप किया जा रहा है…",
     "subscribed": "सब्सक्राइब करने के लिए धन्यवाद!",
-    "genericError": "कुछ गलत हो गया"
+    "genericError": "कुछ गलत हो गया",
+    "pool": "Pool",
+    "thorname": "THORName",
+    "affiliate": "एफिलिएट"
   },
   "header": {
     "wallet": "वॉलेट",
@@ -37,7 +40,9 @@
       "sending": "भेजा जा रहा है...",
       "send": "रिपोर्ट भेजें",
       "failed": "रिपोर्ट भेजने में विफल"
-    }
+    },
+    "forAgents": "एआई एजेंट के लिए",
+    "developers": "डेवलपर"
   },
   "swap": {
     "tab": {
@@ -510,7 +515,8 @@
     "externalWalletModeDescription": "अपने सेल्फ-कस्टडी वॉलेट को वेबसाइट से कनेक्ट किए बिना उसका उपयोग करें",
     "externalWalletAssetUnsupported": "यह एसेट बाहरी वॉलेट मोड में समर्थित नहीं है. यदि आप जारी रखना चाहते हैं तो एक ब्राउज़र वॉलेट कनेक्ट करें.",
     "close": "बंद करें",
-    "sendToken": "{ticker} भेजें"
+    "sendToken": "{ticker} भेजें",
+    "trezorUnlockHint": "सुनिश्चित करें कि आपका Trezor कनेक्टेड और अनलॉक है, फिर Trezor Connect पॉपअप में और अपने डिवाइस पर पुष्टि करें।"
   },
   "common": {
     "close": "बंद करें"

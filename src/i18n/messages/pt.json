@@ -11,7 +11,10 @@
     "signUp": "Inscrever-se",
     "signingUp": "Inscrevendo…",
     "subscribed": "Obrigado por se inscrever!",
-    "genericError": "Algo deu errado"
+    "genericError": "Algo deu errado",
+    "pool": "Pool",
+    "thorname": "THORName",
+    "affiliate": "Afiliado"
   },
   "header": {
     "wallet": "Carteira",
@@ -37,7 +40,9 @@
       "sending": "Enviando...",
       "send": "Enviar relatório",
       "failed": "Falha ao enviar o relatório"
-    }
+    },
+    "forAgents": "Para agentes de IA",
+    "developers": "Programadores"
   },
   "swap": {
     "tab": {
@@ -510,7 +515,8 @@
     "externalWalletModeDescription": "Use uma carteira de autocustódia sem conectá-la ao site",
     "externalWalletAssetUnsupported": "Este ativo não é suportado no modo de carteira externa. Conecte uma carteira de navegador se quiser continuar.",
     "close": "Fechar",
-    "sendToken": "Enviar {ticker}"
+    "sendToken": "Enviar {ticker}",
+    "trezorUnlockHint": "Certifica-te de que o teu Trezor está ligado e desbloqueado e depois confirma na janela do Trezor Connect e no teu dispositivo."
   },
   "common": {
     "close": "Fechar"

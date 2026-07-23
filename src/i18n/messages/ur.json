@@ -11,7 +11,10 @@
     "signUp": "سائن اپ کریں",
     "signingUp": "سائن اپ ہو رہا ہے…",
     "subscribed": "سبسکرائب کرنے کا شکریہ!",
-    "genericError": "کچھ غلط ہو گیا"
+    "genericError": "کچھ غلط ہو گیا",
+    "pool": "Pool",
+    "thorname": "THORName",
+    "affiliate": "ایفیلی ایٹ"
   },
   "header": {
     "wallet": "والٹ",
@@ -37,7 +40,9 @@
       "sending": "بھیجا جا رہا ہے...",
       "send": "رپورٹ بھیجیں",
       "failed": "رپورٹ بھیجنے میں ناکامی"
-    }
+    },
+    "forAgents": "اے آئی ایجنٹس کے لیے",
+    "developers": "ڈیولپرز"
   },
   "swap": {
     "tab": {
@@ -510,7 +515,8 @@
     "externalWalletModeDescription": "سیلف کسٹڈی والٹ کو ویب سائٹ سے منسلک کیے بغیر استعمال کریں",
     "externalWalletAssetUnsupported": "یہ اثاثہ External Wallet موڈ میں سپورٹڈ نہیں ہے۔ اگر آپ جاری رکھنا چاہتے ہیں تو براؤزر والٹ کنیکٹ کریں۔",
     "close": "بند کریں",
-    "sendToken": "{ticker} بھیجیں"
+    "sendToken": "{ticker} بھیجیں",
+    "trezorUnlockHint": "یقینی بنائیں کہ آپ کا Trezor منسلک اور اَن لاک ہے، پھر Trezor Connect پاپ اپ میں اور اپنے ڈیوائس پر تصدیق کریں۔"
   },
   "common": {
     "close": "بند کریں"

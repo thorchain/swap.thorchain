@@ -11,7 +11,10 @@
     "signUp": "Daftar",
     "signingUp": "Mendaftar…",
     "subscribed": "Terima kasih telah berlangganan!",
-    "genericError": "Terjadi kesalahan"
+    "genericError": "Terjadi kesalahan",
+    "pool": "Pool",
+    "thorname": "THORName",
+    "affiliate": "Afiliasi"
   },
   "header": {
     "wallet": "Dompet",
@@ -37,7 +40,9 @@
       "sending": "Mengirim...",
       "send": "Kirim laporan",
       "failed": "Gagal mengirim laporan"
-    }
+    },
+    "forAgents": "Untuk Agen AI",
+    "developers": "Pengembang"
   },
   "swap": {
     "tab": {
@@ -510,7 +515,8 @@
     "externalWalletModeDescription": "Gunakan dompet self-custody tanpa menghubungkannya ke situs web",
     "externalWalletAssetUnsupported": "Aset ini tidak didukung dalam mode dompet eksternal. Hubungkan dompet browser jika Anda ingin melanjutkan.",
     "close": "Tutup",
-    "sendToken": "Kirim {ticker}"
+    "sendToken": "Kirim {ticker}",
+    "trezorUnlockHint": "Pastikan Trezor Anda terhubung dan tidak terkunci, lalu konfirmasi di popup Trezor Connect dan di perangkat Anda."
   },
   "common": {
     "close": "Tutup"

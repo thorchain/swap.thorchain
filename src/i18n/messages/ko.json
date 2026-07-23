@@ -11,7 +11,10 @@
     "signUp": "구독",
     "signingUp": "구독 중…",
     "subscribed": "구독해 주셔서 감사합니다!",
-    "genericError": "문제가 발생했습니다"
+    "genericError": "문제가 발생했습니다",
+    "pool": "Pool",
+    "thorname": "THORName",
+    "affiliate": "제휴"
   },
   "header": {
     "wallet": "지갑",
@@ -37,7 +40,9 @@
       "sending": "전송 중…",
       "send": "신고 전송",
       "failed": "신고 전송에 실패했습니다"
-    }
+    },
+    "forAgents": "AI 에이전트용",
+    "developers": "개발자"
   },
   "swap": {
     "tab": {
@@ -510,7 +515,8 @@
     "externalWalletModeDescription": "자기 수탁 지갑을 웹사이트에 연결하지 않고 사용하세요",
     "externalWalletAssetUnsupported": "이 자산은 외부 지갑 모드에서 지원되지 않습니다. 계속하려면 브라우저 지갑을 연결하세요.",
     "close": "닫기",
-    "sendToken": "{ticker} 보내기"
+    "sendToken": "{ticker} 보내기",
+    "trezorUnlockHint": "Trezor가 연결되어 있고 잠금이 해제되었는지 확인한 다음, Trezor Connect 팝업과 기기에서 확인하세요."
   },
   "common": {
     "close": "닫기"

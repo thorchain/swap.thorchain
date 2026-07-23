@@ -11,7 +11,10 @@
     "signUp": "سائن اپ کرو",
     "signingUp": "سائن اپ پیا ہوندا اے…",
     "subscribed": "سبسکرائب کرݨ تے مہربانی!",
-    "genericError": "کجھ غلط ہو گیا"
+    "genericError": "کجھ غلط ہو گیا",
+    "pool": "Pool",
+    "thorname": "THORName",
+    "affiliate": "افیلیئٹ"
   },
   "header": {
     "wallet": "والٹ",
@@ -37,7 +40,9 @@
       "sending": "بھیجیا پیا ہوندا اے...",
       "send": "رپورٹ بھیجو",
       "failed": "رپورٹ بھیجݨ وچ ناکامی"
-    }
+    },
+    "forAgents": "AI ایجنٹاں لئی",
+    "developers": "ڈیویلپرز"
   },
   "swap": {
     "tab": {
@@ -510,7 +515,8 @@
     "externalWalletModeDescription": "سیلف کسٹڈی والٹ نوں ویب سائٹ نال جوڑے بغیر ورتو",
     "externalWalletAssetUnsupported": "ایہ اثاثہ بیرونی والٹ موڈ وچ سپورٹ نئیں اے۔ جے تُسی اگے ودھݨا چاہندے او تے براؤزر والٹ کنیکٹ کرو۔",
     "close": "بند کرو",
-    "sendToken": "{ticker} بھیجو"
+    "sendToken": "{ticker} بھیجو",
+    "trezorUnlockHint": "پک کرو تہاڈا Trezor کنیکٹ تے اَنلاک ہووے، پھر Trezor Connect پاپ اپ تے آپݨے ڈیوائس تے تصدیق کرو۔"
   },
   "common": {
     "close": "بند کرو"

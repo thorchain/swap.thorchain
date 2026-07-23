@@ -11,7 +11,10 @@
     "signUp": "Abone Ol",
     "signingUp": "Abone olunuyor…",
     "subscribed": "Abone olduğun için teşekkürler!",
-    "genericError": "Bir şeyler ters gitti"
+    "genericError": "Bir şeyler ters gitti",
+    "pool": "Pool",
+    "thorname": "THORName",
+    "affiliate": "Ortaklık"
   },
   "header": {
     "wallet": "Cüzdan",
@@ -37,7 +40,9 @@
       "sending": "Gönderiliyor…",
       "send": "Bildirimi Gönder",
       "failed": "Bildirim gönderilemedi"
-    }
+    },
+    "forAgents": "Yapay Zekâ Ajanları için",
+    "developers": "Geliştiriciler"
   },
   "swap": {
     "tab": {
@@ -510,7 +515,8 @@
     "externalWalletModeDescription": "Öz saklamalı bir cüzdanı web sitesine bağlamadan kullan",
     "externalWalletAssetUnsupported": "Bu varlık Harici Cüzdan modunda desteklenmiyor. Devam etmek istiyorsanız tarayıcı içi bir cüzdan bağlayın.",
     "close": "Kapat",
-    "sendToken": "{ticker} Gönder"
+    "sendToken": "{ticker} Gönder",
+    "trezorUnlockHint": "Trezor cihazınızın bağlı ve kilidinin açık olduğundan emin olun, ardından Trezor Connect penceresinde ve cihazınızda onaylayın."
   },
   "common": {
     "close": "Kapat"
