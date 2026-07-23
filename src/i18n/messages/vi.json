@@ -309,7 +309,6 @@
       "preferredAssetOptional": "Tài sản ưu tiên (không bắt buộc)",
       "assetDefault": "{ticker} (mặc định)",
       "saveAddress": "Lưu địa chỉ",
-      "keepAsset": "Giữ {asset}",
       "manage": "Quản lý",
       "aliasAddressTitle": "Địa chỉ bí danh"
     },

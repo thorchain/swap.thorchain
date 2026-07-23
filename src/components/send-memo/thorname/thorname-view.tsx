@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import { useTranslations } from 'next-intl'
-import { CheckCircle2, ChevronRight, Info, LoaderCircle, Search, X } from 'lucide-react'
+import { CheckCircle2, Info, LoaderCircle, Search, X } from 'lucide-react'
 import { Input } from '@/components/ui/input'
 import { useDialog } from '@/components/global-dialog'
 import { ConnectWallet } from '@/components/connect-wallet/connect-wallet'
@@ -52,8 +52,8 @@ export function ThornameView({ config }: { config: ThornameConfig }) {
   const openRenew = (name: string, expireBlockHeight: number) =>
     withWallet(acc => openDialog(ThornameRenewDialog, { config, name, account: acc, expireBlockHeight }))
   const openTransfer = (name: string) => withWallet(acc => openDialog(ThornameTransferDialog, { config, name, account: acc }))
-  const openAddress = (record: NameRecord, chain?: string) =>
-    withWallet(acc => openDialog(ThornameAddressesDialog, { config, name: record.name, account: acc, record, chain }))
+  const openAddress = (record: NameRecord) =>
+    withWallet(acc => openDialog(ThornameAddressesDialog, { config, name: record.name, account: acc, record }))
 
   return (
     <div className="bg-modal rounded-20 space-y-2.5 border p-2.5">
@@ -102,7 +102,6 @@ export function ThornameView({ config }: { config: ThornameConfig }) {
               expiryDate={blockHeightToDate(found.expire_block_height, currentBlock)}
               onRenew={() => openRenew(found.name, found.expire_block_height)}
               onTransfer={() => openTransfer(found.name)}
-              onEditAddress={chain => openAddress(found, chain)}
               onManage={() => openAddress(found)}
             />
           ) : null}
@@ -122,7 +121,6 @@ export function ThornameView({ config }: { config: ThornameConfig }) {
             expiryDate={blockHeightToDate(n.expire_block_height, currentBlock)}
             onRenew={() => openRenew(n.name, n.expire_block_height)}
             onTransfer={() => openTransfer(n.name)}
-            onEditAddress={chain => openAddress(n, chain)}
             onManage={() => openAddress(n)}
           />
         ))}
@@ -139,11 +137,10 @@ type NameCardProps = {
   onRegister?: () => void
   onRenew?: () => void
   onTransfer?: () => void
-  onEditAddress?: (chain: string) => void
   onManage?: () => void
 }
 
-function NameCard({ config, name, status, record, expiryDate, onRegister, onRenew, onTransfer, onEditAddress, onManage }: NameCardProps) {
+function NameCard({ config, name, status, record, expiryDate, onRegister, onRenew, onTransfer, onManage }: NameCardProps) {
   const t = useTranslations('send')
   // A name with no aliases yet still gets a row, using the owner address.
   const aliases = aliasesOf(record)
@@ -178,12 +175,7 @@ function NameCard({ config, name, status, record, expiryDate, onRegister, onRene
         <div className="space-y-2">
           {expiryDate && <Row label={t('thorname.expires')} value={expiryDate.toLocaleDateString()} />}
           {rows.map(a => (
-            <Row
-              key={a.chain}
-              label={t('thorname.aliasAddress', { chain: a.chain })}
-              value={truncate(a.address)}
-              onClick={onEditAddress && (() => onEditAddress(a.chain))}
-            />
+            <Row key={a.chain} label={t('thorname.aliasAddress', { chain: a.chain })} value={truncate(a.address)} />
           ))}
           {preferredAsset && <Row label={t('thorname.preferredAsset')} value={formatPreferredAsset(preferredAsset)} />}
         </div>
@@ -214,27 +206,11 @@ function NameCard({ config, name, status, record, expiryDate, onRegister, onRene
   )
 }
 
-// An address row doubles as the edit entry point when the name is owned.
-function Row({ label, value, onClick }: { label: string; value: string; onClick?: () => void }) {
-  const content = (
-    <>
-      <span className="text-txt-label-small">{label}</span>
-      <span className="text-txt-high-contrast flex items-center gap-1 font-medium">
-        {value}
-        {onClick && <ChevronRight className="text-txt-label-small size-4" />}
-      </span>
-    </>
-  )
-
-  if (!onClick) return <div className="flex items-center justify-between text-sm">{content}</div>
-
+function Row({ label, value }: { label: string; value: string }) {
   return (
-    <button
-      type="button"
-      onClick={onClick}
-      className="hover:bg-swap-bloc -mx-2 flex w-[calc(100%+1rem)] items-center justify-between rounded-lg px-2 py-0.5 text-sm transition-colors"
-    >
-      {content}
-    </button>
+    <div className="flex items-center justify-between text-sm">
+      <span className="text-txt-label-small">{label}</span>
+      <span className="text-txt-high-contrast font-medium">{value}</span>
+    </div>
   )
 }

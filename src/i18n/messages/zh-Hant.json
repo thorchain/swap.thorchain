@@ -309,7 +309,6 @@
       "preferredAssetOptional": "偏好資產（選填）",
       "assetDefault": "{ticker}（預設）",
       "saveAddress": "儲存地址",
-      "keepAsset": "保持 {asset}",
       "manage": "管理",
       "aliasAddressTitle": "別名地址"
     },

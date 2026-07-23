@@ -309,7 +309,6 @@
       "preferredAssetOptional": "पसंदीदा एसेट (वैकल्पिक)",
       "assetDefault": "{ticker} (डिफ़ॉल्ट)",
       "saveAddress": "पता सहेजें",
-      "keepAsset": "{asset} रखें",
       "manage": "प्रबंधित करें",
       "aliasAddressTitle": "उपनाम पता"
     },

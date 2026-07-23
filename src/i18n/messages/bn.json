@@ -309,7 +309,6 @@
       "preferredAssetOptional": "পছন্দের অ্যাসেট (ঐচ্ছিক)",
       "assetDefault": "{ticker} (ডিফল্ট)",
       "saveAddress": "ঠিকানা সংরক্ষণ করুন",
-      "keepAsset": "{asset} রাখুন",
       "manage": "পরিচালনা",
       "aliasAddressTitle": "অ্যালিয়াস ঠিকানা"
     },

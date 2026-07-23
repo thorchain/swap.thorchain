@@ -309,7 +309,6 @@
       "preferredAssetOptional": "الأصل المفضّل (اختياري)",
       "assetDefault": "{ticker} (افتراضي)",
       "saveAddress": "احفظ العنوان",
-      "keepAsset": "سيب {asset} زى ما هو",
       "manage": "إدارة",
       "aliasAddressTitle": "عنوان الاسم البديل"
     },

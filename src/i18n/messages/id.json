@@ -309,7 +309,6 @@
       "preferredAssetOptional": "Aset pilihan (opsional)",
       "assetDefault": "{ticker} (default)",
       "saveAddress": "Simpan alamat",
-      "keepAsset": "Pertahankan {asset}",
       "manage": "Kelola",
       "aliasAddressTitle": "Alamat alias"
     },

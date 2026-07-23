@@ -455,7 +455,6 @@
       "preferredAssetOptional": "ᛈᚱᛖᚠᛖᚱᚱᛖᛞ ᚨᛊᛊᛖᛏ (ᛟᛈᛏᛁᛟᚾᚨᛚ)",
       "assetDefault": "{ticker} (ᛞᛖᚠᚨᚢᛚᛏ)",
       "saveAddress": "ᛊᚨᚡᛖ ᚨᛞᛞᚱᛖᛊᛊ",
-      "keepAsset": "ᚲᛖᛖᛈ {asset}",
       "manage": "ᛗᚨᚾᚨᚷᛖ",
       "aliasAddressTitle": "ᚨᛚᛁᚨᛊ ᚨᛞᛞᚱᛖᛊᛊ"
     }

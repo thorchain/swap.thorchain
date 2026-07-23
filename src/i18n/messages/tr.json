@@ -309,7 +309,6 @@
       "preferredAssetOptional": "Tercih edilen varlık (isteğe bağlı)",
       "assetDefault": "{ticker} (varsayılan)",
       "saveAddress": "Adresi kaydet",
-      "keepAsset": "{asset} olarak kalsın",
       "manage": "Yönet",
       "aliasAddressTitle": "Takma ad adresi"
     },

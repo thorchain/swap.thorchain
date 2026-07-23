@@ -309,7 +309,6 @@
       "preferredAssetOptional": "สินทรัพย์ที่ต้องการ (ไม่บังคับ)",
       "assetDefault": "{ticker} (ค่าเริ่มต้น)",
       "saveAddress": "บันทึกที่อยู่",
-      "keepAsset": "คงไว้ที่ {asset}",
       "manage": "จัดการ",
       "aliasAddressTitle": "ที่อยู่แฝง"
     },

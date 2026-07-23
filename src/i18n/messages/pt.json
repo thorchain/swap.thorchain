@@ -309,7 +309,6 @@
       "preferredAssetOptional": "Ativo preferido (opcional)",
       "assetDefault": "{ticker} (padrão)",
       "saveAddress": "Guardar endereço",
-      "keepAsset": "Manter {asset}",
       "manage": "Gerir",
       "aliasAddressTitle": "Endereço de alias"
     },

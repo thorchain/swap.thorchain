@@ -309,7 +309,6 @@
       "preferredAssetOptional": "ترجیحی اثاثہ (اختیاری)",
       "assetDefault": "{ticker} (ڈیفالٹ)",
       "saveAddress": "پتہ محفوظ کریں",
-      "keepAsset": "{asset} برقرار رکھیں",
       "manage": "منظم کریں",
       "aliasAddressTitle": "عرفی پتہ"
     },

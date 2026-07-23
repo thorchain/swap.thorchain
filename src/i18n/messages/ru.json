@@ -309,7 +309,6 @@
       "preferredAssetOptional": "Предпочтительный актив (необязательно)",
       "assetDefault": "{ticker} (по умолчанию)",
       "saveAddress": "Сохранить адрес",
-      "keepAsset": "Оставить {asset}",
       "manage": "Управление",
       "aliasAddressTitle": "Алиас-адрес"
     },

@@ -309,7 +309,6 @@
       "preferredAssetOptional": "優先アセット（任意）",
       "assetDefault": "{ticker}（デフォルト）",
       "saveAddress": "アドレスを保存",
-      "keepAsset": "{asset} のまま",
       "manage": "管理",
       "aliasAddressTitle": "エイリアスアドレス"
     },

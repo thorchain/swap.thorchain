@@ -309,7 +309,6 @@
       "preferredAssetOptional": "دارایی ترجیحی (اختیاری)",
       "assetDefault": "{ticker} (پیش‌فرض)",
       "saveAddress": "ذخیره آدرس",
-      "keepAsset": "حفظ {asset}",
       "manage": "مدیریت",
       "aliasAddressTitle": "آدرس مستعار"
     },

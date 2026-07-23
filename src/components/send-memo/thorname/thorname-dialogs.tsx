@@ -381,21 +381,10 @@ export function ThornameRenewDialog({
   )
 }
 
-/** Sentinel for "leave the preferred asset as it is". Never a valid asset id. */
-const KEEP_ASSET = 'keep'
-
 // Sets the name's address on one chain, and whether fees pay out there. A
 // deposit carries a single chain/address pair, and the asset implies the chain,
 // so the asset select doubles as the chain control.
-export function ThornameAddressesDialog({
-  config,
-  name,
-  account,
-  record,
-  chain: initialChain,
-  isOpen,
-  onOpenChange
-}: DialogBase & { record: NameRecord; chain?: string }) {
+export function ThornameAddressesDialog({ config, name, account, record, isOpen, onOpenChange }: DialogBase & { record: NameRecord }) {
   const t = useTranslations('send')
   const accounts = useAccounts()
   const { rate } = useTokenContext(config)
@@ -409,13 +398,11 @@ export function ThornameAddressesDialog({
   // Prefill from the record, falling back to a connected wallet on that chain.
   const addressFor = (chain: string) => registered.find(a => a.chain === chain)?.address ?? accounts.find(a => a.network === chain)?.address ?? ''
 
-  // What payouts use today — the native asset until one is chosen.
-  const effectiveAsset = currentAsset || nativeAsset
-
-  // Editing a row starts on its chain; otherwise an asset has to imply one.
-  const [chain, setChain] = useState(initialChain ?? '')
-  const [address, setAddress] = useState(() => (initialChain ? addressFor(initialChain) : ''))
-  const [asset, setAsset] = useState(() => (!initialChain ? '' : chainOfAsset(currentAsset) === initialChain ? currentAsset : KEEP_ASSET))
+  // Opens on the asset fees already pay out to, so correcting that address is a
+  // single step. A name without one starts empty and waits for a choice.
+  const [asset, setAsset] = useState(currentAsset)
+  const [chain, setChain] = useState(currentAsset ? chainOfAsset(currentAsset) : '')
+  const [address, setAddress] = useState(() => (currentAsset ? addressFor(chainOfAsset(currentAsset)) : ''))
 
   // Keeps a selection visible even if its pool dropped out of the active list.
   const options = useMemo(() => (currentAsset && !assets.includes(currentAsset) ? [currentAsset, ...assets] : assets), [assets, currentAsset])
@@ -424,7 +411,6 @@ export function ThornameAddressesDialog({
   // is what moves the form to another chain.
   const selectAsset = (next: string) => {
     setAsset(next)
-    if (next === KEEP_ASSET) return
     const nextChain = chainOfAsset(next)
     if (nextChain === chain) return
     setChain(nextChain)
@@ -436,8 +422,9 @@ export function ThornameAddressesDialog({
 
   // ~:name:chain:address[:owner:preferredAsset]. The owner slot is positional, so
   // it is only filled when a preferred asset follows it, and it carries the
-  // record's owner — a mismatched owner wipes every alias on the name.
-  const preferred = asset !== KEEP_ASSET && asset !== currentAsset && asset !== nativeAsset ? asset : ''
+  // record's owner — a mismatched owner wipes every alias on the name. Re-picking
+  // the current asset is a no-op, which is how an address alone gets updated.
+  const preferred = asset !== currentAsset && asset !== nativeAsset ? asset : ''
   const memo = preferred ? `~:${name}:${chain}:${trimmed}:${record.owner}:${preferred}` : `~:${name}:${chain}:${trimmed}`
   const canSend = !!chain && isValid && !submitting
 
@@ -460,10 +447,6 @@ export function ThornameAddressesDialog({
                 <SelectValue placeholder={t('thorname.selectAsset')} />
               </SelectTrigger>
               <SelectContent>
-                {/* Editing an address shouldn't force a payout change. */}
-                {!!initialChain && (
-                  <SelectItem value={KEEP_ASSET}>{t('thorname.keepAsset', { asset: formatPreferredAsset(effectiveAsset) })}</SelectItem>
-                )}
                 {options.map(a => (
                   <SelectItem key={a} value={a}>
                     {a === nativeAsset ? t('thorname.assetDefault', { ticker: config.ticker }) : formatPreferredAsset(a)}
