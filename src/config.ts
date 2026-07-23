@@ -27,5 +27,6 @@ export const SUBDOMAIN_ROUTES = [
   { path: '/bond', host: 'bond.thorchain.org' },
   { path: '/memo', host: 'memo.thorchain.org' },
   { path: '/pool', host: 'pool.thorchain.org' },
-  { path: '/thorname', host: 'thorname.thorchain.org' }
+  { path: '/thorname', host: 'thorname.thorchain.org' },
+  { path: '/affiliate', host: 'affiliate.thorchain.org' }
 ] as const
