@@ -13,12 +13,19 @@ import { AnimatedButton } from '@/components/animated-button'
 import { DecimalInput } from '@/components/decimal/decimal-input'
 import { GenericButton } from '@/components/generic-button'
 import { assetIdentifierStr } from '@/components/send/send-helpers'
-import { NameRecord, ThornameConfig, formatPreferredAsset, preferredAssetOf } from '@/components/send-memo/thorname/thorname-config'
+import {
+  aliasesOf,
+  chainOfAsset,
+  formatPreferredAsset,
+  NameRecord,
+  preferredAssetOf,
+  ThornameConfig
+} from '@/components/send-memo/thorname/thorname-config'
 import { useWalletBalances } from '@/hooks/use-wallet-balances'
 import { useAccounts } from '@/hooks/use-wallets'
 import { useRates } from '@/hooks/use-rates'
 import { addDays, addYears, format } from 'date-fns'
-import { SECONDS_PER_BLOCK, blockHeightToDate } from '@/components/send-memo/send-memo-helpers'
+import { blockHeightToDate, SECONDS_PER_BLOCK } from '@/components/send-memo/send-memo-helpers'
 import { getUSwap } from '@/lib/wallets'
 import { WalletAccount } from '@/store/wallets-store'
 import { toCurrencyFixed } from '@/lib/utils'
@@ -256,13 +263,7 @@ export function ThornameRegisterDialog({ config, name: initialName, account, isO
 
           <div className="flex flex-col gap-1.5">
             <label className="text-txt-label-small text-sm">{t('thorname.preferredAssetOptional')}</label>
-            <PreferredAssetSelect
-              assets={assets}
-              value={preferredAsset}
-              onChange={selectAsset}
-              disabled={assetsLoading}
-              defaultAsset={nativeAsset}
-            />
+            <PreferredAssetSelect assets={assets} value={preferredAsset} onChange={selectAsset} disabled={assetsLoading} defaultAsset={nativeAsset} />
           </div>
 
           {needsPayoutAlias && (
@@ -297,7 +298,14 @@ export function ThornameRegisterDialog({ config, name: initialName, account, isO
   )
 }
 
-export function ThornameRenewDialog({ config, name: initialName, account, expireBlockHeight, isOpen, onOpenChange }: DialogBase & { expireBlockHeight: number }) {
+export function ThornameRenewDialog({
+  config,
+  name: initialName,
+  account,
+  expireBlockHeight,
+  isOpen,
+  onOpenChange
+}: DialogBase & { expireBlockHeight: number }) {
   const t = useTranslations('send')
   const { token, rate } = useTokenContext(config)
   const { feePerBlock, currentBlock } = config.useNetwork()
@@ -373,68 +381,107 @@ export function ThornameRenewDialog({ config, name: initialName, account, expire
   )
 }
 
-export function ThornamePreferredAssetDialog({ config, name, account, record, isOpen, onOpenChange }: DialogBase & { record: NameRecord }) {
+/** Sentinel for "leave the preferred asset as it is". Never a valid asset id. */
+const KEEP_ASSET = 'keep'
+
+// Sets the name's address on one chain, and whether fees pay out there. A
+// deposit carries a single chain/address pair, and the asset implies the chain,
+// so the asset select doubles as the chain control.
+export function ThornameAddressesDialog({
+  config,
+  name,
+  account,
+  record,
+  chain: initialChain,
+  isOpen,
+  onOpenChange
+}: DialogBase & { record: NameRecord; chain?: string }) {
   const t = useTranslations('send')
   const accounts = useAccounts()
   const { rate } = useTokenContext(config)
   const { assets, isLoading: assetsLoading } = config.usePreferredAssets()
   const { submit, submitting } = useThornameDeposit(config, account, () => onOpenChange(false))
 
-  const aliasFor = (chain: string) =>
-    record.aliases?.find(a => a.chain === chain)?.address ?? accounts.find(a => a.network === chain)?.address ?? ''
+  const nativeAsset = `${config.aliasChain}.${config.ticker}`
+  const registered = aliasesOf(record)
+  const currentAsset = preferredAssetOf(record)
 
-  const [asset, setAsset] = useState(() => preferredAssetOf(record))
-  const [alias, setAlias] = useState(() => (asset ? aliasFor(asset.split('.')[0]) : ''))
+  // Prefill from the record, falling back to a connected wallet on that chain.
+  const addressFor = (chain: string) => registered.find(a => a.chain === chain)?.address ?? accounts.find(a => a.network === chain)?.address ?? ''
 
-  // The payout goes to the name's alias on the asset's chain, so picking an
-  // asset re-seeds the alias from the record (or a connected wallet).
+  // What payouts use today — the native asset until one is chosen.
+  const effectiveAsset = currentAsset || nativeAsset
+
+  // Editing a row starts on its chain; otherwise an asset has to imply one.
+  const [chain, setChain] = useState(initialChain ?? '')
+  const [address, setAddress] = useState(() => (initialChain ? addressFor(initialChain) : ''))
+  const [asset, setAsset] = useState(() => (!initialChain ? '' : chainOfAsset(currentAsset) === initialChain ? currentAsset : KEEP_ASSET))
+
+  // Keeps a selection visible even if its pool dropped out of the active list.
+  const options = useMemo(() => (currentAsset && !assets.includes(currentAsset) ? [currentAsset, ...assets] : assets), [assets, currentAsset])
+
+  // Payouts land on the name's address on the asset's chain, so picking an asset
+  // is what moves the form to another chain.
   const selectAsset = (next: string) => {
     setAsset(next)
-    setAlias(aliasFor(next.split('.')[0]))
+    if (next === KEEP_ASSET) return
+    const nextChain = chainOfAsset(next)
+    if (nextChain === chain) return
+    setChain(nextChain)
+    setAddress(addressFor(nextChain))
   }
 
-  const assetChain = (asset ? asset.split('.')[0] : config.aliasChain) as Chain
-  const trimmedAlias = alias.trim()
-  const isValidAlias = useValidAddress(alias, assetChain)
-  // ~:name:chain:address:owner:preferredAsset — the chain/address pair also
-  // registers the alias the payout is sent to.
-  const memo = `~:${name}:${assetChain}:${trimmedAlias}:${account.address}:${asset}`
-  const canSend = !!asset && isValidAlias && !submitting
+  const trimmed = address.trim()
+  const isValid = useValidAddress(address, chain as Chain)
 
-  const options = accounts.filter(a => a.network === assetChain)
+  // ~:name:chain:address[:owner:preferredAsset]. The owner slot is positional, so
+  // it is only filled when a preferred asset follows it, and it carries the
+  // record's owner — a mismatched owner wipes every alias on the name.
+  const preferred = asset !== KEEP_ASSET && asset !== currentAsset && asset !== nativeAsset ? asset : ''
+  const memo = preferred ? `~:${name}:${chain}:${trimmed}:${record.owner}:${preferred}` : `~:${name}:${chain}:${trimmed}`
+  const canSend = !!chain && isValid && !submitting
 
-  const submitLabel = !asset ? t('thorname.selectAsset') : !isValidAlias ? t('thorname.enterAliasAddress') : t('thorname.preferredAssetTitle')
+  const submitLabel = !chain ? t('thorname.selectAsset') : !isValid ? t('thorname.enterAliasAddress') : t('thorname.saveAddress')
 
   return (
     <Credenza open={isOpen} onOpenChange={onOpenChange}>
       <CredenzaContent className="h-auto rounded-2xl md:max-w-md">
         <CredenzaHeader>
-          <CredenzaTitle>{t('thorname.preferredAssetTitle')}</CredenzaTitle>
+          <CredenzaTitle>{chain ? t('thorname.aliasAddress', { chain }) : t('thorname.aliasAddressTitle')}</CredenzaTitle>
         </CredenzaHeader>
 
         <div className="flex flex-col gap-5 p-4 pt-2 md:p-8 md:pt-0">
           <p className="text-txt-label-small text-sm">{t('thorname.preferredAssetInfo', { name })}</p>
 
           <div className="flex flex-col gap-1.5">
-            <label className="text-txt-label-small text-sm">{t('thorname.asset')}</label>
-            <PreferredAssetSelect
-              assets={assets}
-              value={asset}
-              onChange={selectAsset}
-              disabled={assetsLoading}
-              defaultAsset={`${config.aliasChain}.${config.ticker}`}
-            />
+            <label className="text-txt-label-small text-sm">{t('thorname.preferredAssetOptional')}</label>
+            <Select value={asset} onValueChange={selectAsset} disabled={assetsLoading}>
+              <SelectTrigger className="bg-input-modal-bg-active border-border-sub-container-modal-low w-full">
+                <SelectValue placeholder={t('thorname.selectAsset')} />
+              </SelectTrigger>
+              <SelectContent>
+                {/* Editing an address shouldn't force a payout change. */}
+                {!!initialChain && (
+                  <SelectItem value={KEEP_ASSET}>{t('thorname.keepAsset', { asset: formatPreferredAsset(effectiveAsset) })}</SelectItem>
+                )}
+                {options.map(a => (
+                  <SelectItem key={a} value={a}>
+                    {a === nativeAsset ? t('thorname.assetDefault', { ticker: config.ticker }) : formatPreferredAsset(a)}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
           </div>
 
-          {asset && (
+          {chain && (
             <div className="flex flex-col gap-1.5">
-              <label className="text-txt-label-small text-sm">{t('thorname.aliasAddress', { chain: assetChain })}</label>
+              <label className="text-txt-label-small text-sm">{t('thorname.aliasAddress', { chain })}</label>
               <AddressInput
-                value={alias}
-                onChange={setAlias}
-                options={options}
+                value={address}
+                onChange={setAddress}
+                options={accounts.filter(a => a.network === chain)}
                 placeholder={t('thorname.recipientPlaceholder')}
-                invalid={!!trimmedAlias && !isValidAlias}
+                invalid={!!trimmed && !isValid}
               />
             </div>
           )}

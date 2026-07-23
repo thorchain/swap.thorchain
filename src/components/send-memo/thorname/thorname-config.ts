@@ -31,6 +31,11 @@ export const formatPreferredAsset = (asset: string): string => {
   return ticker === chain ? ticker : `${ticker} (${chain})`
 }
 
+export const chainOfAsset = (asset: string): string => asset.split('.')[0]
+
+/** Nodes omit `aliases` entirely when the name has none. */
+export const aliasesOf = (record?: NameRecord): { chain: string; address: string }[] => record?.aliases ?? []
+
 export interface NetworkInfo {
   currentBlock: number
   registerFee: number

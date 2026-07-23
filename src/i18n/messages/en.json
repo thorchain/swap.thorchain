@@ -436,7 +436,6 @@
       "renewTitle": "Renew {name}",
       "transferTitle": "Transfer {name}",
       "amount": "Amount",
-      "aliasesChain": "Aliases {chain}",
       "recipientPlaceholder": "Recipient address",
       "extendsLabel": "Extend registration to",
       "name": "Name",
@@ -451,14 +450,16 @@
       "cost": "Cost",
       "expires": "Expires",
       "preferredAsset": "Preferred asset",
-      "preferredAssetTitle": "Set preferred asset",
       "preferredAssetInfo": "Affiliate fees earned by {name} are automatically swapped to the preferred asset and sent to its alias address on that chain.",
-      "asset": "Asset",
       "selectAsset": "Select asset",
       "aliasAddress": "Alias address ({chain})",
       "enterAliasAddress": "Enter a valid address",
       "preferredAssetOptional": "Preferred asset (optional)",
-      "assetDefault": "{ticker} (default)"
+      "assetDefault": "{ticker} (default)",
+      "saveAddress": "Save address",
+      "keepAsset": "Keep {asset}",
+      "manage": "Manage",
+      "aliasAddressTitle": "Alias address"
     }
   },
   "wallet": {

@@ -20,11 +20,18 @@ export interface ThorName {
 
 // "Available" only when THORNode reports the name doesn't exist; any other
 // failure is unknown, not a free name.
+//
+// Up to THORNode 3.19.x an unregistered name answers 500, not 404, with only a
+// wrapper message ({"code":2,"message":"fail to fetch THORName"}). Matching that
+// exact body keeps real outages — 5xx, rate limits, timeouts — reported as
+// errors. 3.20.0 returns 4xx, which the status check already covers, so the
+// message match can go once every node has upgraded.
 const isNameNotFound = (err: unknown): boolean => {
   if (!axios.isAxiosError(err)) return false
   if (err.response?.status === 404) return true
-  const message = err.response?.data?.message
-  return typeof message === 'string' && message.includes("doesn't exist")
+  const message = err.response?.data?.message ?? err.response?.data?.error
+  if (typeof message !== 'string') return false
+  return message.includes("doesn't exist") || message.includes('fail to fetch THORName')
 }
 
 export const getThorName = async (name: string): Promise<ThorName | null> => {

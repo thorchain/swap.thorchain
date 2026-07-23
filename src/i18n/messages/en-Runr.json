@@ -435,7 +435,6 @@
       "renewTitle": "ᚱᛖᚾᛖᚹ {name}",
       "transferTitle": "ᛏᚱᚨᚾᛊᚠᛖᚱ {name}",
       "amount": "ᚨᛗᛟᚢᚾᛏ",
-      "aliasesChain": "ᚨᛚᛁᚨᛊᛖᛊ {chain}",
       "recipientPlaceholder": "ᚱᛖᚲᛁᛈᛁᛖᚾᛏ ᚨᛞᛞᚱᛖᛊᛊ",
       "name": "ᚾᚨᛗᛖ",
       "invalidName": "ᛁᚾᚹᚨᛚᛁᛞ ᚾᚨᛗᛖ",
@@ -449,14 +448,16 @@
       "cost": "ᚲᛟᛊᛏ",
       "expires": "ᛖᚲᛊᛈᛁᚱᛖᛊ",
       "preferredAsset": "ᛈᚱᛖᚠᛖᚱᚱᛖᛞ ᚨᛊᛊᛖᛏ",
-      "preferredAssetTitle": "ᛊᛖᛏ ᛈᚱᛖᚠᛖᚱᚱᛖᛞ ᚨᛊᛊᛖᛏ",
       "preferredAssetInfo": "ᚨᚠᚠᛁᛚᛁᚨᛏᛖ ᚠᛖᛖᛊ ᛖᚨᚱᚾᛖᛞ ᛒᛁ {name} ᚨᚱᛖ ᚨᚢᛏᛟᛗᚨᛏᛁᚲᚨᛚᛚᛁ ᛊᚹᚨᛈᛈᛖᛞ ᛏᛟ ᛏᚺᛖ ᛈᚱᛖᚠᛖᚱᚱᛖᛞ ᚨᛊᛊᛖᛏ ᚨᚾᛞ ᛊᛖᚾᛏ ᛏᛟ ᛁᛏᛊ ᚨᛚᛁᚨᛊ ᚨᛞᛞᚱᛖᛊᛊ ᛟᚾ ᛏᚺᚨᛏ ᚲᚺᚨᛁᚾ.",
-      "asset": "ᚨᛊᛊᛖᛏ",
       "selectAsset": "ᛊᛖᛚᛖᚲᛏ ᚨᛊᛊᛖᛏ",
       "aliasAddress": "ᚨᛚᛁᚨᛊ ᚨᛞᛞᚱᛖᛊᛊ ({chain})",
       "enterAliasAddress": "ᛖᚾᛏᛖᚱ ᚨ ᚹᚨᛚᛁᛞ ᚨᛞᛞᚱᛖᛊᛊ",
       "preferredAssetOptional": "ᛈᚱᛖᚠᛖᚱᚱᛖᛞ ᚨᛊᛊᛖᛏ (ᛟᛈᛏᛁᛟᚾᚨᛚ)",
-      "assetDefault": "{ticker} (ᛞᛖᚠᚨᚢᛚᛏ)"
+      "assetDefault": "{ticker} (ᛞᛖᚠᚨᚢᛚᛏ)",
+      "saveAddress": "ᛊᚨᚡᛖ ᚨᛞᛞᚱᛖᛊᛊ",
+      "keepAsset": "ᚲᛖᛖᛈ {asset}",
+      "manage": "ᛗᚨᚾᚨᚷᛖ",
+      "aliasAddressTitle": "ᚨᛚᛁᚨᛊ ᚨᛞᛞᚱᛖᛊᛊ"
     }
   },
   "wallet": {

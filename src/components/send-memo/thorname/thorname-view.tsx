@@ -2,14 +2,14 @@
 
 import { useState } from 'react'
 import { useTranslations } from 'next-intl'
-import { CheckCircle2, Info, LoaderCircle, Search, X } from 'lucide-react'
+import { CheckCircle2, ChevronRight, Info, LoaderCircle, Search, X } from 'lucide-react'
 import { Input } from '@/components/ui/input'
 import { useDialog } from '@/components/global-dialog'
 import { ConnectWallet } from '@/components/connect-wallet/connect-wallet'
 import { GenericButton } from '@/components/generic-button'
-import { NameRecord, ThornameConfig, formatPreferredAsset, preferredAssetOf } from '@/components/send-memo/thorname/thorname-config'
+import { NameRecord, ThornameConfig, aliasesOf, formatPreferredAsset, preferredAssetOf } from '@/components/send-memo/thorname/thorname-config'
 import {
-  ThornamePreferredAssetDialog,
+  ThornameAddressesDialog,
   ThornameRegisterDialog,
   ThornameRenewDialog,
   ThornameTransferDialog
@@ -52,8 +52,8 @@ export function ThornameView({ config }: { config: ThornameConfig }) {
   const openRenew = (name: string, expireBlockHeight: number) =>
     withWallet(acc => openDialog(ThornameRenewDialog, { config, name, account: acc, expireBlockHeight }))
   const openTransfer = (name: string) => withWallet(acc => openDialog(ThornameTransferDialog, { config, name, account: acc }))
-  const openPreferredAsset = (record: NameRecord) =>
-    withWallet(acc => openDialog(ThornamePreferredAssetDialog, { config, name: record.name, account: acc, record }))
+  const openAddress = (record: NameRecord, chain?: string) =>
+    withWallet(acc => openDialog(ThornameAddressesDialog, { config, name: record.name, account: acc, record, chain }))
 
   return (
     <div className="bg-modal rounded-20 space-y-2.5 border p-2.5">
@@ -102,7 +102,8 @@ export function ThornameView({ config }: { config: ThornameConfig }) {
               expiryDate={blockHeightToDate(found.expire_block_height, currentBlock)}
               onRenew={() => openRenew(found.name, found.expire_block_height)}
               onTransfer={() => openTransfer(found.name)}
-              onPreferredAsset={() => openPreferredAsset(found)}
+              onEditAddress={chain => openAddress(found, chain)}
+              onManage={() => openAddress(found)}
             />
           ) : null}
         </>
@@ -121,7 +122,8 @@ export function ThornameView({ config }: { config: ThornameConfig }) {
             expiryDate={blockHeightToDate(n.expire_block_height, currentBlock)}
             onRenew={() => openRenew(n.name, n.expire_block_height)}
             onTransfer={() => openTransfer(n.name)}
-            onPreferredAsset={() => openPreferredAsset(n)}
+            onEditAddress={chain => openAddress(n, chain)}
+            onManage={() => openAddress(n)}
           />
         ))}
     </div>
@@ -137,12 +139,15 @@ type NameCardProps = {
   onRegister?: () => void
   onRenew?: () => void
   onTransfer?: () => void
-  onPreferredAsset?: () => void
+  onEditAddress?: (chain: string) => void
+  onManage?: () => void
 }
 
-function NameCard({ config, name, status, record, expiryDate, onRegister, onRenew, onTransfer }: NameCardProps) {
+function NameCard({ config, name, status, record, expiryDate, onRegister, onRenew, onTransfer, onEditAddress, onManage }: NameCardProps) {
   const t = useTranslations('send')
-  const alias = record?.aliases?.find(a => a.chain === config.aliasChain)?.address ?? record?.owner
+  // A name with no aliases yet still gets a row, using the owner address.
+  const aliases = aliasesOf(record)
+  const rows = aliases.length > 0 ? aliases : record?.owner ? [{ chain: config.aliasChain, address: record.owner }] : []
   const preferredAsset = preferredAssetOf(record)
 
   return (
@@ -172,13 +177,23 @@ function NameCard({ config, name, status, record, expiryDate, onRegister, onRene
       {status !== 'available' && (
         <div className="space-y-2">
           {expiryDate && <Row label={t('thorname.expires')} value={expiryDate.toLocaleDateString()} />}
-          {alias && <Row label={t('thorname.aliasesChain', { chain: config.aliasChain })} value={truncate(alias)} />}
+          {rows.map(a => (
+            <Row
+              key={a.chain}
+              label={t('thorname.aliasAddress', { chain: a.chain })}
+              value={truncate(a.address)}
+              onClick={onEditAddress && (() => onEditAddress(a.chain))}
+            />
+          ))}
           {preferredAsset && <Row label={t('thorname.preferredAsset')} value={formatPreferredAsset(preferredAsset)} />}
         </div>
       )}
 
       {status === 'owned' && (
         <div className="flex flex-wrap justify-end gap-2">
+          <GenericButton size="small" onClick={onManage}>
+            {t('thorname.manage')}
+          </GenericButton>
           <GenericButton size="small" onClick={onRenew}>
             {t('thorname.renew')}
           </GenericButton>
@@ -199,11 +214,27 @@ function NameCard({ config, name, status, record, expiryDate, onRegister, onRene
   )
 }
 
-function Row({ label, value }: { label: string; value: string }) {
-  return (
-    <div className="flex items-center justify-between text-sm">
+// An address row doubles as the edit entry point when the name is owned.
+function Row({ label, value, onClick }: { label: string; value: string; onClick?: () => void }) {
+  const content = (
+    <>
       <span className="text-txt-label-small">{label}</span>
-      <span className="text-txt-high-contrast font-medium">{value}</span>
-    </div>
+      <span className="text-txt-high-contrast flex items-center gap-1 font-medium">
+        {value}
+        {onClick && <ChevronRight className="text-txt-label-small size-4" />}
+      </span>
+    </>
+  )
+
+  if (!onClick) return <div className="flex items-center justify-between text-sm">{content}</div>
+
+  return (
+    <button
+      type="button"
+      onClick={onClick}
+      className="hover:bg-swap-bloc -mx-2 flex w-[calc(100%+1rem)] items-center justify-between rounded-lg px-2 py-0.5 text-sm transition-colors"
+    >
+      {content}
+    </button>
   )
 }
