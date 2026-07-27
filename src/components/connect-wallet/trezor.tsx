@@ -42,7 +42,7 @@ const CHAIN_PATH_MAP: Record<string, PathPreset[]> = {
 
 export const Trezor = ({ wallet }: { wallet: WalletParams; onConnect: () => void }) => {
   const t = useTranslations('wallet')
-  const evmChains = [Chain.Ethereum, Chain.BinanceSmartChain, Chain.Base, Chain.Avalanche]
+  const evmChains = [Chain.Ethereum, Chain.Arbitrum, Chain.BinanceSmartChain, Chain.Base, Chain.Avalanche]
   const chains = ['EVM', Chain.Bitcoin, Chain.BitcoinCash, Chain.Litecoin, Chain.Dogecoin, Chain.Dash, Chain.Zcash]
 
   const accounts = useAccounts()

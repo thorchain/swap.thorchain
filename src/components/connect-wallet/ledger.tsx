@@ -79,7 +79,7 @@ const CHAIN_PATH_MAP: Record<string, Array<keyof typeof DERIVATION_PATHS>> = {
 
 export const Ledger = ({ wallet }: { wallet: WalletParams; onConnect: () => void }) => {
   const t = useTranslations('wallet')
-  const evmChains = [Chain.Ethereum, Chain.BinanceSmartChain, Chain.Base, Chain.Avalanche]
+  const evmChains = [Chain.Ethereum, Chain.Arbitrum, Chain.BinanceSmartChain, Chain.Base, Chain.Avalanche]
   const chains = ['EVM', Chain.Bitcoin, Chain.BitcoinCash, Chain.Litecoin, Chain.THORChain]
 
   const accounts = useAccounts()
