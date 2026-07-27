@@ -46,12 +46,34 @@ const DERIVATION_PATHS = {
     title: 'Default',
     pathTitle: "m/44'/931'/0'/0/{index}",
     path: (index: number) => [44, 931, 0, 0, index]
+  },
+  // Litecoin (SLIP-44 coin type 2). Native segwit ⇒ ltc1… addresses.
+  ltc_native_segwit: {
+    title: 'Native Segwit',
+    pathTitle: "m/84'/2'/0'/0/{index}",
+    path: (index: number) => [84, 2, 0, 0, index]
+  },
+  ltc_legacy: {
+    title: 'Legacy',
+    pathTitle: "m/44'/2'/0'/0/{index}",
+    path: (index: number) => [44, 2, 0, 0, index]
+  },
+  // Bitcoin Cash (SLIP-44 coin type 145). No segwit, legacy only.
+  bch: {
+    title: 'Default',
+    pathTitle: "m/44'/145'/0'/0/{index}",
+    path: (index: number) => [44, 145, 0, 0, index]
   }
 }
 
+// Every selectable chain needs at least one preset: the connect flow passes the
+// chosen path down, and the SDK throws on an undefined path rather than falling
+// back to a per-chain default.
 const CHAIN_PATH_MAP: Record<string, Array<keyof typeof DERIVATION_PATHS>> = {
   EVM: ['metamask', 'ledger_live', 'legacy'],
   [Chain.Bitcoin]: ['native_segwit', 'native_segwit_middle', 'taproot'],
+  [Chain.Litecoin]: ['ltc_native_segwit', 'ltc_legacy'],
+  [Chain.BitcoinCash]: ['bch'],
   [Chain.THORChain]: ['thorchain']
 }
 
@@ -209,7 +231,7 @@ export const Ledger = ({ wallet }: { wallet: WalletParams; onConnect: () => void
       </div>
 
       <div className="flex p-4 md:justify-end md:px-8 md:pt-0 md:pb-8">
-        <GenericButton colorType="3" size="large" className="w-full md:w-auto" disabled={connecting || !selectedChain} onClick={() => handleConnect()}>
+        <GenericButton colorType="3" size="large" className="w-full md:w-auto" disabled={connecting || !selectedChain || !pathOptions} onClick={() => handleConnect()}>
           {connecting && <LoaderCircle size={20} className="animate-spin" />}
           {t('connectNamed', { name: wallet.label })}
         </GenericButton>
