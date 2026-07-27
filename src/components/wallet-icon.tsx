@@ -15,10 +15,17 @@ interface WalletIconProps {
 const MONO_GLYPHS: Record<string, ReactNode> = {
   trezor: (
     <>
-      <path d="M10 14v-3a6 6 0 0 1 12 0v3" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" />
-      <rect x="6.25" y="14" width="19.5" height="13.5" rx="4" stroke="currentColor" strokeWidth="2.5" />
-      <circle cx="16" cy="19.5" r="1.9" fill="currentColor" />
-      <path d="M16 20.5v3.2" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" />
+      <g clip-path="url(#clip0_4590_23351)">
+        <path
+          d="M23.0828 8.49814C23.0828 4.94643 19.8879 2 15.9988 2C12.1098 2 8.91489 4.94791 8.91489 8.49814V10.5751H6V25.5145L15.9988 30L26 25.5115V10.6388H23.0851L23.0828 8.49814ZM12.5263 8.49814C12.5263 6.82366 14.0543 5.48363 15.9988 5.48363C17.9434 5.48363 19.4714 6.82366 19.4714 8.49814V10.5751H12.5263V8.49814ZM21.9713 23.1023L15.9988 25.7824L10.0264 23.1023V14.1254H21.9713V23.1023Z"
+          fill="currentColor"
+        />
+      </g>
+      <defs>
+        <clipPath id="clip0_4590_23351">
+          <rect width="20" height="28" fill="currentColor" transform="translate(6 2)" />
+        </clipPath>
+      </defs>
     </>
   ),
   ledger: (
@@ -33,7 +40,16 @@ export function WalletIcon({ walletKey, width, height, alt = '', className }: Wa
   const glyph = MONO_GLYPHS[walletKey]
   if (glyph) {
     return (
-      <svg width={width} height={height} viewBox="0 0 32 32" fill="none" role="img" aria-label={alt || undefined} aria-hidden={alt ? undefined : true} className={className}>
+      <svg
+        width={width}
+        height={height}
+        viewBox="0 0 32 32"
+        fill="none"
+        role="img"
+        aria-label={alt || undefined}
+        aria-hidden={alt ? undefined : true}
+        className={className}
+      >
         {glyph}
       </svg>
     )
