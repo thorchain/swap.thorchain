@@ -4,10 +4,13 @@ import { Footer } from '@/components/footer/footer'
 import { GlobalDialog } from '@/components/global-dialog'
 import { Header } from '@/components/header/header'
 import { SendMemoBond } from '@/components/send-memo/send-memo-bond'
+import { buildPageMetadata } from '@/lib/page-metadata'
 
-export const metadata: Metadata = {
-  title: 'Bond | THORChain'
-}
+export const metadata: Metadata = buildPageMetadata({
+  title: 'Bond RUNE to a Node | THORChain',
+  description:
+    'Bond RUNE to a THORChain node. Connect your wallet to add, top up, withdraw, and manage your bond position on-chain.'
+})
 
 export default function BondPage() {
   return (
