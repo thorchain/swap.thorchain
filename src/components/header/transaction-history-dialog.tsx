@@ -342,6 +342,14 @@ function legExplorerUrl(leg: any, chain: Chain): string | null {
   return null
 }
 
+// THORChain's configured explorer resolves to runescan.io, but we surface the
+// swap on thorchain.net instead, so rewrite any runescan.io link to match.
+function normalizeExplorer(url: string): ExplorerLink {
+  const host = explorerHost(url)
+  if (host === 'runescan.io') return { url: url.replace('runescan.io', 'thorchain.net'), label: 'thorchain.net' }
+  return { url, label: host }
+}
+
 // Explorer links shown on an expanded transaction: the swapped assets' own
 // chain explorers (source deposit + destination payout) alongside THORChain's.
 function getExplorerLinks(tx: Transaction): ExplorerLink[] {
@@ -356,11 +364,17 @@ function getExplorerLinks(tx: Transaction): ExplorerLink[] {
   const destUrl = legExplorerUrl(destLeg, toChain)
 
   const links: ExplorerLink[] = []
-  if (sourceUrl) links.push({ url: sourceUrl, label: explorerHost(sourceUrl) })
-  if (tx.provider === ProviderName.THORCHAIN && tx.hash) {
-    links.push({ url: `https://thorchain.net/tx/${tx.hash}`, label: 'thorchain.net' })
+  const add = (url: string | null) => {
+    if (!url) return
+    const link = normalizeExplorer(url)
+    // Dedupe identical links and collapse multiple THORChain buttons into one.
+    const isDup = links.some(l => l.url === link.url || (l.label === 'thorchain.net' && link.label === 'thorchain.net'))
+    if (!isDup) links.push(link)
   }
-  if (destUrl && destUrl !== sourceUrl) links.push({ url: destUrl, label: explorerHost(destUrl) })
+
+  add(sourceUrl)
+  if (tx.provider === ProviderName.THORCHAIN && tx.hash) add(`https://thorchain.net/tx/${tx.hash}`)
+  add(destUrl)
 
   return links
 }
