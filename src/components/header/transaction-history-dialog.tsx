@@ -1,7 +1,7 @@
 'use client'
 
 import { Fragment, useEffect, useMemo, useState } from 'react'
-import { assetFromString, ChainId, ChainIdToChain, getExplorerTxUrl, USwapNumber } from '@tcswap/core'
+import { assetFromString, Chain, ChainId, ChainIdToChain, getExplorerTxUrl, USwapNumber } from '@tcswap/core'
 import { ProviderName } from '@tcswap/helpers'
 import { format, formatDuration, intervalToDuration, isSameDay, isToday, isYesterday } from 'date-fns'
 import { CircleAlert, CircleCheck, ClockFading, Crosshair, Undo2, X } from 'lucide-react'
@@ -129,6 +129,8 @@ export const TransactionHistoryDialog = ({ isOpen, onOpenChange }: HistoryDialog
               const showRQ =
                 tx.qrCodeData && !tx.hash && status !== 'expired' && status !== 'completed' && status !== 'refunded' && status !== 'failed'
               const showLimitSwapActions = !!tx.limitSwapMemo && isTxPending(status) && (!!selectedAccount || !!tx.qrCodeData)
+
+              const explorerLinks = getExplorerLinks(tx)
 
               return (
                 <Fragment key={i}>
@@ -280,17 +282,16 @@ export const TransactionHistoryDialog = ({ isOpen, onOpenChange }: HistoryDialog
                         </div>
                       </>
                     )}
-                    {isExpanded && tx.provider === ProviderName.THORCHAIN && tx.hash && (
-                      <a
-                        href={`https://thorchain.net/tx/${tx.hash}`}
-                        className="flex justify-end border-t pt-3"
-                        rel="noopener noreferrer"
-                        target="_blank"
-                      >
-                        <GenericButton size="small" icon={<Icon name="globe" className="size-5" />}>
-                          thorchain.net
-                        </GenericButton>
-                      </a>
+                    {isExpanded && explorerLinks.length > 0 && (
+                      <div className="flex flex-wrap justify-end gap-2 border-t pt-3">
+                        {explorerLinks.map(link => (
+                          <a key={link.url} href={link.url} rel="noopener noreferrer" target="_blank">
+                            <GenericButton size="small" icon={<Icon name="globe" className="size-5" />}>
+                              {link.label}
+                            </GenericButton>
+                          </a>
+                        ))}
+                      </div>
                     )}
                   </div>
                 </Fragment>
@@ -318,6 +319,50 @@ function RemainingTime({ startTime, estimatedTime, fallback }: { startTime: numb
   if (remainingSeconds <= 0) return <span className="capitalize">{fallback}</span>
 
   return <>{t('remaining', { time: formatExpiration(remainingSeconds) })}</>
+}
+
+interface ExplorerLink {
+  url: string
+  label: string
+}
+
+// Short, human-friendly explorer name derived from its host, e.g. "etherscan.io".
+function explorerHost(url: string): string {
+  try {
+    const host = new URL(url).hostname
+    return host.startsWith('www.') ? host.slice(4) : host
+  } catch {
+    return 'explorer'
+  }
+}
+
+function legExplorerUrl(leg: any, chain: Chain): string | null {
+  if (leg?.meta?.explorerUrl) return leg.meta.explorerUrl
+  if (leg?.hash) return getExplorerTxUrl({ chain, txHash: leg.hash }) || null
+  return null
+}
+
+// Explorer links shown on an expanded transaction: the swapped assets' own
+// chain explorers (source deposit + destination payout) alongside THORChain's.
+function getExplorerLinks(tx: Transaction): ExplorerLink[] {
+  const legs: any[] = tx.details?.legs ?? []
+  const fromChain = tx.assetFrom.chain
+  const toChain = tx.assetTo.chain
+
+  const sourceLeg = legs.find(leg => ChainIdToChain[leg.chainId as ChainId] === fromChain)
+  const destLeg = [...legs].reverse().find(leg => ChainIdToChain[leg.chainId as ChainId] === toChain)
+
+  const sourceUrl = legExplorerUrl(sourceLeg, fromChain) ?? (tx.hash ? getExplorerTxUrl({ chain: fromChain, txHash: tx.hash }) || null : null)
+  const destUrl = legExplorerUrl(destLeg, toChain)
+
+  const links: ExplorerLink[] = []
+  if (sourceUrl) links.push({ url: sourceUrl, label: explorerHost(sourceUrl) })
+  if (tx.provider === ProviderName.THORCHAIN && tx.hash) {
+    links.push({ url: `https://thorchain.net/tx/${tx.hash}`, label: 'thorchain.net' })
+  }
+  if (destUrl && destUrl !== sourceUrl) links.push({ url: destUrl, label: explorerHost(destUrl) })
+
+  return links
 }
 
 function renderLeg(tx: any, legTx: any, t: ReturnType<typeof useTranslations>) {
