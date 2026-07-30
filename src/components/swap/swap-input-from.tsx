@@ -51,11 +51,14 @@ export const SwapInputFrom = () => {
 
   return (
     <div className="bg-swap-bloc rounded-15 border p-7">
-      <div className="text-txt-label-small mb-3 font-semibold">{t('input.sell')}</div>
+      <label htmlFor="swap-sell-amount" className="text-txt-label-small mb-3 block font-semibold">
+        {t('input.sell')}
+      </label>
 
       <div className="flex items-center justify-between">
         <div className="flex-1">
           <DecimalInput
+            id="swap-sell-amount"
             className="text-txt-high-contrast w-full bg-transparent text-2xl font-medium outline-none"
             amount={amountFrom}
             onAmountChange={e => setAmountFrom(e)}
@@ -65,7 +68,7 @@ export const SwapInputFrom = () => {
             {toCurrencyFixed(fiatValueFrom.toCurrency('$', { trimTrailingZeros: false }))}
           </div>
         </div>
-        <DropdownCoinButton open={isSelectOpen} onClick={onClick}>
+        <DropdownCoinButton aria-label={`${t('selectAsset.title')}: ${t('input.sell')}`} open={isSelectOpen} onClick={onClick}>
           <span className="flex items-center gap-2">
             <AssetIcon asset={assetFrom} />
             <span className="flex w-16 flex-col items-start gap-1 text-left">

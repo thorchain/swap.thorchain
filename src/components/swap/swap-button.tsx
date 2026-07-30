@@ -163,6 +163,7 @@ export const SwapButton = ({ instantSwapSupported, instantSwapAvailable }: SwapB
 
   return (
     <AnimatedButton
+      aria-label={state.text || t('button.enterAmount')}
       colorType={state.accent ? 'accent' : 'default'}
       className="w-full"
       onClick={state.onClick}

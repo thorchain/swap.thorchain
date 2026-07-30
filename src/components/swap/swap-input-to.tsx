@@ -52,13 +52,16 @@ export const SwapInputTo = ({ priceImpact }: { priceImpact?: USwapNumber }) => {
   return (
     <div className="bg-swap-bloc rounded-15 border p-7">
       <div className="mb-3 flex items-center justify-between">
-        <div className="text-txt-label-small font-semibold">{t('input.buy')}</div>
+        <label htmlFor="swap-buy-amount" className="text-txt-label-small font-semibold">
+          {t('input.buy')}
+        </label>
         <SwapQuoteTimer quote={quote} isLoading={isLoading} refetch={refetch} />
       </div>
 
       <div className="flex items-center justify-between">
         <div className="flex-1">
           <DecimalInput
+            id="swap-buy-amount"
             className="text-txt-high-contrast w-full bg-transparent text-2xl font-medium outline-none"
             amount={value ? value.toSignificant() : ''}
             onAmountChange={() => null}
@@ -76,7 +79,7 @@ export const SwapInputTo = ({ priceImpact }: { priceImpact?: USwapNumber }) => {
             )}
           </div>
         </div>
-        <DropdownCoinButton open={isSelectOpen} onClick={onClick}>
+        <DropdownCoinButton aria-label={`${t('selectAsset.title')}: ${t('input.buy')}`} open={isSelectOpen} onClick={onClick}>
           <span className="flex items-center gap-2">
             <AssetIcon asset={assetTo} />
             <span className="flex w-16 flex-col items-start gap-1 text-left">

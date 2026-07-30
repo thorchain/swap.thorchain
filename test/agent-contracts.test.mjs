@@ -49,6 +49,92 @@ function assertNoOAuthAdvertisement(text, label) {
   }
 }
 
+function parseJsonLd(html) {
+  return [...html.matchAll(/<script[^>]+type="application\/ld\+json"[^>]*>([\s\S]*?)<\/script>/gi)].map(match => JSON.parse(match[1]))
+}
+
+function assertCanonical(html, path) {
+  const canonical = `${CANONICAL_ORIGIN}${path}`
+  assert.match(html, new RegExp(`<link[^>]+rel="canonical"[^>]+href="${canonical.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}"`))
+}
+
+async function testHomepageMetadataAndStructure() {
+  const { response, body } = await request('/')
+  assert.equal(response.status, 200)
+  assertCanonical(body, '')
+
+  const graphs = parseJsonLd(body).flatMap(document => document['@graph'] || [document])
+  const application = graphs.find(node => node['@type'] === 'WebApplication')
+  assert.ok(application, 'homepage needs WebApplication JSON-LD')
+  assert.deepEqual(application.isPartOf, { '@id': `${CANONICAL_ORIGIN}/#website` })
+  assert.deepEqual(application.publisher, { '@id': `${CANONICAL_ORIGIN}/#organization` })
+  assert.ok(application.sameAs?.includes('https://github.com/thorchain/swap.thorchain'))
+  assert.deepEqual(application.subjectOf, { '@id': `${CANONICAL_ORIGIN}/developers#webpage` })
+  assert.ok(body.includes('rel="ai-catalog"'), 'homepage should advertise the ARD catalog in HTML discovery')
+  assert.ok(
+    body.includes('rel="mcp-server-card" type="application/mcp-server-card+json"'),
+    'homepage should advertise the canonical MCP card with its protocol media type'
+  )
+
+  for (const heading of ['How native cross-chain swaps work', 'Self-custody and transaction safety', 'Developer and AI integrations']) {
+    assert.ok(body.includes(`<h2>${heading}</h2>`), `homepage should include structured heading: ${heading}`)
+  }
+}
+
+async function testTrustPagesAreLinkedAndCanonical() {
+  const pages = new Map([
+    ['/about', 'About THORChain Swap'],
+    ['/contact', 'Contact THORChain Swap']
+  ])
+  for (const [path, heading] of pages) {
+    const { response, body } = await request(path)
+    assert.equal(response.status, 200, `${path} should return HTTP 200`)
+    assertCanonical(body, path)
+    assert.ok(body.includes('<main lang="en"'), `${path} should declare its English content language`)
+    assert.ok(body.includes(`<h1`), `${path} should have an H1`)
+    assert.ok(body.includes(heading), `${path} should identify the page`)
+  }
+
+  const contact = await request('/contact')
+  assert.ok(contact.body.includes('mailto:contact@thorchain.org'), 'contact page should publish the official support email')
+
+  const home = await request('/')
+  assert.ok(home.body.includes('href="/about"'), 'homepage should link to About')
+  assert.ok(home.body.includes('href="/contact"'), 'homepage should link to Contact')
+
+  const sitemap = await request('/sitemap.xml')
+  assert.equal(sitemap.response.status, 200)
+  assert.ok(sitemap.body.includes(`${CANONICAL_ORIGIN}/about`))
+  assert.ok(sitemap.body.includes(`${CANONICAL_ORIGIN}/contact`))
+}
+
+async function testTrustPagesHaveMarkdownTwins() {
+  for (const path of ['/about.md', '/contact.md']) {
+    const { response, body } = await request(path)
+    assert.equal(response.status, 200, `${path} should return HTTP 200`)
+    assert.match(response.headers.get('content-type') || '', /^text\/markdown/)
+    assert.match(body, /^# /)
+    assert.ok(body.includes(CANONICAL_ORIGIN), `${path} should reference the canonical site`)
+  }
+}
+
+async function testInitialSwapControlsHaveAccessibleNames() {
+  const { response, body } = await request('/')
+  assert.equal(response.status, 200)
+
+  for (const label of ['Launch App', 'Swap: Price Protection', 'Select coin: Sell', 'Select coin: Buy', 'Enter Amount']) {
+    assert.ok(body.includes(`aria-label="${label}"`), `initial swap HTML should expose accessible name: ${label}`)
+  }
+
+  for (const [id, label] of [
+    ['swap-sell-amount', 'Sell'],
+    ['swap-buy-amount', 'Buy']
+  ]) {
+    assert.ok(body.includes(`id="${id}"`), `${label} amount input should have a stable id`)
+    assert.match(body, new RegExp(`<label[^>]+for="${id}"[^>]*>${label}<\/label>`))
+  }
+}
+
 async function testUnavailableOAuthIsAbsent() {
   for (const path of [
     '/.well-known/oauth-authorization-server',
@@ -66,6 +152,50 @@ async function testUnavailableOAuthIsAbsent() {
     body: 'grant_type=authorization_code&code=invalid'
   })
   assert.equal(token.response.status, 404, `/agent-auth/token should be absent, got HTTP ${token.response.status}`)
+}
+
+async function testArdCatalogEnumeratesTruthfulResources() {
+  const { response, value: catalog } = await json('/.well-known/ai-catalog.json')
+  assert.match(response.headers.get('content-type') || '', /^application\/json/i)
+  assert.equal(catalog.specVersion, '1.0')
+  assert.equal(catalog.host?.displayName, 'THORChain Swap')
+  assert.ok(Array.isArray(catalog.entries) && catalog.entries.length >= 5, 'ARD catalog should enumerate the primary agent resources')
+
+  const expectedMediaTypes = new Map([
+    [`${CANONICAL_ORIGIN}/.well-known/mcp/server-card.json`, 'application/mcp-server-card+json'],
+    [`${CANONICAL_ORIGIN}/.well-known/openapi.json`, 'application/vnd.oai.openapi+json'],
+    [`${CANONICAL_ORIGIN}/.well-known/api-catalog`, 'application/linkset+json'],
+    [`${CANONICAL_ORIGIN}/.well-known/agent-card.json`, 'application/a2a-agent-card+json'],
+    [`${CANONICAL_ORIGIN}/.well-known/agent-skills/index.json`, 'application/json']
+  ])
+
+  const identifiers = new Set()
+  for (const entry of catalog.entries) {
+    assert.match(entry.identifier || '', /^urn:air:swap\.thorchain\.org:/)
+    assert.equal(identifiers.has(entry.identifier), false, `duplicate ARD identifier ${entry.identifier}`)
+    identifiers.add(entry.identifier)
+    assert.equal(typeof entry.displayName, 'string')
+    assert.equal(entry.type, expectedMediaTypes.get(entry.url), `${entry.identifier} needs the protocol-specific media type`)
+    assert.ok(entry.url?.startsWith(`${CANONICAL_ORIGIN}/`), `${entry.identifier} needs a canonical production URL`)
+    const advertised = await request(new URL(entry.url).pathname)
+    assert.equal(advertised.response.status, 200, `${entry.identifier} URL should resolve`)
+    assert.equal(
+      advertised.response.headers.get('content-type')?.split(';')[0],
+      entry.type,
+      `${entry.identifier} catalog type should match the advertised resource`
+    )
+  }
+
+  const urls = new Set(catalog.entries.map(entry => entry.url))
+  for (const path of [
+    '/.well-known/mcp/server-card.json',
+    '/.well-known/openapi.json',
+    '/.well-known/api-catalog',
+    '/.well-known/agent-card.json',
+    '/.well-known/agent-skills/index.json'
+  ]) {
+    assert.equal(urls.has(`${CANONICAL_ORIGIN}${path}`), true, `ARD catalog should include ${path}`)
+  }
 }
 
 async function testOpenApiIsAnonymousAndTruthful() {
@@ -140,7 +270,8 @@ async function testMcpServerCardAliasesAndAgreement() {
   const cards = []
   for (const path of paths) {
     const card = await json(path)
-    assert.match(card.response.headers.get('content-type') || '', /^application\/json/i)
+    const expectedType = path === '/.well-known/mcp/server-card.json' ? /^application\/mcp-server-card\+json/i : /^application\/json/i
+    assert.match(card.response.headers.get('content-type') || '', expectedType)
     cards.push(card.value)
   }
   for (const [index, card] of cards.entries()) {
@@ -218,8 +349,13 @@ async function testMcpInitializeAndDiscoveryContentTypes() {
     ['/AGENTS.md', /^text\/markdown/],
     ['/developers.md', /^text\/markdown/],
     ['/auth.md', /^text\/markdown/],
+    ['/about.md', /^text\/markdown/],
+    ['/contact.md', /^text\/markdown/],
     ['/.well-known/openapi.json', /^application\/vnd\.oai\.openapi\+json/],
     ['/.well-known/api-catalog', /^application\/linkset\+json/],
+    ['/.well-known/agent-card.json', /^application\/a2a-agent-card\+json/],
+    ['/.well-known/mcp/server-card.json', /^application\/mcp-server-card\+json/],
+    ['/.well-known/ai-catalog.json', /^application\/json/],
     ['/.well-known/agent-skills/index.json', /^application\/json/]
   ])
   for (const [path, contentType] of expected) {
@@ -230,7 +366,12 @@ async function testMcpInitializeAndDiscoveryContentTypes() {
 }
 
 const tests = [
+  testHomepageMetadataAndStructure,
+  testTrustPagesAreLinkedAndCanonical,
+  testTrustPagesHaveMarkdownTwins,
+  testInitialSwapControlsHaveAccessibleNames,
   testUnavailableOAuthIsAbsent,
+  testArdCatalogEnumeratesTruthfulResources,
   testOpenApiIsAnonymousAndTruthful,
   testApiCatalogConformsToRfc9727,
   testMcpServerCardAliasesAndAgreement,
@@ -239,8 +380,11 @@ const tests = [
   testMcpInitializeAndDiscoveryContentTypes
 ]
 
+const selectedTests = process.env.TEST_FILTER ? tests.filter(test => test.name.includes(process.env.TEST_FILTER)) : tests
+assert.ok(selectedTests.length > 0, `No contract tests matched TEST_FILTER=${process.env.TEST_FILTER}`)
+
 let failed = 0
-for (const test of tests) {
+for (const test of selectedTests) {
   try {
     await test()
     console.log(`ok - ${test.name}`)
@@ -254,4 +398,4 @@ if (failed) {
   console.error(`agent_contract_tests=failed failures=${failed}`)
   process.exit(1)
 }
-console.log(`agent_contract_tests=ok tests=${tests.length}`)
+console.log(`agent_contract_tests=ok tests=${selectedTests.length}`)

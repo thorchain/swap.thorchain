@@ -40,9 +40,13 @@ export function FooterContent({ className }: { className?: string }) {
           <a className="sr-only" href="/developers">
             {t('developers')}
           </a>
-          <div onClick={() => openDialog(ReportBug, {})} className="flex cursor-pointer items-center gap-1 underline transition-colors">
+          <button
+            type="button"
+            onClick={() => openDialog(ReportBug, {})}
+            className="flex cursor-pointer items-center gap-1 underline transition-colors"
+          >
             {t('reportBug')}
-          </div>
+          </button>
           <Separator orientation="vertical" className="h-full" />
           <a className="flex items-center gap-2 underline" href={AppConfig.discordLink} rel="noopener noreferrer" target="_blank">
             {t('getSupport')} <Icon width={20} height={20} viewBox="0 0 20 20" name="discord" />

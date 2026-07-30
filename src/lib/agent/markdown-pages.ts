@@ -1,6 +1,7 @@
 import { AppConfig } from '@/config'
 import { developersMarkdown } from '@/lib/agent/developer-portal'
 import { homeMarkdown } from '@/lib/agent/discovery-files'
+import { aboutMarkdown, contactMarkdown } from '@/lib/agent/trust-pages'
 
 // Markdown twins for HTML pages: appending .md to any content page URL returns
 // the markdown representation of that page (/ -> /index.md, /developers ->
@@ -82,6 +83,8 @@ Swapping costs protocol-level fees (inbound gas, outbound fee, liquidity fee), i
 export function markdownForPage(pathname: string): string | null {
   if (pathname === '/' || pathname === '') return homeMarkdown
   if (pathname === '/developers') return developersMarkdown
+  if (pathname === '/about') return aboutMarkdown
+  if (pathname === '/contact') return contactMarkdown
 
   const slug = pathname.slice(1)
   if (slug.includes('/')) return null

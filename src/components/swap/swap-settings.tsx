@@ -74,7 +74,12 @@ export const SwapSettings = () => {
       }}
     >
       <DropdownMenuTrigger asChild>
-        <GenericButton size="small" icon={<Icon name="manage" />} className="bg-btn-style-1-bg" />
+        <GenericButton
+          size="small"
+          aria-label={`${t('tab.swap')}: ${t('settings.priceProtection')}`}
+          icon={<Icon name="manage" />}
+          className="bg-btn-style-1-bg"
+        />
       </DropdownMenuTrigger>
       <DropdownMenuContent className="max-w-sm p-8">
         <div className="flex flex-col gap-6">

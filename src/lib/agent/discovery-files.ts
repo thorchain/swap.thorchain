@@ -62,7 +62,10 @@ const agentsJson = json({
     llms: `${AppConfig.baseUrl}/llms.txt`,
     agents: `${AppConfig.baseUrl}/AGENTS.md`,
     skills: `${AppConfig.baseUrl}/.well-known/agent-skills/index.json`,
+    aiCatalog: `${AppConfig.baseUrl}/.well-known/ai-catalog.json`,
     agentCard: `${AppConfig.baseUrl}/.well-known/agent-card.json`,
+    about: `${AppConfig.baseUrl}/about.md`,
+    contact: `${AppConfig.baseUrl}/contact.md`,
     auth: `${AppConfig.baseUrl}/auth.md`,
     pricing: `${AppConfig.baseUrl}/pricing.md`,
     agentMode: `${AppConfig.baseUrl}/?mode=agent`
@@ -158,6 +161,64 @@ const agentSkillsIndex = json({
   }))
 })
 
+// Agentic Resource Discovery (ARD) v0.9 draft manifest. The draft's
+// ai-catalog schema currently identifies its document format as specVersion
+// "1.0". Keep entries URL-based and limited to resources served by this host;
+// do not claim signatures, attestations, or decentralized identifiers that the
+// deployment does not provide.
+const aiCatalog = json({
+  specVersion: '1.0',
+  host: {
+    displayName: 'THORChain Swap',
+    documentationUrl: `${AppConfig.baseUrl}/developers`,
+    logoUrl: `${AppConfig.baseUrl}/logo.svg`
+  },
+  entries: [
+    {
+      identifier: 'urn:air:swap.thorchain.org:mcp:server',
+      displayName: 'THORChain Swap MCP server',
+      type: 'application/mcp-server-card+json',
+      url: `${AppConfig.baseUrl}/.well-known/mcp/server-card.json`,
+      description: 'Read-only THORChain quote, liquidity-pool, and network-status tools.',
+      tags: ['mcp', 'thorchain', 'swap'],
+      capabilities: MCP_TOOLS.map(tool => tool.name),
+      version: MCP_SERVER_INFO.version
+    },
+    {
+      identifier: 'urn:air:swap.thorchain.org:api:openapi',
+      displayName: 'THORChain Swap OpenAPI description',
+      type: 'application/vnd.oai.openapi+json',
+      url: `${AppConfig.baseUrl}/.well-known/openapi.json`,
+      description: 'OpenAPI 3.1 description for the public support endpoints.',
+      tags: ['openapi', 'rest', 'support']
+    },
+    {
+      identifier: 'urn:air:swap.thorchain.org:api:catalog',
+      displayName: 'THORChain Swap API catalog',
+      type: 'application/linkset+json',
+      url: `${AppConfig.baseUrl}/.well-known/api-catalog`,
+      description: 'RFC 9727 catalog for the public API and its documentation.',
+      tags: ['api-catalog', 'rfc9727', 'rest']
+    },
+    {
+      identifier: 'urn:air:swap.thorchain.org:a2a:agent-card',
+      displayName: 'THORChain Swap A2A agent card',
+      type: 'application/a2a-agent-card+json',
+      url: `${AppConfig.baseUrl}/.well-known/agent-card.json`,
+      description: 'A2A discovery card for the public THORChain Swap interfaces.',
+      tags: ['a2a', 'discovery', 'thorchain']
+    },
+    {
+      identifier: 'urn:air:swap.thorchain.org:skills:index',
+      displayName: 'THORChain Swap Agent Skills index',
+      type: 'application/json',
+      url: `${AppConfig.baseUrl}/.well-known/agent-skills/index.json`,
+      description: 'Agent Skills v0.2 index for public swap, quote, pool, and network guidance.',
+      tags: ['agent-skills', 'discovery', 'thorchain']
+    }
+  ]
+})
+
 const status = json({
   status: 'ok',
   service: 'thorchain-swap',
@@ -172,6 +233,8 @@ THORChain Swap is the public swap interface for THORChain powered cross-chain sw
 ## Public Pages
 
 - [Swap interface](${AppConfig.baseUrl}/)
+- [About THORChain Swap](${AppConfig.baseUrl}/about)
+- [Contact and support](${AppConfig.baseUrl}/contact)
 - [Pool interface](https://pool.thorchain.org/)
 - [Bond interface](https://bond.thorchain.org/)
 - [Memo interface](https://memo.thorchain.org/)
@@ -194,6 +257,7 @@ THORChain Swap is the public swap interface for THORChain powered cross-chain sw
 - [robots.txt](${AppConfig.baseUrl}/robots.txt)
 - [sitemap.xml](${AppConfig.baseUrl}/sitemap.xml)
 - [API catalog](${AppConfig.baseUrl}/.well-known/api-catalog)
+- [ARD AI catalog](${AppConfig.baseUrl}/.well-known/ai-catalog.json)
 - [OpenAPI description](${AppConfig.baseUrl}/.well-known/openapi.json)
 - [Agent skills index](${AppConfig.baseUrl}/.well-known/agent-skills/index.json)
 - [Auth.md](${AppConfig.baseUrl}/auth.md)
@@ -219,13 +283,14 @@ export const discoveryFiles: Record<string, DiscoveryFile> = {
   '/.well-known/openapi.json': { contentType: 'application/vnd.oai.openapi+json; charset=utf-8', body: openApiBody },
   '/.well-known/mcp-server-card': { contentType: JSON_TYPE, body: mcpServerCard },
   '/.well-known/mcp-server-card.json': { contentType: JSON_TYPE, body: mcpServerCard },
-  '/.well-known/mcp/server-card.json': { contentType: JSON_TYPE, body: mcpServerCard },
-  '/.well-known/agent-card.json': { contentType: 'application/a2a+json; charset=utf-8', body: agentCard },
+  '/.well-known/mcp/server-card.json': { contentType: 'application/mcp-server-card+json; charset=utf-8', body: mcpServerCard },
+  '/.well-known/agent-card.json': { contentType: 'application/a2a-agent-card+json; charset=utf-8', body: agentCard },
   '/.well-known/api-catalog': {
     contentType: 'application/linkset+json; profile="https://www.rfc-editor.org/info/rfc9727"; charset=utf-8',
     body: apiCatalog
   },
   '/.well-known/agent-skills/index.json': { contentType: JSON_TYPE, body: agentSkillsIndex },
+  '/.well-known/ai-catalog.json': { contentType: JSON_TYPE, body: aiCatalog },
   '/.well-known/status': { contentType: JSON_TYPE, body: status },
   ...Object.fromEntries(AGENT_SKILLS.map(skill => [skill.path, { contentType: MARKDOWN, body: skill.markdown }]))
 }

@@ -86,7 +86,10 @@ These are the site's own support endpoints; swap quotes are not served under ${A
 - ${AppConfig.baseUrl}/llms.txt
 - ${AppConfig.baseUrl}/auth.md
 - ${AppConfig.baseUrl}/.well-known/agent-skills/index.json — published skills: thorchain-swap, thorchain-swap-quotes, thorchain-liquidity-pools, thorchain-memoless-swap
+- ${AppConfig.baseUrl}/.well-known/ai-catalog.json — ARD catalog of MCP, A2A, OpenAPI, API catalog, and Agent Skills resources
 - ${AppConfig.baseUrl}/index.md — homepage as markdown; append \`.md\` to any content page URL for its markdown twin
+- ${AppConfig.baseUrl}/about.md — product identity, architecture, and self-custody model
+- ${AppConfig.baseUrl}/contact.md — official support channels and security warning
 - ${AppConfig.baseUrl}/.well-known/agent-card.json
 - ${AppConfig.baseUrl}/pricing.md — pricing and per-swap fee model
 - ${AppConfig.baseUrl}/?mode=agent — structured agent view of the homepage (JSON with \`Accept: application/json\`)
@@ -121,6 +124,8 @@ Do not use this site for fiat on/off-ramps, NFTs, derivatives, or custodial acco
 - [Developer portal](${AppConfig.baseUrl}/developers): THORChain Swap API docs, quickstart, MCP server, auth scopes, and sandbox
 - [Developer portal (markdown)](${AppConfig.baseUrl}/developers.md): the same documentation as markdown
 - [Pricing](${AppConfig.baseUrl}/pricing.md): what THORChain Swap costs to use (free) and how per-swap protocol fees work
+- [About](${AppConfig.baseUrl}/about): product identity, architecture, and self-custody model
+- [Contact](${AppConfig.baseUrl}/contact): official support channels and security guidance
 - [Source code](https://github.com/thorchain/swap.thorchain): public repository, with AGENTS.md instructions for AI coding agents
 
 ## Agent Resources
@@ -130,9 +135,10 @@ Do not use this site for fiat on/off-ramps, NFTs, derivatives, or custodial acco
 - [MCP server card](${AppConfig.baseUrl}/.well-known/mcp/server-card.json): public MCP server with swap-quote, pool, and network tools
 - [OpenAPI description](${AppConfig.baseUrl}/.well-known/openapi.json): public REST endpoints
 - [API catalog](${AppConfig.baseUrl}/.well-known/api-catalog): RFC 9727 linkset of public APIs
+- [ARD AI catalog](${AppConfig.baseUrl}/.well-known/ai-catalog.json): consolidated discovery of MCP, A2A, OpenAPI, API catalog, and Agent Skills resources
 - [Agent skills index](${AppConfig.baseUrl}/.well-known/agent-skills/index.json): published agent skills
 - [auth.md](${AppConfig.baseUrl}/auth.md): authentication model for agents
-- [Markdown twins](${AppConfig.baseUrl}/index.md): append \`.md\` to any content page URL for a markdown version (\`/index.md\`, \`/developers.md\`, \`/sell-btc-buy-eth.md\`), or send \`Accept: text/markdown\`
+- [Markdown twins](${AppConfig.baseUrl}/index.md): append \`.md\` to any content page URL for a markdown version (\`/index.md\`, \`/about.md\`, \`/contact.md\`, \`/developers.md\`, \`/sell-btc-buy-eth.md\`), or send \`Accept: text/markdown\`
 - [Agent skills index](${AppConfig.baseUrl}/.well-known/agent-skills/index.json): four published skills — navigation, quotes, pools, and memoless swaps
 - [Agent view](${AppConfig.baseUrl}/?mode=agent): the homepage as structured data — capabilities, endpoints, auth, and pricing (JSON with \`Accept: application/json\`, markdown otherwise)
 

@@ -13,6 +13,16 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://swap.thorchain.org/about</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://swap.thorchain.org/contact</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
     <loc>https://swap.thorchain.org/pricing.md</loc>
     <lastmod>2026-07-20</lastmod>
     <changefreq>monthly</changefreq>

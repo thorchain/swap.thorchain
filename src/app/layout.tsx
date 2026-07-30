@@ -95,6 +95,9 @@ const structuredData = {
       operatingSystem: 'Any',
       browserRequirements: 'Requires JavaScript',
       image: `${AppConfig.baseUrl}/og-image.png`,
+      isPartOf: { '@id': `${AppConfig.baseUrl}/#website` },
+      sameAs: ['https://github.com/thorchain/swap.thorchain'],
+      subjectOf: { '@id': `${AppConfig.baseUrl}/developers#webpage` },
       offers: {
         '@type': 'Offer',
         price: '0',
@@ -153,7 +156,8 @@ export default async function RootLayout({ children }: Readonly<{ children: Reac
       )}
       <body className={`${crit.variable} ${notoRunic.variable} bg-body font-sans antialiased`}>
         {/* Agent discovery links; React hoists them into <head>. */}
-        <link rel="mcp-server-card" type="application/json" href="/.well-known/mcp/server-card.json" />
+        <link rel="mcp-server-card" type="application/mcp-server-card+json" href="/.well-known/mcp/server-card.json" />
+        <link rel="ai-catalog" type="application/json" href="/.well-known/ai-catalog.json" />
         <link rel="alternate" type="text/markdown" title="llms.txt" href="/llms.txt" />
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }} />
         <WebMcpTools />
