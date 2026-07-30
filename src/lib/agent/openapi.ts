@@ -36,17 +36,13 @@ export function buildOpenApiDocument() {
       url: `${AppConfig.baseUrl}/developers`
     },
     servers: [{ url: AppConfig.baseUrl }],
-    // Anonymous access (the empty object) is currently permitted on every
-    // endpoint; agentOAuth documents the scoped model for when self-service
-    // credential issuance is enabled. Scopes match
-    // /.well-known/oauth-authorization-server.
-    security: [{}, { agentOAuth: ['read:public'] }],
+    // Every endpoint described here is anonymous and rate limited.
+    security: [{}],
     paths: {
       '/api/v1/newsletter': {
         post: {
           summary: 'Subscribe an email address to THORChain Swap updates.',
           operationId: 'subscribeNewsletter',
-          security: [{}, { agentOAuth: ['submit:feedback'] }],
           parameters: [idempotencyKeyParameter],
           requestBody: {
             required: true,
@@ -86,7 +82,6 @@ export function buildOpenApiDocument() {
         post: {
           summary: 'Submit a bug report or feature request.',
           operationId: 'reportBug',
-          security: [{}, { agentOAuth: ['submit:feedback'] }],
           parameters: [idempotencyKeyParameter],
           requestBody: {
             required: true,
@@ -135,7 +130,6 @@ export function buildOpenApiDocument() {
         get: {
           summary: 'Return discovery endpoint status.',
           operationId: 'getDiscoveryStatus',
-          security: [{}, { agentOAuth: ['read:public'] }],
           responses: {
             '200': { description: 'Discovery endpoint is available.' }
           }
@@ -143,23 +137,6 @@ export function buildOpenApiDocument() {
       }
     },
     components: {
-      securitySchemes: {
-        agentOAuth: {
-          type: 'oauth2',
-          description:
-            'Scoped OAuth 2.0 access for agents. Anonymous access is currently permitted on all public endpoints, so credentials are optional; the scopes below define the least-privilege access an agent should request once self-service issuance is enabled. See /auth.md and /.well-known/oauth-authorization-server.',
-          flows: {
-            authorizationCode: {
-              authorizationUrl: `${AppConfig.baseUrl}/agent-auth/authorize`,
-              tokenUrl: `${AppConfig.baseUrl}/agent-auth/token`,
-              scopes: {
-                'read:public': 'Read public discovery documents, quotes, pools, and network data.',
-                'submit:feedback': 'Submit newsletter subscriptions and bug reports.'
-              }
-            }
-          }
-        }
-      },
       schemas: {
         Success: {
           type: 'object',

@@ -64,6 +64,10 @@
     "libsodium-wrappers-sumo": "0.7.15",
     "libsodium-sumo": "0.7.15"
   },
+  "resolutions": {
+    "libsodium-wrappers-sumo": "0.7.15",
+    "libsodium-sumo": "0.7.15"
+  },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
     "@tailwindcss/postcss": "^4.1.18",

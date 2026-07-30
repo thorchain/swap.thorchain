@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { PRIMARY_HOST, SUBDOMAIN_ROUTES } from '@/config'
+import { AppConfig, PRIMARY_HOST, SUBDOMAIN_ROUTES } from '@/config'
 import { agentModeJson, agentModeMarkdown } from '@/lib/agent/agent-mode'
 import { discoveryFiles } from '@/lib/agent/discovery-files'
 import { markdownForPage, markdownForSuffixPath } from '@/lib/agent/markdown-pages'
@@ -27,9 +27,11 @@ export function proxy(req: NextRequest) {
   if (req.method === 'GET' || req.method === 'HEAD') {
     const file = discoveryFiles[req.nextUrl.pathname]
     if (file) {
-      return new NextResponse(req.method === 'HEAD' ? null : file.body, {
-        headers: { 'Content-Type': file.contentType }
-      })
+      const headers: Record<string, string> = { 'Content-Type': file.contentType }
+      if (req.nextUrl.pathname === '/.well-known/api-catalog') {
+        headers.Link = `<${AppConfig.baseUrl}/.well-known/api-catalog>; rel="api-catalog"; type="application/linkset+json"`
+      }
+      return new NextResponse(req.method === 'HEAD' ? null : file.body, { headers })
     }
 
     // Markdown twin for any content page: appending .md to a page URL returns
@@ -44,7 +46,7 @@ export function proxy(req: NextRequest) {
   }
 
   const host = (req.headers.get('host') || '').split(':')[0]
-  if (!host.endsWith('.thorchain.org')) return NextResponse.next()
+  if (host !== PRIMARY_HOST && !host.endsWith('.thorchain.org')) return NextResponse.next()
 
   const { pathname, search } = req.nextUrl
 
@@ -55,7 +57,7 @@ export function proxy(req: NextRequest) {
     return new NextResponse(wantsJson ? agentModeJson : agentModeMarkdown, {
       headers: {
         'Content-Type': wantsJson ? 'application/json; charset=utf-8' : 'text/markdown; charset=utf-8',
-        'Vary': 'Accept',
+        Vary: 'Accept',
         'Cache-Control': 'no-store'
       }
     })
@@ -69,7 +71,7 @@ export function proxy(req: NextRequest) {
     return new NextResponse(negotiated, {
       headers: {
         'Content-Type': 'text/markdown; charset=utf-8',
-        'Vary': 'Accept',
+        Vary: 'Accept',
         'Cache-Control': 'no-store',
         'x-markdown-tokens': String(Math.ceil(negotiated.split(/\s+/).length * 1.35))
       }

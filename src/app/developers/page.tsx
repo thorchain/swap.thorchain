@@ -1,19 +1,12 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import { AppConfig } from '@/config'
-import {
-  developerDiscoveryLinks,
-  developerEndpoints,
-  developerMcpTools,
-  developerScopes,
-  errorExample,
-  mcpQuoteExample
-} from '@/lib/agent/developer-portal'
+import { developerDiscoveryLinks, developerEndpoints, developerMcpTools, errorExample, mcpQuoteExample } from '@/lib/agent/developer-portal'
 
 export const metadata: Metadata = {
   title: 'THORChain Developer Resources | Swap API Docs, MCP Server & Agent Tools',
   description:
-    'THORChain developer resources for the swap interface: public REST API with OpenAPI description, MCP server for AI agents, OAuth scopes, JSON error format, rate limits, and stagenet sandbox.',
+    'THORChain developer resources for the swap interface: public REST API with OpenAPI description, MCP server for AI agents, JSON error format, rate limits, and stagenet sandbox.',
   keywords: ['THORChain developer resources', 'THORChain API', 'THORChain Swap API', 'THORChain MCP server', 'cross-chain swap API'],
   alternates: {
     canonical: `${AppConfig.baseUrl}/developers`,
@@ -37,7 +30,7 @@ const developersJsonLd = {
       name: 'THORChain Developer Resources',
       url: `${AppConfig.baseUrl}/developers`,
       description:
-        'THORChain developer resources for the swap interface: REST API, OpenAPI description, MCP server for AI agents, authentication scopes, and sandbox.',
+        'THORChain developer resources for the swap interface: REST API, OpenAPI description, MCP server for AI agents, anonymous access, and sandbox.',
       isPartOf: { '@id': `${AppConfig.baseUrl}/#website` },
       breadcrumb: {
         '@type': 'BreadcrumbList',
@@ -94,9 +87,8 @@ export default function DevelopersPage() {
       <article className="container mx-auto max-w-3xl px-4 py-10">
         <h1 className="text-txt-high-contrast text-3xl font-bold">THORChain Developer Resources</h1>
         <p className="text-txt-med-contrast mt-4 text-sm leading-relaxed">
-          THORChain developer resources for the swap interface — API docs, OpenAPI spec, auth docs, and MCP server — for
-          THORChain Swap, the public web interface for native cross-chain swaps powered by THORChain and Maya Protocol.
-          Everything on this page is also available as markdown at{' '}
+          THORChain developer resources for the swap interface — API docs, OpenAPI spec, auth docs, and MCP server — for THORChain Swap, the public
+          web interface for native cross-chain swaps powered by THORChain and Maya Protocol. Everything on this page is also available as markdown at{' '}
           <a className="underline" href="/developers.md">
             /developers.md
           </a>
@@ -107,31 +99,27 @@ export default function DevelopersPage() {
           <p>THORChain Swap consists of two components:</p>
           <ul className="list-disc space-y-1 pl-5">
             <li>
-              <strong>UI</strong> — this web app. Users connect their own wallet and sign transactions locally, or swap
-              without connecting a wallet via memoless (&ldquo;instant&rdquo;) swaps.
+              <strong>UI</strong> — this web app. Users connect their own wallet and sign transactions locally, or swap without connecting a wallet
+              via memoless (&ldquo;instant&rdquo;) swaps.
             </li>
             <li>
-              <strong>Backend API</strong> — the THORChain/Maya Protocol swap aggregator:{' '}
-              <code>https://api.thorchain.org/v1</code> for swap quotes and routes (requires an <code>x-api-key</code>{' '}
-              header; keys are not self-service — contact the maintainers) and{' '}
+              <strong>Backend API</strong> — the THORChain/Maya Protocol swap aggregator: <code>https://api.thorchain.org/v1</code> for swap quotes
+              and routes (requires an <code>x-api-key</code> header; keys are not self-service — contact the maintainers) and{' '}
               <code>https://api.thorchain.org/memoless/api/v1</code> for memoless (instant) swaps (no API key required).
             </li>
           </ul>
           <p>
-            The UI also reads protocol metadata (pools, network parameters, THORNames, balances, inbound addresses) directly
-            from public THORNode and Midgard APIs. The keyless path for agents is the MCP server below, which serves quote,
-            pool, and network data from THORNode.
+            The UI also reads protocol metadata (pools, network parameters, THORNames, balances, inbound addresses) directly from public THORNode and
+            Midgard APIs. The keyless path for agents is the MCP server below, which serves quote, pool, and network data from THORNode.
           </p>
         </Section>
 
         <Section id="quickstart" title="Quickstart">
-          <p>
-            No API key or registration is required. Fetch a BTC → ETH swap quote through the public MCP server:
-          </p>
+          <p>No API key or registration is required. Fetch a BTC → ETH swap quote through the public MCP server:</p>
           <Code>{mcpQuoteExample}</Code>
           <p>
-            Amounts are strings in 1e8 base units (<code>100000000</code> = 1 BTC). Pass a <code>destination</code> address to
-            receive a usable transaction memo. Quotes, memos, and inbound addresses expire; always re-fetch before use.
+            Amounts are strings in 1e8 base units (<code>100000000</code> = 1 BTC). Pass a <code>destination</code> address to receive a usable
+            transaction memo. Quotes, memos, and inbound addresses expire; always re-fetch before use.
           </p>
         </Section>
 
@@ -139,8 +127,8 @@ export default function DevelopersPage() {
           <p>
             A public, unauthenticated, rate-limited MCP server (streamable HTTP, stateless, JSON responses) is available at{' '}
             <code>{AppConfig.baseUrl}/mcp</code>. Its server card is published at{' '}
-            <a className="underline" href="/.well-known/mcp-server-card">
-              /.well-known/mcp-server-card
+            <a className="underline" href="/.well-known/mcp/server-card.json">
+              /.well-known/mcp/server-card.json
             </a>
             .
           </p>
@@ -153,8 +141,8 @@ export default function DevelopersPage() {
           </ul>
           <p>
             The server supports MCP Apps (<code>io.modelcontextprotocol/ui</code>): <code>get_swap_quote</code> declares{' '}
-            <code>_meta.ui.resourceUri</code> pointing at the <code>ui://thorchain-swap/swap-quote</code> resource, which
-            MCP Apps-capable hosts render as an interactive quote view.
+            <code>_meta.ui.resourceUri</code> pointing at the <code>ui://thorchain-swap/swap-quote</code> resource, which MCP Apps-capable hosts
+            render as an interactive quote view.
           </p>
           <p>The server never holds keys, signs, or submits transactions.</p>
         </Section>
@@ -177,45 +165,32 @@ export default function DevelopersPage() {
                 <code>
                   {endpoint.method} {endpoint.path}
                 </code>{' '}
-                — {endpoint.summary} (scope: <code>{endpoint.scope}</code>)
+                — {endpoint.summary} (auth: <code>{endpoint.authentication}</code>)
               </li>
             ))}
           </ul>
           <p>
-            <strong>Idempotency:</strong> both POST endpoints accept an <code>Idempotency-Key</code> header (any unique
-            string, max 255 chars). A retry with the same key within one hour replays the original JSON response — marked
-            with an <code>Idempotency-Replayed: true</code> response header — instead of re-executing the operation.{' '}
-            <code>429</code> and <code>5xx</code> outcomes are not stored, so retrying after them can succeed.
+            <strong>Idempotency:</strong> both POST endpoints accept an <code>Idempotency-Key</code> header (any unique string, max 255 chars). A
+            retry with the same key within one hour replays the original JSON response — marked with an <code>Idempotency-Replayed: true</code>{' '}
+            response header — instead of re-executing the operation. <code>429</code> and <code>5xx</code> outcomes are not stored, so retrying after
+            them can succeed.
           </p>
           <p>
-            <strong>Versioning and deprecation:</strong> the API is versioned in the URL path — <code>/api/v1/</code> is the
-            canonical prefix, and unversioned <code>/api/*</code> paths are stable aliases of the newest major version.
-            Breaking changes ship as a new <code>/api/vN</code> prefix with at least six months of overlap; endpoints
-            scheduled for removal signal it with <code>Deprecation</code> and <code>Sunset</code> response headers and are
-            announced on this page before retirement.
+            <strong>Versioning and deprecation:</strong> the API is versioned in the URL path — <code>/api/v1/</code> is the canonical prefix, and
+            unversioned <code>/api/*</code> paths are stable aliases of the newest major version. Breaking changes ship as a new <code>/api/vN</code>{' '}
+            prefix with at least six months of overlap; endpoints scheduled for removal signal it with <code>Deprecation</code> and{' '}
+            <code>Sunset</code> response headers and are announced on this page before retirement.
           </p>
         </Section>
 
-        <Section id="auth" title="Authentication and Scopes">
+        <Section id="auth" title="Authentication">
           <p>
-            Browsing, quoting, and the support APIs are anonymous today; there are no accounts, and users sign transactions in
-            their own wallets (or use memoless swaps with no wallet connection). The aggregator quote API (
-            <code>https://api.thorchain.org/v1</code>) is the exception: it requires an <code>x-api-key</code> header. The
-            OAuth 2.0 model below defines least-privilege scopes for when self-service credential issuance is enabled:
+            Browsing, quoting, the public MCP server, and the support APIs are anonymous; there are no accounts, and users sign transactions in their
+            own wallets (or use memoless swaps with no wallet connection). This site does not issue or accept bearer tokens. The aggregator quote API
+            (<code>https://api.thorchain.org/v1</code>) is separate and requires an <code>x-api-key</code> header.
           </p>
-          <ul className="list-disc space-y-1 pl-5">
-            {developerScopes.map(entry => (
-              <li key={entry.scope}>
-                <code>{entry.scope}</code> — {entry.summary}
-              </li>
-            ))}
-          </ul>
           <p>
-            See the{' '}
-            <a className="underline" href="/.well-known/oauth-authorization-server">
-              OAuth authorization server metadata
-            </a>{' '}
-            and{' '}
+            See{' '}
             <a className="underline" href="/auth.md">
               auth.md
             </a>
@@ -225,13 +200,13 @@ export default function DevelopersPage() {
 
         <Section id="errors" title="Errors">
           <p>
-            Every non-2xx API response is JSON with a machine-readable <code>code</code>, a human-readable <code>error</code>,
-            and a resolution <code>hint</code>:
+            Every non-2xx API response is JSON with a machine-readable <code>code</code>, a human-readable <code>error</code>, and a resolution{' '}
+            <code>hint</code>:
           </p>
           <Code>{errorExample}</Code>
           <p>
-            Rate limits return <code>429</code> with a <code>Retry-After</code> header (seconds). Unknown <code>/api/*</code>{' '}
-            paths return a JSON <code>404</code> with code <code>not_found</code>.
+            Rate limits return <code>429</code> with a <code>Retry-After</code> header (seconds). Unknown <code>/api/*</code> paths return a JSON{' '}
+            <code>404</code> with code <code>not_found</code>.
           </p>
         </Section>
 
@@ -255,8 +230,8 @@ export default function DevelopersPage() {
 
         <Section id="protocol" title="THORChain Protocol Resources">
           <p>
-            This site is an interface to the THORChain protocol. Protocol-level development (memos, inbound addresses, quote
-            endpoints, node operation) is documented at:
+            This site is an interface to the THORChain protocol. Protocol-level development (memos, inbound addresses, quote endpoints, node
+            operation) is documented at:
           </p>
           <ul className="list-disc space-y-1 pl-5">
             <li>
@@ -299,7 +274,10 @@ export default function DevelopersPage() {
         <Section id="support" title="Support">
           <ul className="list-disc space-y-1 pl-5">
             <li>
-              Email: <a className="underline" href={`mailto:${AppConfig.supportEmail}`}>{AppConfig.supportEmail}</a>
+              Email:{' '}
+              <a className="underline" href={`mailto:${AppConfig.supportEmail}`}>
+                {AppConfig.supportEmail}
+              </a>
             </li>
             <li>
               <a className="underline" href={AppConfig.discordLink} rel="noopener noreferrer" target="_blank">

@@ -7,19 +7,19 @@ export const developerEndpoints = [
   {
     method: 'POST',
     path: '/api/v1/newsletter',
-    scope: 'submit:feedback',
+    authentication: 'none',
     summary: 'Subscribe an email address to THORChain Swap updates.'
   },
   {
     method: 'POST',
     path: '/api/v1/report-bug',
-    scope: 'submit:feedback',
+    authentication: 'none',
     summary: 'Submit a bug report or feature request.'
   },
   {
     method: 'GET',
     path: '/.well-known/status',
-    scope: 'read:public',
+    authentication: 'none',
     summary: 'Discovery endpoint status.'
   }
 ]
@@ -39,17 +39,6 @@ export const developerMcpTools = [
   }
 ]
 
-export const developerScopes = [
-  {
-    scope: 'read:public',
-    summary: 'Read public discovery documents, quotes, pools, and network data.'
-  },
-  {
-    scope: 'submit:feedback',
-    summary: 'Submit newsletter subscriptions and bug reports.'
-  }
-]
-
 export const developerDiscoveryLinks = [
   { path: '/llms.txt', summary: 'index of agent resources' },
   { path: '/llms-full.md', summary: 'complete single-file agent reference (also at /llms-full.txt)' },
@@ -57,11 +46,11 @@ export const developerDiscoveryLinks = [
   { path: '/developers.md', summary: 'this developer portal as markdown' },
   { path: '/.well-known/openapi.json', summary: 'OpenAPI 3.1 description of the public REST API' },
   { path: '/.well-known/api-catalog', summary: 'RFC 9727 API catalog (linkset)' },
-  { path: '/.well-known/mcp-server-card', summary: 'MCP server card' },
+  { path: '/.well-known/mcp/server-card.json', summary: 'MCP server card' },
   { path: '/.well-known/agent-card.json', summary: 'A2A agent card' },
   { path: '/.well-known/agent-skills/index.json', summary: 'published agent skills (navigation, quotes, pools, memoless swaps)' },
   { path: '/index.md', summary: 'homepage as markdown; append .md to any content page URL' },
-  { path: '/.well-known/oauth-authorization-server', summary: 'OAuth 2.0 authorization server metadata' },
+
   { path: '/auth.md', summary: 'authentication model for agents' },
   { path: '/pricing.md', summary: 'pricing and per-swap fee model' },
   { path: '/?mode=agent', summary: 'structured agent view of the homepage (JSON with Accept: application/json)' },
@@ -126,7 +115,7 @@ Amounts are strings in 1e8 base units (\`100000000\` = 1 BTC). Pass a \`destinat
 A public, unauthenticated, rate-limited MCP server (streamable HTTP, stateless, JSON responses):
 
 - Endpoint: ${AppConfig.baseUrl}/mcp
-- Server card: ${AppConfig.baseUrl}/.well-known/mcp-server-card
+- Server card: ${AppConfig.baseUrl}/.well-known/mcp/server-card.json
 
 Read-only tools:
 
@@ -140,7 +129,7 @@ The server never holds keys, signs, or submits transactions.
 
 Described by the OpenAPI 3.1 document at ${AppConfig.baseUrl}/.well-known/openapi.json (alias: ${AppConfig.baseUrl}/openapi.json).
 
-${developerEndpoints.map(endpoint => `- \`${endpoint.method} ${endpoint.path}\` — ${endpoint.summary} (scope: \`${endpoint.scope}\`)`).join('\n')}
+${developerEndpoints.map(endpoint => `- \`${endpoint.method} ${endpoint.path}\` — ${endpoint.summary} (auth: \`${endpoint.authentication}\`)`).join('\n')}
 
 ### Idempotency
 
@@ -150,14 +139,11 @@ Both POST endpoints accept an \`Idempotency-Key\` header (any unique string, max
 
 The API is versioned in the URL path: \`/api/v1/\` is the canonical prefix, and the unversioned \`/api/*\` paths are stable aliases of the newest major version. Breaking changes ship as a new \`/api/vN\` prefix with at least six months of overlap. Endpoints scheduled for removal signal it with \`Deprecation\` and \`Sunset\` response headers and are announced on this page before retirement.
 
-## Authentication and Scopes
+## Authentication
 
-Browsing, quoting, and the support APIs are anonymous today; there are no accounts, and users sign transactions in their own wallets (or use memoless swaps with no wallet connection). The aggregator quote API (\`https://api.thorchain.org/v1\`) is the exception: it requires an \`x-api-key\` header. The OAuth 2.0 model below defines least-privilege scopes for when self-service credential issuance is enabled:
+Browsing, quoting, the public MCP server, and the support APIs are anonymous; there are no accounts, and users sign transactions in their own wallets (or use memoless swaps with no wallet connection). This site does not issue or accept bearer tokens. The aggregator quote API (\`https://api.thorchain.org/v1\`) is separate and requires an \`x-api-key\` header.
 
-${developerScopes.map(scope => `- \`${scope.scope}\` — ${scope.summary}`).join('\n')}
-
-- Authorization server metadata: ${AppConfig.baseUrl}/.well-known/oauth-authorization-server
-- Details: ${AppConfig.baseUrl}/auth.md
+Details: ${AppConfig.baseUrl}/auth.md
 
 ## Errors
 

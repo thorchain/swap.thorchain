@@ -61,7 +61,7 @@ ${SAFETY}
 - ${AppConfig.baseUrl}/developers.md
 - ${AppConfig.baseUrl}/pricing.md
 - ${AppConfig.baseUrl}/.well-known/openapi.json
-- ${AppConfig.baseUrl}/.well-known/mcp-server-card
+- ${AppConfig.baseUrl}/.well-known/mcp/server-card.json
 `
 
 const quotes = `# THORChain Swap Quotes

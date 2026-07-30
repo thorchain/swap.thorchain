@@ -42,7 +42,7 @@ Full developer documentation (quickstart, API reference, MCP server, auth scopes
 A public, unauthenticated, rate-limited MCP server (streamable HTTP, stateless, JSON responses) is available at:
 
 - Endpoint: ${AppConfig.baseUrl}/mcp
-- Server card: ${AppConfig.baseUrl}/.well-known/mcp-server-card
+- Server card: ${AppConfig.baseUrl}/.well-known/mcp/server-card.json
 
 Tools (read-only):
 
@@ -127,7 +127,7 @@ Do not use this site for fiat on/off-ramps, NFTs, derivatives, or custodial acco
 
 - [Agent library (full)](${AppConfig.baseUrl}/llms-full.md): the complete single-file reference — URL scheme, MCP examples, asset notation, quote semantics, REST endpoints, and safety rules (also at [/llms-full.txt](${AppConfig.baseUrl}/llms-full.txt))
 - [AGENTS.md](${AppConfig.baseUrl}/AGENTS.md): guidance for AI agents using this site
-- [MCP server card](${AppConfig.baseUrl}/.well-known/mcp-server-card): public MCP server with swap-quote, pool, and network tools
+- [MCP server card](${AppConfig.baseUrl}/.well-known/mcp/server-card.json): public MCP server with swap-quote, pool, and network tools
 - [OpenAPI description](${AppConfig.baseUrl}/.well-known/openapi.json): public REST endpoints
 - [API catalog](${AppConfig.baseUrl}/.well-known/api-catalog): RFC 9727 linkset of public APIs
 - [Agent skills index](${AppConfig.baseUrl}/.well-known/agent-skills/index.json): published agent skills
@@ -165,23 +165,12 @@ Keyless access to quotes, pools, and network data is also available through the 
 
 The public support APIs documented in the API catalog are unauthenticated at the HTTP layer and enforce per-client rate limits.
 The public MCP server at ${AppConfig.baseUrl}/mcp is likewise unauthenticated and rate limited.
-There is no public self-service OAuth credential issuance for agents at this time, and the OAuth endpoints below respond with errors until issuance is enabled.
-
-## Scopes
-
-The OpenAPI description (${AppConfig.baseUrl}/.well-known/openapi.json) declares an OAuth 2.0 security scheme with least-privilege scopes, matching the authorization server metadata:
-
-- \`read:public\` — read public discovery documents, quotes, pools, and network data.
-- \`submit:feedback\` — submit newsletter subscriptions and bug reports.
-
-Anonymous access is currently permitted for everything these scopes cover; agents should still request only the scopes they need once issuance is enabled.
+This site does not issue or accept bearer tokens and does not provide self-service credential issuance.
 
 ## Discovery Metadata
 
-- OAuth authorization server metadata: ${AppConfig.baseUrl}/.well-known/oauth-authorization-server
-- OAuth protected resource metadata: ${AppConfig.baseUrl}/.well-known/oauth-protected-resource
 - API catalog: ${AppConfig.baseUrl}/.well-known/api-catalog
-- MCP server card: ${AppConfig.baseUrl}/.well-known/mcp-server-card
+- MCP server card: ${AppConfig.baseUrl}/.well-known/mcp/server-card.json
 
 ## Agent Registration
 
@@ -249,7 +238,7 @@ The path pattern is \`/sell-<asset>-buy-<asset>\`. Native gas assets may use jus
 Public, unauthenticated, rate-limited MCP server (streamable HTTP, stateless, JSON responses, POST only):
 
 - Endpoint: ${AppConfig.baseUrl}/mcp
-- Server card: ${AppConfig.baseUrl}/.well-known/mcp-server-card
+- Server card: ${AppConfig.baseUrl}/.well-known/mcp/server-card.json
 
 Read-only tools:
 
@@ -278,7 +267,7 @@ Both are unauthenticated, rate limited per client (429 with Retry-After), and ac
 
 ## Authentication
 
-Browsing, quoting, and the support APIs are anonymous. Wallet connection and signing happen in user-controlled wallets in the browser; memoless swaps need no wallet. OAuth scopes (\`read:public\`, \`submit:feedback\`) are declared for future self-service issuance — see ${AppConfig.baseUrl}/auth.md.
+Browsing, quoting, and the support APIs are anonymous. Wallet connection and signing happen in user-controlled wallets in the browser; memoless swaps need no wallet. This site does not issue or accept bearer tokens — see ${AppConfig.baseUrl}/auth.md.
 
 ## Discovery Endpoints
 
@@ -287,7 +276,7 @@ Browsing, quoting, and the support APIs are anonymous. Wallet connection and sig
 - ${AppConfig.baseUrl}/developers — developer portal (markdown: /developers.md)
 - ${AppConfig.baseUrl}/.well-known/openapi.json — OpenAPI 3.1 description
 - ${AppConfig.baseUrl}/.well-known/api-catalog — RFC 9727 API catalog
-- ${AppConfig.baseUrl}/.well-known/mcp-server-card — MCP server card
+- ${AppConfig.baseUrl}/.well-known/mcp/server-card.json — MCP server card
 - ${AppConfig.baseUrl}/.well-known/agent-card.json — A2A agent card
 - ${AppConfig.baseUrl}/.well-known/agent-skills/index.json — agent skills index
 - ${AppConfig.baseUrl}/auth.md — authentication model
@@ -314,4 +303,3 @@ Browsing, quoting, and the support APIs are anonymous. Wallet connection and sig
 - Email: ${AppConfig.supportEmail}
 - Bug reports: \`POST /api/v1/report-bug\`
 `
-

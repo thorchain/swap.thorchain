@@ -1,5 +1,5 @@
 import { AppConfig } from '@/config'
-import { developerEndpoints, developerScopes } from '@/lib/agent/developer-portal'
+import { developerEndpoints } from '@/lib/agent/developer-portal'
 import { MCP_SERVER_INFO, MCP_TOOLS } from '@/lib/agent/mcp-server'
 import { pricingPlans } from '@/lib/agent/pricing'
 
@@ -64,9 +64,7 @@ const agentModeValue = {
     model: 'anonymous',
     summary:
       'Browsing, quoting, and the support APIs require no credentials. The swap aggregator backend (https://api.thorchain.org/v1) requires an x-api-key that is not self-service; the memoless API and the MCP server need no key.',
-    scopes: developerScopes.map(({ scope, summary }) => ({ scope, summary })),
-    documentation: `${AppConfig.baseUrl}/auth.md`,
-    oauth_metadata: `${AppConfig.baseUrl}/.well-known/oauth-authorization-server`
+    documentation: `${AppConfig.baseUrl}/auth.md`
   },
   endpoints: {
     mcp: {
@@ -74,14 +72,14 @@ const agentModeValue = {
       transport: 'streamable-http',
       protocolVersion: '2025-06-18',
       serverInfo: MCP_SERVER_INFO,
-      serverCard: `${AppConfig.baseUrl}/.well-known/mcp-server-card.json`,
+      serverCard: `${AppConfig.baseUrl}/.well-known/mcp/server-card.json`,
       authentication: 'none',
       tools: MCP_TOOLS.map(({ name, description }) => ({ name, description }))
     },
-    rest: developerEndpoints.map(({ method, path, scope, summary }) => ({
+    rest: developerEndpoints.map(({ method, path, authentication, summary }) => ({
       method,
       url: `${AppConfig.baseUrl}${path}`,
-      scope,
+      authentication,
       summary
     })),
     openapi: `${AppConfig.baseUrl}/openapi.json`,
@@ -141,9 +139,9 @@ ${notSupported.map(item => `- ${item}`).join('\n')}
 
 ${agentModeValue.authentication.summary}
 
-${developerScopes.map(s => `- \`${s.scope}\` — ${s.summary}`).join('\n')}
+No bearer token is issued or accepted by this site.
 
-Details: ${AppConfig.baseUrl}/auth.md · OAuth metadata: ${AppConfig.baseUrl}/.well-known/oauth-authorization-server
+Details: ${AppConfig.baseUrl}/auth.md
 
 ## Endpoints
 
@@ -153,7 +151,7 @@ ${MCP_TOOLS.map(tool => `- \`${tool.name}\` — ${tool.description}`).join('\n')
 
 REST:
 
-${developerEndpoints.map(e => `- \`${e.method} ${AppConfig.baseUrl}${e.path}\` — ${e.summary} (scope: \`${e.scope}\`)`).join('\n')}
+${developerEndpoints.map(e => `- \`${e.method} ${AppConfig.baseUrl}${e.path}\` — ${e.summary} (auth: \`${e.authentication}\`)`).join('\n')}
 
 OpenAPI description: ${AppConfig.baseUrl}/openapi.json
 

@@ -13,12 +13,20 @@ export const MCP_SERVER_INFO = {
   version: '0.3.0'
 }
 
+const READ_ONLY_TOOL_ANNOTATIONS = {
+  readOnlyHint: true,
+  destructiveHint: false,
+  idempotentHint: true,
+  openWorldHint: true
+}
+
 export const MCP_TOOLS = [
   {
     name: 'get_swap_quote',
     title: 'Get Swap Quote',
     description:
       'Fetch a THORChain swap quote for an asset pair. Assets use CHAIN.SYMBOL notation (e.g. BTC.BTC, ETH.ETH, ETH.USDC-0XA0B86991C6218B36C1D19D4A2E9EB0CE3606EB48). Amount is in 1e8 base units (1 BTC = 100000000). Quotes are indicative and expire quickly; the returned memo and inbound address must not be reused after expiry.',
+    annotations: READ_ONLY_TOOL_ANNOTATIONS,
     inputSchema: {
       type: 'object',
       required: ['from_asset', 'to_asset', 'amount'],
@@ -43,6 +51,7 @@ export const MCP_TOOLS = [
     name: 'list_pools',
     title: 'List Liquidity Pools',
     description: 'List available THORChain liquidity pools with status, depths (1e8 base units), and USD asset price.',
+    annotations: READ_ONLY_TOOL_ANNOTATIONS,
     inputSchema: {
       type: 'object',
       properties: {},
@@ -53,6 +62,7 @@ export const MCP_TOOLS = [
     name: 'get_network_status',
     title: 'Get Network Status',
     description: 'Return current THORChain network parameters, including outbound fees and halt-related gas information.',
+    annotations: READ_ONLY_TOOL_ANNOTATIONS,
     inputSchema: {
       type: 'object',
       properties: {},
@@ -166,9 +176,7 @@ export async function handleMcpPost(req: NextRequest) {
   if (method === 'initialize') {
     const requested = (params as { protocolVersion?: unknown } | undefined)?.protocolVersion
     const protocolVersion =
-      typeof requested === 'string' && SUPPORTED_PROTOCOL_VERSIONS.includes(requested)
-        ? requested
-        : SUPPORTED_PROTOCOL_VERSIONS[0]
+      typeof requested === 'string' && SUPPORTED_PROTOCOL_VERSIONS.includes(requested) ? requested : SUPPORTED_PROTOCOL_VERSIONS[0]
     return jsonRpcResult(id, {
       protocolVersion,
       capabilities: { tools: { listChanged: false }, resources: { listChanged: false, subscribe: false } },

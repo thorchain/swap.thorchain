@@ -1,10 +1,5 @@
 import { AppConfig } from '@/config'
-import {
-  agentsMarkdown,
-  authMarkdown,
-  llmsFullMarkdown,
-  llmsTxt
-} from '@/lib/agent/discovery'
+import { agentsMarkdown, authMarkdown, llmsFullMarkdown, llmsTxt } from '@/lib/agent/discovery'
 import { developersMarkdown } from '@/lib/agent/developer-portal'
 import { AGENT_SKILLS } from '@/lib/agent/skills'
 import { pricingMarkdown } from '@/lib/agent/pricing'
@@ -14,7 +9,7 @@ import { buildOpenApiDocument } from '@/lib/agent/openapi'
 
 // Static discovery files by path, served by src/proxy.ts ahead of the
 // filesystem routes. Add new surfaces here; only dynamic endpoints
-// (/mcp, /agent-auth/*, /api/*) need route folders.
+// (/mcp and /api/*) need route folders.
 
 const MARKDOWN = 'text/markdown; charset=utf-8'
 const JSON_TYPE = 'application/json; charset=utf-8'
@@ -24,8 +19,12 @@ const json = (value: unknown) => JSON.stringify(value, null, 2)
 const openApiBody = json(buildOpenApiDocument())
 
 const mcpServerCard = json({
+  name: MCP_SERVER_INFO.name,
+  description: 'Read-only THORChain quote, liquidity-pool, and network-status tools. The server never holds keys, signs, or submits transactions.',
+  version: MCP_SERVER_INFO.version,
   serverInfo: MCP_SERVER_INFO,
   protocolVersion: '2025-06-18',
+  serverUrl: `${AppConfig.baseUrl}/mcp`,
   transport: {
     type: 'streamable-http',
     endpoint: `${AppConfig.baseUrl}/mcp`
@@ -51,7 +50,7 @@ const agentsJson = json({
       type: 'streamable-http',
       endpoint: `${AppConfig.baseUrl}/mcp`
     },
-    serverCard: `${AppConfig.baseUrl}/.well-known/mcp-server-card.json`,
+    serverCard: `${AppConfig.baseUrl}/.well-known/mcp/server-card.json`,
     authentication: { type: 'none' },
     tools: MCP_TOOLS.map(({ name, description }) => ({ name, description }))
   },
@@ -105,34 +104,46 @@ const agentCard = json({
   ]
 })
 
-const apiCatalogEntry = (anchor: string) => ({
-  anchor: `${AppConfig.baseUrl}${anchor}`,
-  'service-desc': [
+const apiCatalog = json({
+  linkset: [
     {
-      href: `${AppConfig.baseUrl}/.well-known/openapi.json`,
-      type: 'application/vnd.oai.openapi+json'
-    }
-  ],
-  'service-doc': [
-    {
-      href: `${AppConfig.baseUrl}/developers.md`,
-      type: 'text/markdown'
-    },
-    {
-      href: `${AppConfig.baseUrl}/auth.md`,
-      type: 'text/markdown'
-    }
-  ],
-  status: [
-    {
-      href: `${AppConfig.baseUrl}/.well-known/status`,
-      type: 'application/json'
+      anchor: `${AppConfig.baseUrl}/api/v1`,
+      item: [
+        {
+          href: `${AppConfig.baseUrl}/api/v1/newsletter`,
+          type: 'application/json',
+          title: 'Newsletter subscription API'
+        },
+        {
+          href: `${AppConfig.baseUrl}/api/v1/report-bug`,
+          type: 'application/json',
+          title: 'Bug report API'
+        }
+      ],
+      'service-desc': [
+        {
+          href: `${AppConfig.baseUrl}/.well-known/openapi.json`,
+          type: 'application/vnd.oai.openapi+json'
+        }
+      ],
+      'service-doc': [
+        {
+          href: `${AppConfig.baseUrl}/developers.md`,
+          type: 'text/markdown'
+        },
+        {
+          href: `${AppConfig.baseUrl}/auth.md`,
+          type: 'text/markdown'
+        }
+      ],
+      status: [
+        {
+          href: `${AppConfig.baseUrl}/.well-known/status`,
+          type: 'application/json'
+        }
+      ]
     }
   ]
-})
-
-const apiCatalog = json({
-  linkset: [apiCatalogEntry('/api/v1/newsletter'), apiCatalogEntry('/api/v1/report-bug')]
 })
 
 const agentSkillsIndex = json({
@@ -147,41 +158,11 @@ const agentSkillsIndex = json({
   }))
 })
 
-const oauthAuthorizationServer = json({
-  issuer: AppConfig.baseUrl,
-  authorization_endpoint: `${AppConfig.baseUrl}/agent-auth/authorize`,
-  token_endpoint: `${AppConfig.baseUrl}/agent-auth/token`,
-  jwks_uri: `${AppConfig.baseUrl}/.well-known/jwks.json`,
-  grant_types_supported: ['authorization_code'],
-  response_types_supported: ['code'],
-  scopes_supported: ['read:public', 'submit:feedback'],
-  token_endpoint_auth_methods_supported: ['client_secret_basic'],
-  service_documentation: `${AppConfig.baseUrl}/auth.md`,
-  agent_auth: {
-    skill: 'auth.md',
-    register_uri: `${AppConfig.baseUrl}/auth.md`,
-    identity_types_supported: ['anonymous'],
-    anonymous: {
-      credential_types_supported: ['none'],
-      claim_uri: `${AppConfig.baseUrl}/auth.md`
-    }
-  }
-})
-
-const oauthProtectedResource = json({
-  resource: AppConfig.baseUrl,
-  authorization_servers: [AppConfig.baseUrl],
-  scopes_supported: ['read:public', 'submit:feedback'],
-  bearer_methods_supported: ['header']
-})
-
 const status = json({
   status: 'ok',
   service: 'thorchain-swap',
   url: AppConfig.baseUrl
 })
-
-const jwks = json({ keys: [] })
 
 // Homepage markdown variant, served when a client Accepts text/markdown on /.
 export const homeMarkdown = `# THORChain Swap
@@ -209,7 +190,7 @@ THORChain Swap is the public swap interface for THORChain powered cross-chain sw
 - [llms.txt](${AppConfig.baseUrl}/llms.txt)
 - [Agent library (full)](${AppConfig.baseUrl}/llms-full.md)
 - [AGENTS.md](${AppConfig.baseUrl}/AGENTS.md)
-- [MCP server card](${AppConfig.baseUrl}/.well-known/mcp-server-card)
+- [MCP server card](${AppConfig.baseUrl}/.well-known/mcp/server-card.json)
 - [robots.txt](${AppConfig.baseUrl}/robots.txt)
 - [sitemap.xml](${AppConfig.baseUrl}/sitemap.xml)
 - [API catalog](${AppConfig.baseUrl}/.well-known/api-catalog)
@@ -238,14 +219,13 @@ export const discoveryFiles: Record<string, DiscoveryFile> = {
   '/.well-known/openapi.json': { contentType: 'application/vnd.oai.openapi+json; charset=utf-8', body: openApiBody },
   '/.well-known/mcp-server-card': { contentType: JSON_TYPE, body: mcpServerCard },
   '/.well-known/mcp-server-card.json': { contentType: JSON_TYPE, body: mcpServerCard },
+  '/.well-known/mcp/server-card.json': { contentType: JSON_TYPE, body: mcpServerCard },
   '/.well-known/agent-card.json': { contentType: 'application/a2a+json; charset=utf-8', body: agentCard },
-  '/.well-known/api-catalog': { contentType: 'application/linkset+json; charset=utf-8', body: apiCatalog },
+  '/.well-known/api-catalog': {
+    contentType: 'application/linkset+json; profile="https://www.rfc-editor.org/info/rfc9727"; charset=utf-8',
+    body: apiCatalog
+  },
   '/.well-known/agent-skills/index.json': { contentType: JSON_TYPE, body: agentSkillsIndex },
-  '/.well-known/oauth-authorization-server': { contentType: JSON_TYPE, body: oauthAuthorizationServer },
-  '/.well-known/oauth-protected-resource': { contentType: JSON_TYPE, body: oauthProtectedResource },
   '/.well-known/status': { contentType: JSON_TYPE, body: status },
-  '/.well-known/jwks.json': { contentType: JSON_TYPE, body: jwks },
-  ...Object.fromEntries(
-    AGENT_SKILLS.map(skill => [skill.path, { contentType: MARKDOWN, body: skill.markdown }])
-  )
+  ...Object.fromEntries(AGENT_SKILLS.map(skill => [skill.path, { contentType: MARKDOWN, body: skill.markdown }]))
 }
