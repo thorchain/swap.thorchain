@@ -63,6 +63,42 @@ const DERIVATION_PATHS = {
     title: 'Default',
     pathTitle: "m/44'/145'/0'/0/{index}",
     path: (index: number) => [44, 145, 0, 0, index]
+  },
+  // Dogecoin (SLIP-44 coin type 3). No segwit, legacy only.
+  doge: {
+    title: 'Default',
+    pathTitle: "m/44'/3'/0'/0/{index}",
+    path: (index: number) => [44, 3, 0, 0, index]
+  },
+  // Dash (SLIP-44 coin type 5). No segwit, legacy only.
+  dash: {
+    title: 'Default',
+    pathTitle: "m/44'/5'/0'/0/{index}",
+    path: (index: number) => [44, 5, 0, 0, index]
+  },
+  // Zcash (SLIP-44 coin type 133). Transparent (t-addr) legacy.
+  zcash: {
+    title: 'Default',
+    pathTitle: "m/44'/133'/0'/0/{index}",
+    path: (index: number) => [44, 133, 0, 0, index]
+  },
+  // XRP Ledger (SLIP-44 coin type 144).
+  ripple: {
+    title: 'Default',
+    pathTitle: "m/44'/144'/0'/0/{index}",
+    path: (index: number) => [44, 144, 0, 0, index]
+  },
+  // TRON (SLIP-44 coin type 195).
+  tron: {
+    title: 'Default',
+    pathTitle: "m/44'/195'/0'/0/{index}",
+    path: (index: number) => [44, 195, 0, 0, index]
+  },
+  // Cosmos Hub (SLIP-44 coin type 118).
+  cosmos: {
+    title: 'Default',
+    pathTitle: "m/44'/118'/0'/0/{index}",
+    path: (index: number) => [44, 118, 0, 0, index]
   }
 }
 
@@ -74,13 +110,31 @@ const CHAIN_PATH_MAP: Record<string, Array<keyof typeof DERIVATION_PATHS>> = {
   [Chain.Bitcoin]: ['native_segwit', 'native_segwit_middle', 'taproot'],
   [Chain.Litecoin]: ['ltc_native_segwit', 'ltc_legacy'],
   [Chain.BitcoinCash]: ['bch'],
+  [Chain.Dogecoin]: ['doge'],
+  [Chain.Dash]: ['dash'],
+  [Chain.Zcash]: ['zcash'],
+  [Chain.Ripple]: ['ripple'],
+  [Chain.Tron]: ['tron'],
+  [Chain.Cosmos]: ['cosmos'],
   [Chain.THORChain]: ['thorchain']
 }
 
 export const Ledger = ({ wallet }: { wallet: WalletParams; onConnect: () => void }) => {
   const t = useTranslations('wallet')
   const evmChains = [Chain.Ethereum, Chain.Arbitrum, Chain.BinanceSmartChain, Chain.Base, Chain.Avalanche]
-  const chains = ['EVM', Chain.Bitcoin, Chain.BitcoinCash, Chain.Litecoin, Chain.THORChain]
+  const chains = [
+    'EVM',
+    Chain.Bitcoin,
+    Chain.BitcoinCash,
+    Chain.Litecoin,
+    Chain.Dogecoin,
+    Chain.Dash,
+    Chain.Zcash,
+    Chain.Ripple,
+    Chain.Tron,
+    Chain.Cosmos,
+    Chain.THORChain
+  ]
 
   const accounts = useAccounts()
   const { connect } = useWallets()
