@@ -6,7 +6,8 @@
     "dev": "next dev --turbopack",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "test:agent-contracts": "node test/agent-contracts.test.mjs"
   },
   "dependencies": {
     "@bitgo/utxo-lib": "^1.9.5",
