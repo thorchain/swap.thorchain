@@ -102,11 +102,17 @@ const DERIVATION_PATHS = {
   }
 }
 
+// EVM chains all use coin type 60, so they share one address and the same path
+// presets. They're listed individually (rather than under one "EVM" entry) so a
+// user who only knows Ethereum or Avalanche understands each is connectable.
+const EVM_CHAINS = [Chain.Ethereum, Chain.Arbitrum, Chain.BinanceSmartChain, Chain.Base, Chain.Avalanche]
+const EVM_PATHS: Array<keyof typeof DERIVATION_PATHS> = ['metamask', 'ledger_live', 'legacy']
+
 // Every selectable chain needs at least one preset: the connect flow passes the
 // chosen path down, and the SDK throws on an undefined path rather than falling
 // back to a per-chain default.
 const CHAIN_PATH_MAP: Record<string, Array<keyof typeof DERIVATION_PATHS>> = {
-  EVM: ['metamask', 'ledger_live', 'legacy'],
+  ...Object.fromEntries(EVM_CHAINS.map(c => [c, EVM_PATHS])),
   [Chain.Bitcoin]: ['native_segwit', 'native_segwit_middle', 'taproot'],
   [Chain.Litecoin]: ['ltc_native_segwit', 'ltc_legacy'],
   [Chain.BitcoinCash]: ['bch'],
@@ -121,9 +127,8 @@ const CHAIN_PATH_MAP: Record<string, Array<keyof typeof DERIVATION_PATHS>> = {
 
 export const Ledger = ({ wallet }: { wallet: WalletParams; onConnect: () => void }) => {
   const t = useTranslations('wallet')
-  const evmChains = [Chain.Ethereum, Chain.Arbitrum, Chain.BinanceSmartChain, Chain.Base, Chain.Avalanche]
   const chains = [
-    'EVM',
+    ...EVM_CHAINS,
     Chain.Bitcoin,
     Chain.BitcoinCash,
     Chain.Litecoin,
@@ -140,7 +145,7 @@ export const Ledger = ({ wallet }: { wallet: WalletParams; onConnect: () => void
   const { connect } = useWallets()
   const [connecting, setConnecting] = useState(false)
   const [index, setIndex] = useState(0)
-  const [selectedChain, setSelectedChain] = useState<string>(Chain.Bitcoin)
+  const [selectedChain, setSelectedChain] = useState<string>(Chain.Ethereum)
   const [path, setPath] = useState<string | undefined>(Object.keys(DERIVATION_PATHS)[0])
 
   const connectedChains = useMemo(() => {
@@ -148,7 +153,6 @@ export const Ledger = ({ wallet }: { wallet: WalletParams; onConnect: () => void
   }, [accounts])
 
   const isChainConnected = (chain: string) => {
-    if (chain === 'EVM') return evmChains.every(c => connectedChains.has(c))
     return connectedChains.has(chain as Chain)
   }
 
@@ -168,7 +172,7 @@ export const Ledger = ({ wallet }: { wallet: WalletParams; onConnect: () => void
   }, [pathOptions])
 
   const handleConnect = async () => {
-    const chains = selectedChain === 'EVM' ? evmChains : [selectedChain]
+    const chains = [selectedChain]
     const derivationPath = path ? DERIVATION_PATHS[path as keyof typeof DERIVATION_PATHS].path(index) : undefined
 
     setConnecting(true)
@@ -212,31 +216,9 @@ export const Ledger = ({ wallet }: { wallet: WalletParams; onConnect: () => void
                     setSelectedChain(chain)
                   }}
                 >
-                  {chain === 'EVM' ? (
-                    <>
-                      <div className="flex -space-x-4">
-                        {evmChains.map((chain, index) => {
-                          return (
-                            <Image
-                              key={chain}
-                              src={`/networks/${chain.toLowerCase()}.svg`}
-                              alt={chain}
-                              width="24"
-                              height="24"
-                              className="bg-body rounded-md"
-                              style={{ zIndex: chains.length - index }}
-                            />
-                          )
-                        })}
-                      </div>
-                      <div className="flex-1 text-sm">EVMs</div>
-                    </>
-                  ) : (
-                    <>
-                      <Image src={`/networks/${chain.toLowerCase()}.svg`} alt={chain} width="24" height="24" />
-                      <div className="flex-1 text-sm">{chainLabel(chain as Chain)}</div>
-                    </>
-                  )}
+                  <Image src={`/networks/${chain.toLowerCase()}.svg`} alt={chain} width="24" height="24" />
+                  <div className="flex-1 text-sm">{chainLabel(chain as Chain)}</div>
+
                   {isConnected && <CircleCheckBig className="text-green-contrast size-5 shrink-0" />}
                 </div>
               )
@@ -279,7 +261,7 @@ export const Ledger = ({ wallet }: { wallet: WalletParams; onConnect: () => void
         <Info className="mt-0.5 size-4 shrink-0" />
         <span>
           {t('ledgerUnlockHint', {
-            app: selectedChain === 'EVM' ? 'Ethereum' : selectedChain ? chainLabel(selectedChain as Chain) : t('correspondingApp')
+            app: EVM_CHAINS.includes(selectedChain as Chain) ? 'Ethereum' : selectedChain ? chainLabel(selectedChain as Chain) : t('correspondingApp')
           })}
         </span>
       </div>

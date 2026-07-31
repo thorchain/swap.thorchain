@@ -17,13 +17,19 @@ type PathPreset = {
   path: (index: number) => number[]
 }
 
+// EVM chains all use coin type 60, so they share one address and the same path
+// preset. They're listed individually (rather than under one "EVM" entry) so a
+// user who only knows Ethereum or Avalanche understands each is connectable.
+const EVM_CHAINS = [Chain.Ethereum, Chain.Arbitrum, Chain.BinanceSmartChain, Chain.Base, Chain.Avalanche]
+const EVM_PATHS: PathPreset[] = [{ title: 'Default', pathTitle: "m/44'/60'/0'/0/{index}", path: index => [44, 60, 0, 0, index] }]
+
 // Trezor derives an address by BIP-44 path. The first element selects the UTXO
 // script type in the SDK (84 → native segwit, 49 → p2sh-segwit, 44 → legacy),
 // the second is the coin type — so every coin needs its own presets (unlike
 // Ledger, whose UI reuses one BTC-centric map and relies on SDK defaults).
 // Trezor has no taproot signer here, so taproot is intentionally omitted.
 const CHAIN_PATH_MAP: Record<string, PathPreset[]> = {
-  EVM: [{ title: 'Default', pathTitle: "m/44'/60'/0'/0/{index}", path: index => [44, 60, 0, 0, index] }],
+  ...Object.fromEntries(EVM_CHAINS.map(c => [c, EVM_PATHS])),
   [Chain.Bitcoin]: [
     { title: 'Native SegWit', pathTitle: "m/84'/0'/0'/0/{index}", path: index => [84, 0, 0, 0, index] },
     { title: 'SegWit', pathTitle: "m/49'/0'/0'/0/{index}", path: index => [49, 0, 0, 0, index] },
@@ -42,14 +48,13 @@ const CHAIN_PATH_MAP: Record<string, PathPreset[]> = {
 
 export const Trezor = ({ wallet }: { wallet: WalletParams; onConnect: () => void }) => {
   const t = useTranslations('wallet')
-  const evmChains = [Chain.Ethereum, Chain.Arbitrum, Chain.BinanceSmartChain, Chain.Base, Chain.Avalanche]
-  const chains = ['EVM', Chain.Bitcoin, Chain.BitcoinCash, Chain.Litecoin, Chain.Dogecoin, Chain.Dash, Chain.Zcash]
+  const chains = [...EVM_CHAINS, Chain.Bitcoin, Chain.BitcoinCash, Chain.Litecoin, Chain.Dogecoin, Chain.Dash, Chain.Zcash]
 
   const accounts = useAccounts()
   const { connect } = useWallets()
   const [connecting, setConnecting] = useState(false)
   const [index, setIndex] = useState(0)
-  const [selectedChain, setSelectedChain] = useState<string>('EVM')
+  const [selectedChain, setSelectedChain] = useState<string>(Chain.Ethereum)
   const [pathKey, setPathKey] = useState(0)
 
   const connectedChains = useMemo(() => {
@@ -57,7 +62,6 @@ export const Trezor = ({ wallet }: { wallet: WalletParams; onConnect: () => void
   }, [accounts])
 
   const isChainConnected = (chain: string) => {
-    if (chain === 'EVM') return evmChains.every(c => connectedChains.has(c))
     return connectedChains.has(chain as Chain)
   }
 
@@ -77,7 +81,7 @@ export const Trezor = ({ wallet }: { wallet: WalletParams; onConnect: () => void
   }, [pathOptions])
 
   const handleConnect = async () => {
-    const chains = selectedChain === 'EVM' ? evmChains : [selectedChain]
+    const chains = [selectedChain]
     const derivationPath = pathOptions?.[pathKey]?.path(index)
 
     setConnecting(true)
@@ -121,31 +125,9 @@ export const Trezor = ({ wallet }: { wallet: WalletParams; onConnect: () => void
                     setSelectedChain(chain)
                   }}
                 >
-                  {chain === 'EVM' ? (
-                    <>
-                      <div className="flex -space-x-4">
-                        {evmChains.map((chain, index) => {
-                          return (
-                            <Image
-                              key={chain}
-                              src={`/networks/${chain.toLowerCase()}.svg`}
-                              alt={chain}
-                              width="24"
-                              height="24"
-                              className="bg-body rounded-md"
-                              style={{ zIndex: chains.length - index }}
-                            />
-                          )
-                        })}
-                      </div>
-                      <div className="flex-1 text-sm">EVMs</div>
-                    </>
-                  ) : (
-                    <>
-                      <Image src={`/networks/${chain.toLowerCase()}.svg`} alt={chain} width="24" height="24" />
-                      <div className="flex-1 text-sm">{chainLabel(chain as Chain)}</div>
-                    </>
-                  )}
+                  <Image src={`/networks/${chain.toLowerCase()}.svg`} alt={chain} width="24" height="24" />
+                  <div className="flex-1 text-sm">{chainLabel(chain as Chain)}</div>
+
                   {isConnected && <CircleCheckBig className="text-green-contrast size-5 shrink-0" />}
                 </div>
               )
