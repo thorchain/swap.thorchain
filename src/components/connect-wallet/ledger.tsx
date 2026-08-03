@@ -139,7 +139,7 @@ export const Ledger = ({ wallet }: { wallet: WalletParams; onConnect: () => void
     Chain.Tron,
     Chain.Cosmos,
     Chain.THORChain
-  ]
+  ].sort((a, b) => chainLabel(a).localeCompare(chainLabel(b)))
 
   const accounts = useAccounts()
   const { connect } = useWallets()

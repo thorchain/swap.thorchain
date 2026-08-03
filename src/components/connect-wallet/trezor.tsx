@@ -48,7 +48,9 @@ const CHAIN_PATH_MAP: Record<string, PathPreset[]> = {
 
 export const Trezor = ({ wallet }: { wallet: WalletParams; onConnect: () => void }) => {
   const t = useTranslations('wallet')
-  const chains = [...EVM_CHAINS, Chain.Bitcoin, Chain.BitcoinCash, Chain.Litecoin, Chain.Dogecoin, Chain.Dash, Chain.Zcash]
+  const chains = [...EVM_CHAINS, Chain.Bitcoin, Chain.BitcoinCash, Chain.Litecoin, Chain.Dogecoin, Chain.Dash, Chain.Zcash].sort((a, b) =>
+    chainLabel(a).localeCompare(chainLabel(b))
+  )
 
   const accounts = useAccounts()
   const { connect } = useWallets()
