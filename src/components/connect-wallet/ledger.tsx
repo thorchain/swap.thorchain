@@ -234,8 +234,8 @@ export const Ledger = ({ wallet }: { wallet: WalletParams; onConnect: () => void
           <div className="col-span-4">
             <div className="text-txt-label-small mb-2 font-semibold">{t('derivationPath')}</div>
             <Select value={path} onValueChange={setPath} disabled={connecting}>
-              <SelectTrigger className="w-full">
-                <SelectValue placeholder={t('selectAccountType')} />
+              <SelectTrigger className="w-full text-[13px]">
+                <SelectValue className="text-sm" placeholder={t('selectAccountType')} />
               </SelectTrigger>
               <SelectContent position="item-aligned" className="text-txt-high-contrast placeholder:text-txt-med-contrast rounded-xl border-1">
                 {pathOptions.map(item => {
@@ -252,7 +252,7 @@ export const Ledger = ({ wallet }: { wallet: WalletParams; onConnect: () => void
           </div>
           <div className="col-span-1">
             <div className="text-txt-label-small mb-2 font-semibold">{t('index')}</div>
-            <Input placeholder="0" onChange={v => setIndex(parseInt(v.target.value, 10) || 0)} disabled={connecting} />
+            <Input className="text-[13px]" placeholder="0" onChange={v => setIndex(parseInt(v.target.value, 10) || 0)} disabled={connecting} />
           </div>
         </div>
       )}
@@ -267,7 +267,13 @@ export const Ledger = ({ wallet }: { wallet: WalletParams; onConnect: () => void
       </div>
 
       <div className="flex p-4 md:justify-end md:px-8 md:pt-0 md:pb-8">
-        <GenericButton colorType="3" size="large" className="w-full md:w-auto" disabled={connecting || !selectedChain || !pathOptions} onClick={() => handleConnect()}>
+        <GenericButton
+          colorType="3"
+          size="large"
+          className="w-full md:w-auto"
+          disabled={connecting || !selectedChain || !pathOptions}
+          onClick={() => handleConnect()}
+        >
           {connecting && <LoaderCircle size={20} className="animate-spin" />}
           {t('connectNamed', { name: wallet.label })}
         </GenericButton>
