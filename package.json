@@ -7,7 +7,9 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "test:agent-contracts": "node test/agent-contracts.test.mjs"
+    "test:agent-contracts": "node test/agent-contracts.test.mjs",
+    "i18n:translate": "node tools/i18n-translate.mjs",
+    "i18n:check": "node tools/i18n-translate.mjs --check"
   },
   "dependencies": {
     "@bitgo/utxo-lib": "^1.9.5",
