@@ -30,7 +30,13 @@ jobs:
 
       - name: Translate changed strings
         env:
-          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          # Choose the provider with the I18N_PROVIDER repo variable
+          # (anthropic | openai | gemini; defaults to anthropic) and set the
+          # I18N_API_KEY secret to the matching key. I18N_MODEL optionally
+          # overrides the model.
+          I18N_PROVIDER: ${{ vars.I18N_PROVIDER }}
+          I18N_MODEL: ${{ vars.I18N_MODEL }}
+          I18N_API_KEY: ${{ secrets.I18N_API_KEY }}
         run: npm run i18n:translate
 
       - name: Commit translations

@@ -8,20 +8,23 @@
 // removed from English are pruned from the locale files, and output preserves
 // English's key order so diffs stay small.
 //
-// Translation is done by Claude, which handles the ICU-style {placeholders},
+// Translation is done by an LLM, which handles the ICU-style {placeholders},
 // <b> tags, brand terms, and the less common locales (Nigerian Pidgin,
 // Egyptian Arabic, Lahnda, Runic transliteration) that generic translation
-// APIs mishandle.
+// APIs mishandle. Claude, OpenAI (GPT), and Google Gemini are supported.
 //
 // Usage:
-//   ANTHROPIC_API_KEY=sk-ant-... npm run i18n:translate
+//   I18N_API_KEY=sk-ant-... npm run i18n:translate
+//   I18N_PROVIDER=openai I18N_API_KEY=sk-... npm run i18n:translate
+//   I18N_PROVIDER=gemini I18N_API_KEY=... npm run i18n:translate
 //   npm run i18n:check                               # report drift, no API calls, exit 1 if stale
 //   node tools/i18n-translate.mjs --all              # retranslate every key (ignore the snapshot)
 //   node tools/i18n-translate.mjs --locale de,fr     # limit to specific locales
 //
 // Env:
-//   ANTHROPIC_API_KEY   required (except with --check)
-//   I18N_MODEL          model id (default: claude-opus-5)
+//   I18N_PROVIDER       anthropic (default) | openai | gemini
+//   I18N_API_KEY        API key for the chosen provider (except with --check)
+//   I18N_MODEL          model id override (defaults per provider, see PROVIDERS below)
 
 import { readFileSync, writeFileSync, existsSync, readdirSync } from 'node:fs'
 import { fileURLToPath } from 'node:url'
@@ -31,8 +34,21 @@ const HERE = dirname(fileURLToPath(import.meta.url))
 const MESSAGES_DIR = join(HERE, '..', 'src', 'i18n', 'messages')
 const SNAPSHOT_PATH = join(HERE, 'i18n-en-snapshot.json')
 const SOURCE_LOCALE = 'en'
-const MODEL = process.env.I18N_MODEL || 'claude-opus-5'
 const CHUNK_SIZE = 50
+
+// Supported LLM providers. Pick one with I18N_PROVIDER; override the model with
+// I18N_MODEL. Each reads its own API key env var.
+const PROVIDERS = {
+  anthropic: { defaultModel: 'claude-opus-5' },
+  openai: { defaultModel: 'gpt-4o' },
+  gemini: { defaultModel: 'gemini-2.0-flash' }
+}
+const PROVIDER = (process.env.I18N_PROVIDER || 'anthropic').toLowerCase()
+if (!PROVIDERS[PROVIDER]) {
+  console.error(`Unknown I18N_PROVIDER "${PROVIDER}". Use one of: ${Object.keys(PROVIDERS).join(', ')}`)
+  process.exit(1)
+}
+const MODEL = process.env.I18N_MODEL || PROVIDERS[PROVIDER].defaultModel
 
 // Human-readable target descriptions for the translation prompt. Keys must
 // cover every non-English locale that has a messages/<locale>.json file; the
@@ -125,43 +141,79 @@ You will receive a JSON object mapping dotted keys to English UI strings. Return
 - Keep translations concise and idiomatic for buttons, labels, and tooltips in a financial UI.
 - If a value is a URL, email, or pure symbol, return it unchanged.`
 
-async function translateChunk(pairs, langName, localeCode) {
-  const apiKey = process.env.ANTHROPIC_API_KEY
-  if (!apiKey) throw new Error('ANTHROPIC_API_KEY is not set')
+function requireKey() {
+  const key = process.env.I18N_API_KEY
+  if (!key) throw new Error(`I18N_API_KEY is not set (required for I18N_PROVIDER=${PROVIDER})`)
+  return key
+}
 
+async function post(url, headers, body) {
+  const res = await fetch(url, {
+    method: 'POST',
+    headers: { 'content-type': 'application/json', ...headers },
+    body: JSON.stringify(body)
+  })
+  if (!res.ok) throw new Error(`${PROVIDER} API ${res.status}: ${await res.text()}`)
+  return res.json()
+}
+
+// Each provider returns the model's raw text output for a user prompt.
+async function callAnthropic(userText) {
+  const data = await post(
+    'https://api.anthropic.com/v1/messages',
+    { 'x-api-key': requireKey(), 'anthropic-version': '2023-06-01' },
+    {
+      model: MODEL,
+      max_tokens: 16000,
+      system: SYSTEM_PROMPT,
+      messages: [{ role: 'user', content: userText }]
+    }
+  )
+  if (data.stop_reason === 'refusal') throw new Error('Model refused the translation request')
+  return (data.content || [])
+    .filter((b) => b.type === 'text')
+    .map((b) => b.text)
+    .join('')
+}
+
+async function callOpenAI(userText) {
+  const data = await post(
+    'https://api.openai.com/v1/chat/completions',
+    { authorization: `Bearer ${requireKey()}` },
+    {
+      model: MODEL,
+      response_format: { type: 'json_object' },
+      messages: [
+        { role: 'system', content: SYSTEM_PROMPT },
+        { role: 'user', content: userText }
+      ]
+    }
+  )
+  return data.choices?.[0]?.message?.content || ''
+}
+
+async function callGemini(userText) {
+  const data = await post(
+    `https://generativelanguage.googleapis.com/v1beta/models/${MODEL}:generateContent`,
+    { 'x-goog-api-key': requireKey() },
+    {
+      system_instruction: { parts: [{ text: SYSTEM_PROMPT }] },
+      contents: [{ role: 'user', parts: [{ text: userText }] }],
+      generationConfig: { responseMimeType: 'application/json' }
+    }
+  )
+  return (data.candidates?.[0]?.content?.parts || []).map((p) => p.text || '').join('')
+}
+
+const CALLERS = { anthropic: callAnthropic, openai: callOpenAI, gemini: callGemini }
+
+async function translateChunk(pairs, langName, localeCode) {
   const input = Object.fromEntries(pairs)
   const userText =
     `Target language: ${langName} (locale code "${localeCode}").\n\n` +
     `Translate the values in this JSON object:\n${JSON.stringify(input, null, 2)}`
 
-  const res = await fetch('https://api.anthropic.com/v1/messages', {
-    method: 'POST',
-    headers: {
-      'x-api-key': apiKey,
-      'anthropic-version': '2023-06-01',
-      'content-type': 'application/json'
-    },
-    body: JSON.stringify({
-      model: MODEL,
-      max_tokens: 16000,
-      output_config: { effort: 'low' },
-      system: SYSTEM_PROMPT,
-      messages: [{ role: 'user', content: userText }]
-    })
-  })
-
-  if (!res.ok) {
-    const body = await res.text()
-    throw new Error(`Anthropic API ${res.status}: ${body}`)
-  }
-
-  const data = await res.json()
-  if (data.stop_reason === 'refusal') throw new Error('Model refused the translation request')
-  const text = (data.content || [])
-    .filter((b) => b.type === 'text')
-    .map((b) => b.text)
-    .join('')
-    .trim()
+  const text = (await CALLERS[PROVIDER](userText)).trim()
 
   let jsonText = text
   if (jsonText.startsWith('```')) {
@@ -171,13 +223,11 @@ async function translateChunk(pairs, langName, localeCode) {
     jsonText = jsonText.trim()
   }
 
-  let parsed
   try {
-    parsed = JSON.parse(jsonText)
+    return JSON.parse(jsonText)
   } catch {
     throw new Error(`Could not parse model output as JSON for ${localeCode}:\n${text.slice(0, 500)}`)
   }
-  return parsed
 }
 
 // ---- main -----------------------------------------------------------------
@@ -226,7 +276,7 @@ async function main() {
     return
   }
 
-  console.log(`Model: ${MODEL}`)
+  console.log(`Provider: ${PROVIDER} | model: ${MODEL}`)
   console.log(`Locales: ${locales.length} | strings needing translation: ${totalPending}\n`)
 
   for (const { locale, path, locFlat, pending, removed } of plan) {
