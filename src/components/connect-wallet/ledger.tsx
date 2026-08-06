@@ -234,16 +234,19 @@ export const Ledger = ({ wallet }: { wallet: WalletParams; onConnect: () => void
           <div className="col-span-4">
             <div className="text-txt-label-small mb-2 font-semibold">{t('derivationPath')}</div>
             <Select value={path} onValueChange={setPath} disabled={connecting}>
-              <SelectTrigger className="w-full text-[13px]">
-                <SelectValue className="text-sm" placeholder={t('selectAccountType')} />
+              <SelectTrigger className="h-14 w-full *:data-[slot=select-value]:line-clamp-none">
+                <SelectValue placeholder={t('selectAccountType')} />
               </SelectTrigger>
               <SelectContent position="item-aligned" className="text-txt-high-contrast placeholder:text-txt-med-contrast rounded-xl border-1">
                 {pathOptions.map(item => {
                   const derivationPath = DERIVATION_PATHS[item as keyof typeof DERIVATION_PATHS]
 
                   return (
-                    <SelectItem key={item} value={item}>
-                      {derivationPath.title} <span className="text-txt-label-small">({derivationPath.pathTitle})</span>
+                    <SelectItem key={item} value={item} className="py-2">
+                      <span className="flex flex-col items-start gap-0.5 leading-tight">
+                        <span className="text-sm font-medium">{derivationPath.title}</span>
+                        <span className="text-txt-label-small font-mono text-xs">{derivationPath.pathTitle}</span>
+                      </span>
                     </SelectItem>
                   )
                 })}
@@ -252,7 +255,7 @@ export const Ledger = ({ wallet }: { wallet: WalletParams; onConnect: () => void
           </div>
           <div className="col-span-1">
             <div className="text-txt-label-small mb-2 font-semibold">{t('index')}</div>
-            <Input className="text-[13px]" placeholder="0" onChange={v => setIndex(parseInt(v.target.value, 10) || 0)} disabled={connecting} />
+            <Input className="h-14" placeholder="0" onChange={v => setIndex(parseInt(v.target.value, 10) || 0)} disabled={connecting} />
           </div>
         </div>
       )}

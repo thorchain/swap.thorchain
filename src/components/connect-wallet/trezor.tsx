@@ -145,14 +145,17 @@ export const Trezor = ({ wallet }: { wallet: WalletParams; onConnect: () => void
           <div className="col-span-4">
             <div className="text-txt-label-small mb-2 font-semibold">{t('derivationPath')}</div>
             <Select value={String(pathKey)} onValueChange={v => setPathKey(Number(v))} disabled={connecting}>
-              <SelectTrigger className="w-full text-[13px]">
-                <SelectValue className="text-sm" placeholder={t('selectAccountType')} />
+              <SelectTrigger className="h-14 w-full *:data-[slot=select-value]:line-clamp-none">
+                <SelectValue placeholder={t('selectAccountType')} />
               </SelectTrigger>
               <SelectContent position="item-aligned" className="text-txt-high-contrast placeholder:text-txt-med-contrast rounded-xl border-1">
                 {pathOptions.map((option, i) => {
                   return (
-                    <SelectItem key={option.pathTitle} value={String(i)}>
-                      {option.title} <span className="text-txt-label-small">({option.pathTitle})</span>
+                    <SelectItem key={option.pathTitle} value={String(i)} className="py-2">
+                      <span className="flex flex-col items-start gap-0.5 leading-tight">
+                        <span className="text-sm font-medium">{option.title}</span>
+                        <span className="text-txt-label-small font-mono text-xs">{option.pathTitle}</span>
+                      </span>
                     </SelectItem>
                   )
                 })}
@@ -161,7 +164,7 @@ export const Trezor = ({ wallet }: { wallet: WalletParams; onConnect: () => void
           </div>
           <div className="col-span-1">
             <div className="text-txt-label-small mb-2 font-semibold">{t('index')}</div>
-            <Input className="text-[13px]" placeholder="0" onChange={v => setIndex(parseInt(v.target.value, 10) || 0)} disabled={connecting} />
+            <Input className="h-14" placeholder="0" onChange={v => setIndex(parseInt(v.target.value, 10) || 0)} disabled={connecting} />
           </div>
         </div>
       )}
