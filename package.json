@@ -43,6 +43,7 @@
     "cashaddrjs": "^0.4.4",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
+    "country-flag-icons": "^1.6.20",
     "date-fns": "^4.1.0",
     "decimal.js": "^10.6.0",
     "ethers": "^6.15.0",

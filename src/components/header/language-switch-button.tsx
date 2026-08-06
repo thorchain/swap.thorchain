@@ -6,8 +6,9 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigge
 import { ScrollArea } from '@/components/ui/scroll-area'
 import { Icon } from '@/components/icons'
 import { GenericButton } from '@/components/generic-button'
-import { COOKIE_NAME, defaultLocale, isLocale, type Locale, localeFlags, localeNames, locales } from '@/i18n/config'
+import { COOKIE_NAME, defaultLocale, isLocale, type Locale, localeNames, locales } from '@/i18n/config'
 import { setUserLocale } from '@/i18n/locale'
+import { LocaleFlag } from './locale-flag'
 import { cn } from '@/lib/utils'
 
 export const LanguageSwitchButton = () => {
@@ -28,8 +29,8 @@ export const LanguageSwitchButton = () => {
   return (
     <DropdownMenu modal={false}>
       <DropdownMenuTrigger asChild>
-        <GenericButton size="medium" aria-label={t('language')} className="uppercase">
-          {localeFlags[current]} {current}
+        <GenericButton size="medium" aria-label={t('language')} className="flex items-center gap-1.5 uppercase">
+          <LocaleFlag locale={current} /> {current}
         </GenericButton>
       </DropdownMenuTrigger>
       <DropdownMenuContent
@@ -47,8 +48,8 @@ export const LanguageSwitchButton = () => {
               onSelect={() => onSelect(locale)}
             >
               <Icon name="check" className={cn('text-green-contrast size-4.5 shrink-0', { 'opacity-0': locale !== current })} />
-              <span className="text-btn-style-1-text text-xs leading-none font-medium">
-                {localeFlags[locale]} {localeNames[locale]}
+              <span className="text-btn-style-1-text flex items-center gap-1.5 text-xs leading-none font-medium">
+                <LocaleFlag locale={locale} /> {localeNames[locale]}
               </span>
             </DropdownMenuItem>
           ))}

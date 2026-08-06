@@ -60,32 +60,33 @@ export const localeNames: Record<Locale, string> = {
   'en-Runr': 'ᚠᚢᚦᚨᚱᚲ'
 }
 
-// Flag emoji shown next to the locale code in the language switcher.
-export const localeFlags: Record<Locale, string> = {
-  en: '🇺🇸',
-  zh: '🇨🇳',
-  'zh-Hant': '🇹🇼',
-  ko: '🇰🇷',
-  ru: '🇷🇺',
-  es: '🇪🇸',
-  fa: '🇮🇷',
-  tr: '🇹🇷',
-  hi: '🇮🇳',
-  ar: '🇸🇦',
-  fr: '🇫🇷',
-  bn: '🇧🇩',
-  pt: '🇵🇹',
-  ja: '🇯🇵',
-  lah: '🇵🇰',
-  ur: '🇵🇰',
-  id: '🇮🇩',
-  de: '🇩🇪',
-  it: '🇮🇹',
-  pcm: '🇳🇬',
-  arz: '🇪🇬',
-  vi: '🇻🇳',
-  th: '🇹🇭',
-  'en-Runr': '🇺🇸'
+// ISO 3166-1 alpha-2 country code whose flag is shown next to each locale in
+// the language switcher. Rendered as an SVG via country-flag-icons.
+export const localeCountries: Record<Locale, string> = {
+  en: 'US',
+  zh: 'CN',
+  'zh-Hant': 'TW',
+  ko: 'KR',
+  ru: 'RU',
+  es: 'ES',
+  fa: 'IR',
+  tr: 'TR',
+  hi: 'IN',
+  ar: 'SA',
+  fr: 'FR',
+  bn: 'BD',
+  pt: 'PT',
+  ja: 'JP',
+  lah: 'PK',
+  ur: 'PK',
+  id: 'ID',
+  de: 'DE',
+  it: 'IT',
+  pcm: 'NG',
+  arz: 'EG',
+  vi: 'VN',
+  th: 'TH',
+  'en-Runr': 'US'
 }
 
 // Right-to-left locales need dir="rtl" on the <html> element.
