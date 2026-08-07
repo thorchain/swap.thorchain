@@ -5,7 +5,6 @@ import * as DialogPrimitive from '@radix-ui/react-dialog'
 import Lottie, { LottieRefCurrentProps } from 'lottie-react'
 import { useRef, useState } from 'react'
 import { cn } from '@/lib/utils'
-import { X } from 'lucide-react'
 import { useTranslations } from 'next-intl'
 import { VisuallyHidden } from '@radix-ui/react-visually-hidden'
 import { Dialog, DialogPortal } from '@/components/ui/dialog'
@@ -120,11 +119,11 @@ function MenuTile({ label, animationData, href, onClick }: TileProps) {
       onMouseLeave={handleMouseLeave}
       className={cn(
         'flex size-full items-center border-b border-neutral-800 py-5 text-left transition-colors duration-150',
-        'md:rounded-15 md:flex-col md:items-start md:border-none md:bg-neutral-900 md:px-5 md:py-6.25',
+        'md:rounded-15 md:flex-col md:items-start md:border md:border-black md:bg-[#1a1a1a] md:px-5 md:py-6.25',
         'cursor-pointer md:hover:bg-neutral-700'
       )}
     >
-      <span className="text-[30px] leading-tight font-medium text-white">{label}</span>
+      <span className="text-[30px] leading-9 font-medium text-white">{label}</span>
       {/* Desktop: Lottie fills the bottom */}
       <div className="hidden grow md:block">
         <Lottie
@@ -216,8 +215,9 @@ export function GlobalMenu({ isOpen, onOpenChange }: SendMemoMenuProps) {
       <DialogPortal>
         <DialogPrimitive.Content
           className={cn(
-            'fixed inset-0 z-50 overflow-y-auto bg-black text-white',
-            'scrollbar-none [&::-webkit-scrollbar]:hidden',
+            'fixed inset-0 z-50 overflow-y-auto bg-black text-white subpixel-antialiased',
+            'scrollbar-none pr-3.75 [&::-webkit-scrollbar]:hidden',
+            'outline-none [&_*]:outline-none',
             'data-[state=open]:animate-in data-[state=closed]:animate-out',
             'data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0',
             'duration-200'
@@ -229,7 +229,7 @@ export function GlobalMenu({ isOpen, onOpenChange }: SendMemoMenuProps) {
 
           <div className="flex min-h-full flex-col">
             {/* Header — mirrors the site header layout so the close button sits exactly on the burger button */}
-            <div className="container mx-auto flex shrink-0 items-start justify-between gap-4 p-4">
+            <div className="flex shrink-0 items-center justify-between gap-4 pt-7.5 pr-3.75 pl-7.5">
               <a
                 href={AppConfig.logoLink || '/'}
                 className="flex items-center gap-2.5"
@@ -242,11 +242,11 @@ export function GlobalMenu({ isOpen, onOpenChange }: SendMemoMenuProps) {
                 </span>
               </a>
 
-              <div className="flex items-center gap-3">
+              <div className="flex items-center gap-2.5">
                 <a
                   href={resolveHref('/')}
                   onClick={closeMenu}
-                  className="group bg-green-default hidden h-10 items-center gap-2.5 rounded-full border border-transparent px-4.5 text-[15px] font-medium text-black transition-colors hover:bg-white md:flex"
+                  className="group bg-green-default hidden h-17 items-center gap-2.5 rounded-full border border-black px-6 py-5 text-base font-medium text-black transition-colors hover:bg-white md:flex"
                 >
                   <RollingText text={t('launchApp')} />
                   <span className="relative flex size-4.25 shrink-0 items-center justify-center overflow-hidden rounded-full border border-black transition-all duration-300 group-hover:scale-150 group-hover:bg-black">
@@ -268,17 +268,34 @@ export function GlobalMenu({ isOpen, onOpenChange }: SendMemoMenuProps) {
                     </span>
                   </span>
                 </a>
+                {/* Two crossed bars rather than an X glyph, so hovering can straighten them
+                    into a single dash the way thorchain.org's menu button does. */}
                 <DialogPrimitive.Close
-                  className="flex size-10 cursor-pointer items-center justify-center rounded-full bg-white text-black transition-colors hover:bg-neutral-200 focus:outline-none"
+                  className="group relative size-10 cursor-pointer rounded-full bg-white focus:outline-none md:size-17"
                   aria-label="Close"
                 >
-                  <X className="size-4.5" strokeWidth={2.5} />
+                  {['rotate-45', '-rotate-45'].map(rotation => (
+                    <span
+                      key={rotation}
+                      aria-hidden="true"
+                      className={cn(
+                        'absolute top-1/2 left-1/2 h-0.5 w-5.5 origin-center -translate-x-1/2 rounded-full bg-black md:h-0.75',
+                        'transition-all duration-300 ease-[cubic-bezier(0.65,0,0.35,1)]',
+                        // Hover only — Radix focuses this button when the dialog opens, so a
+                        // focus variant would straighten the bars before the X is ever seen.
+                        'group-hover:rotate-0',
+                        rotation
+                      )}
+                    />
+                  ))}
                 </DialogPrimitive.Close>
               </div>
             </div>
 
             {/* Main content */}
-            <div className="container mx-auto flex flex-1 flex-wrap gap-12.5 px-4 pt-12.5 pb-7.5 xl:flex-nowrap xl:pb-15">
+            {/* pt-20.5 puts the tiles 180px from the top, matching thorchain.org, whose
+                header overlays the content instead of sitting above it in flow. */}
+            <div className="3xl:px-37.5 flex flex-1 flex-wrap gap-7.5 px-7.5 pt-12.5 pb-7.5 md:pt-20.5 xl:flex-nowrap xl:px-22.5 xl:pb-15">
               {/* Tiles nav */}
               <nav className="w-full shrink-0 xl:w-2/3">
                 <ul className="w-full md:grid md:w-fit md:grid-cols-4 md:gap-5">
@@ -290,8 +307,10 @@ export function GlobalMenu({ isOpen, onOpenChange }: SendMemoMenuProps) {
                 </ul>
               </nav>
 
-              {/* Right column */}
-              <div className="flex flex-col gap-20">
+              {/* Right column — w-full so it fills the track left over by the tiles nav
+                  instead of shrinking to its content, which is what keeps the socials
+                  columns and the newsletter card growing with the viewport. */}
+              <div className="flex w-full flex-col gap-20">
                 {/* Socials */}
                 <div className="flex flex-col gap-10">
                   <span className="text-xl font-medium text-white">{t('socials')}</span>
@@ -302,7 +321,7 @@ export function GlobalMenu({ isOpen, onOpenChange }: SendMemoMenuProps) {
                           href={link.href}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="group flex items-center gap-3 transition-all duration-150 md:hover:translate-x-2.5"
+                          className="group flex min-h-6 items-center gap-3 transition-all duration-150 md:hover:translate-x-2.5"
                         >
                           {/* Mobile: dark square tile with icon */}
                           <span
@@ -311,10 +330,10 @@ export function GlobalMenu({ isOpen, onOpenChange }: SendMemoMenuProps) {
                           />
                           {/* Desktop: plain icon */}
                           <span
-                            className="hidden size-5 shrink-0 items-center justify-center md:inline-flex [&_svg]:size-full"
+                            className="hidden h-6 w-5 shrink-0 items-center justify-center md:inline-flex [&_svg]:size-full"
                             dangerouslySetInnerHTML={{ __html: link.icon }}
                           />
-                          <span className="hidden text-base font-medium text-[#808080] transition-colors group-hover:text-white md:inline">
+                          <span className="hidden text-base leading-[1.2] font-medium text-[#808080] transition-colors group-hover:text-white md:inline">
                             {link.label}
                           </span>
                         </a>
@@ -325,7 +344,7 @@ export function GlobalMenu({ isOpen, onOpenChange }: SendMemoMenuProps) {
 
                 {/* Newsletter */}
                 <div className="hidden flex-col gap-5 md:flex">
-                  <p className="text-lg leading-snug font-medium text-white">{t('newsletterPitch')}</p>
+                  <p className="text-lg leading-[1.4] font-medium text-white">{t('newsletterPitch')}</p>
                   {newsletterStatus === 'success' ? (
                     <p className="text-green-default text-base">{t('subscribed')}</p>
                   ) : (
@@ -335,7 +354,7 @@ export function GlobalMenu({ isOpen, onOpenChange }: SendMemoMenuProps) {
                           <input
                             type="email"
                             placeholder={t('emailPlaceholder')}
-                            className="size-full bg-transparent text-lg text-neutral-950 placeholder:text-neutral-400 focus:outline-none"
+                            className="size-full bg-transparent text-lg leading-[1.4] font-medium text-[#737373] placeholder:text-[#737373]/50 focus:outline-none disabled:opacity-50"
                             value={newsletterEmail}
                             onChange={e => setNewsletterEmail(e.target.value)}
                             disabled={newsletterStatus === 'loading'}
@@ -345,7 +364,7 @@ export function GlobalMenu({ isOpen, onOpenChange }: SendMemoMenuProps) {
                         <button
                           type="submit"
                           disabled={newsletterStatus === 'loading'}
-                          className="hover:border-neutral-650 hover:bg-neutral-650 cursor-pointer rounded-[5px] border border-black bg-neutral-950 px-3.75 py-2.5 text-[15px] text-white transition-colors disabled:opacity-60"
+                          className="cursor-pointer rounded-[5px] border border-black bg-[#0d0d0d] p-3.75 text-lg leading-[1.4] font-medium text-white transition-colors hover:border-[#595959] hover:bg-[#595959] disabled:opacity-60"
                         >
                           {newsletterStatus === 'loading' ? t('signingUp') : t('signUp')}
                         </button>

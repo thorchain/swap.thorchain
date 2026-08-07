@@ -1,10 +1,14 @@
-@import "tailwindcss";
-@import "tw-animate-css";
+@import 'tailwindcss';
+@import 'tw-animate-css';
 
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {
   --font-sans: var(--font-crit), var(--font-runic), ui-sans-serif, system-ui, sans-serif;
+
+  /* 2000px, in rem so Tailwind sorts it after xl — it orders breakpoints by raw
+     value, so a px-based one lands before the rem-based defaults and loses to xl. */
+  --breakpoint-3xl: 125rem;
 
   --radius-15: 0.9375rem;
   --radius-20: 1.25rem;
@@ -388,7 +392,7 @@
     --contrast-2: var(--neutral-800);
     --dropdown-default: var(--neutral-950);
     --dropdown-hover: var(--neutral-50);
-    --error: #391A1A;
+    --error: #391a1a;
     --green-contrast: var(--green-100);
     --green-default: var(--green-100);
     --green-hover: var(--neutral-00);
@@ -412,7 +416,7 @@
     --stroke-menu: var(--neutral-750);
     --stroke-swap-bloc: var(--neutral-750);
     --sub-container-modal: var(--neutral-850);
-    --success: #172C27;
+    --success: #172c27;
     --swap-bloc: var(--neutral-850);
     --swap-global: var(--neutral-1000);
     --txt-amount: var(--neutral-50);
@@ -436,7 +440,7 @@
     --txt-med-contrast: var(--neutral-560);
     --txt-text-modal: var(--neutral-555);
     --txt-title-modal: var(--neutral-50);
-    --warning: #38231A;
+    --warning: #38231a;
 
     --background: black;
     --foreground: oklch(0.985 0 0);
@@ -471,13 +475,13 @@
     --sidebar-ring: oklch(0.556 0 0);
   }
 
-  [data-brand="thorchain"] {
+  [data-brand='thorchain'] {
     --brand-first: var(--lg-l);
     --brand-second: var(--rb-l);
     --brand-third: var(--sp-l);
   }
 
-  [data-brand="thorchain"].dark {
+  [data-brand='thorchain'].dark {
     --brand-first: var(--lg-d);
     --brand-second: var(--rb-d);
     --brand-third: var(--sp-d);
@@ -491,10 +495,13 @@
 
   body {
     @apply bg-background text-foreground;
+    /* thorchain.org disables kerning site-wide; matching it keeps Crit's
+       letter spacing identical across both properties. */
+    font-kerning: none;
   }
 
-  input[type="number"]::-webkit-inner-spin-button,
-  input[type="number"]::-webkit-outer-spin-button {
+  input[type='number']::-webkit-inner-spin-button,
+  input[type='number']::-webkit-outer-spin-button {
     -webkit-appearance: none;
     margin: 0;
   }
