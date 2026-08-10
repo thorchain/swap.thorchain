@@ -6,8 +6,9 @@
 @theme inline {
   --font-sans: var(--font-crit), var(--font-runic), ui-sans-serif, system-ui, sans-serif;
 
-  /* 2000px, in rem so Tailwind sorts it after xl — it orders breakpoints by raw
-     value, so a px-based one lands before the rem-based defaults and loses to xl. */
+  /* In rem, not px: Tailwind orders breakpoints by raw value, so a px-based one
+     sorts before the rem-based defaults and loses to them. */
+  --breakpoint-desktop: 62rem;
   --breakpoint-3xl: 125rem;
 
   --radius-15: 0.9375rem;
@@ -488,6 +489,86 @@
   }
 }
 
+/* Fluid sizes: interpolate between a 375px and a 1440px viewport, clamped at both ends. */
+@utility text-fluid-30 {
+  font-size: clamp(24px, calc(21.88732px + 0.56338vw), 30px);
+  line-height: 1.2;
+}
+
+@utility text-fluid-20 {
+  font-size: clamp(18px, calc(17.29577px + 0.18779vw), 20px);
+  line-height: 1.4;
+}
+
+@utility text-fluid-18 {
+  font-size: clamp(16px, calc(15.29577px + 0.18779vw), 18px);
+  line-height: 1.4;
+}
+
+/* Socials heading to icon list: 20px → 40px. */
+@utility gap-fluid-socials {
+  gap: clamp(20px, calc(12.9577px + 1.87793vw), 40px);
+}
+
+/* Menu gutter: 30px → 90px. */
+@utility px-menu-gutter {
+  padding-inline: clamp(30px, calc(8.8732px + 5.6338vw), 90px);
+}
+
+/* Offsets clear the fixed header, which overlays the content. The 1200px step is
+   the menu's own; it doesn't line up with our xl. */
+@utility menu-content {
+  flex-wrap: wrap;
+  padding-top: 100px;
+  padding-bottom: 30px;
+
+  @media (min-width: 62rem) {
+    padding-top: 140px;
+  }
+  @media (min-width: 75rem) {
+    flex-wrap: nowrap;
+    padding-top: clamp(140.56px, calc(-56.6197px + 16.4319vw), 180px);
+    padding-bottom: 60px;
+  }
+}
+
+/* Compact bar below 992px, full-size above it. */
+@utility menu-header {
+  padding: 10px 16px;
+  border-bottom: 1px solid #d1d1d1;
+  background-color: #000;
+
+  @media (min-width: 62rem) {
+    padding: 30px 30px 0;
+    border-bottom: 0;
+    background-color: transparent;
+  }
+}
+
+/* Header controls, fluid between the same two viewports. */
+@utility h-menu-launch {
+  height: clamp(38px, calc(27.4366px + 2.8169vw), 68px);
+}
+
+@utility size-menu-close {
+  width: clamp(40px, calc(30.141px + 2.6291vw), 68px);
+  height: clamp(40px, calc(30.141px + 2.6291vw), 68px);
+}
+
+@utility w-menu-logo {
+  width: clamp(25px, calc(21.127px + 1.03286vw), 36px);
+  height: auto;
+  aspect-ratio: 36 / 41;
+}
+
+@utility menu-nav {
+  width: 100%;
+
+  @media (min-width: 75rem) {
+    width: 66.666667%;
+  }
+}
+
 @layer base {
   * {
     @apply border-border outline-ring/50;
@@ -495,8 +576,7 @@
 
   body {
     @apply bg-background text-foreground;
-    /* thorchain.org disables kerning site-wide; matching it keeps Crit's
-       letter spacing identical across both properties. */
+    /* Off site-wide — Crit is spaced for it. */
     font-kerning: none;
   }
 

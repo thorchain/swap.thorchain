@@ -118,12 +118,12 @@ function MenuTile({ label, animationData, href, onClick }: TileProps) {
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
       className={cn(
-        'flex size-full items-center border-b border-neutral-800 py-5 text-left transition-colors duration-150',
-        'md:rounded-15 md:flex-col md:items-start md:border md:border-black md:bg-[#1a1a1a] md:px-5 md:py-6.25',
+        'flex size-full items-center gap-5 border-b border-[#333333] py-5 text-left transition-colors duration-150',
+        'md:rounded-15 md:flex-col md:items-start md:gap-0 md:border md:border-black md:bg-[#1a1a1a] md:px-5 md:py-6.25',
         'cursor-pointer md:hover:bg-neutral-700'
       )}
     >
-      <span className="text-[30px] leading-9 font-medium text-white">{label}</span>
+      <span className="text-fluid-30 font-medium text-white">{label}</span>
       {/* Desktop: Lottie fills the bottom */}
       <div className="hidden grow md:block">
         <Lottie
@@ -134,13 +134,14 @@ function MenuTile({ label, animationData, href, onClick }: TileProps) {
           className="inline-flex size-full items-center justify-center overflow-visible [&>svg]:size-full"
         />
       </div>
-      {/* Mobile: icon before label */}
-      <div className="-order-1 size-12.5 shrink-0 md:hidden">
+      {/* Mobile: icon before label. Scaled up because the Lottie art carries ~40%
+          internal padding, so it fills the 30px box without resizing the box. */}
+      <div className="-order-1 size-7.5 shrink-0 md:hidden">
         <Lottie
           animationData={animationData}
           autoplay={false}
           loop={false}
-          className="inline-flex size-full items-center justify-center overflow-visible [&>svg]:size-full"
+          className="inline-flex size-full items-center justify-center overflow-visible [&>svg]:size-full [&>svg]:scale-[1.667]"
         />
       </div>
     </a>
@@ -228,15 +229,15 @@ export function GlobalMenu({ isOpen, onOpenChange }: SendMemoMenuProps) {
           </VisuallyHidden>
 
           <div className="flex min-h-full flex-col">
-            {/* Header — mirrors the site header layout so the close button sits exactly on the burger button */}
-            <div className="flex shrink-0 items-center justify-between gap-4 pt-7.5 pr-3.75 pl-7.5">
+            {/* Header — fixed, overlaying the content */}
+            <div className="menu-header fixed top-0 left-0 z-10 flex w-full items-center justify-between gap-4">
               <a
                 href={AppConfig.logoLink || '/'}
                 className="flex items-center gap-2.5"
                 rel="noopener noreferrer"
                 target={AppConfig.logoLink ? '_blank' : '_self'}
               >
-                <Image src={AppConfig.logo} alt={AppConfig.title} width={36} height={41} priority />
+                <Image src={AppConfig.logo} alt={AppConfig.title} width={36} height={41} priority className="w-menu-logo" />
                 <span className="hidden md:inline-flex [&_path]:fill-white">
                   <HeaderLogoText />
                 </span>
@@ -246,10 +247,11 @@ export function GlobalMenu({ isOpen, onOpenChange }: SendMemoMenuProps) {
                 <a
                   href={resolveHref('/')}
                   onClick={closeMenu}
-                  className="group bg-green-default hidden h-17 items-center gap-2.5 rounded-full border border-black px-6 py-5 text-base font-medium text-black transition-colors hover:bg-white md:flex"
+                  className="group bg-green-default h-menu-launch desktop:px-6 desktop:py-5 flex items-center gap-2.5 rounded-full border border-black p-3.75 text-base font-medium text-black transition-colors hover:bg-white"
                 >
                   <RollingText text={t('launchApp')} />
-                  <span className="relative flex size-4.25 shrink-0 items-center justify-center overflow-hidden rounded-full border border-black transition-all duration-300 group-hover:scale-150 group-hover:bg-black">
+                  {/* Arrow appears from 992px up */}
+                  <span className="desktop:flex relative hidden size-4.25 shrink-0 items-center justify-center overflow-hidden rounded-full border border-black transition-all duration-300 group-hover:scale-150 group-hover:bg-black">
                     <span
                       aria-hidden="true"
                       className="inline-flex size-full items-center justify-center fill-current transition-transform duration-300 group-hover:translate-x-full group-hover:-translate-y-full [&>svg]:size-full"
@@ -268,10 +270,9 @@ export function GlobalMenu({ isOpen, onOpenChange }: SendMemoMenuProps) {
                     </span>
                   </span>
                 </a>
-                {/* Two crossed bars rather than an X glyph, so hovering can straighten them
-                    into a single dash the way thorchain.org's menu button does. */}
+                {/* Two crossed bars rather than an X glyph, so hover can straighten them into a dash */}
                 <DialogPrimitive.Close
-                  className="group relative size-10 cursor-pointer rounded-full bg-white focus:outline-none md:size-17"
+                  className="group size-menu-close desktop:bg-white relative cursor-pointer rounded-full focus:outline-none"
                   aria-label="Close"
                 >
                   {['rotate-45', '-rotate-45'].map(rotation => (
@@ -279,10 +280,10 @@ export function GlobalMenu({ isOpen, onOpenChange }: SendMemoMenuProps) {
                       key={rotation}
                       aria-hidden="true"
                       className={cn(
-                        'absolute top-1/2 left-1/2 h-0.5 w-5.5 origin-center -translate-x-1/2 rounded-full bg-black md:h-0.75',
+                        'desktop:bg-black desktop:h-0.75 absolute top-1/2 left-1/2 h-0.5 w-5.5 origin-center -translate-x-1/2 rounded-full bg-white',
                         'transition-all duration-300 ease-[cubic-bezier(0.65,0,0.35,1)]',
-                        // Hover only — Radix focuses this button when the dialog opens, so a
-                        // focus variant would straighten the bars before the X is ever seen.
+                        // Hover only: Radix focuses this on open, so a focus variant would
+                        // straighten the bars before the X is ever seen.
                         'group-hover:rotate-0',
                         rotation
                       )}
@@ -293,11 +294,9 @@ export function GlobalMenu({ isOpen, onOpenChange }: SendMemoMenuProps) {
             </div>
 
             {/* Main content */}
-            {/* pt-20.5 puts the tiles 180px from the top, matching thorchain.org, whose
-                header overlays the content instead of sitting above it in flow. */}
-            <div className="3xl:px-37.5 flex flex-1 flex-wrap gap-7.5 px-7.5 pt-12.5 pb-7.5 md:pt-20.5 xl:flex-nowrap xl:px-22.5 xl:pb-15">
+            <div className="menu-content px-menu-gutter 3xl:px-37.5 flex flex-1 gap-7.5">
               {/* Tiles nav */}
-              <nav className="w-full shrink-0 xl:w-2/3">
+              <nav className="menu-nav shrink-0">
                 <ul className="w-full md:grid md:w-fit md:grid-cols-4 md:gap-5">
                   {tiles.map(tile => (
                     <li key={tile.label} className="md:aspect-square md:max-w-55">
@@ -307,33 +306,31 @@ export function GlobalMenu({ isOpen, onOpenChange }: SendMemoMenuProps) {
                 </ul>
               </nav>
 
-              {/* Right column — w-full so it fills the track left over by the tiles nav
-                  instead of shrinking to its content, which is what keeps the socials
-                  columns and the newsletter card growing with the viewport. */}
-              <div className="flex w-full flex-col gap-20">
-                {/* Socials */}
-                <div className="flex flex-col gap-10">
-                  <span className="text-xl font-medium text-white">{t('socials')}</span>
-                  <ul className="flex flex-wrap gap-1.75 md:grid md:grid-cols-2 md:gap-x-20 md:gap-y-5">
+              {/* Right column — w-full to fill the track left by the nav, not shrink to content */}
+              <div className="flex w-full flex-col gap-7.5 md:gap-20">
+                {/* Socials — icon tiles until 992px, labelled two-column list above */}
+                <div className="gap-fluid-socials flex flex-col">
+                  <span className="text-fluid-20 font-medium text-white">{t('socials')}</span>
+                  <ul className="desktop:max-w-none desktop:grid-cols-2 desktop:gap-x-20 desktop:gap-y-5 grid max-w-75 grid-cols-6 gap-1.5">
                     {SOCIAL_LINKS.map(link => (
                       <li key={link.label}>
                         <a
                           href={link.href}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="group flex min-h-6 items-center gap-3 transition-all duration-150 md:hover:translate-x-2.5"
+                          className="group desktop:aspect-auto desktop:min-h-6 desktop:w-auto desktop:justify-start desktop:gap-3 desktop:rounded-none desktop:border-0 desktop:bg-transparent desktop:hover:translate-x-2.5 flex aspect-square w-full items-center justify-center rounded-[2px] border border-[#333333] bg-[#1a1a1a] transition-all duration-150"
                         >
-                          {/* Mobile: dark square tile with icon */}
+                          {/* Icon inside the dark square tile */}
                           <span
-                            className="inline-flex size-12.5 shrink-0 items-center justify-center rounded-[5px] border border-neutral-800 bg-neutral-900 md:hidden [&_svg]:size-5"
+                            className="desktop:hidden inline-flex h-6 w-5 shrink-0 items-center justify-center [&_svg]:size-full"
                             dangerouslySetInnerHTML={{ __html: link.icon }}
                           />
                           {/* Desktop: plain icon */}
                           <span
-                            className="hidden h-6 w-5 shrink-0 items-center justify-center md:inline-flex [&_svg]:size-full"
+                            className="desktop:inline-flex hidden h-6 w-5 shrink-0 items-center justify-center [&_svg]:size-full"
                             dangerouslySetInnerHTML={{ __html: link.icon }}
                           />
-                          <span className="hidden text-base leading-[1.2] font-medium text-[#808080] transition-colors group-hover:text-white md:inline">
+                          <span className="desktop:inline hidden text-base leading-[1.2] font-medium text-[#808080] transition-colors group-hover:text-white">
                             {link.label}
                           </span>
                         </a>
@@ -343,8 +340,8 @@ export function GlobalMenu({ isOpen, onOpenChange }: SendMemoMenuProps) {
                 </div>
 
                 {/* Newsletter */}
-                <div className="hidden flex-col gap-5 md:flex">
-                  <p className="text-lg leading-[1.4] font-medium text-white">{t('newsletterPitch')}</p>
+                <div className="flex flex-col gap-5">
+                  <p className="text-fluid-18 font-medium text-white">{t('newsletterPitch')}</p>
                   {newsletterStatus === 'success' ? (
                     <p className="text-green-default text-base">{t('subscribed')}</p>
                   ) : (
@@ -354,7 +351,7 @@ export function GlobalMenu({ isOpen, onOpenChange }: SendMemoMenuProps) {
                           <input
                             type="email"
                             placeholder={t('emailPlaceholder')}
-                            className="size-full bg-transparent text-lg leading-[1.4] font-medium text-[#737373] placeholder:text-[#737373]/50 focus:outline-none disabled:opacity-50"
+                            className="text-fluid-18 size-full bg-transparent font-medium text-[#737373] placeholder:text-[#737373]/50 focus:outline-none disabled:opacity-50"
                             value={newsletterEmail}
                             onChange={e => setNewsletterEmail(e.target.value)}
                             disabled={newsletterStatus === 'loading'}
@@ -364,7 +361,7 @@ export function GlobalMenu({ isOpen, onOpenChange }: SendMemoMenuProps) {
                         <button
                           type="submit"
                           disabled={newsletterStatus === 'loading'}
-                          className="cursor-pointer rounded-[5px] border border-black bg-[#0d0d0d] p-3.75 text-lg leading-[1.4] font-medium text-white transition-colors hover:border-[#595959] hover:bg-[#595959] disabled:opacity-60"
+                          className="text-fluid-18 cursor-pointer rounded-[5px] border border-black bg-[#0d0d0d] p-3.75 font-medium text-white transition-colors hover:border-[#595959] hover:bg-[#595959] disabled:opacity-60"
                         >
                           {newsletterStatus === 'loading' ? t('signingUp') : t('signUp')}
                         </button>
@@ -374,17 +371,6 @@ export function GlobalMenu({ isOpen, onOpenChange }: SendMemoMenuProps) {
                   )}
                 </div>
               </div>
-            </div>
-
-            {/* Mobile: Launch App full-width button at bottom */}
-            <div className="container mx-auto px-4 pb-7.5 md:hidden">
-              <a
-                href={resolveHref('/')}
-                onClick={closeMenu}
-                className="group bg-green-default flex h-23.25 w-full items-center justify-center rounded-[5px] text-[18px] font-medium text-black transition-colors hover:bg-white"
-              >
-                <RollingText text={t('launchApp')} />
-              </a>
             </div>
           </div>
         </DialogPrimitive.Content>
