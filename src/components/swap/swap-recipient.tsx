@@ -124,7 +124,7 @@ export const SwapRecipient = ({ provider, onFetchQuote }: SwapRecipientProps) =>
       .finally(() => setQuoting(false))
   }
 
-  const isLTC = assetTo.ticker === 'LTC'
+  const isLTC = assetTo.ticker === 'LTC' || (refundRequired && assetFrom.ticker === 'LTC')
   const buttonEnabled =
     isValidDestination &&
     destinationAddress.length &&
