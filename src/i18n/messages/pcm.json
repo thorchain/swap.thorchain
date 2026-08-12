@@ -30,6 +30,7 @@
     "forAgents": "For AI Agents",
     "developers": "Developers",
     "getSupport": "Get Support for Discord",
+    "liveChat": "Live Chat",
     "bug": {
       "title": "Report a Bug / Request a Feature",
       "success": "Thank you! We don receive your report.",
@@ -41,6 +42,8 @@
       "attachFile": "Attach a file",
       "sending": "Dey send...",
       "send": "Send Report",
+      "attachmentTooLarge": "Dis file too big. Attachment must dey under {size} MB.",
+      "attachmentFailed": "We no fit read dis file. Try anoda one.",
       "failed": "E no fit send report"
     }
   },

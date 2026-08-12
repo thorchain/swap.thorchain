@@ -30,6 +30,7 @@
     "forAgents": "AIエージェント向け",
     "developers": "開発者",
     "getSupport": "Discordでサポートを受ける",
+    "liveChat": "ライブチャット",
     "bug": {
       "title": "バグの報告／機能のリクエスト",
       "success": "ありがとうございます。報告が送信されました。",
@@ -41,6 +42,8 @@
       "attachFile": "ファイルを添付",
       "sending": "送信中…",
       "send": "報告を送信",
+      "attachmentTooLarge": "ファイルサイズが大きすぎます。添付ファイルは{size}MB未満にしてください。",
+      "attachmentFailed": "そのファイルを読み込めませんでした。別のファイルをお試しください。",
       "failed": "報告の送信に失敗しました"
     }
   },

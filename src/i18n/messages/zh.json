@@ -30,6 +30,7 @@
     "forAgents": "面向 AI 智能体",
     "developers": "开发者",
     "getSupport": "在Discord获取支持",
+    "liveChat": "在线客服",
     "bug": {
       "title": "报告漏洞 / 功能",
       "success": "谢谢！您的报告已发送。",
@@ -41,6 +42,8 @@
       "attachFile": "添加附件",
       "sending": "发送中…",
       "send": "发送报告",
+      "attachmentTooLarge": "该文件过大。附件必须小于 {size} MB。",
+      "attachmentFailed": "无法读取该文件。请尝试其他文件。",
       "failed": "报告发送失败"
     }
   },

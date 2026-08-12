@@ -28,6 +28,7 @@ Two-component architecture:
 - `src/lib/agent/pricing.ts` — content for `/pricing.md`; `src/lib/agent/agent-mode.ts` — the `/?mode=agent` view (JSON or markdown by `Accept`), derived from `MCP_TOOLS` and `developerEndpoints` so it stays in sync.
 - `src/lib/agent/mcp-server.ts` + `src/lib/agent/mcp-ui.ts` — public MCP server at `/mcp` (stateless streamable HTTP, read-only THORNode tools, MCP Apps quote view). `public/robots.txt` carries AI Content-Signal lines whose ordering matters.
 - `src/app/api/` — support endpoints (`/api/v1/*` canonical, unversioned aliases kept); JSON errors via `src/lib/api-error.ts`, idempotency via `src/lib/agent/idempotency.ts`.
+- `src/lib/chatwoot.ts` — bug reports and feature requests are delivered into a Chatwoot **API-channel** inbox via its unauthenticated public Client API (`CHATWOOT_BASE_URL` + `CHATWOOT_INBOX_IDENTIFIER`); `/api/report-bug` falls back to Brevo email when Chatwoot is unset or fails. `src/components/chatwoot-widget.tsx` is the separate live-chat **Website-channel** widget, rendered only when `NEXT_PUBLIC_CHATWOOT_WEBSITE_TOKEN` is set. Agent replies only reach a reporter by email if the Chatwoot account has the `email_continuity_on_api_channel` feature enabled — it is off by default and replies are silently dropped without it.
 - `docs/agent-readiness/` — notes on agent-readiness scanners and decisions; read before changing discovery surfaces.
 
 ## Conventions

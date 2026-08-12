@@ -30,6 +30,7 @@
     "forAgents": "面向 AI 代理",
     "developers": "開發者",
     "getSupport": "在Discord獲取支持",
+    "liveChat": "線上客服",
     "bug": {
       "title": "報告漏洞 / 功能",
       "success": "謝謝！您的報告已發送。",
@@ -41,6 +42,8 @@
       "attachFile": "附加檔案",
       "sending": "發送中…",
       "send": "發送報告",
+      "attachmentTooLarge": "檔案過大。附件必須小於 {size} MB。",
+      "attachmentFailed": "無法讀取該檔案，請改用其他檔案。",
       "failed": "報告發送失敗"
     }
   },

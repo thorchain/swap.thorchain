@@ -13,9 +13,12 @@ type ReportBugProps = {
   onOpenChange: (open: boolean) => void
 }
 
+const MAX_ATTACHMENT_BYTES = 5 * 1024 * 1024
+
 type AttachmentFile = {
   name: string
   content: string
+  contentType: string
 }
 
 export function ReportBug({ isOpen, onOpenChange }: ReportBugProps) {
@@ -23,31 +26,67 @@ export function ReportBug({ isOpen, onOpenChange }: ReportBugProps) {
   const [email, setEmail] = useState('')
   const [description, setDescription] = useState('')
   const [attachment, setAttachment] = useState<AttachmentFile | null>(null)
+  const [isReadingFile, setIsReadingFile] = useState(false)
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [submitted, setSubmitted] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const fileInputRef = useRef<HTMLInputElement>(null)
 
+  const clearFileInput = () => {
+    if (fileInputRef.current) fileInputRef.current.value = ''
+  }
+
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0]
     if (!file) return
+
+    setError(null)
+
+    // Also enforced server-side; rejecting here avoids base64-encoding a large
+    // file in the browser just to bounce with a 413.
+    if (file.size > MAX_ATTACHMENT_BYTES) {
+      setError(t('attachmentTooLarge', { size: MAX_ATTACHMENT_BYTES / (1024 * 1024) }))
+      setAttachment(null)
+      clearFileInput()
+      return
+    }
+
+    // Reading is async: without this the send button stays live and an early
+    // click posts the report with no attachment, but still shows success.
+    setIsReadingFile(true)
     const reader = new FileReader()
+
     reader.onload = () => {
       const base64 = (reader.result as string).split(',')[1]
-      setAttachment({ name: file.name, content: base64 })
+      setIsReadingFile(false)
+      if (!base64) {
+        setError(t('attachmentFailed'))
+        setAttachment(null)
+        clearFileInput()
+        return
+      }
+      setAttachment({ name: file.name, content: base64, contentType: file.type })
     }
+
+    reader.onerror = () => {
+      setIsReadingFile(false)
+      setError(t('attachmentFailed'))
+      setAttachment(null)
+      clearFileInput()
+    }
+
     reader.readAsDataURL(file)
   }
 
   const handleSubmit = async () => {
-    if (!description.trim()) return
+    if (!description.trim() || isReadingFile) return
     setIsSubmitting(true)
     setError(null)
     try {
       const res = await fetch('/api/report-bug', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email: email.trim() || undefined, description, attachment })
+        body: JSON.stringify({ email: email.trim() || undefined, description, attachment, page: window.location.href })
       })
       const data = await res.json()
       if (!res.ok) throw new Error(data.error ?? t('failed'))
@@ -65,6 +104,7 @@ export function ReportBug({ isOpen, onOpenChange }: ReportBugProps) {
       setEmail('')
       setDescription('')
       setAttachment(null)
+      setIsReadingFile(false)
       setSubmitted(false)
       setError(null)
     }, 300)
@@ -120,7 +160,7 @@ export function ReportBug({ isOpen, onOpenChange }: ReportBugProps) {
                 <div className="flex items-center gap-2 rounded-xl border px-3 py-2 text-sm">
                   <Paperclip className="text-txt-med-contrast size-4 shrink-0" />
                   <span className="text-txt-high-contrast min-w-0 flex-1 truncate">{attachment.name}</span>
-                  <button onClick={() => { setAttachment(null); if (fileInputRef.current) fileInputRef.current.value = '' }} className="text-txt-med-contrast hover:text-txt-high-contrast cursor-pointer">
+                  <button onClick={() => { setAttachment(null); clearFileInput() }} className="text-txt-med-contrast hover:text-txt-high-contrast cursor-pointer">
                     <X className="size-4" />
                   </button>
                 </div>
@@ -142,7 +182,7 @@ export function ReportBug({ isOpen, onOpenChange }: ReportBugProps) {
               size="small"
               className="w-full rounded-xl py-5 text-lg"
               onClick={handleSubmit}
-              disabled={!description.trim() || isSubmitting}
+              disabled={!description.trim() || isSubmitting || isReadingFile}
             >
               {isSubmitting ? t('sending') : t('send')}
             </GenericButton>

@@ -30,6 +30,7 @@
     "forAgents": "Yapay Zekâ Ajanları için",
     "developers": "Geliştiriciler",
     "getSupport": "Discord'da Destek Al",
+    "liveChat": "Canlı Sohbet",
     "bug": {
       "title": "Hata / Özellik Bildir",
       "success": "Teşekkürler! Bildirimin gönderildi.",
@@ -41,6 +42,8 @@
       "attachFile": "Dosya ekle",
       "sending": "Gönderiliyor…",
       "send": "Bildirimi Gönder",
+      "attachmentTooLarge": "Bu dosya çok büyük. Ekler {size} MB'ın altında olmalıdır.",
+      "attachmentFailed": "Bu dosya okunamadı. Başka bir dosya deneyin.",
       "failed": "Bildirim gönderilemedi"
     }
   },

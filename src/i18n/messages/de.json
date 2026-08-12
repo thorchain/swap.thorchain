@@ -30,6 +30,7 @@
     "forAgents": "Für KI-Agenten",
     "developers": "Entwickler",
     "getSupport": "Support in Discord erhalten",
+    "liveChat": "Live-Chat",
     "bug": {
       "title": "Fehler melden / Funktion anfragen",
       "success": "Vielen Dank! Ihre Meldung wurde gesendet.",
@@ -41,6 +42,8 @@
       "attachFile": "Datei anhängen",
       "sending": "Wird gesendet...",
       "send": "Meldung senden",
+      "attachmentTooLarge": "Diese Datei ist zu groß. Anhänge dürfen maximal {size} MB groß sein.",
+      "attachmentFailed": "Diese Datei konnte nicht gelesen werden. Bitte versuche es mit einer anderen.",
       "failed": "Meldung konnte nicht gesendet werden"
     }
   },

@@ -30,6 +30,7 @@
     "forAgents": "For AI Agents",
     "developers": "Developers",
     "getSupport": "Get Support in Discord",
+    "liveChat": "Live Chat",
     "bug": {
       "title": "Report a Bug / Request a Feature",
       "success": "Thank you! Your report has been sent.",
@@ -41,6 +42,8 @@
       "attachFile": "Attach a file",
       "sending": "Sending...",
       "send": "Send Report",
+      "attachmentTooLarge": "That file is too large. Attachments must be under {size} MB.",
+      "attachmentFailed": "That file could not be read. Try another one.",
       "failed": "Failed to send report"
     }
   },

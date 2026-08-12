@@ -30,6 +30,7 @@
     "forAgents": "Dành cho AI Agent",
     "developers": "Nhà phát triển",
     "getSupport": "Nhận hỗ trợ trên Discord",
+    "liveChat": "Trò chuyện trực tiếp",
     "bug": {
       "title": "Báo lỗi / Yêu cầu tính năng",
       "success": "Cảm ơn bạn! Báo cáo của bạn đã được gửi.",
@@ -41,6 +42,8 @@
       "attachFile": "Đính kèm tệp",
       "sending": "Đang gửi...",
       "send": "Gửi báo cáo",
+      "attachmentTooLarge": "Tệp đó quá lớn. Tệp đính kèm phải nhỏ hơn {size} MB.",
+      "attachmentFailed": "Không thể đọc tệp đó. Hãy thử tệp khác.",
       "failed": "Gửi báo cáo thất bại"
     }
   },

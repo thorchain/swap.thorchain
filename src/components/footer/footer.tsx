@@ -1,7 +1,9 @@
 'use client'
 
 import { useTranslations } from 'next-intl'
+import { MessageCircle, X } from 'lucide-react'
 import { Icon } from '@/components/icons'
+import { FOOTER_CLEARANCE_CSS, toggleChatwoot, useChatwootOpen, useChatwootReady } from '@/components/chatwoot-widget'
 import { Tooltip } from '@/components/tooltip'
 import { AppConfig } from '@/config'
 import { useDialog } from '@/components/global-dialog'
@@ -11,6 +13,8 @@ import { Separator } from '../ui/separator'
 export function FooterContent({ className }: { className?: string }) {
   const { openDialog } = useDialog()
   const t = useTranslations('footer')
+  const chatOpen = useChatwootOpen()
+  const chatReady = useChatwootReady()
 
   return (
     <div className={className}>
@@ -51,6 +55,23 @@ export function FooterContent({ className }: { className?: string }) {
           <a className="flex items-center gap-2 underline" href={AppConfig.discordLink} rel="noopener noreferrer" target="_blank">
             {t('getSupport')} <Icon width={20} height={20} viewBox="0 0 20 20" name="discord" />
           </a>
+          {chatReady && (
+            <>
+              {/* Hides the floating bubble only where this button replaces it. */}
+              <style>{FOOTER_CLEARANCE_CSS}</style>
+              <Separator orientation="vertical" className="h-full" />
+              <button
+                type="button"
+                onClick={toggleChatwoot}
+                aria-label={chatOpen ? t('bug.close') : t('liveChat')}
+                aria-expanded={chatOpen}
+                title={chatOpen ? t('bug.close') : t('liveChat')}
+                className="hover:text-txt-high-contrast flex cursor-pointer items-center transition-colors"
+              >
+                {chatOpen ? <X className="size-4" /> : <MessageCircle className="size-4" />}
+              </button>
+            </>
+          )}
         </div>
       </div>
     </div>

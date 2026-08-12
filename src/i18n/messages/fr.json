@@ -30,6 +30,7 @@
     "forAgents": "Pour les agents IA",
     "developers": "Développeurs",
     "getSupport": "Obtenir de l'aide sur Discord",
+    "liveChat": "Chat en direct",
     "bug": {
       "title": "Signaler un bug / Demander une fonctionnalité",
       "success": "Merci ! Votre rapport a été envoyé.",
@@ -41,6 +42,8 @@
       "attachFile": "Joindre un fichier",
       "sending": "Envoi...",
       "send": "Envoyer le rapport",
+      "attachmentTooLarge": "Ce fichier est trop volumineux. Les pièces jointes doivent faire moins de {size} Mo.",
+      "attachmentFailed": "Ce fichier n'a pas pu être lu. Essayez-en un autre.",
       "failed": "Échec de l'envoi du rapport"
     }
   },

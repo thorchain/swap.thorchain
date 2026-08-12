@@ -30,6 +30,7 @@
     "forAgents": "AI 에이전트용",
     "developers": "개발자",
     "getSupport": "Discord에서 지원 받기",
+    "liveChat": "실시간 채팅",
     "bug": {
       "title": "버그 / 기능 신고",
       "success": "감사합니다! 신고가 전송되었습니다.",
@@ -41,6 +42,8 @@
       "attachFile": "파일 첨부",
       "sending": "전송 중…",
       "send": "신고 전송",
+      "attachmentTooLarge": "파일이 너무 큽니다. 첨부 파일은 {size} MB 미만이어야 합니다.",
+      "attachmentFailed": "파일을 읽을 수 없습니다. 다른 파일을 시도해 주세요.",
       "failed": "신고 전송에 실패했습니다"
     }
   },

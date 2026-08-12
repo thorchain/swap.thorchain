@@ -92,12 +92,19 @@ export function buildOpenApiDocument() {
                   required: ['description'],
                   properties: {
                     email: { type: 'string', format: 'email' },
-                    description: { type: 'string', minLength: 1 },
+                    description: { type: 'string', minLength: 1, maxLength: 10000 },
+                    type: { type: 'string', enum: ['bug', 'feature'], description: 'Routes the report for triage.' },
+                    page: { type: 'string', format: 'uri', description: 'URL the report was filed from.' },
                     attachment: {
                       type: 'object',
+                      description: 'Base64 file contents, up to 5 MB decoded. A full `data:` URL is also accepted.',
                       properties: {
                         name: { type: 'string' },
-                        content: { type: 'string' }
+                        content: { type: 'string' },
+                        contentType: {
+                          type: 'string',
+                          description: 'MIME type. Honoured only for supported image/video/document types; otherwise inferred from the file extension.'
+                        }
                       },
                       additionalProperties: false
                     }
@@ -117,6 +124,8 @@ export function buildOpenApiDocument() {
               }
             },
             '400': { description: 'Invalid JSON body or missing description.', content: errorContent },
+            '413': { description: 'Request body, description or attachment exceeds the size limit.', content: errorContent },
+            '502': { description: 'The report was partially delivered upstream; retry.', content: errorContent },
             '405': { description: 'Method not allowed; only POST is supported.', content: errorContent },
             '429': {
               description: 'Rate limit exceeded. Retry after the number of seconds in the Retry-After header.',

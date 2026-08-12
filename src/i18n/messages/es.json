@@ -30,6 +30,7 @@
     "forAgents": "Para agentes de IA",
     "developers": "Desarrolladores",
     "getSupport": "Obtener soporte en Discord",
+    "liveChat": "Chat en vivo",
     "bug": {
       "title": "Notificar un error / Solicitar una función",
       "success": "¡Gracias! Tu notificación ha sido enviada.",
@@ -41,6 +42,8 @@
       "attachFile": "Adjuntar un archivo",
       "sending": "Enviando…",
       "send": "Enviar notificación",
+      "attachmentTooLarge": "Ese archivo es demasiado grande. Los archivos adjuntos deben pesar menos de {size} MB.",
+      "attachmentFailed": "No se pudo leer ese archivo. Prueba con otro.",
       "failed": "Error al enviar notificación"
     }
   },

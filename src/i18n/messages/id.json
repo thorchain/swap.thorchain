@@ -30,6 +30,7 @@
     "forAgents": "Untuk Agen AI",
     "developers": "Pengembang",
     "getSupport": "Dapatkan dukungan di Discord",
+    "liveChat": "Obrolan Langsung",
     "bug": {
       "title": "Laporkan bug / minta fitur",
       "success": "Terima kasih! Laporan Anda telah dikirim.",
@@ -41,6 +42,8 @@
       "attachFile": "Lampirkan file",
       "sending": "Mengirim...",
       "send": "Kirim laporan",
+      "attachmentTooLarge": "Berkas itu terlalu besar. Lampiran harus di bawah {size} MB.",
+      "attachmentFailed": "Berkas itu tidak dapat dibaca. Coba berkas lain.",
       "failed": "Gagal mengirim laporan"
     }
   },

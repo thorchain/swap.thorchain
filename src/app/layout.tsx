@@ -8,6 +8,7 @@ import { NextIntlClientProvider } from 'next-intl'
 import { getLocale, getMessages } from 'next-intl/server'
 import { Toaster } from '@/components/ui/sonner'
 import { WebMcpTools } from '@/components/webmcp-tools'
+import { ChatwootWidget } from '@/components/chatwoot-widget'
 import { ReactQueryProvider } from '@/components/react-query/react-query-provider'
 import { WalletStoreHydration } from '@/components/wallet-store-hydration'
 import { AppConfig } from '@/config'
@@ -166,6 +167,7 @@ export default async function RootLayout({ children }: Readonly<{ children: Reac
           <NextIntlClientProvider locale={locale} messages={messages}>
             <ThemeProvider defaultTheme="light" attribute="class" disableTransitionOnChange>
               {children}
+              <ChatwootWidget />
             </ThemeProvider>
           </NextIntlClientProvider>
         </ReactQueryProvider>
