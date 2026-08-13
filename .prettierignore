@@ -25,3 +25,6 @@ npm-debug.log*
 
 # vercel
 .vercel
+
+# generated i18n bookkeeping (one key per line by design)
+/tools/i18n-state

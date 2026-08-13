@@ -1,12 +1,16 @@
 #!/usr/bin/env node
-// Automatic UI translation.
+// Automatic UI translation, with protection for hand-reviewed translations.
+// The protocol is documented in docs/localization.md; the short version:
 //
-// English (src/i18n/messages/en.json) is the single source of truth. This
-// script fills in every other locale, translating only the strings that are
-// new or whose English text changed since the last run — detected by diffing
-// against a snapshot of the English base (tools/i18n-en-snapshot.json). Keys
-// removed from English are pruned from the locale files, and output preserves
-// English's key order so diffs stay small.
+// English (src/i18n/messages/en.json) is the only input to translation, so
+// editing zh.json can never change en.json or any other locale. Every other
+// locale is filled in from it, translating only what is new or whose English
+// changed, and output keeps English's key order so diffs stay small.
+//
+// A locale value that no longer matches what this script last wrote was edited
+// by a human, and is never overwritten from then on — not by a normal run, not
+// by --all. When English later changes underneath one, the translation is kept
+// and the key is listed in tools/i18n-review-queue.json.
 //
 // Translation is done by an LLM, which handles the ICU-style {placeholders},
 // <b> tags, brand terms, and the less common locales (Nigerian Pidgin,
@@ -17,24 +21,28 @@
 //   I18N_API_KEY=sk-ant-... npm run i18n:translate
 //   I18N_PROVIDER=openai I18N_API_KEY=sk-... npm run i18n:translate
 //   I18N_PROVIDER=gemini I18N_API_KEY=... npm run i18n:translate
-//   npm run i18n:check                               # report drift, no API calls, exit 1 if stale
-//   node tools/i18n-translate.mjs --all              # retranslate every key (ignore the snapshot)
+//   npm run i18n:check                               # report drift + review queue, no API calls
+//   node tools/i18n-translate.mjs --all              # retranslate every machine-written key
 //   node tools/i18n-translate.mjs --locale de,fr     # limit to specific locales
+//   node tools/i18n-translate.mjs --revise-human     # let the model update stale human translations
+//   node tools/i18n-translate.mjs --overwrite-human  # drop all protection (destructive)
 //
 // Env:
 //   I18N_PROVIDER       anthropic (default) | openai | gemini
 //   I18N_API_KEY        API key for the chosen provider (except with --check)
 //   I18N_MODEL          model id override (defaults per provider, see PROVIDERS below)
 
-import { readFileSync, writeFileSync, existsSync, readdirSync } from 'node:fs'
+import { readFileSync, writeFileSync, existsSync, readdirSync, mkdirSync, rmSync } from 'node:fs'
 import { fileURLToPath } from 'node:url'
 import { dirname, join } from 'node:path'
 
 const HERE = dirname(fileURLToPath(import.meta.url))
 const MESSAGES_DIR = join(HERE, '..', 'src', 'i18n', 'messages')
-const SNAPSHOT_PATH = join(HERE, 'i18n-en-snapshot.json')
+const STATE_DIR = join(HERE, 'i18n-state')
+const QUEUE_PATH = join(HERE, 'i18n-review-queue.json')
 const SOURCE_LOCALE = 'en'
 const CHUNK_SIZE = 50
+const REVISE_CHUNK_SIZE = 25
 
 // Supported LLM providers. Pick one with I18N_PROVIDER; override the model with
 // I18N_MODEL. Each reads its own API key env var.
@@ -84,13 +92,22 @@ const LANGUAGES = {
 const args = process.argv.slice(2)
 const CHECK_ONLY = args.includes('--check')
 const RETRANSLATE_ALL = args.includes('--all')
+const REVISE_HUMAN = args.includes('--revise-human')
+const OVERWRITE_HUMAN = args.includes('--overwrite-human')
 const localeArg = args.find((a, i) => args[i - 1] === '--locale')
-const ONLY_LOCALES = localeArg ? new Set(localeArg.split(',').map((s) => s.trim())) : null
+const ONLY_LOCALES = localeArg ? new Set(localeArg.split(',').map(s => s.trim())) : null
 
 // ---- json helpers ---------------------------------------------------------
 
-const readJson = (p) => JSON.parse(readFileSync(p, 'utf8'))
+const readJson = p => JSON.parse(readFileSync(p, 'utf8'))
 const writeJson = (p, obj) => writeFileSync(p, JSON.stringify(obj, null, 2) + '\n')
+
+// State files get one key per line rather than JSON.stringify's four, so a
+// changed string shows up as a one-line diff.
+const writeState = (p, obj) => {
+  const lines = Object.entries(obj).map(([k, v]) => `  ${JSON.stringify(k)}: [${v.map(s => JSON.stringify(s)).join(', ')}]`)
+  writeFileSync(p, `{\n${lines.join(',\n')}\n}\n`)
+}
 
 // Flatten nested strings to { "a.b.c": "text" }. Arrays are treated as leaves
 // (there are none today, but this keeps it safe if one is added).
@@ -122,12 +139,12 @@ function buildNested(enObj, flatValues, prefix = '') {
 // ---- locale discovery -----------------------------------------------------
 
 function discoverLocales() {
-  const files = readdirSync(MESSAGES_DIR).filter((f) => f.endsWith('.json'))
-  const locales = files.map((f) => f.slice(0, -'.json'.length)).filter((l) => l !== SOURCE_LOCALE)
-  return ONLY_LOCALES ? locales.filter((l) => ONLY_LOCALES.has(l)) : locales
+  const files = readdirSync(MESSAGES_DIR).filter(f => f.endsWith('.json'))
+  const locales = files.map(f => f.slice(0, -'.json'.length)).filter(l => l !== SOURCE_LOCALE)
+  return ONLY_LOCALES ? locales.filter(l => ONLY_LOCALES.has(l)) : locales
 }
 
-// ---- Claude ---------------------------------------------------------------
+// ---- model calls ----------------------------------------------------------
 
 const SYSTEM_PROMPT = `You are a professional localizer for THORCHAIN Swap, a non-custodial crypto swap web app.
 
@@ -140,6 +157,18 @@ You will receive a JSON object mapping dotted keys to English UI strings. Return
 - Do NOT translate brand, protocol, or product names: THORChain, THORName, MAYAName, RUNE, CACAO, Maya, Ledger, Trezor, Discord, Swap (as the product tab), and asset tickers/symbols. Keep them as-is.
 - Keep translations concise and idiomatic for buttons, labels, and tooltips in a financial UI.
 - If a value is a URL, email, or pure symbol, return it unchanged.`
+
+// Used with --revise-human: the existing translation was written or corrected
+// by a native speaker, so the model updates it rather than replacing it.
+const REVISE_SYSTEM_PROMPT = `${SYSTEM_PROMPT}
+
+This is a REVISION pass. Each entry gives the previous English text, the new English text, and an existing translation that a native speaker wrote or corrected by hand. Produce an updated translation that:
+
+- Makes the smallest change that brings the translation in line with the new English.
+- Keeps the reviewer's wording, terminology, register, and punctuation everywhere the English did not change.
+- Never reverts the reviewer's word choices to a more literal rendering of the English.
+
+Return ONLY a JSON object mapping each key to its updated translation.`
 
 function requireKey() {
   const key = process.env.I18N_API_KEY
@@ -158,25 +187,25 @@ async function post(url, headers, body) {
 }
 
 // Each provider returns the model's raw text output for a user prompt.
-async function callAnthropic(userText) {
+async function callAnthropic(system, userText) {
   const data = await post(
     'https://api.anthropic.com/v1/messages',
     { 'x-api-key': requireKey(), 'anthropic-version': '2023-06-01' },
     {
       model: MODEL,
       max_tokens: 16000,
-      system: SYSTEM_PROMPT,
+      system,
       messages: [{ role: 'user', content: userText }]
     }
   )
   if (data.stop_reason === 'refusal') throw new Error('Model refused the translation request')
   return (data.content || [])
-    .filter((b) => b.type === 'text')
-    .map((b) => b.text)
+    .filter(b => b.type === 'text')
+    .map(b => b.text)
     .join('')
 }
 
-async function callOpenAI(userText) {
+async function callOpenAI(system, userText) {
   const data = await post(
     'https://api.openai.com/v1/chat/completions',
     { authorization: `Bearer ${requireKey()}` },
@@ -184,7 +213,7 @@ async function callOpenAI(userText) {
       model: MODEL,
       response_format: { type: 'json_object' },
       messages: [
-        { role: 'system', content: SYSTEM_PROMPT },
+        { role: 'system', content: system },
         { role: 'user', content: userText }
       ]
     }
@@ -192,28 +221,23 @@ async function callOpenAI(userText) {
   return data.choices?.[0]?.message?.content || ''
 }
 
-async function callGemini(userText) {
+async function callGemini(system, userText) {
   const data = await post(
     `https://generativelanguage.googleapis.com/v1beta/models/${MODEL}:generateContent`,
     { 'x-goog-api-key': requireKey() },
     {
-      system_instruction: { parts: [{ text: SYSTEM_PROMPT }] },
+      system_instruction: { parts: [{ text: system }] },
       contents: [{ role: 'user', parts: [{ text: userText }] }],
       generationConfig: { responseMimeType: 'application/json' }
     }
   )
-  return (data.candidates?.[0]?.content?.parts || []).map((p) => p.text || '').join('')
+  return (data.candidates?.[0]?.content?.parts || []).map(p => p.text || '').join('')
 }
 
 const CALLERS = { anthropic: callAnthropic, openai: callOpenAI, gemini: callGemini }
 
-async function translateChunk(pairs, langName, localeCode) {
-  const input = Object.fromEntries(pairs)
-  const userText =
-    `Target language: ${langName} (locale code "${localeCode}").\n\n` +
-    `Translate the values in this JSON object:\n${JSON.stringify(input, null, 2)}`
-
-  const text = (await CALLERS[PROVIDER](userText)).trim()
+async function askForJson(system, userText, localeCode) {
+  const text = (await CALLERS[PROVIDER](system, userText)).trim()
 
   let jsonText = text
   if (jsonText.startsWith('```')) {
@@ -230,35 +254,139 @@ async function translateChunk(pairs, langName, localeCode) {
   }
 }
 
+function translateChunk(pairs, langName, localeCode) {
+  const input = Object.fromEntries(pairs)
+  return askForJson(
+    SYSTEM_PROMPT,
+    `Target language: ${langName} (locale code "${localeCode}").\n\n` +
+      `Translate the values in this JSON object:\n${JSON.stringify(input, null, 2)}`,
+    localeCode
+  )
+}
+
+function reviseChunk(entries, langName, localeCode) {
+  const input = Object.fromEntries(entries.map(e => [e.key, { englishWas: e.englishWas, englishNow: e.englishNow, reviewedTranslation: e.current }]))
+  return askForJson(
+    REVISE_SYSTEM_PROMPT,
+    `Target language: ${langName} (locale code "${localeCode}").\n\n` +
+      `Update each reviewed translation to match its new English:\n${JSON.stringify(input, null, 2)}`,
+    localeCode
+  )
+}
+
+// ---- per-locale planning --------------------------------------------------
+
+// Decide, for one locale, which keys the script may rewrite and which are
+// hand-written and therefore off limits.
+//
+// State per key is [english it was translated from, what the translator
+// wrote], plus, once a person has edited the value, [, what was there at the
+// last run]. A locale value that no longer equals the second entry was edited
+// by a person — that is the whole human-edit detector, and it needs no
+// annotation from reviewers. The third entry only distinguishes a translation
+// a reviewer has just changed from one that has been sitting untouched.
+function planLocale(locale, enFlat, enKeys) {
+  const path = join(MESSAGES_DIR, `${locale}.json`)
+  const locFlat = existsSync(path) ? flatten(readJson(path)) : {}
+  const statePath = join(STATE_DIR, `${locale}.json`)
+  const seeding = !existsSync(statePath)
+  const state = seeding ? {} : readJson(statePath)
+
+  const pending = [] // machine-owned keys to (re)translate
+  const stale = [] // human-owned keys whose English moved on
+  const touched = [] // human-owned keys edited in the same window as the English
+  const nextState = {} // rebuilt in English key order; drops keys English removed
+
+  for (const key of enKeys) {
+    const english = enFlat[key]
+    const current = locFlat[key]
+    const prev = state[key]
+
+    if (typeof current !== 'string') {
+      pending.push(key) // missing entirely
+      continue
+    }
+
+    if (!prev) {
+      // Never seen before: adopt whatever is there as machine output.
+      nextState[key] = [english, current]
+      continue
+    }
+
+    const [translatedFrom, machine, seen] = prev
+    const human = current !== machine
+    const englishChanged = translatedFrom !== english
+
+    if (human ? OVERWRITE_HUMAN : RETRANSLATE_ALL || englishChanged) {
+      pending.push(key)
+      continue
+    }
+
+    if (!human) {
+      nextState[key] = prev
+      continue
+    }
+
+    if (englishChanged && seen === current) {
+      // Untouched since the last run, so nobody has looked at it yet. Keep the
+      // pinned English, so the key stays queued until a person acts.
+      stale.push(key)
+      nextState[key] = [translatedFrom, machine, current]
+      continue
+    }
+
+    // The reviewer has just changed this, so take it as written against
+    // today's English. If the English moved in the same window there is no way
+    // to tell in which order, so surface it once for a second look.
+    if (englishChanged) touched.push(key)
+    nextState[key] = [english, machine, current]
+  }
+
+  return {
+    locale,
+    path,
+    statePath,
+    locFlat,
+    state,
+    seeding,
+    pending,
+    stale,
+    removed: Object.keys(locFlat).filter(k => !(k in enFlat)),
+    nextState,
+    review: [...stale, ...touched].map(key => ({
+      key,
+      reason: stale.includes(key) ? 'english-changed' : 'edited-alongside-english',
+      englishWas: state[key][0],
+      englishNow: enFlat[key],
+      translation: locFlat[key]
+    }))
+  }
+}
+
 // ---- main -----------------------------------------------------------------
 
 async function main() {
+  if (OVERWRITE_HUMAN && REVISE_HUMAN) {
+    console.error('--overwrite-human and --revise-human are mutually exclusive.')
+    process.exit(1)
+  }
+
   const en = readJson(join(MESSAGES_DIR, `${SOURCE_LOCALE}.json`))
   const enFlat = flatten(en)
   const enKeys = Object.keys(enFlat)
 
-  const snapFlat = existsSync(SNAPSHOT_PATH) && !RETRANSLATE_ALL ? flatten(readJson(SNAPSHOT_PATH)) : {}
-  // New or modified English strings since the last translation run.
-  const changed = new Set(RETRANSLATE_ALL ? enKeys : enKeys.filter((k) => enFlat[k] !== snapFlat[k]))
-
   const locales = discoverLocales()
-  const missingNames = locales.filter((l) => !LANGUAGES[l])
+  const missingNames = locales.filter(l => !LANGUAGES[l])
   if (missingNames.length) {
     console.error(`Missing LANGUAGES entry for: ${missingNames.join(', ')} (add them to tools/i18n-translate.mjs)`)
     process.exit(1)
   }
 
-  let totalPending = 0
-  const plan = []
-
-  for (const locale of locales) {
-    const path = join(MESSAGES_DIR, `${locale}.json`)
-    const locFlat = existsSync(path) ? flatten(readJson(path)) : {}
-    const pending = enKeys.filter((k) => !(k in locFlat) || changed.has(k))
-    const removed = Object.keys(locFlat).filter((k) => !(k in enFlat))
-    plan.push({ locale, path, locFlat, pending, removed })
-    totalPending += pending.length
-  }
+  // Carried forward so a --locale run doesn't drop other locales' entries.
+  const prevQueue = existsSync(QUEUE_PATH) ? readJson(QUEUE_PATH).locales || {} : {}
+  const plan = locales.map(l => planLocale(l, enFlat, enKeys))
+  const totalPending = plan.reduce((n, p) => n + p.pending.length, 0)
+  const totalReview = plan.reduce((n, p) => n + p.review.length, 0)
 
   if (CHECK_ONLY) {
     let stale = false
@@ -268,49 +396,117 @@ async function main() {
         console.log(`${locale}: ${pending.length} to translate, ${removed.length} to prune`)
       }
     }
+    if (totalReview) {
+      // Reviewed translations only a person can update — reported, never fatal.
+      console.log(`\n${totalReview} reviewed translation(s) need a native speaker's attention:`)
+      for (const { locale, review } of plan) {
+        if (review.length) console.log(`  ${locale}: ${review.map(r => r.key).join(', ')}`)
+      }
+      console.log('See tools/i18n-review-queue.json after the next translation run.')
+    }
     if (stale) {
       console.error('\nTranslations are out of date. Run: npm run i18n:translate')
       process.exit(1)
     }
-    console.log('All translations are up to date.')
+    if (!totalReview) console.log('All translations are up to date.')
     return
   }
 
   console.log(`Provider: ${PROVIDER} | model: ${MODEL}`)
-  console.log(`Locales: ${locales.length} | strings needing translation: ${totalPending}\n`)
+  console.log(`Locales: ${locales.length} | strings needing translation: ${totalPending}`)
+  if (OVERWRITE_HUMAN) console.log('!! --overwrite-human: hand-written translations will be replaced')
+  console.log()
 
-  for (const { locale, path, locFlat, pending, removed } of plan) {
-    if (pending.length === 0 && removed.length === 0) {
-      console.log(`✓ ${locale} — up to date`)
-      continue
-    }
+  mkdirSync(STATE_DIR, { recursive: true })
+  const queue = { ...prevQueue }
+
+  for (const p of plan) {
+    const { locale, path, statePath, locFlat, state, seeding, pending, removed, nextState, stale } = p
     const langName = LANGUAGES[locale]
-    const translated = {}
+    const written = {}
+
     for (let i = 0; i < pending.length; i += CHUNK_SIZE) {
-      const chunk = pending.slice(i, i + CHUNK_SIZE).map((k) => [k, enFlat[k]])
-      process.stdout.write(`… ${locale} — translating ${i + 1}-${Math.min(i + CHUNK_SIZE, pending.length)} of ${pending.length}\r`)
+      const chunk = pending.slice(i, i + CHUNK_SIZE).map(k => [k, enFlat[k]])
+      const upto = Math.min(i + CHUNK_SIZE, pending.length)
+      process.stdout.write(`… ${locale} — translating ${i + 1}-${upto} of ${pending.length}\r`)
       const result = await translateChunk(chunk, langName, locale)
-      for (const [k] of chunk) if (typeof result[k] === 'string') translated[k] = result[k]
+      for (const [k] of chunk) {
+        if (typeof result[k] === 'string') {
+          written[k] = result[k]
+          nextState[k] = [enFlat[k], result[k]]
+        } else {
+          // The model skipped this key, so the file keeps what it had (or falls
+          // back to English). Record that value or the next run mistakes it for
+          // a hand edit; the null source never matches, so the key is retried.
+          nextState[k] = [null, typeof locFlat[k] === 'string' ? locFlat[k] : enFlat[k]]
+        }
+      }
     }
 
-    // Existing translations win for untouched keys; new/changed keys overwrite.
-    const merged = { ...locFlat, ...translated }
+    const revisedKeys = new Set()
+    if (REVISE_HUMAN && stale.length) {
+      const entries = stale.map(k => ({
+        key: k,
+        englishWas: state[k][0],
+        englishNow: enFlat[k],
+        current: locFlat[k]
+      }))
+      for (let i = 0; i < entries.length; i += REVISE_CHUNK_SIZE) {
+        const chunk = entries.slice(i, i + REVISE_CHUNK_SIZE)
+        const upto = Math.min(i + REVISE_CHUNK_SIZE, entries.length)
+        process.stdout.write(`… ${locale} — revising ${i + 1}-${upto} of ${entries.length}\r`)
+        const result = await reviseChunk(chunk, langName, locale)
+        for (const e of chunk) {
+          if (typeof result[e.key] !== 'string') continue
+          written[e.key] = result[e.key]
+          // Keep the original machine text, so the revision — which carries the
+          // reviewer's wording — stays human-owned and protected.
+          nextState[e.key] = [enFlat[e.key], state[e.key][1]]
+          revisedKeys.add(e.key)
+        }
+      }
+      // Report the revisions instead of the staleness they resolved.
+      for (const item of p.review) {
+        if (item.reason === 'english-changed' && revisedKeys.has(item.key)) {
+          item.reason = 'machine-revised-verify'
+          item.translation = written[item.key]
+        }
+      }
+    }
+
+    if (p.review.length) queue[locale] = p.review
+    else delete queue[locale]
+
+    // Existing values win for untouched keys; only keys this run wrote change.
+    const merged = { ...locFlat, ...written }
     for (const k of Object.keys(merged)) if (!(k in enFlat)) delete merged[k]
     writeJson(path, buildNested(en, merged))
-    console.log(`✓ ${locale} — +${Object.keys(translated).length} translated, -${removed.length} pruned` + ' '.repeat(20))
+    writeState(statePath, nextState)
+
+    const translated = Object.keys(written).length - revisedKeys.size
+    const parts = []
+    if (translated) parts.push(`+${translated} translated`)
+    if (revisedKeys.size) parts.push(`~${revisedKeys.size} revised`)
+    if (removed.length) parts.push(`-${removed.length} pruned`)
+    if (p.review.length) parts.push(`${p.review.length} awaiting review`)
+    if (seeding) parts.push('state seeded')
+    console.log(`✓ ${locale} — ${parts.length ? parts.join(', ') : 'up to date'}`.padEnd(72))
   }
 
-  // Record the English we just translated from, so the next run only picks up
-  // future changes. Only update when a full pass ran (no --locale filter).
-  if (!ONLY_LOCALES) {
-    writeJson(SNAPSHOT_PATH, en)
-    console.log('\nUpdated English snapshot.')
-  } else {
-    console.log('\nSkipped snapshot update (--locale was used).')
+  if (Object.keys(queue).length) {
+    writeJson(QUEUE_PATH, {
+      note: 'Hand-reviewed translations whose English source has changed. These were NOT overwritten — a native speaker should confirm or update them in src/i18n/messages/<locale>.json.',
+      generated: new Date().toISOString(),
+      locales: queue
+    })
+    const queued = Object.values(queue).reduce((n, items) => n + items.length, 0)
+    console.log(`\n${queued} reviewed translation(s) awaiting a native speaker — see tools/i18n-review-queue.json`)
+  } else if (existsSync(QUEUE_PATH)) {
+    rmSync(QUEUE_PATH)
   }
 }
 
-main().catch((err) => {
+main().catch(err => {
   console.error('\n' + err.message)
   process.exit(1)
 })

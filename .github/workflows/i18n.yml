@@ -2,13 +2,18 @@ name: Translate UI strings
 
 # Whenever the English source (en.json) changes on main, translate the new or
 # modified strings into every other locale and commit the result back.
-# Requires an ANTHROPIC_API_KEY repository secret.
+# Requires an I18N_API_KEY repository secret.
+#
+# Also runs when a locale file itself changes, so that a native speaker's
+# hand-written improvements are recorded in tools/i18n-state/<locale>.json and
+# protected from then on. Such a run makes no API calls unless something is
+# actually untranslated.
 
 on:
   push:
     branches: [main]
     paths:
-      - 'src/i18n/messages/en.json'
+      - 'src/i18n/messages/**'
   workflow_dispatch: {}
 
 # Avoid overlapping runs racing to commit translations.
@@ -39,6 +44,29 @@ jobs:
           I18N_API_KEY: ${{ secrets.I18N_API_KEY }}
         run: npm run i18n:translate
 
+      - name: Summarise translations awaiting review
+        if: always()
+        run: |
+          if [ ! -f tools/i18n-review-queue.json ]; then
+            echo "No reviewed translations are waiting on a native speaker." >> "$GITHUB_STEP_SUMMARY"
+            exit 0
+          fi
+          {
+            echo "## Hand-reviewed translations whose English changed"
+            echo
+            echo "These were **not** overwritten. A native speaker should confirm or update them in \`src/i18n/messages/<locale>.json\`."
+            echo
+            echo '| Locale | Key | English was | English now | Current translation |'
+            echo '| --- | --- | --- | --- | --- |'
+            node -e '
+              const q = require("./tools/i18n-review-queue.json")
+              const cell = (s) => String(s ?? "").replace(/\|/g, "\\|").replace(/\n/g, " ")
+              for (const [loc, items] of Object.entries(q.locales))
+                for (const i of items)
+                  console.log(`| ${loc} | \`${i.key}\` | ${cell(i.englishWas)} | ${cell(i.englishNow)} | ${cell(i.translation)} |`)
+            '
+          } >> "$GITHUB_STEP_SUMMARY"
+
       - name: Commit translations
         run: |
           if [ -z "$(git status --porcelain)" ]; then
@@ -47,6 +75,7 @@ jobs:
           fi
           git config user.name  "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add src/i18n/messages tools/i18n-en-snapshot.json
+          # -A over the whole tools dir so a removed review queue is staged too.
+          git add -A src/i18n/messages tools
           git commit -m "Auto-translate updated UI strings [skip ci]"
           git push
