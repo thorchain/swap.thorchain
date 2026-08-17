@@ -22,7 +22,7 @@ export const InstantSwap = ({ assetFrom, assetTo, channel }: SwapMemolessChannel
   const [warningChecked, setWarningChecked] = useState(false)
   const [warningCheckedLTC, setWarningCheckedLTC] = useState(false)
 
-  const isLTC = assetFrom.ticker === 'LTC'
+  const isLTC = assetFrom.ticker === 'LTC' || assetTo.ticker === 'LTC'
   const isBlurred = !warningChecked || (isLTC && !warningCheckedLTC)
 
   return (
