@@ -61,8 +61,9 @@ export const localeNames: Record<Locale, string> = {
 }
 
 // ISO 3166-1 alpha-2 country code whose flag is shown next to each locale in
-// the language switcher. Rendered as an SVG via country-flag-icons.
-export const localeCountries: Record<Locale, string> = {
+// the language switcher. Rendered as an SVG via country-flag-icons. Locales
+// with no country of their own are absent here and listed in localeFlags.
+export const localeCountries: Partial<Record<Locale, string>> = {
   en: 'US',
   zh: 'CN',
   'zh-Hant': 'TW',
@@ -85,8 +86,12 @@ export const localeCountries: Record<Locale, string> = {
   pcm: 'NG',
   arz: 'EG',
   vi: 'VN',
-  th: 'TH',
-  'en-Runr': 'US'
+  th: 'TH'
+}
+
+// Locales that ship their own flag from /public instead of a country flag.
+export const localeFlags: Partial<Record<Locale, string>> = {
+  'en-Runr': '/flags/en-Runr.svg'
 }
 
 // Right-to-left locales need dir="rtl" on the <html> element.
