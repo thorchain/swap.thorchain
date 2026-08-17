@@ -177,7 +177,8 @@
       "error": {
         "loadInboundAddresses": "Failed to load inbound addresses",
         "cancelFailed": "Failed to cancel limit swap",
-        "modifyFailed": "Failed to modify limit swap"
+        "modifyFailed": "Failed to modify limit swap",
+        "walletNotConnected": "Wallet not connected"
       },
       "toast": {
         "sendToCancel": "Send {amount} {ticker} from the original wallet to cancel",
@@ -191,7 +192,8 @@
         "connect": "Connect a {chain} wallet to {mode} this order",
         "switch": "Switch to a {chain} wallet to {mode} this order",
         "addressMismatch": "Connected wallet does not match the address that placed this order",
-        "tradingPaused": "{chain} trading is currently paused"
+        "tradingPaused": "{chain} trading is currently paused",
+        "orderNotFound": "This order is no longer open on THORChain - it may have already been filled or expired"
       }
     },
     "quoteTimer": {

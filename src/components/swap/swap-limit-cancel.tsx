@@ -2,7 +2,7 @@
 
 import { useEffect, useMemo, useState } from 'react'
 import { useTranslations } from 'next-intl'
-import { AssetValue, FeeOption, USwapNumber } from '@tcswap/core'
+import { AssetValue, Chain, FeeOption, USwapNumber } from '@tcswap/core'
 import { type InboundAddressesItem, USwapApi } from '@tcswap/helpers/api'
 import { AlertTriangle, LoaderCircle } from 'lucide-react'
 import { toast } from 'sonner'
@@ -19,8 +19,14 @@ import { SwapError } from '@/components/swap/swap-error'
 import { GenericButton } from '@/components/generic-button'
 import { useMemolessAssets } from '@/hooks/use-memoless-assets'
 import { useSelectedAccount } from '@/hooks/use-wallets'
-import { getInboundAddresses } from '@/lib/api'
-import { createCancelLimitSwapMemo, createModifyLimitSwapMemo } from '@/lib/memo-helpers'
+import { getInboundAddresses, getLimitSwaps } from '@/lib/api'
+import {
+  createCancelLimitSwapMemo,
+  createModifyLimitSwapMemo,
+  createModifyLimitSwapMemoFromOrder,
+  findLimitSwapOrder,
+  type LimitSwapOrder
+} from '@/lib/memo-helpers'
 import { getUSwap } from '@/lib/wallets'
 
 interface SwapLimitCancelProps {
@@ -50,8 +56,14 @@ export const SwapLimitCancel = ({ isOpen, onOpenChange, mode, transaction }: Swa
   const [error, setError] = useState<Error | undefined>()
   const [pricePerUnit, setPricePerUnit] = useState<USwapNumber | undefined>()
   const [totalAmount, setTotalAmount] = useState<USwapNumber | undefined>()
+  const [order, setOrder] = useState<LimitSwapOrder | undefined>()
+  const [orderMissing, setOrderMissing] = useState(false)
 
   const { assetFrom, assetTo, amountFrom, amountTo, addressFrom, limitSwapMemo, isMemoless } = transaction
+
+  // THORChain-native orders (RUNE, TCY, RUJI, secured assets) are placed with MsgDeposit and have
+  // no inbound address to send to - they must be cancelled the same way.
+  const isThorNative = assetFrom.chain === Chain.THORChain
 
   const sellAmount = useMemo(() => new USwapNumber(amountFrom), [amountFrom])
 
@@ -74,14 +86,42 @@ export const SwapLimitCancel = ({ isOpen, onOpenChange, mode, transaction }: Swa
       return
     }
 
-    setLoading(true)
     setError(undefined)
 
+    if (isThorNative) {
+      setLoading(false)
+      return
+    }
+
+    setLoading(true)
     getInboundAddresses()
       .then(addresses => setInboundAddresses(addresses))
       .catch(() => setError(new Error(t('limitCancel.error.loadInboundAddresses'))))
       .finally(() => setLoading(false))
-  }, [isOpen, t])
+  }, [isOpen, isThorNative, t])
+
+  useEffect(() => {
+    if (!isOpen || !addressFrom) return
+
+    let stale = false
+    getLimitSwaps(addressFrom)
+      .then(items => {
+        if (stale) return
+        const match = findLimitSwapOrder(items, assetFrom, assetTo, limitSwapMemo)
+        setOrder(match)
+        setOrderMissing(!match)
+      })
+      .catch(() => {
+        // Fall back to deriving the memo locally rather than blocking the user on a node hiccup.
+        if (!stale) setOrderMissing(false)
+      })
+
+    return () => {
+      stale = true
+      setOrder(undefined)
+      setOrderMissing(false)
+    }
+  }, [isOpen, addressFrom, assetFrom, assetTo, limitSwapMemo])
 
   const inboundAddress = inboundAddresses.find(addr => addr.chain === assetFrom.chain)
 
@@ -119,8 +159,8 @@ export const SwapLimitCancel = ({ isOpen, onOpenChange, mode, transaction }: Swa
   }, [totalAmount])
 
   const targetReady = mode === 'cancel' || (mode === 'modify' && !!newTargetBaseAmount)
-  const walletReady =
-    !!selectedAccount && walletMatchesChain && addressMatch && !!inboundAddress && !inboundAddress.halted && !inboundAddress.chain_trading_paused
+  const inboundReady = isThorNative || (!!inboundAddress && !inboundAddress.halted && !inboundAddress.chain_trading_paused)
+  const walletReady = !!selectedAccount && walletMatchesChain && addressMatch && inboundReady
   const memolessReady = useMemolessPath && !!memolessAsset
   const canSubmit = !!limitSwapMemo && targetReady && (walletReady || memolessReady)
 
@@ -131,8 +171,10 @@ export const SwapLimitCancel = ({ isOpen, onOpenChange, mode, transaction }: Swa
     setError(undefined)
 
     try {
-      const memo =
-        mode === 'cancel'
+      const newTarget = mode === 'cancel' ? '0' : newTargetBaseAmount!
+      const memo = order
+        ? createModifyLimitSwapMemoFromOrder(order, newTarget)
+        : mode === 'cancel'
           ? createCancelLimitSwapMemo(limitSwapMemo, amountFrom, assetFrom, assetTo)
           : createModifyLimitSwapMemo(limitSwapMemo, amountFrom, assetFrom, assetTo, newTargetBaseAmount!)
 
@@ -178,7 +220,25 @@ export const SwapLimitCancel = ({ isOpen, onOpenChange, mode, transaction }: Swa
         return
       }
 
-      if (!inboundAddress?.address || !selectedAccount) return
+      if (!selectedAccount) return
+
+      if (isThorNative) {
+        const wallet = uSwap.getWallet(selectedAccount.provider, Chain.THORChain)
+        if (!wallet) throw new Error(t('limitCancel.error.walletNotConnected'))
+
+        // The modify memo is routed to the Reserve module, which only accepts RUNE, and any amount
+        // sent along is kept by the network - so deposit zero and pay just the native tx fee.
+        await (wallet as { deposit: (a: unknown) => Promise<string> }).deposit({
+          assetValue: AssetValue.from({ chain: Chain.THORChain, value: '0', fromBaseDecimal: 8 }),
+          memo
+        })
+
+        toast.success(mode === 'cancel' ? t('limitCancel.toast.cancelSubmitted') : t('limitCancel.toast.modifySubmitted'))
+        onOpenChange(false)
+        return
+      }
+
+      if (!inboundAddress?.address) return
 
       const dustThreshold = BigInt(inboundAddress.dust_threshold || '0')
       const minAmount = dustThreshold > 0n ? dustThreshold : 10000n
@@ -223,8 +283,12 @@ export const SwapLimitCancel = ({ isOpen, onOpenChange, mode, transaction }: Swa
       warnings.push(t('limitCancel.warning.addressMismatch'))
     }
 
-    if (!useMemolessPath && (inboundAddress?.halted || inboundAddress?.chain_trading_paused)) {
+    if (!useMemolessPath && !isThorNative && (inboundAddress?.halted || inboundAddress?.chain_trading_paused)) {
       warnings.push(t('limitCancel.warning.tradingPaused', { chain: chainLabel(assetFrom.chain) }))
+    }
+
+    if (orderMissing) {
+      warnings.push(t('limitCancel.warning.orderNotFound'))
     }
 
     if (warnings.length === 0) return null

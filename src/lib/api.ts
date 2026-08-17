@@ -201,3 +201,20 @@ export const getTcyClaimer = async (address: string): Promise<TcyClaimer[]> => {
 export const getInboundAddresses = () => {
   return USwapApi.thornode.getInboundAddresses()
 }
+
+export interface LimitSwapQueueItem {
+  swap: {
+    tx: {
+      id: string
+      from_address: string
+      coins: { asset: string; amount: string }[]
+      memo: string
+    }
+    target_asset: string
+    trade_target: string
+  }
+}
+
+export const getLimitSwaps = async (sender: string): Promise<LimitSwapQueueItem[]> => {
+  return thornode.get('/thorchain/queue/limit_swaps', { params: { sender, limit: 1000 } }).then(res => res.data?.limit_swaps ?? [])
+}
