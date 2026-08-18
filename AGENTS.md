@@ -20,6 +20,7 @@ Two-component architecture:
 ## Key areas
 
 - `src/components/swap/` — swap flow UI; `src/lib/wallets.ts` — wallet/TCSwap SDK config (env vars in `.env.example`).
+- `public/widget.js` + `src/app/widget/` — the embeddable swap iframe. The loader mirrors the host page's dark/light mode into the iframe: it reads the effective background painted behind the widget (so a `.dark` class, `data-theme`, or a CSS-variable swap all work without configuration), boots the iframe with `?theme=`, and pushes later changes over `postMessage` — `src/app/widget/theme.ts` holds that contract plus the pre-paint script that stops the embed flashing the wrong theme. Keep `widget.js` plain unbundled ES5-style script — it runs as-is on third-party sites.
 - `src/lib/agent/discovery-files.ts` — single registry of every static discovery file (`/llms.txt`, `/AGENTS.md`, `/openapi.json`, `/.well-known/*`, …), served by `src/proxy.ts` before filesystem routes. Add new agent/developer surfaces here, not as route folders.
 - `src/lib/agent/discovery.ts` — markdown content for `/AGENTS.md`, `/llms.txt`, `/llms-full.md`, `/auth.md`, and the agent skill; `src/lib/agent/openapi.ts` — the OpenAPI document.
 - `src/lib/agent/developer-portal.ts` — content for `/developers.md`; `src/app/developers/page.tsx` is a hand-built HTML mirror — keep the two in sync.

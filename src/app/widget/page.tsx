@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import { Widget } from './widget'
+import { parseWidgetTheme, widgetThemeScript } from './theme'
 
 export const metadata: Metadata = {
   title: 'Swap Widget | THORChain',
@@ -13,6 +14,12 @@ interface WidgetPageProps {
 export default async function WidgetPage({ searchParams }: WidgetPageProps) {
   const params = await searchParams
   const apiKey = typeof params.apiKey === 'string' ? params.apiKey : undefined
+  const theme = parseWidgetTheme(params.theme)
 
-  return <Widget apiKey={apiKey} />
+  return (
+    <>
+      {theme && <script dangerouslySetInnerHTML={{ __html: widgetThemeScript(theme) }} />}
+      <Widget apiKey={apiKey} theme={theme} />
+    </>
+  )
 }
