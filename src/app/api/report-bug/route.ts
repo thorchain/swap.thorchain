@@ -4,6 +4,7 @@ import { withIdempotency } from '@/lib/agent/idempotency'
 import { rateLimit } from '@/lib/rate-limit'
 import { ChatwootDeliveryError, chatwootConfig, deliverToChatwoot, type ChatwootAttachment, type ChatwootReport } from '@/lib/chatwoot'
 import { COOKIE_NAME } from '@/i18n/config'
+import { looksLikeProbe } from '@/lib/report-probe'
 
 const MAX_DESCRIPTION_LENGTH = 10_000
 const MAX_ATTACHMENT_BYTES = 5 * 1024 * 1024
@@ -156,6 +157,13 @@ async function handlePost(req: NextRequest) {
   const userEmail = email && typeof email === 'string' && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim()) ? email.trim() : null
   const typeLabel = typeof type === 'string' ? REPORT_TYPE_LABELS.get(type) : undefined
   const reportedPage = typeof page === 'string' && page.startsWith('http') ? page : (req.headers.get('referer') ?? undefined)
+
+  if (looksLikeProbe(req, { description: description.trim(), email: userEmail, page: reportedPage })) {
+    // Logged rather than dropped outright, so a real report caught by the
+    // heuristic is still recoverable from the server logs.
+    console.warn('[report-bug] Absorbed likely scanner probe:', JSON.stringify({ description, page: reportedPage, ua: req.headers.get('user-agent') }))
+    return NextResponse.json({ success: true })
+  }
 
   const report: ChatwootReport = {
     description: description.trim(),
