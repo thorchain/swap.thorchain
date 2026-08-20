@@ -1,9 +1,9 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { useTranslations } from 'next-intl'
 import { WalletIcon } from '@/components/wallet-icon'
-import { Chain, CosmosChain, CosmosChains, EVMChain, EVMChains, FeeOption, isGasAsset, USwapNumber, UTXOChain, UTXOChains } from '@tcswap/core'
+import { AssetValue, Chain, CosmosChain, CosmosChains, EVMChain, EVMChains, FeeOption, isGasAsset, USwapNumber, UTXOChain, UTXOChains } from '@tcswap/core'
 import { getAddressValidator } from '@tcswap/toolboxes'
 import { estimateTransactionFee } from '@tcswap/toolboxes/cosmos'
 import { LoaderCircle } from 'lucide-react'
@@ -35,6 +35,22 @@ export interface SendDialogProps {
   account: WalletAccount
 }
 
+// Gas prices are public chain data, so read them straight off an RPC. Going through the connected
+// wallet instead routes the call through the SDK's network-switch wrapper, which stalls the estimate
+// behind a wallet prompt whenever the extension sits on another chain.
+async function evmGasPrices(chain: EVMChain) {
+  try {
+    const { getEvmToolbox } = await import('@tcswap/toolboxes/evm')
+    const toolbox = await getEvmToolbox(chain)
+    // Some toolboxes (Optimism) expose this as an already-resolving promise rather than a function.
+    const estimateFn = toolbox.estimateGasPrices
+    return await (typeof estimateFn === 'function' ? estimateFn() : estimateFn)
+  } catch (error) {
+    console.warn(`Failed to read ${chain} gas prices:`, error)
+    return undefined
+  }
+}
+
 export function Send({ isOpen, onOpenChange, initialToken, account }: SendDialogProps) {
   const t = useTranslations('send')
   const uSwap = getUSwap()
@@ -61,7 +77,11 @@ export function Send({ isOpen, onOpenChange, initialToken, account }: SendDialog
     }
   }, [isOpen])
 
-  const { rates } = useRates([assetIdentifierStr(selectedToken.balance)])
+  // Fees are always paid in the chain's gas asset, never in the token being sent.
+  const gasAsset = useMemo(() => AssetValue.from({ chain: selectedToken.balance.chain, value: 0 }), [selectedToken.balance.chain])
+  const gasAssetIdentifier = assetIdentifierStr(gasAsset)
+
+  const { rates } = useRates([assetIdentifierStr(selectedToken.balance), gasAssetIdentifier])
   const rate = rates[assetIdentifierStr(selectedToken.balance)]
 
   const numericAmount = parseFloat(amount) || 0
@@ -79,29 +99,19 @@ export function Send({ isOpen, onOpenChange, initialToken, account }: SendDialog
 
     const { balance } = selectedToken
     const chain = balance.chain
-    const gasAsset = isGasAsset({ chain, symbol: balance.ticker })
-
-    if (!gasAsset) {
-      setTxFee({ amount: new USwapNumber(0), ticker: balance.ticker })
-      return
-    }
+    const isGas = isGasAsset({ chain, symbol: balance.ticker })
+    const setFee = (amount: USwapNumber) => setTxFee({ amount, ticker: gasAsset.ticker })
 
     const estimate = async () => {
       try {
         if (EVMChains.includes(chain as EVMChain)) {
-          const gasLimit = 21_000n
-          const evmWallet = uSwap.getWallet<EVMChain>(selectedAccount.provider, chain as EVMChain)
-          if (!evmWallet) return
-          const estimateFn = evmWallet.estimateGasPrices
-          const gasPrices = await (typeof estimateFn === 'function' ? estimateFn() : estimateFn)
-          const { gasPrice, maxFeePerGas, maxPriorityFeePerGas } = gasPrices[FeeOption.Fast]
-          let fee = new USwapNumber(0)
-          if (gasPrice) {
-            fee = USwapNumber.fromBigInt(gasPrice * gasLimit, balance.decimal)
-          } else if (maxFeePerGas && maxPriorityFeePerGas) {
-            fee = USwapNumber.fromBigInt((maxFeePerGas + maxPriorityFeePerGas) * gasLimit, balance.decimal)
-          }
-          setTxFee({ amount: fee, ticker: balance.ticker })
+          const gasPrices = await evmGasPrices(chain as EVMChain)
+          // `maxFeePerGas` already covers the priority tip; `gasPrice` is the pre-EIP-1559 equivalent.
+          const price = gasPrices?.[FeeOption.Fast].gasPrice ?? gasPrices?.[FeeOption.Fast].maxFeePerGas
+          if (!price) return setTxFee(null)
+          // The toolbox only estimates bare native transfers, so use a flat limit: an ERC-20
+          // transfer burns roughly 3x the 21k of a native one.
+          setFee(USwapNumber.fromBigInt(price * (isGas ? 21_000n : 65_000n), gasAsset.decimal))
         } else if (UTXOChains.includes(chain as UTXOChain)) {
           const utxoWallet = uSwap.getWallet<UTXOChain>(selectedAccount.provider, chain as UTXOChain)
           if (!utxoWallet) return
@@ -112,24 +122,32 @@ export function Send({ isOpen, onOpenChange, initialToken, account }: SendDialog
             memo: '',
             feeOptionKey: FeeOption.Fast
           })
-          setTxFee({ amount: feeValue, ticker: balance.ticker })
+          setFee(feeValue)
         } else if (CosmosChains.includes(chain as CosmosChain)) {
-          const fee = estimateTransactionFee({ assetValue: balance })
-          setTxFee({ amount: fee, ticker: balance.ticker })
+          setFee(estimateTransactionFee({ assetValue: balance }))
         } else if (chain === Chain.THORChain || chain === Chain.Maya) {
-          setTxFee({ amount: new USwapNumber(0.02), ticker: balance.ticker })
+          setFee(new USwapNumber(0.02))
         } else if (chain === Chain.Tron) {
-          setTxFee({ amount: new USwapNumber(1), ticker: balance.ticker })
+          const tronFallback = new USwapNumber(isGas ? 1 : 15)
+          const tronWallet = uSwap.getWallet(selectedAccount.provider, chain)
+          const estimateTronFee = tronWallet?.estimateTransactionFee
+          if (typeof estimateTronFee !== 'function') return setFee(tronFallback)
+          const feeValue = await estimateTronFee({
+            assetValue: balance.set(0),
+            recipient: selectedAccount.address,
+            sender: selectedAccount.address
+          }).catch(() => tronFallback)
+          setFee(feeValue)
         } else {
-          setTxFee({ amount: new USwapNumber(0), ticker: balance.ticker })
+          setTxFee(null)
         }
       } catch {
-        setTxFee({ amount: new USwapNumber(0), ticker: balance.ticker })
+        setTxFee(null)
       }
     }
 
     void estimate()
-  }, [isOpen, selectedToken])
+  }, [isOpen, selectedToken, selectedAccount, gasAsset])
 
   const handleSend = () => {
     if (!amount || numericAmount <= 0 || !recipient || !isValidRecipient) return
@@ -160,7 +178,7 @@ export function Send({ isOpen, onOpenChange, initialToken, account }: SendDialog
 
   const totalTokenCount = walletData.reduce((sum, { tokens }) => sum + tokens.filter(t => t.amount > 0).length, 0)
   const selectedAsset = tokenToAsset(selectedToken)
-  const feeRate = rates[assetIdentifierStr(selectedToken.balance)]
+  const feeRate = rates[gasAssetIdentifier]
   const feeUsd = txFee && feeRate ? feeRate.mul(parseFloat(txFee.amount.toSignificant())) : undefined
   const canSend = amount && numericAmount > 0 && recipient.length > 0 && isValidRecipient && !submitting
 
