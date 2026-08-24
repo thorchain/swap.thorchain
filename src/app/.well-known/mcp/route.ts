@@ -1,1 +1,1 @@
-export { handleMcpPost as POST, handleMcpGet as GET } from '@/lib/agent/mcp-server'
+export { handleMcpPost as POST, handleMcpGet as GET, handleMcpOptions as OPTIONS } from '@/lib/agent/mcp-server'

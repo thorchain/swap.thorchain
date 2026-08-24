@@ -1,0 +1,30 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "thorchain-swap"
+version = "0.1.0"
+description = "Official client for the public THORChain Swap APIs: swap quotes, liquidity pools, network status, and support endpoints."
+readme = "README.md"
+requires-python = ">=3.9"
+license = { text = "MIT" }
+keywords = ["thorchain", "swap", "cross-chain", "bitcoin", "mcp"]
+authors = [{ name = "THORChain Swap", email = "contact@thorchain.org" }]
+classifiers = [
+  "Development Status :: 4 - Beta",
+  "Intended Audience :: Developers",
+  "License :: OSI Approved :: MIT License",
+  "Programming Language :: Python :: 3",
+  "Topic :: Software Development :: Libraries :: Python Modules",
+]
+dependencies = []
+
+[project.urls]
+Homepage = "https://swap.thorchain.org"
+Documentation = "https://swap.thorchain.org/developers"
+Source = "https://github.com/thorchain/swap.thorchain/tree/main/sdk/python"
+Issues = "https://github.com/thorchain/swap.thorchain/issues"
+
+[tool.hatch.build.targets.wheel]
+packages = ["thorchain_swap"]

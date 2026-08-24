@@ -25,7 +25,7 @@ const SAFETY = `## Safety Rules
 - Confirm the destination address with the user before they submit any transaction.
 - A transaction is irreversible once broadcast. Say so before the user commits.`
 
-const MCP_NOTE = `The public MCP server at ${AppConfig.baseUrl}/mcp is unauthenticated, rate limited, read-only, and needs no API key. It never holds keys, signs, or submits transactions.`
+const MCP_NOTE = `The public MCP server at ${AppConfig.baseUrl}/mcp is unauthenticated, rate limited, read-only, and needs no API key, token, or OAuth client. It never holds keys, signs, or submits transactions.`
 
 const overview = `# THORChain Swap Agent Skill
 

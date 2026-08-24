@@ -1,6 +1,7 @@
 import { AppConfig } from '@/config'
 import { developerEndpoints } from '@/lib/agent/developer-portal'
-import { MCP_SERVER_INFO, MCP_TOOLS } from '@/lib/agent/mcp-server'
+import { DEVELOPER_TOPICS } from '@/lib/agent/developer-topics'
+import { MCP_SERVER_INFO, MCP_TOOLS } from '@/lib/agent/mcp-tools'
 import { pricingPlans } from '@/lib/agent/pricing'
 
 // The ?mode=agent view of the homepage: capabilities, endpoints, auth, and
@@ -39,6 +40,12 @@ const capabilities = [
     authentication: 'user wallet'
   },
   {
+    id: 'partner-api-key',
+    summary: 'Obtain an aggregator API key (and affiliate fee splits, widget, and earnings reporting) through the affiliate program.',
+    access: `${AppConfig.affiliateLink} — register, verify email, key issued on approval`,
+    authentication: 'partner account'
+  },
+  {
     id: 'submit-feedback',
     summary: 'Subscribe to updates or file a bug report through the public REST API.',
     access: `POST ${AppConfig.baseUrl}/api/v1/newsletter, POST ${AppConfig.baseUrl}/api/v1/report-bug`,
@@ -49,7 +56,8 @@ const capabilities = [
 const notSupported = [
   'Executing or signing a swap on a user behalf — the server holds no keys and never submits transactions.',
   'Fiat on/off-ramps, NFTs, derivatives, or custodial accounts.',
-  'Self-service API key or OAuth credential issuance.'
+  'Any credential from this site — it issues none, and needs none.',
+  'Instant, unreviewed keys for the swap aggregator backend (https://api.thorchain.org/v1) — those come from the affiliate program after review.'
 ]
 
 const agentModeValue = {
@@ -62,8 +70,7 @@ const agentModeValue = {
   not_supported: notSupported,
   authentication: {
     model: 'anonymous',
-    summary:
-      'Browsing, quoting, and the support APIs require no credentials. The swap aggregator backend (https://api.thorchain.org/v1) requires an x-api-key that is not self-service; the memoless API and the MCP server need no key.',
+    summary: `Browsing, quoting, the MCP server, and the support APIs require no credentials, and this site runs no authorization server — clients that probe for OAuth metadata find none and connect directly. The swap aggregator backend (https://api.thorchain.org/v1) takes an x-api-key issued free through the affiliate program at ${AppConfig.affiliateLink} after review; the memoless API and the MCP server need no key.`,
     documentation: `${AppConfig.baseUrl}/auth.md`
   },
   endpoints: {
@@ -85,6 +92,7 @@ const agentModeValue = {
     openapi: `${AppConfig.baseUrl}/openapi.json`,
     upstream: {
       aggregator: 'https://api.thorchain.org/v1',
+      aggregatorKeys: AppConfig.affiliateLink,
       memoless: 'https://api.thorchain.org/memoless/api/v1'
     }
   },
@@ -115,6 +123,7 @@ const agentModeValue = {
     api_catalog: `${AppConfig.baseUrl}/.well-known/api-catalog`,
     agent_card: `${AppConfig.baseUrl}/.well-known/agent-card.json`,
     agent_skills: `${AppConfig.baseUrl}/.well-known/agent-skills/index.json`,
+    developer_docs: DEVELOPER_TOPICS.map(topic => `${AppConfig.baseUrl}/developers/${topic.slug}`).join(', '),
     source: 'https://github.com/thorchain/swap.thorchain'
   }
 }
@@ -139,9 +148,9 @@ ${notSupported.map(item => `- ${item}`).join('\n')}
 
 ${agentModeValue.authentication.summary}
 
-No bearer token is issued or accepted by this site.
+No authorization server, no tokens: a client that probes for OAuth metadata finds none and connects directly. Aggregator API keys come from ${AppConfig.affiliateLink}.
 
-Details: ${AppConfig.baseUrl}/auth.md
+Details: ${AppConfig.baseUrl}/auth.md and ${AppConfig.baseUrl}/developers/auth
 
 ## Endpoints
 
@@ -155,7 +164,7 @@ ${developerEndpoints.map(e => `- \`${e.method} ${AppConfig.baseUrl}${e.path}\` �
 
 OpenAPI description: ${AppConfig.baseUrl}/openapi.json
 
-Upstream swap APIs the UI itself uses: https://api.thorchain.org/v1 (quotes and routing, \`x-api-key\` gated) and https://api.thorchain.org/memoless/api/v1 (memoless swaps, no key).
+Upstream swap APIs the UI itself uses: https://api.thorchain.org/v1 (quotes and routing, \`x-api-key\` gated — free keys via ${AppConfig.affiliateLink}) and https://api.thorchain.org/memoless/api/v1 (memoless swaps, no key).
 
 ## Pricing
 

@@ -103,7 +103,8 @@ export function buildOpenApiDocument() {
                         content: { type: 'string' },
                         contentType: {
                           type: 'string',
-                          description: 'MIME type. Honoured only for supported image/video/document types; otherwise inferred from the file extension.'
+                          description:
+                            'MIME type. Honoured only for supported image/video/document types; otherwise inferred from the file extension.'
                         }
                       },
                       additionalProperties: false

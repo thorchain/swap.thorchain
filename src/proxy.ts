@@ -3,6 +3,7 @@ import { AppConfig, PRIMARY_HOST, SUBDOMAIN_ROUTES } from '@/config'
 import { agentModeJson, agentModeMarkdown } from '@/lib/agent/agent-mode'
 import { discoveryFiles } from '@/lib/agent/discovery-files'
 import { markdownForPage, markdownForSuffixPath } from '@/lib/agent/markdown-pages'
+import { MCP_ENDPOINT_ALIASES } from '@/lib/agent/mcp-tools'
 
 function prefersMarkdown(req: NextRequest) {
   const accept = req.headers.get('accept')?.toLowerCase()
@@ -23,11 +24,22 @@ function prefersMarkdown(req: NextRequest) {
 }
 
 export function proxy(req: NextRequest) {
+  // Every path that serves the manifest also speaks the transport: a client
+  // that discovered a card alias and posts JSON-RPC at it reaches the server
+  // instead of the HTML 404 the static registry would otherwise fall through
+  // to. GET on these paths still returns the manifest, below.
+  if ((req.method === 'POST' || req.method === 'OPTIONS') && MCP_ENDPOINT_ALIASES.has(req.nextUrl.pathname)) {
+    return NextResponse.rewrite(new URL('/mcp', req.url))
+  }
+
   // Registered discovery files are served ahead of the filesystem routes.
   if (req.method === 'GET' || req.method === 'HEAD') {
     const file = discoveryFiles[req.nextUrl.pathname]
     if (file) {
-      const headers: Record<string, string> = { 'Content-Type': file.contentType }
+      // Generated once per build and identical for every caller, so a short
+      // shared-cache window costs nothing but a minute of staleness after a
+      // deploy, and keeps agent fetches off the origin.
+      const headers: Record<string, string> = { 'Content-Type': file.contentType, 'Cache-Control': 'public, max-age=60' }
       if (req.nextUrl.pathname === '/.well-known/api-catalog') {
         headers.Link = `<${AppConfig.baseUrl}/.well-known/api-catalog>; rel="api-catalog"; type="application/linkset+json"`
       }

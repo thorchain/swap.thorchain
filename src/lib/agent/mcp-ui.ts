@@ -16,6 +16,12 @@ export const MCP_UI_RESOURCES = [
 
 // Hand-rolled host handshake instead of the ext-apps SDK so the template
 // stays a single self-contained string (no external assets; CSP stays empty).
+//
+// The handshake posts to '*' and accepts messages from any origin, as the
+// ext-apps hosts require: the frame is sandboxed and its opaque origin is not
+// knowable in advance. Nothing here is trusted — every value received is
+// written with textContent, never innerHTML — so a hostile framer can only
+// make the view render its own data to itself.
 export const SWAP_QUOTE_UI_HTML = `<!DOCTYPE html>
 <html>
 <head>

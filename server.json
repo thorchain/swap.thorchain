@@ -1,0 +1,18 @@
+{
+  "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
+  "name": "org.thorchain.swap/thorchain-swap",
+  "title": "THORChain Swap",
+  "description": "Read-only THORChain swap quotes, liquidity pools, and network status.",
+  "version": "0.4.1",
+  "websiteUrl": "https://swap.thorchain.org/developers/mcp",
+  "repository": {
+    "url": "https://github.com/thorchain/swap.thorchain",
+    "source": "github"
+  },
+  "remotes": [
+    {
+      "type": "streamable-http",
+      "url": "https://swap.thorchain.org/mcp"
+    }
+  ]
+}

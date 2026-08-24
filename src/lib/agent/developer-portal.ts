@@ -1,4 +1,6 @@
 import { AppConfig } from '@/config'
+import { DEVELOPER_TOPICS } from '@/lib/agent/developer-topics'
+import { SDK_PACKAGES } from '@/lib/agent/sdks'
 
 // Single source of truth for the developer portal content. Rendered as HTML at
 // /developers and served verbatim as markdown at /developers.md.
@@ -24,6 +26,15 @@ export const developerEndpoints = [
   }
 ]
 
+// Named developer resources, one topic per page: /developers/<slug> with a
+// markdown twin at /developers/<slug>.md.
+export const developerTopicLinks = DEVELOPER_TOPICS.map(topic => ({
+  path: `/developers/${topic.slug}`,
+  title: `THORChain Swap ${topic.navTitle}`,
+  navTitle: topic.navTitle,
+  description: topic.description
+}))
+
 export const developerMcpTools = [
   {
     name: 'get_swap_quote',
@@ -39,8 +50,14 @@ export const developerMcpTools = [
   }
 ]
 
+// Every path here is rendered as a link, so every path here must resolve. No
+// `/.well-known/oauth-*` entry belongs in this list: the MCP server is
+// anonymous, those documents deliberately 404, and linking them is what makes
+// a connector attempt a sign-in flow that has nothing to sign in to (see
+// docs/agent-readiness/orank.md).
 export const developerDiscoveryLinks = [
   { path: '/llms.txt', summary: 'index of agent resources' },
+  { path: '/.well-known/mcp.json', summary: 'MCP manifest alias (also /mcp.json and GET /mcp)' },
   { path: '/llms-full.md', summary: 'complete single-file agent reference (also at /llms-full.txt)' },
   { path: '/AGENTS.md', summary: 'guidance for AI agents using this site' },
   { path: '/developers.md', summary: 'this developer portal as markdown' },
@@ -89,13 +106,19 @@ THORChain developer resources for the swap interface — API docs, OpenAPI spec,
 - HTML version: ${AppConfig.baseUrl}/developers
 - Markdown version: ${AppConfig.baseUrl}/developers.md
 
+## Named Developer Resources
+
+Each topic has its own page, and each page has a markdown twin at the same URL plus \`.md\`:
+
+${developerTopicLinks.map(link => `- [${link.title}](${AppConfig.baseUrl}${link.path}) — ${link.description}`).join('\n')}
+
 ## Architecture
 
 THORChain Swap consists of two components:
 
 - **UI** — this web app. Users connect their own wallet and sign transactions locally, or swap without connecting a wallet via memoless ("instant") swaps.
 - **Backend API** — the THORChain/Maya Protocol swap aggregator:
-  - \`https://api.thorchain.org/v1\` — swap quotes and routes across THORChain and Maya Protocol providers. Requires an \`x-api-key\` header; keys are not self-service (contact the maintainers).
+  - \`https://api.thorchain.org/v1\` — swap quotes and routes across THORChain and Maya Protocol providers. Requires an \`x-api-key\` header; keys are free through the affiliate program at ${AppConfig.affiliateLink} (register, verify your email, key issued on approval).
   - \`https://api.thorchain.org/memoless/api/v1\` — memoless (instant) swaps. No API key required.
 
 The UI also reads protocol metadata (pools, network parameters, THORNames, balances, inbound addresses) directly from public THORNode and Midgard APIs. The keyless path for agents is the MCP server below, which serves quote, pool, and network data from THORNode.
@@ -114,8 +137,9 @@ Amounts are strings in 1e8 base units (\`100000000\` = 1 BTC). Pass a \`destinat
 
 A public, unauthenticated, rate-limited MCP server (streamable HTTP, stateless, JSON responses):
 
-- Endpoint: ${AppConfig.baseUrl}/mcp
-- Server card: ${AppConfig.baseUrl}/.well-known/mcp/server-card.json
+- Endpoint: ${AppConfig.baseUrl}/mcp — JSON-RPC over POST; a plain GET returns the server card
+- Server card: ${AppConfig.baseUrl}/.well-known/mcp/server-card.json (aliases: ${AppConfig.baseUrl}/.well-known/mcp.json, ${AppConfig.baseUrl}/mcp.json)
+- Full reference: ${AppConfig.baseUrl}/developers/mcp
 
 Read-only tools:
 
@@ -124,6 +148,12 @@ ${developerMcpTools.map(tool => `- \`${tool.name}\` — ${tool.summary}`).join('
 The server supports MCP Apps (io.modelcontextprotocol/ui): \`get_swap_quote\` declares \`_meta.ui.resourceUri\` pointing at the \`ui://thorchain-swap/swap-quote\` resource (\`text/html;profile=mcp-app\`), which MCP Apps-capable hosts render as an interactive quote view. The view is self-contained (no external scripts) and receives data via \`ui/notifications/tool-result\`.
 
 The server never holds keys, signs, or submits transactions.
+
+## SDKs
+
+${SDK_PACKAGES.map(pkg => `- **${pkg.language}** — \`${pkg.name}\` (${pkg.ecosystem}): ${pkg.source}. ${pkg.status}`).join('\n')}
+
+Full reference: ${AppConfig.baseUrl}/developers/sdks
 
 ## REST API
 
@@ -141,9 +171,13 @@ The API is versioned in the URL path: \`/api/v1/\` is the canonical prefix, and 
 
 ## Authentication
 
-Browsing, quoting, the public MCP server, and the support APIs are anonymous; there are no accounts, and users sign transactions in their own wallets (or use memoless swaps with no wallet connection). This site does not issue or accept bearer tokens. The aggregator quote API (\`https://api.thorchain.org/v1\`) is separate and requires an \`x-api-key\` header.
+Browsing, quoting, the public MCP server, and the support APIs are anonymous; there are no accounts, and users sign transactions in their own wallets (or use memoless swaps with no wallet connection).
 
-Details: ${AppConfig.baseUrl}/auth.md
+This site runs no authorization server and issues no tokens: there is no \`/.well-known/oauth-protected-resource\` and no \`/.well-known/oauth-authorization-server\` to discover, so an MCP client that probes for authorization metadata finds none and connects directly. If a connector UI asks for an OAuth client ID or API key for \`${AppConfig.baseUrl}/mcp\`, leave it blank.
+
+The aggregator quote API (\`https://api.thorchain.org/v1\`) is a different system: it takes an \`x-api-key\`, issued free through the affiliate program at ${AppConfig.affiliateLink} after a short review. That same account sets affiliate/service fee splits, generates the embeddable widget, and reports earnings.
+
+Details: ${AppConfig.baseUrl}/developers/auth and ${AppConfig.baseUrl}/auth.md
 
 ## Errors
 

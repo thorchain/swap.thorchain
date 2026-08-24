@@ -5,9 +5,24 @@ const MAX_TRACKED_CLIENTS = 10_000
 
 const hits = new Map<string, number[]>()
 
+/**
+ * The caller's IP as seen by the proxy in front of this app.
+ *
+ * Never the *first* `x-forwarded-for` hop: Cloudflare appends the real client
+ * IP to whatever the caller sent, so the leftmost entry is attacker-controlled
+ * and rotating it hands out an unlimited number of buckets. `cf-connecting-ip`
+ * is set by the edge and overwrites any client-supplied copy; the last
+ * forwarded hop is the equivalent fallback for any other single proxy.
+ */
 function clientKey(req: NextRequest) {
+  const edgeIp = req.headers.get('cf-connecting-ip')?.trim()
+  if (edgeIp) return edgeIp
+
   const forwarded = req.headers.get('x-forwarded-for')
-  return forwarded ? forwarded.split(',')[0].trim() : 'unknown'
+  if (!forwarded) return 'unknown'
+
+  const hops = forwarded.split(',')
+  return hops[hops.length - 1].trim() || 'unknown'
 }
 
 function sweep(now: number) {

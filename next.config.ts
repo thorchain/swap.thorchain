@@ -36,6 +36,19 @@ const nextConfig: NextConfig = {
       }
     ]
   },
+  // Predictable aliases for the developer resources, so a name-based guess
+  // ("/docs", "/api-docs") lands on the documentation instead of a 404.
+  async redirects() {
+    return [
+      { source: '/docs', destination: '/developers', permanent: false },
+      { source: '/api-docs', destination: '/developers/api', permanent: false },
+      { source: '/documentation', destination: '/developers', permanent: false },
+      { source: '/developer', destination: '/developers', permanent: false },
+      { source: '/sdk', destination: '/developers/sdks', permanent: false },
+      { source: '/sdks', destination: '/developers/sdks', permanent: false },
+      { source: '/quickstart', destination: '/developers/quickstart', permanent: false }
+    ]
+  },
   async rewrites() {
     return {
       beforeFiles: SUBDOMAIN_ROUTES.map(({ host, path }) => ({

@@ -1,4 +1,5 @@
 import { AppConfig } from '@/config'
+import { developerDocBySlug } from '@/lib/agent/developer-docs'
 import { developersMarkdown } from '@/lib/agent/developer-portal'
 import { homeMarkdown } from '@/lib/agent/discovery-files'
 import { aboutMarkdown, contactMarkdown } from '@/lib/agent/trust-pages'
@@ -85,6 +86,11 @@ export function markdownForPage(pathname: string): string | null {
   if (pathname === '/developers') return developersMarkdown
   if (pathname === '/about') return aboutMarkdown
   if (pathname === '/contact') return contactMarkdown
+
+  const DEVELOPERS_PREFIX = '/developers/'
+  if (pathname.startsWith(DEVELOPERS_PREFIX)) {
+    return developerDocBySlug.get(pathname.slice(DEVELOPERS_PREFIX.length))?.markdown ?? null
+  }
 
   const slug = pathname.slice(1)
   if (slug.includes('/')) return null

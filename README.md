@@ -10,12 +10,19 @@ accounts. Users connect their own wallet and sign transactions locally, or swap 
 
 THORChain developer resources for the swap interface — API docs, OpenAPI spec, auth docs, and MCP server:
 
-- [Developer portal](https://swap.thorchain.org/developers) — API reference, quickstart, MCP server, anonymous access model, error format, versioning
-  policy, and sandbox (Markdown: [/developers.md](https://swap.thorchain.org/developers.md))
+- [Developer portal](https://swap.thorchain.org/developers) — the index (Markdown: [/developers.md](https://swap.thorchain.org/developers.md))
+- [Quickstart](https://swap.thorchain.org/developers/quickstart) — first swap quote in one request, no API key
+- [REST API reference](https://swap.thorchain.org/developers/api) — endpoints, error format, idempotency, versioning, sandbox
+- [MCP server reference](https://swap.thorchain.org/developers/mcp) — tools, parameter schemas, MCP Apps, rate limits
+- [Authentication](https://swap.thorchain.org/developers/auth) — none needed here; where aggregator API keys come from
+- [SDKs](https://swap.thorchain.org/developers/sdks) — [`@tcswap/sdk`](https://www.npmjs.com/package/@tcswap/sdk) for building swaps, plus Python
+  ([`sdk/python`](./sdk/python)) and Go ([`sdk/go`](./sdk/go)) clients for the keyless public surfaces
+- [Webhooks and event polling](https://swap.thorchain.org/developers/webhooks) — how to track swap state without webhooks
 - [OpenAPI 3.1 description](https://swap.thorchain.org/.well-known/openapi.json) — the public REST API
 - [MCP server](https://swap.thorchain.org/.well-known/mcp/server-card.json) — public Model Context Protocol server at `/mcp` with swap-quote, pool,
   and network tools (supports MCP Apps)
-- [Authentication model](https://swap.thorchain.org/auth.md) — anonymous, rate-limited public access
+- [Authentication model](https://swap.thorchain.org/auth.md) — anonymous, rate-limited public access; no key, token, or OAuth for the MCP server, and
+  free aggregator API keys via the [affiliate program](https://affiliate.thorchain.org)
 
 ## AI Agent Resources
 

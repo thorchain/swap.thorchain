@@ -14,15 +14,15 @@ export const pricingPlans = [
   },
   {
     name: 'Public MCP server + REST APIs',
-    price: 'Free, no API key',
+    price: 'Free, no API key, no sign-in',
     audience: 'Agents and developers reading quotes, pools, and network data',
-    limits: 'Per-client rate limits; 429 with Retry-After when exceeded'
+    limits: 'Per-client rate limits (60 requests/10 min); 429 with Retry-After when exceeded'
   },
   {
     name: 'Swap aggregator API',
-    price: 'No published price — access by arrangement',
+    price: 'Free — issued through the affiliate program after review',
     audience: 'Partners needing direct quote/routing access to api.thorchain.org/v1',
-    limits: 'Requires an x-api-key header; keys are not self-service'
+    limits: `Requires an x-api-key header; register at ${AppConfig.affiliateLink}`
   }
 ]
 

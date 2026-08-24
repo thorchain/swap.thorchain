@@ -1,7 +1,15 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import { AppConfig } from '@/config'
-import { developerDiscoveryLinks, developerEndpoints, developerMcpTools, errorExample, mcpQuoteExample } from '@/lib/agent/developer-portal'
+import {
+  developerDiscoveryLinks,
+  developerEndpoints,
+  developerMcpTools,
+  developerTopicLinks,
+  errorExample,
+  mcpQuoteExample
+} from '@/lib/agent/developer-portal'
+import { SDK_PACKAGES } from '@/lib/agent/sdks'
 
 export const metadata: Metadata = {
   title: 'THORChain Developer Resources | Swap API Docs, MCP Server & Agent Tools',
@@ -95,6 +103,22 @@ export default function DevelopersPage() {
           .
         </p>
 
+        <Section id="resources" title="Named Developer Resources">
+          <p>
+            Each topic has its own page, and every page has a markdown twin at the same URL plus <code>.md</code>:
+          </p>
+          <ul className="list-disc space-y-1 pl-5">
+            {developerTopicLinks.map(link => (
+              <li key={link.path}>
+                <Link className="underline" href={link.path}>
+                  {link.title}
+                </Link>{' '}
+                — {link.description}
+              </li>
+            ))}
+          </ul>
+        </Section>
+
         <Section id="architecture" title="Architecture">
           <p>THORChain Swap consists of two components:</p>
           <ul className="list-disc space-y-1 pl-5">
@@ -104,8 +128,11 @@ export default function DevelopersPage() {
             </li>
             <li>
               <strong>Backend API</strong> — the THORChain/Maya Protocol swap aggregator: <code>https://api.thorchain.org/v1</code> for swap quotes
-              and routes (requires an <code>x-api-key</code> header; keys are not self-service — contact the maintainers) and{' '}
-              <code>https://api.thorchain.org/memoless/api/v1</code> for memoless (instant) swaps (no API key required).
+              and routes (requires an <code>x-api-key</code> header; keys are free through the{' '}
+              <a className="underline" href={AppConfig.affiliateLink} rel="noopener noreferrer" target="_blank">
+                affiliate program
+              </a>
+              , issued after review) and <code>https://api.thorchain.org/memoless/api/v1</code> for memoless (instant) swaps (no API key required).
             </li>
           </ul>
           <p>
@@ -130,6 +157,10 @@ export default function DevelopersPage() {
             <a className="underline" href="/.well-known/mcp/server-card.json">
               /.well-known/mcp/server-card.json
             </a>
+            . Aliases: <code>/.well-known/mcp.json</code>, <code>/mcp.json</code>, and a plain <code>GET /mcp</code>. The full reference lives at{' '}
+            <Link className="underline" href="/developers/mcp">
+              /developers/mcp
+            </Link>
             .
           </p>
           <ul className="list-disc space-y-1 pl-5">
@@ -145,6 +176,27 @@ export default function DevelopersPage() {
             render as an interactive quote view.
           </p>
           <p>The server never holds keys, signs, or submits transactions.</p>
+        </Section>
+
+        <Section id="sdks" title="SDKs">
+          <ul className="list-disc space-y-1 pl-5">
+            {SDK_PACKAGES.map(pkg => (
+              <li key={pkg.name}>
+                <strong>{pkg.language}</strong> — <code>{pkg.name}</code> ({pkg.ecosystem}):{' '}
+                <a className="underline" href={pkg.source} rel="noopener noreferrer" target="_blank">
+                  source
+                </a>
+                . {pkg.status}
+              </li>
+            ))}
+          </ul>
+          <p>
+            Full reference:{' '}
+            <Link className="underline" href="/developers/sdks">
+              /developers/sdks
+            </Link>
+            .
+          </p>
         </Section>
 
         <Section id="api" title="REST API">
@@ -186,11 +238,27 @@ export default function DevelopersPage() {
         <Section id="auth" title="Authentication">
           <p>
             Browsing, quoting, the public MCP server, and the support APIs are anonymous; there are no accounts, and users sign transactions in their
-            own wallets (or use memoless swaps with no wallet connection). This site does not issue or accept bearer tokens. The aggregator quote API
-            (<code>https://api.thorchain.org/v1</code>) is separate and requires an <code>x-api-key</code> header.
+            own wallets (or use memoless swaps with no wallet connection).
+          </p>
+          <p>
+            This site runs no authorization server and issues no tokens — there is no <code>/.well-known/oauth-protected-resource</code> and no{' '}
+            <code>/.well-known/oauth-authorization-server</code> to discover, so an MCP client that probes for authorization metadata finds none and
+            connects directly. If a connector UI asks for an OAuth client ID or an API key for <code>{AppConfig.baseUrl}/mcp</code>, leave it blank.
+          </p>
+          <p>
+            The aggregator quote API (<code>https://api.thorchain.org/v1</code>) is a different system: it takes an <code>x-api-key</code>, issued
+            free through the{' '}
+            <a className="underline" href={AppConfig.affiliateLink} rel="noopener noreferrer" target="_blank">
+              affiliate program
+            </a>{' '}
+            after a short review. That account also sets affiliate and service fee splits, generates the embeddable widget, and reports earnings.
           </p>
           <p>
             See{' '}
+            <Link className="underline" href="/developers/auth">
+              /developers/auth
+            </Link>{' '}
+            and{' '}
             <a className="underline" href="/auth.md">
               auth.md
             </a>

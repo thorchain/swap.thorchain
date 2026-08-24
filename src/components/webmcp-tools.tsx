@@ -14,7 +14,12 @@ type ModelContext = {
 }
 
 declare global {
+  // WebMCP moved its entry point to document.modelContext; the navigator alias
+  // is deprecated from Chrome 150 on, so both are declared and document wins.
   interface Navigator {
+    modelContext?: ModelContext
+  }
+  interface Document {
     modelContext?: ModelContext
   }
 }
@@ -28,6 +33,14 @@ const publicRoutes: Record<string, string> = {
   thorname: 'https://thorname.thorchain.org/'
 }
 
+const PAGE_SECTIONS = ['page', 'discovery', 'all'] as const
+
+function readSection(input: unknown) {
+  if (!input || typeof input !== 'object' || !('include' in input)) return 'all'
+  const include = (input as { include?: unknown }).include
+  return typeof include === 'string' && (PAGE_SECTIONS as readonly string[]).includes(include) ? include : 'all'
+}
+
 function readRoute(input: unknown) {
   if (!input || typeof input !== 'object' || !('route' in input)) return 'swap'
   const route = (input as { route?: unknown }).route
@@ -36,7 +49,7 @@ function readRoute(input: unknown) {
 
 export function WebMcpTools() {
   useEffect(() => {
-    const modelContext = navigator.modelContext
+    const modelContext = document.modelContext ?? navigator.modelContext
     if (!modelContext?.registerTool) return
 
     const controller = new AbortController()
@@ -45,23 +58,37 @@ export function WebMcpTools() {
     const tools: WebMcpTool[] = [
       {
         name: 'get-thorchain-swap-page',
-        description: 'Return public metadata for the current THORChain Swap page.',
+        description:
+          'Return public metadata for the current THORChain Swap page: its identity, and where this site publishes agent discovery documents.',
         inputSchema: {
           type: 'object',
           additionalProperties: false,
-          properties: {}
+          required: [],
+          properties: {
+            include: {
+              type: 'string',
+              enum: [...PAGE_SECTIONS],
+              default: 'all',
+              description: 'Which half of the result to return: "page" for the page identity, "discovery" for the discovery URLs, "all" for both.'
+            }
+          }
         },
-        execute: () => ({
-          title: document.title,
-          url: window.location.href,
-          origin: window.location.origin,
-          discovery: {
+        execute: input => {
+          const section = readSection(input)
+          const page = { title: document.title, url: window.location.href, origin: window.location.origin }
+          const discovery = {
             robots: `${window.location.origin}/robots.txt`,
             sitemap: `${window.location.origin}/sitemap.xml`,
             apiCatalog: `${window.location.origin}/.well-known/api-catalog`,
-            agentSkills: `${window.location.origin}/.well-known/agent-skills/index.json`
+            agentSkills: `${window.location.origin}/.well-known/agent-skills/index.json`,
+            mcpServerCard: `${window.location.origin}/.well-known/mcp/server-card.json`,
+            developers: `${window.location.origin}/developers`
           }
-        })
+
+          if (section === 'page') return page
+          if (section === 'discovery') return { discovery }
+          return { ...page, discovery }
+        }
       },
       {
         name: 'open-thorchain-swap-route',
@@ -69,15 +96,16 @@ export function WebMcpTools() {
         inputSchema: {
           type: 'object',
           additionalProperties: false,
+          required: ['route'],
           properties: {
             route: {
               type: 'string',
               enum: Object.keys(publicRoutes),
-              description: 'Public route to open.'
+              description: 'Public route to open. Defaults to the swap interface when omitted or unknown.'
             }
           }
         },
-        execute: (input) => {
+        execute: input => {
           const route = readRoute(input)
           const target = publicRoutes[route]
           // Defer navigation so the tool result is delivered before the page unloads.
