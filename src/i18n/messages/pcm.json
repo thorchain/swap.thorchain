@@ -188,6 +188,7 @@
       "warning": {
         "memolessDeposit": "To {mode} dis order, send di deposit from di original {chain} wallet wey place am",
         "connectOrMemoless": "Connect a {chain} wallet or use di memoless deposit to {mode} dis order",
+        "memolessHalted": "Memoless deposit don pause for THORChain right now - connect di original {chain} wallet to {mode} dis order",
         "connect": "Connect a {chain} wallet to {mode} dis order",
         "switch": "Switch to a {chain} wallet to {mode} dis order",
         "addressMismatch": "Di wallet wey connect no match di address wey place dis order",

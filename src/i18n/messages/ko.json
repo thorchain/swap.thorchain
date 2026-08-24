@@ -188,6 +188,7 @@
       "warning": {
         "memolessDeposit": "이 주문을 {mode}하려면 주문을 생성한 원래 {chain} 지갑에서 입금을 보내세요",
         "connectOrMemoless": "이 주문을 {mode}하려면 {chain} 지갑을 연결하거나 Memo 없는 입금을 사용하세요",
+        "memolessHalted": "Memo 없는 입금은 현재 THORChain에서 중단되었습니다 - 이 주문을 {mode}하려면 원래 {chain} 지갑을 연결하세요",
         "connect": "이 주문을 {mode}하려면 {chain} 지갑을 연결하세요",
         "switch": "이 주문을 {mode}하려면 {chain} 지갑으로 전환하세요",
         "addressMismatch": "연결된 지갑이 이 주문을 생성한 주소와 일치하지 않습니다",

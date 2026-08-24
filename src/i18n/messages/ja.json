@@ -188,6 +188,7 @@
       "warning": {
         "memolessDeposit": "この注文を{mode}するには、注文を行った元の{chain}ウォレットから預け入れを送信してください",
         "connectOrMemoless": "この注文を{mode}するには、{chain}ウォレットを接続するか、Memoなしの預け入れを使用してください",
+        "memolessHalted": "Memoなしの預け入れは現在THORChainにより停止されています - この注文を{mode}するには、注文を行った元の{chain}ウォレットを接続してください",
         "connect": "この注文を{mode}するには、{chain}ウォレットを接続してください",
         "switch": "この注文を{mode}するには、{chain}ウォレットに切り替えてください",
         "addressMismatch": "接続中のウォレットがこの注文を行ったアドレスと一致しません",

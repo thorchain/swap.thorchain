@@ -189,6 +189,7 @@
       "warning": {
         "memolessDeposit": "To {mode} this order, send the deposit from the original {chain} wallet that placed it",
         "connectOrMemoless": "Connect a {chain} wallet or use the memoless deposit to {mode} this order",
+        "memolessHalted": "Memoless deposits are paused by THORChain right now - connect the original {chain} wallet to {mode} this order",
         "connect": "Connect a {chain} wallet to {mode} this order",
         "switch": "Switch to a {chain} wallet to {mode} this order",
         "addressMismatch": "Connected wallet does not match the address that placed this order",

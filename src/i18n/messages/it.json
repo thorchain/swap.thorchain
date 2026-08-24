@@ -188,6 +188,7 @@
       "warning": {
         "memolessDeposit": "Per {mode} questo ordine, invia il deposito dal wallet {chain} originale che l'ha effettuato",
         "connectOrMemoless": "Connetti un wallet {chain} o utilizza ill deposito senza memo per {mode} quest'ordine",
+        "memolessHalted": "I depositi senza memo sono attualmente sospesi da THORChain - connetti il wallet {chain} originale per {mode} questo ordine",
         "connect": "Connetti un wallet {chain} per {mode} questo ordine",
         "switch": "Passa a un wallet {chain} per {mode} quest'ordine",
         "addressMismatch": "Il wallet connesso non corrisponde all'indirizzo che ha effettuato quest'ordine",

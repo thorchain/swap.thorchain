@@ -14,6 +14,7 @@ import { SwapLimit } from '@/components/swap/swap-limit'
 import { SwapSettings } from '@/components/swap/swap-settings'
 import { SwapToggleAssets } from '@/components/swap/swap-toggle-assets'
 import { useMemolessAssets } from '@/hooks/use-memoless-assets'
+import { useIsMemolessHalted } from '@/hooks/use-mimir'
 import { useQuote } from '@/hooks/use-quote'
 import { useSwapRates } from '@/hooks/use-rates'
 import { useResolveSource } from '@/hooks/use-resolve-source'
@@ -33,6 +34,7 @@ export const Swap = () => {
   const { valueFrom } = useSwap()
   const { quote } = useQuote()
   const { assets: memolessAssets } = useMemolessAssets()
+  const isMemolessHalted = useIsMemolessHalted()
   const { rateFrom, rateTo } = useSwapRates()
 
   useUrlParams()
@@ -53,9 +55,9 @@ export const Swap = () => {
     const minAmount = new USwapNumber(10 ** -(memolessAsset.decimals - 5))
     if (valueFrom.lt(minAmount))
       return new Error(t('error.minAmountNoWallet', { amount: minAmount.toSignificant(), ticker: assetFrom.ticker }))
-  }, [memolessAsset, selectedAccount, valueFrom, t])
+  }, [memolessAsset, selectedAccount, valueFrom, isMemolessHalted, t])
 
-  const instantSwapSupported = !!memolessAsset
+  const instantSwapSupported = !!memolessAsset && !isMemolessHalted
 
   const priceImpact = useMemo(() => {
     return resolvePriceImpact(quote, rateFrom, rateTo)

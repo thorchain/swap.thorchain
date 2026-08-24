@@ -188,6 +188,7 @@
       "warning": {
         "memolessDeposit": "Para {mode} esta orden, envía el depósito desde la billetera {chain} original que la creó",
         "connectOrMemoless": "Conecta una billetera {chain} o usa el depósito sin Memo para {mode} esta orden",
+        "memolessHalted": "Los depósitos sin Memo están pausados por THORChain en este momento - conecta la billetera {chain} original para {mode} esta orden",
         "connect": "Conecta una billetera {chain} para {mode} esta orden",
         "switch": "Cambia a una billetera {chain} para {mode} esta orden",
         "addressMismatch": "La billetera conectada no coincide con la dirección que creó esta orden",

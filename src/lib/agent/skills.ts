@@ -163,6 +163,10 @@ A memoless ("instant") swap replaces the transaction memo with a dedicated depos
 
 The endpoint is \`https://api.thorchain.org/memoless/api/v1\` and needs no API key. The interface at ${AppConfig.baseUrl}/ drives the same flow for humans.
 
+## Check The Halt Switch First
+
+THORChain can pause memoless swaps without halting any chain, by setting \`HALTMEMOLESS\` in Mimir. Read \`https://thornode.ninerealms.com/thorchain/mimir\` and treat any value greater than 0 for \`HALTMEMOLESS\` as "wallet-free swaps are unavailable right now": tell the user to swap from a connected wallet instead, and never hand out a deposit address while the halt is up.
+
 ## What An Agent Should And Should Not Do
 
 - **Do** explain the flow, help pick the pair, and surface the quote via \`get_swap_quote\`.

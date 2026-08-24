@@ -188,6 +188,7 @@
       "warning": {
         "memolessDeposit": "ایہ آرڈر {mode} کرݨ لئی، اوسے اصل {chain} والٹ توں ڈیپازٹ بھیجو جیہڑے ایہ رکھیا سی",
         "connectOrMemoless": "ایہ آرڈر {mode} کرݨ لئی {chain} والٹ کنیکٹ کرو یا memoless ڈیپازٹ ورتو",
+        "memolessHalted": "memoless ڈیپازٹ ہُݨ THORChain نے روک رکھے نیں - ایہ آرڈر {mode} کرݨ لئی اصل {chain} والٹ کنیکٹ کرو",
         "connect": "ایہ آرڈر {mode} کرݨ لئی {chain} والٹ کنیکٹ کرو",
         "switch": "ایہ آرڈر {mode} کرݨ لئی {chain} والٹ تے سوئچ کرو",
         "addressMismatch": "کنیکٹ کیتا والٹ اوس پتے نال نئیں ملدا جیہڑے ایہ آرڈر رکھیا سی",

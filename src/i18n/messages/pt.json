@@ -188,6 +188,7 @@
       "warning": {
         "memolessDeposit": "Para {mode} esta ordem, envie o depósito da carteira {chain} original que a criou",
         "connectOrMemoless": "Conecte uma carteira {chain} ou use o depósito sem memo para {mode} esta ordem",
+        "memolessHalted": "A THORChain pausou os depósitos sem memo no momento - conecte a carteira {chain} original para {mode} esta ordem",
         "connect": "Conecte uma carteira {chain} para {mode} esta ordem",
         "switch": "Mude para uma carteira {chain} para {mode} esta ordem",
         "addressMismatch": "A carteira conectada não corresponde ao endereço que criou esta ordem",

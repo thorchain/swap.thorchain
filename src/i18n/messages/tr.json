@@ -188,6 +188,7 @@
       "warning": {
         "memolessDeposit": "Bu emri {mode} için, emri oluşturan orijinal {chain} cüzdanından yatırma gönder",
         "connectOrMemoless": "Bu emri {mode} için bir {chain} cüzdanı bağla veya Memo'suz yatırmayı kullan",
+        "memolessHalted": "Memo'suz yatırmalar şu anda THORChain tarafından durduruldu - bu emri {mode} için orijinal {chain} cüzdanını bağla",
         "connect": "Bu emri {mode} için bir {chain} cüzdanı bağla",
         "switch": "Bu emri {mode} için bir {chain} cüzdanına geç",
         "addressMismatch": "Bağlı cüzdan, bu emri oluşturan adresle eşleşmiyor",

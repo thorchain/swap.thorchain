@@ -10,7 +10,7 @@ import { useDialog } from '@/components/global-dialog'
 import { InstantSwapDialog } from '@/components/swap/instant-swap-dialog'
 import { SwapDialog } from '@/components/swap/swap-dialog'
 import { useBalance } from '@/hooks/use-balance'
-import { useMimir } from '@/hooks/use-mimir'
+import { useIsMemolessHalted, useMimir } from '@/hooks/use-mimir'
 import { useQuote } from '@/hooks/use-quote'
 import { useSimulation } from '@/hooks/use-simulation'
 import { useAssetFrom, useAssetTo, useSwap } from '@/hooks/use-swap'
@@ -41,6 +41,7 @@ export const SwapButton = ({ instantSwapSupported, instantSwapAvailable }: SwapB
   const isLimitSwap = useIsLimitSwap()
   const limitSwapBuyAmount = useLimitSwapBuyAmount()
   const externalWalletMode = useExternalWalletMode()
+  const isMemolessHalted = useIsMemolessHalted()
   const setExternalWalletMode = useSetExternalWalletMode()
   const { valueFrom } = useSwap()
   const { quote, isLoading: isQuoting, refetch: refetchQuote } = useQuote()
@@ -121,7 +122,7 @@ export const SwapButton = ({ instantSwapSupported, instantSwapAvailable }: SwapB
           accent: false,
           onClick: () => {
             if (externalWalletMode) {
-              toast.warning(tWallet('externalWalletAssetUnsupported'))
+              if (!isMemolessHalted) toast.warning(tWallet('externalWalletAssetUnsupported'))
               setExternalWalletMode(false)
             }
             openDialog(ConnectWallet, { chain: assetFrom.chain })

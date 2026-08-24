@@ -188,6 +188,7 @@
       "warning": {
         "memolessDeposit": "Um diese Order zu {mode}, senden Sie die Einzahlung von der ursprünglichen {chain}-Wallet, die sie platziert hat",
         "connectOrMemoless": "Verbinden Sie eine {chain}-Wallet oder verwenden Sie die memolose Einzahlung, um diese Order zu {mode}",
+        "memolessHalted": "Memolose Einzahlungen sind bei THORChain derzeit pausiert - verbinden Sie die ursprüngliche {chain}-Wallet, um diese Order zu {mode}",
         "connect": "Verbinden Sie eine {chain}-Wallet, um diese Order zu {mode}",
         "switch": "Wechseln Sie zu einer {chain}-Wallet, um diese Order zu {mode}",
         "addressMismatch": "Die verbundene Wallet stimmt nicht mit der Adresse überein, die diese Order platziert hat",

@@ -188,6 +188,7 @@
       "warning": {
         "memolessDeposit": "要{mode}此订单，请从最初下单的{chain}钱包发送存款",
         "connectOrMemoless": "连接{chain}钱包或使用无Memo存款来{mode}此订单",
+        "memolessHalted": "无Memo存款目前已被THORChain暂停 - 请连接最初下单的{chain}钱包来{mode}此订单",
         "connect": "连接{chain}钱包以{mode}此订单",
         "switch": "切换到{chain}钱包以{mode}此订单",
         "addressMismatch": "已连接的钱包与下此订单的地址不匹配",

@@ -188,6 +188,7 @@
       "warning": {
         "memolessDeposit": "لـ {mode} هذا الأمر، أرسِل الإيداع من محفظة {chain} الأصلية التي أنشأته",
         "connectOrMemoless": "اربط محفظة {chain} أو استخدم الإيداع بلا Memo لـ {mode} هذا الأمر",
+        "memolessHalted": "الإيداعات بلا Memo متوقفة مؤقتًا من قِبل THORChain حاليًا - اربط محفظة {chain} الأصلية لـ {mode} هذا الأمر",
         "connect": "اربط محفظة {chain} لـ {mode} هذا الأمر",
         "switch": "بدّل إلى محفظة {chain} لـ {mode} هذا الأمر",
         "addressMismatch": "المحفظة المتصلة لا تطابق العنوان الذي أنشأ هذا الأمر",

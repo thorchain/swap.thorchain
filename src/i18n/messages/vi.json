@@ -188,6 +188,7 @@
       "warning": {
         "memolessDeposit": "Để {mode} lệnh này, hãy gửi khoản tiền nạp từ ví {chain} gốc đã đặt lệnh",
         "connectOrMemoless": "Kết nối ví {chain} hoặc dùng khoản tiền nạp không Memo để {mode} lệnh này",
+        "memolessHalted": "Các khoản tiền nạp không Memo hiện đang bị THORChain tạm dừng - hãy kết nối ví {chain} gốc để {mode} lệnh này",
         "connect": "Kết nối ví {chain} để {mode} lệnh này",
         "switch": "Chuyển sang ví {chain} để {mode} lệnh này",
         "addressMismatch": "Ví đã kết nối không khớp với địa chỉ đã đặt lệnh này",

@@ -188,6 +188,7 @@
       "warning": {
         "memolessDeposit": "Pour {mode} cet ordre, envoyez le dépôt depuis le portefeuille {chain} d'origine qui l'a placé",
         "connectOrMemoless": "Connectez un portefeuille {chain} ou utilisez le dépôt sans Memo pour {mode} cet ordre",
+        "memolessHalted": "Les dépôts sans Memo sont actuellement suspendus par THORChain - connectez le portefeuille {chain} d'origine pour {mode} cet ordre",
         "connect": "Connectez un portefeuille {chain} pour {mode} cet ordre",
         "switch": "Basculez vers un portefeuille {chain} pour {mode} cet ordre",
         "addressMismatch": "Le portefeuille connecté ne correspond pas à l'adresse qui a placé cet ordre",

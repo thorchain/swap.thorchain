@@ -18,6 +18,7 @@ import { InstantSwapChannelDialog } from '@/components/swap/instant-swap-channel
 import { SwapError } from '@/components/swap/swap-error'
 import { GenericButton } from '@/components/generic-button'
 import { useMemolessAssets } from '@/hooks/use-memoless-assets'
+import { useIsMemolessHalted } from '@/hooks/use-mimir'
 import { useSelectedAccount } from '@/hooks/use-wallets'
 import { getInboundAddresses, getLimitSwaps } from '@/lib/api'
 import {
@@ -50,6 +51,7 @@ export const SwapLimitCancel = ({ isOpen, onOpenChange, mode, transaction }: Swa
   const selectedAccount = useSelectedAccount()
   const { openDialog } = useDialog()
   const { assets: memolessAssets } = useMemolessAssets()
+  const isMemolessHalted = useIsMemolessHalted()
   const [inboundAddresses, setInboundAddresses] = useState<InboundAddressesItem[]>([])
   const [loading, setLoading] = useState(false)
   const [submitting, setSubmitting] = useState(false)
@@ -127,7 +129,9 @@ export const SwapLimitCancel = ({ isOpen, onOpenChange, mode, transaction }: Swa
 
   const memolessAsset = memolessAssets?.find(a => a.asset === assetFrom.identifier)
   const walletMatchesChain = !!selectedAccount && selectedAccount.network === assetFrom.chain
-  const useMemolessPath = !!isMemoless && !!memolessAsset && !walletMatchesChain
+  // HALTMEMOLESS closes the deposit-channel route, so a memoless order can only be cancelled or
+  // modified from a connected wallet on its own chain until the network lifts the halt.
+  const useMemolessPath = !!isMemoless && !!memolessAsset && !walletMatchesChain && !isMemolessHalted
 
   const addressMatch = !addressFrom || !selectedAccount || selectedAccount.address.toLowerCase() === addressFrom.toLowerCase()
 
@@ -271,6 +275,8 @@ export const SwapLimitCancel = ({ isOpen, onOpenChange, mode, transaction }: Swa
 
     if (useMemolessPath) {
       warnings.push(t('limitCancel.warning.memolessDeposit', { mode, chain: chainLabel(assetFrom.chain) }))
+    } else if (isMemoless && memolessAsset && isMemolessHalted && !walletMatchesChain) {
+      warnings.push(t('limitCancel.warning.memolessHalted', { mode, chain: chainLabel(assetFrom.chain) }))
     } else if (!selectedAccount) {
       if (isMemoless && memolessAsset) {
         warnings.push(t('limitCancel.warning.connectOrMemoless', { mode, chain: chainLabel(assetFrom.chain) }))
