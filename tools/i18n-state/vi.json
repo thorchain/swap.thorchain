@@ -147,6 +147,7 @@
   "swap.limitCancel.toast.modifySubmitted": ["Modify transaction submitted", "Giao dịch sửa đã được gửi"],
   "swap.limitCancel.warning.memolessDeposit": ["To {mode} this order, send the deposit from the original {chain} wallet that placed it", "Để {mode} lệnh này, hãy gửi khoản tiền nạp từ ví {chain} gốc đã đặt lệnh"],
   "swap.limitCancel.warning.connectOrMemoless": ["Connect a {chain} wallet or use the memoless deposit to {mode} this order", "Kết nối ví {chain} hoặc dùng khoản tiền nạp không Memo để {mode} lệnh này"],
+  "swap.limitCancel.warning.memolessHalted": ["Memoless deposits are paused by THORChain right now - connect the original {chain} wallet to {mode} this order", "Các khoản tiền nạp không Memo hiện đang bị THORChain tạm dừng - hãy kết nối ví {chain} gốc để {mode} lệnh này"],
   "swap.limitCancel.warning.connect": ["Connect a {chain} wallet to {mode} this order", "Kết nối ví {chain} để {mode} lệnh này"],
   "swap.limitCancel.warning.switch": ["Switch to a {chain} wallet to {mode} this order", "Chuyển sang ví {chain} để {mode} lệnh này"],
   "swap.limitCancel.warning.addressMismatch": ["Connected wallet does not match the address that placed this order", "Ví đã kết nối không khớp với địa chỉ đã đặt lệnh này"],
@@ -455,5 +456,9 @@
   "tx.status.unknown": ["Unknown", "Không xác định"],
   "tx.leg.deposit": ["Deposit {ticker}", "Nạp {ticker}"],
   "tx.leg.send": ["Send {ticker}", "Gửi {ticker}"],
-  "tx.leg.swap": ["Swap {from} to {to}", "Hoán đổi {from} sang {to}"]
+  "tx.leg.swap": ["Swap {from} to {to}", "Hoán đổi {from} sang {to}"],
+  "swap.limitCancel.error.walletNotConnected": ["Wallet not connected", "Ví chưa được kết nối"],
+  "swap.limitCancel.warning.orderNotFound": ["This order is no longer open on THORChain - it may have already been filled or expired", "Lệnh này không còn mở trên THORChain - có thể đã được khớp hoặc đã hết hạn"],
+  "wallet.externalWalletModeUnavailable": ["Currently Unavailable", "Hiện không khả dụng"],
+  "wallet.externalWalletModeHalted": ["Memoless swaps are paused right now. Connect a wallet to keep swapping.", "Giao dịch hoán đổi không cần memo đang tạm dừng. Hãy kết nối ví để tiếp tục hoán đổi."]
 }

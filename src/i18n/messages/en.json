@@ -520,6 +520,8 @@
     "sortByBalance": "Balance (High → Low)",
     "externalWalletMode": "External Wallet Mode",
     "externalWalletModeDescription": "Use a self custody wallet without connecting it to the website",
+    "externalWalletModeUnavailable": "Currently Unavailable",
+    "externalWalletModeHalted": "Memoless swaps are paused right now. Connect a wallet to keep swapping.",
     "externalWalletAssetUnsupported": "This asset is not supported in External Wallet mode. Connect a browser wallet if you want to continue.",
     "close": "Close",
     "sendToken": "Send {ticker}"

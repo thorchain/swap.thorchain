@@ -177,7 +177,8 @@
       "error": {
         "loadInboundAddresses": "Inbound-Adressen konnten nicht geladen werden",
         "cancelFailed": "Limit-Swap konnte nicht storniert werden",
-        "modifyFailed": "Limit-Swap konnte nicht geändert werden"
+        "modifyFailed": "Limit-Swap konnte nicht geändert werden",
+        "walletNotConnected": "Wallet nicht verbunden"
       },
       "toast": {
         "sendToCancel": "Senden Sie {amount} {ticker} von der ursprünglichen Wallet, um zu stornieren",
@@ -192,7 +193,8 @@
         "connect": "Verbinden Sie eine {chain}-Wallet, um diese Order zu {mode}",
         "switch": "Wechseln Sie zu einer {chain}-Wallet, um diese Order zu {mode}",
         "addressMismatch": "Die verbundene Wallet stimmt nicht mit der Adresse überein, die diese Order platziert hat",
-        "tradingPaused": "{chain}-Handel ist derzeit pausiert"
+        "tradingPaused": "{chain}-Handel ist derzeit pausiert",
+        "orderNotFound": "Diese Order ist auf THORChain nicht mehr offen – sie wurde möglicherweise bereits ausgeführt oder ist abgelaufen"
       }
     },
     "quoteTimer": {
@@ -518,6 +520,8 @@
     "sortByBalance": "Guthaben (Hoch → Niedrig)",
     "externalWalletMode": "Externer Wallet-Modus",
     "externalWalletModeDescription": "Verwenden Sie eine Self-Custody-Wallet, ohne sie mit der Website zu verbinden",
+    "externalWalletModeUnavailable": "Derzeit nicht verfügbar",
+    "externalWalletModeHalted": "Memo-lose Swaps sind derzeit pausiert. Verbinde eine Wallet, um weiter zu swappen.",
     "externalWalletAssetUnsupported": "Dieses Asset wird im externen Wallet-Modus nicht unterstützt. Verbinden Sie eine Browser-Wallet, wenn Sie fortfahren möchten.",
     "close": "Schließen",
     "sendToken": "{ticker} senden"

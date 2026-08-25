@@ -147,6 +147,7 @@
   "swap.limitCancel.toast.modifySubmitted": ["Modify transaction submitted", "Transaksi perubahan terkirim"],
   "swap.limitCancel.warning.memolessDeposit": ["To {mode} this order, send the deposit from the original {chain} wallet that placed it", "Untuk {mode} order ini, kirim deposit dari dompet {chain} asli yang membuatnya"],
   "swap.limitCancel.warning.connectOrMemoless": ["Connect a {chain} wallet or use the memoless deposit to {mode} this order", "Hubungkan dompet {chain} atau gunakan deposit tanpa memo untuk {mode} order ini"],
+  "swap.limitCancel.warning.memolessHalted": ["Memoless deposits are paused by THORChain right now - connect the original {chain} wallet to {mode} this order", "Deposit tanpa memo sedang dijeda oleh THORChain saat ini - hubungkan dompet {chain} asli untuk {mode} order ini"],
   "swap.limitCancel.warning.connect": ["Connect a {chain} wallet to {mode} this order", "Hubungkan dompet {chain} untuk {mode} order ini"],
   "swap.limitCancel.warning.switch": ["Switch to a {chain} wallet to {mode} this order", "Beralih ke dompet {chain} untuk {mode} order ini"],
   "swap.limitCancel.warning.addressMismatch": ["Connected wallet does not match the address that placed this order", "Dompet yang terhubung tidak cocok dengan alamat yang membuat order ini"],
@@ -455,5 +456,9 @@
   "tx.status.unknown": ["Unknown", "Tidak diketahui"],
   "tx.leg.deposit": ["Deposit {ticker}", "Deposit {ticker}"],
   "tx.leg.send": ["Send {ticker}", "Kirim {ticker}"],
-  "tx.leg.swap": ["Swap {from} to {to}", "Tukar {from} ke {to}"]
+  "tx.leg.swap": ["Swap {from} to {to}", "Tukar {from} ke {to}"],
+  "swap.limitCancel.error.walletNotConnected": ["Wallet not connected", "Wallet tidak terhubung"],
+  "swap.limitCancel.warning.orderNotFound": ["This order is no longer open on THORChain - it may have already been filled or expired", "Order ini tidak lagi terbuka di THORChain - kemungkinan sudah terisi atau kedaluwarsa"],
+  "wallet.externalWalletModeUnavailable": ["Currently Unavailable", "Saat Ini Tidak Tersedia"],
+  "wallet.externalWalletModeHalted": ["Memoless swaps are paused right now. Connect a wallet to keep swapping.", "Swap tanpa memo sedang dijeda saat ini. Hubungkan wallet untuk terus melakukan swap."]
 }

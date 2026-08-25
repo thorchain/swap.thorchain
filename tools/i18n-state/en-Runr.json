@@ -147,6 +147,7 @@
   "swap.limitCancel.toast.modifySubmitted": ["Modify transaction submitted", "ᛗᛟᛞᛁᚠᛁ ᛏᚱᚨᚾᛊᚨᚲᛏᛁᛟᚾ ᛊᚢᛒᛗᛁᛏᛏᛖᛞ"],
   "swap.limitCancel.warning.memolessDeposit": ["To {mode} this order, send the deposit from the original {chain} wallet that placed it", "ᛏᛟ {mode} ᚦᛁᛊ ᛟᚱᛞᛖᚱ, ᛊᛖᚾᛞ ᚦᛖ ᛞᛖᛈᛟᛊᛁᛏ ᚠᚱᛟᛗ ᚦᛖ ᛟᚱᛁᚷᛁᚾᚨᛚ {chain} ᚹᚨᛚᛚᛖᛏ ᚦᚨᛏ ᛈᛚᚨᚲᛖᛞ ᛁᛏ"],
   "swap.limitCancel.warning.connectOrMemoless": ["Connect a {chain} wallet or use the memoless deposit to {mode} this order", "ᚲᛟᚾᚾᛖᚲᛏ ᚨ {chain} ᚹᚨᛚᛚᛖᛏ ᛟᚱ ᚢᛊᛖ ᚦᛖ ᛗᛖᛗᛟᛚᛖᛊᛊ ᛞᛖᛈᛟᛊᛁᛏ ᛏᛟ {mode} ᚦᛁᛊ ᛟᚱᛞᛖᚱ"],
+  "swap.limitCancel.warning.memolessHalted": ["Memoless deposits are paused by THORChain right now - connect the original {chain} wallet to {mode} this order", "ᛗᛖᛗᛟᛚᛖᛊᛊ ᛞᛖᛈᛟᛊᛁᛏᛊ ᚨᚱᛖ ᛈᚨᚢᛊᛖᛞ ᛒᛁ ᚦᛟᚱᚲᚺᚨᛁᚾ ᚱᛁᚷᚺᛏ ᚾᛟᚹ - ᚲᛟᚾᚾᛖᚲᛏ ᚦᛖ ᛟᚱᛁᚷᛁᚾᚨᛚ {chain} ᚹᚨᛚᛚᛖᛏ ᛏᛟ {mode} ᚦᛁᛊ ᛟᚱᛞᛖᚱ"],
   "swap.limitCancel.warning.connect": ["Connect a {chain} wallet to {mode} this order", "ᚲᛟᚾᚾᛖᚲᛏ ᚨ {chain} ᚹᚨᛚᛚᛖᛏ ᛏᛟ {mode} ᚦᛁᛊ ᛟᚱᛞᛖᚱ"],
   "swap.limitCancel.warning.switch": ["Switch to a {chain} wallet to {mode} this order", "ᛊᚹᛁᛏᚲᚺ ᛏᛟ ᚨ {chain} ᚹᚨᛚᛚᛖᛏ ᛏᛟ {mode} ᚦᛁᛊ ᛟᚱᛞᛖᚱ"],
   "swap.limitCancel.warning.addressMismatch": ["Connected wallet does not match the address that placed this order", "ᚲᛟᚾᚾᛖᚲᛏᛖᛞ ᚹᚨᛚᛚᛖᛏ ᛞᛟᛖᛊ ᚾᛟᛏ ᛗᚨᛏᚲᚺ ᚦᛖ ᚨᛞᛞᚱᛖᛊᛊ ᚦᚨᛏ ᛈᛚᚨᚲᛖᛞ ᚦᛁᛊ ᛟᚱᛞᛖᚱ"],
@@ -455,5 +456,9 @@
   "tx.status.unknown": ["Unknown", "ᚢᚾᚲᚾᛟᚹᚾ"],
   "tx.leg.deposit": ["Deposit {ticker}", "ᛞᛖᛈᛟᛊᛁᛏ {ticker}"],
   "tx.leg.send": ["Send {ticker}", "ᛊᛖᚾᛞ {ticker}"],
-  "tx.leg.swap": ["Swap {from} to {to}", "ᛊᚹᚨᛈ {from} ᛏᛟ {to}"]
+  "tx.leg.swap": ["Swap {from} to {to}", "ᛊᚹᚨᛈ {from} ᛏᛟ {to}"],
+  "swap.limitCancel.error.walletNotConnected": ["Wallet not connected", "ᚹᚨᛚᛚᛖᛏ ᚾᚩᛏ ᚲᚩᚾᚾᛖᚲᛏᛖᚦ"],
+  "swap.limitCancel.warning.orderNotFound": ["This order is no longer open on THORChain - it may have already been filled or expired", "ᚦᛁᛋ ᚩᚱᛞᛖᚱ ᛁᛋ ᚾᚩ ᛚᚩᚾᚷᛖᚱ ᚩᛈᛖᚾ ᚩᚾ THORChain - ᛁᛏ ᛘᚨᚤ ᚻᚨᚠᛖ ᚨᛚᚱᛖᚨᛞᚤ ᛒᛖᛖᚾ ᚠᛁᛚᛚᛖᚦ ᚩᚱ ᛖᚲᛋᛈᛁᚱᛖᚦ"],
+  "wallet.externalWalletModeUnavailable": ["Currently Unavailable", "ᚲᚢᚱᚱᛖᚾᛏᛚᚤ ᚢᚾᚨᚢᚨᛁᛚᚨᛒᛚᛖ"],
+  "wallet.externalWalletModeHalted": ["Memoless swaps are paused right now. Connect a wallet to keep swapping.", "ᛘᛖᛘᚩᛚᛖᛋᛋ ᛋᚹᚨᛈᛋ ᚨᚱᛖ ᛈᚨᚢᛋᛖᚦ ᚱᛁᚷᚻᛏ ᚾᚩᚹ. ᚲᚩᚾᚾᛖᚲᛏ ᚨ ᚹᚨᛚᛚᛖᛏ ᛏᚩ ᚲᛖᛖᛈ ᛋᚹᚨᛈᛈᛁᚾᚷ."]
 }

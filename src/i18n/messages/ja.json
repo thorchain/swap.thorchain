@@ -177,7 +177,8 @@
       "error": {
         "loadInboundAddresses": "受信アドレスの読み込みに失敗しました",
         "cancelFailed": "指値スワップのキャンセルに失敗しました",
-        "modifyFailed": "指値スワップの変更に失敗しました"
+        "modifyFailed": "指値スワップの変更に失敗しました",
+        "walletNotConnected": "ウォレットが未接続です"
       },
       "toast": {
         "sendToCancel": "キャンセルするには元のウォレットから{amount} {ticker}を送信してください",
@@ -192,7 +193,8 @@
         "connect": "この注文を{mode}するには、{chain}ウォレットを接続してください",
         "switch": "この注文を{mode}するには、{chain}ウォレットに切り替えてください",
         "addressMismatch": "接続中のウォレットがこの注文を行ったアドレスと一致しません",
-        "tradingPaused": "{chain}の取引は現在停止されています"
+        "tradingPaused": "{chain}の取引は現在停止されています",
+        "orderNotFound": "この注文はTHORChain上でこれ以上有効ではありません。すでに約定したか、期限切れの可能性があります"
       }
     },
     "quoteTimer": {
@@ -518,6 +520,8 @@
     "sortByBalance": "残高（高 → 低）",
     "externalWalletMode": "外部ウォレットモード",
     "externalWalletModeDescription": "セルフカストディウォレットをウェブサイトに接続せずに使用します",
+    "externalWalletModeUnavailable": "現在ご利用いただけません",
+    "externalWalletModeHalted": "メモレススワップは現在停止中です。ウォレットを接続してスワップを続けてください。",
     "externalWalletAssetUnsupported": "この資産は外部ウォレットモードでは対応していません。続行する場合はブラウザウォレットを接続してください。",
     "close": "閉じる",
     "sendToken": "{ticker} を送信"

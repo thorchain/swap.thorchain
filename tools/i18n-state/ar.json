@@ -147,6 +147,7 @@
   "swap.limitCancel.toast.modifySubmitted": ["Modify transaction submitted", "تم إرسال معاملة التعديل"],
   "swap.limitCancel.warning.memolessDeposit": ["To {mode} this order, send the deposit from the original {chain} wallet that placed it", "لـ {mode} هذا الأمر، أرسِل الإيداع من محفظة {chain} الأصلية التي أنشأته"],
   "swap.limitCancel.warning.connectOrMemoless": ["Connect a {chain} wallet or use the memoless deposit to {mode} this order", "اربط محفظة {chain} أو استخدم الإيداع بلا Memo لـ {mode} هذا الأمر"],
+  "swap.limitCancel.warning.memolessHalted": ["Memoless deposits are paused by THORChain right now - connect the original {chain} wallet to {mode} this order", "الإيداعات بلا Memo متوقفة مؤقتًا من قِبل THORChain حاليًا - اربط محفظة {chain} الأصلية لـ {mode} هذا الأمر"],
   "swap.limitCancel.warning.connect": ["Connect a {chain} wallet to {mode} this order", "اربط محفظة {chain} لـ {mode} هذا الأمر"],
   "swap.limitCancel.warning.switch": ["Switch to a {chain} wallet to {mode} this order", "بدّل إلى محفظة {chain} لـ {mode} هذا الأمر"],
   "swap.limitCancel.warning.addressMismatch": ["Connected wallet does not match the address that placed this order", "المحفظة المتصلة لا تطابق العنوان الذي أنشأ هذا الأمر"],
@@ -455,5 +456,9 @@
   "tx.status.unknown": ["Unknown", "غير معروف"],
   "tx.leg.deposit": ["Deposit {ticker}", "إيداع {ticker}"],
   "tx.leg.send": ["Send {ticker}", "إرسال {ticker}"],
-  "tx.leg.swap": ["Swap {from} to {to}", "تبادل {from} إلى {to}"]
+  "tx.leg.swap": ["Swap {from} to {to}", "تبادل {from} إلى {to}"],
+  "swap.limitCancel.error.walletNotConnected": ["Wallet not connected", "المحفظة غير متصلة"],
+  "swap.limitCancel.warning.orderNotFound": ["This order is no longer open on THORChain - it may have already been filled or expired", "لم يعد هذا الأمر مفتوحًا على THORChain - ربما تم تنفيذه أو انتهت صلاحيته"],
+  "wallet.externalWalletModeUnavailable": ["Currently Unavailable", "غير متاح حاليًا"],
+  "wallet.externalWalletModeHalted": ["Memoless swaps are paused right now. Connect a wallet to keep swapping.", "عمليات التبادل بدون مذكرة متوقفة مؤقتًا الآن. قم بتوصيل محفظة لمواصلة التبادل."]
 }

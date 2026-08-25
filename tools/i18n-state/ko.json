@@ -147,6 +147,7 @@
   "swap.limitCancel.toast.modifySubmitted": ["Modify transaction submitted", "수정 트랜잭션이 제출되었습니다"],
   "swap.limitCancel.warning.memolessDeposit": ["To {mode} this order, send the deposit from the original {chain} wallet that placed it", "이 주문을 {mode}하려면 주문을 생성한 원래 {chain} 지갑에서 입금을 보내세요"],
   "swap.limitCancel.warning.connectOrMemoless": ["Connect a {chain} wallet or use the memoless deposit to {mode} this order", "이 주문을 {mode}하려면 {chain} 지갑을 연결하거나 Memo 없는 입금을 사용하세요"],
+  "swap.limitCancel.warning.memolessHalted": ["Memoless deposits are paused by THORChain right now - connect the original {chain} wallet to {mode} this order", "Memo 없는 입금은 현재 THORChain에서 중단되었습니다 - 이 주문을 {mode}하려면 원래 {chain} 지갑을 연결하세요"],
   "swap.limitCancel.warning.connect": ["Connect a {chain} wallet to {mode} this order", "이 주문을 {mode}하려면 {chain} 지갑을 연결하세요"],
   "swap.limitCancel.warning.switch": ["Switch to a {chain} wallet to {mode} this order", "이 주문을 {mode}하려면 {chain} 지갑으로 전환하세요"],
   "swap.limitCancel.warning.addressMismatch": ["Connected wallet does not match the address that placed this order", "연결된 지갑이 이 주문을 생성한 주소와 일치하지 않습니다"],
@@ -455,5 +456,9 @@
   "tx.status.unknown": ["Unknown", "알 수 없음"],
   "tx.leg.deposit": ["Deposit {ticker}", "{ticker} 입금"],
   "tx.leg.send": ["Send {ticker}", "{ticker} 보내기"],
-  "tx.leg.swap": ["Swap {from} to {to}", "{from}을(를) {to}(으)로 스왑"]
+  "tx.leg.swap": ["Swap {from} to {to}", "{from}을(를) {to}(으)로 스왑"],
+  "swap.limitCancel.error.walletNotConnected": ["Wallet not connected", "지갑이 연결되지 않았습니다"],
+  "swap.limitCancel.warning.orderNotFound": ["This order is no longer open on THORChain - it may have already been filled or expired", "이 주문은 THORChain에서 더 이상 열려 있지 않습니다 - 이미 체결되었거나 만료되었을 수 있습니다"],
+  "wallet.externalWalletModeUnavailable": ["Currently Unavailable", "현재 사용할 수 없음"],
+  "wallet.externalWalletModeHalted": ["Memoless swaps are paused right now. Connect a wallet to keep swapping.", "메모 없는 스왑이 현재 일시 중지되었습니다. 계속 스왑하려면 지갑을 연결하세요."]
 }

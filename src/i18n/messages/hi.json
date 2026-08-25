@@ -177,7 +177,8 @@
       "error": {
         "loadInboundAddresses": "इनबाउंड पते लोड करने में विफल",
         "cancelFailed": "लिमिट स्वैप रद्द करने में विफल",
-        "modifyFailed": "लिमिट स्वैप संशोधित करने में विफल"
+        "modifyFailed": "लिमिट स्वैप संशोधित करने में विफल",
+        "walletNotConnected": "वॉलेट कनेक्ट नहीं है"
       },
       "toast": {
         "sendToCancel": "रद्द करने के लिए मूल वॉलेट से {amount} {ticker} भेजें",
@@ -192,7 +193,8 @@
         "connect": "इस ऑर्डर को {mode} करने के लिए एक {chain} वॉलेट कनेक्ट करें",
         "switch": "इस ऑर्डर को {mode} करने के लिए एक {chain} वॉलेट पर स्विच करें",
         "addressMismatch": "कनेक्ट किया गया वॉलेट इस ऑर्डर को रखने वाले पते से मेल नहीं खाता",
-        "tradingPaused": "{chain} ट्रेडिंग वर्तमान में रुकी हुई है"
+        "tradingPaused": "{chain} ट्रेडिंग वर्तमान में रुकी हुई है",
+        "orderNotFound": "यह ऑर्डर अब THORChain पर खुला नहीं है - यह पहले ही पूरा हो चुका है या समाप्त हो चुका है"
       }
     },
     "quoteTimer": {
@@ -518,6 +520,8 @@
     "sortByBalance": "शेष राशि (अधिक → कम)",
     "externalWalletMode": "बाहरी वॉलेट मोड",
     "externalWalletModeDescription": "अपने सेल्फ-कस्टडी वॉलेट को वेबसाइट से कनेक्ट किए बिना उसका उपयोग करें",
+    "externalWalletModeUnavailable": "फ़िलहाल उपलब्ध नहीं",
+    "externalWalletModeHalted": "मेमोलेस स्वैप अभी रोके गए हैं। स्वैप जारी रखने के लिए वॉलेट कनेक्ट करें।",
     "externalWalletAssetUnsupported": "यह एसेट बाहरी वॉलेट मोड में समर्थित नहीं है. यदि आप जारी रखना चाहते हैं तो एक ब्राउज़र वॉलेट कनेक्ट करें.",
     "close": "बंद करें",
     "sendToken": "{ticker} भेजें"

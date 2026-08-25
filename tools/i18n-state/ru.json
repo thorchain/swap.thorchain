@@ -147,6 +147,7 @@
   "swap.limitCancel.toast.modifySubmitted": ["Modify transaction submitted", "Транзакция изменения отправлена"],
   "swap.limitCancel.warning.memolessDeposit": ["To {mode} this order, send the deposit from the original {chain} wallet that placed it", "Чтобы {mode} этот ордер, отправьте депозит с исходного {chain} кошелька, с которого он был размещён"],
   "swap.limitCancel.warning.connectOrMemoless": ["Connect a {chain} wallet or use the memoless deposit to {mode} this order", "Подключите {chain} кошелёк или используйте депозит без Memo, чтобы {mode} этот ордер"],
+  "swap.limitCancel.warning.memolessHalted": ["Memoless deposits are paused by THORChain right now - connect the original {chain} wallet to {mode} this order", "Депозиты без Memo сейчас приостановлены THORChain — подключите исходный {chain} кошелёк, чтобы {mode} этот ордер"],
   "swap.limitCancel.warning.connect": ["Connect a {chain} wallet to {mode} this order", "Подключите {chain} кошелёк, чтобы {mode} этот ордер"],
   "swap.limitCancel.warning.switch": ["Switch to a {chain} wallet to {mode} this order", "Переключитесь на {chain} кошелёк, чтобы {mode} этот ордер"],
   "swap.limitCancel.warning.addressMismatch": ["Connected wallet does not match the address that placed this order", "Подключённый кошелёк не совпадает с адресом, разместившим этот ордер"],
@@ -455,5 +456,9 @@
   "tx.status.unknown": ["Unknown", "Неизвестно"],
   "tx.leg.deposit": ["Deposit {ticker}", "Внести {ticker}"],
   "tx.leg.send": ["Send {ticker}", "Отправить {ticker}"],
-  "tx.leg.swap": ["Swap {from} to {to}", "Обменять {from} на {to}"]
+  "tx.leg.swap": ["Swap {from} to {to}", "Обменять {from} на {to}"],
+  "swap.limitCancel.error.walletNotConnected": ["Wallet not connected", "Кошелёк не подключён"],
+  "swap.limitCancel.warning.orderNotFound": ["This order is no longer open on THORChain - it may have already been filled or expired", "Этот ордер больше не активен в THORChain — возможно, он уже исполнен или истёк"],
+  "wallet.externalWalletModeUnavailable": ["Currently Unavailable", "Сейчас недоступно"],
+  "wallet.externalWalletModeHalted": ["Memoless swaps are paused right now. Connect a wallet to keep swapping.", "Свопы без memo сейчас приостановлены. Подключите кошелёк, чтобы продолжить обмен."]
 }

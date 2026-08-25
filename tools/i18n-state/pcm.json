@@ -147,6 +147,7 @@
   "swap.limitCancel.toast.modifySubmitted": ["Modify transaction submitted", "We don submit change transaction"],
   "swap.limitCancel.warning.memolessDeposit": ["To {mode} this order, send the deposit from the original {chain} wallet that placed it", "To {mode} dis order, send di deposit from di original {chain} wallet wey place am"],
   "swap.limitCancel.warning.connectOrMemoless": ["Connect a {chain} wallet or use the memoless deposit to {mode} this order", "Connect a {chain} wallet or use di memoless deposit to {mode} dis order"],
+  "swap.limitCancel.warning.memolessHalted": ["Memoless deposits are paused by THORChain right now - connect the original {chain} wallet to {mode} this order", "Memoless deposit don pause for THORChain right now - connect di original {chain} wallet to {mode} dis order"],
   "swap.limitCancel.warning.connect": ["Connect a {chain} wallet to {mode} this order", "Connect a {chain} wallet to {mode} dis order"],
   "swap.limitCancel.warning.switch": ["Switch to a {chain} wallet to {mode} this order", "Switch to a {chain} wallet to {mode} dis order"],
   "swap.limitCancel.warning.addressMismatch": ["Connected wallet does not match the address that placed this order", "Di wallet wey connect no match di address wey place dis order"],
@@ -455,5 +456,9 @@
   "tx.status.unknown": ["Unknown", "We no sabi"],
   "tx.leg.deposit": ["Deposit {ticker}", "Deposit {ticker}"],
   "tx.leg.send": ["Send {ticker}", "Send {ticker}"],
-  "tx.leg.swap": ["Swap {from} to {to}", "Swap {from} to {to}"]
+  "tx.leg.swap": ["Swap {from} to {to}", "Swap {from} to {to}"],
+  "swap.limitCancel.error.walletNotConnected": ["Wallet not connected", "Wallet no connect"],
+  "swap.limitCancel.warning.orderNotFound": ["This order is no longer open on THORChain - it may have already been filled or expired", "Dis order no dey open again for THORChain - e fit don already complete or don expire"],
+  "wallet.externalWalletModeUnavailable": ["Currently Unavailable", "E No Dey Available Now"],
+  "wallet.externalWalletModeHalted": ["Memoless swaps are paused right now. Connect a wallet to keep swapping.", "Memoless swaps don pause for now. Connect wallet make you fit continue to swap."]
 }

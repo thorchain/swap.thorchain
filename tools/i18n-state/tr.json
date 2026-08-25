@@ -147,6 +147,7 @@
   "swap.limitCancel.toast.modifySubmitted": ["Modify transaction submitted", "Değişiklik işlemi gönderildi"],
   "swap.limitCancel.warning.memolessDeposit": ["To {mode} this order, send the deposit from the original {chain} wallet that placed it", "Bu emri {mode} için, emri oluşturan orijinal {chain} cüzdanından yatırma gönder"],
   "swap.limitCancel.warning.connectOrMemoless": ["Connect a {chain} wallet or use the memoless deposit to {mode} this order", "Bu emri {mode} için bir {chain} cüzdanı bağla veya Memo'suz yatırmayı kullan"],
+  "swap.limitCancel.warning.memolessHalted": ["Memoless deposits are paused by THORChain right now - connect the original {chain} wallet to {mode} this order", "Memo'suz yatırmalar şu anda THORChain tarafından durduruldu - bu emri {mode} için orijinal {chain} cüzdanını bağla"],
   "swap.limitCancel.warning.connect": ["Connect a {chain} wallet to {mode} this order", "Bu emri {mode} için bir {chain} cüzdanı bağla"],
   "swap.limitCancel.warning.switch": ["Switch to a {chain} wallet to {mode} this order", "Bu emri {mode} için bir {chain} cüzdanına geç"],
   "swap.limitCancel.warning.addressMismatch": ["Connected wallet does not match the address that placed this order", "Bağlı cüzdan, bu emri oluşturan adresle eşleşmiyor"],
@@ -455,5 +456,9 @@
   "tx.status.unknown": ["Unknown", "Bilinmiyor"],
   "tx.leg.deposit": ["Deposit {ticker}", "{ticker} Yatır"],
   "tx.leg.send": ["Send {ticker}", "{ticker} Gönder"],
-  "tx.leg.swap": ["Swap {from} to {to}", "{from} → {to} Takas"]
+  "tx.leg.swap": ["Swap {from} to {to}", "{from} → {to} Takas"],
+  "swap.limitCancel.error.walletNotConnected": ["Wallet not connected", "Cüzdan bağlı değil"],
+  "swap.limitCancel.warning.orderNotFound": ["This order is no longer open on THORChain - it may have already been filled or expired", "Bu emir artık THORChain üzerinde açık değil - önceden gerçekleşmiş veya süresi dolmuş olabilir"],
+  "wallet.externalWalletModeUnavailable": ["Currently Unavailable", "Şu Anda Kullanılamıyor"],
+  "wallet.externalWalletModeHalted": ["Memoless swaps are paused right now. Connect a wallet to keep swapping.", "Memosuz takaslar şu anda duraklatıldı. Takas yapmaya devam etmek için bir cüzdan bağlayın."]
 }

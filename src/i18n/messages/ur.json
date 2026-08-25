@@ -177,7 +177,8 @@
       "error": {
         "loadInboundAddresses": "inbound پتے لوڈ کرنے میں ناکامی",
         "cancelFailed": "limit تبادلہ منسوخ کرنے میں ناکامی",
-        "modifyFailed": "limit تبادلے میں ترمیم کرنے میں ناکامی"
+        "modifyFailed": "limit تبادلے میں ترمیم کرنے میں ناکامی",
+        "walletNotConnected": "والیٹ منسلک نہیں ہے"
       },
       "toast": {
         "sendToCancel": "منسوخ کرنے کے لیے اصل والٹ سے {amount} {ticker} بھیجیں",
@@ -192,7 +193,8 @@
         "connect": "اس آرڈر کو {mode} کرنے کے لیے ایک {chain} والٹ کنیکٹ کریں",
         "switch": "اس آرڈر کو {mode} کرنے کے لیے ایک {chain} والٹ پر سوئچ کریں",
         "addressMismatch": "کنیکٹ شدہ والٹ اس پتے سے مطابقت نہیں رکھتا جس نے یہ آرڈر رکھا تھا",
-        "tradingPaused": "{chain} ٹریڈنگ اس وقت روکی ہوئی ہے"
+        "tradingPaused": "{chain} ٹریڈنگ اس وقت روکی ہوئی ہے",
+        "orderNotFound": "یہ آرڈر اب THORChain پر کھلا نہیں ہے - ممکن ہے یہ پہلے ہی مکمل ہو چکا ہو یا اس کی میعاد ختم ہو گئی ہو"
       }
     },
     "quoteTimer": {
@@ -518,6 +520,8 @@
     "sortByBalance": "بیلنس (زیادہ → کم)",
     "externalWalletMode": "External Wallet موڈ",
     "externalWalletModeDescription": "سیلف کسٹڈی والٹ کو ویب سائٹ سے منسلک کیے بغیر استعمال کریں",
+    "externalWalletModeUnavailable": "فی الحال دستیاب نہیں",
+    "externalWalletModeHalted": "میمو کے بغیر سویپ اس وقت روکے گئے ہیں۔ سویپ جاری رکھنے کے لیے والیٹ منسلک کریں۔",
     "externalWalletAssetUnsupported": "یہ اثاثہ External Wallet موڈ میں سپورٹڈ نہیں ہے۔ اگر آپ جاری رکھنا چاہتے ہیں تو براؤزر والٹ کنیکٹ کریں۔",
     "close": "بند کریں",
     "sendToken": "{ticker} بھیجیں"

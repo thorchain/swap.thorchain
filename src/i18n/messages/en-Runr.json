@@ -177,7 +177,8 @@
       "error": {
         "loadInboundAddresses": "ᚠᚨᛁᛚᛖᛞ ᛏᛟ ᛚᛟᚨᛞ ᛁᚾᛒᛟᚢᚾᛞ ᚨᛞᛞᚱᛖᛊᛊᛖᛊ",
         "cancelFailed": "ᚠᚨᛁᛚᛖᛞ ᛏᛟ ᚲᚨᚾᚲᛖᛚ ᛚᛁᛗᛁᛏ ᛊᚹᚨᛈ",
-        "modifyFailed": "ᚠᚨᛁᛚᛖᛞ ᛏᛟ ᛗᛟᛞᛁᚠᛁ ᛚᛁᛗᛁᛏ ᛊᚹᚨᛈ"
+        "modifyFailed": "ᚠᚨᛁᛚᛖᛞ ᛏᛟ ᛗᛟᛞᛁᚠᛁ ᛚᛁᛗᛁᛏ ᛊᚹᚨᛈ",
+        "walletNotConnected": "ᚹᚨᛚᛚᛖᛏ ᚾᚩᛏ ᚲᚩᚾᚾᛖᚲᛏᛖᚦ"
       },
       "toast": {
         "sendToCancel": "ᛊᛖᚾᛞ {amount} {ticker} ᚠᚱᛟᛗ ᚦᛖ ᛟᚱᛁᚷᛁᚾᚨᛚ ᚹᚨᛚᛚᛖᛏ ᛏᛟ ᚲᚨᚾᚲᛖᛚ",
@@ -192,7 +193,8 @@
         "connect": "ᚲᛟᚾᚾᛖᚲᛏ ᚨ {chain} ᚹᚨᛚᛚᛖᛏ ᛏᛟ {mode} ᚦᛁᛊ ᛟᚱᛞᛖᚱ",
         "switch": "ᛊᚹᛁᛏᚲᚺ ᛏᛟ ᚨ {chain} ᚹᚨᛚᛚᛖᛏ ᛏᛟ {mode} ᚦᛁᛊ ᛟᚱᛞᛖᚱ",
         "addressMismatch": "ᚲᛟᚾᚾᛖᚲᛏᛖᛞ ᚹᚨᛚᛚᛖᛏ ᛞᛟᛖᛊ ᚾᛟᛏ ᛗᚨᛏᚲᚺ ᚦᛖ ᚨᛞᛞᚱᛖᛊᛊ ᚦᚨᛏ ᛈᛚᚨᚲᛖᛞ ᚦᛁᛊ ᛟᚱᛞᛖᚱ",
-        "tradingPaused": "{chain} ᛏᚱᚨᛞᛁᛜ ᛁᛊ ᚲᚢᚱᚱᛖᚾᛏᛚᛁ ᛈᚨᚢᛊᛖᛞ"
+        "tradingPaused": "{chain} ᛏᚱᚨᛞᛁᛜ ᛁᛊ ᚲᚢᚱᚱᛖᚾᛏᛚᛁ ᛈᚨᚢᛊᛖᛞ",
+        "orderNotFound": "ᚦᛁᛋ ᚩᚱᛞᛖᚱ ᛁᛋ ᚾᚩ ᛚᚩᚾᚷᛖᚱ ᚩᛈᛖᚾ ᚩᚾ THORChain - ᛁᛏ ᛘᚨᚤ ᚻᚨᚠᛖ ᚨᛚᚱᛖᚨᛞᚤ ᛒᛖᛖᚾ ᚠᛁᛚᛚᛖᚦ ᚩᚱ ᛖᚲᛋᛈᛁᚱᛖᚦ"
       }
     },
     "quoteTimer": {
@@ -518,6 +520,8 @@
     "sortByBalance": "ᛒᚨᛚᚨᚾᚲᛖ (ᚺᛁᚷᚺ → ᛚᛟᚹ)",
     "externalWalletMode": "ᛖᚲᛊᛏᛖᚱᚾᚨᛚ ᚹᚨᛚᛚᛖᛏ ᛗᛟᛞᛖ",
     "externalWalletModeDescription": "ᚢᛊᛖ ᚨ ᛊᛖᛚᚠ ᚲᚢᛊᛏᛟᛞᛁ ᚹᚨᛚᛚᛖᛏ ᚹᛁᚦᛟᚢᛏ ᚲᛟᚾᚾᛖᚲᛏᛁᛜ ᛁᛏ ᛏᛟ ᚦᛖ ᚹᛖᛒᛊᛁᛏᛖ",
+    "externalWalletModeUnavailable": "ᚲᚢᚱᚱᛖᚾᛏᛚᚤ ᚢᚾᚨᚢᚨᛁᛚᚨᛒᛚᛖ",
+    "externalWalletModeHalted": "ᛘᛖᛘᚩᛚᛖᛋᛋ ᛋᚹᚨᛈᛋ ᚨᚱᛖ ᛈᚨᚢᛋᛖᚦ ᚱᛁᚷᚻᛏ ᚾᚩᚹ. ᚲᚩᚾᚾᛖᚲᛏ ᚨ ᚹᚨᛚᛚᛖᛏ ᛏᚩ ᚲᛖᛖᛈ ᛋᚹᚨᛈᛈᛁᚾᚷ.",
     "externalWalletAssetUnsupported": "ᚦᛁᛊ ᚨᛊᛊᛖᛏ ᛁᛊ ᚾᛟᛏ ᛊᚢᛈᛈᛟᚱᛏᛖᛞ ᛁᚾ ᛖᚲᛊᛏᛖᚱᚾᚨᛚ ᚹᚨᛚᛚᛖᛏ ᛗᛟᛞᛖ. ᚲᛟᚾᚾᛖᚲᛏ ᚨ ᛒᚱᛟᚹᛊᛖᚱ ᚹᚨᛚᛚᛖᛏ ᛁᚠ ᛁᛟᚢ ᚹᚨᚾᛏ ᛏᛟ ᚲᛟᚾᛏᛁᚾᚢᛖ.",
     "close": "ᚲᛚᛟᛊᛖ",
     "sendToken": "ᛊᛖᚾᛞ {ticker}"

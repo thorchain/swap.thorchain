@@ -147,6 +147,7 @@
   "swap.limitCancel.toast.modifySubmitted": ["Modify transaction submitted", "Änderungstransaktion gesendet"],
   "swap.limitCancel.warning.memolessDeposit": ["To {mode} this order, send the deposit from the original {chain} wallet that placed it", "Um diese Order zu {mode}, senden Sie die Einzahlung von der ursprünglichen {chain}-Wallet, die sie platziert hat"],
   "swap.limitCancel.warning.connectOrMemoless": ["Connect a {chain} wallet or use the memoless deposit to {mode} this order", "Verbinden Sie eine {chain}-Wallet oder verwenden Sie die memolose Einzahlung, um diese Order zu {mode}"],
+  "swap.limitCancel.warning.memolessHalted": ["Memoless deposits are paused by THORChain right now - connect the original {chain} wallet to {mode} this order", "Memolose Einzahlungen sind bei THORChain derzeit pausiert - verbinden Sie die ursprüngliche {chain}-Wallet, um diese Order zu {mode}"],
   "swap.limitCancel.warning.connect": ["Connect a {chain} wallet to {mode} this order", "Verbinden Sie eine {chain}-Wallet, um diese Order zu {mode}"],
   "swap.limitCancel.warning.switch": ["Switch to a {chain} wallet to {mode} this order", "Wechseln Sie zu einer {chain}-Wallet, um diese Order zu {mode}"],
   "swap.limitCancel.warning.addressMismatch": ["Connected wallet does not match the address that placed this order", "Die verbundene Wallet stimmt nicht mit der Adresse überein, die diese Order platziert hat"],
@@ -455,5 +456,9 @@
   "tx.status.unknown": ["Unknown", "Unbekannt"],
   "tx.leg.deposit": ["Deposit {ticker}", "{ticker} einzahlen"],
   "tx.leg.send": ["Send {ticker}", "{ticker} senden"],
-  "tx.leg.swap": ["Swap {from} to {to}", "{from} zu {to} swappen"]
+  "tx.leg.swap": ["Swap {from} to {to}", "{from} zu {to} swappen"],
+  "swap.limitCancel.error.walletNotConnected": ["Wallet not connected", "Wallet nicht verbunden"],
+  "swap.limitCancel.warning.orderNotFound": ["This order is no longer open on THORChain - it may have already been filled or expired", "Diese Order ist auf THORChain nicht mehr offen – sie wurde möglicherweise bereits ausgeführt oder ist abgelaufen"],
+  "wallet.externalWalletModeUnavailable": ["Currently Unavailable", "Derzeit nicht verfügbar"],
+  "wallet.externalWalletModeHalted": ["Memoless swaps are paused right now. Connect a wallet to keep swapping.", "Memo-lose Swaps sind derzeit pausiert. Verbinde eine Wallet, um weiter zu swappen."]
 }

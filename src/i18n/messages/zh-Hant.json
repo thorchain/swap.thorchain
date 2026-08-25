@@ -177,7 +177,8 @@
       "error": {
         "loadInboundAddresses": "無法載入入站地址",
         "cancelFailed": "取消限價兌換失敗",
-        "modifyFailed": "修改限價兌換失敗"
+        "modifyFailed": "修改限價兌換失敗",
+        "walletNotConnected": "錢包未連接"
       },
       "toast": {
         "sendToCancel": "請從原錢包發送{amount} {ticker}以取消",
@@ -192,7 +193,8 @@
         "connect": "連接{chain}錢包以{mode}此訂單",
         "switch": "切換到{chain}錢包以{mode}此訂單",
         "addressMismatch": "已連接的錢包與下此訂單的地址不匹配",
-        "tradingPaused": "{chain}交易目前已暫停"
+        "tradingPaused": "{chain}交易目前已暫停",
+        "orderNotFound": "此訂單已不在 THORChain 上掛單中 — 可能已成交或已過期"
       }
     },
     "quoteTimer": {
@@ -518,6 +520,8 @@
     "sortByBalance": "餘額（高 → 低）",
     "externalWalletMode": "外部錢包模式",
     "externalWalletModeDescription": "使用自託管錢包，無需將其連接到網站",
+    "externalWalletModeUnavailable": "目前無法使用",
+    "externalWalletModeHalted": "免 memo 交換目前已暫停。請連接錢包以繼續交換。",
     "externalWalletAssetUnsupported": "此資產在外部錢包模式下不受支援。如要繼續，請連接瀏覽器錢包。",
     "close": "關閉",
     "sendToken": "發送{ticker}"

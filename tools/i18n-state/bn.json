@@ -147,6 +147,7 @@
   "swap.limitCancel.toast.modifySubmitted": ["Modify transaction submitted", "পরিবর্তন লেনদেন জমা দেওয়া হয়েছে"],
   "swap.limitCancel.warning.memolessDeposit": ["To {mode} this order, send the deposit from the original {chain} wallet that placed it", "এই অর্ডারটি {mode} করতে, যে মূল {chain} ওয়ালেট এটি স্থাপন করেছিল সেখান থেকে ডিপোজিট পাঠান"],
   "swap.limitCancel.warning.connectOrMemoless": ["Connect a {chain} wallet or use the memoless deposit to {mode} this order", "এই অর্ডারটি {mode} করতে একটি {chain} ওয়ালেট সংযুক্ত করুন অথবা Memo-বিহীন ডিপোজিট ব্যবহার করুন"],
+  "swap.limitCancel.warning.memolessHalted": ["Memoless deposits are paused by THORChain right now - connect the original {chain} wallet to {mode} this order", "Memo-বিহীন ডিপোজিট এই মুহূর্তে THORChain স্থগিত রেখেছে - এই অর্ডারটি {mode} করতে মূল {chain} ওয়ালেট সংযুক্ত করুন"],
   "swap.limitCancel.warning.connect": ["Connect a {chain} wallet to {mode} this order", "এই অর্ডারটি {mode} করতে একটি {chain} ওয়ালেট সংযুক্ত করুন"],
   "swap.limitCancel.warning.switch": ["Switch to a {chain} wallet to {mode} this order", "এই অর্ডারটি {mode} করতে একটি {chain} ওয়ালেটে স্যুইচ করুন"],
   "swap.limitCancel.warning.addressMismatch": ["Connected wallet does not match the address that placed this order", "সংযুক্ত ওয়ালেট এই অর্ডার স্থাপনকারী ঠিকানার সাথে মেলে না"],
@@ -455,5 +456,9 @@
   "tx.status.unknown": ["Unknown", "অজানা"],
   "tx.leg.deposit": ["Deposit {ticker}", "{ticker} ডিপোজিট করুন"],
   "tx.leg.send": ["Send {ticker}", "{ticker} পাঠান"],
-  "tx.leg.swap": ["Swap {from} to {to}", "{from} থেকে {to} সোয়াপ করুন"]
+  "tx.leg.swap": ["Swap {from} to {to}", "{from} থেকে {to} সোয়াপ করুন"],
+  "swap.limitCancel.error.walletNotConnected": ["Wallet not connected", "ওয়ালেট সংযুক্ত নয়"],
+  "swap.limitCancel.warning.orderNotFound": ["This order is no longer open on THORChain - it may have already been filled or expired", "এই অর্ডারটি আর THORChain-এ খোলা নেই - এটি ইতিমধ্যে পূরণ হয়ে থাকতে পারে বা মেয়াদ শেষ হয়ে যেতে পারে"],
+  "wallet.externalWalletModeUnavailable": ["Currently Unavailable", "বর্তমানে অনুপলব্ধ"],
+  "wallet.externalWalletModeHalted": ["Memoless swaps are paused right now. Connect a wallet to keep swapping.", "মেমোবিহীন সোয়াপ এখন সাময়িকভাবে বন্ধ আছে। সোয়াপ চালিয়ে যেতে একটি ওয়ালেট সংযুক্ত করুন।"]
 }

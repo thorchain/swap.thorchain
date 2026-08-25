@@ -177,7 +177,8 @@
       "error": {
         "loadInboundAddresses": "Caricamento degli indirizzi in entrata non riuscito",
         "cancelFailed": "Annullamento dello swap limite non riuscito",
-        "modifyFailed": "Modifica dello swap limite non riuscita"
+        "modifyFailed": "Modifica dello swap limite non riuscita",
+        "walletNotConnected": "Wallet non connesso"
       },
       "toast": {
         "sendToCancel": "Invia {amount} {ticker} dal wallet originale per annullare",
@@ -192,7 +193,8 @@
         "connect": "Connetti un wallet {chain} per {mode} questo ordine",
         "switch": "Passa a un wallet {chain} per {mode} quest'ordine",
         "addressMismatch": "Il wallet connesso non corrisponde all'indirizzo che ha effettuato quest'ordine",
-        "tradingPaused": "Il trading {chain} è attualmente sospeso"
+        "tradingPaused": "Il trading {chain} è attualmente sospeso",
+        "orderNotFound": "Questo ordine non è più aperto su THORChain - potrebbe essere già stato eseguito o scaduto"
       }
     },
     "quoteTimer": {
@@ -518,6 +520,8 @@
     "sortByBalance": "Saldo (Alto → Basso)",
     "externalWalletMode": "Modalità wallet esterno",
     "externalWalletModeDescription": "Utilizzi un portafoglio self-custody senza collegarlo al sito web",
+    "externalWalletModeUnavailable": "Attualmente non disponibile",
+    "externalWalletModeHalted": "Gli swap senza memo sono momentaneamente sospesi. Connetti un wallet per continuare a fare swap.",
     "externalWalletAssetUnsupported": "Questo asset non è supportato in modalità portafoglio esterno. Connetta un portafoglio del browser se desidera continuare.",
     "close": "Chiudi",
     "sendToken": "Invia {ticker}"

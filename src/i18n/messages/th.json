@@ -177,7 +177,8 @@
       "error": {
         "loadInboundAddresses": "โหลดที่อยู่ขาเข้าไม่สำเร็จ",
         "cancelFailed": "ยกเลิกการแลกเปลี่ยน Limit ไม่สำเร็จ",
-        "modifyFailed": "แก้ไขการแลกเปลี่ยน Limit ไม่สำเร็จ"
+        "modifyFailed": "แก้ไขการแลกเปลี่ยน Limit ไม่สำเร็จ",
+        "walletNotConnected": "ยังไม่ได้เชื่อมต่อกระเป๋าเงิน"
       },
       "toast": {
         "sendToCancel": "ส่ง {amount} {ticker} จากกระเป๋าเงินเดิมเพื่อยกเลิก",
@@ -192,7 +193,8 @@
         "connect": "เชื่อมต่อกระเป๋าเงิน {chain} เพื่อ {mode} คำสั่งนี้",
         "switch": "สลับไปยังกระเป๋าเงิน {chain} เพื่อ {mode} คำสั่งนี้",
         "addressMismatch": "กระเป๋าเงินที่เชื่อมต่อไม่ตรงกับที่อยู่ที่วางคำสั่งนี้",
-        "tradingPaused": "การซื้อขาย {chain} ถูกหยุดชั่วคราวในขณะนี้"
+        "tradingPaused": "การซื้อขาย {chain} ถูกหยุดชั่วคราวในขณะนี้",
+        "orderNotFound": "คำสั่งนี้ไม่ได้เปิดอยู่บน THORChain แล้ว อาจถูกจับคู่สำเร็จหรือหมดอายุไปแล้ว"
       }
     },
     "quoteTimer": {
@@ -518,6 +520,8 @@
     "sortByBalance": "ยอดคงเหลือ (สูง → ต่ำ)",
     "externalWalletMode": "โหมดกระเป๋าเงินภายนอก",
     "externalWalletModeDescription": "ใช้กระเป๋าเงินแบบ self-custody โดยไม่ต้องเชื่อมต่อกับเว็บไซต์",
+    "externalWalletModeUnavailable": "ไม่พร้อมใช้งานในขณะนี้",
+    "externalWalletModeHalted": "การสวอปแบบไม่ใช้ memo ถูกหยุดชั่วคราวในขณะนี้ เชื่อมต่อกระเป๋าเงินเพื่อสวอปต่อ",
     "externalWalletAssetUnsupported": "สินทรัพย์นี้ไม่รองรับในโหมดกระเป๋าเงินภายนอก เชื่อมต่อกระเป๋าเงินบนเบราว์เซอร์หากคุณต้องการดำเนินการต่อ",
     "close": "ปิด",
     "sendToken": "ส่ง {ticker}"

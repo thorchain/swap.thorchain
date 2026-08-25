@@ -147,6 +147,7 @@
   "swap.limitCancel.toast.modifySubmitted": ["Modify transaction submitted", "تم إرسال معاملة التعديل"],
   "swap.limitCancel.warning.memolessDeposit": ["To {mode} this order, send the deposit from the original {chain} wallet that placed it", "عشان {mode} الأمر ده، ابعت الإيداع من محفظة {chain} الأصلية اللي عملته"],
   "swap.limitCancel.warning.connectOrMemoless": ["Connect a {chain} wallet or use the memoless deposit to {mode} this order", "اربط محفظة {chain} أو استخدم الإيداع بدون Memo عشان {mode} الأمر ده"],
+  "swap.limitCancel.warning.memolessHalted": ["Memoless deposits are paused by THORChain right now - connect the original {chain} wallet to {mode} this order", "الإيداعات بدون Memo متوقفة دلوقتي من THORChain - اربط محفظة {chain} الأصلية عشان {mode} الأمر ده"],
   "swap.limitCancel.warning.connect": ["Connect a {chain} wallet to {mode} this order", "اربط محفظة {chain} عشان {mode} الأمر ده"],
   "swap.limitCancel.warning.switch": ["Switch to a {chain} wallet to {mode} this order", "بدّل لمحفظة {chain} عشان {mode} الأمر ده"],
   "swap.limitCancel.warning.addressMismatch": ["Connected wallet does not match the address that placed this order", "المحفظة المربوطة مش مطابقة للعنوان اللي عمل الأمر ده"],
@@ -455,5 +456,9 @@
   "tx.status.unknown": ["Unknown", "غير معروف"],
   "tx.leg.deposit": ["Deposit {ticker}", "إيداع {ticker}"],
   "tx.leg.send": ["Send {ticker}", "إرسال {ticker}"],
-  "tx.leg.swap": ["Swap {from} to {to}", "تبديل {from} إلى {to}"]
+  "tx.leg.swap": ["Swap {from} to {to}", "تبديل {from} إلى {to}"],
+  "swap.limitCancel.error.walletNotConnected": ["Wallet not connected", "المحفظة مش متوصلة"],
+  "swap.limitCancel.warning.orderNotFound": ["This order is no longer open on THORChain - it may have already been filled or expired", "الأوردر ده مبقاش مفتوح على THORChain - يمكن يكون اتنفذ خلاص أو انتهت مدته"],
+  "wallet.externalWalletModeUnavailable": ["Currently Unavailable", "مش متاح دلوقتي"],
+  "wallet.externalWalletModeHalted": ["Memoless swaps are paused right now. Connect a wallet to keep swapping.", "عمليات Memoless swaps متوقفة دلوقتي. وصّل محفظة عشان تكمل التبديل."]
 }

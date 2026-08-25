@@ -10,6 +10,7 @@ import { useDialog } from '@/components/global-dialog'
 import { Drawer, DrawerContent, DrawerHeader, DrawerTitle } from '@/components/ui/drawer'
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu'
 import { Switch } from '@/components/ui/switch'
+import { useIsMemolessHalted } from '@/hooks/use-mimir'
 import { useWalletBalances } from '@/hooks/use-wallet-balances'
 import { WalletProviderGroup, WalletSortBy } from '@/components/wallet-sidebar/wallet-provider-group'
 import { useAccounts, useConnectedWallets, useDisconnect, useExternalWalletMode, useSetExternalWalletMode } from '@/hooks/use-wallets'
@@ -31,6 +32,7 @@ export function WalletSidebar({ isOpen, onOpenChange }: WalletSidebarProps) {
   const t = useTranslations('wallet')
   const externalWalletMode = useExternalWalletMode()
   const setExternalWalletMode = useSetExternalWalletMode()
+  const isMemolessHalted = useIsMemolessHalted()
   const connectedWallets = useConnectedWallets()
   const accounts = useAccounts()
   const disconnect = useDisconnect()
@@ -108,13 +110,19 @@ export function WalletSidebar({ isOpen, onOpenChange }: WalletSidebarProps) {
             <div className="flex items-center justify-between gap-3">
               <div className="flex-1">
                 <div className="text-txt-high-contrast text-sm font-semibold">{t('externalWalletMode')}</div>
-                <div className="text-txt-label-small mt-0.5 text-xs leading-relaxed">
-                  {t('externalWalletModeDescription')}
-                </div>
+                {isMemolessHalted ? (
+                  <>
+                    <div className="text-lucian mt-0.5 text-xs leading-relaxed">{t('externalWalletModeUnavailable')}</div>
+                    <div className="text-txt-label-small mt-0.5 text-xs leading-relaxed">{t('externalWalletModeHalted')}</div>
+                  </>
+                ) : (
+                  <div className="text-txt-label-small mt-0.5 text-xs leading-relaxed">{t('externalWalletModeDescription')}</div>
+                )}
               </div>
               <Switch
                 checked={externalWalletMode}
                 onCheckedChange={setExternalWalletMode}
+                disabled={isMemolessHalted}
                 size="md"
                 className="data-[state=checked]:bg-green-default"
               />

@@ -177,7 +177,8 @@
       "error": {
         "loadInboundAddresses": "E no fit load inbound addresses",
         "cancelFailed": "E no fit cancel limit swap",
-        "modifyFailed": "E no fit change limit swap"
+        "modifyFailed": "E no fit change limit swap",
+        "walletNotConnected": "Wallet no connect"
       },
       "toast": {
         "sendToCancel": "Send {amount} {ticker} from di original wallet to cancel",
@@ -192,7 +193,8 @@
         "connect": "Connect a {chain} wallet to {mode} dis order",
         "switch": "Switch to a {chain} wallet to {mode} dis order",
         "addressMismatch": "Di wallet wey connect no match di address wey place dis order",
-        "tradingPaused": "{chain} trading don pause for now"
+        "tradingPaused": "{chain} trading don pause for now",
+        "orderNotFound": "Dis order no dey open again for THORChain - e fit don already complete or don expire"
       }
     },
     "quoteTimer": {
@@ -518,6 +520,8 @@
     "sortByBalance": "Balance (High → Low)",
     "externalWalletMode": "External Wallet Mode",
     "externalWalletModeDescription": "Use a self-custody wallet without connecting am to di website",
+    "externalWalletModeUnavailable": "E No Dey Available Now",
+    "externalWalletModeHalted": "Memoless swaps don pause for now. Connect wallet make you fit continue to swap.",
     "externalWalletAssetUnsupported": "Dis asset no dey supported for External Wallet mode. Connect a browser wallet if you wan continue.",
     "close": "Close",
     "sendToken": "Send {ticker}"

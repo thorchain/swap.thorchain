@@ -177,7 +177,8 @@
       "error": {
         "loadInboundAddresses": "인바운드 주소를 불러오지 못했습니다",
         "cancelFailed": "지정가 스왑 취소에 실패했습니다",
-        "modifyFailed": "지정가 스왑 수정에 실패했습니다"
+        "modifyFailed": "지정가 스왑 수정에 실패했습니다",
+        "walletNotConnected": "지갑이 연결되지 않았습니다"
       },
       "toast": {
         "sendToCancel": "취소하려면 원래 지갑에서 {amount} {ticker}를 보내세요",
@@ -192,7 +193,8 @@
         "connect": "이 주문을 {mode}하려면 {chain} 지갑을 연결하세요",
         "switch": "이 주문을 {mode}하려면 {chain} 지갑으로 전환하세요",
         "addressMismatch": "연결된 지갑이 이 주문을 생성한 주소와 일치하지 않습니다",
-        "tradingPaused": "{chain} 거래가 현재 일시 중지되었습니다"
+        "tradingPaused": "{chain} 거래가 현재 일시 중지되었습니다",
+        "orderNotFound": "이 주문은 THORChain에서 더 이상 열려 있지 않습니다 - 이미 체결되었거나 만료되었을 수 있습니다"
       }
     },
     "quoteTimer": {
@@ -518,6 +520,8 @@
     "sortByBalance": "잔액 (높은 순 → 낮은 순)",
     "externalWalletMode": "외부 지갑 모드",
     "externalWalletModeDescription": "자기 수탁 지갑을 웹사이트에 연결하지 않고 사용하세요",
+    "externalWalletModeUnavailable": "현재 사용할 수 없음",
+    "externalWalletModeHalted": "메모 없는 스왑이 현재 일시 중지되었습니다. 계속 스왑하려면 지갑을 연결하세요.",
     "externalWalletAssetUnsupported": "이 자산은 외부 지갑 모드에서 지원되지 않습니다. 계속하려면 브라우저 지갑을 연결하세요.",
     "close": "닫기",
     "sendToken": "{ticker} 보내기"

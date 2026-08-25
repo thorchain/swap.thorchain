@@ -147,6 +147,7 @@
   "swap.limitCancel.toast.modifySubmitted": ["Modify transaction submitted", "修改交易已提交"],
   "swap.limitCancel.warning.memolessDeposit": ["To {mode} this order, send the deposit from the original {chain} wallet that placed it", "要{mode}此訂單，請從最初下單的{chain}錢包發送存款"],
   "swap.limitCancel.warning.connectOrMemoless": ["Connect a {chain} wallet or use the memoless deposit to {mode} this order", "連接{chain}錢包或使用無Memo存款來{mode}此訂單"],
+  "swap.limitCancel.warning.memolessHalted": ["Memoless deposits are paused by THORChain right now - connect the original {chain} wallet to {mode} this order", "無Memo存款目前已被THORChain暫停 - 請連接最初下單的{chain}錢包來{mode}此訂單"],
   "swap.limitCancel.warning.connect": ["Connect a {chain} wallet to {mode} this order", "連接{chain}錢包以{mode}此訂單"],
   "swap.limitCancel.warning.switch": ["Switch to a {chain} wallet to {mode} this order", "切換到{chain}錢包以{mode}此訂單"],
   "swap.limitCancel.warning.addressMismatch": ["Connected wallet does not match the address that placed this order", "已連接的錢包與下此訂單的地址不匹配"],
@@ -455,5 +456,9 @@
   "tx.status.unknown": ["Unknown", "未知"],
   "tx.leg.deposit": ["Deposit {ticker}", "存入{ticker}"],
   "tx.leg.send": ["Send {ticker}", "發送{ticker}"],
-  "tx.leg.swap": ["Swap {from} to {to}", "將{from}兌換為{to}"]
+  "tx.leg.swap": ["Swap {from} to {to}", "將{from}兌換為{to}"],
+  "swap.limitCancel.error.walletNotConnected": ["Wallet not connected", "錢包未連接"],
+  "swap.limitCancel.warning.orderNotFound": ["This order is no longer open on THORChain - it may have already been filled or expired", "此訂單已不在 THORChain 上掛單中 — 可能已成交或已過期"],
+  "wallet.externalWalletModeUnavailable": ["Currently Unavailable", "目前無法使用"],
+  "wallet.externalWalletModeHalted": ["Memoless swaps are paused right now. Connect a wallet to keep swapping.", "免 memo 交換目前已暫停。請連接錢包以繼續交換。"]
 }

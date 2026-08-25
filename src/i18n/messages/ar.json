@@ -177,7 +177,8 @@
       "error": {
         "loadInboundAddresses": "تعذّر تحميل العناوين الواردة",
         "cancelFailed": "تعذّر إلغاء التبادل المحدد",
-        "modifyFailed": "تعذّر تعديل التبادل المحدد"
+        "modifyFailed": "تعذّر تعديل التبادل المحدد",
+        "walletNotConnected": "المحفظة غير متصلة"
       },
       "toast": {
         "sendToCancel": "أرسِل {amount} {ticker} من المحفظة الأصلية للإلغاء",
@@ -192,7 +193,8 @@
         "connect": "اربط محفظة {chain} لـ {mode} هذا الأمر",
         "switch": "بدّل إلى محفظة {chain} لـ {mode} هذا الأمر",
         "addressMismatch": "المحفظة المتصلة لا تطابق العنوان الذي أنشأ هذا الأمر",
-        "tradingPaused": "تداول {chain} متوقف مؤقتًا حاليًا"
+        "tradingPaused": "تداول {chain} متوقف مؤقتًا حاليًا",
+        "orderNotFound": "لم يعد هذا الأمر مفتوحًا على THORChain - ربما تم تنفيذه أو انتهت صلاحيته"
       }
     },
     "quoteTimer": {
@@ -518,6 +520,8 @@
     "sortByBalance": "الرصيد (مرتفع ← منخفض)",
     "externalWalletMode": "وضع المحفظة الخارجية",
     "externalWalletModeDescription": "استخدم محفظة ذاتية الحفظ دون ربطها بالموقع",
+    "externalWalletModeUnavailable": "غير متاح حاليًا",
+    "externalWalletModeHalted": "عمليات التبادل بدون مذكرة متوقفة مؤقتًا الآن. قم بتوصيل محفظة لمواصلة التبادل.",
     "externalWalletAssetUnsupported": "هذا الأصل غير مدعوم في وضع المحفظة الخارجية. اربط محفظة متصفح إذا كنت تريد المتابعة.",
     "close": "إغلاق",
     "sendToken": "إرسال {ticker}"

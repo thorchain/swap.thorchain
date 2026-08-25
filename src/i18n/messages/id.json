@@ -177,7 +177,8 @@
       "error": {
         "loadInboundAddresses": "Gagal memuat alamat masuk",
         "cancelFailed": "Gagal membatalkan limit swap",
-        "modifyFailed": "Gagal mengubah limit swap"
+        "modifyFailed": "Gagal mengubah limit swap",
+        "walletNotConnected": "Wallet tidak terhubung"
       },
       "toast": {
         "sendToCancel": "Kirim {amount} {ticker} dari dompet asli untuk membatalkan",
@@ -192,7 +193,8 @@
         "connect": "Hubungkan dompet {chain} untuk {mode} order ini",
         "switch": "Beralih ke dompet {chain} untuk {mode} order ini",
         "addressMismatch": "Dompet yang terhubung tidak cocok dengan alamat yang membuat order ini",
-        "tradingPaused": "Trading {chain} saat ini sedang dijeda"
+        "tradingPaused": "Trading {chain} saat ini sedang dijeda",
+        "orderNotFound": "Order ini tidak lagi terbuka di THORChain - kemungkinan sudah terisi atau kedaluwarsa"
       }
     },
     "quoteTimer": {
@@ -518,6 +520,8 @@
     "sortByBalance": "Saldo (Tinggi → Rendah)",
     "externalWalletMode": "Mode dompet eksternal",
     "externalWalletModeDescription": "Gunakan dompet self-custody tanpa menghubungkannya ke situs web",
+    "externalWalletModeUnavailable": "Saat Ini Tidak Tersedia",
+    "externalWalletModeHalted": "Swap tanpa memo sedang dijeda saat ini. Hubungkan wallet untuk terus melakukan swap.",
     "externalWalletAssetUnsupported": "Aset ini tidak didukung dalam mode dompet eksternal. Hubungkan dompet browser jika Anda ingin melanjutkan.",
     "close": "Tutup",
     "sendToken": "Kirim {ticker}"

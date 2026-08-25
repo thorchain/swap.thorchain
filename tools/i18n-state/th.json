@@ -147,6 +147,7 @@
   "swap.limitCancel.toast.modifySubmitted": ["Modify transaction submitted", "ส่งธุรกรรมแก้ไขแล้ว"],
   "swap.limitCancel.warning.memolessDeposit": ["To {mode} this order, send the deposit from the original {chain} wallet that placed it", "หาก {mode} คำสั่งนี้ ให้ส่งเงินฝากจากกระเป๋าเงิน {chain} เดิมที่วางคำสั่งไว้"],
   "swap.limitCancel.warning.connectOrMemoless": ["Connect a {chain} wallet or use the memoless deposit to {mode} this order", "เชื่อมต่อกระเป๋าเงิน {chain} หรือใช้เงินฝากแบบไม่มี Memo เพื่อ {mode} คำสั่งนี้"],
+  "swap.limitCancel.warning.memolessHalted": ["Memoless deposits are paused by THORChain right now - connect the original {chain} wallet to {mode} this order", "เงินฝากแบบไม่มี Memo ถูกระงับโดย THORChain อยู่ในขณะนี้ - เชื่อมต่อกระเป๋าเงิน {chain} เดิมเพื่อ {mode} คำสั่งนี้"],
   "swap.limitCancel.warning.connect": ["Connect a {chain} wallet to {mode} this order", "เชื่อมต่อกระเป๋าเงิน {chain} เพื่อ {mode} คำสั่งนี้"],
   "swap.limitCancel.warning.switch": ["Switch to a {chain} wallet to {mode} this order", "สลับไปยังกระเป๋าเงิน {chain} เพื่อ {mode} คำสั่งนี้"],
   "swap.limitCancel.warning.addressMismatch": ["Connected wallet does not match the address that placed this order", "กระเป๋าเงินที่เชื่อมต่อไม่ตรงกับที่อยู่ที่วางคำสั่งนี้"],
@@ -455,5 +456,9 @@
   "tx.status.unknown": ["Unknown", "ไม่ทราบ"],
   "tx.leg.deposit": ["Deposit {ticker}", "ฝาก {ticker}"],
   "tx.leg.send": ["Send {ticker}", "ส่ง {ticker}"],
-  "tx.leg.swap": ["Swap {from} to {to}", "แลกเปลี่ยน {from} เป็น {to}"]
+  "tx.leg.swap": ["Swap {from} to {to}", "แลกเปลี่ยน {from} เป็น {to}"],
+  "swap.limitCancel.error.walletNotConnected": ["Wallet not connected", "ยังไม่ได้เชื่อมต่อกระเป๋าเงิน"],
+  "swap.limitCancel.warning.orderNotFound": ["This order is no longer open on THORChain - it may have already been filled or expired", "คำสั่งนี้ไม่ได้เปิดอยู่บน THORChain แล้ว อาจถูกจับคู่สำเร็จหรือหมดอายุไปแล้ว"],
+  "wallet.externalWalletModeUnavailable": ["Currently Unavailable", "ไม่พร้อมใช้งานในขณะนี้"],
+  "wallet.externalWalletModeHalted": ["Memoless swaps are paused right now. Connect a wallet to keep swapping.", "การสวอปแบบไม่ใช้ memo ถูกหยุดชั่วคราวในขณะนี้ เชื่อมต่อกระเป๋าเงินเพื่อสวอปต่อ"]
 }

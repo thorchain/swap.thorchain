@@ -177,7 +177,8 @@
       "error": {
         "loadInboundAddresses": "Không thể tải địa chỉ nhận vào",
         "cancelFailed": "Không thể hủy lệnh hoán đổi giới hạn",
-        "modifyFailed": "Không thể sửa lệnh hoán đổi giới hạn"
+        "modifyFailed": "Không thể sửa lệnh hoán đổi giới hạn",
+        "walletNotConnected": "Ví chưa được kết nối"
       },
       "toast": {
         "sendToCancel": "Gửi {amount} {ticker} từ ví gốc để hủy",
@@ -192,7 +193,8 @@
         "connect": "Kết nối ví {chain} để {mode} lệnh này",
         "switch": "Chuyển sang ví {chain} để {mode} lệnh này",
         "addressMismatch": "Ví đã kết nối không khớp với địa chỉ đã đặt lệnh này",
-        "tradingPaused": "Giao dịch {chain} hiện đang tạm dừng"
+        "tradingPaused": "Giao dịch {chain} hiện đang tạm dừng",
+        "orderNotFound": "Lệnh này không còn mở trên THORChain - có thể đã được khớp hoặc đã hết hạn"
       }
     },
     "quoteTimer": {
@@ -518,6 +520,8 @@
     "sortByBalance": "Số dư (Cao → Thấp)",
     "externalWalletMode": "Chế độ ví bên ngoài",
     "externalWalletModeDescription": "Sử dụng ví tự lưu ký mà không cần kết nối với trang web",
+    "externalWalletModeUnavailable": "Hiện không khả dụng",
+    "externalWalletModeHalted": "Giao dịch hoán đổi không cần memo đang tạm dừng. Hãy kết nối ví để tiếp tục hoán đổi.",
     "externalWalletAssetUnsupported": "Tài sản này không được hỗ trợ ở chế độ ví bên ngoài. Kết nối ví trình duyệt nếu bạn muốn tiếp tục.",
     "close": "Đóng",
     "sendToken": "Gửi {ticker}"

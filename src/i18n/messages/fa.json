@@ -177,7 +177,8 @@
       "error": {
         "loadInboundAddresses": "بارگذاری آدرس‌های ورودی ناموفق بود",
         "cancelFailed": "لغو تبادل حد ناموفق بود",
-        "modifyFailed": "ویرایش تبادل حد ناموفق بود"
+        "modifyFailed": "ویرایش تبادل حد ناموفق بود",
+        "walletNotConnected": "کیف پول متصل نیست"
       },
       "toast": {
         "sendToCancel": "برای لغو، {amount} {ticker} را از کیف پول اصلی ارسال کنید",
@@ -192,7 +193,8 @@
         "connect": "برای {mode} این سفارش، کیف پول {chain} را متصل کنید",
         "switch": "برای {mode} این سفارش، به کیف پول {chain} تغییر دهید",
         "addressMismatch": "کیف پول متصل با آدرسی که این سفارش را ثبت کرده مطابقت ندارد",
-        "tradingPaused": "معاملات {chain} در حال حاضر متوقف شده است"
+        "tradingPaused": "معاملات {chain} در حال حاضر متوقف شده است",
+        "orderNotFound": "این سفارش دیگر در THORChain باز نیست - ممکن است قبلاً انجام شده یا منقضی شده باشد"
       }
     },
     "quoteTimer": {
@@ -518,6 +520,8 @@
     "sortByBalance": "موجودی (زیاد به کم)",
     "externalWalletMode": "حالت کیف پول خارجی",
     "externalWalletModeDescription": "از یک کیف پول خودنگهدار بدون اتصال آن به وب‌سایت استفاده کنید",
+    "externalWalletModeUnavailable": "در حال حاضر در دسترس نیست",
+    "externalWalletModeHalted": "سواپ‌های بدون ممو در حال حاضر متوقف شده‌اند. برای ادامه سواپ، یک کیف پول متصل کنید.",
     "externalWalletAssetUnsupported": "این دارایی در حالت کیف پول خارجی پشتیبانی نمی‌شود. برای ادامه، یک کیف پول مرورگر متصل کنید.",
     "close": "بستن",
     "sendToken": "ارسال {ticker}"

@@ -147,6 +147,7 @@
   "swap.limitCancel.toast.modifySubmitted": ["Modify transaction submitted", "Transazione di modifica inviata"],
   "swap.limitCancel.warning.memolessDeposit": ["To {mode} this order, send the deposit from the original {chain} wallet that placed it", "Per {mode} questo ordine, invii il deposito dal portafoglio {chain} originale che lo ha effettuato", "Per {mode} questo ordine, invia il deposito dal wallet {chain} originale che l'ha effettuato"],
   "swap.limitCancel.warning.connectOrMemoless": ["Connect a {chain} wallet or use the memoless deposit to {mode} this order", "Connetta un portafoglio {chain} o utilizzi il deposito senza memo per {mode} questo ordine", "Connetti un wallet {chain} o utilizza ill deposito senza memo per {mode} quest'ordine"],
+  "swap.limitCancel.warning.memolessHalted": ["Memoless deposits are paused by THORChain right now - connect the original {chain} wallet to {mode} this order", "I depositi senza memo sono attualmente sospesi da THORChain - connetti il wallet {chain} originale per {mode} questo ordine"],
   "swap.limitCancel.warning.connect": ["Connect a {chain} wallet to {mode} this order", "Connetta un portafoglio {chain} per {mode} questo ordine", "Connetti un wallet {chain} per {mode} questo ordine"],
   "swap.limitCancel.warning.switch": ["Switch to a {chain} wallet to {mode} this order", "Passi a un portafoglio {chain} per {mode} questo ordine", "Passa a un wallet {chain} per {mode} quest'ordine"],
   "swap.limitCancel.warning.addressMismatch": ["Connected wallet does not match the address that placed this order", "Il portafoglio connesso non corrisponde all'indirizzo che ha effettuato questo ordine", "Il wallet connesso non corrisponde all'indirizzo che ha effettuato quest'ordine"],
@@ -455,5 +456,9 @@
   "tx.status.unknown": ["Unknown", "Sconosciuto"],
   "tx.leg.deposit": ["Deposit {ticker}", "Deposita {ticker}"],
   "tx.leg.send": ["Send {ticker}", "Invia {ticker}"],
-  "tx.leg.swap": ["Swap {from} to {to}", "Scambia {from} con {to}"]
+  "tx.leg.swap": ["Swap {from} to {to}", "Scambia {from} con {to}"],
+  "swap.limitCancel.error.walletNotConnected": ["Wallet not connected", "Wallet non connesso"],
+  "swap.limitCancel.warning.orderNotFound": ["This order is no longer open on THORChain - it may have already been filled or expired", "Questo ordine non è più aperto su THORChain - potrebbe essere già stato eseguito o scaduto"],
+  "wallet.externalWalletModeUnavailable": ["Currently Unavailable", "Attualmente non disponibile"],
+  "wallet.externalWalletModeHalted": ["Memoless swaps are paused right now. Connect a wallet to keep swapping.", "Gli swap senza memo sono momentaneamente sospesi. Connetti un wallet per continuare a fare swap."]
 }

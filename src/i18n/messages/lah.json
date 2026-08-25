@@ -177,7 +177,8 @@
       "error": {
         "loadInboundAddresses": "inbound پتے لوڈ کرݨ وچ ناکامی",
         "cancelFailed": "limit تبادلہ منسوخ کرݨ وچ ناکامی",
-        "modifyFailed": "limit تبادلہ بدلݨ وچ ناکامی"
+        "modifyFailed": "limit تبادلہ بدلݨ وچ ناکامی",
+        "walletNotConnected": "والٹ کنیکٹ نہیں ہوئی"
       },
       "toast": {
         "sendToCancel": "منسوخ کرݨ لئی اصل والٹ توں {amount} {ticker} بھیجو",
@@ -192,7 +193,8 @@
         "connect": "ایہ آرڈر {mode} کرݨ لئی {chain} والٹ کنیکٹ کرو",
         "switch": "ایہ آرڈر {mode} کرݨ لئی {chain} والٹ تے سوئچ کرو",
         "addressMismatch": "کنیکٹ کیتا والٹ اوس پتے نال نئیں ملدا جیہڑے ایہ آرڈر رکھیا سی",
-        "tradingPaused": "{chain} ٹریڈنگ فی الحال روکی گئی اے"
+        "tradingPaused": "{chain} ٹریڈنگ فی الحال روکی گئی اے",
+        "orderNotFound": "ایہہ آرڈر ہُن THORChain تے کھُلا نہیں رہیا - ہو سکدا اے پہلاں ای پورا ہو گیا ہووے یا میعاد مُک گئی ہووے"
       }
     },
     "quoteTimer": {
@@ -518,6 +520,8 @@
     "sortByBalance": "بیلنس (ودھ → گھٹ)",
     "externalWalletMode": "بیرونی والٹ موڈ",
     "externalWalletModeDescription": "سیلف کسٹڈی والٹ نوں ویب سائٹ نال جوڑے بغیر ورتو",
+    "externalWalletModeUnavailable": "ہُنے دستیاب نہیں",
+    "externalWalletModeHalted": "میمو توں بغیر سویپ ہُنے روکے ہوئے نیں۔ سویپ جاری رکھن لئی والٹ کنیکٹ کرو۔",
     "externalWalletAssetUnsupported": "ایہ اثاثہ بیرونی والٹ موڈ وچ سپورٹ نئیں اے۔ جے تُسی اگے ودھݨا چاہندے او تے براؤزر والٹ کنیکٹ کرو۔",
     "close": "بند کرو",
     "sendToken": "{ticker} بھیجو"

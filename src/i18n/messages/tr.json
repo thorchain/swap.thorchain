@@ -177,7 +177,8 @@
       "error": {
         "loadInboundAddresses": "Gelen adresler yüklenemedi",
         "cancelFailed": "Limit takası iptal edilemedi",
-        "modifyFailed": "Limit takası değiştirilemedi"
+        "modifyFailed": "Limit takası değiştirilemedi",
+        "walletNotConnected": "Cüzdan bağlı değil"
       },
       "toast": {
         "sendToCancel": "İptal etmek için orijinal cüzdandan {amount} {ticker} gönder",
@@ -192,7 +193,8 @@
         "connect": "Bu emri {mode} için bir {chain} cüzdanı bağla",
         "switch": "Bu emri {mode} için bir {chain} cüzdanına geç",
         "addressMismatch": "Bağlı cüzdan, bu emri oluşturan adresle eşleşmiyor",
-        "tradingPaused": "{chain} işlemleri şu anda duraklatıldı"
+        "tradingPaused": "{chain} işlemleri şu anda duraklatıldı",
+        "orderNotFound": "Bu emir artık THORChain üzerinde açık değil - önceden gerçekleşmiş veya süresi dolmuş olabilir"
       }
     },
     "quoteTimer": {
@@ -518,6 +520,8 @@
     "sortByBalance": "Bakiye (Yüksek → Düşük)",
     "externalWalletMode": "Harici Cüzdan Modu",
     "externalWalletModeDescription": "Öz saklamalı bir cüzdanı web sitesine bağlamadan kullan",
+    "externalWalletModeUnavailable": "Şu Anda Kullanılamıyor",
+    "externalWalletModeHalted": "Memosuz takaslar şu anda duraklatıldı. Takas yapmaya devam etmek için bir cüzdan bağlayın.",
     "externalWalletAssetUnsupported": "Bu varlık Harici Cüzdan modunda desteklenmiyor. Devam etmek istiyorsanız tarayıcı içi bir cüzdan bağlayın.",
     "close": "Kapat",
     "sendToken": "{ticker} Gönder"

@@ -147,6 +147,7 @@
   "swap.limitCancel.toast.modifySubmitted": ["Modify transaction submitted", "تراکنش ویرایش ارسال شد"],
   "swap.limitCancel.warning.memolessDeposit": ["To {mode} this order, send the deposit from the original {chain} wallet that placed it", "برای {mode} این سفارش، واریز را از کیف پول {chain} اصلی که آن را ثبت کرده ارسال کنید"],
   "swap.limitCancel.warning.connectOrMemoless": ["Connect a {chain} wallet or use the memoless deposit to {mode} this order", "برای {mode} این سفارش، کیف پول {chain} را متصل کنید یا از واریز بدون Memo استفاده کنید"],
+  "swap.limitCancel.warning.memolessHalted": ["Memoless deposits are paused by THORChain right now - connect the original {chain} wallet to {mode} this order", "واریزهای بدون Memo در حال حاضر توسط THORChain متوقف شده‌اند - برای {mode} این سفارش، کیف پول {chain} اصلی را متصل کنید"],
   "swap.limitCancel.warning.connect": ["Connect a {chain} wallet to {mode} this order", "برای {mode} این سفارش، کیف پول {chain} را متصل کنید"],
   "swap.limitCancel.warning.switch": ["Switch to a {chain} wallet to {mode} this order", "برای {mode} این سفارش، به کیف پول {chain} تغییر دهید"],
   "swap.limitCancel.warning.addressMismatch": ["Connected wallet does not match the address that placed this order", "کیف پول متصل با آدرسی که این سفارش را ثبت کرده مطابقت ندارد"],
@@ -455,5 +456,9 @@
   "tx.status.unknown": ["Unknown", "نامشخص"],
   "tx.leg.deposit": ["Deposit {ticker}", "واریز {ticker}"],
   "tx.leg.send": ["Send {ticker}", "ارسال {ticker}"],
-  "tx.leg.swap": ["Swap {from} to {to}", "تبادل {from} به {to}"]
+  "tx.leg.swap": ["Swap {from} to {to}", "تبادل {from} به {to}"],
+  "swap.limitCancel.error.walletNotConnected": ["Wallet not connected", "کیف پول متصل نیست"],
+  "swap.limitCancel.warning.orderNotFound": ["This order is no longer open on THORChain - it may have already been filled or expired", "این سفارش دیگر در THORChain باز نیست - ممکن است قبلاً انجام شده یا منقضی شده باشد"],
+  "wallet.externalWalletModeUnavailable": ["Currently Unavailable", "در حال حاضر در دسترس نیست"],
+  "wallet.externalWalletModeHalted": ["Memoless swaps are paused right now. Connect a wallet to keep swapping.", "سواپ‌های بدون ممو در حال حاضر متوقف شده‌اند. برای ادامه سواپ، یک کیف پول متصل کنید."]
 }
