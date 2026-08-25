@@ -522,7 +522,7 @@
     "externalWalletMode": "وضع المحفظة الخارجية",
     "externalWalletModeDescription": "استخدم محفظة ذاتية الحفظ دون ربطها بالموقع",
     "externalWalletModeUnavailable": "غير متاح حاليًا",
-    "externalWalletModeHalted": "عمليات التبادل بدون مذكرة متوقفة مؤقتًا الآن. قم بتوصيل محفظة لمواصلة التبادل.",
+    "externalWalletModeHalted": "قم بتوصيل محفظة لمواصلة التبديل.",
     "externalWalletAssetUnsupported": "هذا الأصل غير مدعوم في وضع المحفظة الخارجية. اربط محفظة متصفح إذا كنت تريد المتابعة.",
     "close": "إغلاق",
     "sendToken": "إرسال {ticker}"

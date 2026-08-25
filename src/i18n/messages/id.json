@@ -522,7 +522,7 @@
     "externalWalletMode": "Mode dompet eksternal",
     "externalWalletModeDescription": "Gunakan dompet self-custody tanpa menghubungkannya ke situs web",
     "externalWalletModeUnavailable": "Saat Ini Tidak Tersedia",
-    "externalWalletModeHalted": "Swap tanpa memo sedang dijeda saat ini. Hubungkan wallet untuk terus melakukan swap.",
+    "externalWalletModeHalted": "Hubungkan dompet untuk terus melakukan swap.",
     "externalWalletAssetUnsupported": "Aset ini tidak didukung dalam mode dompet eksternal. Hubungkan dompet browser jika Anda ingin melanjutkan.",
     "close": "Tutup",
     "sendToken": "Kirim {ticker}"

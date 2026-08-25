@@ -522,7 +522,7 @@
     "externalWalletMode": "外部钱包模式",
     "externalWalletModeDescription": "使用自托管钱包，无需将其连接到网站",
     "externalWalletModeUnavailable": "暂不可用",
-    "externalWalletModeHalted": "免 memo 交换当前已暂停。请连接钱包以继续交换。",
+    "externalWalletModeHalted": "连接钱包以继续交易。",
     "externalWalletAssetUnsupported": "此资产在外部钱包模式下不受支持。如要继续，请连接浏览器钱包。",
     "close": "关闭",
     "sendToken": "发送{ticker}"

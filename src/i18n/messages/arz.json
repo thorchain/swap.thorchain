@@ -522,7 +522,7 @@
     "externalWalletMode": "وضع المحفظة الخارجية",
     "externalWalletModeDescription": "استخدم محفظة بحفظ ذاتي من غير ما تربطها بالموقع",
     "externalWalletModeUnavailable": "مش متاح دلوقتي",
-    "externalWalletModeHalted": "عمليات Memoless swaps متوقفة دلوقتي. وصّل محفظة عشان تكمل التبديل.",
+    "externalWalletModeHalted": "وصّل محفظة عشان تكمّل عمليات التبديل.",
     "externalWalletAssetUnsupported": "الأصل ده مش مدعوم في وضع المحفظة الخارجية. اربط محفظة متصفح لو عايز تكمّل.",
     "close": "إغلاق",
     "sendToken": "إرسال {ticker}"

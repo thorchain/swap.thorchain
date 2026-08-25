@@ -522,7 +522,7 @@
     "externalWalletMode": "外部ウォレットモード",
     "externalWalletModeDescription": "セルフカストディウォレットをウェブサイトに接続せずに使用します",
     "externalWalletModeUnavailable": "現在ご利用いただけません",
-    "externalWalletModeHalted": "メモレススワップは現在停止中です。ウォレットを接続してスワップを続けてください。",
+    "externalWalletModeHalted": "スワップを続けるにはウォレットを接続してください。",
     "externalWalletAssetUnsupported": "この資産は外部ウォレットモードでは対応していません。続行する場合はブラウザウォレットを接続してください。",
     "close": "閉じる",
     "sendToken": "{ticker} を送信"

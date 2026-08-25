@@ -522,7 +522,7 @@
     "externalWalletMode": "حالت کیف پول خارجی",
     "externalWalletModeDescription": "از یک کیف پول خودنگهدار بدون اتصال آن به وب‌سایت استفاده کنید",
     "externalWalletModeUnavailable": "در حال حاضر در دسترس نیست",
-    "externalWalletModeHalted": "سواپ‌های بدون ممو در حال حاضر متوقف شده‌اند. برای ادامه سواپ، یک کیف پول متصل کنید.",
+    "externalWalletModeHalted": "برای ادامه سواپ، یک کیف پول متصل کنید.",
     "externalWalletAssetUnsupported": "این دارایی در حالت کیف پول خارجی پشتیبانی نمی‌شود. برای ادامه، یک کیف پول مرورگر متصل کنید.",
     "close": "بستن",
     "sendToken": "ارسال {ticker}"

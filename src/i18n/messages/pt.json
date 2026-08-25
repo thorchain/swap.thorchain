@@ -522,7 +522,7 @@
     "externalWalletMode": "Modo de carteira externa",
     "externalWalletModeDescription": "Use uma carteira de autocustódia sem conectá-la ao site",
     "externalWalletModeUnavailable": "Atualmente Indisponível",
-    "externalWalletModeHalted": "Os swaps sem memo estão pausados neste momento. Conecte uma carteira para continuar a fazer swaps.",
+    "externalWalletModeHalted": "Ligue uma carteira para continuar a fazer swaps.",
     "externalWalletAssetUnsupported": "Este ativo não é suportado no modo de carteira externa. Conecte uma carteira de navegador se quiser continuar.",
     "close": "Fechar",
     "sendToken": "Enviar {ticker}"

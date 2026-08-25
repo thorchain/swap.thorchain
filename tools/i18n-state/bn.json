@@ -433,7 +433,6 @@
   "wallet.externalWalletMode": ["External Wallet Mode", "বহিরাগত ওয়ালেট মোড"],
   "wallet.externalWalletModeDescription": ["Use a self custody wallet without connecting it to the website", "ওয়েবসাইটে সংযুক্ত না করেই একটি সেলফ-কাস্টডি ওয়ালেট ব্যবহার করুন"],
   "wallet.externalWalletModeUnavailable": ["Currently Unavailable", "বর্তমানে অনুপলব্ধ"],
-  "wallet.externalWalletModeHalted": ["Memoless swaps are paused right now. Connect a wallet to keep swapping.", "মেমোবিহীন সোয়াপ এখন সাময়িকভাবে বন্ধ আছে। সোয়াপ চালিয়ে যেতে একটি ওয়ালেট সংযুক্ত করুন।"],
   "wallet.externalWalletAssetUnsupported": ["This asset is not supported in External Wallet mode. Connect a browser wallet if you want to continue.", "এই অ্যাসেটটি বহিরাগত ওয়ালেট মোডে সমর্থিত নয়। আপনি যদি চালিয়ে যেতে চান তবে একটি ব্রাউজার ওয়ালেট সংযুক্ত করুন।"],
   "wallet.close": ["Close", "বন্ধ করুন"],
   "wallet.sendToken": ["Send {ticker}", "{ticker} পাঠান"],
@@ -461,5 +460,6 @@
   "tx.status.unknown": ["Unknown", "অজানা"],
   "tx.leg.deposit": ["Deposit {ticker}", "{ticker} ডিপোজিট করুন"],
   "tx.leg.send": ["Send {ticker}", "{ticker} পাঠান"],
-  "tx.leg.swap": ["Swap {from} to {to}", "{from} থেকে {to} সোয়াপ করুন"]
+  "tx.leg.swap": ["Swap {from} to {to}", "{from} থেকে {to} সোয়াপ করুন"],
+  "wallet.externalWalletModeHalted": ["Connect a wallet to keep swapping.", "সোয়াপ চালিয়ে যেতে একটি ওয়ালেট কানেক্ট করুন।"]
 }

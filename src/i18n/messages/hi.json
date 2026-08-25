@@ -522,7 +522,7 @@
     "externalWalletMode": "बाहरी वॉलेट मोड",
     "externalWalletModeDescription": "अपने सेल्फ-कस्टडी वॉलेट को वेबसाइट से कनेक्ट किए बिना उसका उपयोग करें",
     "externalWalletModeUnavailable": "फ़िलहाल उपलब्ध नहीं",
-    "externalWalletModeHalted": "मेमोलेस स्वैप अभी रोके गए हैं। स्वैप जारी रखने के लिए वॉलेट कनेक्ट करें।",
+    "externalWalletModeHalted": "स्वैप जारी रखने के लिए वॉलेट कनेक्ट करें।",
     "externalWalletAssetUnsupported": "यह एसेट बाहरी वॉलेट मोड में समर्थित नहीं है. यदि आप जारी रखना चाहते हैं तो एक ब्राउज़र वॉलेट कनेक्ट करें.",
     "close": "बंद करें",
     "sendToken": "{ticker} भेजें"

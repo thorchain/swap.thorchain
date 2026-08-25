@@ -522,7 +522,7 @@
     "externalWalletMode": "Modalità wallet esterno",
     "externalWalletModeDescription": "Utilizzi un portafoglio self-custody senza collegarlo al sito web",
     "externalWalletModeUnavailable": "Attualmente non disponibile",
-    "externalWalletModeHalted": "Gli swap senza memo sono momentaneamente sospesi. Connetti un wallet per continuare a fare swap.",
+    "externalWalletModeHalted": "Collega un wallet per continuare a fare swap.",
     "externalWalletAssetUnsupported": "Questo asset non è supportato in modalità portafoglio esterno. Connetta un portafoglio del browser se desidera continuare.",
     "close": "Chiudi",
     "sendToken": "Invia {ticker}"

@@ -433,7 +433,6 @@
   "wallet.externalWalletMode": ["External Wallet Mode", "وضع المحفظة الخارجية"],
   "wallet.externalWalletModeDescription": ["Use a self custody wallet without connecting it to the website", "استخدم محفظة ذاتية الحفظ دون ربطها بالموقع"],
   "wallet.externalWalletModeUnavailable": ["Currently Unavailable", "غير متاح حاليًا"],
-  "wallet.externalWalletModeHalted": ["Memoless swaps are paused right now. Connect a wallet to keep swapping.", "عمليات التبادل بدون مذكرة متوقفة مؤقتًا الآن. قم بتوصيل محفظة لمواصلة التبادل."],
   "wallet.externalWalletAssetUnsupported": ["This asset is not supported in External Wallet mode. Connect a browser wallet if you want to continue.", "هذا الأصل غير مدعوم في وضع المحفظة الخارجية. اربط محفظة متصفح إذا كنت تريد المتابعة."],
   "wallet.close": ["Close", "إغلاق"],
   "wallet.sendToken": ["Send {ticker}", "إرسال {ticker}"],
@@ -461,5 +460,6 @@
   "tx.status.unknown": ["Unknown", "غير معروف"],
   "tx.leg.deposit": ["Deposit {ticker}", "إيداع {ticker}"],
   "tx.leg.send": ["Send {ticker}", "إرسال {ticker}"],
-  "tx.leg.swap": ["Swap {from} to {to}", "تبادل {from} إلى {to}"]
+  "tx.leg.swap": ["Swap {from} to {to}", "تبادل {from} إلى {to}"],
+  "wallet.externalWalletModeHalted": ["Connect a wallet to keep swapping.", "قم بتوصيل محفظة لمواصلة التبديل."]
 }

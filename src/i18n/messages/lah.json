@@ -522,7 +522,7 @@
     "externalWalletMode": "بیرونی والٹ موڈ",
     "externalWalletModeDescription": "سیلف کسٹڈی والٹ نوں ویب سائٹ نال جوڑے بغیر ورتو",
     "externalWalletModeUnavailable": "ہُنے دستیاب نہیں",
-    "externalWalletModeHalted": "میمو توں بغیر سویپ ہُنے روکے ہوئے نیں۔ سویپ جاری رکھن لئی والٹ کنیکٹ کرو۔",
+    "externalWalletModeHalted": "سواپ جاری رکھݨ لئی کوئی والٹ جوڑو۔",
     "externalWalletAssetUnsupported": "ایہ اثاثہ بیرونی والٹ موڈ وچ سپورٹ نئیں اے۔ جے تُسی اگے ودھݨا چاہندے او تے براؤزر والٹ کنیکٹ کرو۔",
     "close": "بند کرو",
     "sendToken": "{ticker} بھیجو"

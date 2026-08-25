@@ -522,7 +522,7 @@
     "externalWalletMode": "Chế độ ví bên ngoài",
     "externalWalletModeDescription": "Sử dụng ví tự lưu ký mà không cần kết nối với trang web",
     "externalWalletModeUnavailable": "Hiện không khả dụng",
-    "externalWalletModeHalted": "Giao dịch hoán đổi không cần memo đang tạm dừng. Hãy kết nối ví để tiếp tục hoán đổi.",
+    "externalWalletModeHalted": "Kết nối ví để tiếp tục swap.",
     "externalWalletAssetUnsupported": "Tài sản này không được hỗ trợ ở chế độ ví bên ngoài. Kết nối ví trình duyệt nếu bạn muốn tiếp tục.",
     "close": "Đóng",
     "sendToken": "Gửi {ticker}"

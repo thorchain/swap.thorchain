@@ -522,7 +522,7 @@
     "externalWalletMode": "External Wallet Mode",
     "externalWalletModeDescription": "Use a self-custody wallet without connecting am to di website",
     "externalWalletModeUnavailable": "E No Dey Available Now",
-    "externalWalletModeHalted": "Memoless swaps don pause for now. Connect wallet make you fit continue to swap.",
+    "externalWalletModeHalted": "Konnect wallet make you fit continue to dey swap.",
     "externalWalletAssetUnsupported": "Dis asset no dey supported for External Wallet mode. Connect a browser wallet if you wan continue.",
     "close": "Close",
     "sendToken": "Send {ticker}"

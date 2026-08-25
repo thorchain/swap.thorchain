@@ -522,7 +522,7 @@
     "externalWalletMode": "Mode portefeuille externe",
     "externalWalletModeDescription": "Utilisez un portefeuille auto-hébergé sans le connecter au site web",
     "externalWalletModeUnavailable": "Actuellement indisponible",
-    "externalWalletModeHalted": "Les swaps sans mémo sont actuellement suspendus. Connectez un portefeuille pour continuer à échanger.",
+    "externalWalletModeHalted": "Connectez un portefeuille pour continuer à échanger.",
     "externalWalletAssetUnsupported": "Cet actif n'est pas pris en charge en mode portefeuille externe. Connectez un portefeuille de navigateur si vous souhaitez continuer.",
     "close": "Fermer",
     "sendToken": "Envoyer {ticker}"

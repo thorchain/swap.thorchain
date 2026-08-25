@@ -522,7 +522,7 @@
     "externalWalletMode": "Modo de billetera externa",
     "externalWalletModeDescription": "Usa una billetera de autocustodia sin conectarla al sitio web",
     "externalWalletModeUnavailable": "No disponible actualmente",
-    "externalWalletModeHalted": "Los swaps sin memo están pausados en este momento. Conecta una wallet para seguir intercambiando.",
+    "externalWalletModeHalted": "Conecta una billetera para seguir intercambiando.",
     "externalWalletAssetUnsupported": "Este activo no es compatible en el modo de billetera externa. Conecta una billetera del navegador si quieres continuar.",
     "close": "Cerrar",
     "sendToken": "Enviar {ticker}"

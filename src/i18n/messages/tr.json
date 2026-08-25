@@ -522,7 +522,7 @@
     "externalWalletMode": "Harici Cüzdan Modu",
     "externalWalletModeDescription": "Öz saklamalı bir cüzdanı web sitesine bağlamadan kullan",
     "externalWalletModeUnavailable": "Şu Anda Kullanılamıyor",
-    "externalWalletModeHalted": "Memosuz takaslar şu anda duraklatıldı. Takas yapmaya devam etmek için bir cüzdan bağlayın.",
+    "externalWalletModeHalted": "Takas işlemlerine devam etmek için bir cüzdan bağlayın.",
     "externalWalletAssetUnsupported": "Bu varlık Harici Cüzdan modunda desteklenmiyor. Devam etmek istiyorsanız tarayıcı içi bir cüzdan bağlayın.",
     "close": "Kapat",
     "sendToken": "{ticker} Gönder"

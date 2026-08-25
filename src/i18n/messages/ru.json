@@ -522,7 +522,7 @@
     "externalWalletMode": "Режим внешнего кошелька",
     "externalWalletModeDescription": "Используйте некастодиальный кошелёк, не подключая его к сайту",
     "externalWalletModeUnavailable": "Сейчас недоступно",
-    "externalWalletModeHalted": "Свопы без memo сейчас приостановлены. Подключите кошелёк, чтобы продолжить обмен.",
+    "externalWalletModeHalted": "Подключите кошелёк, чтобы продолжить обмен.",
     "externalWalletAssetUnsupported": "Этот актив не поддерживается в режиме внешнего кошелька. Подключите браузерный кошелёк, чтобы продолжить.",
     "close": "Закрыть",
     "sendToken": "Отправить {ticker}"
