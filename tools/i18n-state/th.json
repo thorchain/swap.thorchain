@@ -433,7 +433,7 @@
   "wallet.externalWalletMode": ["External Wallet Mode", "โหมดกระเป๋าเงินภายนอก"],
   "wallet.externalWalletModeDescription": ["Use a self custody wallet without connecting it to the website", "ใช้กระเป๋าเงินแบบ self-custody โดยไม่ต้องเชื่อมต่อกับเว็บไซต์"],
   "wallet.externalWalletModeUnavailable": ["Currently Unavailable", "ไม่พร้อมใช้งานในขณะนี้"],
-  "wallet.externalWalletModeHalted": ["Memoless swaps are paused right now. Connect a wallet to keep swapping.", "การสวอปแบบไม่ใช้ memo ถูกหยุดชั่วคราวในขณะนี้ เชื่อมต่อกระเป๋าเงินเพื่อสวอปต่อ"],
+  "wallet.externalWalletModeHalted": ["Connect a wallet to keep swapping.", "การสวอปแบบไม่ใช้ memo ถูกหยุดชั่วคราวในขณะนี้ เชื่อมต่อกระเป๋าเงินเพื่อสวอปต่อ", "เชื่อมต่อกระเป๋าเงินเพื่อสวอปต่อ"],
   "wallet.externalWalletAssetUnsupported": ["This asset is not supported in External Wallet mode. Connect a browser wallet if you want to continue.", "สินทรัพย์นี้ไม่รองรับในโหมดกระเป๋าเงินภายนอก เชื่อมต่อกระเป๋าเงินบนเบราว์เซอร์หากคุณต้องการดำเนินการต่อ"],
   "wallet.close": ["Close", "ปิด"],
   "wallet.sendToken": ["Send {ticker}", "ส่ง {ticker}"],

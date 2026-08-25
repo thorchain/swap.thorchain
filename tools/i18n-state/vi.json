@@ -433,7 +433,7 @@
   "wallet.externalWalletMode": ["External Wallet Mode", "Chế độ ví bên ngoài"],
   "wallet.externalWalletModeDescription": ["Use a self custody wallet without connecting it to the website", "Sử dụng ví tự lưu ký mà không cần kết nối với trang web"],
   "wallet.externalWalletModeUnavailable": ["Currently Unavailable", "Hiện không khả dụng"],
-  "wallet.externalWalletModeHalted": ["Memoless swaps are paused right now. Connect a wallet to keep swapping.", "Giao dịch hoán đổi không cần memo đang tạm dừng. Hãy kết nối ví để tiếp tục hoán đổi."],
+  "wallet.externalWalletModeHalted": ["Connect a wallet to keep swapping.", "Giao dịch hoán đổi không cần memo đang tạm dừng. Hãy kết nối ví để tiếp tục hoán đổi.", "Kết nối ví để tiếp tục swap."],
   "wallet.externalWalletAssetUnsupported": ["This asset is not supported in External Wallet mode. Connect a browser wallet if you want to continue.", "Tài sản này không được hỗ trợ ở chế độ ví bên ngoài. Kết nối ví trình duyệt nếu bạn muốn tiếp tục."],
   "wallet.close": ["Close", "Đóng"],
   "wallet.sendToken": ["Send {ticker}", "Gửi {ticker}"],

@@ -433,7 +433,7 @@
   "wallet.externalWalletMode": ["External Wallet Mode", "外部ウォレットモード"],
   "wallet.externalWalletModeDescription": ["Use a self custody wallet without connecting it to the website", "セルフカストディウォレットをウェブサイトに接続せずに使用します"],
   "wallet.externalWalletModeUnavailable": ["Currently Unavailable", "現在ご利用いただけません"],
-  "wallet.externalWalletModeHalted": ["Memoless swaps are paused right now. Connect a wallet to keep swapping.", "メモレススワップは現在停止中です。ウォレットを接続してスワップを続けてください。"],
+  "wallet.externalWalletModeHalted": ["Connect a wallet to keep swapping.", "メモレススワップは現在停止中です。ウォレットを接続してスワップを続けてください。", "スワップを続けるにはウォレットを接続してください。"],
   "wallet.externalWalletAssetUnsupported": ["This asset is not supported in External Wallet mode. Connect a browser wallet if you want to continue.", "この資産は外部ウォレットモードでは対応していません。続行する場合はブラウザウォレットを接続してください。"],
   "wallet.close": ["Close", "閉じる"],
   "wallet.sendToken": ["Send {ticker}", "{ticker} を送信"],

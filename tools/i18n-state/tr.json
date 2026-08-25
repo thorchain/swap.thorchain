@@ -433,7 +433,7 @@
   "wallet.externalWalletMode": ["External Wallet Mode", "Harici Cüzdan Modu"],
   "wallet.externalWalletModeDescription": ["Use a self custody wallet without connecting it to the website", "Öz saklamalı bir cüzdanı web sitesine bağlamadan kullan"],
   "wallet.externalWalletModeUnavailable": ["Currently Unavailable", "Şu Anda Kullanılamıyor"],
-  "wallet.externalWalletModeHalted": ["Memoless swaps are paused right now. Connect a wallet to keep swapping.", "Memosuz takaslar şu anda duraklatıldı. Takas yapmaya devam etmek için bir cüzdan bağlayın."],
+  "wallet.externalWalletModeHalted": ["Connect a wallet to keep swapping.", "Memosuz takaslar şu anda duraklatıldı. Takas yapmaya devam etmek için bir cüzdan bağlayın.", "Takas işlemlerine devam etmek için bir cüzdan bağlayın."],
   "wallet.externalWalletAssetUnsupported": ["This asset is not supported in External Wallet mode. Connect a browser wallet if you want to continue.", "Bu varlık Harici Cüzdan modunda desteklenmiyor. Devam etmek istiyorsanız tarayıcı içi bir cüzdan bağlayın."],
   "wallet.close": ["Close", "Kapat"],
   "wallet.sendToken": ["Send {ticker}", "{ticker} Gönder"],

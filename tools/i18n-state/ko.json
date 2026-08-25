@@ -433,7 +433,7 @@
   "wallet.externalWalletMode": ["External Wallet Mode", "외부 지갑 모드"],
   "wallet.externalWalletModeDescription": ["Use a self custody wallet without connecting it to the website", "자기 수탁 지갑을 웹사이트에 연결하지 않고 사용하세요"],
   "wallet.externalWalletModeUnavailable": ["Currently Unavailable", "현재 사용할 수 없음"],
-  "wallet.externalWalletModeHalted": ["Memoless swaps are paused right now. Connect a wallet to keep swapping.", "메모 없는 스왑이 현재 일시 중지되었습니다. 계속 스왑하려면 지갑을 연결하세요."],
+  "wallet.externalWalletModeHalted": ["Connect a wallet to keep swapping.", "메모 없는 스왑이 현재 일시 중지되었습니다. 계속 스왑하려면 지갑을 연결하세요.", "지갑을 연결하여 스왑을 계속하세요."],
   "wallet.externalWalletAssetUnsupported": ["This asset is not supported in External Wallet mode. Connect a browser wallet if you want to continue.", "이 자산은 외부 지갑 모드에서 지원되지 않습니다. 계속하려면 브라우저 지갑을 연결하세요."],
   "wallet.close": ["Close", "닫기"],
   "wallet.sendToken": ["Send {ticker}", "{ticker} 보내기"],

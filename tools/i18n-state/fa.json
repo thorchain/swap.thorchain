@@ -433,7 +433,7 @@
   "wallet.externalWalletMode": ["External Wallet Mode", "حالت کیف پول خارجی"],
   "wallet.externalWalletModeDescription": ["Use a self custody wallet without connecting it to the website", "از یک کیف پول خودنگهدار بدون اتصال آن به وب‌سایت استفاده کنید"],
   "wallet.externalWalletModeUnavailable": ["Currently Unavailable", "در حال حاضر در دسترس نیست"],
-  "wallet.externalWalletModeHalted": ["Memoless swaps are paused right now. Connect a wallet to keep swapping.", "سواپ‌های بدون ممو در حال حاضر متوقف شده‌اند. برای ادامه سواپ، یک کیف پول متصل کنید."],
+  "wallet.externalWalletModeHalted": ["Connect a wallet to keep swapping.", "سواپ‌های بدون ممو در حال حاضر متوقف شده‌اند. برای ادامه سواپ، یک کیف پول متصل کنید.", "برای ادامه سواپ، یک کیف پول متصل کنید."],
   "wallet.externalWalletAssetUnsupported": ["This asset is not supported in External Wallet mode. Connect a browser wallet if you want to continue.", "این دارایی در حالت کیف پول خارجی پشتیبانی نمی‌شود. برای ادامه، یک کیف پول مرورگر متصل کنید."],
   "wallet.close": ["Close", "بستن"],
   "wallet.sendToken": ["Send {ticker}", "ارسال {ticker}"],

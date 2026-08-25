@@ -433,7 +433,7 @@
   "wallet.externalWalletMode": ["External Wallet Mode", "Modalità portafoglio esterno", "Modalità wallet esterno"],
   "wallet.externalWalletModeDescription": ["Use a self custody wallet without connecting it to the website", "Utilizzi un portafoglio self-custody senza collegarlo al sito web"],
   "wallet.externalWalletModeUnavailable": ["Currently Unavailable", "Attualmente non disponibile"],
-  "wallet.externalWalletModeHalted": ["Memoless swaps are paused right now. Connect a wallet to keep swapping.", "Gli swap senza memo sono momentaneamente sospesi. Connetti un wallet per continuare a fare swap."],
+  "wallet.externalWalletModeHalted": ["Connect a wallet to keep swapping.", "Gli swap senza memo sono momentaneamente sospesi. Connetti un wallet per continuare a fare swap.", "Collega un wallet per continuare a fare swap."],
   "wallet.externalWalletAssetUnsupported": ["This asset is not supported in External Wallet mode. Connect a browser wallet if you want to continue.", "Questo asset non è supportato in modalità portafoglio esterno. Connetta un portafoglio del browser se desidera continuare."],
   "wallet.close": ["Close", "Chiudi"],
   "wallet.sendToken": ["Send {ticker}", "Invia {ticker}"],

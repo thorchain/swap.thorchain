@@ -433,7 +433,7 @@
   "wallet.externalWalletMode": ["External Wallet Mode", "बाहरी वॉलेट मोड"],
   "wallet.externalWalletModeDescription": ["Use a self custody wallet without connecting it to the website", "अपने सेल्फ-कस्टडी वॉलेट को वेबसाइट से कनेक्ट किए बिना उसका उपयोग करें"],
   "wallet.externalWalletModeUnavailable": ["Currently Unavailable", "फ़िलहाल उपलब्ध नहीं"],
-  "wallet.externalWalletModeHalted": ["Memoless swaps are paused right now. Connect a wallet to keep swapping.", "मेमोलेस स्वैप अभी रोके गए हैं। स्वैप जारी रखने के लिए वॉलेट कनेक्ट करें।"],
+  "wallet.externalWalletModeHalted": ["Connect a wallet to keep swapping.", "मेमोलेस स्वैप अभी रोके गए हैं। स्वैप जारी रखने के लिए वॉलेट कनेक्ट करें।", "स्वैप जारी रखने के लिए वॉलेट कनेक्ट करें।"],
   "wallet.externalWalletAssetUnsupported": ["This asset is not supported in External Wallet mode. Connect a browser wallet if you want to continue.", "यह एसेट बाहरी वॉलेट मोड में समर्थित नहीं है. यदि आप जारी रखना चाहते हैं तो एक ब्राउज़र वॉलेट कनेक्ट करें."],
   "wallet.close": ["Close", "बंद करें"],
   "wallet.sendToken": ["Send {ticker}", "{ticker} भेजें"],

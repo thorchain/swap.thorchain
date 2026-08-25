@@ -1,0 +1,186 @@
+{
+  "note": "Hand-reviewed translations whose English source has changed. These were NOT overwritten — a native speaker should confirm or update them in src/i18n/messages/<locale>.json.",
+  "generated": "2026-08-25T07:16:50.166Z",
+  "locales": {
+    "de": [
+      {
+        "key": "wallet.externalWalletModeHalted",
+        "reason": "edited-alongside-english",
+        "englishWas": "Memoless swaps are paused right now. Connect a wallet to keep swapping.",
+        "englishNow": "Connect a wallet to keep swapping.",
+        "translation": "Verbinde eine Wallet, um weiter zu swappen."
+      }
+    ],
+    "en-Runr": [
+      {
+        "key": "wallet.externalWalletModeHalted",
+        "reason": "edited-alongside-english",
+        "englishWas": "Memoless swaps are paused right now. Connect a wallet to keep swapping.",
+        "englishNow": "Connect a wallet to keep swapping.",
+        "translation": "ᚲᛟᚾᚾᛖᚲᛏ ᚨ ᚹᚨᛚᛚᛖᛏ ᛏᛟ ᚲᛖᛖᛈ ᛊᚹᚨᛈᛈᛁᚾᚷ."
+      }
+    ],
+    "es": [
+      {
+        "key": "wallet.externalWalletModeHalted",
+        "reason": "edited-alongside-english",
+        "englishWas": "Memoless swaps are paused right now. Connect a wallet to keep swapping.",
+        "englishNow": "Connect a wallet to keep swapping.",
+        "translation": "Conecta una billetera para seguir intercambiando."
+      }
+    ],
+    "fa": [
+      {
+        "key": "wallet.externalWalletModeHalted",
+        "reason": "edited-alongside-english",
+        "englishWas": "Memoless swaps are paused right now. Connect a wallet to keep swapping.",
+        "englishNow": "Connect a wallet to keep swapping.",
+        "translation": "برای ادامه سواپ، یک کیف پول متصل کنید."
+      }
+    ],
+    "fr": [
+      {
+        "key": "wallet.externalWalletModeHalted",
+        "reason": "edited-alongside-english",
+        "englishWas": "Memoless swaps are paused right now. Connect a wallet to keep swapping.",
+        "englishNow": "Connect a wallet to keep swapping.",
+        "translation": "Connectez un portefeuille pour continuer à échanger."
+      }
+    ],
+    "hi": [
+      {
+        "key": "wallet.externalWalletModeHalted",
+        "reason": "edited-alongside-english",
+        "englishWas": "Memoless swaps are paused right now. Connect a wallet to keep swapping.",
+        "englishNow": "Connect a wallet to keep swapping.",
+        "translation": "स्वैप जारी रखने के लिए वॉलेट कनेक्ट करें।"
+      }
+    ],
+    "id": [
+      {
+        "key": "wallet.externalWalletModeHalted",
+        "reason": "edited-alongside-english",
+        "englishWas": "Memoless swaps are paused right now. Connect a wallet to keep swapping.",
+        "englishNow": "Connect a wallet to keep swapping.",
+        "translation": "Hubungkan dompet untuk terus melakukan swap."
+      }
+    ],
+    "it": [
+      {
+        "key": "wallet.externalWalletModeHalted",
+        "reason": "edited-alongside-english",
+        "englishWas": "Memoless swaps are paused right now. Connect a wallet to keep swapping.",
+        "englishNow": "Connect a wallet to keep swapping.",
+        "translation": "Collega un wallet per continuare a fare swap."
+      }
+    ],
+    "ja": [
+      {
+        "key": "wallet.externalWalletModeHalted",
+        "reason": "edited-alongside-english",
+        "englishWas": "Memoless swaps are paused right now. Connect a wallet to keep swapping.",
+        "englishNow": "Connect a wallet to keep swapping.",
+        "translation": "スワップを続けるにはウォレットを接続してください。"
+      }
+    ],
+    "ko": [
+      {
+        "key": "wallet.externalWalletModeHalted",
+        "reason": "edited-alongside-english",
+        "englishWas": "Memoless swaps are paused right now. Connect a wallet to keep swapping.",
+        "englishNow": "Connect a wallet to keep swapping.",
+        "translation": "지갑을 연결하여 스왑을 계속하세요."
+      }
+    ],
+    "lah": [
+      {
+        "key": "wallet.externalWalletModeHalted",
+        "reason": "edited-alongside-english",
+        "englishWas": "Memoless swaps are paused right now. Connect a wallet to keep swapping.",
+        "englishNow": "Connect a wallet to keep swapping.",
+        "translation": "سواپ جاری رکھݨ لئی کوئی والٹ جوڑو۔"
+      }
+    ],
+    "pcm": [
+      {
+        "key": "wallet.externalWalletModeHalted",
+        "reason": "edited-alongside-english",
+        "englishWas": "Memoless swaps are paused right now. Connect a wallet to keep swapping.",
+        "englishNow": "Connect a wallet to keep swapping.",
+        "translation": "Konnect wallet make you fit continue to dey swap."
+      }
+    ],
+    "pt": [
+      {
+        "key": "wallet.externalWalletModeHalted",
+        "reason": "edited-alongside-english",
+        "englishWas": "Memoless swaps are paused right now. Connect a wallet to keep swapping.",
+        "englishNow": "Connect a wallet to keep swapping.",
+        "translation": "Ligue uma carteira para continuar a fazer swaps."
+      }
+    ],
+    "ru": [
+      {
+        "key": "wallet.externalWalletModeHalted",
+        "reason": "edited-alongside-english",
+        "englishWas": "Memoless swaps are paused right now. Connect a wallet to keep swapping.",
+        "englishNow": "Connect a wallet to keep swapping.",
+        "translation": "Подключите кошелёк, чтобы продолжить обмен."
+      }
+    ],
+    "th": [
+      {
+        "key": "wallet.externalWalletModeHalted",
+        "reason": "edited-alongside-english",
+        "englishWas": "Memoless swaps are paused right now. Connect a wallet to keep swapping.",
+        "englishNow": "Connect a wallet to keep swapping.",
+        "translation": "เชื่อมต่อกระเป๋าเงินเพื่อสวอปต่อ"
+      }
+    ],
+    "tr": [
+      {
+        "key": "wallet.externalWalletModeHalted",
+        "reason": "edited-alongside-english",
+        "englishWas": "Memoless swaps are paused right now. Connect a wallet to keep swapping.",
+        "englishNow": "Connect a wallet to keep swapping.",
+        "translation": "Takas işlemlerine devam etmek için bir cüzdan bağlayın."
+      }
+    ],
+    "ur": [
+      {
+        "key": "wallet.externalWalletModeHalted",
+        "reason": "edited-alongside-english",
+        "englishWas": "Memoless swaps are paused right now. Connect a wallet to keep swapping.",
+        "englishNow": "Connect a wallet to keep swapping.",
+        "translation": "سواپ جاری رکھنے کے لیے والیٹ منسلک کریں۔"
+      }
+    ],
+    "vi": [
+      {
+        "key": "wallet.externalWalletModeHalted",
+        "reason": "edited-alongside-english",
+        "englishWas": "Memoless swaps are paused right now. Connect a wallet to keep swapping.",
+        "englishNow": "Connect a wallet to keep swapping.",
+        "translation": "Kết nối ví để tiếp tục swap."
+      }
+    ],
+    "zh-Hant": [
+      {
+        "key": "wallet.externalWalletModeHalted",
+        "reason": "edited-alongside-english",
+        "englishWas": "Memoless swaps are paused right now. Connect a wallet to keep swapping.",
+        "englishNow": "Connect a wallet to keep swapping.",
+        "translation": "連接錢包以繼續交換。"
+      }
+    ],
+    "zh": [
+      {
+        "key": "wallet.externalWalletModeHalted",
+        "reason": "edited-alongside-english",
+        "englishWas": "Memoless swaps are paused right now. Connect a wallet to keep swapping.",
+        "englishNow": "Connect a wallet to keep swapping.",
+        "translation": "连接钱包以继续交易。"
+      }
+    ]
+  }
+}

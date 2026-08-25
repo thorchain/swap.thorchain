@@ -433,7 +433,7 @@
   "wallet.externalWalletMode": ["External Wallet Mode", "Mode dompet eksternal"],
   "wallet.externalWalletModeDescription": ["Use a self custody wallet without connecting it to the website", "Gunakan dompet self-custody tanpa menghubungkannya ke situs web"],
   "wallet.externalWalletModeUnavailable": ["Currently Unavailable", "Saat Ini Tidak Tersedia"],
-  "wallet.externalWalletModeHalted": ["Memoless swaps are paused right now. Connect a wallet to keep swapping.", "Swap tanpa memo sedang dijeda saat ini. Hubungkan wallet untuk terus melakukan swap."],
+  "wallet.externalWalletModeHalted": ["Connect a wallet to keep swapping.", "Swap tanpa memo sedang dijeda saat ini. Hubungkan wallet untuk terus melakukan swap.", "Hubungkan dompet untuk terus melakukan swap."],
   "wallet.externalWalletAssetUnsupported": ["This asset is not supported in External Wallet mode. Connect a browser wallet if you want to continue.", "Aset ini tidak didukung dalam mode dompet eksternal. Hubungkan dompet browser jika Anda ingin melanjutkan."],
   "wallet.close": ["Close", "Tutup"],
   "wallet.sendToken": ["Send {ticker}", "Kirim {ticker}"],

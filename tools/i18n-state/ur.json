@@ -433,7 +433,7 @@
   "wallet.externalWalletMode": ["External Wallet Mode", "External Wallet موڈ"],
   "wallet.externalWalletModeDescription": ["Use a self custody wallet without connecting it to the website", "سیلف کسٹڈی والٹ کو ویب سائٹ سے منسلک کیے بغیر استعمال کریں"],
   "wallet.externalWalletModeUnavailable": ["Currently Unavailable", "فی الحال دستیاب نہیں"],
-  "wallet.externalWalletModeHalted": ["Memoless swaps are paused right now. Connect a wallet to keep swapping.", "میمو کے بغیر سویپ اس وقت روکے گئے ہیں۔ سویپ جاری رکھنے کے لیے والیٹ منسلک کریں۔"],
+  "wallet.externalWalletModeHalted": ["Connect a wallet to keep swapping.", "میمو کے بغیر سویپ اس وقت روکے گئے ہیں۔ سویپ جاری رکھنے کے لیے والیٹ منسلک کریں۔", "سواپ جاری رکھنے کے لیے والیٹ منسلک کریں۔"],
   "wallet.externalWalletAssetUnsupported": ["This asset is not supported in External Wallet mode. Connect a browser wallet if you want to continue.", "یہ اثاثہ External Wallet موڈ میں سپورٹڈ نہیں ہے۔ اگر آپ جاری رکھنا چاہتے ہیں تو براؤزر والٹ کنیکٹ کریں۔"],
   "wallet.close": ["Close", "بند کریں"],
   "wallet.sendToken": ["Send {ticker}", "{ticker} بھیجیں"],

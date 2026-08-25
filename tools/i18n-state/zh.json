@@ -433,7 +433,7 @@
   "wallet.externalWalletMode": ["External Wallet Mode", "外部钱包模式"],
   "wallet.externalWalletModeDescription": ["Use a self custody wallet without connecting it to the website", "使用自托管钱包，无需将其连接到网站"],
   "wallet.externalWalletModeUnavailable": ["Currently Unavailable", "暂不可用"],
-  "wallet.externalWalletModeHalted": ["Memoless swaps are paused right now. Connect a wallet to keep swapping.", "免 memo 交换当前已暂停。请连接钱包以继续交换。"],
+  "wallet.externalWalletModeHalted": ["Connect a wallet to keep swapping.", "免 memo 交换当前已暂停。请连接钱包以继续交换。", "连接钱包以继续交易。"],
   "wallet.externalWalletAssetUnsupported": ["This asset is not supported in External Wallet mode. Connect a browser wallet if you want to continue.", "此资产在外部钱包模式下不受支持。如要继续，请连接浏览器钱包。"],
   "wallet.close": ["Close", "关闭"],
   "wallet.sendToken": ["Send {ticker}", "发送{ticker}"],

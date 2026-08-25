@@ -433,7 +433,7 @@
   "wallet.externalWalletMode": ["External Wallet Mode", "Режим внешнего кошелька"],
   "wallet.externalWalletModeDescription": ["Use a self custody wallet without connecting it to the website", "Используйте некастодиальный кошелёк, не подключая его к сайту"],
   "wallet.externalWalletModeUnavailable": ["Currently Unavailable", "Сейчас недоступно"],
-  "wallet.externalWalletModeHalted": ["Memoless swaps are paused right now. Connect a wallet to keep swapping.", "Свопы без memo сейчас приостановлены. Подключите кошелёк, чтобы продолжить обмен."],
+  "wallet.externalWalletModeHalted": ["Connect a wallet to keep swapping.", "Свопы без memo сейчас приостановлены. Подключите кошелёк, чтобы продолжить обмен.", "Подключите кошелёк, чтобы продолжить обмен."],
   "wallet.externalWalletAssetUnsupported": ["This asset is not supported in External Wallet mode. Connect a browser wallet if you want to continue.", "Этот актив не поддерживается в режиме внешнего кошелька. Подключите браузерный кошелёк, чтобы продолжить."],
   "wallet.close": ["Close", "Закрыть"],
   "wallet.sendToken": ["Send {ticker}", "Отправить {ticker}"],
