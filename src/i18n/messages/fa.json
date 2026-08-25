@@ -67,6 +67,7 @@
       "enterAmount": "مقدار را وارد کنید",
       "quoting": "در حال دریافت قیمت",
       "noValidQuotes": "قیمت معتبری وجود ندارد",
+      "tradingHalted": "معاملات متوقف شده است",
       "enterLimitPrice": "قیمت حد را وارد کنید",
       "enterLimitOrder": "سفارش حد را وارد کنید",
       "swap": "تبادل",

@@ -67,6 +67,7 @@
       "enterAmount": "Ingresa la cantidad",
       "quoting": "Cotizando",
       "noValidQuotes": "No hay cotizaciones válidas",
+      "tradingHalted": "El trading está detenido",
       "enterLimitPrice": "Ingresa el precio límite",
       "enterLimitOrder": "Ingresa la orden límite",
       "swap": "Intercambiar",

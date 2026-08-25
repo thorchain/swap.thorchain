@@ -67,6 +67,7 @@
       "enterAmount": "Введите сумму",
       "quoting": "Расчёт котировки",
       "noValidQuotes": "Нет доступных котировок",
+      "tradingHalted": "Торговля приостановлена",
       "enterLimitPrice": "Введите лимитную цену",
       "enterLimitOrder": "Введите лимитный ордер",
       "swap": "Обменять",

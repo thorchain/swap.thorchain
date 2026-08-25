@@ -67,6 +67,7 @@
       "enterAmount": "Enter Amount",
       "quoting": "Quoting",
       "noValidQuotes": "No Valid Quotes",
+      "tradingHalted": "Trading is Halted",
       "enterLimitPrice": "Enter limit price",
       "enterLimitOrder": "Enter Limit Order",
       "swap": "Swap",

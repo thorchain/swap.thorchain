@@ -141,6 +141,7 @@
   "swap.limitCancel.error.loadInboundAddresses": ["Failed to load inbound addresses", "โหลดที่อยู่ขาเข้าไม่สำเร็จ"],
   "swap.limitCancel.error.cancelFailed": ["Failed to cancel limit swap", "ยกเลิกการแลกเปลี่ยน Limit ไม่สำเร็จ"],
   "swap.limitCancel.error.modifyFailed": ["Failed to modify limit swap", "แก้ไขการแลกเปลี่ยน Limit ไม่สำเร็จ"],
+  "swap.limitCancel.error.walletNotConnected": ["Wallet not connected", "ยังไม่ได้เชื่อมต่อกระเป๋าเงิน"],
   "swap.limitCancel.toast.sendToCancel": ["Send {amount} {ticker} from the original wallet to cancel", "ส่ง {amount} {ticker} จากกระเป๋าเงินเดิมเพื่อยกเลิก"],
   "swap.limitCancel.toast.sendToModify": ["Send {amount} {ticker} from the original wallet to modify", "ส่ง {amount} {ticker} จากกระเป๋าเงินเดิมเพื่อแก้ไข"],
   "swap.limitCancel.toast.cancelSubmitted": ["Cancel transaction submitted", "ส่งธุรกรรมยกเลิกแล้ว"],
@@ -152,6 +153,7 @@
   "swap.limitCancel.warning.switch": ["Switch to a {chain} wallet to {mode} this order", "สลับไปยังกระเป๋าเงิน {chain} เพื่อ {mode} คำสั่งนี้"],
   "swap.limitCancel.warning.addressMismatch": ["Connected wallet does not match the address that placed this order", "กระเป๋าเงินที่เชื่อมต่อไม่ตรงกับที่อยู่ที่วางคำสั่งนี้"],
   "swap.limitCancel.warning.tradingPaused": ["{chain} trading is currently paused", "การซื้อขาย {chain} ถูกหยุดชั่วคราวในขณะนี้"],
+  "swap.limitCancel.warning.orderNotFound": ["This order is no longer open on THORChain - it may have already been filled or expired", "คำสั่งนี้ไม่ได้เปิดอยู่บน THORChain แล้ว อาจถูกจับคู่สำเร็จหรือหมดอายุไปแล้ว"],
   "swap.quoteTimer.refresh": ["Refresh", "รีเฟรช"],
   "swap.recipient.addressPlaceholder": ["{chain} address", "ที่อยู่ {chain}"],
   "swap.recipient.paste": ["Paste", "วาง"],
@@ -429,6 +431,8 @@
   "wallet.sortByBalance": ["Balance (High → Low)", "ยอดคงเหลือ (สูง → ต่ำ)"],
   "wallet.externalWalletMode": ["External Wallet Mode", "โหมดกระเป๋าเงินภายนอก"],
   "wallet.externalWalletModeDescription": ["Use a self custody wallet without connecting it to the website", "ใช้กระเป๋าเงินแบบ self-custody โดยไม่ต้องเชื่อมต่อกับเว็บไซต์"],
+  "wallet.externalWalletModeUnavailable": ["Currently Unavailable", "ไม่พร้อมใช้งานในขณะนี้"],
+  "wallet.externalWalletModeHalted": ["Memoless swaps are paused right now. Connect a wallet to keep swapping.", "การสวอปแบบไม่ใช้ memo ถูกหยุดชั่วคราวในขณะนี้ เชื่อมต่อกระเป๋าเงินเพื่อสวอปต่อ"],
   "wallet.externalWalletAssetUnsupported": ["This asset is not supported in External Wallet mode. Connect a browser wallet if you want to continue.", "สินทรัพย์นี้ไม่รองรับในโหมดกระเป๋าเงินภายนอก เชื่อมต่อกระเป๋าเงินบนเบราว์เซอร์หากคุณต้องการดำเนินการต่อ"],
   "wallet.close": ["Close", "ปิด"],
   "wallet.sendToken": ["Send {ticker}", "ส่ง {ticker}"],
@@ -457,8 +461,5 @@
   "tx.leg.deposit": ["Deposit {ticker}", "ฝาก {ticker}"],
   "tx.leg.send": ["Send {ticker}", "ส่ง {ticker}"],
   "tx.leg.swap": ["Swap {from} to {to}", "แลกเปลี่ยน {from} เป็น {to}"],
-  "swap.limitCancel.error.walletNotConnected": ["Wallet not connected", "ยังไม่ได้เชื่อมต่อกระเป๋าเงิน"],
-  "swap.limitCancel.warning.orderNotFound": ["This order is no longer open on THORChain - it may have already been filled or expired", "คำสั่งนี้ไม่ได้เปิดอยู่บน THORChain แล้ว อาจถูกจับคู่สำเร็จหรือหมดอายุไปแล้ว"],
-  "wallet.externalWalletModeUnavailable": ["Currently Unavailable", "ไม่พร้อมใช้งานในขณะนี้"],
-  "wallet.externalWalletModeHalted": ["Memoless swaps are paused right now. Connect a wallet to keep swapping.", "การสวอปแบบไม่ใช้ memo ถูกหยุดชั่วคราวในขณะนี้ เชื่อมต่อกระเป๋าเงินเพื่อสวอปต่อ"]
+  "swap.button.tradingHalted": ["Trading is Halted", "การซื้อขายถูกระงับ"]
 }

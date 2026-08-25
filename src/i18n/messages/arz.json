@@ -67,6 +67,7 @@
       "enterAmount": "اكتب المبلغ",
       "quoting": "جاري التسعير",
       "noValidQuotes": "مفيش عروض أسعار صالحة",
+      "tradingHalted": "التداول متوقف",
       "enterLimitPrice": "اكتب السعر المحدد",
       "enterLimitOrder": "اكتب الأمر المحدد",
       "swap": "تبديل",

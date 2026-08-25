@@ -67,6 +67,7 @@
       "enterAmount": "Saisir le montant",
       "quoting": "Estimation en cours...",
       "noValidQuotes": "Aucune route disponible",
+      "tradingHalted": "Trading suspendu",
       "enterLimitPrice": "Saisir le prix limite",
       "enterLimitOrder": "Saisir l'ordre limite",
       "swap": "Échanger",

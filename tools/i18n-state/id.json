@@ -141,6 +141,7 @@
   "swap.limitCancel.error.loadInboundAddresses": ["Failed to load inbound addresses", "Gagal memuat alamat masuk"],
   "swap.limitCancel.error.cancelFailed": ["Failed to cancel limit swap", "Gagal membatalkan limit swap"],
   "swap.limitCancel.error.modifyFailed": ["Failed to modify limit swap", "Gagal mengubah limit swap"],
+  "swap.limitCancel.error.walletNotConnected": ["Wallet not connected", "Wallet tidak terhubung"],
   "swap.limitCancel.toast.sendToCancel": ["Send {amount} {ticker} from the original wallet to cancel", "Kirim {amount} {ticker} dari dompet asli untuk membatalkan"],
   "swap.limitCancel.toast.sendToModify": ["Send {amount} {ticker} from the original wallet to modify", "Kirim {amount} {ticker} dari dompet asli untuk mengubah"],
   "swap.limitCancel.toast.cancelSubmitted": ["Cancel transaction submitted", "Transaksi pembatalan terkirim"],
@@ -152,6 +153,7 @@
   "swap.limitCancel.warning.switch": ["Switch to a {chain} wallet to {mode} this order", "Beralih ke dompet {chain} untuk {mode} order ini"],
   "swap.limitCancel.warning.addressMismatch": ["Connected wallet does not match the address that placed this order", "Dompet yang terhubung tidak cocok dengan alamat yang membuat order ini"],
   "swap.limitCancel.warning.tradingPaused": ["{chain} trading is currently paused", "Trading {chain} saat ini sedang dijeda"],
+  "swap.limitCancel.warning.orderNotFound": ["This order is no longer open on THORChain - it may have already been filled or expired", "Order ini tidak lagi terbuka di THORChain - kemungkinan sudah terisi atau kedaluwarsa"],
   "swap.quoteTimer.refresh": ["Refresh", "Segarkan"],
   "swap.recipient.addressPlaceholder": ["{chain} address", "Alamat {chain}"],
   "swap.recipient.paste": ["Paste", "Tempel"],
@@ -429,6 +431,8 @@
   "wallet.sortByBalance": ["Balance (High → Low)", "Saldo (Tinggi → Rendah)"],
   "wallet.externalWalletMode": ["External Wallet Mode", "Mode dompet eksternal"],
   "wallet.externalWalletModeDescription": ["Use a self custody wallet without connecting it to the website", "Gunakan dompet self-custody tanpa menghubungkannya ke situs web"],
+  "wallet.externalWalletModeUnavailable": ["Currently Unavailable", "Saat Ini Tidak Tersedia"],
+  "wallet.externalWalletModeHalted": ["Memoless swaps are paused right now. Connect a wallet to keep swapping.", "Swap tanpa memo sedang dijeda saat ini. Hubungkan wallet untuk terus melakukan swap."],
   "wallet.externalWalletAssetUnsupported": ["This asset is not supported in External Wallet mode. Connect a browser wallet if you want to continue.", "Aset ini tidak didukung dalam mode dompet eksternal. Hubungkan dompet browser jika Anda ingin melanjutkan."],
   "wallet.close": ["Close", "Tutup"],
   "wallet.sendToken": ["Send {ticker}", "Kirim {ticker}"],
@@ -457,8 +461,5 @@
   "tx.leg.deposit": ["Deposit {ticker}", "Deposit {ticker}"],
   "tx.leg.send": ["Send {ticker}", "Kirim {ticker}"],
   "tx.leg.swap": ["Swap {from} to {to}", "Tukar {from} ke {to}"],
-  "swap.limitCancel.error.walletNotConnected": ["Wallet not connected", "Wallet tidak terhubung"],
-  "swap.limitCancel.warning.orderNotFound": ["This order is no longer open on THORChain - it may have already been filled or expired", "Order ini tidak lagi terbuka di THORChain - kemungkinan sudah terisi atau kedaluwarsa"],
-  "wallet.externalWalletModeUnavailable": ["Currently Unavailable", "Saat Ini Tidak Tersedia"],
-  "wallet.externalWalletModeHalted": ["Memoless swaps are paused right now. Connect a wallet to keep swapping.", "Swap tanpa memo sedang dijeda saat ini. Hubungkan wallet untuk terus melakukan swap."]
+  "swap.button.tradingHalted": ["Trading is Halted", "Perdagangan Dihentikan"]
 }

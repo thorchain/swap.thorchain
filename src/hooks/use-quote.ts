@@ -5,6 +5,7 @@ import { QuoteResponseRoute } from '@tcswap/helpers/api'
 import { AppConfig } from '@/config'
 import { useAssetFrom, useAssetTo, useCustomInterval, useCustomQuantity, useSlippage, useSwap } from '@/hooks/use-swap'
 import { getQuotes } from '@/lib/api'
+import { resolveQuoteError } from '@/lib/errors'
 
 type UseQuote = {
   isLoading: boolean
@@ -76,16 +77,7 @@ export const useQuote = (): UseQuote => {
     refetchOnMount: false
   })
 
-  let newError = error
-  if (error instanceof USwapError) {
-    const cause = error.cause as any
-    const errors = cause.errorData?.providerErrors
-    if (errors && errors.length) {
-      newError = new Error(errors[0]?.message || errors[0]?.error)
-    } else if (cause.errorData?.error) {
-      newError = new Error(cause.errorData?.error)
-    }
-  }
+  const newError = error instanceof USwapError ? resolveQuoteError(error) : error
 
   return {
     isLoading: isLoading || isRefetching,

@@ -67,6 +67,7 @@
       "enterAmount": "輸入金額",
       "quoting": "報價中",
       "noValidQuotes": "無有效報價",
+      "tradingHalted": "交易已暫停",
       "enterLimitPrice": "輸入限價",
       "enterLimitOrder": "輸入限價訂單",
       "swap": "兌換",

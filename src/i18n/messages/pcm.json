@@ -67,6 +67,7 @@
       "enterAmount": "Put Amount",
       "quoting": "Dey quote",
       "noValidQuotes": "No Valid Quotes",
+      "tradingHalted": "Dem don Stop Trading",
       "enterLimitPrice": "Put limit price",
       "enterLimitOrder": "Put Limit Order",
       "swap": "Swap",

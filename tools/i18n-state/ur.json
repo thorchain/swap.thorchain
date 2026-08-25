@@ -141,6 +141,7 @@
   "swap.limitCancel.error.loadInboundAddresses": ["Failed to load inbound addresses", "inbound پتے لوڈ کرنے میں ناکامی"],
   "swap.limitCancel.error.cancelFailed": ["Failed to cancel limit swap", "limit تبادلہ منسوخ کرنے میں ناکامی"],
   "swap.limitCancel.error.modifyFailed": ["Failed to modify limit swap", "limit تبادلے میں ترمیم کرنے میں ناکامی"],
+  "swap.limitCancel.error.walletNotConnected": ["Wallet not connected", "والیٹ منسلک نہیں ہے"],
   "swap.limitCancel.toast.sendToCancel": ["Send {amount} {ticker} from the original wallet to cancel", "منسوخ کرنے کے لیے اصل والٹ سے {amount} {ticker} بھیجیں"],
   "swap.limitCancel.toast.sendToModify": ["Send {amount} {ticker} from the original wallet to modify", "ترمیم کرنے کے لیے اصل والٹ سے {amount} {ticker} بھیجیں"],
   "swap.limitCancel.toast.cancelSubmitted": ["Cancel transaction submitted", "منسوخی کی Tx جمع کرا دی گئی"],
@@ -152,6 +153,7 @@
   "swap.limitCancel.warning.switch": ["Switch to a {chain} wallet to {mode} this order", "اس آرڈر کو {mode} کرنے کے لیے ایک {chain} والٹ پر سوئچ کریں"],
   "swap.limitCancel.warning.addressMismatch": ["Connected wallet does not match the address that placed this order", "کنیکٹ شدہ والٹ اس پتے سے مطابقت نہیں رکھتا جس نے یہ آرڈر رکھا تھا"],
   "swap.limitCancel.warning.tradingPaused": ["{chain} trading is currently paused", "{chain} ٹریڈنگ اس وقت روکی ہوئی ہے"],
+  "swap.limitCancel.warning.orderNotFound": ["This order is no longer open on THORChain - it may have already been filled or expired", "یہ آرڈر اب THORChain پر کھلا نہیں ہے - ممکن ہے یہ پہلے ہی مکمل ہو چکا ہو یا اس کی میعاد ختم ہو گئی ہو"],
   "swap.quoteTimer.refresh": ["Refresh", "ریفریش کریں"],
   "swap.recipient.addressPlaceholder": ["{chain} address", "{chain} پتہ"],
   "swap.recipient.paste": ["Paste", "پیسٹ کریں"],
@@ -429,6 +431,8 @@
   "wallet.sortByBalance": ["Balance (High → Low)", "بیلنس (زیادہ → کم)"],
   "wallet.externalWalletMode": ["External Wallet Mode", "External Wallet موڈ"],
   "wallet.externalWalletModeDescription": ["Use a self custody wallet without connecting it to the website", "سیلف کسٹڈی والٹ کو ویب سائٹ سے منسلک کیے بغیر استعمال کریں"],
+  "wallet.externalWalletModeUnavailable": ["Currently Unavailable", "فی الحال دستیاب نہیں"],
+  "wallet.externalWalletModeHalted": ["Memoless swaps are paused right now. Connect a wallet to keep swapping.", "میمو کے بغیر سویپ اس وقت روکے گئے ہیں۔ سویپ جاری رکھنے کے لیے والیٹ منسلک کریں۔"],
   "wallet.externalWalletAssetUnsupported": ["This asset is not supported in External Wallet mode. Connect a browser wallet if you want to continue.", "یہ اثاثہ External Wallet موڈ میں سپورٹڈ نہیں ہے۔ اگر آپ جاری رکھنا چاہتے ہیں تو براؤزر والٹ کنیکٹ کریں۔"],
   "wallet.close": ["Close", "بند کریں"],
   "wallet.sendToken": ["Send {ticker}", "{ticker} بھیجیں"],
@@ -457,8 +461,5 @@
   "tx.leg.deposit": ["Deposit {ticker}", "{ticker} ڈپازٹ کریں"],
   "tx.leg.send": ["Send {ticker}", "{ticker} بھیجیں"],
   "tx.leg.swap": ["Swap {from} to {to}", "{from} کا {to} میں تبادلہ کریں"],
-  "swap.limitCancel.error.walletNotConnected": ["Wallet not connected", "والیٹ منسلک نہیں ہے"],
-  "swap.limitCancel.warning.orderNotFound": ["This order is no longer open on THORChain - it may have already been filled or expired", "یہ آرڈر اب THORChain پر کھلا نہیں ہے - ممکن ہے یہ پہلے ہی مکمل ہو چکا ہو یا اس کی میعاد ختم ہو گئی ہو"],
-  "wallet.externalWalletModeUnavailable": ["Currently Unavailable", "فی الحال دستیاب نہیں"],
-  "wallet.externalWalletModeHalted": ["Memoless swaps are paused right now. Connect a wallet to keep swapping.", "میمو کے بغیر سویپ اس وقت روکے گئے ہیں۔ سویپ جاری رکھنے کے لیے والیٹ منسلک کریں۔"]
+  "swap.button.tradingHalted": ["Trading is Halted", "ٹریڈنگ روک دی گئی ہے"]
 }

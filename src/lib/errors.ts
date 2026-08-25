@@ -45,3 +45,25 @@ export const translateError = (message: string): string => {
 
   return message
 }
+
+// A halted chain reports it in prose, e.g. "failed to simulate swap: trading is halted, can't
+// process swap", so the wording is all the aggregator gives us to go on.
+export const isTradingHaltedError = (message: string): boolean => message.includes('trading is halted')
+
+// The aggregator answers a failed quote with one error per provider. Providers that do not list the
+// asset answer "not found" and are usually first, which buries the real reason when the provider
+// that could have routed the swap is the halted one - so a halt wins over the leading error.
+export const resolveQuoteError = (error: unknown): Error => {
+  const cause = (error as any)?.cause
+  const providerErrors: { message?: string; error?: string }[] | undefined = cause?.errorData?.providerErrors
+
+  if (providerErrors?.length) {
+    const halted = providerErrors.find(e => isTradingHaltedError(e.message || e.error || ''))
+    const relevant = halted ?? providerErrors[0]
+    return new Error(relevant.message || relevant.error)
+  }
+
+  if (cause?.errorData?.error) return new Error(cause.errorData.error)
+
+  return error as Error
+}

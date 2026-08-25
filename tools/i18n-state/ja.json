@@ -141,6 +141,7 @@
   "swap.limitCancel.error.loadInboundAddresses": ["Failed to load inbound addresses", "受信アドレスの読み込みに失敗しました"],
   "swap.limitCancel.error.cancelFailed": ["Failed to cancel limit swap", "指値スワップのキャンセルに失敗しました"],
   "swap.limitCancel.error.modifyFailed": ["Failed to modify limit swap", "指値スワップの変更に失敗しました"],
+  "swap.limitCancel.error.walletNotConnected": ["Wallet not connected", "ウォレットが未接続です"],
   "swap.limitCancel.toast.sendToCancel": ["Send {amount} {ticker} from the original wallet to cancel", "キャンセルするには元のウォレットから{amount} {ticker}を送信してください"],
   "swap.limitCancel.toast.sendToModify": ["Send {amount} {ticker} from the original wallet to modify", "変更するには元のウォレットから{amount} {ticker}を送信してください"],
   "swap.limitCancel.toast.cancelSubmitted": ["Cancel transaction submitted", "キャンセルトランザクションが送信されました"],
@@ -152,6 +153,7 @@
   "swap.limitCancel.warning.switch": ["Switch to a {chain} wallet to {mode} this order", "この注文を{mode}するには、{chain}ウォレットに切り替えてください"],
   "swap.limitCancel.warning.addressMismatch": ["Connected wallet does not match the address that placed this order", "接続中のウォレットがこの注文を行ったアドレスと一致しません"],
   "swap.limitCancel.warning.tradingPaused": ["{chain} trading is currently paused", "{chain}の取引は現在停止されています"],
+  "swap.limitCancel.warning.orderNotFound": ["This order is no longer open on THORChain - it may have already been filled or expired", "この注文はTHORChain上でこれ以上有効ではありません。すでに約定したか、期限切れの可能性があります"],
   "swap.quoteTimer.refresh": ["Refresh", "更新"],
   "swap.recipient.addressPlaceholder": ["{chain} address", "{chain} アドレス"],
   "swap.recipient.paste": ["Paste", "貼り付け"],
@@ -429,6 +431,8 @@
   "wallet.sortByBalance": ["Balance (High → Low)", "残高（高 → 低）"],
   "wallet.externalWalletMode": ["External Wallet Mode", "外部ウォレットモード"],
   "wallet.externalWalletModeDescription": ["Use a self custody wallet without connecting it to the website", "セルフカストディウォレットをウェブサイトに接続せずに使用します"],
+  "wallet.externalWalletModeUnavailable": ["Currently Unavailable", "現在ご利用いただけません"],
+  "wallet.externalWalletModeHalted": ["Memoless swaps are paused right now. Connect a wallet to keep swapping.", "メモレススワップは現在停止中です。ウォレットを接続してスワップを続けてください。"],
   "wallet.externalWalletAssetUnsupported": ["This asset is not supported in External Wallet mode. Connect a browser wallet if you want to continue.", "この資産は外部ウォレットモードでは対応していません。続行する場合はブラウザウォレットを接続してください。"],
   "wallet.close": ["Close", "閉じる"],
   "wallet.sendToken": ["Send {ticker}", "{ticker} を送信"],
@@ -457,8 +461,5 @@
   "tx.leg.deposit": ["Deposit {ticker}", "{ticker} を預け入れ"],
   "tx.leg.send": ["Send {ticker}", "{ticker} を送信"],
   "tx.leg.swap": ["Swap {from} to {to}", "{from} を {to} にスワップ"],
-  "swap.limitCancel.error.walletNotConnected": ["Wallet not connected", "ウォレットが未接続です"],
-  "swap.limitCancel.warning.orderNotFound": ["This order is no longer open on THORChain - it may have already been filled or expired", "この注文はTHORChain上でこれ以上有効ではありません。すでに約定したか、期限切れの可能性があります"],
-  "wallet.externalWalletModeUnavailable": ["Currently Unavailable", "現在ご利用いただけません"],
-  "wallet.externalWalletModeHalted": ["Memoless swaps are paused right now. Connect a wallet to keep swapping.", "メモレススワップは現在停止中です。ウォレットを接続してスワップを続けてください。"]
+  "swap.button.tradingHalted": ["Trading is Halted", "取引は停止中です"]
 }

@@ -67,6 +67,7 @@
       "enterAmount": "Inserisci l'importo",
       "quoting": "Quotazione in corso",
       "noValidQuotes": "Nessuna quotazione valida",
+      "tradingHalted": "Trading sospeso",
       "enterLimitPrice": "Inserisci il prezzo limite",
       "enterLimitOrder": "Inserisci l'ordine limite",
       "swap": "Swap",

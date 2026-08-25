@@ -67,6 +67,7 @@
       "enterAmount": "राशि दर्ज करें",
       "quoting": "कोट किया जा रहा है",
       "noValidQuotes": "कोई मान्य कोट नहीं",
+      "tradingHalted": "ट्रेडिंग रोक दी गई है",
       "enterLimitPrice": "लिमिट मूल्य दर्ज करें",
       "enterLimitOrder": "लिमिट ऑर्डर दर्ज करें",
       "swap": "स्वैप करें",

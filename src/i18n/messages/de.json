@@ -67,6 +67,7 @@
       "enterAmount": "Betrag eingeben",
       "quoting": "Angebot wird erstellt",
       "noValidQuotes": "Keine gültigen Angebote",
+      "tradingHalted": "Handel ist ausgesetzt",
       "enterLimitPrice": "Limit-Preis eingeben",
       "enterLimitOrder": "Limit-Order eingeben",
       "swap": "Swap",

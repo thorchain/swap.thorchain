@@ -141,6 +141,7 @@
   "swap.limitCancel.error.loadInboundAddresses": ["Failed to load inbound addresses", "تعذّر تحميل العناوين الواردة"],
   "swap.limitCancel.error.cancelFailed": ["Failed to cancel limit swap", "تعذّر إلغاء التبادل المحدد"],
   "swap.limitCancel.error.modifyFailed": ["Failed to modify limit swap", "تعذّر تعديل التبادل المحدد"],
+  "swap.limitCancel.error.walletNotConnected": ["Wallet not connected", "المحفظة غير متصلة"],
   "swap.limitCancel.toast.sendToCancel": ["Send {amount} {ticker} from the original wallet to cancel", "أرسِل {amount} {ticker} من المحفظة الأصلية للإلغاء"],
   "swap.limitCancel.toast.sendToModify": ["Send {amount} {ticker} from the original wallet to modify", "أرسِل {amount} {ticker} من المحفظة الأصلية للتعديل"],
   "swap.limitCancel.toast.cancelSubmitted": ["Cancel transaction submitted", "تم إرسال معاملة الإلغاء"],
@@ -152,6 +153,7 @@
   "swap.limitCancel.warning.switch": ["Switch to a {chain} wallet to {mode} this order", "بدّل إلى محفظة {chain} لـ {mode} هذا الأمر"],
   "swap.limitCancel.warning.addressMismatch": ["Connected wallet does not match the address that placed this order", "المحفظة المتصلة لا تطابق العنوان الذي أنشأ هذا الأمر"],
   "swap.limitCancel.warning.tradingPaused": ["{chain} trading is currently paused", "تداول {chain} متوقف مؤقتًا حاليًا"],
+  "swap.limitCancel.warning.orderNotFound": ["This order is no longer open on THORChain - it may have already been filled or expired", "لم يعد هذا الأمر مفتوحًا على THORChain - ربما تم تنفيذه أو انتهت صلاحيته"],
   "swap.quoteTimer.refresh": ["Refresh", "تحديث"],
   "swap.recipient.addressPlaceholder": ["{chain} address", "عنوان {chain}"],
   "swap.recipient.paste": ["Paste", "لصق"],
@@ -429,6 +431,8 @@
   "wallet.sortByBalance": ["Balance (High → Low)", "الرصيد (مرتفع ← منخفض)"],
   "wallet.externalWalletMode": ["External Wallet Mode", "وضع المحفظة الخارجية"],
   "wallet.externalWalletModeDescription": ["Use a self custody wallet without connecting it to the website", "استخدم محفظة ذاتية الحفظ دون ربطها بالموقع"],
+  "wallet.externalWalletModeUnavailable": ["Currently Unavailable", "غير متاح حاليًا"],
+  "wallet.externalWalletModeHalted": ["Memoless swaps are paused right now. Connect a wallet to keep swapping.", "عمليات التبادل بدون مذكرة متوقفة مؤقتًا الآن. قم بتوصيل محفظة لمواصلة التبادل."],
   "wallet.externalWalletAssetUnsupported": ["This asset is not supported in External Wallet mode. Connect a browser wallet if you want to continue.", "هذا الأصل غير مدعوم في وضع المحفظة الخارجية. اربط محفظة متصفح إذا كنت تريد المتابعة."],
   "wallet.close": ["Close", "إغلاق"],
   "wallet.sendToken": ["Send {ticker}", "إرسال {ticker}"],
@@ -457,8 +461,5 @@
   "tx.leg.deposit": ["Deposit {ticker}", "إيداع {ticker}"],
   "tx.leg.send": ["Send {ticker}", "إرسال {ticker}"],
   "tx.leg.swap": ["Swap {from} to {to}", "تبادل {from} إلى {to}"],
-  "swap.limitCancel.error.walletNotConnected": ["Wallet not connected", "المحفظة غير متصلة"],
-  "swap.limitCancel.warning.orderNotFound": ["This order is no longer open on THORChain - it may have already been filled or expired", "لم يعد هذا الأمر مفتوحًا على THORChain - ربما تم تنفيذه أو انتهت صلاحيته"],
-  "wallet.externalWalletModeUnavailable": ["Currently Unavailable", "غير متاح حاليًا"],
-  "wallet.externalWalletModeHalted": ["Memoless swaps are paused right now. Connect a wallet to keep swapping.", "عمليات التبادل بدون مذكرة متوقفة مؤقتًا الآن. قم بتوصيل محفظة لمواصلة التبادل."]
+  "swap.button.tradingHalted": ["Trading is Halted", "تم إيقاف التداول"]
 }

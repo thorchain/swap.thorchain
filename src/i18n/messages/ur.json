@@ -67,6 +67,7 @@
       "enterAmount": "رقم درج کریں",
       "quoting": "قیمت معلوم ہو رہی ہے",
       "noValidQuotes": "کوئی درست قیمت نہیں",
+      "tradingHalted": "ٹریڈنگ روک دی گئی ہے",
       "enterLimitPrice": "limit قیمت درج کریں",
       "enterLimitOrder": "Limit Order درج کریں",
       "swap": "تبادلہ کریں",

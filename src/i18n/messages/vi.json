@@ -67,6 +67,7 @@
       "enterAmount": "Nhập số lượng",
       "quoting": "Đang báo giá",
       "noValidQuotes": "Không có báo giá hợp lệ",
+      "tradingHalted": "Giao dịch đã tạm dừng",
       "enterLimitPrice": "Nhập giá giới hạn",
       "enterLimitOrder": "Nhập lệnh giới hạn",
       "swap": "Hoán đổi",

@@ -141,6 +141,7 @@
   "swap.limitCancel.error.loadInboundAddresses": ["Failed to load inbound addresses", "Caricamento degli indirizzi in entrata non riuscito"],
   "swap.limitCancel.error.cancelFailed": ["Failed to cancel limit swap", "Annullamento dello swap limite non riuscito"],
   "swap.limitCancel.error.modifyFailed": ["Failed to modify limit swap", "Modifica dello swap limite non riuscita"],
+  "swap.limitCancel.error.walletNotConnected": ["Wallet not connected", "Wallet non connesso"],
   "swap.limitCancel.toast.sendToCancel": ["Send {amount} {ticker} from the original wallet to cancel", "Invii {amount} {ticker} dal portafoglio originale per annullare", "Invia {amount} {ticker} dal wallet originale per annullare"],
   "swap.limitCancel.toast.sendToModify": ["Send {amount} {ticker} from the original wallet to modify", "Invii {amount} {ticker} dal portafoglio originale per modificare", "Invia {amount} {ticker} dal wallet originale per modificare"],
   "swap.limitCancel.toast.cancelSubmitted": ["Cancel transaction submitted", "Transazione di annullamento inviata"],
@@ -152,6 +153,7 @@
   "swap.limitCancel.warning.switch": ["Switch to a {chain} wallet to {mode} this order", "Passi a un portafoglio {chain} per {mode} questo ordine", "Passa a un wallet {chain} per {mode} quest'ordine"],
   "swap.limitCancel.warning.addressMismatch": ["Connected wallet does not match the address that placed this order", "Il portafoglio connesso non corrisponde all'indirizzo che ha effettuato questo ordine", "Il wallet connesso non corrisponde all'indirizzo che ha effettuato quest'ordine"],
   "swap.limitCancel.warning.tradingPaused": ["{chain} trading is currently paused", "Il trading {chain} è attualmente sospeso"],
+  "swap.limitCancel.warning.orderNotFound": ["This order is no longer open on THORChain - it may have already been filled or expired", "Questo ordine non è più aperto su THORChain - potrebbe essere già stato eseguito o scaduto"],
   "swap.quoteTimer.refresh": ["Refresh", "Aggiorna"],
   "swap.recipient.addressPlaceholder": ["{chain} address", "Indirizzo {chain}"],
   "swap.recipient.paste": ["Paste", "Incolla"],
@@ -429,6 +431,8 @@
   "wallet.sortByBalance": ["Balance (High → Low)", "Saldo (Alto → Basso)"],
   "wallet.externalWalletMode": ["External Wallet Mode", "Modalità portafoglio esterno", "Modalità wallet esterno"],
   "wallet.externalWalletModeDescription": ["Use a self custody wallet without connecting it to the website", "Utilizzi un portafoglio self-custody senza collegarlo al sito web"],
+  "wallet.externalWalletModeUnavailable": ["Currently Unavailable", "Attualmente non disponibile"],
+  "wallet.externalWalletModeHalted": ["Memoless swaps are paused right now. Connect a wallet to keep swapping.", "Gli swap senza memo sono momentaneamente sospesi. Connetti un wallet per continuare a fare swap."],
   "wallet.externalWalletAssetUnsupported": ["This asset is not supported in External Wallet mode. Connect a browser wallet if you want to continue.", "Questo asset non è supportato in modalità portafoglio esterno. Connetta un portafoglio del browser se desidera continuare."],
   "wallet.close": ["Close", "Chiudi"],
   "wallet.sendToken": ["Send {ticker}", "Invia {ticker}"],
@@ -457,8 +461,5 @@
   "tx.leg.deposit": ["Deposit {ticker}", "Deposita {ticker}"],
   "tx.leg.send": ["Send {ticker}", "Invia {ticker}"],
   "tx.leg.swap": ["Swap {from} to {to}", "Scambia {from} con {to}"],
-  "swap.limitCancel.error.walletNotConnected": ["Wallet not connected", "Wallet non connesso"],
-  "swap.limitCancel.warning.orderNotFound": ["This order is no longer open on THORChain - it may have already been filled or expired", "Questo ordine non è più aperto su THORChain - potrebbe essere già stato eseguito o scaduto"],
-  "wallet.externalWalletModeUnavailable": ["Currently Unavailable", "Attualmente non disponibile"],
-  "wallet.externalWalletModeHalted": ["Memoless swaps are paused right now. Connect a wallet to keep swapping.", "Gli swap senza memo sono momentaneamente sospesi. Connetti un wallet per continuare a fare swap."]
+  "swap.button.tradingHalted": ["Trading is Halted", "Trading sospeso"]
 }

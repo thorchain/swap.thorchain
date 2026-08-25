@@ -141,6 +141,7 @@
   "swap.limitCancel.error.loadInboundAddresses": ["Failed to load inbound addresses", "E no fit load inbound addresses"],
   "swap.limitCancel.error.cancelFailed": ["Failed to cancel limit swap", "E no fit cancel limit swap"],
   "swap.limitCancel.error.modifyFailed": ["Failed to modify limit swap", "E no fit change limit swap"],
+  "swap.limitCancel.error.walletNotConnected": ["Wallet not connected", "Wallet no connect"],
   "swap.limitCancel.toast.sendToCancel": ["Send {amount} {ticker} from the original wallet to cancel", "Send {amount} {ticker} from di original wallet to cancel"],
   "swap.limitCancel.toast.sendToModify": ["Send {amount} {ticker} from the original wallet to modify", "Send {amount} {ticker} from di original wallet to change am"],
   "swap.limitCancel.toast.cancelSubmitted": ["Cancel transaction submitted", "We don submit cancel transaction"],
@@ -152,6 +153,7 @@
   "swap.limitCancel.warning.switch": ["Switch to a {chain} wallet to {mode} this order", "Switch to a {chain} wallet to {mode} dis order"],
   "swap.limitCancel.warning.addressMismatch": ["Connected wallet does not match the address that placed this order", "Di wallet wey connect no match di address wey place dis order"],
   "swap.limitCancel.warning.tradingPaused": ["{chain} trading is currently paused", "{chain} trading don pause for now"],
+  "swap.limitCancel.warning.orderNotFound": ["This order is no longer open on THORChain - it may have already been filled or expired", "Dis order no dey open again for THORChain - e fit don already complete or don expire"],
   "swap.quoteTimer.refresh": ["Refresh", "Refresh"],
   "swap.recipient.addressPlaceholder": ["{chain} address", "{chain} address"],
   "swap.recipient.paste": ["Paste", "Paste"],
@@ -429,6 +431,8 @@
   "wallet.sortByBalance": ["Balance (High → Low)", "Balance (High → Low)"],
   "wallet.externalWalletMode": ["External Wallet Mode", "External Wallet Mode"],
   "wallet.externalWalletModeDescription": ["Use a self custody wallet without connecting it to the website", "Use a self-custody wallet without connecting am to di website"],
+  "wallet.externalWalletModeUnavailable": ["Currently Unavailable", "E No Dey Available Now"],
+  "wallet.externalWalletModeHalted": ["Memoless swaps are paused right now. Connect a wallet to keep swapping.", "Memoless swaps don pause for now. Connect wallet make you fit continue to swap."],
   "wallet.externalWalletAssetUnsupported": ["This asset is not supported in External Wallet mode. Connect a browser wallet if you want to continue.", "Dis asset no dey supported for External Wallet mode. Connect a browser wallet if you wan continue."],
   "wallet.close": ["Close", "Close"],
   "wallet.sendToken": ["Send {ticker}", "Send {ticker}"],
@@ -457,8 +461,5 @@
   "tx.leg.deposit": ["Deposit {ticker}", "Deposit {ticker}"],
   "tx.leg.send": ["Send {ticker}", "Send {ticker}"],
   "tx.leg.swap": ["Swap {from} to {to}", "Swap {from} to {to}"],
-  "swap.limitCancel.error.walletNotConnected": ["Wallet not connected", "Wallet no connect"],
-  "swap.limitCancel.warning.orderNotFound": ["This order is no longer open on THORChain - it may have already been filled or expired", "Dis order no dey open again for THORChain - e fit don already complete or don expire"],
-  "wallet.externalWalletModeUnavailable": ["Currently Unavailable", "E No Dey Available Now"],
-  "wallet.externalWalletModeHalted": ["Memoless swaps are paused right now. Connect a wallet to keep swapping.", "Memoless swaps don pause for now. Connect wallet make you fit continue to swap."]
+  "swap.button.tradingHalted": ["Trading is Halted", "Dem don Stop Trading"]
 }

@@ -141,6 +141,7 @@
   "swap.limitCancel.error.loadInboundAddresses": ["Failed to load inbound addresses", "Không thể tải địa chỉ nhận vào"],
   "swap.limitCancel.error.cancelFailed": ["Failed to cancel limit swap", "Không thể hủy lệnh hoán đổi giới hạn"],
   "swap.limitCancel.error.modifyFailed": ["Failed to modify limit swap", "Không thể sửa lệnh hoán đổi giới hạn"],
+  "swap.limitCancel.error.walletNotConnected": ["Wallet not connected", "Ví chưa được kết nối"],
   "swap.limitCancel.toast.sendToCancel": ["Send {amount} {ticker} from the original wallet to cancel", "Gửi {amount} {ticker} từ ví gốc để hủy"],
   "swap.limitCancel.toast.sendToModify": ["Send {amount} {ticker} from the original wallet to modify", "Gửi {amount} {ticker} từ ví gốc để sửa"],
   "swap.limitCancel.toast.cancelSubmitted": ["Cancel transaction submitted", "Giao dịch hủy đã được gửi"],
@@ -152,6 +153,7 @@
   "swap.limitCancel.warning.switch": ["Switch to a {chain} wallet to {mode} this order", "Chuyển sang ví {chain} để {mode} lệnh này"],
   "swap.limitCancel.warning.addressMismatch": ["Connected wallet does not match the address that placed this order", "Ví đã kết nối không khớp với địa chỉ đã đặt lệnh này"],
   "swap.limitCancel.warning.tradingPaused": ["{chain} trading is currently paused", "Giao dịch {chain} hiện đang tạm dừng"],
+  "swap.limitCancel.warning.orderNotFound": ["This order is no longer open on THORChain - it may have already been filled or expired", "Lệnh này không còn mở trên THORChain - có thể đã được khớp hoặc đã hết hạn"],
   "swap.quoteTimer.refresh": ["Refresh", "Làm mới"],
   "swap.recipient.addressPlaceholder": ["{chain} address", "Địa chỉ {chain}"],
   "swap.recipient.paste": ["Paste", "Dán"],
@@ -429,6 +431,8 @@
   "wallet.sortByBalance": ["Balance (High → Low)", "Số dư (Cao → Thấp)"],
   "wallet.externalWalletMode": ["External Wallet Mode", "Chế độ ví bên ngoài"],
   "wallet.externalWalletModeDescription": ["Use a self custody wallet without connecting it to the website", "Sử dụng ví tự lưu ký mà không cần kết nối với trang web"],
+  "wallet.externalWalletModeUnavailable": ["Currently Unavailable", "Hiện không khả dụng"],
+  "wallet.externalWalletModeHalted": ["Memoless swaps are paused right now. Connect a wallet to keep swapping.", "Giao dịch hoán đổi không cần memo đang tạm dừng. Hãy kết nối ví để tiếp tục hoán đổi."],
   "wallet.externalWalletAssetUnsupported": ["This asset is not supported in External Wallet mode. Connect a browser wallet if you want to continue.", "Tài sản này không được hỗ trợ ở chế độ ví bên ngoài. Kết nối ví trình duyệt nếu bạn muốn tiếp tục."],
   "wallet.close": ["Close", "Đóng"],
   "wallet.sendToken": ["Send {ticker}", "Gửi {ticker}"],
@@ -457,8 +461,5 @@
   "tx.leg.deposit": ["Deposit {ticker}", "Nạp {ticker}"],
   "tx.leg.send": ["Send {ticker}", "Gửi {ticker}"],
   "tx.leg.swap": ["Swap {from} to {to}", "Hoán đổi {from} sang {to}"],
-  "swap.limitCancel.error.walletNotConnected": ["Wallet not connected", "Ví chưa được kết nối"],
-  "swap.limitCancel.warning.orderNotFound": ["This order is no longer open on THORChain - it may have already been filled or expired", "Lệnh này không còn mở trên THORChain - có thể đã được khớp hoặc đã hết hạn"],
-  "wallet.externalWalletModeUnavailable": ["Currently Unavailable", "Hiện không khả dụng"],
-  "wallet.externalWalletModeHalted": ["Memoless swaps are paused right now. Connect a wallet to keep swapping.", "Giao dịch hoán đổi không cần memo đang tạm dừng. Hãy kết nối ví để tiếp tục hoán đổi."]
+  "swap.button.tradingHalted": ["Trading is Halted", "Giao dịch đã tạm dừng"]
 }

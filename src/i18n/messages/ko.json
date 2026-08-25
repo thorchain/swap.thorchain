@@ -67,6 +67,7 @@
       "enterAmount": "금액 입력",
       "quoting": "견적 조회 중",
       "noValidQuotes": "유효한 견적 없음",
+      "tradingHalted": "거래가 중단되었습니다",
       "enterLimitPrice": "지정가 입력",
       "enterLimitOrder": "지정가 주문 입력",
       "swap": "스왑",

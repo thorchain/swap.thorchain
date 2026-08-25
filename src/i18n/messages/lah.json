@@ -67,6 +67,7 @@
       "enterAmount": "رقم پاؤ",
       "quoting": "قیمت لئی پئی جاندی اے",
       "noValidQuotes": "کوئی درست قیمت نئیں",
+      "tradingHalted": "ٹریڈنگ بند ہو گئی اے",
       "enterLimitPrice": "limit قیمت پاؤ",
       "enterLimitOrder": "Limit آرڈر پاؤ",
       "swap": "تبادلہ کرو",

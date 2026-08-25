@@ -67,6 +67,7 @@
       "enterAmount": "金額を入力",
       "quoting": "見積もり中",
       "noValidQuotes": "有効な見積もりがありません",
+      "tradingHalted": "取引は停止中です",
       "enterLimitPrice": "指値価格を入力",
       "enterLimitOrder": "指値注文を入力",
       "swap": "スワップ",

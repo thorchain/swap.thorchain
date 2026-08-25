@@ -20,6 +20,7 @@ import { useIsMobile } from '@/hooks/use-mobile'
 import { useAssetFrom, useAssetTo, useCustomInterval, useCustomQuantity, useSlippage, useSwap } from '@/hooks/use-swap'
 import { useAccounts, useSelectedAccount } from '@/hooks/use-wallets'
 import { getQuotes } from '@/lib/api'
+import { resolveQuoteError } from '@/lib/errors'
 import { prepareQuoteForLimitSwap } from '@/lib/memo-helpers'
 import { isMayaProvider, isTaprootAddress } from '@/lib/swap-helpers'
 import { cn, truncate } from '@/lib/utils'
@@ -108,18 +109,7 @@ export const SwapRecipient = ({ provider, onFetchQuote }: SwapRecipientProps) =>
         onFetchQuote(quote)
       })
       .catch(error => {
-        let newError = error
-        if (error instanceof USwapError) {
-          const cause = error.cause as any
-          const errors = cause.errorData?.providerErrors
-          if (errors && errors.length) {
-            newError = new Error(errors[0]?.message || errors[0]?.error)
-          } else if (cause.errorData?.error) {
-            newError = new Error(cause.errorData?.error)
-          }
-        }
-
-        setQuoteError(newError)
+        setQuoteError(error instanceof USwapError ? resolveQuoteError(error) : error)
       })
       .finally(() => setQuoting(false))
   }

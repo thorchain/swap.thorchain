@@ -67,6 +67,7 @@
       "enterAmount": "পরিমাণ লিখুন",
       "quoting": "কোট নেওয়া হচ্ছে",
       "noValidQuotes": "কোনো বৈধ কোট নেই",
+      "tradingHalted": "ট্রেডিং স্থগিত রয়েছে",
       "enterLimitPrice": "লিমিট মূল্য লিখুন",
       "enterLimitOrder": "লিমিট অর্ডার লিখুন",
       "swap": "সোয়াপ করুন",

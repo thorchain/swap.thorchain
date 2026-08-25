@@ -67,6 +67,7 @@
       "enterAmount": "输入金额",
       "quoting": "报价中",
       "noValidQuotes": "无有效报价",
+      "tradingHalted": "交易已暂停",
       "enterLimitPrice": "输入限价",
       "enterLimitOrder": "输入限价订单",
       "swap": "兑换",

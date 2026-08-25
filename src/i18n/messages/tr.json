@@ -67,6 +67,7 @@
       "enterAmount": "Tutar Gir",
       "quoting": "Fiyat alınıyor",
       "noValidQuotes": "Geçerli Teklif Yok",
+      "tradingHalted": "İşlemler Durduruldu",
       "enterLimitPrice": "Limit fiyatı gir",
       "enterLimitOrder": "Limit Emri Gir",
       "swap": "Takas Et",

@@ -141,6 +141,7 @@
   "swap.limitCancel.error.loadInboundAddresses": ["Failed to load inbound addresses", "Gelen adresler yüklenemedi"],
   "swap.limitCancel.error.cancelFailed": ["Failed to cancel limit swap", "Limit takası iptal edilemedi"],
   "swap.limitCancel.error.modifyFailed": ["Failed to modify limit swap", "Limit takası değiştirilemedi"],
+  "swap.limitCancel.error.walletNotConnected": ["Wallet not connected", "Cüzdan bağlı değil"],
   "swap.limitCancel.toast.sendToCancel": ["Send {amount} {ticker} from the original wallet to cancel", "İptal etmek için orijinal cüzdandan {amount} {ticker} gönder"],
   "swap.limitCancel.toast.sendToModify": ["Send {amount} {ticker} from the original wallet to modify", "Değiştirmek için orijinal cüzdandan {amount} {ticker} gönder"],
   "swap.limitCancel.toast.cancelSubmitted": ["Cancel transaction submitted", "İptal işlemi gönderildi"],
@@ -152,6 +153,7 @@
   "swap.limitCancel.warning.switch": ["Switch to a {chain} wallet to {mode} this order", "Bu emri {mode} için bir {chain} cüzdanına geç"],
   "swap.limitCancel.warning.addressMismatch": ["Connected wallet does not match the address that placed this order", "Bağlı cüzdan, bu emri oluşturan adresle eşleşmiyor"],
   "swap.limitCancel.warning.tradingPaused": ["{chain} trading is currently paused", "{chain} işlemleri şu anda duraklatıldı"],
+  "swap.limitCancel.warning.orderNotFound": ["This order is no longer open on THORChain - it may have already been filled or expired", "Bu emir artık THORChain üzerinde açık değil - önceden gerçekleşmiş veya süresi dolmuş olabilir"],
   "swap.quoteTimer.refresh": ["Refresh", "Yenile"],
   "swap.recipient.addressPlaceholder": ["{chain} address", "{chain} adresi"],
   "swap.recipient.paste": ["Paste", "Yapıştır"],
@@ -429,6 +431,8 @@
   "wallet.sortByBalance": ["Balance (High → Low)", "Bakiye (Yüksek → Düşük)"],
   "wallet.externalWalletMode": ["External Wallet Mode", "Harici Cüzdan Modu"],
   "wallet.externalWalletModeDescription": ["Use a self custody wallet without connecting it to the website", "Öz saklamalı bir cüzdanı web sitesine bağlamadan kullan"],
+  "wallet.externalWalletModeUnavailable": ["Currently Unavailable", "Şu Anda Kullanılamıyor"],
+  "wallet.externalWalletModeHalted": ["Memoless swaps are paused right now. Connect a wallet to keep swapping.", "Memosuz takaslar şu anda duraklatıldı. Takas yapmaya devam etmek için bir cüzdan bağlayın."],
   "wallet.externalWalletAssetUnsupported": ["This asset is not supported in External Wallet mode. Connect a browser wallet if you want to continue.", "Bu varlık Harici Cüzdan modunda desteklenmiyor. Devam etmek istiyorsanız tarayıcı içi bir cüzdan bağlayın."],
   "wallet.close": ["Close", "Kapat"],
   "wallet.sendToken": ["Send {ticker}", "{ticker} Gönder"],
@@ -457,8 +461,5 @@
   "tx.leg.deposit": ["Deposit {ticker}", "{ticker} Yatır"],
   "tx.leg.send": ["Send {ticker}", "{ticker} Gönder"],
   "tx.leg.swap": ["Swap {from} to {to}", "{from} → {to} Takas"],
-  "swap.limitCancel.error.walletNotConnected": ["Wallet not connected", "Cüzdan bağlı değil"],
-  "swap.limitCancel.warning.orderNotFound": ["This order is no longer open on THORChain - it may have already been filled or expired", "Bu emir artık THORChain üzerinde açık değil - önceden gerçekleşmiş veya süresi dolmuş olabilir"],
-  "wallet.externalWalletModeUnavailable": ["Currently Unavailable", "Şu Anda Kullanılamıyor"],
-  "wallet.externalWalletModeHalted": ["Memoless swaps are paused right now. Connect a wallet to keep swapping.", "Memosuz takaslar şu anda duraklatıldı. Takas yapmaya devam etmek için bir cüzdan bağlayın."]
+  "swap.button.tradingHalted": ["Trading is Halted", "İşlemler Durduruldu"]
 }

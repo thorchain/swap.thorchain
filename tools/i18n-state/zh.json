@@ -141,6 +141,7 @@
   "swap.limitCancel.error.loadInboundAddresses": ["Failed to load inbound addresses", "无法加载入站地址"],
   "swap.limitCancel.error.cancelFailed": ["Failed to cancel limit swap", "取消限价兑换失败"],
   "swap.limitCancel.error.modifyFailed": ["Failed to modify limit swap", "修改限价兑换失败"],
+  "swap.limitCancel.error.walletNotConnected": ["Wallet not connected", "钱包未连接"],
   "swap.limitCancel.toast.sendToCancel": ["Send {amount} {ticker} from the original wallet to cancel", "请从原钱包发送{amount} {ticker}以取消"],
   "swap.limitCancel.toast.sendToModify": ["Send {amount} {ticker} from the original wallet to modify", "请从原钱包发送{amount} {ticker}以修改"],
   "swap.limitCancel.toast.cancelSubmitted": ["Cancel transaction submitted", "取消交易已提交"],
@@ -152,6 +153,7 @@
   "swap.limitCancel.warning.switch": ["Switch to a {chain} wallet to {mode} this order", "切换到{chain}钱包以{mode}此订单"],
   "swap.limitCancel.warning.addressMismatch": ["Connected wallet does not match the address that placed this order", "已连接的钱包与下此订单的地址不匹配"],
   "swap.limitCancel.warning.tradingPaused": ["{chain} trading is currently paused", "{chain}交易当前已暂停"],
+  "swap.limitCancel.warning.orderNotFound": ["This order is no longer open on THORChain - it may have already been filled or expired", "该订单在 THORChain 上已不再挂单 — 可能已成交或已过期"],
   "swap.quoteTimer.refresh": ["Refresh", "刷新"],
   "swap.recipient.addressPlaceholder": ["{chain} address", "{chain}地址"],
   "swap.recipient.paste": ["Paste", "粘贴"],
@@ -429,6 +431,8 @@
   "wallet.sortByBalance": ["Balance (High → Low)", "余额（高 → 低）"],
   "wallet.externalWalletMode": ["External Wallet Mode", "外部钱包模式"],
   "wallet.externalWalletModeDescription": ["Use a self custody wallet without connecting it to the website", "使用自托管钱包，无需将其连接到网站"],
+  "wallet.externalWalletModeUnavailable": ["Currently Unavailable", "暂不可用"],
+  "wallet.externalWalletModeHalted": ["Memoless swaps are paused right now. Connect a wallet to keep swapping.", "免 memo 交换当前已暂停。请连接钱包以继续交换。"],
   "wallet.externalWalletAssetUnsupported": ["This asset is not supported in External Wallet mode. Connect a browser wallet if you want to continue.", "此资产在外部钱包模式下不受支持。如要继续，请连接浏览器钱包。"],
   "wallet.close": ["Close", "关闭"],
   "wallet.sendToken": ["Send {ticker}", "发送{ticker}"],
@@ -457,8 +461,5 @@
   "tx.leg.deposit": ["Deposit {ticker}", "存入{ticker}"],
   "tx.leg.send": ["Send {ticker}", "发送{ticker}"],
   "tx.leg.swap": ["Swap {from} to {to}", "将{from}兑换为{to}"],
-  "swap.limitCancel.error.walletNotConnected": ["Wallet not connected", "钱包未连接"],
-  "swap.limitCancel.warning.orderNotFound": ["This order is no longer open on THORChain - it may have already been filled or expired", "该订单在 THORChain 上已不再挂单 — 可能已成交或已过期"],
-  "wallet.externalWalletModeUnavailable": ["Currently Unavailable", "暂不可用"],
-  "wallet.externalWalletModeHalted": ["Memoless swaps are paused right now. Connect a wallet to keep swapping.", "免 memo 交换当前已暂停。请连接钱包以继续交换。"]
+  "swap.button.tradingHalted": ["Trading is Halted", "交易已暂停"]
 }
