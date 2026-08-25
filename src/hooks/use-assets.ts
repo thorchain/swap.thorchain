@@ -23,7 +23,7 @@ export const useAssets = (): { assets?: Asset[]; isLoading: boolean } => {
           continue
         }
 
-        if (token.chain === Chain.Radix) {
+        if (token.chain === Chain.Radix || token.chain === Chain.Kujira) {
           continue
         }
 
