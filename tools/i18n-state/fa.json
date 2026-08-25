@@ -107,6 +107,7 @@
   "swap.error.preflightMemoless": ["Failed to preflight memoless request", "بررسی اولیه درخواست بدون Memo ناموفق بود"],
   "swap.error.minAmountNoWallet": ["Minimum swap amount without a connected wallet is {amount} {ticker}", "حداقل مقدار تبادل بدون کیف پول متصل، {amount} {ticker} است"],
   "swap.error.unknown": ["Unknown Error", "خطای ناشناخته"],
+  "swap.error.memolessHalted": ["Memoless swaps are paused by THORChain right now. Connect a {chain} wallet to swap.", "سوآپ‌های بدون Memo در حال حاضر توسط THORChain متوقف شده‌اند. برای سوآپ، یک کیف‌پول {chain} متصل کنید."],
   "swap.feeDialog.title": ["Fees Included in the Rate", "کارمزدهای لحاظ‌شده در نرخ"],
   "swap.feeDialog.description": ["These fees are already included in the rate — you don't pay them separately.", "این کارمزدها از پیش در نرخ لحاظ شده‌اند — آن‌ها را جداگانه پرداخت نمی‌کنید."],
   "swap.feeDialog.liquidityFee": ["Liquidity Fee", "کارمزد Liquidity"],
@@ -461,6 +462,5 @@
   "tx.status.unknown": ["Unknown", "نامشخص"],
   "tx.leg.deposit": ["Deposit {ticker}", "واریز {ticker}"],
   "tx.leg.send": ["Send {ticker}", "ارسال {ticker}"],
-  "tx.leg.swap": ["Swap {from} to {to}", "تبادل {from} به {to}"],
-  "swap.error.memolessHalted": ["Memoless swaps are paused by THORChain right now. Connect a {chain} wallet to swap.", "سوآپ‌های بدون Memo در حال حاضر توسط THORChain متوقف شده‌اند. برای سوآپ، یک کیف‌پول {chain} متصل کنید."]
+  "tx.leg.swap": ["Swap {from} to {to}", "تبادل {from} به {to}"]
 }

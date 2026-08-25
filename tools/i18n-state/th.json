@@ -107,6 +107,7 @@
   "swap.error.preflightMemoless": ["Failed to preflight memoless request", "ตรวจสอบคำขอแบบไม่มี Memo ล่วงหน้าไม่สำเร็จ"],
   "swap.error.minAmountNoWallet": ["Minimum swap amount without a connected wallet is {amount} {ticker}", "จำนวนแลกเปลี่ยนต่ำสุดเมื่อไม่ได้เชื่อมต่อกระเป๋าเงินคือ {amount} {ticker}"],
   "swap.error.unknown": ["Unknown Error", "ข้อผิดพลาดที่ไม่ทราบสาเหตุ"],
+  "swap.error.memolessHalted": ["Memoless swaps are paused by THORChain right now. Connect a {chain} wallet to swap.", "ขณะนี้ THORChain หยุดการสวอปแบบ Memoless ไว้ชั่วคราว กรุณาเชื่อมต่อกระเป๋า {chain} เพื่อสวอป"],
   "swap.feeDialog.title": ["Fees Included in the Rate", "ค่าธรรมเนียมที่รวมอยู่ในอัตรา"],
   "swap.feeDialog.description": ["These fees are already included in the rate — you don't pay them separately.", "ค่าธรรมเนียมเหล่านี้รวมอยู่ในอัตราแล้ว คุณไม่ต้องจ่ายแยกต่างหาก"],
   "swap.feeDialog.liquidityFee": ["Liquidity Fee", "Liquidity Fee"],
@@ -461,6 +462,5 @@
   "tx.status.unknown": ["Unknown", "ไม่ทราบ"],
   "tx.leg.deposit": ["Deposit {ticker}", "ฝาก {ticker}"],
   "tx.leg.send": ["Send {ticker}", "ส่ง {ticker}"],
-  "tx.leg.swap": ["Swap {from} to {to}", "แลกเปลี่ยน {from} เป็น {to}"],
-  "swap.error.memolessHalted": ["Memoless swaps are paused by THORChain right now. Connect a {chain} wallet to swap.", "ขณะนี้ THORChain หยุดการสวอปแบบ Memoless ไว้ชั่วคราว กรุณาเชื่อมต่อกระเป๋า {chain} เพื่อสวอป"]
+  "tx.leg.swap": ["Swap {from} to {to}", "แลกเปลี่ยน {from} เป็น {to}"]
 }

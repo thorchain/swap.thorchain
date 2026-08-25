@@ -107,6 +107,7 @@
   "swap.error.preflightMemoless": ["Failed to preflight memoless request", "Memoなしの事前確認リクエストに失敗しました"],
   "swap.error.minAmountNoWallet": ["Minimum swap amount without a connected wallet is {amount} {ticker}", "ウォレットを接続していない場合の最小スワップ金額は{amount} {ticker}です"],
   "swap.error.unknown": ["Unknown Error", "不明なエラー"],
+  "swap.error.memolessHalted": ["Memoless swaps are paused by THORChain right now. Connect a {chain} wallet to swap.", "メモレススワップは現在THORChainにより一時停止されています。スワップするには{chain}ウォレットを接続してください。"],
   "swap.feeDialog.title": ["Fees Included in the Rate", "レートに含まれる手数料"],
   "swap.feeDialog.description": ["These fees are already included in the rate — you don't pay them separately.", "これらの手数料はすでにレートに含まれており、別途お支払いいただく必要はありません。"],
   "swap.feeDialog.liquidityFee": ["Liquidity Fee", "Liquidity手数料"],
@@ -461,6 +462,5 @@
   "tx.status.unknown": ["Unknown", "不明"],
   "tx.leg.deposit": ["Deposit {ticker}", "{ticker} を預け入れ"],
   "tx.leg.send": ["Send {ticker}", "{ticker} を送信"],
-  "tx.leg.swap": ["Swap {from} to {to}", "{from} を {to} にスワップ"],
-  "swap.error.memolessHalted": ["Memoless swaps are paused by THORChain right now. Connect a {chain} wallet to swap.", "メモレススワップは現在THORChainにより一時停止されています。スワップするには{chain}ウォレットを接続してください。"]
+  "tx.leg.swap": ["Swap {from} to {to}", "{from} を {to} にスワップ"]
 }

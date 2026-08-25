@@ -107,6 +107,7 @@
   "swap.error.preflightMemoless": ["Failed to preflight memoless request", "Gagal melakukan preflight permintaan tanpa memo"],
   "swap.error.minAmountNoWallet": ["Minimum swap amount without a connected wallet is {amount} {ticker}", "Jumlah swap minimum tanpa dompet yang terhubung adalah {amount} {ticker}"],
   "swap.error.unknown": ["Unknown Error", "Kesalahan tidak diketahui"],
+  "swap.error.memolessHalted": ["Memoless swaps are paused by THORChain right now. Connect a {chain} wallet to swap.", "Swap memoless sedang dijeda oleh THORChain saat ini. Hubungkan wallet {chain} untuk melakukan swap."],
   "swap.feeDialog.title": ["Fees Included in the Rate", "Biaya termasuk dalam kurs"],
   "swap.feeDialog.description": ["These fees are already included in the rate — you don't pay them separately.", "Biaya ini sudah termasuk dalam kurs — Anda tidak membayarnya secara terpisah."],
   "swap.feeDialog.liquidityFee": ["Liquidity Fee", "Liquidity fee"],
@@ -461,6 +462,5 @@
   "tx.status.unknown": ["Unknown", "Tidak diketahui"],
   "tx.leg.deposit": ["Deposit {ticker}", "Deposit {ticker}"],
   "tx.leg.send": ["Send {ticker}", "Kirim {ticker}"],
-  "tx.leg.swap": ["Swap {from} to {to}", "Tukar {from} ke {to}"],
-  "swap.error.memolessHalted": ["Memoless swaps are paused by THORChain right now. Connect a {chain} wallet to swap.", "Swap memoless sedang dijeda oleh THORChain saat ini. Hubungkan wallet {chain} untuk melakukan swap."]
+  "tx.leg.swap": ["Swap {from} to {to}", "Tukar {from} ke {to}"]
 }

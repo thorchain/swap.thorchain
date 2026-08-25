@@ -107,6 +107,7 @@
   "swap.error.preflightMemoless": ["Failed to preflight memoless request", "Не удалось выполнить предварительную проверку запроса без Memo"],
   "swap.error.minAmountNoWallet": ["Minimum swap amount without a connected wallet is {amount} {ticker}", "Минимальная сумма обмена без подключённого кошелька — {amount} {ticker}"],
   "swap.error.unknown": ["Unknown Error", "Неизвестная ошибка"],
+  "swap.error.memolessHalted": ["Memoless swaps are paused by THORChain right now. Connect a {chain} wallet to swap.", "Свопы без memo сейчас приостановлены THORChain. Подключите кошелёк {chain} для свопа."],
   "swap.feeDialog.title": ["Fees Included in the Rate", "Комиссии, включённые в курс"],
   "swap.feeDialog.description": ["These fees are already included in the rate — you don't pay them separately.", "Эти комиссии уже включены в курс — вы не платите их отдельно."],
   "swap.feeDialog.liquidityFee": ["Liquidity Fee", "Комиссия Liquidity", "Комиссия за ликвидность"],
@@ -461,6 +462,5 @@
   "tx.status.unknown": ["Unknown", "Неизвестно"],
   "tx.leg.deposit": ["Deposit {ticker}", "Внести {ticker}"],
   "tx.leg.send": ["Send {ticker}", "Отправить {ticker}"],
-  "tx.leg.swap": ["Swap {from} to {to}", "Обменять {from} на {to}"],
-  "swap.error.memolessHalted": ["Memoless swaps are paused by THORChain right now. Connect a {chain} wallet to swap.", "Свопы без memo сейчас приостановлены THORChain. Подключите кошелёк {chain} для свопа."]
+  "tx.leg.swap": ["Swap {from} to {to}", "Обменять {from} на {to}"]
 }

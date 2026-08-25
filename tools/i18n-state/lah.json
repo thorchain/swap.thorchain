@@ -107,6 +107,7 @@
   "swap.error.preflightMemoless": ["Failed to preflight memoless request", "memoless preflight درخواست وچ ناکامی"],
   "swap.error.minAmountNoWallet": ["Minimum swap amount without a connected wallet is {amount} {ticker}", "بغیر کنیکٹ کیتے والٹ دے کم از کم تبادلہ رقم {amount} {ticker} اے"],
   "swap.error.unknown": ["Unknown Error", "اݨ جاݨی خرابی"],
+  "swap.error.memolessHalted": ["Memoless swaps are paused by THORChain right now. Connect a {chain} wallet to swap.", "میمو توں بغیر سواپ ہُن THORChain ولّوں روکے گئے نیں۔ سواپ کرن لئی {chain} والٹ کنیکٹ کرو۔"],
   "swap.feeDialog.title": ["Fees Included in the Rate", "ریٹ وچ شامل فیساں"],
   "swap.feeDialog.description": ["These fees are already included in the rate — you don't pay them separately.", "ایہ فیساں ریٹ وچ پہلاں ای شامل نیں — تُسی ایہناں نوں ولکھ نئیں دیندے۔"],
   "swap.feeDialog.liquidityFee": ["Liquidity Fee", "Liquidity فیس"],
@@ -461,6 +462,5 @@
   "tx.status.unknown": ["Unknown", "اݨ جاݨیا"],
   "tx.leg.deposit": ["Deposit {ticker}", "{ticker} ڈیپازٹ کرو"],
   "tx.leg.send": ["Send {ticker}", "{ticker} بھیجو"],
-  "tx.leg.swap": ["Swap {from} to {to}", "{from} نوں {to} وچ تبادلہ کرو"],
-  "swap.error.memolessHalted": ["Memoless swaps are paused by THORChain right now. Connect a {chain} wallet to swap.", "میمو توں بغیر سواپ ہُن THORChain ولّوں روکے گئے نیں۔ سواپ کرن لئی {chain} والٹ کنیکٹ کرو۔"]
+  "tx.leg.swap": ["Swap {from} to {to}", "{from} نوں {to} وچ تبادلہ کرو"]
 }

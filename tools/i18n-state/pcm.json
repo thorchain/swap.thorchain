@@ -107,6 +107,7 @@
   "swap.error.preflightMemoless": ["Failed to preflight memoless request", "E no fit preflight di memoless request"],
   "swap.error.minAmountNoWallet": ["Minimum swap amount without a connected wallet is {amount} {ticker}", "Minimum swap amount without wallet wey connect na {amount} {ticker}"],
   "swap.error.unknown": ["Unknown Error", "Error wey we no sabi"],
+  "swap.error.memolessHalted": ["Memoless swaps are paused by THORChain right now. Connect a {chain} wallet to swap.", "THORChain don pause memoless swaps for now. Connect {chain} wallet make you swap."],
   "swap.feeDialog.title": ["Fees Included in the Rate", "Fees Wey Dey Inside di Rate"],
   "swap.feeDialog.description": ["These fees are already included in the rate — you don't pay them separately.", "Dis fees dey inside di rate already — you no dey pay dem separately."],
   "swap.feeDialog.liquidityFee": ["Liquidity Fee", "Liquidity Fee"],
@@ -461,6 +462,5 @@
   "tx.status.unknown": ["Unknown", "We no sabi"],
   "tx.leg.deposit": ["Deposit {ticker}", "Deposit {ticker}"],
   "tx.leg.send": ["Send {ticker}", "Send {ticker}"],
-  "tx.leg.swap": ["Swap {from} to {to}", "Swap {from} to {to}"],
-  "swap.error.memolessHalted": ["Memoless swaps are paused by THORChain right now. Connect a {chain} wallet to swap.", "THORChain don pause memoless swaps for now. Connect {chain} wallet make you swap."]
+  "tx.leg.swap": ["Swap {from} to {to}", "Swap {from} to {to}"]
 }

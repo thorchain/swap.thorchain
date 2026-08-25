@@ -107,6 +107,7 @@
   "swap.error.preflightMemoless": ["Failed to preflight memoless request", "预检无Memo请求失败"],
   "swap.error.minAmountNoWallet": ["Minimum swap amount without a connected wallet is {amount} {ticker}", "未连接钱包时的最小兑换金额为{amount} {ticker}"],
   "swap.error.unknown": ["Unknown Error", "未知错误"],
+  "swap.error.memolessHalted": ["Memoless swaps are paused by THORChain right now. Connect a {chain} wallet to swap.", "THORChain 目前已暂停免 memo 交换。请连接 {chain} 钱包进行交换。"],
   "swap.feeDialog.title": ["Fees Included in the Rate", "已含在汇率中的费用"],
   "swap.feeDialog.description": ["These fees are already included in the rate — you don't pay them separately.", "这些费用已包含在汇率中——您无需单独支付。"],
   "swap.feeDialog.liquidityFee": ["Liquidity Fee", "Liquidity手续费"],
@@ -461,6 +462,5 @@
   "tx.status.unknown": ["Unknown", "未知"],
   "tx.leg.deposit": ["Deposit {ticker}", "存入{ticker}"],
   "tx.leg.send": ["Send {ticker}", "发送{ticker}"],
-  "tx.leg.swap": ["Swap {from} to {to}", "将{from}兑换为{to}"],
-  "swap.error.memolessHalted": ["Memoless swaps are paused by THORChain right now. Connect a {chain} wallet to swap.", "THORChain 目前已暂停免 memo 交换。请连接 {chain} 钱包进行交换。"]
+  "tx.leg.swap": ["Swap {from} to {to}", "将{from}兑换为{to}"]
 }

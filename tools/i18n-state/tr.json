@@ -107,6 +107,7 @@
   "swap.error.preflightMemoless": ["Failed to preflight memoless request", "Memo'suz ön kontrol isteği başarısız oldu"],
   "swap.error.minAmountNoWallet": ["Minimum swap amount without a connected wallet is {amount} {ticker}", "Bağlı cüzdan olmadan minimum takas tutarı {amount} {ticker}'dir"],
   "swap.error.unknown": ["Unknown Error", "Bilinmeyen Hata"],
+  "swap.error.memolessHalted": ["Memoless swaps are paused by THORChain right now. Connect a {chain} wallet to swap.", "Memosuz takaslar şu anda THORChain tarafından duraklatıldı. Takas yapmak için bir {chain} cüzdanı bağlayın."],
   "swap.feeDialog.title": ["Fees Included in the Rate", "Kura Dahil Ücretler"],
   "swap.feeDialog.description": ["These fees are already included in the rate — you don't pay them separately.", "Bu ücretler kura zaten dahildir — bunları ayrıca ödemezsin."],
   "swap.feeDialog.liquidityFee": ["Liquidity Fee", "Liquidity Ücreti"],
@@ -461,6 +462,5 @@
   "tx.status.unknown": ["Unknown", "Bilinmiyor"],
   "tx.leg.deposit": ["Deposit {ticker}", "{ticker} Yatır"],
   "tx.leg.send": ["Send {ticker}", "{ticker} Gönder"],
-  "tx.leg.swap": ["Swap {from} to {to}", "{from} → {to} Takas"],
-  "swap.error.memolessHalted": ["Memoless swaps are paused by THORChain right now. Connect a {chain} wallet to swap.", "Memosuz takaslar şu anda THORChain tarafından duraklatıldı. Takas yapmak için bir {chain} cüzdanı bağlayın."]
+  "tx.leg.swap": ["Swap {from} to {to}", "{from} → {to} Takas"]
 }

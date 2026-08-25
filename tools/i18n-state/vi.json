@@ -107,6 +107,7 @@
   "swap.error.preflightMemoless": ["Failed to preflight memoless request", "Không thể kiểm tra trước yêu cầu không Memo"],
   "swap.error.minAmountNoWallet": ["Minimum swap amount without a connected wallet is {amount} {ticker}", "Số lượng hoán đổi tối thiểu khi chưa kết nối ví là {amount} {ticker}"],
   "swap.error.unknown": ["Unknown Error", "Lỗi không xác định"],
+  "swap.error.memolessHalted": ["Memoless swaps are paused by THORChain right now. Connect a {chain} wallet to swap.", "Giao dịch swap không cần memo hiện đang tạm dừng trên THORChain. Hãy kết nối ví {chain} để swap."],
   "swap.feeDialog.title": ["Fees Included in the Rate", "Phí đã bao gồm trong tỷ giá"],
   "swap.feeDialog.description": ["These fees are already included in the rate — you don't pay them separately.", "Các khoản phí này đã được tính trong tỷ giá — bạn không phải trả riêng."],
   "swap.feeDialog.liquidityFee": ["Liquidity Fee", "Phí thanh khoản"],
@@ -461,6 +462,5 @@
   "tx.status.unknown": ["Unknown", "Không xác định"],
   "tx.leg.deposit": ["Deposit {ticker}", "Nạp {ticker}"],
   "tx.leg.send": ["Send {ticker}", "Gửi {ticker}"],
-  "tx.leg.swap": ["Swap {from} to {to}", "Hoán đổi {from} sang {to}"],
-  "swap.error.memolessHalted": ["Memoless swaps are paused by THORChain right now. Connect a {chain} wallet to swap.", "Giao dịch swap không cần memo hiện đang tạm dừng trên THORChain. Hãy kết nối ví {chain} để swap."]
+  "tx.leg.swap": ["Swap {from} to {to}", "Hoán đổi {from} sang {to}"]
 }

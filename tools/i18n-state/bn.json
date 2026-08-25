@@ -107,6 +107,7 @@
   "swap.error.preflightMemoless": ["Failed to preflight memoless request", "Memo-বিহীন প্রিফ্লাইট অনুরোধ করতে ব্যর্থ হয়েছে"],
   "swap.error.minAmountNoWallet": ["Minimum swap amount without a connected wallet is {amount} {ticker}", "সংযুক্ত ওয়ালেট ছাড়া সর্বনিম্ন সোয়াপ পরিমাণ হলো {amount} {ticker}"],
   "swap.error.unknown": ["Unknown Error", "অজানা ত্রুটি"],
+  "swap.error.memolessHalted": ["Memoless swaps are paused by THORChain right now. Connect a {chain} wallet to swap.", "THORChain বর্তমানে মেমোবিহীন সোয়াপ সাময়িকভাবে বন্ধ রেখেছে। সোয়াপ করতে একটি {chain} ওয়ালেট সংযুক্ত করুন।"],
   "swap.feeDialog.title": ["Fees Included in the Rate", "রেটে অন্তর্ভুক্ত ফি"],
   "swap.feeDialog.description": ["These fees are already included in the rate — you don't pay them separately.", "এই ফিগুলি ইতিমধ্যে রেটে অন্তর্ভুক্ত আছে — আপনি সেগুলি আলাদাভাবে পরিশোধ করেন না।"],
   "swap.feeDialog.liquidityFee": ["Liquidity Fee", "Liquidity ফি"],
@@ -461,6 +462,5 @@
   "tx.status.unknown": ["Unknown", "অজানা"],
   "tx.leg.deposit": ["Deposit {ticker}", "{ticker} ডিপোজিট করুন"],
   "tx.leg.send": ["Send {ticker}", "{ticker} পাঠান"],
-  "tx.leg.swap": ["Swap {from} to {to}", "{from} থেকে {to} সোয়াপ করুন"],
-  "swap.error.memolessHalted": ["Memoless swaps are paused by THORChain right now. Connect a {chain} wallet to swap.", "THORChain বর্তমানে মেমোবিহীন সোয়াপ সাময়িকভাবে বন্ধ রেখেছে। সোয়াপ করতে একটি {chain} ওয়ালেট সংযুক্ত করুন।"]
+  "tx.leg.swap": ["Swap {from} to {to}", "{from} থেকে {to} সোয়াপ করুন"]
 }

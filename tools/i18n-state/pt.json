@@ -107,6 +107,7 @@
   "swap.error.preflightMemoless": ["Failed to preflight memoless request", "Falha ao validar a solicitação sem memo"],
   "swap.error.minAmountNoWallet": ["Minimum swap amount without a connected wallet is {amount} {ticker}", "A quantia mínima de troca sem uma carteira conectada é {amount} {ticker}"],
   "swap.error.unknown": ["Unknown Error", "Erro desconhecido"],
+  "swap.error.memolessHalted": ["Memoless swaps are paused by THORChain right now. Connect a {chain} wallet to swap.", "As swaps sem memo estão pausadas pela THORChain neste momento. Conecte uma carteira {chain} para fazer a swap."],
   "swap.feeDialog.title": ["Fees Included in the Rate", "Taxas incluídas na cotação"],
   "swap.feeDialog.description": ["These fees are already included in the rate — you don't pay them separately.", "Essas taxas já estão incluídas na cotação — você não as paga separadamente."],
   "swap.feeDialog.liquidityFee": ["Liquidity Fee", "Taxa de liquidez"],
@@ -461,6 +462,5 @@
   "tx.status.unknown": ["Unknown", "Desconhecido"],
   "tx.leg.deposit": ["Deposit {ticker}", "Depositar {ticker}"],
   "tx.leg.send": ["Send {ticker}", "Enviar {ticker}"],
-  "tx.leg.swap": ["Swap {from} to {to}", "Trocar {from} por {to}"],
-  "swap.error.memolessHalted": ["Memoless swaps are paused by THORChain right now. Connect a {chain} wallet to swap.", "As swaps sem memo estão pausadas pela THORChain neste momento. Conecte uma carteira {chain} para fazer a swap."]
+  "tx.leg.swap": ["Swap {from} to {to}", "Trocar {from} por {to}"]
 }
