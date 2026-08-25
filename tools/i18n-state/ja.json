@@ -461,5 +461,6 @@
   "tx.status.unknown": ["Unknown", "不明"],
   "tx.leg.deposit": ["Deposit {ticker}", "{ticker} を預け入れ"],
   "tx.leg.send": ["Send {ticker}", "{ticker} を送信"],
-  "tx.leg.swap": ["Swap {from} to {to}", "{from} を {to} にスワップ"]
+  "tx.leg.swap": ["Swap {from} to {to}", "{from} を {to} にスワップ"],
+  "swap.error.memolessHalted": ["Memoless swaps are paused by THORChain right now. Connect a {chain} wallet to swap.", "メモレススワップは現在THORChainにより一時停止されています。スワップするには{chain}ウォレットを接続してください。"]
 }

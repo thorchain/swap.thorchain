@@ -132,7 +132,8 @@
       "preflightRequest": "تعذّر التحقق المسبق من الطلب",
       "preflightMemoless": "تعذّر التحقق المسبق من الطلب بلا Memo",
       "minAmountNoWallet": "الحد الأدنى لمبلغ التبادل بدون محفظة متصلة هو {amount} {ticker}",
-      "unknown": "خطأ غير معروف"
+      "unknown": "خطأ غير معروف",
+      "memolessHalted": "عمليات التبديل بدون مذكرة (memoless) متوقفة مؤقتًا من قِبل THORChain حاليًا. اربط محفظة {chain} لإجراء التبديل."
     },
     "feeDialog": {
       "title": "الرسوم المضمّنة في السعر",

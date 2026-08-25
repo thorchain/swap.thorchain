@@ -67,7 +67,7 @@
       "enterAmount": "ᛖᚾᛏᛖᚱ ᚨᛗᛟᚢᚾᛏ",
       "quoting": "ᚲᚢᛟᛏᛁᛜ",
       "noValidQuotes": "ᚾᛟ ᚹᚨᛚᛁᛞ ᚲᚢᛟᛏᛖᛊ",
-      "tradingHalted": "ᛏᚱᚨᛞᛁᚾᚷ ᛁᛊ ᚺᚨᛚᛏᛖᛞ",
+      "tradingHalted": "ᛏᚱᚨᛞᛁᛜ ᛁᛊ ᚺᚨᛚᛏᛖᛞ",
       "enterLimitPrice": "ᛖᚾᛏᛖᚱ ᛚᛁᛗᛁᛏ ᛈᚱᛁᚲᛖ",
       "enterLimitOrder": "ᛖᚾᛏᛖᚱ ᛚᛁᛗᛁᛏ ᛟᚱᛞᛖᚱ",
       "swap": "ᛊᚹᚨᛈ",
@@ -132,7 +132,8 @@
       "preflightRequest": "ᚠᚨᛁᛚᛖᛞ ᛏᛟ ᛈᚱᛖᚠᛚᛁᚷᚺᛏ ᚱᛖᚲᚢᛖᛊᛏ",
       "preflightMemoless": "ᚠᚨᛁᛚᛖᛞ ᛏᛟ ᛈᚱᛖᚠᛚᛁᚷᚺᛏ ᛗᛖᛗᛟᛚᛖᛊᛊ ᚱᛖᚲᚢᛖᛊᛏ",
       "minAmountNoWallet": "ᛗᛁᚾᛁᛗᚢᛗ ᛊᚹᚨᛈ ᚨᛗᛟᚢᚾᛏ ᚹᛁᚦᛟᚢᛏ ᚨ ᚲᛟᚾᚾᛖᚲᛏᛖᛞ ᚹᚨᛚᛚᛖᛏ ᛁᛊ {amount} {ticker}",
-      "unknown": "ᚢᚾᚲᚾᛟᚹᚾ ᛖᚱᚱᛟᚱ"
+      "unknown": "ᚢᚾᚲᚾᛟᚹᚾ ᛖᚱᚱᛟᚱ",
+      "memolessHalted": "ᛗᛖᛗᛟᛚᛖᛊᛊ ᛊᚹᚨᛈᛊ ᚨᚱᛖ ᛈᚨᚢᛊᛖᛞ ᛒᛁ ᚦᛟᚱᚲᚺᚨᛁᚾ ᚱᛁᚷᚺᛏ ᚾᛟᚹ. ᚲᛟᚾᚾᛖᚲᛏ ᚨ {chain} ᚹᚨᛚᛚᛖᛏ ᛏᛟ ᛊᚹᚨᛈ."
     },
     "feeDialog": {
       "title": "ᚠᛖᛖᛊ ᛁᚾᚲᛚᚢᛞᛖᛞ ᛁᚾ ᚦᛖ ᚱᚨᛏᛖ",
@@ -179,7 +180,7 @@
         "loadInboundAddresses": "ᚠᚨᛁᛚᛖᛞ ᛏᛟ ᛚᛟᚨᛞ ᛁᚾᛒᛟᚢᚾᛞ ᚨᛞᛞᚱᛖᛊᛊᛖᛊ",
         "cancelFailed": "ᚠᚨᛁᛚᛖᛞ ᛏᛟ ᚲᚨᚾᚲᛖᛚ ᛚᛁᛗᛁᛏ ᛊᚹᚨᛈ",
         "modifyFailed": "ᚠᚨᛁᛚᛖᛞ ᛏᛟ ᛗᛟᛞᛁᚠᛁ ᛚᛁᛗᛁᛏ ᛊᚹᚨᛈ",
-        "walletNotConnected": "ᚹᚨᛚᛚᛖᛏ ᚾᚩᛏ ᚲᚩᚾᚾᛖᚲᛏᛖᚦ"
+        "walletNotConnected": "ᚹᚨᛚᛚᛖᛏ ᚾᛟᛏ ᚲᛟᚾᚾᛖᚲᛏᛖᛞ"
       },
       "toast": {
         "sendToCancel": "ᛊᛖᚾᛞ {amount} {ticker} ᚠᚱᛟᛗ ᚦᛖ ᛟᚱᛁᚷᛁᚾᚨᛚ ᚹᚨᛚᛚᛖᛏ ᛏᛟ ᚲᚨᚾᚲᛖᛚ",
@@ -195,7 +196,7 @@
         "switch": "ᛊᚹᛁᛏᚲᚺ ᛏᛟ ᚨ {chain} ᚹᚨᛚᛚᛖᛏ ᛏᛟ {mode} ᚦᛁᛊ ᛟᚱᛞᛖᚱ",
         "addressMismatch": "ᚲᛟᚾᚾᛖᚲᛏᛖᛞ ᚹᚨᛚᛚᛖᛏ ᛞᛟᛖᛊ ᚾᛟᛏ ᛗᚨᛏᚲᚺ ᚦᛖ ᚨᛞᛞᚱᛖᛊᛊ ᚦᚨᛏ ᛈᛚᚨᚲᛖᛞ ᚦᛁᛊ ᛟᚱᛞᛖᚱ",
         "tradingPaused": "{chain} ᛏᚱᚨᛞᛁᛜ ᛁᛊ ᚲᚢᚱᚱᛖᚾᛏᛚᛁ ᛈᚨᚢᛊᛖᛞ",
-        "orderNotFound": "ᚦᛁᛋ ᚩᚱᛞᛖᚱ ᛁᛋ ᚾᚩ ᛚᚩᚾᚷᛖᚱ ᚩᛈᛖᚾ ᚩᚾ THORChain - ᛁᛏ ᛘᚨᚤ ᚻᚨᚠᛖ ᚨᛚᚱᛖᚨᛞᚤ ᛒᛖᛖᚾ ᚠᛁᛚᛚᛖᚦ ᚩᚱ ᛖᚲᛋᛈᛁᚱᛖᚦ"
+        "orderNotFound": "ᚦᛁᛊ ᛟᚱᛞᛖᚱ ᛁᛊ ᚾᛟ ᛚᛟᛜᛖᚱ ᛟᛈᛖᚾ ᛟᚾ ᚦᛟᚱᚲᚺᚨᛁᚾ - ᛁᛏ ᛗᚨᛁ ᚺᚨᚹᛖ ᚨᛚᚱᛖᚨᛞᛁ ᛒᛖᛖᚾ ᚠᛁᛚᛚᛖᛞ ᛟᚱ ᛖᚲᛊᛈᛁᚱᛖᛞ"
       }
     },
     "quoteTimer": {
@@ -521,8 +522,8 @@
     "sortByBalance": "ᛒᚨᛚᚨᚾᚲᛖ (ᚺᛁᚷᚺ → ᛚᛟᚹ)",
     "externalWalletMode": "ᛖᚲᛊᛏᛖᚱᚾᚨᛚ ᚹᚨᛚᛚᛖᛏ ᛗᛟᛞᛖ",
     "externalWalletModeDescription": "ᚢᛊᛖ ᚨ ᛊᛖᛚᚠ ᚲᚢᛊᛏᛟᛞᛁ ᚹᚨᛚᛚᛖᛏ ᚹᛁᚦᛟᚢᛏ ᚲᛟᚾᚾᛖᚲᛏᛁᛜ ᛁᛏ ᛏᛟ ᚦᛖ ᚹᛖᛒᛊᛁᛏᛖ",
-    "externalWalletModeUnavailable": "ᚲᚢᚱᚱᛖᚾᛏᛚᚤ ᚢᚾᚨᚢᚨᛁᛚᚨᛒᛚᛖ",
-    "externalWalletModeHalted": "ᚲᛟᚾᚾᛖᚲᛏ ᚨ ᚹᚨᛚᛚᛖᛏ ᛏᛟ ᚲᛖᛖᛈ ᛊᚹᚨᛈᛈᛁᚾᚷ.",
+    "externalWalletModeUnavailable": "ᚲᚢᚱᚱᛖᚾᛏᛚᛁ ᚢᚾᚨᚹᚨᛁᛚᚨᛒᛚᛖ",
+    "externalWalletModeHalted": "ᚲᛟᚾᚾᛖᚲᛏ ᚨ ᚹᚨᛚᛚᛖᛏ ᛏᛟ ᚲᛖᛖᛈ ᛊᚹᚨᛈᛈᛁᛜ.",
     "externalWalletAssetUnsupported": "ᚦᛁᛊ ᚨᛊᛊᛖᛏ ᛁᛊ ᚾᛟᛏ ᛊᚢᛈᛈᛟᚱᛏᛖᛞ ᛁᚾ ᛖᚲᛊᛏᛖᚱᚾᚨᛚ ᚹᚨᛚᛚᛖᛏ ᛗᛟᛞᛖ. ᚲᛟᚾᚾᛖᚲᛏ ᚨ ᛒᚱᛟᚹᛊᛖᚱ ᚹᚨᛚᛚᛖᛏ ᛁᚠ ᛁᛟᚢ ᚹᚨᚾᛏ ᛏᛟ ᚲᛟᚾᛏᛁᚾᚢᛖ.",
     "close": "ᚲᛚᛟᛊᛖ",
     "sendToken": "ᛊᛖᚾᛞ {ticker}"

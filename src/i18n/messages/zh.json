@@ -132,7 +132,8 @@
       "preflightRequest": "预检请求失败",
       "preflightMemoless": "预检无Memo请求失败",
       "minAmountNoWallet": "未连接钱包时的最小兑换金额为{amount} {ticker}",
-      "unknown": "未知错误"
+      "unknown": "未知错误",
+      "memolessHalted": "THORChain 目前已暂停免 memo 交换。请连接 {chain} 钱包进行交换。"
     },
     "feeDialog": {
       "title": "已含在汇率中的费用",

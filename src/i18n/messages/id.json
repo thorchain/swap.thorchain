@@ -132,7 +132,8 @@
       "preflightRequest": "Gagal melakukan preflight permintaan",
       "preflightMemoless": "Gagal melakukan preflight permintaan tanpa memo",
       "minAmountNoWallet": "Jumlah swap minimum tanpa dompet yang terhubung adalah {amount} {ticker}",
-      "unknown": "Kesalahan tidak diketahui"
+      "unknown": "Kesalahan tidak diketahui",
+      "memolessHalted": "Swap memoless sedang dijeda oleh THORChain saat ini. Hubungkan wallet {chain} untuk melakukan swap."
     },
     "feeDialog": {
       "title": "Biaya termasuk dalam kurs",

@@ -132,7 +132,8 @@
       "preflightRequest": "No se pudo verificar la solicitud",
       "preflightMemoless": "No se pudo verificar la solicitud sin Memo",
       "minAmountNoWallet": "El monto mínimo de intercambio sin una billetera conectada es {amount} {ticker}",
-      "unknown": "Error desconocido"
+      "unknown": "Error desconocido",
+      "memolessHalted": "Los swaps sin memo están pausados por THORChain en este momento. Conecta una billetera de {chain} para hacer swap."
     },
     "feeDialog": {
       "title": "Comisiones incluidas en la tasa",

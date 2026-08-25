@@ -4,6 +4,7 @@ import { useEffect, useMemo } from 'react'
 import { useTranslations } from 'next-intl'
 import { AssetValue, USwapNumber } from '@tcswap/core'
 import { type MemolessAsset } from '@tcswap/helpers/api'
+import { chainLabel } from '@/components/connect-wallet/config'
 import { SwapAddressFrom } from '@/components/swap/swap-address-from'
 import { SwapButton } from '@/components/swap/swap-button'
 import { SwapDetails } from '@/components/swap/swap-details'
@@ -52,9 +53,11 @@ export const Swap = () => {
 
   const memolessError: Error | undefined = useMemo(() => {
     if (selectedAccount || !memolessAsset || !assetFrom) return
+    // Without a wallet the deposit channel is the only route, so a HALTMEMOLESS spells out why the
+    // button now asks for a wallet instead of quoting an instant swap.
+    if (isMemolessHalted) return new Error(t('error.memolessHalted', { chain: chainLabel(assetFrom.chain) }))
     const minAmount = new USwapNumber(10 ** -(memolessAsset.decimals - 5))
-    if (valueFrom.lt(minAmount))
-      return new Error(t('error.minAmountNoWallet', { amount: minAmount.toSignificant(), ticker: assetFrom.ticker }))
+    if (valueFrom.lt(minAmount)) return new Error(t('error.minAmountNoWallet', { amount: minAmount.toSignificant(), ticker: assetFrom.ticker }))
   }, [memolessAsset, selectedAccount, valueFrom, isMemolessHalted, t])
 
   const instantSwapSupported = !!memolessAsset && !isMemolessHalted
@@ -89,13 +92,13 @@ export const Swap = () => {
           <SwapButton instantSwapSupported={instantSwapSupported} instantSwapAvailable={!memolessError} />
         </div>
 
+        <SwapDetails />
+
         {memolessError && (
           <div className="px-4 pt-2">
             <SwapError error={memolessError} />
           </div>
         )}
-
-        <SwapDetails />
       </div>
     </div>
   )

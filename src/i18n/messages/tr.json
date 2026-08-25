@@ -132,7 +132,8 @@
       "preflightRequest": "Ön kontrol isteği başarısız oldu",
       "preflightMemoless": "Memo'suz ön kontrol isteği başarısız oldu",
       "minAmountNoWallet": "Bağlı cüzdan olmadan minimum takas tutarı {amount} {ticker}'dir",
-      "unknown": "Bilinmeyen Hata"
+      "unknown": "Bilinmeyen Hata",
+      "memolessHalted": "Memosuz takaslar şu anda THORChain tarafından duraklatıldı. Takas yapmak için bir {chain} cüzdanı bağlayın."
     },
     "feeDialog": {
       "title": "Kura Dahil Ücretler",

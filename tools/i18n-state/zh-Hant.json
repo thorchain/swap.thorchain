@@ -461,5 +461,6 @@
   "tx.status.unknown": ["Unknown", "未知"],
   "tx.leg.deposit": ["Deposit {ticker}", "存入{ticker}"],
   "tx.leg.send": ["Send {ticker}", "發送{ticker}"],
-  "tx.leg.swap": ["Swap {from} to {to}", "將{from}兌換為{to}"]
+  "tx.leg.swap": ["Swap {from} to {to}", "將{from}兌換為{to}"],
+  "swap.error.memolessHalted": ["Memoless swaps are paused by THORChain right now. Connect a {chain} wallet to swap.", "THORChain 目前已暫停免 memo 交換。請連接 {chain} 錢包以進行交換。"]
 }

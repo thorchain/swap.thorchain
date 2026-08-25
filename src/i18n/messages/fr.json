@@ -132,7 +132,8 @@
       "preflightRequest": "Échec de la vérification préalable de la requête",
       "preflightMemoless": "Échec de la vérification préalable de la requête sans Memo",
       "minAmountNoWallet": "Le montant minimum d'échange sans portefeuille connecté est de {amount} {ticker}",
-      "unknown": "Erreur inconnue"
+      "unknown": "Erreur inconnue",
+      "memolessHalted": "Les swaps sans mémo sont actuellement suspendus par THORChain. Connectez un portefeuille {chain} pour échanger."
     },
     "feeDialog": {
       "title": "Frais inclus dans le taux",

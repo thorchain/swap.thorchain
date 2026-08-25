@@ -132,7 +132,8 @@
       "preflightRequest": "Không thể kiểm tra trước yêu cầu",
       "preflightMemoless": "Không thể kiểm tra trước yêu cầu không Memo",
       "minAmountNoWallet": "Số lượng hoán đổi tối thiểu khi chưa kết nối ví là {amount} {ticker}",
-      "unknown": "Lỗi không xác định"
+      "unknown": "Lỗi không xác định",
+      "memolessHalted": "Giao dịch swap không cần memo hiện đang tạm dừng trên THORChain. Hãy kết nối ví {chain} để swap."
     },
     "feeDialog": {
       "title": "Phí đã bao gồm trong tỷ giá",

@@ -132,7 +132,8 @@
       "preflightRequest": "अनुरोध को प्रीफ़्लाइट करने में विफल",
       "preflightMemoless": "memoless अनुरोध को प्रीफ़्लाइट करने में विफल",
       "minAmountNoWallet": "कनेक्ट किए गए वॉलेट के बिना न्यूनतम स्वैप राशि {amount} {ticker} है",
-      "unknown": "अज्ञात त्रुटि"
+      "unknown": "अज्ञात त्रुटि",
+      "memolessHalted": "Memoless स्वैप अभी THORChain द्वारा रोके गए हैं। स्वैप करने के लिए {chain} वॉलेट कनेक्ट करें।"
     },
     "feeDialog": {
       "title": "दर में शामिल शुल्क",

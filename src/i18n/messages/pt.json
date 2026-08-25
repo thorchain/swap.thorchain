@@ -132,7 +132,8 @@
       "preflightRequest": "Falha ao validar a solicitação",
       "preflightMemoless": "Falha ao validar a solicitação sem memo",
       "minAmountNoWallet": "A quantia mínima de troca sem uma carteira conectada é {amount} {ticker}",
-      "unknown": "Erro desconhecido"
+      "unknown": "Erro desconhecido",
+      "memolessHalted": "As swaps sem memo estão pausadas pela THORChain neste momento. Conecte uma carteira {chain} para fazer a swap."
     },
     "feeDialog": {
       "title": "Taxas incluídas na cotação",

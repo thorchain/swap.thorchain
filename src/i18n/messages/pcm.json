@@ -132,7 +132,8 @@
       "preflightRequest": "E no fit preflight di request",
       "preflightMemoless": "E no fit preflight di memoless request",
       "minAmountNoWallet": "Minimum swap amount without wallet wey connect na {amount} {ticker}",
-      "unknown": "Error wey we no sabi"
+      "unknown": "Error wey we no sabi",
+      "memolessHalted": "THORChain don pause memoless swaps for now. Connect {chain} wallet make you swap."
     },
     "feeDialog": {
       "title": "Fees Wey Dey Inside di Rate",

@@ -461,5 +461,6 @@
   "tx.status.unknown": ["Unknown", "Unbekannt"],
   "tx.leg.deposit": ["Deposit {ticker}", "{ticker} einzahlen"],
   "tx.leg.send": ["Send {ticker}", "{ticker} senden"],
-  "tx.leg.swap": ["Swap {from} to {to}", "{from} zu {to} swappen"]
+  "tx.leg.swap": ["Swap {from} to {to}", "{from} zu {to} swappen"],
+  "swap.error.memolessHalted": ["Memoless swaps are paused by THORChain right now. Connect a {chain} wallet to swap.", "Memoless-Swaps sind derzeit von THORChain pausiert. Verbinde eine {chain}-Wallet, um zu swappen."]
 }

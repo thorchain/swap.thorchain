@@ -132,7 +132,8 @@
       "preflightRequest": "preflight درخواست وچ ناکامی",
       "preflightMemoless": "memoless preflight درخواست وچ ناکامی",
       "minAmountNoWallet": "بغیر کنیکٹ کیتے والٹ دے کم از کم تبادلہ رقم {amount} {ticker} اے",
-      "unknown": "اݨ جاݨی خرابی"
+      "unknown": "اݨ جاݨی خرابی",
+      "memolessHalted": "میمو توں بغیر سواپ ہُن THORChain ولّوں روکے گئے نیں۔ سواپ کرن لئی {chain} والٹ کنیکٹ کرو۔"
     },
     "feeDialog": {
       "title": "ریٹ وچ شامل فیساں",

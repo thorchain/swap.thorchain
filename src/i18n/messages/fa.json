@@ -132,7 +132,8 @@
       "preflightRequest": "بررسی اولیه درخواست ناموفق بود",
       "preflightMemoless": "بررسی اولیه درخواست بدون Memo ناموفق بود",
       "minAmountNoWallet": "حداقل مقدار تبادل بدون کیف پول متصل، {amount} {ticker} است",
-      "unknown": "خطای ناشناخته"
+      "unknown": "خطای ناشناخته",
+      "memolessHalted": "سوآپ‌های بدون Memo در حال حاضر توسط THORChain متوقف شده‌اند. برای سوآپ، یک کیف‌پول {chain} متصل کنید."
     },
     "feeDialog": {
       "title": "کارمزدهای لحاظ‌شده در نرخ",

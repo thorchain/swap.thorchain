@@ -21,7 +21,7 @@ export function SwapDetails() {
 
   return (
     <div className="text-txt-high-contrast flex justify-between text-[13px] font-semibold">
-      <span className="p-4">
+      <span className="p-4 pb-2">
         1 {assetFrom.ticker} = {price.toSignificant()} {assetTo.ticker}
       </span>
 

@@ -132,7 +132,8 @@
       "preflightRequest": "Preflight della richiesta non riuscito",
       "preflightMemoless": "Preflight della richiesta senza memo non riuscito",
       "minAmountNoWallet": "L'importo minimo di swap senza un wallet connesso è {amount} {ticker}",
-      "unknown": "Errore sconosciuto"
+      "unknown": "Errore sconosciuto",
+      "memolessHalted": "Gli swap memoless sono attualmente in pausa su THORChain. Collega un wallet {chain} per fare swap."
     },
     "feeDialog": {
       "title": "Commissioni incluse nel prezzo.",

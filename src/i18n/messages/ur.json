@@ -132,7 +132,8 @@
       "preflightRequest": "preflight درخواست میں ناکامی",
       "preflightMemoless": "memoless preflight درخواست میں ناکامی",
       "minAmountNoWallet": "کنیکٹ شدہ والٹ کے بغیر کم از کم تبادلہ رقم {amount} {ticker} ہے",
-      "unknown": "نامعلوم خرابی"
+      "unknown": "نامعلوم خرابی",
+      "memolessHalted": "میمو کے بغیر سواپس اس وقت THORChain کی جانب سے روکے گئے ہیں۔ سواپ کرنے کے لیے {chain} والیٹ منسلک کریں۔"
     },
     "feeDialog": {
       "title": "ریٹ میں شامل فیس",

@@ -132,7 +132,8 @@
       "preflightRequest": "Preflight-Anfrage fehlgeschlagen",
       "preflightMemoless": "Memolose Preflight-Anfrage fehlgeschlagen",
       "minAmountNoWallet": "Der Mindest-Swap-Betrag ohne verbundene Wallet beträgt {amount} {ticker}",
-      "unknown": "Unbekannter Fehler"
+      "unknown": "Unbekannter Fehler",
+      "memolessHalted": "Memoless-Swaps sind derzeit von THORChain pausiert. Verbinde eine {chain}-Wallet, um zu swappen."
     },
     "feeDialog": {
       "title": "Im Kurs enthaltene Gebühren",

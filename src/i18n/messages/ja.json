@@ -132,7 +132,8 @@
       "preflightRequest": "事前確認リクエストに失敗しました",
       "preflightMemoless": "Memoなしの事前確認リクエストに失敗しました",
       "minAmountNoWallet": "ウォレットを接続していない場合の最小スワップ金額は{amount} {ticker}です",
-      "unknown": "不明なエラー"
+      "unknown": "不明なエラー",
+      "memolessHalted": "メモレススワップは現在THORChainにより一時停止されています。スワップするには{chain}ウォレットを接続してください。"
     },
     "feeDialog": {
       "title": "レートに含まれる手数料",
