@@ -50,17 +50,39 @@ export const translateError = (message: string): string => {
 // process swap", so the wording is all the aggregator gives us to go on.
 export const isTradingHaltedError = (message: string): boolean => message.includes('trading is halted')
 
-// The aggregator answers a failed quote with one error per provider. Providers that do not list the
-// asset answer "not found" and are usually first, which buries the real reason when the provider
-// that could have routed the swap is the halted one - so a halt wins over the leading error.
+// THORChain reaches the aggregator wrapped in a JSON envelope, e.g.
+// {"code":2,"message":"amount less than dust threshold","details":[]}, so unwrap it before the
+// message is matched on or shown - the envelope is noise to both.
+const unwrapProviderError = (message: string): string => {
+  if (!message.startsWith('{')) return message
+
+  try {
+    const parsed = JSON.parse(message)
+    return typeof parsed?.message === 'string' ? parsed.message : message
+  } catch {
+    return message
+  }
+}
+
+// A provider that does not list one of the assets answers "Token with identifier BASE.ETH not found".
+const isAssetMissingError = (message: string): boolean => message.includes('not found')
+
+// The aggregator answers a failed quote with one error per provider, and only one of them explains
+// why the swap the user asked for cannot be routed:
+//   - a provider that never listed the asset says "not found" and explains nothing, so it goes last;
+//   - a halt explains the failure only when every other provider is in that "not found" group. A
+//     provider that did list the asset and failed for another reason (dust, slippage, liquidity)
+//     wins over it, otherwise Maya being halted surfaces as "trading is halted" on a swap that
+//     THORChain declined for an entirely different - and fixable - reason.
+const errorRank = (message: string): number => (isAssetMissingError(message) ? 2 : isTradingHaltedError(message) ? 1 : 0)
+
 export const resolveQuoteError = (error: unknown): Error => {
   const cause = (error as any)?.cause
   const providerErrors: { message?: string; error?: string }[] | undefined = cause?.errorData?.providerErrors
 
   if (providerErrors?.length) {
-    const halted = providerErrors.find(e => isTradingHaltedError(e.message || e.error || ''))
-    const relevant = halted ?? providerErrors[0]
-    return new Error(relevant.message || relevant.error)
+    const messages = providerErrors.map(e => unwrapProviderError(e.message || e.error || ''))
+    return new Error(messages.reduce((best, message) => (errorRank(message) < errorRank(best) ? message : best)))
   }
 
   if (cause?.errorData?.error) return new Error(cause.errorData.error)
