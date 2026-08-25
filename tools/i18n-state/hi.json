@@ -51,6 +51,7 @@
   "swap.button.enterAmount": ["Enter Amount", "राशि दर्ज करें"],
   "swap.button.quoting": ["Quoting", "कोट किया जा रहा है"],
   "swap.button.noValidQuotes": ["No Valid Quotes", "कोई मान्य कोट नहीं"],
+  "swap.button.tradingHalted": ["Trading is Halted", "ट्रेडिंग रोक दी गई है"],
   "swap.button.enterLimitPrice": ["Enter limit price", "लिमिट मूल्य दर्ज करें"],
   "swap.button.enterLimitOrder": ["Enter Limit Order", "लिमिट ऑर्डर दर्ज करें"],
   "swap.button.swap": ["Swap", "स्वैप करें"],
@@ -460,6 +461,5 @@
   "tx.status.unknown": ["Unknown", "अज्ञात"],
   "tx.leg.deposit": ["Deposit {ticker}", "{ticker} जमा करें"],
   "tx.leg.send": ["Send {ticker}", "{ticker} भेजें"],
-  "tx.leg.swap": ["Swap {from} to {to}", "{from} को {to} में स्वैप करें"],
-  "swap.button.tradingHalted": ["Trading is Halted", "ट्रेडिंग रोक दी गई है"]
+  "tx.leg.swap": ["Swap {from} to {to}", "{from} को {to} में स्वैप करें"]
 }

@@ -51,6 +51,7 @@
   "swap.button.enterAmount": ["Enter Amount", "金額を入力"],
   "swap.button.quoting": ["Quoting", "見積もり中"],
   "swap.button.noValidQuotes": ["No Valid Quotes", "有効な見積もりがありません"],
+  "swap.button.tradingHalted": ["Trading is Halted", "取引は停止中です"],
   "swap.button.enterLimitPrice": ["Enter limit price", "指値価格を入力"],
   "swap.button.enterLimitOrder": ["Enter Limit Order", "指値注文を入力"],
   "swap.button.swap": ["Swap", "スワップ"],
@@ -460,6 +461,5 @@
   "tx.status.unknown": ["Unknown", "不明"],
   "tx.leg.deposit": ["Deposit {ticker}", "{ticker} を預け入れ"],
   "tx.leg.send": ["Send {ticker}", "{ticker} を送信"],
-  "tx.leg.swap": ["Swap {from} to {to}", "{from} を {to} にスワップ"],
-  "swap.button.tradingHalted": ["Trading is Halted", "取引は停止中です"]
+  "tx.leg.swap": ["Swap {from} to {to}", "{from} を {to} にスワップ"]
 }

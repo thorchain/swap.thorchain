@@ -51,6 +51,7 @@
   "swap.button.enterAmount": ["Enter Amount", "Nhập số lượng"],
   "swap.button.quoting": ["Quoting", "Đang báo giá"],
   "swap.button.noValidQuotes": ["No Valid Quotes", "Không có báo giá hợp lệ"],
+  "swap.button.tradingHalted": ["Trading is Halted", "Giao dịch đã tạm dừng"],
   "swap.button.enterLimitPrice": ["Enter limit price", "Nhập giá giới hạn"],
   "swap.button.enterLimitOrder": ["Enter Limit Order", "Nhập lệnh giới hạn"],
   "swap.button.swap": ["Swap", "Hoán đổi"],
@@ -460,6 +461,5 @@
   "tx.status.unknown": ["Unknown", "Không xác định"],
   "tx.leg.deposit": ["Deposit {ticker}", "Nạp {ticker}"],
   "tx.leg.send": ["Send {ticker}", "Gửi {ticker}"],
-  "tx.leg.swap": ["Swap {from} to {to}", "Hoán đổi {from} sang {to}"],
-  "swap.button.tradingHalted": ["Trading is Halted", "Giao dịch đã tạm dừng"]
+  "tx.leg.swap": ["Swap {from} to {to}", "Hoán đổi {from} sang {to}"]
 }

@@ -51,6 +51,7 @@
   "swap.button.enterAmount": ["Enter Amount", "Put Amount"],
   "swap.button.quoting": ["Quoting", "Dey quote"],
   "swap.button.noValidQuotes": ["No Valid Quotes", "No Valid Quotes"],
+  "swap.button.tradingHalted": ["Trading is Halted", "Dem don Stop Trading"],
   "swap.button.enterLimitPrice": ["Enter limit price", "Put limit price"],
   "swap.button.enterLimitOrder": ["Enter Limit Order", "Put Limit Order"],
   "swap.button.swap": ["Swap", "Swap"],
@@ -460,6 +461,5 @@
   "tx.status.unknown": ["Unknown", "We no sabi"],
   "tx.leg.deposit": ["Deposit {ticker}", "Deposit {ticker}"],
   "tx.leg.send": ["Send {ticker}", "Send {ticker}"],
-  "tx.leg.swap": ["Swap {from} to {to}", "Swap {from} to {to}"],
-  "swap.button.tradingHalted": ["Trading is Halted", "Dem don Stop Trading"]
+  "tx.leg.swap": ["Swap {from} to {to}", "Swap {from} to {to}"]
 }

@@ -51,6 +51,7 @@
   "swap.button.enterAmount": ["Enter Amount", "輸入金額"],
   "swap.button.quoting": ["Quoting", "報價中"],
   "swap.button.noValidQuotes": ["No Valid Quotes", "無有效報價"],
+  "swap.button.tradingHalted": ["Trading is Halted", "交易已暫停"],
   "swap.button.enterLimitPrice": ["Enter limit price", "輸入限價"],
   "swap.button.enterLimitOrder": ["Enter Limit Order", "輸入限價訂單"],
   "swap.button.swap": ["Swap", "兌換"],
@@ -460,6 +461,5 @@
   "tx.status.unknown": ["Unknown", "未知"],
   "tx.leg.deposit": ["Deposit {ticker}", "存入{ticker}"],
   "tx.leg.send": ["Send {ticker}", "發送{ticker}"],
-  "tx.leg.swap": ["Swap {from} to {to}", "將{from}兌換為{to}"],
-  "swap.button.tradingHalted": ["Trading is Halted", "交易已暫停"]
+  "tx.leg.swap": ["Swap {from} to {to}", "將{from}兌換為{to}"]
 }

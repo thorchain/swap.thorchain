@@ -51,6 +51,7 @@
   "swap.button.enterAmount": ["Enter Amount", "กรอกจำนวน"],
   "swap.button.quoting": ["Quoting", "กำลังคำนวณราคา"],
   "swap.button.noValidQuotes": ["No Valid Quotes", "ไม่มีราคาที่ใช้ได้"],
+  "swap.button.tradingHalted": ["Trading is Halted", "การซื้อขายถูกระงับ"],
   "swap.button.enterLimitPrice": ["Enter limit price", "กรอกราคา Limit"],
   "swap.button.enterLimitOrder": ["Enter Limit Order", "กรอกคำสั่ง Limit"],
   "swap.button.swap": ["Swap", "แลกเปลี่ยน"],
@@ -460,6 +461,5 @@
   "tx.status.unknown": ["Unknown", "ไม่ทราบ"],
   "tx.leg.deposit": ["Deposit {ticker}", "ฝาก {ticker}"],
   "tx.leg.send": ["Send {ticker}", "ส่ง {ticker}"],
-  "tx.leg.swap": ["Swap {from} to {to}", "แลกเปลี่ยน {from} เป็น {to}"],
-  "swap.button.tradingHalted": ["Trading is Halted", "การซื้อขายถูกระงับ"]
+  "tx.leg.swap": ["Swap {from} to {to}", "แลกเปลี่ยน {from} เป็น {to}"]
 }

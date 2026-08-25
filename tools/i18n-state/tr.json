@@ -51,6 +51,7 @@
   "swap.button.enterAmount": ["Enter Amount", "Tutar Gir"],
   "swap.button.quoting": ["Quoting", "Fiyat alınıyor"],
   "swap.button.noValidQuotes": ["No Valid Quotes", "Geçerli Teklif Yok"],
+  "swap.button.tradingHalted": ["Trading is Halted", "İşlemler Durduruldu"],
   "swap.button.enterLimitPrice": ["Enter limit price", "Limit fiyatı gir"],
   "swap.button.enterLimitOrder": ["Enter Limit Order", "Limit Emri Gir"],
   "swap.button.swap": ["Swap", "Takas Et"],
@@ -460,6 +461,5 @@
   "tx.status.unknown": ["Unknown", "Bilinmiyor"],
   "tx.leg.deposit": ["Deposit {ticker}", "{ticker} Yatır"],
   "tx.leg.send": ["Send {ticker}", "{ticker} Gönder"],
-  "tx.leg.swap": ["Swap {from} to {to}", "{from} → {to} Takas"],
-  "swap.button.tradingHalted": ["Trading is Halted", "İşlemler Durduruldu"]
+  "tx.leg.swap": ["Swap {from} to {to}", "{from} → {to} Takas"]
 }

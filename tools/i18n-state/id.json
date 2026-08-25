@@ -51,6 +51,7 @@
   "swap.button.enterAmount": ["Enter Amount", "Masukkan jumlah"],
   "swap.button.quoting": ["Quoting", "Mengambil kuotasi"],
   "swap.button.noValidQuotes": ["No Valid Quotes", "Tidak ada kuotasi yang valid"],
+  "swap.button.tradingHalted": ["Trading is Halted", "Perdagangan Dihentikan"],
   "swap.button.enterLimitPrice": ["Enter limit price", "Masukkan harga limit"],
   "swap.button.enterLimitOrder": ["Enter Limit Order", "Masukkan limit order"],
   "swap.button.swap": ["Swap", "Tukar"],
@@ -460,6 +461,5 @@
   "tx.status.unknown": ["Unknown", "Tidak diketahui"],
   "tx.leg.deposit": ["Deposit {ticker}", "Deposit {ticker}"],
   "tx.leg.send": ["Send {ticker}", "Kirim {ticker}"],
-  "tx.leg.swap": ["Swap {from} to {to}", "Tukar {from} ke {to}"],
-  "swap.button.tradingHalted": ["Trading is Halted", "Perdagangan Dihentikan"]
+  "tx.leg.swap": ["Swap {from} to {to}", "Tukar {from} ke {to}"]
 }

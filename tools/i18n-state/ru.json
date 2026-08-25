@@ -51,6 +51,7 @@
   "swap.button.enterAmount": ["Enter Amount", "Введите сумму"],
   "swap.button.quoting": ["Quoting", "Расчёт котировки"],
   "swap.button.noValidQuotes": ["No Valid Quotes", "Нет доступных котировок"],
+  "swap.button.tradingHalted": ["Trading is Halted", "Торговля приостановлена"],
   "swap.button.enterLimitPrice": ["Enter limit price", "Введите лимитную цену"],
   "swap.button.enterLimitOrder": ["Enter Limit Order", "Введите лимитный ордер"],
   "swap.button.swap": ["Swap", "Обменять"],
@@ -460,6 +461,5 @@
   "tx.status.unknown": ["Unknown", "Неизвестно"],
   "tx.leg.deposit": ["Deposit {ticker}", "Внести {ticker}"],
   "tx.leg.send": ["Send {ticker}", "Отправить {ticker}"],
-  "tx.leg.swap": ["Swap {from} to {to}", "Обменять {from} на {to}"],
-  "swap.button.tradingHalted": ["Trading is Halted", "Торговля приостановлена"]
+  "tx.leg.swap": ["Swap {from} to {to}", "Обменять {from} на {to}"]
 }

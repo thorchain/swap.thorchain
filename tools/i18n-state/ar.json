@@ -51,6 +51,7 @@
   "swap.button.enterAmount": ["Enter Amount", "أدخل المبلغ"],
   "swap.button.quoting": ["Quoting", "جارٍ التسعير"],
   "swap.button.noValidQuotes": ["No Valid Quotes", "لا توجد عروض أسعار صالحة"],
+  "swap.button.tradingHalted": ["Trading is Halted", "تم إيقاف التداول"],
   "swap.button.enterLimitPrice": ["Enter limit price", "أدخل السعر المحدد"],
   "swap.button.enterLimitOrder": ["Enter Limit Order", "أدخل الأمر المحدد"],
   "swap.button.swap": ["Swap", "تبادل"],
@@ -460,6 +461,5 @@
   "tx.status.unknown": ["Unknown", "غير معروف"],
   "tx.leg.deposit": ["Deposit {ticker}", "إيداع {ticker}"],
   "tx.leg.send": ["Send {ticker}", "إرسال {ticker}"],
-  "tx.leg.swap": ["Swap {from} to {to}", "تبادل {from} إلى {to}"],
-  "swap.button.tradingHalted": ["Trading is Halted", "تم إيقاف التداول"]
+  "tx.leg.swap": ["Swap {from} to {to}", "تبادل {from} إلى {to}"]
 }

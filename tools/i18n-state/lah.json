@@ -51,6 +51,7 @@
   "swap.button.enterAmount": ["Enter Amount", "رقم پاؤ"],
   "swap.button.quoting": ["Quoting", "قیمت لئی پئی جاندی اے"],
   "swap.button.noValidQuotes": ["No Valid Quotes", "کوئی درست قیمت نئیں"],
+  "swap.button.tradingHalted": ["Trading is Halted", "ٹریڈنگ بند ہو گئی اے"],
   "swap.button.enterLimitPrice": ["Enter limit price", "limit قیمت پاؤ"],
   "swap.button.enterLimitOrder": ["Enter Limit Order", "Limit آرڈر پاؤ"],
   "swap.button.swap": ["Swap", "تبادلہ کرو"],
@@ -460,6 +461,5 @@
   "tx.status.unknown": ["Unknown", "اݨ جاݨیا"],
   "tx.leg.deposit": ["Deposit {ticker}", "{ticker} ڈیپازٹ کرو"],
   "tx.leg.send": ["Send {ticker}", "{ticker} بھیجو"],
-  "tx.leg.swap": ["Swap {from} to {to}", "{from} نوں {to} وچ تبادلہ کرو"],
-  "swap.button.tradingHalted": ["Trading is Halted", "ٹریڈنگ بند ہو گئی اے"]
+  "tx.leg.swap": ["Swap {from} to {to}", "{from} نوں {to} وچ تبادلہ کرو"]
 }

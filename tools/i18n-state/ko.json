@@ -51,6 +51,7 @@
   "swap.button.enterAmount": ["Enter Amount", "금액 입력"],
   "swap.button.quoting": ["Quoting", "견적 조회 중"],
   "swap.button.noValidQuotes": ["No Valid Quotes", "유효한 견적 없음"],
+  "swap.button.tradingHalted": ["Trading is Halted", "거래가 중단되었습니다"],
   "swap.button.enterLimitPrice": ["Enter limit price", "지정가 입력"],
   "swap.button.enterLimitOrder": ["Enter Limit Order", "지정가 주문 입력"],
   "swap.button.swap": ["Swap", "스왑"],
@@ -460,6 +461,5 @@
   "tx.status.unknown": ["Unknown", "알 수 없음"],
   "tx.leg.deposit": ["Deposit {ticker}", "{ticker} 입금"],
   "tx.leg.send": ["Send {ticker}", "{ticker} 보내기"],
-  "tx.leg.swap": ["Swap {from} to {to}", "{from}을(를) {to}(으)로 스왑"],
-  "swap.button.tradingHalted": ["Trading is Halted", "거래가 중단되었습니다"]
+  "tx.leg.swap": ["Swap {from} to {to}", "{from}을(를) {to}(으)로 스왑"]
 }

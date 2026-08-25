@@ -51,6 +51,7 @@
   "swap.button.enterAmount": ["Enter Amount", "Betrag eingeben"],
   "swap.button.quoting": ["Quoting", "Angebot wird erstellt"],
   "swap.button.noValidQuotes": ["No Valid Quotes", "Keine gültigen Angebote"],
+  "swap.button.tradingHalted": ["Trading is Halted", "Handel ist ausgesetzt"],
   "swap.button.enterLimitPrice": ["Enter limit price", "Limit-Preis eingeben"],
   "swap.button.enterLimitOrder": ["Enter Limit Order", "Limit-Order eingeben"],
   "swap.button.swap": ["Swap", "Swap"],
@@ -460,6 +461,5 @@
   "tx.status.unknown": ["Unknown", "Unbekannt"],
   "tx.leg.deposit": ["Deposit {ticker}", "{ticker} einzahlen"],
   "tx.leg.send": ["Send {ticker}", "{ticker} senden"],
-  "tx.leg.swap": ["Swap {from} to {to}", "{from} zu {to} swappen"],
-  "swap.button.tradingHalted": ["Trading is Halted", "Handel ist ausgesetzt"]
+  "tx.leg.swap": ["Swap {from} to {to}", "{from} zu {to} swappen"]
 }

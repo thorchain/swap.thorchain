@@ -51,6 +51,7 @@
   "swap.button.enterAmount": ["Enter Amount", "পরিমাণ লিখুন"],
   "swap.button.quoting": ["Quoting", "কোট নেওয়া হচ্ছে"],
   "swap.button.noValidQuotes": ["No Valid Quotes", "কোনো বৈধ কোট নেই"],
+  "swap.button.tradingHalted": ["Trading is Halted", "ট্রেডিং স্থগিত রয়েছে"],
   "swap.button.enterLimitPrice": ["Enter limit price", "লিমিট মূল্য লিখুন"],
   "swap.button.enterLimitOrder": ["Enter Limit Order", "লিমিট অর্ডার লিখুন"],
   "swap.button.swap": ["Swap", "সোয়াপ করুন"],
@@ -460,6 +461,5 @@
   "tx.status.unknown": ["Unknown", "অজানা"],
   "tx.leg.deposit": ["Deposit {ticker}", "{ticker} ডিপোজিট করুন"],
   "tx.leg.send": ["Send {ticker}", "{ticker} পাঠান"],
-  "tx.leg.swap": ["Swap {from} to {to}", "{from} থেকে {to} সোয়াপ করুন"],
-  "swap.button.tradingHalted": ["Trading is Halted", "ট্রেডিং স্থগিত রয়েছে"]
+  "tx.leg.swap": ["Swap {from} to {to}", "{from} থেকে {to} সোয়াপ করুন"]
 }

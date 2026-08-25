@@ -51,6 +51,7 @@
   "swap.button.enterAmount": ["Enter Amount", "مقدار را وارد کنید"],
   "swap.button.quoting": ["Quoting", "در حال دریافت قیمت"],
   "swap.button.noValidQuotes": ["No Valid Quotes", "قیمت معتبری وجود ندارد"],
+  "swap.button.tradingHalted": ["Trading is Halted", "معاملات متوقف شده است"],
   "swap.button.enterLimitPrice": ["Enter limit price", "قیمت حد را وارد کنید"],
   "swap.button.enterLimitOrder": ["Enter Limit Order", "سفارش حد را وارد کنید"],
   "swap.button.swap": ["Swap", "تبادل"],
@@ -460,6 +461,5 @@
   "tx.status.unknown": ["Unknown", "نامشخص"],
   "tx.leg.deposit": ["Deposit {ticker}", "واریز {ticker}"],
   "tx.leg.send": ["Send {ticker}", "ارسال {ticker}"],
-  "tx.leg.swap": ["Swap {from} to {to}", "تبادل {from} به {to}"],
-  "swap.button.tradingHalted": ["Trading is Halted", "معاملات متوقف شده است"]
+  "tx.leg.swap": ["Swap {from} to {to}", "تبادل {from} به {to}"]
 }

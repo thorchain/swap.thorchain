@@ -51,6 +51,7 @@
   "swap.button.enterAmount": ["Enter Amount", "رقم درج کریں"],
   "swap.button.quoting": ["Quoting", "قیمت معلوم ہو رہی ہے"],
   "swap.button.noValidQuotes": ["No Valid Quotes", "کوئی درست قیمت نہیں"],
+  "swap.button.tradingHalted": ["Trading is Halted", "ٹریڈنگ روک دی گئی ہے"],
   "swap.button.enterLimitPrice": ["Enter limit price", "limit قیمت درج کریں"],
   "swap.button.enterLimitOrder": ["Enter Limit Order", "Limit Order درج کریں"],
   "swap.button.swap": ["Swap", "تبادلہ کریں"],
@@ -460,6 +461,5 @@
   "tx.status.unknown": ["Unknown", "نامعلوم"],
   "tx.leg.deposit": ["Deposit {ticker}", "{ticker} ڈپازٹ کریں"],
   "tx.leg.send": ["Send {ticker}", "{ticker} بھیجیں"],
-  "tx.leg.swap": ["Swap {from} to {to}", "{from} کا {to} میں تبادلہ کریں"],
-  "swap.button.tradingHalted": ["Trading is Halted", "ٹریڈنگ روک دی گئی ہے"]
+  "tx.leg.swap": ["Swap {from} to {to}", "{from} کا {to} میں تبادلہ کریں"]
 }
