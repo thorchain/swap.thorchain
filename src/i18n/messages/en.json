@@ -20,6 +20,13 @@
     "wallet": "Wallet",
     "history": "History"
   },
+  "announcement": {
+    "monero": {
+      "title": "Monero will be ready for trading soon.",
+      "text": "XMR swaps are coming to THORChain — stay tuned."
+    },
+    "dismiss": "Dismiss"
+  },
   "footer": {
     "privacyPolicy": "Privacy Policy",
     "termsOfUse": "Terms of Use",
