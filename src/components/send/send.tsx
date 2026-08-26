@@ -23,6 +23,7 @@ import { SendSelectToken } from '@/components/send/send-select-token'
 import { TokenBalance, useWalletBalances } from '@/hooks/use-wallet-balances'
 import { useAccounts } from '@/hooks/use-wallets'
 import { useRates } from '@/hooks/use-rates'
+import { readableError } from '@/lib/errors'
 import { getUSwap } from '@/lib/wallets'
 import { WalletAccount } from '@/store/wallets-store'
 import { DecimalText } from '@/components/decimal/decimal-text'
@@ -172,7 +173,7 @@ export function Send({ isOpen, onOpenChange, initialToken, account }: SendDialog
     toast.promise(broadcast, {
       loading: t('toast.submitting'),
       success: () => t('toast.submitted'),
-      error: (err: any) => err?.message || t('toast.submitError')
+      error: (err: unknown) => readableError(err, t('toast.submitError'))
     })
   }
 

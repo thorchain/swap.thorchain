@@ -13,6 +13,7 @@ import { GenericButton } from '@/components/generic-button'
 import { useBalance } from '@/hooks/use-balance'
 import { useSwapRates } from '@/hooks/use-rates'
 import { useAssetFrom, useAssetTo, useSwap } from '@/hooks/use-swap'
+import { readableError } from '@/lib/errors'
 import { resolvePriceImpact } from '@/lib/swap-helpers'
 import { generateId } from '@/lib/utils'
 import { getUSwap } from '@/lib/wallets'
@@ -100,10 +101,7 @@ export const SwapDialog = ({ provider, isOpen, onOpenChange }: SwapDialogProps) 
     toast.promise(broadcast, {
       loading: t('toast.submittingTransaction'),
       success: () => t('toast.transactionSubmitted'),
-      error: (err: any) => {
-        console.log(err)
-        return t('toast.errorSubmitting')
-      }
+      error: (err: unknown) => readableError(err, t('toast.errorSubmitting'))
     })
   }
 

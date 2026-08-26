@@ -21,6 +21,7 @@ import { useMemolessAssets } from '@/hooks/use-memoless-assets'
 import { useIsMemolessHalted } from '@/hooks/use-mimir'
 import { useSelectedAccount } from '@/hooks/use-wallets'
 import { getInboundAddresses, getLimitSwaps } from '@/lib/api'
+import { readableError } from '@/lib/errors'
 import {
   createCancelLimitSwapMemo,
   createModifyLimitSwapMemo,
@@ -264,7 +265,7 @@ export const SwapLimitCancel = ({ isOpen, onOpenChange, mode, transaction }: Swa
       onOpenChange(false)
     } catch (err: any) {
       console.error(`Failed to ${mode} limit swap:`, err)
-      setError(new Error(err.message || (mode === 'cancel' ? t('limitCancel.error.cancelFailed') : t('limitCancel.error.modifyFailed'))))
+      setError(new Error(readableError(err, mode === 'cancel' ? t('limitCancel.error.cancelFailed') : t('limitCancel.error.modifyFailed'))))
     } finally {
       setSubmitting(false)
     }

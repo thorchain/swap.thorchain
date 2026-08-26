@@ -49,8 +49,9 @@ export const translateError = (message: string): string => {
 // Wallet errors reach us as a wall of serialised RPC payload - ethers inlines the whole request in
 // the message - so only a message short enough to read is shown, and the rest falls back to generic
 // copy. translateError runs first because it turns the known ones (a rejected signature, insufficient
-// funds) into exactly that kind of short message.
-const MAX_READABLE_LENGTH = 100
+// funds) into exactly that kind of short message. The cap sits above the longest sentence
+// translateError produces and far below a serialised payload, so it separates the two cleanly.
+const MAX_READABLE_LENGTH = 160
 
 export const readableError = (error: unknown, fallback: string): string => {
   const message = translateError((error as { message?: string })?.message || '')
