@@ -62,6 +62,8 @@
   "swap.button.insufficientBalance": ["Insufficient Balance", "موجودی ناکافی"],
   "swap.button.approve": ["Approve {ticker}", "تأیید {ticker}"],
   "swap.toast.approvalTransaction": ["Approval Transaction", "تراکنش تأیید"],
+  "swap.toast.resettingApproval": ["Resetting Approval", "بازنشانی تأیید"],
+  "swap.toast.approvalNotConfirmed": ["Approval was not confirmed on-chain", "تأیید روی زنجیره ثبت نشد"],
   "swap.toast.success": ["Success", "موفق"],
   "swap.toast.errorSubmitting": ["Error Submitting Transaction", "خطا در ارسال تراکنش"],
   "swap.toast.submittingTransaction": ["Submitting Transaction", "در حال ارسال تراکنش"],
@@ -465,7 +467,5 @@
   "tx.status.unknown": ["Unknown", "نامشخص"],
   "tx.leg.deposit": ["Deposit {ticker}", "واریز {ticker}"],
   "tx.leg.send": ["Send {ticker}", "ارسال {ticker}"],
-  "tx.leg.swap": ["Swap {from} to {to}", "تبادل {from} به {to}"],
-  "swap.toast.resettingApproval": ["Resetting Approval", "بازنشانی تأیید"],
-  "swap.toast.approvalNotConfirmed": ["Approval was not confirmed on-chain", "تأیید روی زنجیره ثبت نشد"]
+  "tx.leg.swap": ["Swap {from} to {to}", "تبادل {from} به {to}"]
 }

@@ -62,6 +62,8 @@
   "swap.button.insufficientBalance": ["Insufficient Balance", "अपर्याप्त शेष राशि"],
   "swap.button.approve": ["Approve {ticker}", "{ticker} को स्वीकृत करें"],
   "swap.toast.approvalTransaction": ["Approval Transaction", "स्वीकृति लेन-देन"],
+  "swap.toast.resettingApproval": ["Resetting Approval", "स्वीकृति रीसेट की जा रही है"],
+  "swap.toast.approvalNotConfirmed": ["Approval was not confirmed on-chain", "स्वीकृति ऑन-चेन पुष्ट नहीं हुई"],
   "swap.toast.success": ["Success", "सफल"],
   "swap.toast.errorSubmitting": ["Error Submitting Transaction", "लेन-देन सबमिट करने में त्रुटि"],
   "swap.toast.submittingTransaction": ["Submitting Transaction", "लेन-देन सबमिट किया जा रहा है"],
@@ -465,7 +467,5 @@
   "tx.status.unknown": ["Unknown", "अज्ञात"],
   "tx.leg.deposit": ["Deposit {ticker}", "{ticker} जमा करें"],
   "tx.leg.send": ["Send {ticker}", "{ticker} भेजें"],
-  "tx.leg.swap": ["Swap {from} to {to}", "{from} को {to} में स्वैप करें"],
-  "swap.toast.resettingApproval": ["Resetting Approval", "स्वीकृति रीसेट की जा रही है"],
-  "swap.toast.approvalNotConfirmed": ["Approval was not confirmed on-chain", "स्वीकृति ऑन-चेन पुष्ट नहीं हुई"]
+  "tx.leg.swap": ["Swap {from} to {to}", "{from} को {to} में स्वैप करें"]
 }

@@ -62,6 +62,8 @@
   "swap.button.insufficientBalance": ["Insufficient Balance", "Unzureichendes Guthaben"],
   "swap.button.approve": ["Approve {ticker}", "{ticker} genehmigen"],
   "swap.toast.approvalTransaction": ["Approval Transaction", "Genehmigungstransaktion"],
+  "swap.toast.resettingApproval": ["Resetting Approval", "Genehmigung wird zurückgesetzt"],
+  "swap.toast.approvalNotConfirmed": ["Approval was not confirmed on-chain", "Die Genehmigung wurde nicht on-chain bestätigt"],
   "swap.toast.success": ["Success", "Erfolgreich"],
   "swap.toast.errorSubmitting": ["Error Submitting Transaction", "Fehler beim Senden der Transaktion"],
   "swap.toast.submittingTransaction": ["Submitting Transaction", "Transaktion wird gesendet"],
@@ -465,7 +467,5 @@
   "tx.status.unknown": ["Unknown", "Unbekannt"],
   "tx.leg.deposit": ["Deposit {ticker}", "{ticker} einzahlen"],
   "tx.leg.send": ["Send {ticker}", "{ticker} senden"],
-  "tx.leg.swap": ["Swap {from} to {to}", "{from} zu {to} swappen"],
-  "swap.toast.resettingApproval": ["Resetting Approval", "Genehmigung wird zurückgesetzt"],
-  "swap.toast.approvalNotConfirmed": ["Approval was not confirmed on-chain", "Die Genehmigung wurde nicht on-chain bestätigt"]
+  "tx.leg.swap": ["Swap {from} to {to}", "{from} zu {to} swappen"]
 }

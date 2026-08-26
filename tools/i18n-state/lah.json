@@ -16,6 +16,9 @@
   "menu.genericError": ["Something went wrong", "کجھ غلط ہو گیا"],
   "header.wallet": ["Wallet", "والٹ"],
   "header.history": ["History", "تاریخ"],
+  "announcement.monero.title": ["Monero will be ready for trading soon.", "Monero چھیتی ٹریڈنگ لئی تیار ہوسی۔"],
+  "announcement.monero.text": ["XMR swaps are coming to THORChain — stay tuned.", "XMR تبادلے THORChain تے آ رہے نیں — نال رہو۔"],
+  "announcement.dismiss": ["Dismiss", "بند کرو"],
   "footer.privacyPolicy": ["Privacy Policy", "پرائیویسی پالیسی"],
   "footer.termsOfUse": ["Terms of Use", "ورتݨ دیاں شرطاں"],
   "footer.riskPolicy": ["Risk Policy", "رسک پالیسی"],
@@ -59,6 +62,8 @@
   "swap.button.insufficientBalance": ["Insufficient Balance", "بیلنس کافی نئیں"],
   "swap.button.approve": ["Approve {ticker}", "{ticker} منظور کرو"],
   "swap.toast.approvalTransaction": ["Approval Transaction", "منظوری دی Tx"],
+  "swap.toast.resettingApproval": ["Resetting Approval", "منظوری ری سیٹ کیتی جا رہی اے"],
+  "swap.toast.approvalNotConfirmed": ["Approval was not confirmed on-chain", "منظوری چین تے تصدیق نہیں ہوئی"],
   "swap.toast.success": ["Success", "کامیابی"],
   "swap.toast.errorSubmitting": ["Error Submitting Transaction", "Tx جمع کرݨ وچ خرابی"],
   "swap.toast.submittingTransaction": ["Submitting Transaction", "Tx جمع کیتی پئی جاندی اے"],
@@ -462,10 +467,5 @@
   "tx.status.unknown": ["Unknown", "اݨ جاݨیا"],
   "tx.leg.deposit": ["Deposit {ticker}", "{ticker} ڈیپازٹ کرو"],
   "tx.leg.send": ["Send {ticker}", "{ticker} بھیجو"],
-  "tx.leg.swap": ["Swap {from} to {to}", "{from} نوں {to} وچ تبادلہ کرو"],
-  "announcement.monero.title": ["Monero will be ready for trading soon.", "Monero چھیتی ٹریڈنگ لئی تیار ہوسی۔"],
-  "announcement.monero.text": ["XMR swaps are coming to THORChain — stay tuned.", "XMR تبادلے THORChain تے آ رہے نیں — نال رہو۔"],
-  "announcement.dismiss": ["Dismiss", "بند کرو"],
-  "swap.toast.resettingApproval": ["Resetting Approval", "منظوری ری سیٹ کیتی جا رہی اے"],
-  "swap.toast.approvalNotConfirmed": ["Approval was not confirmed on-chain", "منظوری چین تے تصدیق نہیں ہوئی"]
+  "tx.leg.swap": ["Swap {from} to {to}", "{from} نوں {to} وچ تبادلہ کرو"]
 }

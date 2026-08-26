@@ -16,6 +16,9 @@
   "menu.genericError": ["Something went wrong", "Đã xảy ra lỗi"],
   "header.wallet": ["Wallet", "Ví"],
   "header.history": ["History", "Lịch sử"],
+  "announcement.monero.title": ["Monero will be ready for trading soon.", "Monero sẽ sớm sẵn sàng để giao dịch."],
+  "announcement.monero.text": ["XMR swaps are coming to THORChain — stay tuned.", "Hoán đổi XMR sắp có mặt trên THORChain — hãy đón xem."],
+  "announcement.dismiss": ["Dismiss", "Đóng"],
   "footer.privacyPolicy": ["Privacy Policy", "Chính sách bảo mật"],
   "footer.termsOfUse": ["Terms of Use", "Điều khoản sử dụng"],
   "footer.riskPolicy": ["Risk Policy", "Chính sách rủi ro"],
@@ -59,6 +62,8 @@
   "swap.button.insufficientBalance": ["Insufficient Balance", "Số dư không đủ"],
   "swap.button.approve": ["Approve {ticker}", "Phê duyệt {ticker}"],
   "swap.toast.approvalTransaction": ["Approval Transaction", "Giao dịch phê duyệt"],
+  "swap.toast.resettingApproval": ["Resetting Approval", "Đang đặt lại phê duyệt"],
+  "swap.toast.approvalNotConfirmed": ["Approval was not confirmed on-chain", "Phê duyệt chưa được xác nhận trên chuỗi"],
   "swap.toast.success": ["Success", "Thành công"],
   "swap.toast.errorSubmitting": ["Error Submitting Transaction", "Lỗi khi gửi giao dịch"],
   "swap.toast.submittingTransaction": ["Submitting Transaction", "Đang gửi giao dịch"],
@@ -462,10 +467,5 @@
   "tx.status.unknown": ["Unknown", "Không xác định"],
   "tx.leg.deposit": ["Deposit {ticker}", "Nạp {ticker}"],
   "tx.leg.send": ["Send {ticker}", "Gửi {ticker}"],
-  "tx.leg.swap": ["Swap {from} to {to}", "Hoán đổi {from} sang {to}"],
-  "announcement.monero.title": ["Monero will be ready for trading soon.", "Monero sẽ sớm sẵn sàng để giao dịch."],
-  "announcement.monero.text": ["XMR swaps are coming to THORChain — stay tuned.", "Hoán đổi XMR sắp có mặt trên THORChain — hãy đón xem."],
-  "announcement.dismiss": ["Dismiss", "Đóng"],
-  "swap.toast.resettingApproval": ["Resetting Approval", "Đang đặt lại phê duyệt"],
-  "swap.toast.approvalNotConfirmed": ["Approval was not confirmed on-chain", "Phê duyệt chưa được xác nhận trên chuỗi"]
+  "tx.leg.swap": ["Swap {from} to {to}", "Hoán đổi {from} sang {to}"]
 }

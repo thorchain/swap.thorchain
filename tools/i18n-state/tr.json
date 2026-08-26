@@ -16,6 +16,9 @@
   "menu.genericError": ["Something went wrong", "Bir şeyler ters gitti"],
   "header.wallet": ["Wallet", "Cüzdan"],
   "header.history": ["History", "Geçmiş"],
+  "announcement.monero.title": ["Monero will be ready for trading soon.", "Monero yakında işleme açılacak."],
+  "announcement.monero.text": ["XMR swaps are coming to THORChain — stay tuned.", "XMR takasları THORChain'e geliyor — takipte kalın."],
+  "announcement.dismiss": ["Dismiss", "Kapat"],
   "footer.privacyPolicy": ["Privacy Policy", "Gizlilik Politikası"],
   "footer.termsOfUse": ["Terms of Use", "Kullanım Koşulları"],
   "footer.riskPolicy": ["Risk Policy", "Risk Politikası"],
@@ -59,6 +62,8 @@
   "swap.button.insufficientBalance": ["Insufficient Balance", "Yetersiz Bakiye"],
   "swap.button.approve": ["Approve {ticker}", "{ticker} Onayla"],
   "swap.toast.approvalTransaction": ["Approval Transaction", "Onay İşlemi"],
+  "swap.toast.resettingApproval": ["Resetting Approval", "Onay Sıfırlanıyor"],
+  "swap.toast.approvalNotConfirmed": ["Approval was not confirmed on-chain", "Onay zincir üzerinde doğrulanmadı"],
   "swap.toast.success": ["Success", "Başarılı"],
   "swap.toast.errorSubmitting": ["Error Submitting Transaction", "İşlem Gönderilirken Hata Oluştu"],
   "swap.toast.submittingTransaction": ["Submitting Transaction", "İşlem Gönderiliyor"],
@@ -462,10 +467,5 @@
   "tx.status.unknown": ["Unknown", "Bilinmiyor"],
   "tx.leg.deposit": ["Deposit {ticker}", "{ticker} Yatır"],
   "tx.leg.send": ["Send {ticker}", "{ticker} Gönder"],
-  "tx.leg.swap": ["Swap {from} to {to}", "{from} → {to} Takas"],
-  "announcement.monero.title": ["Monero will be ready for trading soon.", "Monero yakında işleme açılacak."],
-  "announcement.monero.text": ["XMR swaps are coming to THORChain — stay tuned.", "XMR takasları THORChain'e geliyor — takipte kalın."],
-  "announcement.dismiss": ["Dismiss", "Kapat"],
-  "swap.toast.resettingApproval": ["Resetting Approval", "Onay Sıfırlanıyor"],
-  "swap.toast.approvalNotConfirmed": ["Approval was not confirmed on-chain", "Onay zincir üzerinde doğrulanmadı"]
+  "tx.leg.swap": ["Swap {from} to {to}", "{from} → {to} Takas"]
 }

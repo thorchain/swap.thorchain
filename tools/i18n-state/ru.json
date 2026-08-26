@@ -16,6 +16,9 @@
   "menu.genericError": ["Something went wrong", "Что-то пошло не так"],
   "header.wallet": ["Wallet", "Кошелёк"],
   "header.history": ["History", "История"],
+  "announcement.monero.title": ["Monero will be ready for trading soon.", "Monero скоро станет доступен для торговли."],
+  "announcement.monero.text": ["XMR swaps are coming to THORChain — stay tuned.", "Обмены XMR скоро появятся в THORChain — следите за новостями."],
+  "announcement.dismiss": ["Dismiss", "Закрыть"],
   "footer.privacyPolicy": ["Privacy Policy", "Политика конфиденциальности"],
   "footer.termsOfUse": ["Terms of Use", "Условия использования"],
   "footer.riskPolicy": ["Risk Policy", "Политика рисков"],
@@ -59,6 +62,8 @@
   "swap.button.insufficientBalance": ["Insufficient Balance", "Недостаточно средств"],
   "swap.button.approve": ["Approve {ticker}", "Одобрить {ticker}"],
   "swap.toast.approvalTransaction": ["Approval Transaction", "Транзакция одобрения"],
+  "swap.toast.resettingApproval": ["Resetting Approval", "Сброс одобрения"],
+  "swap.toast.approvalNotConfirmed": ["Approval was not confirmed on-chain", "Одобрение не подтверждено в сети"],
   "swap.toast.success": ["Success", "Успешно"],
   "swap.toast.errorSubmitting": ["Error Submitting Transaction", "Ошибка отправки транзакции"],
   "swap.toast.submittingTransaction": ["Submitting Transaction", "Отправка транзакции"],
@@ -462,10 +467,5 @@
   "tx.status.unknown": ["Unknown", "Неизвестно"],
   "tx.leg.deposit": ["Deposit {ticker}", "Внести {ticker}"],
   "tx.leg.send": ["Send {ticker}", "Отправить {ticker}"],
-  "tx.leg.swap": ["Swap {from} to {to}", "Обменять {from} на {to}"],
-  "announcement.monero.title": ["Monero will be ready for trading soon.", "Monero скоро станет доступен для торговли."],
-  "announcement.monero.text": ["XMR swaps are coming to THORChain — stay tuned.", "Обмены XMR скоро появятся в THORChain — следите за новостями."],
-  "announcement.dismiss": ["Dismiss", "Закрыть"],
-  "swap.toast.resettingApproval": ["Resetting Approval", "Сброс одобрения"],
-  "swap.toast.approvalNotConfirmed": ["Approval was not confirmed on-chain", "Одобрение не подтверждено в сети"]
+  "tx.leg.swap": ["Swap {from} to {to}", "Обменять {from} на {to}"]
 }

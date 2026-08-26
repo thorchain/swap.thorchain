@@ -62,6 +62,8 @@
   "swap.button.insufficientBalance": ["Insufficient Balance", "Saldo tidak mencukupi"],
   "swap.button.approve": ["Approve {ticker}", "Setujui {ticker}"],
   "swap.toast.approvalTransaction": ["Approval Transaction", "Transaksi persetujuan"],
+  "swap.toast.resettingApproval": ["Resetting Approval", "Menyetel ulang persetujuan"],
+  "swap.toast.approvalNotConfirmed": ["Approval was not confirmed on-chain", "Persetujuan tidak terkonfirmasi di blockchain"],
   "swap.toast.success": ["Success", "Berhasil"],
   "swap.toast.errorSubmitting": ["Error Submitting Transaction", "Gagal mengirim transaksi"],
   "swap.toast.submittingTransaction": ["Submitting Transaction", "Mengirim transaksi"],
@@ -465,7 +467,5 @@
   "tx.status.unknown": ["Unknown", "Tidak diketahui"],
   "tx.leg.deposit": ["Deposit {ticker}", "Deposit {ticker}"],
   "tx.leg.send": ["Send {ticker}", "Kirim {ticker}"],
-  "tx.leg.swap": ["Swap {from} to {to}", "Tukar {from} ke {to}"],
-  "swap.toast.resettingApproval": ["Resetting Approval", "Menyetel ulang persetujuan"],
-  "swap.toast.approvalNotConfirmed": ["Approval was not confirmed on-chain", "Persetujuan tidak terkonfirmasi di blockchain"]
+  "tx.leg.swap": ["Swap {from} to {to}", "Tukar {from} ke {to}"]
 }

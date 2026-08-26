@@ -62,6 +62,8 @@
   "swap.button.insufficientBalance": ["Insufficient Balance", "ᛁᚾᛊᚢᚠᚠᛁᚲᛁᛖᚾᛏ ᛒᚨᛚᚨᚾᚲᛖ"],
   "swap.button.approve": ["Approve {ticker}", "ᚨᛈᛈᚱᛟᚹᛖ {ticker}"],
   "swap.toast.approvalTransaction": ["Approval Transaction", "ᚨᛈᛈᚱᛟᚹᚨᛚ ᛏᚱᚨᚾᛊᚨᚲᛏᛁᛟᚾ"],
+  "swap.toast.resettingApproval": ["Resetting Approval", "ᚱᛖᛊᛖᛏᛏᛁᛜ ᚨᛈᛈᚱᛟᚹᚨᛚ"],
+  "swap.toast.approvalNotConfirmed": ["Approval was not confirmed on-chain", "ᚨᛈᛈᚱᛟᚹᚨᛚ ᚹᚨᛊ ᚾᛟᛏ ᚲᛟᚾᚠᛁᚱᛗᛖᛞ ᛟᚾ-ᚲᚺᚨᛁᚾ"],
   "swap.toast.success": ["Success", "ᛊᚢᚲᚲᛖᛊᛊ"],
   "swap.toast.errorSubmitting": ["Error Submitting Transaction", "ᛖᚱᚱᛟᚱ ᛊᚢᛒᛗᛁᛏᛏᛁᛜ ᛏᚱᚨᚾᛊᚨᚲᛏᛁᛟᚾ"],
   "swap.toast.submittingTransaction": ["Submitting Transaction", "ᛊᚢᛒᛗᛁᛏᛏᛁᛜ ᛏᚱᚨᚾᛊᚨᚲᛏᛁᛟᚾ"],
@@ -465,7 +467,5 @@
   "tx.status.unknown": ["Unknown", "ᚢᚾᚲᚾᛟᚹᚾ"],
   "tx.leg.deposit": ["Deposit {ticker}", "ᛞᛖᛈᛟᛊᛁᛏ {ticker}"],
   "tx.leg.send": ["Send {ticker}", "ᛊᛖᚾᛞ {ticker}"],
-  "tx.leg.swap": ["Swap {from} to {to}", "ᛊᚹᚨᛈ {from} ᛏᛟ {to}"],
-  "swap.toast.resettingApproval": ["Resetting Approval", "ᚱᛖᛊᛖᛏᛏᛁᛜ ᚨᛈᛈᚱᛟᚹᚨᛚ"],
-  "swap.toast.approvalNotConfirmed": ["Approval was not confirmed on-chain", "ᚨᛈᛈᚱᛟᚹᚨᛚ ᚹᚨᛊ ᚾᛟᛏ ᚲᛟᚾᚠᛁᚱᛗᛖᛞ ᛟᚾ-ᚲᚺᚨᛁᚾ"]
+  "tx.leg.swap": ["Swap {from} to {to}", "ᛊᚹᚨᛈ {from} ᛏᛟ {to}"]
 }

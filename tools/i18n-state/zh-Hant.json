@@ -16,6 +16,9 @@
   "menu.genericError": ["Something went wrong", "出現錯誤"],
   "header.wallet": ["Wallet", "錢包"],
   "header.history": ["History", "歷史記錄"],
+  "announcement.monero.title": ["Monero will be ready for trading soon.", "Monero 即將開放交易。"],
+  "announcement.monero.text": ["XMR swaps are coming to THORChain — stay tuned.", "XMR 兌換即將登陸 THORChain — 敬請期待。"],
+  "announcement.dismiss": ["Dismiss", "關閉"],
   "footer.privacyPolicy": ["Privacy Policy", "隱私政策"],
   "footer.termsOfUse": ["Terms of Use", "使用條款"],
   "footer.riskPolicy": ["Risk Policy", "風險政策"],
@@ -59,6 +62,8 @@
   "swap.button.insufficientBalance": ["Insufficient Balance", "餘額不足"],
   "swap.button.approve": ["Approve {ticker}", "授權{ticker}"],
   "swap.toast.approvalTransaction": ["Approval Transaction", "授權交易"],
+  "swap.toast.resettingApproval": ["Resetting Approval", "正在重設授權"],
+  "swap.toast.approvalNotConfirmed": ["Approval was not confirmed on-chain", "授權未在鏈上確認"],
   "swap.toast.success": ["Success", "成功"],
   "swap.toast.errorSubmitting": ["Error Submitting Transaction", "提交交易出錯"],
   "swap.toast.submittingTransaction": ["Submitting Transaction", "正在提交交易"],
@@ -462,10 +467,5 @@
   "tx.status.unknown": ["Unknown", "未知"],
   "tx.leg.deposit": ["Deposit {ticker}", "存入{ticker}"],
   "tx.leg.send": ["Send {ticker}", "發送{ticker}"],
-  "tx.leg.swap": ["Swap {from} to {to}", "將{from}兌換為{to}"],
-  "announcement.monero.title": ["Monero will be ready for trading soon.", "Monero 即將開放交易。"],
-  "announcement.monero.text": ["XMR swaps are coming to THORChain — stay tuned.", "XMR 兌換即將登陸 THORChain — 敬請期待。"],
-  "announcement.dismiss": ["Dismiss", "關閉"],
-  "swap.toast.resettingApproval": ["Resetting Approval", "正在重設授權"],
-  "swap.toast.approvalNotConfirmed": ["Approval was not confirmed on-chain", "授權未在鏈上確認"]
+  "tx.leg.swap": ["Swap {from} to {to}", "將{from}兌換為{to}"]
 }

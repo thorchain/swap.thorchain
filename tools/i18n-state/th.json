@@ -16,6 +16,9 @@
   "menu.genericError": ["Something went wrong", "เกิดข้อผิดพลาดบางอย่าง"],
   "header.wallet": ["Wallet", "กระเป๋าเงิน"],
   "header.history": ["History", "ประวัติ"],
+  "announcement.monero.title": ["Monero will be ready for trading soon.", "Monero จะพร้อมให้เทรดเร็ว ๆ นี้"],
+  "announcement.monero.text": ["XMR swaps are coming to THORChain — stay tuned.", "การแลกเปลี่ยน XMR กำลังจะมาที่ THORChain — โปรดติดตาม"],
+  "announcement.dismiss": ["Dismiss", "ปิด"],
   "footer.privacyPolicy": ["Privacy Policy", "นโยบายความเป็นส่วนตัว"],
   "footer.termsOfUse": ["Terms of Use", "ข้อกำหนดการใช้งาน"],
   "footer.riskPolicy": ["Risk Policy", "นโยบายความเสี่ยง"],
@@ -59,6 +62,8 @@
   "swap.button.insufficientBalance": ["Insufficient Balance", "ยอดคงเหลือไม่เพียงพอ"],
   "swap.button.approve": ["Approve {ticker}", "อนุมัติ {ticker}"],
   "swap.toast.approvalTransaction": ["Approval Transaction", "ธุรกรรมการอนุมัติ"],
+  "swap.toast.resettingApproval": ["Resetting Approval", "กำลังรีเซ็ตการอนุมัติ"],
+  "swap.toast.approvalNotConfirmed": ["Approval was not confirmed on-chain", "การอนุมัติไม่ได้รับการยืนยันบนเชน"],
   "swap.toast.success": ["Success", "สำเร็จ"],
   "swap.toast.errorSubmitting": ["Error Submitting Transaction", "เกิดข้อผิดพลาดในการส่งธุรกรรม"],
   "swap.toast.submittingTransaction": ["Submitting Transaction", "กำลังส่งธุรกรรม"],
@@ -462,10 +467,5 @@
   "tx.status.unknown": ["Unknown", "ไม่ทราบ"],
   "tx.leg.deposit": ["Deposit {ticker}", "ฝาก {ticker}"],
   "tx.leg.send": ["Send {ticker}", "ส่ง {ticker}"],
-  "tx.leg.swap": ["Swap {from} to {to}", "แลกเปลี่ยน {from} เป็น {to}"],
-  "announcement.monero.title": ["Monero will be ready for trading soon.", "Monero จะพร้อมให้เทรดเร็ว ๆ นี้"],
-  "announcement.monero.text": ["XMR swaps are coming to THORChain — stay tuned.", "การแลกเปลี่ยน XMR กำลังจะมาที่ THORChain — โปรดติดตาม"],
-  "announcement.dismiss": ["Dismiss", "ปิด"],
-  "swap.toast.resettingApproval": ["Resetting Approval", "กำลังรีเซ็ตการอนุมัติ"],
-  "swap.toast.approvalNotConfirmed": ["Approval was not confirmed on-chain", "การอนุมัติไม่ได้รับการยืนยันบนเชน"]
+  "tx.leg.swap": ["Swap {from} to {to}", "แลกเปลี่ยน {from} เป็น {to}"]
 }

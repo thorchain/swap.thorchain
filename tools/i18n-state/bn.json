@@ -62,6 +62,8 @@
   "swap.button.insufficientBalance": ["Insufficient Balance", "অপর্যাপ্ত ব্যালেন্স"],
   "swap.button.approve": ["Approve {ticker}", "{ticker} অনুমোদন করুন"],
   "swap.toast.approvalTransaction": ["Approval Transaction", "অনুমোদন লেনদেন"],
+  "swap.toast.resettingApproval": ["Resetting Approval", "অনুমোদন রিসেট করা হচ্ছে"],
+  "swap.toast.approvalNotConfirmed": ["Approval was not confirmed on-chain", "অন-চেইনে অনুমোদন নিশ্চিত হয়নি"],
   "swap.toast.success": ["Success", "সফল হয়েছে"],
   "swap.toast.errorSubmitting": ["Error Submitting Transaction", "লেনদেন জমা দিতে ত্রুটি হয়েছে"],
   "swap.toast.submittingTransaction": ["Submitting Transaction", "লেনদেন জমা দেওয়া হচ্ছে"],
@@ -465,7 +467,5 @@
   "tx.status.unknown": ["Unknown", "অজানা"],
   "tx.leg.deposit": ["Deposit {ticker}", "{ticker} ডিপোজিট করুন"],
   "tx.leg.send": ["Send {ticker}", "{ticker} পাঠান"],
-  "tx.leg.swap": ["Swap {from} to {to}", "{from} থেকে {to} সোয়াপ করুন"],
-  "swap.toast.resettingApproval": ["Resetting Approval", "অনুমোদন রিসেট করা হচ্ছে"],
-  "swap.toast.approvalNotConfirmed": ["Approval was not confirmed on-chain", "অন-চেইনে অনুমোদন নিশ্চিত হয়নি"]
+  "tx.leg.swap": ["Swap {from} to {to}", "{from} থেকে {to} সোয়াপ করুন"]
 }

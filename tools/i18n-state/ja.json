@@ -62,6 +62,8 @@
   "swap.button.insufficientBalance": ["Insufficient Balance", "残高が不足しています"],
   "swap.button.approve": ["Approve {ticker}", "{ticker} を承認"],
   "swap.toast.approvalTransaction": ["Approval Transaction", "承認トランザクション"],
+  "swap.toast.resettingApproval": ["Resetting Approval", "承認をリセット中"],
+  "swap.toast.approvalNotConfirmed": ["Approval was not confirmed on-chain", "承認がオンチェーンで確認されませんでした"],
   "swap.toast.success": ["Success", "成功"],
   "swap.toast.errorSubmitting": ["Error Submitting Transaction", "トランザクションの送信エラー"],
   "swap.toast.submittingTransaction": ["Submitting Transaction", "トランザクションを送信中"],
@@ -465,7 +467,5 @@
   "tx.status.unknown": ["Unknown", "不明"],
   "tx.leg.deposit": ["Deposit {ticker}", "{ticker} を預け入れ"],
   "tx.leg.send": ["Send {ticker}", "{ticker} を送信"],
-  "tx.leg.swap": ["Swap {from} to {to}", "{from} を {to} にスワップ"],
-  "swap.toast.resettingApproval": ["Resetting Approval", "承認をリセット中"],
-  "swap.toast.approvalNotConfirmed": ["Approval was not confirmed on-chain", "承認がオンチェーンで確認されませんでした"]
+  "tx.leg.swap": ["Swap {from} to {to}", "{from} を {to} にスワップ"]
 }
