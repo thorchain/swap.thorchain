@@ -46,6 +46,18 @@ export const translateError = (message: string): string => {
   return message
 }
 
+// Wallet errors reach us as a wall of serialised RPC payload - ethers inlines the whole request in
+// the message - so only a message short enough to read is shown, and the rest falls back to generic
+// copy. translateError runs first because it turns the known ones (a rejected signature, insufficient
+// funds) into exactly that kind of short message.
+const MAX_READABLE_LENGTH = 100
+
+export const readableError = (error: unknown, fallback: string): string => {
+  const message = translateError((error as { message?: string })?.message || '')
+
+  return message.length > 0 && message.length <= MAX_READABLE_LENGTH ? message : fallback
+}
+
 // A halted chain reports it in prose, e.g. "failed to simulate swap: trading is halted, can't
 // process swap", so the wording is all the aggregator gives us to go on.
 export const isTradingHaltedError = (message: string): boolean => message.includes('trading is halted')

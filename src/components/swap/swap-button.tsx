@@ -15,7 +15,7 @@ import { useQuote } from '@/hooks/use-quote'
 import { useSimulation } from '@/hooks/use-simulation'
 import { useAssetFrom, useAssetTo, useSwap } from '@/hooks/use-swap'
 import { useExternalWalletMode, useSelectedAccount, useSetExternalWalletMode } from '@/hooks/use-wallets'
-import { isTradingHaltedError } from '@/lib/errors'
+import { isTradingHaltedError, readableError } from '@/lib/errors'
 import { isMayaProvider, isTaprootAddress, waitForAllowance } from '@/lib/swap-helpers'
 import { getUSwap } from '@/lib/wallets'
 import { useIsLimitSwap, useLimitSwapBuyAmount } from '@/store/limit-swap-store'
@@ -97,8 +97,8 @@ export const SwapButton = ({ instantSwapSupported, instantSwapAvailable }: SwapB
       if (!approved) throw new Error(t('toast.approvalNotConfirmed'))
 
       toast.success(t('toast.success'), { id: toastId })
-    } catch (err: any) {
-      toast.error(err?.message || t('toast.errorSubmitting'), { id: toastId })
+    } catch (err) {
+      toast.error(readableError(err, t('toast.errorSubmitting')), { id: toastId })
     } finally {
       setIsApproving(false)
       refetchQuote()
