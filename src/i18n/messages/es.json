@@ -20,6 +20,13 @@
     "wallet": "Monedero",
     "history": "Historial"
   },
+  "announcement": {
+    "monero": {
+      "title": "Monero estará disponible para operar próximamente.",
+      "text": "Los swaps de XMR llegan a THORChain — mantente atento."
+    },
+    "dismiss": "Descartar"
+  },
   "footer": {
     "privacyPolicy": "Política de privacidad",
     "termsOfUse": "Términos de uso",

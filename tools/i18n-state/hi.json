@@ -462,5 +462,8 @@
   "tx.status.unknown": ["Unknown", "अज्ञात"],
   "tx.leg.deposit": ["Deposit {ticker}", "{ticker} जमा करें"],
   "tx.leg.send": ["Send {ticker}", "{ticker} भेजें"],
-  "tx.leg.swap": ["Swap {from} to {to}", "{from} को {to} में स्वैप करें"]
+  "tx.leg.swap": ["Swap {from} to {to}", "{from} को {to} में स्वैप करें"],
+  "announcement.monero.title": ["Monero will be ready for trading soon.", "Monero जल्द ही ट्रेडिंग के लिए उपलब्ध होगा।"],
+  "announcement.monero.text": ["XMR swaps are coming to THORChain — stay tuned.", "XMR स्वैप THORChain पर आ रहे हैं — जुड़े रहें।"],
+  "announcement.dismiss": ["Dismiss", "बंद करें"]
 }

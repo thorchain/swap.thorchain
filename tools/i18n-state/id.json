@@ -462,5 +462,8 @@
   "tx.status.unknown": ["Unknown", "Tidak diketahui"],
   "tx.leg.deposit": ["Deposit {ticker}", "Deposit {ticker}"],
   "tx.leg.send": ["Send {ticker}", "Kirim {ticker}"],
-  "tx.leg.swap": ["Swap {from} to {to}", "Tukar {from} ke {to}"]
+  "tx.leg.swap": ["Swap {from} to {to}", "Tukar {from} ke {to}"],
+  "announcement.monero.title": ["Monero will be ready for trading soon.", "Monero akan segera tersedia untuk diperdagangkan."],
+  "announcement.monero.text": ["XMR swaps are coming to THORChain — stay tuned.", "Swap XMR akan hadir di THORChain — pantau terus."],
+  "announcement.dismiss": ["Dismiss", "Tutup"]
 }

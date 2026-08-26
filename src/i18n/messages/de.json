@@ -20,6 +20,13 @@
     "wallet": "Wallet",
     "history": "Verlauf"
   },
+  "announcement": {
+    "monero": {
+      "title": "Monero ist bald handelbar.",
+      "text": "XMR-Swaps kommen zu THORChain – bleib dran."
+    },
+    "dismiss": "Ausblenden"
+  },
   "footer": {
     "privacyPolicy": "Datenschutzrichtlinie",
     "termsOfUse": "Nutzungsbedingungen",

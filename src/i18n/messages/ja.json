@@ -20,6 +20,13 @@
     "wallet": "ウォレット",
     "history": "履歴"
   },
+  "announcement": {
+    "monero": {
+      "title": "Monero がまもなく取引可能になります。",
+      "text": "XMR のスワップが THORChain に登場します。続報をお待ちください。"
+    },
+    "dismiss": "閉じる"
+  },
   "footer": {
     "privacyPolicy": "プライバシーポリシー",
     "termsOfUse": "利用規約",

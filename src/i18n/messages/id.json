@@ -20,6 +20,13 @@
     "wallet": "Dompet",
     "history": "Riwayat"
   },
+  "announcement": {
+    "monero": {
+      "title": "Monero akan segera tersedia untuk diperdagangkan.",
+      "text": "Swap XMR akan hadir di THORChain — pantau terus."
+    },
+    "dismiss": "Tutup"
+  },
   "footer": {
     "privacyPolicy": "Kebijakan privasi",
     "termsOfUse": "Ketentuan penggunaan",

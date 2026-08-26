@@ -462,5 +462,8 @@
   "tx.status.unknown": ["Unknown", "Inconnu"],
   "tx.leg.deposit": ["Deposit {ticker}", "Déposer {ticker}"],
   "tx.leg.send": ["Send {ticker}", "Envoyer {ticker}"],
-  "tx.leg.swap": ["Swap {from} to {to}", "Échanger {from} en {to}"]
+  "tx.leg.swap": ["Swap {from} to {to}", "Échanger {from} en {to}"],
+  "announcement.monero.title": ["Monero will be ready for trading soon.", "Monero sera bientôt disponible à l'échange."],
+  "announcement.monero.text": ["XMR swaps are coming to THORChain — stay tuned.", "Les swaps XMR arrivent sur THORChain — restez à l'écoute."],
+  "announcement.dismiss": ["Dismiss", "Ignorer"]
 }
