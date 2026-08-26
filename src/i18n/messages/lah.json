@@ -20,6 +20,13 @@
     "wallet": "والٹ",
     "history": "تاریخ"
   },
+  "announcement": {
+    "monero": {
+      "title": "Monero چھیتی ٹریڈنگ لئی تیار ہوسی۔",
+      "text": "XMR تبادلے THORChain تے آ رہے نیں — نال رہو۔"
+    },
+    "dismiss": "بند کرو"
+  },
   "footer": {
     "privacyPolicy": "پرائیویسی پالیسی",
     "termsOfUse": "ورتݨ دیاں شرطاں",
@@ -77,6 +84,8 @@
     },
     "toast": {
       "approvalTransaction": "منظوری دی Tx",
+      "resettingApproval": "منظوری ری سیٹ کیتی جا رہی اے",
+      "approvalNotConfirmed": "منظوری چین تے تصدیق نہیں ہوئی",
       "success": "کامیابی",
       "errorSubmitting": "Tx جمع کرݨ وچ خرابی",
       "submittingTransaction": "Tx جمع کیتی پئی جاندی اے",

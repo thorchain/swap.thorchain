@@ -20,6 +20,13 @@
     "wallet": "กระเป๋าเงิน",
     "history": "ประวัติ"
   },
+  "announcement": {
+    "monero": {
+      "title": "Monero จะพร้อมให้เทรดเร็ว ๆ นี้",
+      "text": "การแลกเปลี่ยน XMR กำลังจะมาที่ THORChain — โปรดติดตาม"
+    },
+    "dismiss": "ปิด"
+  },
   "footer": {
     "privacyPolicy": "นโยบายความเป็นส่วนตัว",
     "termsOfUse": "ข้อกำหนดการใช้งาน",
@@ -77,6 +84,8 @@
     },
     "toast": {
       "approvalTransaction": "ธุรกรรมการอนุมัติ",
+      "resettingApproval": "กำลังรีเซ็ตการอนุมัติ",
+      "approvalNotConfirmed": "การอนุมัติไม่ได้รับการยืนยันบนเชน",
       "success": "สำเร็จ",
       "errorSubmitting": "เกิดข้อผิดพลาดในการส่งธุรกรรม",
       "submittingTransaction": "กำลังส่งธุรกรรม",

@@ -20,6 +20,13 @@
     "wallet": "钱包",
     "history": "历史记录"
   },
+  "announcement": {
+    "monero": {
+      "title": "Monero 即将开放交易。",
+      "text": "XMR 兑换即将登陆 THORChain — 敬请期待。"
+    },
+    "dismiss": "关闭"
+  },
   "footer": {
     "privacyPolicy": "隐私政策",
     "termsOfUse": "使用条款",
@@ -77,6 +84,8 @@
     },
     "toast": {
       "approvalTransaction": "授权交易",
+      "resettingApproval": "正在重置授权",
+      "approvalNotConfirmed": "授权未在链上确认",
       "success": "成功",
       "errorSubmitting": "提交交易出错",
       "submittingTransaction": "正在提交交易",

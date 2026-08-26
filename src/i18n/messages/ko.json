@@ -20,6 +20,13 @@
     "wallet": "지갑",
     "history": "내역"
   },
+  "announcement": {
+    "monero": {
+      "title": "Monero가 곧 거래 가능해집니다.",
+      "text": "XMR 스왑이 THORChain에 곧 추가됩니다 — 계속 지켜봐 주세요."
+    },
+    "dismiss": "닫기"
+  },
   "footer": {
     "privacyPolicy": "개인정보 처리방침",
     "termsOfUse": "이용약관",
@@ -77,6 +84,8 @@
     },
     "toast": {
       "approvalTransaction": "승인 트랜잭션",
+      "resettingApproval": "승인 초기화 중",
+      "approvalNotConfirmed": "승인이 온체인에서 확인되지 않았습니다",
       "success": "성공",
       "errorSubmitting": "트랜잭션 제출 오류",
       "submittingTransaction": "트랜잭션 제출 중",

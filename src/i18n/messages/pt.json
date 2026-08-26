@@ -20,6 +20,13 @@
     "wallet": "Carteira",
     "history": "Histórico"
   },
+  "announcement": {
+    "monero": {
+      "title": "Monero estará disponível para negociação em breve.",
+      "text": "As trocas de XMR estão chegando à THORChain — fique atento."
+    },
+    "dismiss": "Dispensar"
+  },
   "footer": {
     "privacyPolicy": "Política de privacidade",
     "termsOfUse": "Termos de uso",
@@ -77,6 +84,8 @@
     },
     "toast": {
       "approvalTransaction": "Transação de aprovação",
+      "resettingApproval": "Redefinindo a aprovação",
+      "approvalNotConfirmed": "A aprovação não foi confirmada on-chain",
       "success": "Sucesso",
       "errorSubmitting": "Erro ao enviar a transação",
       "submittingTransaction": "Enviando transação",

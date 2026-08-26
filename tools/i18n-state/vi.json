@@ -462,5 +462,10 @@
   "tx.status.unknown": ["Unknown", "Không xác định"],
   "tx.leg.deposit": ["Deposit {ticker}", "Nạp {ticker}"],
   "tx.leg.send": ["Send {ticker}", "Gửi {ticker}"],
-  "tx.leg.swap": ["Swap {from} to {to}", "Hoán đổi {from} sang {to}"]
+  "tx.leg.swap": ["Swap {from} to {to}", "Hoán đổi {from} sang {to}"],
+  "announcement.monero.title": ["Monero will be ready for trading soon.", "Monero sẽ sớm sẵn sàng để giao dịch."],
+  "announcement.monero.text": ["XMR swaps are coming to THORChain — stay tuned.", "Hoán đổi XMR sắp có mặt trên THORChain — hãy đón xem."],
+  "announcement.dismiss": ["Dismiss", "Đóng"],
+  "swap.toast.resettingApproval": ["Resetting Approval", "Đang đặt lại phê duyệt"],
+  "swap.toast.approvalNotConfirmed": ["Approval was not confirmed on-chain", "Phê duyệt chưa được xác nhận trên chuỗi"]
 }

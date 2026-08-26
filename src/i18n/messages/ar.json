@@ -84,6 +84,8 @@
     },
     "toast": {
       "approvalTransaction": "معاملة الموافقة",
+      "resettingApproval": "إعادة تعيين الموافقة",
+      "approvalNotConfirmed": "لم يتم تأكيد الموافقة على السلسلة",
       "success": "نجاح",
       "errorSubmitting": "خطأ في إرسال المعاملة",
       "submittingTransaction": "جارٍ إرسال المعاملة",

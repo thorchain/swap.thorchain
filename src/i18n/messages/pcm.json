@@ -20,6 +20,13 @@
     "wallet": "Wallet",
     "history": "History"
   },
+  "announcement": {
+    "monero": {
+      "title": "Monero go ready for trading soon.",
+      "text": "XMR swaps dey come THORChain — stay tuned."
+    },
+    "dismiss": "Close am"
+  },
   "footer": {
     "privacyPolicy": "Privacy Policy",
     "termsOfUse": "Terms of Use",
@@ -77,6 +84,8 @@
     },
     "toast": {
       "approvalTransaction": "Approval Transaction",
+      "resettingApproval": "Dey Reset Approval",
+      "approvalNotConfirmed": "Approval no confirm on-chain",
       "success": "E work",
       "errorSubmitting": "Error Dey Submit Transaction",
       "submittingTransaction": "Dey Submit Transaction",

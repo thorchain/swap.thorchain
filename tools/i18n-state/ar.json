@@ -465,5 +465,7 @@
   "tx.status.unknown": ["Unknown", "غير معروف"],
   "tx.leg.deposit": ["Deposit {ticker}", "إيداع {ticker}"],
   "tx.leg.send": ["Send {ticker}", "إرسال {ticker}"],
-  "tx.leg.swap": ["Swap {from} to {to}", "تبادل {from} إلى {to}"]
+  "tx.leg.swap": ["Swap {from} to {to}", "تبادل {from} إلى {to}"],
+  "swap.toast.resettingApproval": ["Resetting Approval", "إعادة تعيين الموافقة"],
+  "swap.toast.approvalNotConfirmed": ["Approval was not confirmed on-chain", "لم يتم تأكيد الموافقة على السلسلة"]
 }

@@ -84,6 +84,8 @@
     },
     "toast": {
       "approvalTransaction": "स्वीकृति लेन-देन",
+      "resettingApproval": "स्वीकृति रीसेट की जा रही है",
+      "approvalNotConfirmed": "स्वीकृति ऑन-चेन पुष्ट नहीं हुई",
       "success": "सफल",
       "errorSubmitting": "लेन-देन सबमिट करने में त्रुटि",
       "submittingTransaction": "लेन-देन सबमिट किया जा रहा है",

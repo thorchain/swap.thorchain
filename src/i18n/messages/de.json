@@ -84,6 +84,8 @@
     },
     "toast": {
       "approvalTransaction": "Genehmigungstransaktion",
+      "resettingApproval": "Genehmigung wird zurückgesetzt",
+      "approvalNotConfirmed": "Die Genehmigung wurde nicht on-chain bestätigt",
       "success": "Erfolgreich",
       "errorSubmitting": "Fehler beim Senden der Transaktion",
       "submittingTransaction": "Transaktion wird gesendet",

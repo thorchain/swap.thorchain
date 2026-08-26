@@ -20,6 +20,13 @@
     "wallet": "Cüzdan",
     "history": "Geçmiş"
   },
+  "announcement": {
+    "monero": {
+      "title": "Monero yakında işleme açılacak.",
+      "text": "XMR takasları THORChain'e geliyor — takipte kalın."
+    },
+    "dismiss": "Kapat"
+  },
   "footer": {
     "privacyPolicy": "Gizlilik Politikası",
     "termsOfUse": "Kullanım Koşulları",
@@ -77,6 +84,8 @@
     },
     "toast": {
       "approvalTransaction": "Onay İşlemi",
+      "resettingApproval": "Onay Sıfırlanıyor",
+      "approvalNotConfirmed": "Onay zincir üzerinde doğrulanmadı",
       "success": "Başarılı",
       "errorSubmitting": "İşlem Gönderilirken Hata Oluştu",
       "submittingTransaction": "İşlem Gönderiliyor",

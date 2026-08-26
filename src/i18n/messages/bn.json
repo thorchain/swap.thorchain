@@ -84,6 +84,8 @@
     },
     "toast": {
       "approvalTransaction": "অনুমোদন লেনদেন",
+      "resettingApproval": "অনুমোদন রিসেট করা হচ্ছে",
+      "approvalNotConfirmed": "অন-চেইনে অনুমোদন নিশ্চিত হয়নি",
       "success": "সফল হয়েছে",
       "errorSubmitting": "লেনদেন জমা দিতে ত্রুটি হয়েছে",
       "submittingTransaction": "লেনদেন জমা দেওয়া হচ্ছে",

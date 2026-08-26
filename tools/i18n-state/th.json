@@ -462,5 +462,10 @@
   "tx.status.unknown": ["Unknown", "ไม่ทราบ"],
   "tx.leg.deposit": ["Deposit {ticker}", "ฝาก {ticker}"],
   "tx.leg.send": ["Send {ticker}", "ส่ง {ticker}"],
-  "tx.leg.swap": ["Swap {from} to {to}", "แลกเปลี่ยน {from} เป็น {to}"]
+  "tx.leg.swap": ["Swap {from} to {to}", "แลกเปลี่ยน {from} เป็น {to}"],
+  "announcement.monero.title": ["Monero will be ready for trading soon.", "Monero จะพร้อมให้เทรดเร็ว ๆ นี้"],
+  "announcement.monero.text": ["XMR swaps are coming to THORChain — stay tuned.", "การแลกเปลี่ยน XMR กำลังจะมาที่ THORChain — โปรดติดตาม"],
+  "announcement.dismiss": ["Dismiss", "ปิด"],
+  "swap.toast.resettingApproval": ["Resetting Approval", "กำลังรีเซ็ตการอนุมัติ"],
+  "swap.toast.approvalNotConfirmed": ["Approval was not confirmed on-chain", "การอนุมัติไม่ได้รับการยืนยันบนเชน"]
 }

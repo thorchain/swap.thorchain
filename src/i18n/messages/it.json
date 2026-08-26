@@ -84,6 +84,8 @@
     },
     "toast": {
       "approvalTransaction": "Approvazione della transazione",
+      "resettingApproval": "Reimpostazione dell'approvazione",
+      "approvalNotConfirmed": "L'approvazione non è stata confermata on-chain",
       "success": "Operazione riuscita",
       "errorSubmitting": "Errore nell'invio della transazione",
       "submittingTransaction": "Invio della transazione",

@@ -20,6 +20,13 @@
     "wallet": "Ví",
     "history": "Lịch sử"
   },
+  "announcement": {
+    "monero": {
+      "title": "Monero sẽ sớm sẵn sàng để giao dịch.",
+      "text": "Hoán đổi XMR sắp có mặt trên THORChain — hãy đón xem."
+    },
+    "dismiss": "Đóng"
+  },
   "footer": {
     "privacyPolicy": "Chính sách bảo mật",
     "termsOfUse": "Điều khoản sử dụng",
@@ -77,6 +84,8 @@
     },
     "toast": {
       "approvalTransaction": "Giao dịch phê duyệt",
+      "resettingApproval": "Đang đặt lại phê duyệt",
+      "approvalNotConfirmed": "Phê duyệt chưa được xác nhận trên chuỗi",
       "success": "Thành công",
       "errorSubmitting": "Lỗi khi gửi giao dịch",
       "submittingTransaction": "Đang gửi giao dịch",

@@ -462,5 +462,10 @@
   "tx.status.unknown": ["Unknown", "未知"],
   "tx.leg.deposit": ["Deposit {ticker}", "存入{ticker}"],
   "tx.leg.send": ["Send {ticker}", "发送{ticker}"],
-  "tx.leg.swap": ["Swap {from} to {to}", "将{from}兑换为{to}"]
+  "tx.leg.swap": ["Swap {from} to {to}", "将{from}兑换为{to}"],
+  "announcement.monero.title": ["Monero will be ready for trading soon.", "Monero 即将开放交易。"],
+  "announcement.monero.text": ["XMR swaps are coming to THORChain — stay tuned.", "XMR 兑换即将登陆 THORChain — 敬请期待。"],
+  "announcement.dismiss": ["Dismiss", "关闭"],
+  "swap.toast.resettingApproval": ["Resetting Approval", "正在重置授权"],
+  "swap.toast.approvalNotConfirmed": ["Approval was not confirmed on-chain", "授权未在链上确认"]
 }

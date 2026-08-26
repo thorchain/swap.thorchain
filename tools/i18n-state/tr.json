@@ -462,5 +462,10 @@
   "tx.status.unknown": ["Unknown", "Bilinmiyor"],
   "tx.leg.deposit": ["Deposit {ticker}", "{ticker} Yatır"],
   "tx.leg.send": ["Send {ticker}", "{ticker} Gönder"],
-  "tx.leg.swap": ["Swap {from} to {to}", "{from} → {to} Takas"]
+  "tx.leg.swap": ["Swap {from} to {to}", "{from} → {to} Takas"],
+  "announcement.monero.title": ["Monero will be ready for trading soon.", "Monero yakında işleme açılacak."],
+  "announcement.monero.text": ["XMR swaps are coming to THORChain — stay tuned.", "XMR takasları THORChain'e geliyor — takipte kalın."],
+  "announcement.dismiss": ["Dismiss", "Kapat"],
+  "swap.toast.resettingApproval": ["Resetting Approval", "Onay Sıfırlanıyor"],
+  "swap.toast.approvalNotConfirmed": ["Approval was not confirmed on-chain", "Onay zincir üzerinde doğrulanmadı"]
 }

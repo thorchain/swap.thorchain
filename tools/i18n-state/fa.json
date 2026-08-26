@@ -16,6 +16,9 @@
   "menu.genericError": ["Something went wrong", "مشکلی پیش آمد"],
   "header.wallet": ["Wallet", "کیف پول"],
   "header.history": ["History", "تاریخچه"],
+  "announcement.monero.title": ["Monero will be ready for trading soon.", "Monero به‌زودی برای معامله آماده می‌شود."],
+  "announcement.monero.text": ["XMR swaps are coming to THORChain — stay tuned.", "سوآپ‌های XMR به THORChain می‌آیند — همراه ما باشید."],
+  "announcement.dismiss": ["Dismiss", "بستن"],
   "footer.privacyPolicy": ["Privacy Policy", "سیاست حفظ حریم خصوصی"],
   "footer.termsOfUse": ["Terms of Use", "شرایط استفاده"],
   "footer.riskPolicy": ["Risk Policy", "سیاست ریسک"],
@@ -463,7 +466,6 @@
   "tx.leg.deposit": ["Deposit {ticker}", "واریز {ticker}"],
   "tx.leg.send": ["Send {ticker}", "ارسال {ticker}"],
   "tx.leg.swap": ["Swap {from} to {to}", "تبادل {from} به {to}"],
-  "announcement.monero.title": ["Monero will be ready for trading soon.", "Monero به‌زودی برای معامله آماده می‌شود."],
-  "announcement.monero.text": ["XMR swaps are coming to THORChain — stay tuned.", "سوآپ‌های XMR به THORChain می‌آیند — همراه ما باشید."],
-  "announcement.dismiss": ["Dismiss", "بستن"]
+  "swap.toast.resettingApproval": ["Resetting Approval", "بازنشانی تأیید"],
+  "swap.toast.approvalNotConfirmed": ["Approval was not confirmed on-chain", "تأیید روی زنجیره ثبت نشد"]
 }

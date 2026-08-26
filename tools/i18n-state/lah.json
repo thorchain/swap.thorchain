@@ -462,5 +462,10 @@
   "tx.status.unknown": ["Unknown", "اݨ جاݨیا"],
   "tx.leg.deposit": ["Deposit {ticker}", "{ticker} ڈیپازٹ کرو"],
   "tx.leg.send": ["Send {ticker}", "{ticker} بھیجو"],
-  "tx.leg.swap": ["Swap {from} to {to}", "{from} نوں {to} وچ تبادلہ کرو"]
+  "tx.leg.swap": ["Swap {from} to {to}", "{from} نوں {to} وچ تبادلہ کرو"],
+  "announcement.monero.title": ["Monero will be ready for trading soon.", "Monero چھیتی ٹریڈنگ لئی تیار ہوسی۔"],
+  "announcement.monero.text": ["XMR swaps are coming to THORChain — stay tuned.", "XMR تبادلے THORChain تے آ رہے نیں — نال رہو۔"],
+  "announcement.dismiss": ["Dismiss", "بند کرو"],
+  "swap.toast.resettingApproval": ["Resetting Approval", "منظوری ری سیٹ کیتی جا رہی اے"],
+  "swap.toast.approvalNotConfirmed": ["Approval was not confirmed on-chain", "منظوری چین تے تصدیق نہیں ہوئی"]
 }

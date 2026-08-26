@@ -84,6 +84,8 @@
     },
     "toast": {
       "approvalTransaction": "Transaksi persetujuan",
+      "resettingApproval": "Menyetel ulang persetujuan",
+      "approvalNotConfirmed": "Persetujuan tidak terkonfirmasi di blockchain",
       "success": "Berhasil",
       "errorSubmitting": "Gagal mengirim transaksi",
       "submittingTransaction": "Mengirim transaksi",

@@ -20,6 +20,13 @@
     "wallet": "Кошелёк",
     "history": "История"
   },
+  "announcement": {
+    "monero": {
+      "title": "Monero скоро станет доступен для торговли.",
+      "text": "Обмены XMR скоро появятся в THORChain — следите за новостями."
+    },
+    "dismiss": "Закрыть"
+  },
   "footer": {
     "privacyPolicy": "Политика конфиденциальности",
     "termsOfUse": "Условия использования",
@@ -77,6 +84,8 @@
     },
     "toast": {
       "approvalTransaction": "Транзакция одобрения",
+      "resettingApproval": "Сброс одобрения",
+      "approvalNotConfirmed": "Одобрение не подтверждено в сети",
       "success": "Успешно",
       "errorSubmitting": "Ошибка отправки транзакции",
       "submittingTransaction": "Отправка транзакции",

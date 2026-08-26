@@ -16,6 +16,9 @@
   "menu.genericError": ["Something went wrong", "Terjadi kesalahan"],
   "header.wallet": ["Wallet", "Dompet"],
   "header.history": ["History", "Riwayat"],
+  "announcement.monero.title": ["Monero will be ready for trading soon.", "Monero akan segera tersedia untuk diperdagangkan."],
+  "announcement.monero.text": ["XMR swaps are coming to THORChain — stay tuned.", "Swap XMR akan hadir di THORChain — pantau terus."],
+  "announcement.dismiss": ["Dismiss", "Tutup"],
   "footer.privacyPolicy": ["Privacy Policy", "Kebijakan privasi"],
   "footer.termsOfUse": ["Terms of Use", "Ketentuan penggunaan"],
   "footer.riskPolicy": ["Risk Policy", "Kebijakan risiko"],
@@ -463,7 +466,6 @@
   "tx.leg.deposit": ["Deposit {ticker}", "Deposit {ticker}"],
   "tx.leg.send": ["Send {ticker}", "Kirim {ticker}"],
   "tx.leg.swap": ["Swap {from} to {to}", "Tukar {from} ke {to}"],
-  "announcement.monero.title": ["Monero will be ready for trading soon.", "Monero akan segera tersedia untuk diperdagangkan."],
-  "announcement.monero.text": ["XMR swaps are coming to THORChain — stay tuned.", "Swap XMR akan hadir di THORChain — pantau terus."],
-  "announcement.dismiss": ["Dismiss", "Tutup"]
+  "swap.toast.resettingApproval": ["Resetting Approval", "Menyetel ulang persetujuan"],
+  "swap.toast.approvalNotConfirmed": ["Approval was not confirmed on-chain", "Persetujuan tidak terkonfirmasi di blockchain"]
 }

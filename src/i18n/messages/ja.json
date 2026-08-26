@@ -84,6 +84,8 @@
     },
     "toast": {
       "approvalTransaction": "承認トランザクション",
+      "resettingApproval": "承認をリセット中",
+      "approvalNotConfirmed": "承認がオンチェーンで確認されませんでした",
       "success": "成功",
       "errorSubmitting": "トランザクションの送信エラー",
       "submittingTransaction": "トランザクションを送信中",

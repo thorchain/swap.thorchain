@@ -16,6 +16,9 @@
   "menu.genericError": ["Something went wrong", "問題が発生しました"],
   "header.wallet": ["Wallet", "ウォレット"],
   "header.history": ["History", "履歴"],
+  "announcement.monero.title": ["Monero will be ready for trading soon.", "Monero がまもなく取引可能になります。"],
+  "announcement.monero.text": ["XMR swaps are coming to THORChain — stay tuned.", "XMR のスワップが THORChain に登場します。続報をお待ちください。"],
+  "announcement.dismiss": ["Dismiss", "閉じる"],
   "footer.privacyPolicy": ["Privacy Policy", "プライバシーポリシー"],
   "footer.termsOfUse": ["Terms of Use", "利用規約"],
   "footer.riskPolicy": ["Risk Policy", "リスクポリシー"],
@@ -463,7 +466,6 @@
   "tx.leg.deposit": ["Deposit {ticker}", "{ticker} を預け入れ"],
   "tx.leg.send": ["Send {ticker}", "{ticker} を送信"],
   "tx.leg.swap": ["Swap {from} to {to}", "{from} を {to} にスワップ"],
-  "announcement.monero.title": ["Monero will be ready for trading soon.", "Monero がまもなく取引可能になります。"],
-  "announcement.monero.text": ["XMR swaps are coming to THORChain — stay tuned.", "XMR のスワップが THORChain に登場します。続報をお待ちください。"],
-  "announcement.dismiss": ["Dismiss", "閉じる"]
+  "swap.toast.resettingApproval": ["Resetting Approval", "承認をリセット中"],
+  "swap.toast.approvalNotConfirmed": ["Approval was not confirmed on-chain", "承認がオンチェーンで確認されませんでした"]
 }

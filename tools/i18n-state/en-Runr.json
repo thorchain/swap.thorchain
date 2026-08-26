@@ -465,5 +465,7 @@
   "tx.status.unknown": ["Unknown", "ᚢᚾᚲᚾᛟᚹᚾ"],
   "tx.leg.deposit": ["Deposit {ticker}", "ᛞᛖᛈᛟᛊᛁᛏ {ticker}"],
   "tx.leg.send": ["Send {ticker}", "ᛊᛖᚾᛞ {ticker}"],
-  "tx.leg.swap": ["Swap {from} to {to}", "ᛊᚹᚨᛈ {from} ᛏᛟ {to}"]
+  "tx.leg.swap": ["Swap {from} to {to}", "ᛊᚹᚨᛈ {from} ᛏᛟ {to}"],
+  "swap.toast.resettingApproval": ["Resetting Approval", "ᚱᛖᛊᛖᛏᛏᛁᛜ ᚨᛈᛈᚱᛟᚹᚨᛚ"],
+  "swap.toast.approvalNotConfirmed": ["Approval was not confirmed on-chain", "ᚨᛈᛈᚱᛟᚹᚨᛚ ᚹᚨᛊ ᚾᛟᛏ ᚲᛟᚾᚠᛁᚱᛗᛖᛞ ᛟᚾ-ᚲᚺᚨᛁᚾ"]
 }

@@ -16,6 +16,9 @@
   "menu.genericError": ["Something went wrong", "कुछ गलत हो गया"],
   "header.wallet": ["Wallet", "वॉलेट"],
   "header.history": ["History", "इतिहास"],
+  "announcement.monero.title": ["Monero will be ready for trading soon.", "Monero जल्द ही ट्रेडिंग के लिए उपलब्ध होगा।"],
+  "announcement.monero.text": ["XMR swaps are coming to THORChain — stay tuned.", "XMR स्वैप THORChain पर आ रहे हैं — जुड़े रहें।"],
+  "announcement.dismiss": ["Dismiss", "बंद करें"],
   "footer.privacyPolicy": ["Privacy Policy", "गोपनीयता नीति"],
   "footer.termsOfUse": ["Terms of Use", "उपयोग की शर्तें"],
   "footer.riskPolicy": ["Risk Policy", "जोखिम नीति"],
@@ -463,7 +466,6 @@
   "tx.leg.deposit": ["Deposit {ticker}", "{ticker} जमा करें"],
   "tx.leg.send": ["Send {ticker}", "{ticker} भेजें"],
   "tx.leg.swap": ["Swap {from} to {to}", "{from} को {to} में स्वैप करें"],
-  "announcement.monero.title": ["Monero will be ready for trading soon.", "Monero जल्द ही ट्रेडिंग के लिए उपलब्ध होगा।"],
-  "announcement.monero.text": ["XMR swaps are coming to THORChain — stay tuned.", "XMR स्वैप THORChain पर आ रहे हैं — जुड़े रहें।"],
-  "announcement.dismiss": ["Dismiss", "बंद करें"]
+  "swap.toast.resettingApproval": ["Resetting Approval", "स्वीकृति रीसेट की जा रही है"],
+  "swap.toast.approvalNotConfirmed": ["Approval was not confirmed on-chain", "स्वीकृति ऑन-चेन पुष्ट नहीं हुई"]
 }

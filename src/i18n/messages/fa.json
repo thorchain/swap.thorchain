@@ -84,6 +84,8 @@
     },
     "toast": {
       "approvalTransaction": "تراکنش تأیید",
+      "resettingApproval": "بازنشانی تأیید",
+      "approvalNotConfirmed": "تأیید روی زنجیره ثبت نشد",
       "success": "موفق",
       "errorSubmitting": "خطا در ارسال تراکنش",
       "submittingTransaction": "در حال ارسال تراکنش",

@@ -84,6 +84,8 @@
     },
     "toast": {
       "approvalTransaction": "ᚨᛈᛈᚱᛟᚹᚨᛚ ᛏᚱᚨᚾᛊᚨᚲᛏᛁᛟᚾ",
+      "resettingApproval": "ᚱᛖᛊᛖᛏᛏᛁᛜ ᚨᛈᛈᚱᛟᚹᚨᛚ",
+      "approvalNotConfirmed": "ᚨᛈᛈᚱᛟᚹᚨᛚ ᚹᚨᛊ ᚾᛟᛏ ᚲᛟᚾᚠᛁᚱᛗᛖᛞ ᛟᚾ-ᚲᚺᚨᛁᚾ",
       "success": "ᛊᚢᚲᚲᛖᛊᛊ",
       "errorSubmitting": "ᛖᚱᚱᛟᚱ ᛊᚢᛒᛗᛁᛏᛏᛁᛜ ᛏᚱᚨᚾᛊᚨᚲᛏᛁᛟᚾ",
       "submittingTransaction": "ᛊᚢᛒᛗᛁᛏᛏᛁᛜ ᛏᚱᚨᚾᛊᚨᚲᛏᛁᛟᚾ",

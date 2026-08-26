@@ -20,6 +20,13 @@
     "wallet": "والٹ",
     "history": "تاریخ"
   },
+  "announcement": {
+    "monero": {
+      "title": "Monero جلد ٹریڈنگ کے لیے دستیاب ہوگا۔",
+      "text": "XMR تبادلے THORChain پر آ رہے ہیں — منتظر رہیں۔"
+    },
+    "dismiss": "بند کریں"
+  },
   "footer": {
     "privacyPolicy": "پرائیویسی پالیسی",
     "termsOfUse": "شرائطِ استعمال",
@@ -77,6 +84,8 @@
     },
     "toast": {
       "approvalTransaction": "منظوری کی Tx",
+      "resettingApproval": "منظوری ری سیٹ ہو رہی ہے",
+      "approvalNotConfirmed": "منظوری چین پر تصدیق نہیں ہوئی",
       "success": "کامیاب",
       "errorSubmitting": "Tx جمع کرانے میں خرابی",
       "submittingTransaction": "Tx جمع کرائی جا رہی ہے",

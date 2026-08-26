@@ -465,5 +465,7 @@
   "tx.status.unknown": ["Unknown", "অজানা"],
   "tx.leg.deposit": ["Deposit {ticker}", "{ticker} ডিপোজিট করুন"],
   "tx.leg.send": ["Send {ticker}", "{ticker} পাঠান"],
-  "tx.leg.swap": ["Swap {from} to {to}", "{from} থেকে {to} সোয়াপ করুন"]
+  "tx.leg.swap": ["Swap {from} to {to}", "{from} থেকে {to} সোয়াপ করুন"],
+  "swap.toast.resettingApproval": ["Resetting Approval", "অনুমোদন রিসেট করা হচ্ছে"],
+  "swap.toast.approvalNotConfirmed": ["Approval was not confirmed on-chain", "অন-চেইনে অনুমোদন নিশ্চিত হয়নি"]
 }
