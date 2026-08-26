@@ -13,10 +13,12 @@ export type FeeData = {
 const APPROVAL_POLL_INTERVAL_MS = 3000
 const APPROVAL_POLL_ATTEMPTS = 40
 
-export const waitForApproval = async (isApproved: () => Promise<boolean>): Promise<boolean> => {
+// Approval txs resolve on broadcast, so the allowance is polled until the tx is mined. Returns false
+// when it never lands - a reverted or dropped tx has to read as a failure, not as a silent success.
+export const waitForAllowance = async (hasLanded: () => Promise<boolean>): Promise<boolean> => {
   for (let i = 0; i < APPROVAL_POLL_ATTEMPTS; i++) {
     await new Promise(resolve => setTimeout(resolve, APPROVAL_POLL_INTERVAL_MS))
-    if (await isApproved().catch(() => false)) return true
+    if (await hasLanded().catch(() => false)) return true
   }
   return false
 }

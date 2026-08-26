@@ -16,7 +16,7 @@ import { useSimulation } from '@/hooks/use-simulation'
 import { useAssetFrom, useAssetTo, useSwap } from '@/hooks/use-swap'
 import { useExternalWalletMode, useSelectedAccount, useSetExternalWalletMode } from '@/hooks/use-wallets'
 import { isTradingHaltedError } from '@/lib/errors'
-import { isMayaProvider, isTaprootAddress, waitForApproval } from '@/lib/swap-helpers'
+import { isMayaProvider, isTaprootAddress, waitForAllowance } from '@/lib/swap-helpers'
 import { getUSwap } from '@/lib/wallets'
 import { useIsLimitSwap, useLimitSwapBuyAmount } from '@/store/limit-swap-store'
 
@@ -71,24 +71,38 @@ export const SwapButton = ({ instantSwapSupported, instantSwapAvailable }: SwapB
     if (!wallet) return
 
     const { contract, spender, amount } = approveData
+    const from = selectedAccount.address
+    const target = { assetAddress: contract, spenderAddress: spender }
 
     setIsApproving(true)
 
-    const promise = wallet
-      .approve({ assetAddress: contract, spenderAddress: spender, amount })
-      .then(() =>
-        waitForApproval(() => wallet.isApproved({ assetAddress: contract, spenderAddress: spender, from: selectedAccount.address, amount }))
-      )
-      .finally(() => {
-        setIsApproving(false)
-        refetchQuote()
-      })
+    const toastId = toast.loading(t('toast.approvalTransaction'))
 
-    toast.promise(promise, {
-      loading: t('toast.approvalTransaction'),
-      success: t('toast.success'),
-      error: (err: any) => err.message || t('toast.errorSubmitting')
-    })
+    try {
+      // USDT and other non-standard ERC-20s revert on approve() while a leftover non-zero allowance
+      // is still set, so it has to be cleared - and mined - before the new allowance can be signed.
+      const allowance = await wallet.approvedAmount({ ...target, from }).catch(() => 0n)
+
+      if (allowance > 0n) {
+        toast.loading(t('toast.resettingApproval'), { id: toastId })
+        // '0' as a string on purpose: the SDK falls back to an unlimited approval for a falsy amount.
+        await wallet.approve({ ...target, amount: '0' })
+        const cleared = await waitForAllowance(async () => (await wallet.approvedAmount({ ...target, from })) === 0n)
+        if (!cleared) throw new Error(t('toast.approvalNotConfirmed'))
+        toast.loading(t('toast.approvalTransaction'), { id: toastId })
+      }
+
+      await wallet.approve({ ...target, amount })
+      const approved = await waitForAllowance(() => wallet.isApproved({ ...target, from, amount }))
+      if (!approved) throw new Error(t('toast.approvalNotConfirmed'))
+
+      toast.success(t('toast.success'), { id: toastId })
+    } catch (err: any) {
+      toast.error(err?.message || t('toast.errorSubmitting'), { id: toastId })
+    } finally {
+      setIsApproving(false)
+      refetchQuote()
+    }
   }
 
   const getState = (): ButtonState => {
