@@ -164,7 +164,6 @@
   "swap.limitCancel.warning.tradingPaused": ["{chain} trading is currently paused", "การซื้อขาย {chain} ถูกหยุดชั่วคราวในขณะนี้"],
   "swap.limitCancel.warning.orderNotFound": ["This order is no longer open on THORChain - it may have already been filled or expired", "คำสั่งนี้ไม่ได้เปิดอยู่บน THORChain แล้ว อาจถูกจับคู่สำเร็จหรือหมดอายุไปแล้ว"],
   "swap.quoteTimer.refresh": ["Refresh", "รีเฟรช"],
-  "swap.recipient.addressPlaceholder": ["{chain} address", "ที่อยู่ {chain}"],
   "swap.recipient.paste": ["Paste", "วาง"],
   "swap.recipient.invalidAddress": ["Invalid {chain} address", "ที่อยู่ {chain} ไม่ถูกต้อง"],
   "swap.recipient.taprootNotSupported": ["Maya Protocol does not support Taproot addresses", "Maya Protocol ไม่รองรับที่อยู่ Taproot"],
@@ -469,5 +468,6 @@
   "tx.status.unknown": ["Unknown", "ไม่ทราบ"],
   "tx.leg.deposit": ["Deposit {ticker}", "ฝาก {ticker}"],
   "tx.leg.send": ["Send {ticker}", "ส่ง {ticker}"],
-  "tx.leg.swap": ["Swap {from} to {to}", "แลกเปลี่ยน {from} เป็น {to}"]
+  "tx.leg.swap": ["Swap {from} to {to}", "แลกเปลี่ยน {from} เป็น {to}"],
+  "swap.recipient.addressPlaceholder": ["{chain} address or THORName", "ที่อยู่ {chain} หรือ THORName"]
 }

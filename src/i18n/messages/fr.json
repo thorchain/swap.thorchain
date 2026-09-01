@@ -216,7 +216,7 @@
       "refresh": "Actualiser"
     },
     "recipient": {
-      "addressPlaceholder": "Adresse {chain}",
+      "addressPlaceholder": "Adresse {chain} ou THORName",
       "paste": "Coller",
       "invalidAddress": "Adresse {chain} invalide",
       "taprootNotSupported": "Maya Protocol ne prend pas en charge les adresses Taproot",

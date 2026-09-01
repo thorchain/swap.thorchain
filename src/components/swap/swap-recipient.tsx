@@ -4,7 +4,6 @@ import { Chain } from '@tcswap/core'
 import { WalletIcon } from '@/components/wallet-icon'
 import { ProviderName, USwapError } from '@tcswap/helpers'
 import { QuoteResponseRoute } from '@tcswap/helpers/api'
-import { getAddressValidator } from '@tcswap/toolboxes'
 import { LoaderCircle } from 'lucide-react'
 import { CredenzaHeader, CredenzaTitle } from '@/components/ui/credenza'
 import { ScrollArea } from '@/components/ui/scroll-area'
@@ -17,6 +16,8 @@ import { SwapError } from '@/components/swap/swap-error'
 import { GenericButton } from '@/components/generic-button'
 import { Tooltip } from '@/components/tooltip'
 import { useIsMobile } from '@/hooks/use-mobile'
+import { useResolvedName } from '@/hooks/use-resolved-name'
+import { AddressCheck, useValidAddress } from '@/hooks/use-valid-address'
 import { useAssetFrom, useAssetTo, useCustomInterval, useCustomQuantity, useSlippage, useSwap } from '@/hooks/use-swap'
 import { useAccounts, useSelectedAccount } from '@/hooks/use-wallets'
 import { getQuotes } from '@/lib/api'
@@ -52,8 +53,6 @@ export const SwapRecipient = ({ provider, onFetchQuote }: SwapRecipientProps) =>
 
   const [destinationAddress, setDestinationAddress] = useState<string>('')
   const [refundAddress, setRefundAddress] = useState<string>('')
-  const [isValidDestination, setIsValidDestination] = useState(true)
-  const [isValidRefund, setIsValidRefund] = useState(true)
   const [warningChecked, setWarningChecked] = useState(false)
   const [warningCheckedLTC, setWarningCheckedLTC] = useState(false)
 
@@ -64,21 +63,24 @@ export const SwapRecipient = ({ provider, onFetchQuote }: SwapRecipientProps) =>
   const isMayachain = isMayaProvider(provider)
   const isTaprootDestination = isMayachain && assetTo.chain === Chain.Bitcoin && isTaprootAddress(destinationAddress)
 
+  const destinationCheck = useValidAddress(destinationAddress, assetTo.chain)
+  const refundCheck = useValidAddress(refundAddress, assetFrom.chain)
+
+  // A THORName / MAYAName typed instead of an address is replaced by the
+  // address it registered for the chain. Only input that has been validated and
+  // rejected as an address is looked up, so a pasted address is never swapped
+  // out for someone's alias, and a field waiting on either answer never reads
+  // as invalid in between.
+  const destinationName = useResolvedName(destinationCheck.isInvalid ? destinationAddress : '', assetTo.chain)
+  const refundName = useResolvedName(refundCheck.isInvalid ? refundAddress : '', assetFrom.chain)
+
   useEffect(() => {
-    if (destinationAddress.length === 0) return setIsValidDestination(true)
-
-    getAddressValidator()
-      .then(validateAddress => setIsValidDestination(validateAddress({ address: destinationAddress, chain: assetTo.chain })))
-      .catch(() => setIsValidDestination(false))
-  }, [destinationAddress])
+    if (destinationName.address) setDestinationAddress(destinationName.address)
+  }, [destinationName.address])
 
   useEffect(() => {
-    if (refundAddress.length === 0) return setIsValidRefund(true)
-
-    getAddressValidator()
-      .then(validateAddress => setIsValidRefund(validateAddress({ address: refundAddress, chain: assetFrom.chain })))
-      .catch(() => setIsValidRefund(false))
-  }, [refundAddress])
+    if (refundName.address) setRefundAddress(refundName.address)
+  }, [refundName.address])
 
   const fetchQuote = () => {
     setQuoting(true)
@@ -116,14 +118,24 @@ export const SwapRecipient = ({ provider, onFetchQuote }: SwapRecipientProps) =>
 
   const isLTC = assetFrom.ticker === 'LTC' || assetTo.ticker === 'LTC'
   const buttonEnabled =
-    isValidDestination &&
+    destinationCheck.isValid &&
     destinationAddress.length &&
     !isTaprootDestination &&
     !quoting &&
-    (refundRequired ? isValidRefund && refundAddress.length : true)
+    (refundRequired ? refundCheck.isValid && refundAddress.length : true)
 
-  const addressInput = (asset: Asset, address: string, setAddress: (address: string) => void, isValid: boolean, options: WalletAccount[] = []) => {
+  const addressInput = (
+    asset: Asset,
+    address: string,
+    setAddress: (address: string) => void,
+    check: AddressCheck,
+    resolving: boolean,
+    options: WalletAccount[] = []
+  ) => {
     const currentOption = options.find(a => a.address.toLowerCase() === address.toLowerCase())
+    // Nothing is wrong with a field that is still being checked or resolved.
+    const isInvalid = check.isInvalid && !resolving
+    const busy = check.isChecking || resolving
 
     return (
       <>
@@ -131,7 +143,7 @@ export const SwapRecipient = ({ provider, onFetchQuote }: SwapRecipientProps) =>
           <Textarea
             placeholder={isMobile ? undefined : t('recipient.addressPlaceholder', { chain: chainLabel(asset.chain) })}
             value={address}
-            aria-invalid={!isValid}
+            aria-invalid={isInvalid}
             onChange={e => setAddress(e.target.value)}
             className={cn('bg-input-modal-bg-active border-border-sub-container-modal-low', { 'pl-12': currentOption })}
             tabIndex={isMobile ? -1 : 0}
@@ -147,7 +159,9 @@ export const SwapRecipient = ({ provider, onFetchQuote }: SwapRecipientProps) =>
             />
           )}
 
-          {address.length ? (
+          {busy ? (
+            <LoaderCircle size={20} className="text-txt-label-small absolute end-4 top-1/2 -translate-y-1/2 animate-spin" />
+          ) : address.length ? (
             <GenericButton
               size="small"
               icon={<Icon name="trash" />}
@@ -184,7 +198,7 @@ export const SwapRecipient = ({ provider, onFetchQuote }: SwapRecipientProps) =>
           )}
         </div>
 
-        {!isValid && <div className="text-lucian text-xs font-semibold">{t('recipient.invalidAddress', { chain: chainLabel(asset.chain) })}</div>}
+        {isInvalid && <div className="text-lucian text-xs font-semibold">{t('recipient.invalidAddress', { chain: chainLabel(asset.chain) })}</div>}
       </>
     )
   }
@@ -202,13 +216,13 @@ export const SwapRecipient = ({ provider, onFetchQuote }: SwapRecipientProps) =>
               {refundRequired && (
                 <div className="flex flex-col gap-3">
                   <div className="text-txt-label-small text-sm font-semibold">{t('recipient.enterRefundAddress')}</div>
-                  {addressInput(assetFrom, refundAddress, setRefundAddress, isValidRefund)}
+                  {addressInput(assetFrom, refundAddress, setRefundAddress, refundCheck, refundName.isResolving)}
                 </div>
               )}
 
               <div className="flex flex-col gap-3">
                 {refundRequired && <div className="text-txt-label-small text-sm font-semibold">{t('recipient.enterReceivingAddress')}</div>}
-                {addressInput(assetTo, destinationAddress, setDestinationAddress, isValidDestination, options)}
+                {addressInput(assetTo, destinationAddress, setDestinationAddress, destinationCheck, destinationName.isResolving, options)}
                 {isTaprootDestination && <div className="text-lucian text-xs font-semibold">{t('recipient.taprootNotSupported')}</div>}
               </div>
             </div>

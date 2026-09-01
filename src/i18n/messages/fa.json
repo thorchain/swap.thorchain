@@ -216,7 +216,7 @@
       "refresh": "تازه‌سازی"
     },
     "recipient": {
-      "addressPlaceholder": "آدرس {chain}",
+      "addressPlaceholder": "آدرس {chain} یا THORName",
       "paste": "چسباندن",
       "invalidAddress": "آدرس {chain} نامعتبر است",
       "taprootNotSupported": "پروتکل Maya از آدرس‌های Taproot پشتیبانی نمی‌کند",

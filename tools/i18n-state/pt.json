@@ -164,7 +164,6 @@
   "swap.limitCancel.warning.tradingPaused": ["{chain} trading is currently paused", "As negociações em {chain} estão pausadas no momento"],
   "swap.limitCancel.warning.orderNotFound": ["This order is no longer open on THORChain - it may have already been filled or expired", "Esta ordem já não está aberta na THORChain — pode já ter sido executada ou expirado"],
   "swap.quoteTimer.refresh": ["Refresh", "Atualizar"],
-  "swap.recipient.addressPlaceholder": ["{chain} address", "Endereço {chain}"],
   "swap.recipient.paste": ["Paste", "Colar"],
   "swap.recipient.invalidAddress": ["Invalid {chain} address", "Endereço {chain} inválido"],
   "swap.recipient.taprootNotSupported": ["Maya Protocol does not support Taproot addresses", "O Maya Protocol não suporta endereços Taproot"],
@@ -469,5 +468,6 @@
   "tx.status.unknown": ["Unknown", "Desconhecido"],
   "tx.leg.deposit": ["Deposit {ticker}", "Depositar {ticker}"],
   "tx.leg.send": ["Send {ticker}", "Enviar {ticker}"],
-  "tx.leg.swap": ["Swap {from} to {to}", "Trocar {from} por {to}"]
+  "tx.leg.swap": ["Swap {from} to {to}", "Trocar {from} por {to}"],
+  "swap.recipient.addressPlaceholder": ["{chain} address or THORName", "Endereço {chain} ou THORName"]
 }

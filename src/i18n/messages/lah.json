@@ -216,7 +216,7 @@
       "refresh": "ریفریش کرو"
     },
     "recipient": {
-      "addressPlaceholder": "{chain} پتہ",
+      "addressPlaceholder": "{chain} پتہ یا THORName",
       "paste": "پیسٹ کرو",
       "invalidAddress": "غلط {chain} پتہ",
       "taprootNotSupported": "Maya Protocol Taproot ایڈریساں نوں سپورٹ نئیں کردا",

@@ -216,7 +216,7 @@
       "refresh": "刷新"
     },
     "recipient": {
-      "addressPlaceholder": "{chain}地址",
+      "addressPlaceholder": "{chain} 地址或 THORName",
       "paste": "粘贴",
       "invalidAddress": "无效的{chain}地址",
       "taprootNotSupported": "Maya Protocol 不支持 Taproot 地址",

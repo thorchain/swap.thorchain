@@ -164,7 +164,6 @@
   "swap.limitCancel.warning.tradingPaused": ["{chain} trading is currently paused", "Trading {chain} saat ini sedang dijeda"],
   "swap.limitCancel.warning.orderNotFound": ["This order is no longer open on THORChain - it may have already been filled or expired", "Order ini tidak lagi terbuka di THORChain - kemungkinan sudah terisi atau kedaluwarsa"],
   "swap.quoteTimer.refresh": ["Refresh", "Segarkan"],
-  "swap.recipient.addressPlaceholder": ["{chain} address", "Alamat {chain}"],
   "swap.recipient.paste": ["Paste", "Tempel"],
   "swap.recipient.invalidAddress": ["Invalid {chain} address", "Alamat {chain} tidak valid"],
   "swap.recipient.taprootNotSupported": ["Maya Protocol does not support Taproot addresses", "Maya Protocol tidak mendukung alamat Taproot"],
@@ -469,5 +468,6 @@
   "tx.status.unknown": ["Unknown", "Tidak diketahui"],
   "tx.leg.deposit": ["Deposit {ticker}", "Deposit {ticker}"],
   "tx.leg.send": ["Send {ticker}", "Kirim {ticker}"],
-  "tx.leg.swap": ["Swap {from} to {to}", "Tukar {from} ke {to}"]
+  "tx.leg.swap": ["Swap {from} to {to}", "Tukar {from} ke {to}"],
+  "swap.recipient.addressPlaceholder": ["{chain} address or THORName", "Alamat {chain} atau THORName"]
 }

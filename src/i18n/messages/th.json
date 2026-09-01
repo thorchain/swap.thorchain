@@ -216,7 +216,7 @@
       "refresh": "รีเฟรช"
     },
     "recipient": {
-      "addressPlaceholder": "ที่อยู่ {chain}",
+      "addressPlaceholder": "ที่อยู่ {chain} หรือ THORName",
       "paste": "วาง",
       "invalidAddress": "ที่อยู่ {chain} ไม่ถูกต้อง",
       "taprootNotSupported": "Maya Protocol ไม่รองรับที่อยู่ Taproot",

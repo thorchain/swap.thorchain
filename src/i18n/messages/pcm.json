@@ -216,7 +216,7 @@
       "refresh": "Refresh"
     },
     "recipient": {
-      "addressPlaceholder": "{chain} address",
+      "addressPlaceholder": "{chain} address abi THORName",
       "paste": "Paste",
       "invalidAddress": "{chain} address no correct",
       "taprootNotSupported": "Maya Protocol no dey support Taproot address",

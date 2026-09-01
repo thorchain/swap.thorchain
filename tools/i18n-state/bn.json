@@ -164,7 +164,6 @@
   "swap.limitCancel.warning.tradingPaused": ["{chain} trading is currently paused", "{chain} ট্রেডিং বর্তমানে স্থগিত রয়েছে"],
   "swap.limitCancel.warning.orderNotFound": ["This order is no longer open on THORChain - it may have already been filled or expired", "এই অর্ডারটি আর THORChain-এ খোলা নেই - এটি ইতিমধ্যে পূরণ হয়ে থাকতে পারে বা মেয়াদ শেষ হয়ে যেতে পারে"],
   "swap.quoteTimer.refresh": ["Refresh", "রিফ্রেশ করুন"],
-  "swap.recipient.addressPlaceholder": ["{chain} address", "{chain} ঠিকানা"],
   "swap.recipient.paste": ["Paste", "পেস্ট করুন"],
   "swap.recipient.invalidAddress": ["Invalid {chain} address", "অবৈধ {chain} ঠিকানা"],
   "swap.recipient.taprootNotSupported": ["Maya Protocol does not support Taproot addresses", "Maya Protocol Taproot ঠিকানা সমর্থন করে না"],
@@ -469,5 +468,6 @@
   "tx.status.unknown": ["Unknown", "অজানা"],
   "tx.leg.deposit": ["Deposit {ticker}", "{ticker} ডিপোজিট করুন"],
   "tx.leg.send": ["Send {ticker}", "{ticker} পাঠান"],
-  "tx.leg.swap": ["Swap {from} to {to}", "{from} থেকে {to} সোয়াপ করুন"]
+  "tx.leg.swap": ["Swap {from} to {to}", "{from} থেকে {to} সোয়াপ করুন"],
+  "swap.recipient.addressPlaceholder": ["{chain} address or THORName", "{chain} ঠিকানা বা THORName"]
 }

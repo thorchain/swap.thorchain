@@ -216,7 +216,7 @@
       "refresh": "Yenile"
     },
     "recipient": {
-      "addressPlaceholder": "{chain} adresi",
+      "addressPlaceholder": "{chain} adresi veya THORName",
       "paste": "Yapıştır",
       "invalidAddress": "Geçersiz {chain} adresi",
       "taprootNotSupported": "Maya Protocol, Taproot adreslerini desteklemiyor",

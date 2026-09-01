@@ -164,7 +164,6 @@
   "swap.limitCancel.warning.tradingPaused": ["{chain} trading is currently paused", "{chain} 거래가 현재 일시 중지되었습니다"],
   "swap.limitCancel.warning.orderNotFound": ["This order is no longer open on THORChain - it may have already been filled or expired", "이 주문은 THORChain에서 더 이상 열려 있지 않습니다 - 이미 체결되었거나 만료되었을 수 있습니다"],
   "swap.quoteTimer.refresh": ["Refresh", "새로고침"],
-  "swap.recipient.addressPlaceholder": ["{chain} address", "{chain} 주소"],
   "swap.recipient.paste": ["Paste", "붙여넣기"],
   "swap.recipient.invalidAddress": ["Invalid {chain} address", "유효하지 않은 {chain} 주소"],
   "swap.recipient.taprootNotSupported": ["Maya Protocol does not support Taproot addresses", "Maya Protocol은 Taproot 주소를 지원하지 않습니다"],
@@ -469,5 +468,6 @@
   "tx.status.unknown": ["Unknown", "알 수 없음"],
   "tx.leg.deposit": ["Deposit {ticker}", "{ticker} 입금"],
   "tx.leg.send": ["Send {ticker}", "{ticker} 보내기"],
-  "tx.leg.swap": ["Swap {from} to {to}", "{from}을(를) {to}(으)로 스왑"]
+  "tx.leg.swap": ["Swap {from} to {to}", "{from}을(를) {to}(으)로 스왑"],
+  "swap.recipient.addressPlaceholder": ["{chain} address or THORName", "{chain} 주소 또는 THORName"]
 }

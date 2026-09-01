@@ -216,7 +216,7 @@
       "refresh": "Làm mới"
     },
     "recipient": {
-      "addressPlaceholder": "Địa chỉ {chain}",
+      "addressPlaceholder": "Địa chỉ {chain} hoặc THORName",
       "paste": "Dán",
       "invalidAddress": "Địa chỉ {chain} không hợp lệ",
       "taprootNotSupported": "Maya Protocol không hỗ trợ địa chỉ Taproot",

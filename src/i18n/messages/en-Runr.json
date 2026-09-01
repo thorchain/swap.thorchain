@@ -216,7 +216,7 @@
       "refresh": "ᚱᛖᚠᚱᛖᛊᚺ"
     },
     "recipient": {
-      "addressPlaceholder": "{chain} ᚨᛞᛞᚱᛖᛊᛊ",
+      "addressPlaceholder": "{chain} ᚨᛞᛞᚱᛖᛋᛋ ᛟᚱ THORName",
       "paste": "ᛈᚨᛊᛏᛖ",
       "invalidAddress": "ᛁᚾᚹᚨᛚᛁᛞ {chain} ᚨᛞᛞᚱᛖᛊᛊ",
       "taprootNotSupported": "ᛗᚨᛁᚨ ᛈᚱᛟᛏᛟᚲᛟᛚ ᛞᛟᛖᛊ ᚾᛟᛏ ᛊᚢᛈᛈᛟᚱᛏ ᛏᚨᛈᚱᛟᛟᛏ ᚨᛞᛞᚱᛖᛊᛊᛖᛊ",

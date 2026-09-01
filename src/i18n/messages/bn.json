@@ -216,7 +216,7 @@
       "refresh": "রিফ্রেশ করুন"
     },
     "recipient": {
-      "addressPlaceholder": "{chain} ঠিকানা",
+      "addressPlaceholder": "{chain} ঠিকানা বা THORName",
       "paste": "পেস্ট করুন",
       "invalidAddress": "অবৈধ {chain} ঠিকানা",
       "taprootNotSupported": "Maya Protocol Taproot ঠিকানা সমর্থন করে না",

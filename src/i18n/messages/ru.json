@@ -216,7 +216,7 @@
       "refresh": "Обновить"
     },
     "recipient": {
-      "addressPlaceholder": "Адрес {chain}",
+      "addressPlaceholder": "{chain} адрес или THORName",
       "paste": "Вставить",
       "invalidAddress": "Недействительный адрес {chain}",
       "taprootNotSupported": "Maya Protocol не поддерживает Taproot-адреса",

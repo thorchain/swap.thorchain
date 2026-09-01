@@ -216,7 +216,7 @@
       "refresh": "새로고침"
     },
     "recipient": {
-      "addressPlaceholder": "{chain} 주소",
+      "addressPlaceholder": "{chain} 주소 또는 THORName",
       "paste": "붙여넣기",
       "invalidAddress": "유효하지 않은 {chain} 주소",
       "taprootNotSupported": "Maya Protocol은 Taproot 주소를 지원하지 않습니다",

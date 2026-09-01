@@ -216,7 +216,7 @@
       "refresh": "تحديث"
     },
     "recipient": {
-      "addressPlaceholder": "عنوان {chain}",
+      "addressPlaceholder": "عنوان {chain} أو THORName",
       "paste": "لصق",
       "invalidAddress": "عنوان {chain} غير صالح",
       "taprootNotSupported": "بروتوكول Maya مش بيدعم عناوين Taproot",

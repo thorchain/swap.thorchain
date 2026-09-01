@@ -164,7 +164,6 @@
   "swap.limitCancel.warning.tradingPaused": ["{chain} trading is currently paused", "{chain} trading don pause for now"],
   "swap.limitCancel.warning.orderNotFound": ["This order is no longer open on THORChain - it may have already been filled or expired", "Dis order no dey open again for THORChain - e fit don already complete or don expire"],
   "swap.quoteTimer.refresh": ["Refresh", "Refresh"],
-  "swap.recipient.addressPlaceholder": ["{chain} address", "{chain} address"],
   "swap.recipient.paste": ["Paste", "Paste"],
   "swap.recipient.invalidAddress": ["Invalid {chain} address", "{chain} address no correct"],
   "swap.recipient.taprootNotSupported": ["Maya Protocol does not support Taproot addresses", "Maya Protocol no dey support Taproot address"],
@@ -469,5 +468,6 @@
   "tx.status.unknown": ["Unknown", "We no sabi"],
   "tx.leg.deposit": ["Deposit {ticker}", "Deposit {ticker}"],
   "tx.leg.send": ["Send {ticker}", "Send {ticker}"],
-  "tx.leg.swap": ["Swap {from} to {to}", "Swap {from} to {to}"]
+  "tx.leg.swap": ["Swap {from} to {to}", "Swap {from} to {to}"],
+  "swap.recipient.addressPlaceholder": ["{chain} address or THORName", "{chain} address abi THORName"]
 }

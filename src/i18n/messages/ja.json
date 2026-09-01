@@ -216,7 +216,7 @@
       "refresh": "更新"
     },
     "recipient": {
-      "addressPlaceholder": "{chain} アドレス",
+      "addressPlaceholder": "{chain} アドレスまたは THORName",
       "paste": "貼り付け",
       "invalidAddress": "無効な{chain}アドレスです",
       "taprootNotSupported": "Maya ProtocolはTaprootアドレスに対応していません",

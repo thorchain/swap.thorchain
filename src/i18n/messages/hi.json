@@ -216,7 +216,7 @@
       "refresh": "रिफ़्रेश करें"
     },
     "recipient": {
-      "addressPlaceholder": "{chain} पता",
+      "addressPlaceholder": "{chain} पता या THORName",
       "paste": "पेस्ट करें",
       "invalidAddress": "अमान्य {chain} पता",
       "taprootNotSupported": "Maya Protocol Taproot पतों का समर्थन नहीं करता",

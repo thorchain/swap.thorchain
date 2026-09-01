@@ -216,7 +216,7 @@
       "refresh": "Segarkan"
     },
     "recipient": {
-      "addressPlaceholder": "Alamat {chain}",
+      "addressPlaceholder": "Alamat {chain} atau THORName",
       "paste": "Tempel",
       "invalidAddress": "Alamat {chain} tidak valid",
       "taprootNotSupported": "Maya Protocol tidak mendukung alamat Taproot",

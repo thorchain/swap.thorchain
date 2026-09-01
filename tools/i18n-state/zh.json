@@ -164,7 +164,6 @@
   "swap.limitCancel.warning.tradingPaused": ["{chain} trading is currently paused", "{chain}交易当前已暂停"],
   "swap.limitCancel.warning.orderNotFound": ["This order is no longer open on THORChain - it may have already been filled or expired", "该订单在 THORChain 上已不再挂单 — 可能已成交或已过期"],
   "swap.quoteTimer.refresh": ["Refresh", "刷新"],
-  "swap.recipient.addressPlaceholder": ["{chain} address", "{chain}地址"],
   "swap.recipient.paste": ["Paste", "粘贴"],
   "swap.recipient.invalidAddress": ["Invalid {chain} address", "无效的{chain}地址"],
   "swap.recipient.taprootNotSupported": ["Maya Protocol does not support Taproot addresses", "Maya Protocol 不支持 Taproot 地址"],
@@ -469,5 +468,6 @@
   "tx.status.unknown": ["Unknown", "未知"],
   "tx.leg.deposit": ["Deposit {ticker}", "存入{ticker}"],
   "tx.leg.send": ["Send {ticker}", "发送{ticker}"],
-  "tx.leg.swap": ["Swap {from} to {to}", "将{from}兑换为{to}"]
+  "tx.leg.swap": ["Swap {from} to {to}", "将{from}兑换为{to}"],
+  "swap.recipient.addressPlaceholder": ["{chain} address or THORName", "{chain} 地址或 THORName"]
 }

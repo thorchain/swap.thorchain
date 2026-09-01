@@ -216,7 +216,7 @@
       "refresh": "Atualizar"
     },
     "recipient": {
-      "addressPlaceholder": "Endereço {chain}",
+      "addressPlaceholder": "Endereço {chain} ou THORName",
       "paste": "Colar",
       "invalidAddress": "Endereço {chain} inválido",
       "taprootNotSupported": "O Maya Protocol não suporta endereços Taproot",

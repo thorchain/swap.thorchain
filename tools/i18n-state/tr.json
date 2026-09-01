@@ -164,7 +164,6 @@
   "swap.limitCancel.warning.tradingPaused": ["{chain} trading is currently paused", "{chain} işlemleri şu anda duraklatıldı"],
   "swap.limitCancel.warning.orderNotFound": ["This order is no longer open on THORChain - it may have already been filled or expired", "Bu emir artık THORChain üzerinde açık değil - önceden gerçekleşmiş veya süresi dolmuş olabilir"],
   "swap.quoteTimer.refresh": ["Refresh", "Yenile"],
-  "swap.recipient.addressPlaceholder": ["{chain} address", "{chain} adresi"],
   "swap.recipient.paste": ["Paste", "Yapıştır"],
   "swap.recipient.invalidAddress": ["Invalid {chain} address", "Geçersiz {chain} adresi"],
   "swap.recipient.taprootNotSupported": ["Maya Protocol does not support Taproot addresses", "Maya Protocol, Taproot adreslerini desteklemiyor"],
@@ -469,5 +468,6 @@
   "tx.status.unknown": ["Unknown", "Bilinmiyor"],
   "tx.leg.deposit": ["Deposit {ticker}", "{ticker} Yatır"],
   "tx.leg.send": ["Send {ticker}", "{ticker} Gönder"],
-  "tx.leg.swap": ["Swap {from} to {to}", "{from} → {to} Takas"]
+  "tx.leg.swap": ["Swap {from} to {to}", "{from} → {to} Takas"],
+  "swap.recipient.addressPlaceholder": ["{chain} address or THORName", "{chain} adresi veya THORName"]
 }

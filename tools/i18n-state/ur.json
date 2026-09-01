@@ -164,7 +164,6 @@
   "swap.limitCancel.warning.tradingPaused": ["{chain} trading is currently paused", "{chain} ٹریڈنگ اس وقت روکی ہوئی ہے"],
   "swap.limitCancel.warning.orderNotFound": ["This order is no longer open on THORChain - it may have already been filled or expired", "یہ آرڈر اب THORChain پر کھلا نہیں ہے - ممکن ہے یہ پہلے ہی مکمل ہو چکا ہو یا اس کی میعاد ختم ہو گئی ہو"],
   "swap.quoteTimer.refresh": ["Refresh", "ریفریش کریں"],
-  "swap.recipient.addressPlaceholder": ["{chain} address", "{chain} پتہ"],
   "swap.recipient.paste": ["Paste", "پیسٹ کریں"],
   "swap.recipient.invalidAddress": ["Invalid {chain} address", "غلط {chain} پتہ"],
   "swap.recipient.taprootNotSupported": ["Maya Protocol does not support Taproot addresses", "Maya Protocol Taproot ایڈریسز کو سپورٹ نہیں کرتا"],
@@ -469,5 +468,6 @@
   "tx.status.unknown": ["Unknown", "نامعلوم"],
   "tx.leg.deposit": ["Deposit {ticker}", "{ticker} ڈپازٹ کریں"],
   "tx.leg.send": ["Send {ticker}", "{ticker} بھیجیں"],
-  "tx.leg.swap": ["Swap {from} to {to}", "{from} کا {to} میں تبادلہ کریں"]
+  "tx.leg.swap": ["Swap {from} to {to}", "{from} کا {to} میں تبادلہ کریں"],
+  "swap.recipient.addressPlaceholder": ["{chain} address or THORName", "{chain} ایڈریس یا THORName"]
 }
