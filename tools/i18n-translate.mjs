@@ -29,7 +29,9 @@
 //
 // Env:
 //   I18N_PROVIDER       anthropic (default) | openai | gemini
-//   I18N_API_KEY        API key for the chosen provider (except with --check)
+//   I18N_API_KEY        API key for the chosen provider (except with --check).
+//                       Falls back to the provider's own conventional variable
+//                       (ANTHROPIC_API_KEY | OPENAI_API_KEY | GEMINI_API_KEY).
 //   I18N_MODEL          model id override (defaults per provider, see PROVIDERS below)
 
 import { readFileSync, writeFileSync, existsSync, readdirSync, mkdirSync, rmSync } from 'node:fs'
@@ -45,11 +47,12 @@ const CHUNK_SIZE = 50
 const REVISE_CHUNK_SIZE = 25
 
 // Supported LLM providers. Pick one with I18N_PROVIDER; override the model with
-// I18N_MODEL. Each reads its own API key env var.
+// I18N_MODEL. keyEnv is the provider's own conventional key variable, accepted
+// as a fallback for I18N_API_KEY.
 const PROVIDERS = {
-  anthropic: { defaultModel: 'claude-opus-5' },
-  openai: { defaultModel: 'gpt-4o' },
-  gemini: { defaultModel: 'gemini-2.0-flash' }
+  anthropic: { defaultModel: 'claude-opus-5', keyEnv: 'ANTHROPIC_API_KEY' },
+  openai: { defaultModel: 'gpt-4o', keyEnv: 'OPENAI_API_KEY' },
+  gemini: { defaultModel: 'gemini-2.0-flash', keyEnv: 'GEMINI_API_KEY' }
 }
 const PROVIDER = (process.env.I18N_PROVIDER || 'anthropic').toLowerCase()
 if (!PROVIDERS[PROVIDER]) {
@@ -170,9 +173,12 @@ This is a REVISION pass. Each entry gives the previous English text, the new Eng
 
 Return ONLY a JSON object mapping each key to its updated translation.`
 
+// I18N_API_KEY is the provider-agnostic name, but the provider's own variable is
+// honoured too - an ANTHROPIC_API_KEY already set in CI or a shell keeps working.
 function requireKey() {
-  const key = process.env.I18N_API_KEY
-  if (!key) throw new Error(`I18N_API_KEY is not set (required for I18N_PROVIDER=${PROVIDER})`)
+  const { keyEnv } = PROVIDERS[PROVIDER]
+  const key = process.env.I18N_API_KEY || process.env[keyEnv]
+  if (!key) throw new Error(`Neither I18N_API_KEY nor ${keyEnv} is set (required for I18N_PROVIDER=${PROVIDER})`)
   return key
 }
 

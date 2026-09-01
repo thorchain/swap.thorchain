@@ -2,7 +2,8 @@ name: Translate UI strings
 
 # Whenever the English source (en.json) changes on main, translate the new or
 # modified strings into every other locale and commit the result back.
-# Requires an I18N_API_KEY repository secret.
+# Requires an I18N_API_KEY repository secret (or the provider's own key secret,
+# e.g. ANTHROPIC_API_KEY, which the script accepts as a fallback).
 #
 # Also runs when a locale file itself changes, so that a native speaker's
 # hand-written improvements are recorded in tools/i18n-state/<locale>.json and
@@ -38,10 +39,15 @@ jobs:
           # Choose the provider with the I18N_PROVIDER repo variable
           # (anthropic | openai | gemini; defaults to anthropic) and set the
           # I18N_API_KEY secret to the matching key. I18N_MODEL optionally
-          # overrides the model.
+          # overrides the model. Without I18N_API_KEY the script falls back to
+          # the provider's own key variable, so a pre-existing ANTHROPIC_API_KEY
+          # (or OPENAI_API_KEY / GEMINI_API_KEY) secret keeps the run working.
           I18N_PROVIDER: ${{ vars.I18N_PROVIDER }}
           I18N_MODEL: ${{ vars.I18N_MODEL }}
           I18N_API_KEY: ${{ secrets.I18N_API_KEY }}
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
         run: npm run i18n:translate
 
       - name: Summarise translations awaiting review
