@@ -60,6 +60,9 @@
   "swap.button.connectWallet": ["Connect {chain} Wallet", "Conectar monedero {chain}"],
   "swap.button.insufficientBalance": ["Insufficient Balance", "Saldo insuficiente"],
   "swap.button.approve": ["Approve {ticker}", "Aprobar {ticker}"],
+  "swap.halted.title": ["Trading is Halted", "El trading está detenido"],
+  "swap.halted.description": ["The network has temporarily halted trading for this pair. Swaps will resume automatically once trading is restored.", "La red ha detenido temporalmente el trading de este par. Los swaps se reanudarán automáticamente cuando se restablezca el trading."],
+  "swap.halted.descriptionChains": ["The network has temporarily halted trading on {chains}. Swaps will resume automatically once trading is restored.", "La red ha detenido temporalmente el trading en {chains}. Los swaps se reanudarán automáticamente cuando se restablezca el trading."],
   "swap.toast.approvalTransaction": ["Approval Transaction", "Transacción de aprobación"],
   "swap.toast.resettingApproval": ["Resetting Approval", "Restableciendo la aprobación"],
   "swap.toast.approvalNotConfirmed": ["Approval was not confirmed on-chain", "La aprobación no se confirmó en la cadena"],
@@ -466,8 +469,5 @@
   "tx.status.unknown": ["Unknown", "Desconocido"],
   "tx.leg.deposit": ["Deposit {ticker}", "Depositar {ticker}"],
   "tx.leg.send": ["Send {ticker}", "Enviar {ticker}"],
-  "tx.leg.swap": ["Swap {from} to {to}", "Intercambiar {from} por {to}"],
-  "swap.halted.title": ["Trading is Halted", "El trading está detenido"],
-  "swap.halted.description": ["The network has temporarily halted trading for this pair. Swaps will resume automatically once trading is restored.", "La red ha detenido temporalmente el trading de este par. Los swaps se reanudarán automáticamente cuando se restablezca el trading."],
-  "swap.halted.descriptionChains": ["The network has temporarily halted trading on {chains}. Swaps will resume automatically once trading is restored.", "La red ha detenido temporalmente el trading en {chains}. Los swaps se reanudarán automáticamente cuando se restablezca el trading."]
+  "tx.leg.swap": ["Swap {from} to {to}", "Intercambiar {from} por {to}"]
 }

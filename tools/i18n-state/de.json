@@ -60,6 +60,9 @@
   "swap.button.connectWallet": ["Connect {chain} Wallet", "{chain}-Wallet verbinden"],
   "swap.button.insufficientBalance": ["Insufficient Balance", "Unzureichendes Guthaben"],
   "swap.button.approve": ["Approve {ticker}", "{ticker} genehmigen"],
+  "swap.halted.title": ["Trading is Halted", "Handel ist pausiert"],
+  "swap.halted.description": ["The network has temporarily halted trading for this pair. Swaps will resume automatically once trading is restored.", "Das Netzwerk hat den Handel für dieses Paar vorübergehend pausiert. Swaps werden automatisch fortgesetzt, sobald der Handel wiederhergestellt ist."],
+  "swap.halted.descriptionChains": ["The network has temporarily halted trading on {chains}. Swaps will resume automatically once trading is restored.", "Das Netzwerk hat den Handel auf {chains} vorübergehend pausiert. Swaps werden automatisch fortgesetzt, sobald der Handel wiederhergestellt ist."],
   "swap.toast.approvalTransaction": ["Approval Transaction", "Genehmigungstransaktion"],
   "swap.toast.resettingApproval": ["Resetting Approval", "Genehmigung wird zurückgesetzt"],
   "swap.toast.approvalNotConfirmed": ["Approval was not confirmed on-chain", "Die Genehmigung wurde nicht on-chain bestätigt"],
@@ -466,8 +469,5 @@
   "tx.status.unknown": ["Unknown", "Unbekannt"],
   "tx.leg.deposit": ["Deposit {ticker}", "{ticker} einzahlen"],
   "tx.leg.send": ["Send {ticker}", "{ticker} senden"],
-  "tx.leg.swap": ["Swap {from} to {to}", "{from} zu {to} swappen"],
-  "swap.halted.title": ["Trading is Halted", "Handel ist pausiert"],
-  "swap.halted.description": ["The network has temporarily halted trading for this pair. Swaps will resume automatically once trading is restored.", "Das Netzwerk hat den Handel für dieses Paar vorübergehend pausiert. Swaps werden automatisch fortgesetzt, sobald der Handel wiederhergestellt ist."],
-  "swap.halted.descriptionChains": ["The network has temporarily halted trading on {chains}. Swaps will resume automatically once trading is restored.", "Das Netzwerk hat den Handel auf {chains} vorübergehend pausiert. Swaps werden automatisch fortgesetzt, sobald der Handel wiederhergestellt ist."]
+  "tx.leg.swap": ["Swap {from} to {to}", "{from} zu {to} swappen"]
 }

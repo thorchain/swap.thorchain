@@ -60,6 +60,9 @@
   "swap.button.connectWallet": ["Connect {chain} Wallet", "{chain} Cüzdanı Bağla"],
   "swap.button.insufficientBalance": ["Insufficient Balance", "Yetersiz Bakiye"],
   "swap.button.approve": ["Approve {ticker}", "{ticker} Onayla"],
+  "swap.halted.title": ["Trading is Halted", "İşlemler Durduruldu"],
+  "swap.halted.description": ["The network has temporarily halted trading for this pair. Swaps will resume automatically once trading is restored.", "Ağ, bu çift için işlemleri geçici olarak durdurdu. İşlemler yeniden başladığında takaslar otomatik olarak devam edecek."],
+  "swap.halted.descriptionChains": ["The network has temporarily halted trading on {chains}. Swaps will resume automatically once trading is restored.", "Ağ, {chains} üzerindeki işlemleri geçici olarak durdurdu. İşlemler yeniden başladığında takaslar otomatik olarak devam edecek."],
   "swap.toast.approvalTransaction": ["Approval Transaction", "Onay İşlemi"],
   "swap.toast.resettingApproval": ["Resetting Approval", "Onay Sıfırlanıyor"],
   "swap.toast.approvalNotConfirmed": ["Approval was not confirmed on-chain", "Onay zincir üzerinde doğrulanmadı"],
@@ -466,8 +469,5 @@
   "tx.status.unknown": ["Unknown", "Bilinmiyor"],
   "tx.leg.deposit": ["Deposit {ticker}", "{ticker} Yatır"],
   "tx.leg.send": ["Send {ticker}", "{ticker} Gönder"],
-  "tx.leg.swap": ["Swap {from} to {to}", "{from} → {to} Takas"],
-  "swap.halted.title": ["Trading is Halted", "İşlemler Durduruldu"],
-  "swap.halted.description": ["The network has temporarily halted trading for this pair. Swaps will resume automatically once trading is restored.", "Ağ, bu çift için işlemleri geçici olarak durdurdu. İşlemler yeniden başladığında takaslar otomatik olarak devam edecek."],
-  "swap.halted.descriptionChains": ["The network has temporarily halted trading on {chains}. Swaps will resume automatically once trading is restored.", "Ağ, {chains} üzerindeki işlemleri geçici olarak durdurdu. İşlemler yeniden başladığında takaslar otomatik olarak devam edecek."]
+  "tx.leg.swap": ["Swap {from} to {to}", "{from} → {to} Takas"]
 }

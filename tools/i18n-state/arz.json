@@ -60,6 +60,9 @@
   "swap.button.connectWallet": ["Connect {chain} Wallet", "ربط محفظة {chain}"],
   "swap.button.insufficientBalance": ["Insufficient Balance", "الرصيد غير كافٍ"],
   "swap.button.approve": ["Approve {ticker}", "الموافقة على {ticker}"],
+  "swap.halted.title": ["Trading is Halted", "التداول متوقف"],
+  "swap.halted.description": ["The network has temporarily halted trading for this pair. Swaps will resume automatically once trading is restored.", "الشبكة وقّفت التداول مؤقتًا للزوج ده. عمليات الـ Swap هتشتغل تاني لوحدها أول ما التداول يرجع."],
+  "swap.halted.descriptionChains": ["The network has temporarily halted trading on {chains}. Swaps will resume automatically once trading is restored.", "الشبكة وقّفت التداول مؤقتًا على {chains}. عمليات الـ Swap هتشتغل تاني لوحدها أول ما التداول يرجع."],
   "swap.toast.approvalTransaction": ["Approval Transaction", "معاملة الموافقة"],
   "swap.toast.resettingApproval": ["Resetting Approval", "إعادة ضبط الموافقة"],
   "swap.toast.approvalNotConfirmed": ["Approval was not confirmed on-chain", "الموافقة ماتأكدتش على السلسلة"],
@@ -466,8 +469,5 @@
   "tx.status.unknown": ["Unknown", "غير معروف"],
   "tx.leg.deposit": ["Deposit {ticker}", "إيداع {ticker}"],
   "tx.leg.send": ["Send {ticker}", "إرسال {ticker}"],
-  "tx.leg.swap": ["Swap {from} to {to}", "تبديل {from} إلى {to}"],
-  "swap.halted.title": ["Trading is Halted", "التداول متوقف"],
-  "swap.halted.description": ["The network has temporarily halted trading for this pair. Swaps will resume automatically once trading is restored.", "الشبكة وقّفت التداول مؤقتًا للزوج ده. عمليات الـ Swap هتشتغل تاني لوحدها أول ما التداول يرجع."],
-  "swap.halted.descriptionChains": ["The network has temporarily halted trading on {chains}. Swaps will resume automatically once trading is restored.", "الشبكة وقّفت التداول مؤقتًا على {chains}. عمليات الـ Swap هتشتغل تاني لوحدها أول ما التداول يرجع."]
+  "tx.leg.swap": ["Swap {from} to {to}", "تبديل {from} إلى {to}"]
 }

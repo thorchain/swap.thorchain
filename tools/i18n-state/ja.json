@@ -60,6 +60,9 @@
   "swap.button.connectWallet": ["Connect {chain} Wallet", "{chain} ウォレットを接続"],
   "swap.button.insufficientBalance": ["Insufficient Balance", "残高が不足しています"],
   "swap.button.approve": ["Approve {ticker}", "{ticker} を承認"],
+  "swap.halted.title": ["Trading is Halted", "取引が停止中です"],
+  "swap.halted.description": ["The network has temporarily halted trading for this pair. Swaps will resume automatically once trading is restored.", "ネットワークがこのペアの取引を一時的に停止しています。取引が再開されると、スワップは自動的に利用可能になります。"],
+  "swap.halted.descriptionChains": ["The network has temporarily halted trading on {chains}. Swaps will resume automatically once trading is restored.", "ネットワークが {chains} での取引を一時的に停止しています。取引が再開されると、スワップは自動的に利用可能になります。"],
   "swap.toast.approvalTransaction": ["Approval Transaction", "承認トランザクション"],
   "swap.toast.resettingApproval": ["Resetting Approval", "承認をリセット中"],
   "swap.toast.approvalNotConfirmed": ["Approval was not confirmed on-chain", "承認がオンチェーンで確認されませんでした"],
@@ -466,8 +469,5 @@
   "tx.status.unknown": ["Unknown", "不明"],
   "tx.leg.deposit": ["Deposit {ticker}", "{ticker} を預け入れ"],
   "tx.leg.send": ["Send {ticker}", "{ticker} を送信"],
-  "tx.leg.swap": ["Swap {from} to {to}", "{from} を {to} にスワップ"],
-  "swap.halted.title": ["Trading is Halted", "取引が停止中です"],
-  "swap.halted.description": ["The network has temporarily halted trading for this pair. Swaps will resume automatically once trading is restored.", "ネットワークがこのペアの取引を一時的に停止しています。取引が再開されると、スワップは自動的に利用可能になります。"],
-  "swap.halted.descriptionChains": ["The network has temporarily halted trading on {chains}. Swaps will resume automatically once trading is restored.", "ネットワークが {chains} での取引を一時的に停止しています。取引が再開されると、スワップは自動的に利用可能になります。"]
+  "tx.leg.swap": ["Swap {from} to {to}", "{from} を {to} にスワップ"]
 }

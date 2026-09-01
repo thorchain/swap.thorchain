@@ -60,6 +60,9 @@
   "swap.button.connectWallet": ["Connect {chain} Wallet", "{chain} والٹ کنیکٹ کرو"],
   "swap.button.insufficientBalance": ["Insufficient Balance", "بیلنس کافی نئیں"],
   "swap.button.approve": ["Approve {ticker}", "{ticker} منظور کرو"],
+  "swap.halted.title": ["Trading is Halted", "ٹریڈنگ روک دِتی گئی اے"],
+  "swap.halted.description": ["The network has temporarily halted trading for this pair. Swaps will resume automatically once trading is restored.", "نیٹ ورک نے ایس جوڑے لئی ٹریڈنگ عارضی طور تے روک دِتی اے۔ ٹریڈنگ بحال ہوندیاں ای سویپ آپے مُڑ شروع ہو جان گے۔"],
+  "swap.halted.descriptionChains": ["The network has temporarily halted trading on {chains}. Swaps will resume automatically once trading is restored.", "نیٹ ورک نے {chains} اُتے ٹریڈنگ عارضی طور تے روک دِتی اے۔ ٹریڈنگ بحال ہوندیاں ای سویپ آپے مُڑ شروع ہو جان گے۔"],
   "swap.toast.approvalTransaction": ["Approval Transaction", "منظوری دی Tx"],
   "swap.toast.resettingApproval": ["Resetting Approval", "منظوری ری سیٹ کیتی جا رہی اے"],
   "swap.toast.approvalNotConfirmed": ["Approval was not confirmed on-chain", "منظوری چین تے تصدیق نہیں ہوئی"],
@@ -466,8 +469,5 @@
   "tx.status.unknown": ["Unknown", "اݨ جاݨیا"],
   "tx.leg.deposit": ["Deposit {ticker}", "{ticker} ڈیپازٹ کرو"],
   "tx.leg.send": ["Send {ticker}", "{ticker} بھیجو"],
-  "tx.leg.swap": ["Swap {from} to {to}", "{from} نوں {to} وچ تبادلہ کرو"],
-  "swap.halted.title": ["Trading is Halted", "ٹریڈنگ روک دِتی گئی اے"],
-  "swap.halted.description": ["The network has temporarily halted trading for this pair. Swaps will resume automatically once trading is restored.", "نیٹ ورک نے ایس جوڑے لئی ٹریڈنگ عارضی طور تے روک دِتی اے۔ ٹریڈنگ بحال ہوندیاں ای سویپ آپے مُڑ شروع ہو جان گے۔"],
-  "swap.halted.descriptionChains": ["The network has temporarily halted trading on {chains}. Swaps will resume automatically once trading is restored.", "نیٹ ورک نے {chains} اُتے ٹریڈنگ عارضی طور تے روک دِتی اے۔ ٹریڈنگ بحال ہوندیاں ای سویپ آپے مُڑ شروع ہو جان گے۔"]
+  "tx.leg.swap": ["Swap {from} to {to}", "{from} نوں {to} وچ تبادلہ کرو"]
 }

@@ -60,6 +60,9 @@
   "swap.button.connectWallet": ["Connect {chain} Wallet", "{chain} वॉलेट कनेक्ट करें"],
   "swap.button.insufficientBalance": ["Insufficient Balance", "अपर्याप्त शेष राशि"],
   "swap.button.approve": ["Approve {ticker}", "{ticker} को स्वीकृत करें"],
+  "swap.halted.title": ["Trading is Halted", "ट्रेडिंग रोक दी गई है"],
+  "swap.halted.description": ["The network has temporarily halted trading for this pair. Swaps will resume automatically once trading is restored.", "नेटवर्क ने इस पेयर के लिए ट्रेडिंग अस्थायी रूप से रोक दी है। ट्रेडिंग बहाल होते ही स्वैप अपने आप फिर से शुरू हो जाएंगे।"],
+  "swap.halted.descriptionChains": ["The network has temporarily halted trading on {chains}. Swaps will resume automatically once trading is restored.", "नेटवर्क ने {chains} पर ट्रेडिंग अस्थायी रूप से रोक दी है। ट्रेडिंग बहाल होते ही स्वैप अपने आप फिर से शुरू हो जाएंगे।"],
   "swap.toast.approvalTransaction": ["Approval Transaction", "स्वीकृति लेन-देन"],
   "swap.toast.resettingApproval": ["Resetting Approval", "स्वीकृति रीसेट की जा रही है"],
   "swap.toast.approvalNotConfirmed": ["Approval was not confirmed on-chain", "स्वीकृति ऑन-चेन पुष्ट नहीं हुई"],
@@ -466,8 +469,5 @@
   "tx.status.unknown": ["Unknown", "अज्ञात"],
   "tx.leg.deposit": ["Deposit {ticker}", "{ticker} जमा करें"],
   "tx.leg.send": ["Send {ticker}", "{ticker} भेजें"],
-  "tx.leg.swap": ["Swap {from} to {to}", "{from} को {to} में स्वैप करें"],
-  "swap.halted.title": ["Trading is Halted", "ट्रेडिंग रोक दी गई है"],
-  "swap.halted.description": ["The network has temporarily halted trading for this pair. Swaps will resume automatically once trading is restored.", "नेटवर्क ने इस पेयर के लिए ट्रेडिंग अस्थायी रूप से रोक दी है। ट्रेडिंग बहाल होते ही स्वैप अपने आप फिर से शुरू हो जाएंगे।"],
-  "swap.halted.descriptionChains": ["The network has temporarily halted trading on {chains}. Swaps will resume automatically once trading is restored.", "नेटवर्क ने {chains} पर ट्रेडिंग अस्थायी रूप से रोक दी है। ट्रेडिंग बहाल होते ही स्वैप अपने आप फिर से शुरू हो जाएंगे।"]
+  "tx.leg.swap": ["Swap {from} to {to}", "{from} को {to} में स्वैप करें"]
 }

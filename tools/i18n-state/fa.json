@@ -60,6 +60,9 @@
   "swap.button.connectWallet": ["Connect {chain} Wallet", "اتصال کیف پول {chain}"],
   "swap.button.insufficientBalance": ["Insufficient Balance", "موجودی ناکافی"],
   "swap.button.approve": ["Approve {ticker}", "تأیید {ticker}"],
+  "swap.halted.title": ["Trading is Halted", "معاملات متوقف شده است"],
+  "swap.halted.description": ["The network has temporarily halted trading for this pair. Swaps will resume automatically once trading is restored.", "شبکه به‌طور موقت معاملات این جفت‌ارز را متوقف کرده است. به‌محض از سرگیری معاملات، سوآپ‌ها به‌صورت خودکار از سر گرفته می‌شوند."],
+  "swap.halted.descriptionChains": ["The network has temporarily halted trading on {chains}. Swaps will resume automatically once trading is restored.", "شبکه به‌طور موقت معاملات را در {chains} متوقف کرده است. به‌محض از سرگیری معاملات، سوآپ‌ها به‌صورت خودکار از سر گرفته می‌شوند."],
   "swap.toast.approvalTransaction": ["Approval Transaction", "تراکنش تأیید"],
   "swap.toast.resettingApproval": ["Resetting Approval", "بازنشانی تأیید"],
   "swap.toast.approvalNotConfirmed": ["Approval was not confirmed on-chain", "تأیید روی زنجیره ثبت نشد"],
@@ -466,8 +469,5 @@
   "tx.status.unknown": ["Unknown", "نامشخص"],
   "tx.leg.deposit": ["Deposit {ticker}", "واریز {ticker}"],
   "tx.leg.send": ["Send {ticker}", "ارسال {ticker}"],
-  "tx.leg.swap": ["Swap {from} to {to}", "تبادل {from} به {to}"],
-  "swap.halted.title": ["Trading is Halted", "معاملات متوقف شده است"],
-  "swap.halted.description": ["The network has temporarily halted trading for this pair. Swaps will resume automatically once trading is restored.", "شبکه به‌طور موقت معاملات این جفت‌ارز را متوقف کرده است. به‌محض از سرگیری معاملات، سوآپ‌ها به‌صورت خودکار از سر گرفته می‌شوند."],
-  "swap.halted.descriptionChains": ["The network has temporarily halted trading on {chains}. Swaps will resume automatically once trading is restored.", "شبکه به‌طور موقت معاملات را در {chains} متوقف کرده است. به‌محض از سرگیری معاملات، سوآپ‌ها به‌صورت خودکار از سر گرفته می‌شوند."]
+  "tx.leg.swap": ["Swap {from} to {to}", "تبادل {from} به {to}"]
 }

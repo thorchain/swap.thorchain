@@ -60,6 +60,9 @@
   "swap.button.connectWallet": ["Connect {chain} Wallet", "Connect {chain} Wallet"],
   "swap.button.insufficientBalance": ["Insufficient Balance", "Balance No Reach"],
   "swap.button.approve": ["Approve {ticker}", "Approve {ticker}"],
+  "swap.halted.title": ["Trading is Halted", "Trading Don Stop"],
+  "swap.halted.description": ["The network has temporarily halted trading for this pair. Swaps will resume automatically once trading is restored.", "Di network don stop trading for dis pair small time. Swap go start again by imsef once trading come back."],
+  "swap.halted.descriptionChains": ["The network has temporarily halted trading on {chains}. Swaps will resume automatically once trading is restored.", "Di network don stop trading for {chains} small time. Swap go start again by imsef once trading come back."],
   "swap.toast.approvalTransaction": ["Approval Transaction", "Approval Transaction"],
   "swap.toast.resettingApproval": ["Resetting Approval", "Dey Reset Approval"],
   "swap.toast.approvalNotConfirmed": ["Approval was not confirmed on-chain", "Approval no confirm on-chain"],
@@ -466,8 +469,5 @@
   "tx.status.unknown": ["Unknown", "We no sabi"],
   "tx.leg.deposit": ["Deposit {ticker}", "Deposit {ticker}"],
   "tx.leg.send": ["Send {ticker}", "Send {ticker}"],
-  "tx.leg.swap": ["Swap {from} to {to}", "Swap {from} to {to}"],
-  "swap.halted.title": ["Trading is Halted", "Trading Don Stop"],
-  "swap.halted.description": ["The network has temporarily halted trading for this pair. Swaps will resume automatically once trading is restored.", "Di network don stop trading for dis pair small time. Swap go start again by imsef once trading come back."],
-  "swap.halted.descriptionChains": ["The network has temporarily halted trading on {chains}. Swaps will resume automatically once trading is restored.", "Di network don stop trading for {chains} small time. Swap go start again by imsef once trading come back."]
+  "tx.leg.swap": ["Swap {from} to {to}", "Swap {from} to {to}"]
 }

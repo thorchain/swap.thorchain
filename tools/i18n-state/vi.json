@@ -60,6 +60,9 @@
   "swap.button.connectWallet": ["Connect {chain} Wallet", "Kết nối ví {chain}"],
   "swap.button.insufficientBalance": ["Insufficient Balance", "Số dư không đủ"],
   "swap.button.approve": ["Approve {ticker}", "Phê duyệt {ticker}"],
+  "swap.halted.title": ["Trading is Halted", "Giao dịch đã tạm dừng"],
+  "swap.halted.description": ["The network has temporarily halted trading for this pair. Swaps will resume automatically once trading is restored.", "Mạng lưới đã tạm dừng giao dịch cho cặp này. Việc hoán đổi sẽ tự động tiếp tục khi giao dịch được khôi phục."],
+  "swap.halted.descriptionChains": ["The network has temporarily halted trading on {chains}. Swaps will resume automatically once trading is restored.", "Mạng lưới đã tạm dừng giao dịch trên {chains}. Việc hoán đổi sẽ tự động tiếp tục khi giao dịch được khôi phục."],
   "swap.toast.approvalTransaction": ["Approval Transaction", "Giao dịch phê duyệt"],
   "swap.toast.resettingApproval": ["Resetting Approval", "Đang đặt lại phê duyệt"],
   "swap.toast.approvalNotConfirmed": ["Approval was not confirmed on-chain", "Phê duyệt chưa được xác nhận trên chuỗi"],
@@ -466,8 +469,5 @@
   "tx.status.unknown": ["Unknown", "Không xác định"],
   "tx.leg.deposit": ["Deposit {ticker}", "Nạp {ticker}"],
   "tx.leg.send": ["Send {ticker}", "Gửi {ticker}"],
-  "tx.leg.swap": ["Swap {from} to {to}", "Hoán đổi {from} sang {to}"],
-  "swap.halted.title": ["Trading is Halted", "Giao dịch đã tạm dừng"],
-  "swap.halted.description": ["The network has temporarily halted trading for this pair. Swaps will resume automatically once trading is restored.", "Mạng lưới đã tạm dừng giao dịch cho cặp này. Việc hoán đổi sẽ tự động tiếp tục khi giao dịch được khôi phục."],
-  "swap.halted.descriptionChains": ["The network has temporarily halted trading on {chains}. Swaps will resume automatically once trading is restored.", "Mạng lưới đã tạm dừng giao dịch trên {chains}. Việc hoán đổi sẽ tự động tiếp tục khi giao dịch được khôi phục."]
+  "tx.leg.swap": ["Swap {from} to {to}", "Hoán đổi {from} sang {to}"]
 }

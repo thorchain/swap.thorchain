@@ -60,6 +60,9 @@
   "swap.button.connectWallet": ["Connect {chain} Wallet", "เชื่อมต่อกระเป๋าเงิน {chain}"],
   "swap.button.insufficientBalance": ["Insufficient Balance", "ยอดคงเหลือไม่เพียงพอ"],
   "swap.button.approve": ["Approve {ticker}", "อนุมัติ {ticker}"],
+  "swap.halted.title": ["Trading is Halted", "การซื้อขายถูกระงับ"],
+  "swap.halted.description": ["The network has temporarily halted trading for this pair. Swaps will resume automatically once trading is restored.", "เครือข่ายได้ระงับการซื้อขายคู่นี้ไว้ชั่วคราว การ Swap จะกลับมาทำงานโดยอัตโนมัติเมื่อการซื้อขายเปิดใช้งานอีกครั้ง"],
+  "swap.halted.descriptionChains": ["The network has temporarily halted trading on {chains}. Swaps will resume automatically once trading is restored.", "เครือข่ายได้ระงับการซื้อขายบน {chains} ไว้ชั่วคราว การ Swap จะกลับมาทำงานโดยอัตโนมัติเมื่อการซื้อขายเปิดใช้งานอีกครั้ง"],
   "swap.toast.approvalTransaction": ["Approval Transaction", "ธุรกรรมการอนุมัติ"],
   "swap.toast.resettingApproval": ["Resetting Approval", "กำลังรีเซ็ตการอนุมัติ"],
   "swap.toast.approvalNotConfirmed": ["Approval was not confirmed on-chain", "การอนุมัติไม่ได้รับการยืนยันบนเชน"],
@@ -466,8 +469,5 @@
   "tx.status.unknown": ["Unknown", "ไม่ทราบ"],
   "tx.leg.deposit": ["Deposit {ticker}", "ฝาก {ticker}"],
   "tx.leg.send": ["Send {ticker}", "ส่ง {ticker}"],
-  "tx.leg.swap": ["Swap {from} to {to}", "แลกเปลี่ยน {from} เป็น {to}"],
-  "swap.halted.title": ["Trading is Halted", "การซื้อขายถูกระงับ"],
-  "swap.halted.description": ["The network has temporarily halted trading for this pair. Swaps will resume automatically once trading is restored.", "เครือข่ายได้ระงับการซื้อขายคู่นี้ไว้ชั่วคราว การ Swap จะกลับมาทำงานโดยอัตโนมัติเมื่อการซื้อขายเปิดใช้งานอีกครั้ง"],
-  "swap.halted.descriptionChains": ["The network has temporarily halted trading on {chains}. Swaps will resume automatically once trading is restored.", "เครือข่ายได้ระงับการซื้อขายบน {chains} ไว้ชั่วคราว การ Swap จะกลับมาทำงานโดยอัตโนมัติเมื่อการซื้อขายเปิดใช้งานอีกครั้ง"]
+  "tx.leg.swap": ["Swap {from} to {to}", "แลกเปลี่ยน {from} เป็น {to}"]
 }

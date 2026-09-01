@@ -60,6 +60,9 @@
   "swap.button.connectWallet": ["Connect {chain} Wallet", "Подключить {chain} кошелёк"],
   "swap.button.insufficientBalance": ["Insufficient Balance", "Недостаточно средств"],
   "swap.button.approve": ["Approve {ticker}", "Одобрить {ticker}"],
+  "swap.halted.title": ["Trading is Halted", "Торговля приостановлена"],
+  "swap.halted.description": ["The network has temporarily halted trading for this pair. Swaps will resume automatically once trading is restored.", "Сеть временно приостановила торговлю этой парой. Свопы возобновятся автоматически после восстановления торговли."],
+  "swap.halted.descriptionChains": ["The network has temporarily halted trading on {chains}. Swaps will resume automatically once trading is restored.", "Сеть временно приостановила торговлю в {chains}. Свопы возобновятся автоматически после восстановления торговли."],
   "swap.toast.approvalTransaction": ["Approval Transaction", "Транзакция одобрения"],
   "swap.toast.resettingApproval": ["Resetting Approval", "Сброс одобрения"],
   "swap.toast.approvalNotConfirmed": ["Approval was not confirmed on-chain", "Одобрение не подтверждено в сети"],
@@ -466,8 +469,5 @@
   "tx.status.unknown": ["Unknown", "Неизвестно"],
   "tx.leg.deposit": ["Deposit {ticker}", "Внести {ticker}"],
   "tx.leg.send": ["Send {ticker}", "Отправить {ticker}"],
-  "tx.leg.swap": ["Swap {from} to {to}", "Обменять {from} на {to}"],
-  "swap.halted.title": ["Trading is Halted", "Торговля приостановлена"],
-  "swap.halted.description": ["The network has temporarily halted trading for this pair. Swaps will resume automatically once trading is restored.", "Сеть временно приостановила торговлю этой парой. Свопы возобновятся автоматически после восстановления торговли."],
-  "swap.halted.descriptionChains": ["The network has temporarily halted trading on {chains}. Swaps will resume automatically once trading is restored.", "Сеть временно приостановила торговлю в {chains}. Свопы возобновятся автоматически после восстановления торговли."]
+  "tx.leg.swap": ["Swap {from} to {to}", "Обменять {from} на {to}"]
 }

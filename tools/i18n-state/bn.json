@@ -60,6 +60,9 @@
   "swap.button.connectWallet": ["Connect {chain} Wallet", "{chain} ওয়ালেট সংযুক্ত করুন"],
   "swap.button.insufficientBalance": ["Insufficient Balance", "অপর্যাপ্ত ব্যালেন্স"],
   "swap.button.approve": ["Approve {ticker}", "{ticker} অনুমোদন করুন"],
+  "swap.halted.title": ["Trading is Halted", "ট্রেডিং স্থগিত রয়েছে"],
+  "swap.halted.description": ["The network has temporarily halted trading for this pair. Swaps will resume automatically once trading is restored.", "নেটওয়ার্ক সাময়িকভাবে এই জোড়ার ট্রেডিং স্থগিত করেছে। ট্রেডিং পুনরায় চালু হলে সোয়াপ স্বয়ংক্রিয়ভাবে শুরু হবে।"],
+  "swap.halted.descriptionChains": ["The network has temporarily halted trading on {chains}. Swaps will resume automatically once trading is restored.", "নেটওয়ার্ক সাময়িকভাবে {chains}-এ ট্রেডিং স্থগিত করেছে। ট্রেডিং পুনরায় চালু হলে সোয়াপ স্বয়ংক্রিয়ভাবে শুরু হবে।"],
   "swap.toast.approvalTransaction": ["Approval Transaction", "অনুমোদন লেনদেন"],
   "swap.toast.resettingApproval": ["Resetting Approval", "অনুমোদন রিসেট করা হচ্ছে"],
   "swap.toast.approvalNotConfirmed": ["Approval was not confirmed on-chain", "অন-চেইনে অনুমোদন নিশ্চিত হয়নি"],
@@ -466,8 +469,5 @@
   "tx.status.unknown": ["Unknown", "অজানা"],
   "tx.leg.deposit": ["Deposit {ticker}", "{ticker} ডিপোজিট করুন"],
   "tx.leg.send": ["Send {ticker}", "{ticker} পাঠান"],
-  "tx.leg.swap": ["Swap {from} to {to}", "{from} থেকে {to} সোয়াপ করুন"],
-  "swap.halted.title": ["Trading is Halted", "ট্রেডিং স্থগিত রয়েছে"],
-  "swap.halted.description": ["The network has temporarily halted trading for this pair. Swaps will resume automatically once trading is restored.", "নেটওয়ার্ক সাময়িকভাবে এই জোড়ার ট্রেডিং স্থগিত করেছে। ট্রেডিং পুনরায় চালু হলে সোয়াপ স্বয়ংক্রিয়ভাবে শুরু হবে।"],
-  "swap.halted.descriptionChains": ["The network has temporarily halted trading on {chains}. Swaps will resume automatically once trading is restored.", "নেটওয়ার্ক সাময়িকভাবে {chains}-এ ট্রেডিং স্থগিত করেছে। ট্রেডিং পুনরায় চালু হলে সোয়াপ স্বয়ংক্রিয়ভাবে শুরু হবে।"]
+  "tx.leg.swap": ["Swap {from} to {to}", "{from} থেকে {to} সোয়াপ করুন"]
 }

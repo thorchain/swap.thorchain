@@ -60,6 +60,9 @@
   "swap.button.connectWallet": ["Connect {chain} Wallet", "連接{chain}錢包"],
   "swap.button.insufficientBalance": ["Insufficient Balance", "餘額不足"],
   "swap.button.approve": ["Approve {ticker}", "授權{ticker}"],
+  "swap.halted.title": ["Trading is Halted", "交易已暫停"],
+  "swap.halted.description": ["The network has temporarily halted trading for this pair. Swaps will resume automatically once trading is restored.", "網路已暫時暫停此交易對的交易。交易恢復後，Swap 將自動恢復運作。"],
+  "swap.halted.descriptionChains": ["The network has temporarily halted trading on {chains}. Swaps will resume automatically once trading is restored.", "網路已暫時暫停 {chains} 上的交易。交易恢復後，Swap 將自動恢復運作。"],
   "swap.toast.approvalTransaction": ["Approval Transaction", "授權交易"],
   "swap.toast.resettingApproval": ["Resetting Approval", "正在重設授權"],
   "swap.toast.approvalNotConfirmed": ["Approval was not confirmed on-chain", "授權未在鏈上確認"],
@@ -466,8 +469,5 @@
   "tx.status.unknown": ["Unknown", "未知"],
   "tx.leg.deposit": ["Deposit {ticker}", "存入{ticker}"],
   "tx.leg.send": ["Send {ticker}", "發送{ticker}"],
-  "tx.leg.swap": ["Swap {from} to {to}", "將{from}兌換為{to}"],
-  "swap.halted.title": ["Trading is Halted", "交易已暫停"],
-  "swap.halted.description": ["The network has temporarily halted trading for this pair. Swaps will resume automatically once trading is restored.", "網路已暫時暫停此交易對的交易。交易恢復後，Swap 將自動恢復運作。"],
-  "swap.halted.descriptionChains": ["The network has temporarily halted trading on {chains}. Swaps will resume automatically once trading is restored.", "網路已暫時暫停 {chains} 上的交易。交易恢復後，Swap 將自動恢復運作。"]
+  "tx.leg.swap": ["Swap {from} to {to}", "將{from}兌換為{to}"]
 }

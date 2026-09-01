@@ -60,6 +60,9 @@
   "swap.button.connectWallet": ["Connect {chain} Wallet", "Hubungkan dompet {chain}"],
   "swap.button.insufficientBalance": ["Insufficient Balance", "Saldo tidak mencukupi"],
   "swap.button.approve": ["Approve {ticker}", "Setujui {ticker}"],
+  "swap.halted.title": ["Trading is Halted", "Perdagangan Dihentikan"],
+  "swap.halted.description": ["The network has temporarily halted trading for this pair. Swaps will resume automatically once trading is restored.", "Jaringan untuk sementara menghentikan perdagangan untuk pasangan ini. Swap akan otomatis dilanjutkan setelah perdagangan dipulihkan."],
+  "swap.halted.descriptionChains": ["The network has temporarily halted trading on {chains}. Swaps will resume automatically once trading is restored.", "Jaringan untuk sementara menghentikan perdagangan di {chains}. Swap akan otomatis dilanjutkan setelah perdagangan dipulihkan."],
   "swap.toast.approvalTransaction": ["Approval Transaction", "Transaksi persetujuan"],
   "swap.toast.resettingApproval": ["Resetting Approval", "Menyetel ulang persetujuan"],
   "swap.toast.approvalNotConfirmed": ["Approval was not confirmed on-chain", "Persetujuan tidak terkonfirmasi di blockchain"],
@@ -466,8 +469,5 @@
   "tx.status.unknown": ["Unknown", "Tidak diketahui"],
   "tx.leg.deposit": ["Deposit {ticker}", "Deposit {ticker}"],
   "tx.leg.send": ["Send {ticker}", "Kirim {ticker}"],
-  "tx.leg.swap": ["Swap {from} to {to}", "Tukar {from} ke {to}"],
-  "swap.halted.title": ["Trading is Halted", "Perdagangan Dihentikan"],
-  "swap.halted.description": ["The network has temporarily halted trading for this pair. Swaps will resume automatically once trading is restored.", "Jaringan untuk sementara menghentikan perdagangan untuk pasangan ini. Swap akan otomatis dilanjutkan setelah perdagangan dipulihkan."],
-  "swap.halted.descriptionChains": ["The network has temporarily halted trading on {chains}. Swaps will resume automatically once trading is restored.", "Jaringan untuk sementara menghentikan perdagangan di {chains}. Swap akan otomatis dilanjutkan setelah perdagangan dipulihkan."]
+  "tx.leg.swap": ["Swap {from} to {to}", "Tukar {from} ke {to}"]
 }
