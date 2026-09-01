@@ -74,13 +74,17 @@
       "enterAmount": "Betrag eingeben",
       "quoting": "Angebot wird erstellt",
       "noValidQuotes": "Keine gültigen Angebote",
-      "tradingHalted": "Handel ist ausgesetzt",
       "enterLimitPrice": "Limit-Preis eingeben",
       "enterLimitOrder": "Limit-Order eingeben",
       "swap": "Swap",
       "connectWallet": "{chain}-Wallet verbinden",
       "insufficientBalance": "Unzureichendes Guthaben",
       "approve": "{ticker} genehmigen"
+    },
+    "halted": {
+      "title": "Handel ist pausiert",
+      "description": "Das Netzwerk hat den Handel für dieses Paar vorübergehend pausiert. Swaps werden automatisch fortgesetzt, sobald der Handel wiederhergestellt ist.",
+      "descriptionChains": "Das Netzwerk hat den Handel auf {chains} vorübergehend pausiert. Swaps werden automatisch fortgesetzt, sobald der Handel wiederhergestellt ist."
     },
     "toast": {
       "approvalTransaction": "Genehmigungstransaktion",

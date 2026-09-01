@@ -54,7 +54,6 @@
   "swap.button.enterAmount": ["Enter Amount", "กรอกจำนวน"],
   "swap.button.quoting": ["Quoting", "กำลังคำนวณราคา"],
   "swap.button.noValidQuotes": ["No Valid Quotes", "ไม่มีราคาที่ใช้ได้"],
-  "swap.button.tradingHalted": ["Trading is Halted", "การซื้อขายถูกระงับ"],
   "swap.button.enterLimitPrice": ["Enter limit price", "กรอกราคา Limit"],
   "swap.button.enterLimitOrder": ["Enter Limit Order", "กรอกคำสั่ง Limit"],
   "swap.button.swap": ["Swap", "แลกเปลี่ยน"],
@@ -467,5 +466,8 @@
   "tx.status.unknown": ["Unknown", "ไม่ทราบ"],
   "tx.leg.deposit": ["Deposit {ticker}", "ฝาก {ticker}"],
   "tx.leg.send": ["Send {ticker}", "ส่ง {ticker}"],
-  "tx.leg.swap": ["Swap {from} to {to}", "แลกเปลี่ยน {from} เป็น {to}"]
+  "tx.leg.swap": ["Swap {from} to {to}", "แลกเปลี่ยน {from} เป็น {to}"],
+  "swap.halted.title": ["Trading is Halted", "การซื้อขายถูกระงับ"],
+  "swap.halted.description": ["The network has temporarily halted trading for this pair. Swaps will resume automatically once trading is restored.", "เครือข่ายได้ระงับการซื้อขายคู่นี้ไว้ชั่วคราว การ Swap จะกลับมาทำงานโดยอัตโนมัติเมื่อการซื้อขายเปิดใช้งานอีกครั้ง"],
+  "swap.halted.descriptionChains": ["The network has temporarily halted trading on {chains}. Swaps will resume automatically once trading is restored.", "เครือข่ายได้ระงับการซื้อขายบน {chains} ไว้ชั่วคราว การ Swap จะกลับมาทำงานโดยอัตโนมัติเมื่อการซื้อขายเปิดใช้งานอีกครั้ง"]
 }

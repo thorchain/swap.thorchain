@@ -74,13 +74,17 @@
       "enterAmount": "Masukkan jumlah",
       "quoting": "Mengambil kuotasi",
       "noValidQuotes": "Tidak ada kuotasi yang valid",
-      "tradingHalted": "Perdagangan Dihentikan",
       "enterLimitPrice": "Masukkan harga limit",
       "enterLimitOrder": "Masukkan limit order",
       "swap": "Tukar",
       "connectWallet": "Hubungkan dompet {chain}",
       "insufficientBalance": "Saldo tidak mencukupi",
       "approve": "Setujui {ticker}"
+    },
+    "halted": {
+      "title": "Perdagangan Dihentikan",
+      "description": "Jaringan untuk sementara menghentikan perdagangan untuk pasangan ini. Swap akan otomatis dilanjutkan setelah perdagangan dipulihkan.",
+      "descriptionChains": "Jaringan untuk sementara menghentikan perdagangan di {chains}. Swap akan otomatis dilanjutkan setelah perdagangan dipulihkan."
     },
     "toast": {
       "approvalTransaction": "Transaksi persetujuan",

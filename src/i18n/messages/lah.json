@@ -74,13 +74,17 @@
       "enterAmount": "رقم پاؤ",
       "quoting": "قیمت لئی پئی جاندی اے",
       "noValidQuotes": "کوئی درست قیمت نئیں",
-      "tradingHalted": "ٹریڈنگ بند ہو گئی اے",
       "enterLimitPrice": "limit قیمت پاؤ",
       "enterLimitOrder": "Limit آرڈر پاؤ",
       "swap": "تبادلہ کرو",
       "connectWallet": "{chain} والٹ کنیکٹ کرو",
       "insufficientBalance": "بیلنس کافی نئیں",
       "approve": "{ticker} منظور کرو"
+    },
+    "halted": {
+      "title": "ٹریڈنگ روک دِتی گئی اے",
+      "description": "نیٹ ورک نے ایس جوڑے لئی ٹریڈنگ عارضی طور تے روک دِتی اے۔ ٹریڈنگ بحال ہوندیاں ای سویپ آپے مُڑ شروع ہو جان گے۔",
+      "descriptionChains": "نیٹ ورک نے {chains} اُتے ٹریڈنگ عارضی طور تے روک دِتی اے۔ ٹریڈنگ بحال ہوندیاں ای سویپ آپے مُڑ شروع ہو جان گے۔"
     },
     "toast": {
       "approvalTransaction": "منظوری دی Tx",

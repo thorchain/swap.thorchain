@@ -74,13 +74,17 @@
       "enterAmount": "輸入金額",
       "quoting": "報價中",
       "noValidQuotes": "無有效報價",
-      "tradingHalted": "交易已暫停",
       "enterLimitPrice": "輸入限價",
       "enterLimitOrder": "輸入限價訂單",
       "swap": "兌換",
       "connectWallet": "連接{chain}錢包",
       "insufficientBalance": "餘額不足",
       "approve": "授權{ticker}"
+    },
+    "halted": {
+      "title": "交易已暫停",
+      "description": "網路已暫時暫停此交易對的交易。交易恢復後，Swap 將自動恢復運作。",
+      "descriptionChains": "網路已暫時暫停 {chains} 上的交易。交易恢復後，Swap 將自動恢復運作。"
     },
     "toast": {
       "approvalTransaction": "授權交易",

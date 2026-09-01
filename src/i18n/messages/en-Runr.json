@@ -74,13 +74,17 @@
       "enterAmount": "ᛖᚾᛏᛖᚱ ᚨᛗᛟᚢᚾᛏ",
       "quoting": "ᚲᚢᛟᛏᛁᛜ",
       "noValidQuotes": "ᚾᛟ ᚹᚨᛚᛁᛞ ᚲᚢᛟᛏᛖᛊ",
-      "tradingHalted": "ᛏᚱᚨᛞᛁᛜ ᛁᛊ ᚺᚨᛚᛏᛖᛞ",
       "enterLimitPrice": "ᛖᚾᛏᛖᚱ ᛚᛁᛗᛁᛏ ᛈᚱᛁᚲᛖ",
       "enterLimitOrder": "ᛖᚾᛏᛖᚱ ᛚᛁᛗᛁᛏ ᛟᚱᛞᛖᚱ",
       "swap": "ᛊᚹᚨᛈ",
       "connectWallet": "ᚲᛟᚾᚾᛖᚲᛏ {chain} ᚹᚨᛚᛚᛖᛏ",
       "insufficientBalance": "ᛁᚾᛊᚢᚠᚠᛁᚲᛁᛖᚾᛏ ᛒᚨᛚᚨᚾᚲᛖ",
       "approve": "ᚨᛈᛈᚱᛟᚹᛖ {ticker}"
+    },
+    "halted": {
+      "title": "ᛏᚱᚨᛞᛁᛜ ᛁᛊ ᚺᚨᛚᛏᛖᛞ",
+      "description": "ᚦᛖ ᚾᛖᛏᚹᛟᚱᚲ ᚺᚨᛊ ᛏᛖᛗᛈᛟᚱᚨᚱᛁᛚᛁ ᚺᚨᛚᛏᛖᛞ ᛏᚱᚨᛞᛁᛜ ᚠᛟᚱ ᚦᛁᛊ ᛈᚨᛁᚱ. ᛊᚹᚨᛈᛊ ᚹᛁᛚᛚ ᚱᛖᛊᚢᛗᛖ ᚨᚢᛏᛟᛗᚨᛏᛁᚲᚨᛚᛚᛁ ᛟᚾᚲᛖ ᛏᚱᚨᛞᛁᛜ ᛁᛊ ᚱᛖᛊᛏᛟᚱᛖᛞ.",
+      "descriptionChains": "ᚦᛖ ᚾᛖᛏᚹᛟᚱᚲ ᚺᚨᛊ ᛏᛖᛗᛈᛟᚱᚨᚱᛁᛚᛁ ᚺᚨᛚᛏᛖᛞ ᛏᚱᚨᛞᛁᛜ ᛟᚾ {chains}. ᛊᚹᚨᛈᛊ ᚹᛁᛚᛚ ᚱᛖᛊᚢᛗᛖ ᚨᚢᛏᛟᛗᚨᛏᛁᚲᚨᛚᛚᛁ ᛟᚾᚲᛖ ᛏᚱᚨᛞᛁᛜ ᛁᛊ ᚱᛖᛊᛏᛟᚱᛖᛞ."
     },
     "toast": {
       "approvalTransaction": "ᚨᛈᛈᚱᛟᚹᚨᛚ ᛏᚱᚨᚾᛊᚨᚲᛏᛁᛟᚾ",

@@ -74,13 +74,17 @@
       "enterAmount": "Ingresa la cantidad",
       "quoting": "Cotizando",
       "noValidQuotes": "No hay cotizaciones válidas",
-      "tradingHalted": "El trading está detenido",
       "enterLimitPrice": "Ingresa el precio límite",
       "enterLimitOrder": "Ingresa la orden límite",
       "swap": "Intercambiar",
       "connectWallet": "Conectar monedero {chain}",
       "insufficientBalance": "Saldo insuficiente",
       "approve": "Aprobar {ticker}"
+    },
+    "halted": {
+      "title": "El trading está detenido",
+      "description": "La red ha detenido temporalmente el trading de este par. Los swaps se reanudarán automáticamente cuando se restablezca el trading.",
+      "descriptionChains": "La red ha detenido temporalmente el trading en {chains}. Los swaps se reanudarán automáticamente cuando se restablezca el trading."
     },
     "toast": {
       "approvalTransaction": "Transacción de aprobación",

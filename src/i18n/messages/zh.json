@@ -74,13 +74,17 @@
       "enterAmount": "输入金额",
       "quoting": "报价中",
       "noValidQuotes": "无有效报价",
-      "tradingHalted": "交易已暂停",
       "enterLimitPrice": "输入限价",
       "enterLimitOrder": "输入限价订单",
       "swap": "兑换",
       "connectWallet": "连接{chain}钱包",
       "insufficientBalance": "余额不足",
       "approve": "授权{ticker}"
+    },
+    "halted": {
+      "title": "交易已暂停",
+      "description": "网络已暂时暂停该交易对的交易。交易恢复后，兑换将自动继续。",
+      "descriptionChains": "网络已暂时暂停 {chains} 上的交易。交易恢复后，兑换将自动继续。"
     },
     "toast": {
       "approvalTransaction": "授权交易",

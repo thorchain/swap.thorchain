@@ -54,7 +54,6 @@
   "swap.button.enterAmount": ["Enter Amount", "Введите сумму"],
   "swap.button.quoting": ["Quoting", "Расчёт котировки", "Расчёт курса"],
   "swap.button.noValidQuotes": ["No Valid Quotes", "Нет доступных котировок"],
-  "swap.button.tradingHalted": ["Trading is Halted", "Торговля приостановлена"],
   "swap.button.enterLimitPrice": ["Enter limit price", "Введите лимитную цену"],
   "swap.button.enterLimitOrder": ["Enter Limit Order", "Введите лимитный ордер"],
   "swap.button.swap": ["Swap", "Обменять"],
@@ -467,5 +466,8 @@
   "tx.status.unknown": ["Unknown", "Неизвестно"],
   "tx.leg.deposit": ["Deposit {ticker}", "Внести {ticker}"],
   "tx.leg.send": ["Send {ticker}", "Отправить {ticker}"],
-  "tx.leg.swap": ["Swap {from} to {to}", "Обменять {from} на {to}"]
+  "tx.leg.swap": ["Swap {from} to {to}", "Обменять {from} на {to}"],
+  "swap.halted.title": ["Trading is Halted", "Торговля приостановлена"],
+  "swap.halted.description": ["The network has temporarily halted trading for this pair. Swaps will resume automatically once trading is restored.", "Сеть временно приостановила торговлю этой парой. Свопы возобновятся автоматически после восстановления торговли."],
+  "swap.halted.descriptionChains": ["The network has temporarily halted trading on {chains}. Swaps will resume automatically once trading is restored.", "Сеть временно приостановила торговлю в {chains}. Свопы возобновятся автоматически после восстановления торговли."]
 }

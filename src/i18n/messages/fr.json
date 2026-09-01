@@ -74,13 +74,17 @@
       "enterAmount": "Saisir le montant",
       "quoting": "Estimation en cours...",
       "noValidQuotes": "Aucune route disponible",
-      "tradingHalted": "Trading suspendu",
       "enterLimitPrice": "Saisir le prix limite",
       "enterLimitOrder": "Saisir l'ordre limite",
       "swap": "Échanger",
       "connectWallet": "Connecter le portefeuille {chain}",
       "insufficientBalance": "Solde insuffisant",
       "approve": "Approuver {ticker}"
+    },
+    "halted": {
+      "title": "Trading suspendu",
+      "description": "Le réseau a temporairement suspendu le trading pour cette paire. Les swaps reprendront automatiquement dès le rétablissement du trading.",
+      "descriptionChains": "Le réseau a temporairement suspendu le trading sur {chains}. Les swaps reprendront automatiquement dès le rétablissement du trading."
     },
     "toast": {
       "approvalTransaction": "Transaction d'approbation",

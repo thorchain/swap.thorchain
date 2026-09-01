@@ -74,13 +74,17 @@
       "enterAmount": "金額を入力",
       "quoting": "見積もり中",
       "noValidQuotes": "有効な見積もりがありません",
-      "tradingHalted": "取引は停止中です",
       "enterLimitPrice": "指値価格を入力",
       "enterLimitOrder": "指値注文を入力",
       "swap": "スワップ",
       "connectWallet": "{chain} ウォレットを接続",
       "insufficientBalance": "残高が不足しています",
       "approve": "{ticker} を承認"
+    },
+    "halted": {
+      "title": "取引が停止中です",
+      "description": "ネットワークがこのペアの取引を一時的に停止しています。取引が再開されると、スワップは自動的に利用可能になります。",
+      "descriptionChains": "ネットワークが {chains} での取引を一時的に停止しています。取引が再開されると、スワップは自動的に利用可能になります。"
     },
     "toast": {
       "approvalTransaction": "承認トランザクション",

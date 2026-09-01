@@ -74,13 +74,17 @@
       "enterAmount": "أدخل المبلغ",
       "quoting": "جارٍ التسعير",
       "noValidQuotes": "لا توجد عروض أسعار صالحة",
-      "tradingHalted": "تم إيقاف التداول",
       "enterLimitPrice": "أدخل السعر المحدد",
       "enterLimitOrder": "أدخل الأمر المحدد",
       "swap": "تبادل",
       "connectWallet": "ربط محفظة {chain}",
       "insufficientBalance": "الرصيد غير كافٍ",
       "approve": "الموافقة على {ticker}"
+    },
+    "halted": {
+      "title": "تم إيقاف التداول",
+      "description": "أوقفت الشبكة التداول مؤقتاً على هذا الزوج. ستُستأنف عمليات المبادلة تلقائياً بمجرد استعادة التداول.",
+      "descriptionChains": "أوقفت الشبكة التداول مؤقتاً على {chains}. ستُستأنف عمليات المبادلة تلقائياً بمجرد استعادة التداول."
     },
     "toast": {
       "approvalTransaction": "معاملة الموافقة",

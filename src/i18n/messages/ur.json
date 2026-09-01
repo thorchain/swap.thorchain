@@ -74,13 +74,17 @@
       "enterAmount": "رقم درج کریں",
       "quoting": "قیمت معلوم ہو رہی ہے",
       "noValidQuotes": "کوئی درست قیمت نہیں",
-      "tradingHalted": "ٹریڈنگ روک دی گئی ہے",
       "enterLimitPrice": "limit قیمت درج کریں",
       "enterLimitOrder": "Limit Order درج کریں",
       "swap": "تبادلہ کریں",
       "connectWallet": "{chain} والٹ کنیکٹ کریں",
       "insufficientBalance": "ناکافی بیلنس",
       "approve": "{ticker} منظور کریں"
+    },
+    "halted": {
+      "title": "ٹریڈنگ روک دی گئی ہے",
+      "description": "نیٹ ورک نے اس جوڑے کی ٹریڈنگ عارضی طور پر روک دی ہے۔ ٹریڈنگ بحال ہوتے ہی Swaps خودکار طور پر دوبارہ شروع ہو جائیں گے۔",
+      "descriptionChains": "نیٹ ورک نے {chains} پر ٹریڈنگ عارضی طور پر روک دی ہے۔ ٹریڈنگ بحال ہوتے ہی Swaps خودکار طور پر دوبارہ شروع ہو جائیں گے۔"
     },
     "toast": {
       "approvalTransaction": "منظوری کی Tx",

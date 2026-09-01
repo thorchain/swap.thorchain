@@ -74,13 +74,17 @@
       "enterAmount": "Put Amount",
       "quoting": "Dey quote",
       "noValidQuotes": "No Valid Quotes",
-      "tradingHalted": "Dem don Stop Trading",
       "enterLimitPrice": "Put limit price",
       "enterLimitOrder": "Put Limit Order",
       "swap": "Swap",
       "connectWallet": "Connect {chain} Wallet",
       "insufficientBalance": "Balance No Reach",
       "approve": "Approve {ticker}"
+    },
+    "halted": {
+      "title": "Trading Don Stop",
+      "description": "Di network don stop trading for dis pair small time. Swap go start again by imsef once trading come back.",
+      "descriptionChains": "Di network don stop trading for {chains} small time. Swap go start again by imsef once trading come back."
     },
     "toast": {
       "approvalTransaction": "Approval Transaction",

@@ -74,13 +74,17 @@
       "enterAmount": "Inserisci l'importo",
       "quoting": "Quotazione in corso",
       "noValidQuotes": "Nessuna quotazione valida",
-      "tradingHalted": "Trading sospeso",
       "enterLimitPrice": "Inserisci il prezzo limite",
       "enterLimitOrder": "Inserisci l'ordine limite",
       "swap": "Swap",
       "connectWallet": "Connetti il wallet {chain}",
       "insufficientBalance": "Saldo insufficiente",
       "approve": "Approva {ticker}"
+    },
+    "halted": {
+      "title": "Trading sospeso",
+      "description": "La rete ha sospeso temporaneamente il trading per questa coppia. Gli swap riprenderanno automaticamente al ripristino del trading.",
+      "descriptionChains": "La rete ha sospeso temporaneamente il trading su {chains}. Gli swap riprenderanno automaticamente al ripristino del trading."
     },
     "toast": {
       "approvalTransaction": "Approvazione della transazione",

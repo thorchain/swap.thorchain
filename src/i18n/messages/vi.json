@@ -74,13 +74,17 @@
       "enterAmount": "Nhập số lượng",
       "quoting": "Đang báo giá",
       "noValidQuotes": "Không có báo giá hợp lệ",
-      "tradingHalted": "Giao dịch đã tạm dừng",
       "enterLimitPrice": "Nhập giá giới hạn",
       "enterLimitOrder": "Nhập lệnh giới hạn",
       "swap": "Hoán đổi",
       "connectWallet": "Kết nối ví {chain}",
       "insufficientBalance": "Số dư không đủ",
       "approve": "Phê duyệt {ticker}"
+    },
+    "halted": {
+      "title": "Giao dịch đã tạm dừng",
+      "description": "Mạng lưới đã tạm dừng giao dịch cho cặp này. Việc hoán đổi sẽ tự động tiếp tục khi giao dịch được khôi phục.",
+      "descriptionChains": "Mạng lưới đã tạm dừng giao dịch trên {chains}. Việc hoán đổi sẽ tự động tiếp tục khi giao dịch được khôi phục."
     },
     "toast": {
       "approvalTransaction": "Giao dịch phê duyệt",

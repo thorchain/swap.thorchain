@@ -54,7 +54,6 @@
   "swap.button.enterAmount": ["Enter Amount", "পরিমাণ লিখুন"],
   "swap.button.quoting": ["Quoting", "কোট নেওয়া হচ্ছে"],
   "swap.button.noValidQuotes": ["No Valid Quotes", "কোনো বৈধ কোট নেই"],
-  "swap.button.tradingHalted": ["Trading is Halted", "ট্রেডিং স্থগিত রয়েছে"],
   "swap.button.enterLimitPrice": ["Enter limit price", "লিমিট মূল্য লিখুন"],
   "swap.button.enterLimitOrder": ["Enter Limit Order", "লিমিট অর্ডার লিখুন"],
   "swap.button.swap": ["Swap", "সোয়াপ করুন"],
@@ -467,5 +466,8 @@
   "tx.status.unknown": ["Unknown", "অজানা"],
   "tx.leg.deposit": ["Deposit {ticker}", "{ticker} ডিপোজিট করুন"],
   "tx.leg.send": ["Send {ticker}", "{ticker} পাঠান"],
-  "tx.leg.swap": ["Swap {from} to {to}", "{from} থেকে {to} সোয়াপ করুন"]
+  "tx.leg.swap": ["Swap {from} to {to}", "{from} থেকে {to} সোয়াপ করুন"],
+  "swap.halted.title": ["Trading is Halted", "ট্রেডিং স্থগিত রয়েছে"],
+  "swap.halted.description": ["The network has temporarily halted trading for this pair. Swaps will resume automatically once trading is restored.", "নেটওয়ার্ক সাময়িকভাবে এই জোড়ার ট্রেডিং স্থগিত করেছে। ট্রেডিং পুনরায় চালু হলে সোয়াপ স্বয়ংক্রিয়ভাবে শুরু হবে।"],
+  "swap.halted.descriptionChains": ["The network has temporarily halted trading on {chains}. Swaps will resume automatically once trading is restored.", "নেটওয়ার্ক সাময়িকভাবে {chains}-এ ট্রেডিং স্থগিত করেছে। ট্রেডিং পুনরায় চালু হলে সোয়াপ স্বয়ংক্রিয়ভাবে শুরু হবে।"]
 }

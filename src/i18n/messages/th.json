@@ -74,13 +74,17 @@
       "enterAmount": "กรอกจำนวน",
       "quoting": "กำลังคำนวณราคา",
       "noValidQuotes": "ไม่มีราคาที่ใช้ได้",
-      "tradingHalted": "การซื้อขายถูกระงับ",
       "enterLimitPrice": "กรอกราคา Limit",
       "enterLimitOrder": "กรอกคำสั่ง Limit",
       "swap": "แลกเปลี่ยน",
       "connectWallet": "เชื่อมต่อกระเป๋าเงิน {chain}",
       "insufficientBalance": "ยอดคงเหลือไม่เพียงพอ",
       "approve": "อนุมัติ {ticker}"
+    },
+    "halted": {
+      "title": "การซื้อขายถูกระงับ",
+      "description": "เครือข่ายได้ระงับการซื้อขายคู่นี้ไว้ชั่วคราว การ Swap จะกลับมาทำงานโดยอัตโนมัติเมื่อการซื้อขายเปิดใช้งานอีกครั้ง",
+      "descriptionChains": "เครือข่ายได้ระงับการซื้อขายบน {chains} ไว้ชั่วคราว การ Swap จะกลับมาทำงานโดยอัตโนมัติเมื่อการซื้อขายเปิดใช้งานอีกครั้ง"
     },
     "toast": {
       "approvalTransaction": "ธุรกรรมการอนุมัติ",

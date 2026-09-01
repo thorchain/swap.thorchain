@@ -74,13 +74,17 @@
       "enterAmount": "Tutar Gir",
       "quoting": "Fiyat alınıyor",
       "noValidQuotes": "Geçerli Teklif Yok",
-      "tradingHalted": "İşlemler Durduruldu",
       "enterLimitPrice": "Limit fiyatı gir",
       "enterLimitOrder": "Limit Emri Gir",
       "swap": "Takas Et",
       "connectWallet": "{chain} Cüzdanı Bağla",
       "insufficientBalance": "Yetersiz Bakiye",
       "approve": "{ticker} Onayla"
+    },
+    "halted": {
+      "title": "İşlemler Durduruldu",
+      "description": "Ağ, bu çift için işlemleri geçici olarak durdurdu. İşlemler yeniden başladığında takaslar otomatik olarak devam edecek.",
+      "descriptionChains": "Ağ, {chains} üzerindeki işlemleri geçici olarak durdurdu. İşlemler yeniden başladığında takaslar otomatik olarak devam edecek."
     },
     "toast": {
       "approvalTransaction": "Onay İşlemi",

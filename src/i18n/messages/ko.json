@@ -74,13 +74,17 @@
       "enterAmount": "금액 입력",
       "quoting": "견적 조회 중",
       "noValidQuotes": "유효한 견적 없음",
-      "tradingHalted": "거래가 중단되었습니다",
       "enterLimitPrice": "지정가 입력",
       "enterLimitOrder": "지정가 주문 입력",
       "swap": "스왑",
       "connectWallet": "{chain} 지갑 연결",
       "insufficientBalance": "잔액 부족",
       "approve": "{ticker} 승인"
+    },
+    "halted": {
+      "title": "거래가 중단됨",
+      "description": "네트워크에서 이 페어의 거래를 일시적으로 중단했습니다. 거래가 복구되면 스왑이 자동으로 재개됩니다.",
+      "descriptionChains": "네트워크에서 {chains}의 거래를 일시적으로 중단했습니다. 거래가 복구되면 스왑이 자동으로 재개됩니다."
     },
     "toast": {
       "approvalTransaction": "승인 트랜잭션",
