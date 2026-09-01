@@ -537,7 +537,7 @@
     "externalWalletModeDescription": "セルフカストディウォレットをウェブサイトに接続せずに使用します",
     "externalWalletModeUnavailable": "現在ご利用いただけません",
     "externalWalletModeHalted": "スワップを続けるにはウォレットを接続してください。",
-    "externalWalletAssetUnsupported": "この資産は外部ウォレットモードでは対応していません。続行する場合はブラウザウォレットを接続してください。",
+    "externalWalletAssetUnsupported": "外部ウォレットモードはレイヤー1資産のみ対応しています。ERC20トークンはウォレットの承認が必要なため、このオプションでは利用できません。",
     "close": "閉じる",
     "sendToken": "{ticker} を送信"
   },

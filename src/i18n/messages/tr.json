@@ -537,7 +537,7 @@
     "externalWalletModeDescription": "Öz saklamalı bir cüzdanı web sitesine bağlamadan kullan",
     "externalWalletModeUnavailable": "Şu Anda Kullanılamıyor",
     "externalWalletModeHalted": "Takas işlemlerine devam etmek için bir cüzdan bağlayın.",
-    "externalWalletAssetUnsupported": "Bu varlık Harici Cüzdan modunda desteklenmiyor. Devam etmek istiyorsanız tarayıcı içi bir cüzdan bağlayın.",
+    "externalWalletAssetUnsupported": "Harici Cüzdan Modu yalnızca Layer 1 varlıkları için kullanılabilir. ERC20 tokenleri cüzdan onayı gerektirir ve bu seçenekle kullanılamaz.",
     "close": "Kapat",
     "sendToken": "{ticker} Gönder"
   },

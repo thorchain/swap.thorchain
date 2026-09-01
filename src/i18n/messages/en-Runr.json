@@ -537,7 +537,7 @@
     "externalWalletModeDescription": "ᚢᛊᛖ ᚨ ᛊᛖᛚᚠ ᚲᚢᛊᛏᛟᛞᛁ ᚹᚨᛚᛚᛖᛏ ᚹᛁᚦᛟᚢᛏ ᚲᛟᚾᚾᛖᚲᛏᛁᛜ ᛁᛏ ᛏᛟ ᚦᛖ ᚹᛖᛒᛊᛁᛏᛖ",
     "externalWalletModeUnavailable": "ᚲᚢᚱᚱᛖᚾᛏᛚᛁ ᚢᚾᚨᚹᚨᛁᛚᚨᛒᛚᛖ",
     "externalWalletModeHalted": "ᚲᛟᚾᚾᛖᚲᛏ ᚨ ᚹᚨᛚᛚᛖᛏ ᛏᛟ ᚲᛖᛖᛈ ᛊᚹᚨᛈᛈᛁᛜ.",
-    "externalWalletAssetUnsupported": "ᚦᛁᛊ ᚨᛊᛊᛖᛏ ᛁᛊ ᚾᛟᛏ ᛊᚢᛈᛈᛟᚱᛏᛖᛞ ᛁᚾ ᛖᚲᛊᛏᛖᚱᚾᚨᛚ ᚹᚨᛚᛚᛖᛏ ᛗᛟᛞᛖ. ᚲᛟᚾᚾᛖᚲᛏ ᚨ ᛒᚱᛟᚹᛊᛖᚱ ᚹᚨᛚᛚᛖᛏ ᛁᚠ ᛁᛟᚢ ᚹᚨᚾᛏ ᛏᛟ ᚲᛟᚾᛏᛁᚾᚢᛖ.",
+    "externalWalletAssetUnsupported": "ᛖᚲᛊᛏᛖᚱᚾᚨᛚ ᚹᚨᛚᛚᛖᛏ ᛗᛟᛞᛖ ᛁᛊ ᛟᚾᛚᛁ ᚨᚹᚨᛁᛚᚨᛒᛚᛖ ᚠᛟᚱ ᛚᚨᛁᛖᚱ 1 ᚨᛊᛊᛖᛏᛊ. ᛖᚱᚲ20 ᛏᛟᚲᛖᚾᛊ ᚱᛖᚲᚢᛁᚱᛖ ᚹᚨᛚᛚᛖᛏ ᚨᛈᛈᚱᛟᚹᚨᛚ ᚨᚾᛞ ᚲᚨᚾᚾᛟᛏ ᛒᛖ ᚢᛊᛖᛞ ᚹᛁᚦ ᚦᛁᛊ ᛟᛈᛏᛁᛟᚾ.",
     "close": "ᚲᛚᛟᛊᛖ",
     "sendToken": "ᛊᛖᚾᛞ {ticker}"
   },

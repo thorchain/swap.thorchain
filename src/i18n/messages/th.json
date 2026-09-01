@@ -537,7 +537,7 @@
     "externalWalletModeDescription": "ใช้กระเป๋าเงินแบบ self-custody โดยไม่ต้องเชื่อมต่อกับเว็บไซต์",
     "externalWalletModeUnavailable": "ไม่พร้อมใช้งานในขณะนี้",
     "externalWalletModeHalted": "เชื่อมต่อกระเป๋าเงินเพื่อสวอปต่อ",
-    "externalWalletAssetUnsupported": "สินทรัพย์นี้ไม่รองรับในโหมดกระเป๋าเงินภายนอก เชื่อมต่อกระเป๋าเงินบนเบราว์เซอร์หากคุณต้องการดำเนินการต่อ",
+    "externalWalletAssetUnsupported": "โหมดกระเป๋าภายนอกใช้ได้เฉพาะกับสินทรัพย์ Layer 1 เท่านั้น โทเค็น ERC20 ต้องมีการอนุมัติจากกระเป๋าเงิน จึงไม่สามารถใช้กับตัวเลือกนี้ได้",
     "close": "ปิด",
     "sendToken": "ส่ง {ticker}"
   },

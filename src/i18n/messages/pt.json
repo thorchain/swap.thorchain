@@ -537,7 +537,7 @@
     "externalWalletModeDescription": "Use uma carteira de autocustódia sem conectá-la ao site",
     "externalWalletModeUnavailable": "Atualmente Indisponível",
     "externalWalletModeHalted": "Ligue uma carteira para continuar a fazer swaps.",
-    "externalWalletAssetUnsupported": "Este ativo não é suportado no modo de carteira externa. Conecte uma carteira de navegador se quiser continuar.",
+    "externalWalletAssetUnsupported": "O Modo de Carteira Externa está disponível apenas para ativos de Camada 1. Os tokens ERC20 exigem aprovação da carteira e não podem ser utilizados com esta opção.",
     "close": "Fechar",
     "sendToken": "Enviar {ticker}"
   },

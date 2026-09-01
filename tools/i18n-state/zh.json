@@ -442,7 +442,6 @@
   "wallet.externalWalletModeDescription": ["Use a self custody wallet without connecting it to the website", "使用自托管钱包，无需将其连接到网站"],
   "wallet.externalWalletModeUnavailable": ["Currently Unavailable", "暂不可用"],
   "wallet.externalWalletModeHalted": ["Connect a wallet to keep swapping.", "免 memo 交换当前已暂停。请连接钱包以继续交换。", "连接钱包以继续交易。"],
-  "wallet.externalWalletAssetUnsupported": ["This asset is not supported in External Wallet mode. Connect a browser wallet if you want to continue.", "此资产在外部钱包模式下不受支持。如要继续，请连接浏览器钱包。"],
   "wallet.close": ["Close", "关闭"],
   "wallet.sendToken": ["Send {ticker}", "发送{ticker}"],
   "common.close": ["Close", "关闭"],
@@ -469,5 +468,6 @@
   "tx.status.unknown": ["Unknown", "未知"],
   "tx.leg.deposit": ["Deposit {ticker}", "存入{ticker}"],
   "tx.leg.send": ["Send {ticker}", "发送{ticker}"],
-  "tx.leg.swap": ["Swap {from} to {to}", "将{from}兑换为{to}"]
+  "tx.leg.swap": ["Swap {from} to {to}", "将{from}兑换为{to}"],
+  "wallet.externalWalletAssetUnsupported": ["External Wallet Mode is only available for Layer 1 assets. ERC20 tokens require wallet approval and cannot be used with this option.", "外部钱包模式仅支持 Layer 1 资产。ERC20 代币需要钱包授权，无法使用此选项。"]
 }

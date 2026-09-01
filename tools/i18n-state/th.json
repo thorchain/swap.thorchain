@@ -442,7 +442,6 @@
   "wallet.externalWalletModeDescription": ["Use a self custody wallet without connecting it to the website", "ใช้กระเป๋าเงินแบบ self-custody โดยไม่ต้องเชื่อมต่อกับเว็บไซต์"],
   "wallet.externalWalletModeUnavailable": ["Currently Unavailable", "ไม่พร้อมใช้งานในขณะนี้"],
   "wallet.externalWalletModeHalted": ["Connect a wallet to keep swapping.", "การสวอปแบบไม่ใช้ memo ถูกหยุดชั่วคราวในขณะนี้ เชื่อมต่อกระเป๋าเงินเพื่อสวอปต่อ", "เชื่อมต่อกระเป๋าเงินเพื่อสวอปต่อ"],
-  "wallet.externalWalletAssetUnsupported": ["This asset is not supported in External Wallet mode. Connect a browser wallet if you want to continue.", "สินทรัพย์นี้ไม่รองรับในโหมดกระเป๋าเงินภายนอก เชื่อมต่อกระเป๋าเงินบนเบราว์เซอร์หากคุณต้องการดำเนินการต่อ"],
   "wallet.close": ["Close", "ปิด"],
   "wallet.sendToken": ["Send {ticker}", "ส่ง {ticker}"],
   "common.close": ["Close", "ปิด"],
@@ -469,5 +468,6 @@
   "tx.status.unknown": ["Unknown", "ไม่ทราบ"],
   "tx.leg.deposit": ["Deposit {ticker}", "ฝาก {ticker}"],
   "tx.leg.send": ["Send {ticker}", "ส่ง {ticker}"],
-  "tx.leg.swap": ["Swap {from} to {to}", "แลกเปลี่ยน {from} เป็น {to}"]
+  "tx.leg.swap": ["Swap {from} to {to}", "แลกเปลี่ยน {from} เป็น {to}"],
+  "wallet.externalWalletAssetUnsupported": ["External Wallet Mode is only available for Layer 1 assets. ERC20 tokens require wallet approval and cannot be used with this option.", "โหมดกระเป๋าภายนอกใช้ได้เฉพาะกับสินทรัพย์ Layer 1 เท่านั้น โทเค็น ERC20 ต้องมีการอนุมัติจากกระเป๋าเงิน จึงไม่สามารถใช้กับตัวเลือกนี้ได้"]
 }

@@ -537,7 +537,7 @@
     "externalWalletModeDescription": "अपने सेल्फ-कस्टडी वॉलेट को वेबसाइट से कनेक्ट किए बिना उसका उपयोग करें",
     "externalWalletModeUnavailable": "फ़िलहाल उपलब्ध नहीं",
     "externalWalletModeHalted": "स्वैप जारी रखने के लिए वॉलेट कनेक्ट करें।",
-    "externalWalletAssetUnsupported": "यह एसेट बाहरी वॉलेट मोड में समर्थित नहीं है. यदि आप जारी रखना चाहते हैं तो एक ब्राउज़र वॉलेट कनेक्ट करें.",
+    "externalWalletAssetUnsupported": "एक्सटर्नल वॉलेट मोड केवल Layer 1 एसेट्स के लिए उपलब्ध है। ERC20 टोकन के लिए वॉलेट अप्रूवल आवश्यक है और इन्हें इस विकल्प के साथ उपयोग नहीं किया जा सकता।",
     "close": "बंद करें",
     "sendToken": "{ticker} भेजें"
   },

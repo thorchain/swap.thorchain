@@ -537,7 +537,7 @@
     "externalWalletModeDescription": "از یک کیف پول خودنگهدار بدون اتصال آن به وب‌سایت استفاده کنید",
     "externalWalletModeUnavailable": "در حال حاضر در دسترس نیست",
     "externalWalletModeHalted": "برای ادامه سواپ، یک کیف پول متصل کنید.",
-    "externalWalletAssetUnsupported": "این دارایی در حالت کیف پول خارجی پشتیبانی نمی‌شود. برای ادامه، یک کیف پول مرورگر متصل کنید.",
+    "externalWalletAssetUnsupported": "حالت کیف پول خارجی فقط برای دارایی‌های لایه ۱ در دسترس است. توکن‌های ERC20 به تأیید کیف پول نیاز دارند و نمی‌توان از آن‌ها با این گزینه استفاده کرد.",
     "close": "بستن",
     "sendToken": "ارسال {ticker}"
   },

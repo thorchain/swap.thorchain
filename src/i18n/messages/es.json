@@ -537,7 +537,7 @@
     "externalWalletModeDescription": "Usa una billetera de autocustodia sin conectarla al sitio web",
     "externalWalletModeUnavailable": "No disponible actualmente",
     "externalWalletModeHalted": "Conecta una billetera para seguir intercambiando.",
-    "externalWalletAssetUnsupported": "Este activo no es compatible en el modo de billetera externa. Conecta una billetera del navegador si quieres continuar.",
+    "externalWalletAssetUnsupported": "El Modo de Billetera Externa solo está disponible para activos de capa 1. Los tokens ERC20 requieren aprobación de la billetera y no pueden usarse con esta opción.",
     "close": "Cerrar",
     "sendToken": "Enviar {ticker}"
   },

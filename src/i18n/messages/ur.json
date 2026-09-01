@@ -537,7 +537,7 @@
     "externalWalletModeDescription": "سیلف کسٹڈی والٹ کو ویب سائٹ سے منسلک کیے بغیر استعمال کریں",
     "externalWalletModeUnavailable": "فی الحال دستیاب نہیں",
     "externalWalletModeHalted": "سواپ جاری رکھنے کے لیے والیٹ منسلک کریں۔",
-    "externalWalletAssetUnsupported": "یہ اثاثہ External Wallet موڈ میں سپورٹڈ نہیں ہے۔ اگر آپ جاری رکھنا چاہتے ہیں تو براؤزر والٹ کنیکٹ کریں۔",
+    "externalWalletAssetUnsupported": "بیرونی والٹ موڈ صرف لیئر 1 اثاثوں کے لیے دستیاب ہے۔ ERC20 ٹوکنز کے لیے والٹ کی منظوری درکار ہوتی ہے، اس لیے انہیں اس آپشن کے ساتھ استعمال نہیں کیا جا سکتا۔",
     "close": "بند کریں",
     "sendToken": "{ticker} بھیجیں"
   },

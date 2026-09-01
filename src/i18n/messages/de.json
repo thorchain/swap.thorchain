@@ -537,7 +537,7 @@
     "externalWalletModeDescription": "Verwenden Sie eine Self-Custody-Wallet, ohne sie mit der Website zu verbinden",
     "externalWalletModeUnavailable": "Derzeit nicht verfügbar",
     "externalWalletModeHalted": "Verbinde eine Wallet, um weiter zu swappen.",
-    "externalWalletAssetUnsupported": "Dieses Asset wird im externen Wallet-Modus nicht unterstützt. Verbinden Sie eine Browser-Wallet, wenn Sie fortfahren möchten.",
+    "externalWalletAssetUnsupported": "Der Modus für externe Wallets ist nur für Layer-1-Assets verfügbar. ERC20-Token erfordern eine Wallet-Freigabe und können mit dieser Option nicht verwendet werden.",
     "close": "Schließen",
     "sendToken": "{ticker} senden"
   },

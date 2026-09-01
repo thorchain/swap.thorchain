@@ -537,7 +537,7 @@
     "externalWalletModeDescription": "استخدم محفظة بحفظ ذاتي من غير ما تربطها بالموقع",
     "externalWalletModeUnavailable": "مش متاح دلوقتي",
     "externalWalletModeHalted": "وصّل محفظة عشان تكمّل عمليات التبديل.",
-    "externalWalletAssetUnsupported": "الأصل ده مش مدعوم في وضع المحفظة الخارجية. اربط محفظة متصفح لو عايز تكمّل.",
+    "externalWalletAssetUnsupported": "وضع المحفظة الخارجية متاح بس لأصول Layer 1. توكنات ERC20 محتاجة موافقة من المحفظة ومش ممكن تستخدم مع الخيار ده.",
     "close": "إغلاق",
     "sendToken": "إرسال {ticker}"
   },

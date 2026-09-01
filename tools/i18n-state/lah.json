@@ -442,7 +442,6 @@
   "wallet.externalWalletModeDescription": ["Use a self custody wallet without connecting it to the website", "سیلف کسٹڈی والٹ نوں ویب سائٹ نال جوڑے بغیر ورتو"],
   "wallet.externalWalletModeUnavailable": ["Currently Unavailable", "ہُنے دستیاب نہیں"],
   "wallet.externalWalletModeHalted": ["Connect a wallet to keep swapping.", "میمو توں بغیر سویپ ہُنے روکے ہوئے نیں۔ سویپ جاری رکھن لئی والٹ کنیکٹ کرو۔", "سواپ جاری رکھݨ لئی کوئی والٹ جوڑو۔"],
-  "wallet.externalWalletAssetUnsupported": ["This asset is not supported in External Wallet mode. Connect a browser wallet if you want to continue.", "ایہ اثاثہ بیرونی والٹ موڈ وچ سپورٹ نئیں اے۔ جے تُسی اگے ودھݨا چاہندے او تے براؤزر والٹ کنیکٹ کرو۔"],
   "wallet.close": ["Close", "بند کرو"],
   "wallet.sendToken": ["Send {ticker}", "{ticker} بھیجو"],
   "common.close": ["Close", "بند کرو"],
@@ -469,5 +468,6 @@
   "tx.status.unknown": ["Unknown", "اݨ جاݨیا"],
   "tx.leg.deposit": ["Deposit {ticker}", "{ticker} ڈیپازٹ کرو"],
   "tx.leg.send": ["Send {ticker}", "{ticker} بھیجو"],
-  "tx.leg.swap": ["Swap {from} to {to}", "{from} نوں {to} وچ تبادلہ کرو"]
+  "tx.leg.swap": ["Swap {from} to {to}", "{from} نوں {to} وچ تبادلہ کرو"],
+  "wallet.externalWalletAssetUnsupported": ["External Wallet Mode is only available for Layer 1 assets. ERC20 tokens require wallet approval and cannot be used with this option.", "بیرونی والٹ موڈ صرف لیئر 1 اثاثیاں لئی دستیاب اے۔ ERC20 ٹوکناں نوں والٹ دی منظوری دی لوڑ ہوندی اے تے اوہ ایس آپشن نال نئیں ورتے جا سکدے۔"]
 }

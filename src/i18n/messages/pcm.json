@@ -537,7 +537,7 @@
     "externalWalletModeDescription": "Use a self-custody wallet without connecting am to di website",
     "externalWalletModeUnavailable": "E No Dey Available Now",
     "externalWalletModeHalted": "Konnect wallet make you fit continue to dey swap.",
-    "externalWalletAssetUnsupported": "Dis asset no dey supported for External Wallet mode. Connect a browser wallet if you wan continue.",
+    "externalWalletAssetUnsupported": "External Wallet Mode na only for Layer 1 assets. ERC20 tokens need wallet approval, so you no fit use dem with dis option.",
     "close": "Close",
     "sendToken": "Send {ticker}"
   },

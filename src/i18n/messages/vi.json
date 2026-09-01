@@ -537,7 +537,7 @@
     "externalWalletModeDescription": "Sử dụng ví tự lưu ký mà không cần kết nối với trang web",
     "externalWalletModeUnavailable": "Hiện không khả dụng",
     "externalWalletModeHalted": "Kết nối ví để tiếp tục swap.",
-    "externalWalletAssetUnsupported": "Tài sản này không được hỗ trợ ở chế độ ví bên ngoài. Kết nối ví trình duyệt nếu bạn muốn tiếp tục.",
+    "externalWalletAssetUnsupported": "Chế độ Ví Ngoài chỉ khả dụng cho các tài sản Layer 1. Token ERC20 cần được ví phê duyệt nên không thể sử dụng với tùy chọn này.",
     "close": "Đóng",
     "sendToken": "Gửi {ticker}"
   },

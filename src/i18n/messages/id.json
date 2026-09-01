@@ -537,7 +537,7 @@
     "externalWalletModeDescription": "Gunakan dompet self-custody tanpa menghubungkannya ke situs web",
     "externalWalletModeUnavailable": "Saat Ini Tidak Tersedia",
     "externalWalletModeHalted": "Hubungkan dompet untuk terus melakukan swap.",
-    "externalWalletAssetUnsupported": "Aset ini tidak didukung dalam mode dompet eksternal. Hubungkan dompet browser jika Anda ingin melanjutkan.",
+    "externalWalletAssetUnsupported": "Mode Dompet Eksternal hanya tersedia untuk aset Layer 1. Token ERC20 memerlukan persetujuan dompet dan tidak dapat digunakan dengan opsi ini.",
     "close": "Tutup",
     "sendToken": "Kirim {ticker}"
   },

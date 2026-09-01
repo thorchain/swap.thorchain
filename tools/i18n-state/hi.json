@@ -442,7 +442,6 @@
   "wallet.externalWalletModeDescription": ["Use a self custody wallet without connecting it to the website", "अपने सेल्फ-कस्टडी वॉलेट को वेबसाइट से कनेक्ट किए बिना उसका उपयोग करें"],
   "wallet.externalWalletModeUnavailable": ["Currently Unavailable", "फ़िलहाल उपलब्ध नहीं"],
   "wallet.externalWalletModeHalted": ["Connect a wallet to keep swapping.", "मेमोलेस स्वैप अभी रोके गए हैं। स्वैप जारी रखने के लिए वॉलेट कनेक्ट करें।", "स्वैप जारी रखने के लिए वॉलेट कनेक्ट करें।"],
-  "wallet.externalWalletAssetUnsupported": ["This asset is not supported in External Wallet mode. Connect a browser wallet if you want to continue.", "यह एसेट बाहरी वॉलेट मोड में समर्थित नहीं है. यदि आप जारी रखना चाहते हैं तो एक ब्राउज़र वॉलेट कनेक्ट करें."],
   "wallet.close": ["Close", "बंद करें"],
   "wallet.sendToken": ["Send {ticker}", "{ticker} भेजें"],
   "common.close": ["Close", "बंद करें"],
@@ -469,5 +468,6 @@
   "tx.status.unknown": ["Unknown", "अज्ञात"],
   "tx.leg.deposit": ["Deposit {ticker}", "{ticker} जमा करें"],
   "tx.leg.send": ["Send {ticker}", "{ticker} भेजें"],
-  "tx.leg.swap": ["Swap {from} to {to}", "{from} को {to} में स्वैप करें"]
+  "tx.leg.swap": ["Swap {from} to {to}", "{from} को {to} में स्वैप करें"],
+  "wallet.externalWalletAssetUnsupported": ["External Wallet Mode is only available for Layer 1 assets. ERC20 tokens require wallet approval and cannot be used with this option.", "एक्सटर्नल वॉलेट मोड केवल Layer 1 एसेट्स के लिए उपलब्ध है। ERC20 टोकन के लिए वॉलेट अप्रूवल आवश्यक है और इन्हें इस विकल्प के साथ उपयोग नहीं किया जा सकता।"]
 }

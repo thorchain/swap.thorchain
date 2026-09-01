@@ -537,7 +537,7 @@
     "externalWalletModeDescription": "Utilizzi un portafoglio self-custody senza collegarlo al sito web",
     "externalWalletModeUnavailable": "Attualmente non disponibile",
     "externalWalletModeHalted": "Collega un wallet per continuare a fare swap.",
-    "externalWalletAssetUnsupported": "Questo asset non è supportato in modalità portafoglio esterno. Connetta un portafoglio del browser se desidera continuare.",
+    "externalWalletAssetUnsupported": "La modalità Wallet Esterno è disponibile solo per gli asset Layer 1. I token ERC20 richiedono l'approvazione del wallet e non possono essere utilizzati con questa opzione.",
     "close": "Chiudi",
     "sendToken": "Invia {ticker}"
   },

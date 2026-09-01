@@ -442,7 +442,6 @@
   "wallet.externalWalletModeDescription": ["Use a self custody wallet without connecting it to the website", "セルフカストディウォレットをウェブサイトに接続せずに使用します"],
   "wallet.externalWalletModeUnavailable": ["Currently Unavailable", "現在ご利用いただけません"],
   "wallet.externalWalletModeHalted": ["Connect a wallet to keep swapping.", "メモレススワップは現在停止中です。ウォレットを接続してスワップを続けてください。", "スワップを続けるにはウォレットを接続してください。"],
-  "wallet.externalWalletAssetUnsupported": ["This asset is not supported in External Wallet mode. Connect a browser wallet if you want to continue.", "この資産は外部ウォレットモードでは対応していません。続行する場合はブラウザウォレットを接続してください。"],
   "wallet.close": ["Close", "閉じる"],
   "wallet.sendToken": ["Send {ticker}", "{ticker} を送信"],
   "common.close": ["Close", "閉じる"],
@@ -469,5 +468,6 @@
   "tx.status.unknown": ["Unknown", "不明"],
   "tx.leg.deposit": ["Deposit {ticker}", "{ticker} を預け入れ"],
   "tx.leg.send": ["Send {ticker}", "{ticker} を送信"],
-  "tx.leg.swap": ["Swap {from} to {to}", "{from} を {to} にスワップ"]
+  "tx.leg.swap": ["Swap {from} to {to}", "{from} を {to} にスワップ"],
+  "wallet.externalWalletAssetUnsupported": ["External Wallet Mode is only available for Layer 1 assets. ERC20 tokens require wallet approval and cannot be used with this option.", "外部ウォレットモードはレイヤー1資産のみ対応しています。ERC20トークンはウォレットの承認が必要なため、このオプションでは利用できません。"]
 }

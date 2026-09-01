@@ -537,7 +537,7 @@
     "externalWalletModeDescription": "سیلف کسٹڈی والٹ نوں ویب سائٹ نال جوڑے بغیر ورتو",
     "externalWalletModeUnavailable": "ہُنے دستیاب نہیں",
     "externalWalletModeHalted": "سواپ جاری رکھݨ لئی کوئی والٹ جوڑو۔",
-    "externalWalletAssetUnsupported": "ایہ اثاثہ بیرونی والٹ موڈ وچ سپورٹ نئیں اے۔ جے تُسی اگے ودھݨا چاہندے او تے براؤزر والٹ کنیکٹ کرو۔",
+    "externalWalletAssetUnsupported": "بیرونی والٹ موڈ صرف لیئر 1 اثاثیاں لئی دستیاب اے۔ ERC20 ٹوکناں نوں والٹ دی منظوری دی لوڑ ہوندی اے تے اوہ ایس آپشن نال نئیں ورتے جا سکدے۔",
     "close": "بند کرو",
     "sendToken": "{ticker} بھیجو"
   },

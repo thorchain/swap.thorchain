@@ -442,7 +442,6 @@
   "wallet.externalWalletModeDescription": ["Use a self custody wallet without connecting it to the website", "Use a self-custody wallet without connecting am to di website"],
   "wallet.externalWalletModeUnavailable": ["Currently Unavailable", "E No Dey Available Now"],
   "wallet.externalWalletModeHalted": ["Connect a wallet to keep swapping.", "Memoless swaps don pause for now. Connect wallet make you fit continue to swap.", "Konnect wallet make you fit continue to dey swap."],
-  "wallet.externalWalletAssetUnsupported": ["This asset is not supported in External Wallet mode. Connect a browser wallet if you want to continue.", "Dis asset no dey supported for External Wallet mode. Connect a browser wallet if you wan continue."],
   "wallet.close": ["Close", "Close"],
   "wallet.sendToken": ["Send {ticker}", "Send {ticker}"],
   "common.close": ["Close", "Close"],
@@ -469,5 +468,6 @@
   "tx.status.unknown": ["Unknown", "We no sabi"],
   "tx.leg.deposit": ["Deposit {ticker}", "Deposit {ticker}"],
   "tx.leg.send": ["Send {ticker}", "Send {ticker}"],
-  "tx.leg.swap": ["Swap {from} to {to}", "Swap {from} to {to}"]
+  "tx.leg.swap": ["Swap {from} to {to}", "Swap {from} to {to}"],
+  "wallet.externalWalletAssetUnsupported": ["External Wallet Mode is only available for Layer 1 assets. ERC20 tokens require wallet approval and cannot be used with this option.", "External Wallet Mode na only for Layer 1 assets. ERC20 tokens need wallet approval, so you no fit use dem with dis option."]
 }

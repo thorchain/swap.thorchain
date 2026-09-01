@@ -442,7 +442,6 @@
   "wallet.externalWalletModeDescription": ["Use a self custody wallet without connecting it to the website", "Используйте некастодиальный кошелёк, не подключая его к сайту"],
   "wallet.externalWalletModeUnavailable": ["Currently Unavailable", "Сейчас недоступно"],
   "wallet.externalWalletModeHalted": ["Connect a wallet to keep swapping.", "Свопы без memo сейчас приостановлены. Подключите кошелёк, чтобы продолжить обмен.", "Подключите кошелёк, чтобы продолжить обмен."],
-  "wallet.externalWalletAssetUnsupported": ["This asset is not supported in External Wallet mode. Connect a browser wallet if you want to continue.", "Этот актив не поддерживается в режиме внешнего кошелька. Подключите браузерный кошелёк, чтобы продолжить."],
   "wallet.close": ["Close", "Закрыть"],
   "wallet.sendToken": ["Send {ticker}", "Отправить {ticker}"],
   "common.close": ["Close", "Закрыть"],
@@ -469,5 +468,6 @@
   "tx.status.unknown": ["Unknown", "Неизвестно"],
   "tx.leg.deposit": ["Deposit {ticker}", "Внести {ticker}"],
   "tx.leg.send": ["Send {ticker}", "Отправить {ticker}"],
-  "tx.leg.swap": ["Swap {from} to {to}", "Обменять {from} на {to}"]
+  "tx.leg.swap": ["Swap {from} to {to}", "Обменять {from} на {to}"],
+  "wallet.externalWalletAssetUnsupported": ["External Wallet Mode is only available for Layer 1 assets. ERC20 tokens require wallet approval and cannot be used with this option.", "Режим внешнего кошелька доступен только для активов Layer 1. Токены ERC20 требуют подтверждения в кошельке и не могут использоваться с этой опцией."]
 }
