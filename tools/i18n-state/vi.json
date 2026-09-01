@@ -164,6 +164,7 @@
   "swap.limitCancel.warning.tradingPaused": ["{chain} trading is currently paused", "Giao dịch {chain} hiện đang tạm dừng"],
   "swap.limitCancel.warning.orderNotFound": ["This order is no longer open on THORChain - it may have already been filled or expired", "Lệnh này không còn mở trên THORChain - có thể đã được khớp hoặc đã hết hạn"],
   "swap.quoteTimer.refresh": ["Refresh", "Làm mới"],
+  "swap.recipient.addressPlaceholder": ["{chain} address or THORName", "Địa chỉ {chain} hoặc THORName"],
   "swap.recipient.paste": ["Paste", "Dán"],
   "swap.recipient.invalidAddress": ["Invalid {chain} address", "Địa chỉ {chain} không hợp lệ"],
   "swap.recipient.taprootNotSupported": ["Maya Protocol does not support Taproot addresses", "Maya Protocol không hỗ trợ địa chỉ Taproot"],
@@ -468,6 +469,5 @@
   "tx.status.unknown": ["Unknown", "Không xác định"],
   "tx.leg.deposit": ["Deposit {ticker}", "Nạp {ticker}"],
   "tx.leg.send": ["Send {ticker}", "Gửi {ticker}"],
-  "tx.leg.swap": ["Swap {from} to {to}", "Hoán đổi {from} sang {to}"],
-  "swap.recipient.addressPlaceholder": ["{chain} address or THORName", "Địa chỉ {chain} hoặc THORName"]
+  "tx.leg.swap": ["Swap {from} to {to}", "Hoán đổi {from} sang {to}"]
 }

@@ -164,6 +164,7 @@
   "swap.limitCancel.warning.tradingPaused": ["{chain} trading is currently paused", "{chain}の取引は現在停止されています"],
   "swap.limitCancel.warning.orderNotFound": ["This order is no longer open on THORChain - it may have already been filled or expired", "この注文はTHORChain上でこれ以上有効ではありません。すでに約定したか、期限切れの可能性があります"],
   "swap.quoteTimer.refresh": ["Refresh", "更新"],
+  "swap.recipient.addressPlaceholder": ["{chain} address or THORName", "{chain} アドレスまたは THORName"],
   "swap.recipient.paste": ["Paste", "貼り付け"],
   "swap.recipient.invalidAddress": ["Invalid {chain} address", "無効な{chain}アドレスです"],
   "swap.recipient.taprootNotSupported": ["Maya Protocol does not support Taproot addresses", "Maya ProtocolはTaprootアドレスに対応していません"],
@@ -468,6 +469,5 @@
   "tx.status.unknown": ["Unknown", "不明"],
   "tx.leg.deposit": ["Deposit {ticker}", "{ticker} を預け入れ"],
   "tx.leg.send": ["Send {ticker}", "{ticker} を送信"],
-  "tx.leg.swap": ["Swap {from} to {to}", "{from} を {to} にスワップ"],
-  "swap.recipient.addressPlaceholder": ["{chain} address or THORName", "{chain} アドレスまたは THORName"]
+  "tx.leg.swap": ["Swap {from} to {to}", "{from} を {to} にスワップ"]
 }

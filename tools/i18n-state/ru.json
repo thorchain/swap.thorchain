@@ -164,6 +164,7 @@
   "swap.limitCancel.warning.tradingPaused": ["{chain} trading is currently paused", "Торговля {chain} сейчас приостановлена"],
   "swap.limitCancel.warning.orderNotFound": ["This order is no longer open on THORChain - it may have already been filled or expired", "Этот ордер больше не активен в THORChain — возможно, он уже исполнен или истёк"],
   "swap.quoteTimer.refresh": ["Refresh", "Обновить"],
+  "swap.recipient.addressPlaceholder": ["{chain} address or THORName", "{chain} адрес или THORName"],
   "swap.recipient.paste": ["Paste", "Вставить"],
   "swap.recipient.invalidAddress": ["Invalid {chain} address", "Недействительный адрес {chain}"],
   "swap.recipient.taprootNotSupported": ["Maya Protocol does not support Taproot addresses", "Maya Protocol не поддерживает Taproot-адреса"],
@@ -468,6 +469,5 @@
   "tx.status.unknown": ["Unknown", "Неизвестно"],
   "tx.leg.deposit": ["Deposit {ticker}", "Внести {ticker}"],
   "tx.leg.send": ["Send {ticker}", "Отправить {ticker}"],
-  "tx.leg.swap": ["Swap {from} to {to}", "Обменять {from} на {to}"],
-  "swap.recipient.addressPlaceholder": ["{chain} address or THORName", "{chain} адрес или THORName"]
+  "tx.leg.swap": ["Swap {from} to {to}", "Обменять {from} на {to}"]
 }
