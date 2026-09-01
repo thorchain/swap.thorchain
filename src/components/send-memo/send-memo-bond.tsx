@@ -13,7 +13,6 @@ import { AssetIcon } from '@/components/asset-icon'
 import { useDialog } from '@/components/global-dialog'
 import { DecimalInput } from '@/components/decimal/decimal-input'
 import { DecimalText } from '@/components/decimal/decimal-text'
-import { SendMemoBeta } from '@/components/send-memo/send-memo-beta'
 import { Icon } from '@/components/icons'
 import { GenericButton } from '@/components/generic-button'
 import { assetIdentifierStr, tokenToAsset } from '@/components/send/send-helpers'
@@ -296,8 +295,6 @@ export function SendMemoBond({ account, initialTab = 'bond' }: BondFormProps) {
           <span>0.02 RUNE {runeRate && ` (${toCurrencyFixed(runeRate.mul(0.02).toCurrency('$', { trimTrailingZeros: false }))})`}</span>
         </div>
       )}
-
-      <SendMemoBeta />
     </div>
   )
 }

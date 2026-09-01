@@ -1,7 +1,6 @@
 'use client'
 
 import { useState } from 'react'
-import { SendMemoBeta } from '@/components/send-memo/send-memo-beta'
 import { SwapAddressFrom } from '@/components/swap/swap-address-from'
 import { ThornameView } from '@/components/send-memo/thorname/thorname-view'
 import { THORNAME_CONFIGS, ThornameConfig } from '@/components/send-memo/thorname/thorname-config'
@@ -37,8 +36,6 @@ export function Thorname() {
       </div>
 
       <ThornameView key={tab} config={config} />
-
-      <SendMemoBeta />
     </div>
   )
 }

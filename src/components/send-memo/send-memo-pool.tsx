@@ -16,7 +16,6 @@ import { Icon } from '@/components/icons'
 import { GenericButton } from '@/components/generic-button'
 import { assetIdentifierStr, tokenToAsset } from '@/components/send/send-helpers'
 import { SendSelectToken } from '@/components/send/send-select-token'
-import { SendMemoBeta } from '@/components/send-memo/send-memo-beta'
 import { PoolSelect } from '@/components/send-memo/pool-select'
 import { poolToAsset } from '@/components/send-memo/pool-helpers'
 import { isRuneToken } from '@/components/send-memo/send-memo-helpers'
@@ -475,8 +474,6 @@ export function SendMemoPool() {
           <span>0.02 RUNE {runeRate && ` (${toCurrencyFixed(runeRate.mul(0.02).toCurrency('$', { trimTrailingZeros: false }))})`}</span>
         </div>
       )}
-
-      <SendMemoBeta />
     </div>
   )
 }

@@ -16,7 +16,6 @@ import { Icon } from '@/components/icons'
 import { GenericButton } from '@/components/generic-button'
 import { assetIdentifierStr, tokenToAsset } from '@/components/send/send-helpers'
 import { SwapAddressFrom } from '@/components/swap/swap-address-from'
-import { SendMemoBeta } from '@/components/send-memo/send-memo-beta'
 import { isRuneToken, isTcyToken } from '@/components/send-memo/send-memo-helpers'
 import { useWalletBalances } from '@/hooks/use-wallet-balances'
 import { useAccounts, useSelectedAccount } from '@/hooks/use-wallets'
@@ -298,8 +297,6 @@ export function SendMemoStake({ account, initialTab = 'stake', stakedAmount }: S
         <div className="flex items-center gap-1">{t('transactionFee')}</div>
         <span>0.02 RUNE {runeRate && ` (${toCurrencyFixed(runeRate.mul(0.02).toCurrency('$', { trimTrailingZeros: false }))})`}</span>
       </div>
-
-      <SendMemoBeta />
     </div>
   )
 }
