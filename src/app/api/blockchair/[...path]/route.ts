@@ -43,7 +43,43 @@ function badPath() {
   )
 }
 
+/**
+ * Same-origin only. `Sec-Fetch-Site` is a forbidden header name, so JavaScript
+ * running on another site cannot forge it -- that is what stops someone else's
+ * frontend from pointing at this route and spending our key. It is not a
+ * defence against a scripted, non-browser caller, which can send any header it
+ * likes; the rate limit is the brake for those.
+ *
+ * The client builds its URL from `window.location.origin`, so a real request is
+ * same-origin whichever host serves the app -- swap.thorchain.org, a tcy./bond./
+ * pool. subdomain, or localhost in dev -- and no host allowlist is needed.
+ */
+function isSameOrigin(req: NextRequest) {
+  const site = req.headers.get('sec-fetch-site')
+  if (site) return site === 'same-origin'
+
+  // Browsers predating Sec-Fetch-* (Safari < 16.4) still send a Referer on a
+  // same-origin fetch, so fall back to matching its host against ours.
+  const referer = req.headers.get('referer')
+  if (!referer) return false
+
+  try {
+    return new URL(referer).host === req.headers.get('host')
+  } catch {
+    return false
+  }
+}
+
 async function forward(req: NextRequest, path: string[], endpoints: string[], body?: string) {
+  if (!isSameOrigin(req)) {
+    return apiError(
+      403,
+      'forbidden',
+      'Cross-origin requests are not allowed',
+      'This proxy only serves the THORChain Swap frontend. Query api.blockchair.com directly with your own API key instead.'
+    )
+  }
+
   const retryAfter = rateLimit(req, 'blockchair', 300)
   if (retryAfter !== null) {
     return apiError(429, 'rate_limited', 'Too many requests', `Retry after ${retryAfter} seconds (see the Retry-After header).`, {
