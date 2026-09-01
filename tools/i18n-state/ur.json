@@ -442,6 +442,7 @@
   "wallet.externalWalletModeDescription": ["Use a self custody wallet without connecting it to the website", "سیلف کسٹڈی والٹ کو ویب سائٹ سے منسلک کیے بغیر استعمال کریں"],
   "wallet.externalWalletModeUnavailable": ["Currently Unavailable", "فی الحال دستیاب نہیں"],
   "wallet.externalWalletModeHalted": ["Connect a wallet to keep swapping.", "میمو کے بغیر سویپ اس وقت روکے گئے ہیں۔ سویپ جاری رکھنے کے لیے والیٹ منسلک کریں۔", "سواپ جاری رکھنے کے لیے والیٹ منسلک کریں۔"],
+  "wallet.externalWalletAssetUnsupported": ["External Wallet Mode is only available for Layer 1 assets. ERC20 tokens require wallet approval and cannot be used with this option.", "بیرونی والٹ موڈ صرف لیئر 1 اثاثوں کے لیے دستیاب ہے۔ ERC20 ٹوکنز کے لیے والٹ کی منظوری درکار ہوتی ہے، اس لیے انہیں اس آپشن کے ساتھ استعمال نہیں کیا جا سکتا۔"],
   "wallet.close": ["Close", "بند کریں"],
   "wallet.sendToken": ["Send {ticker}", "{ticker} بھیجیں"],
   "common.close": ["Close", "بند کریں"],
@@ -468,6 +469,5 @@
   "tx.status.unknown": ["Unknown", "نامعلوم"],
   "tx.leg.deposit": ["Deposit {ticker}", "{ticker} ڈپازٹ کریں"],
   "tx.leg.send": ["Send {ticker}", "{ticker} بھیجیں"],
-  "tx.leg.swap": ["Swap {from} to {to}", "{from} کا {to} میں تبادلہ کریں"],
-  "wallet.externalWalletAssetUnsupported": ["External Wallet Mode is only available for Layer 1 assets. ERC20 tokens require wallet approval and cannot be used with this option.", "بیرونی والٹ موڈ صرف لیئر 1 اثاثوں کے لیے دستیاب ہے۔ ERC20 ٹوکنز کے لیے والٹ کی منظوری درکار ہوتی ہے، اس لیے انہیں اس آپشن کے ساتھ استعمال نہیں کیا جا سکتا۔"]
+  "tx.leg.swap": ["Swap {from} to {to}", "{from} کا {to} میں تبادلہ کریں"]
 }

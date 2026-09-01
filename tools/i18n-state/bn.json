@@ -442,6 +442,7 @@
   "wallet.externalWalletModeDescription": ["Use a self custody wallet without connecting it to the website", "ওয়েবসাইটে সংযুক্ত না করেই একটি সেলফ-কাস্টডি ওয়ালেট ব্যবহার করুন"],
   "wallet.externalWalletModeUnavailable": ["Currently Unavailable", "বর্তমানে অনুপলব্ধ"],
   "wallet.externalWalletModeHalted": ["Connect a wallet to keep swapping.", "সোয়াপ চালিয়ে যেতে একটি ওয়ালেট কানেক্ট করুন।"],
+  "wallet.externalWalletAssetUnsupported": ["External Wallet Mode is only available for Layer 1 assets. ERC20 tokens require wallet approval and cannot be used with this option.", "এক্সটার্নাল ওয়ালেট মোড শুধুমাত্র Layer 1 অ্যাসেটের জন্য উপলব্ধ। ERC20 টোকেনের জন্য ওয়ালেট অনুমোদন প্রয়োজন এবং এই অপশনের সাথে ব্যবহার করা যায় না।"],
   "wallet.close": ["Close", "বন্ধ করুন"],
   "wallet.sendToken": ["Send {ticker}", "{ticker} পাঠান"],
   "common.close": ["Close", "বন্ধ করুন"],
@@ -468,6 +469,5 @@
   "tx.status.unknown": ["Unknown", "অজানা"],
   "tx.leg.deposit": ["Deposit {ticker}", "{ticker} ডিপোজিট করুন"],
   "tx.leg.send": ["Send {ticker}", "{ticker} পাঠান"],
-  "tx.leg.swap": ["Swap {from} to {to}", "{from} থেকে {to} সোয়াপ করুন"],
-  "wallet.externalWalletAssetUnsupported": ["External Wallet Mode is only available for Layer 1 assets. ERC20 tokens require wallet approval and cannot be used with this option.", "এক্সটার্নাল ওয়ালেট মোড শুধুমাত্র Layer 1 অ্যাসেটের জন্য উপলব্ধ। ERC20 টোকেনের জন্য ওয়ালেট অনুমোদন প্রয়োজন এবং এই অপশনের সাথে ব্যবহার করা যায় না।"]
+  "tx.leg.swap": ["Swap {from} to {to}", "{from} থেকে {to} সোয়াপ করুন"]
 }

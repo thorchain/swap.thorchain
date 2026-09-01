@@ -442,6 +442,7 @@
   "wallet.externalWalletModeDescription": ["Use a self custody wallet without connecting it to the website", "자기 수탁 지갑을 웹사이트에 연결하지 않고 사용하세요"],
   "wallet.externalWalletModeUnavailable": ["Currently Unavailable", "현재 사용할 수 없음"],
   "wallet.externalWalletModeHalted": ["Connect a wallet to keep swapping.", "메모 없는 스왑이 현재 일시 중지되었습니다. 계속 스왑하려면 지갑을 연결하세요.", "지갑을 연결하여 스왑을 계속하세요."],
+  "wallet.externalWalletAssetUnsupported": ["External Wallet Mode is only available for Layer 1 assets. ERC20 tokens require wallet approval and cannot be used with this option.", "외부 지갑 모드는 레이어 1 자산에만 사용할 수 있습니다. ERC20 토큰은 지갑 승인이 필요하므로 이 옵션과 함께 사용할 수 없습니다."],
   "wallet.close": ["Close", "닫기"],
   "wallet.sendToken": ["Send {ticker}", "{ticker} 보내기"],
   "common.close": ["Close", "닫기"],
@@ -468,6 +469,5 @@
   "tx.status.unknown": ["Unknown", "알 수 없음"],
   "tx.leg.deposit": ["Deposit {ticker}", "{ticker} 입금"],
   "tx.leg.send": ["Send {ticker}", "{ticker} 보내기"],
-  "tx.leg.swap": ["Swap {from} to {to}", "{from}을(를) {to}(으)로 스왑"],
-  "wallet.externalWalletAssetUnsupported": ["External Wallet Mode is only available for Layer 1 assets. ERC20 tokens require wallet approval and cannot be used with this option.", "외부 지갑 모드는 레이어 1 자산에만 사용할 수 있습니다. ERC20 토큰은 지갑 승인이 필요하므로 이 옵션과 함께 사용할 수 없습니다."]
+  "tx.leg.swap": ["Swap {from} to {to}", "{from}을(를) {to}(으)로 스왑"]
 }
