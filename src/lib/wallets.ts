@@ -66,6 +66,14 @@ export function setUSwapApiKey(apiKey: string) {
   apiKeyOverride = apiKey
 }
 
+// The Blockchair API key stays on the server, so the UTXO toolbox talks to our
+// own proxy (src/app/api/blockchair) instead of api.blockchair.com. The SDK's
+// request client builds a `new URL(...)`, so this has to be absolute.
+function blockchairProxyUrl() {
+  const origin = typeof window === 'undefined' ? AppConfig.baseUrl : window.location.origin
+  return `${origin}/api/blockchair`
+}
+
 // Trezor Connect requires a manifest (contact email + app URL) before it will open its popup.
 const trezorManifest = {
   email: AppConfig.supportEmail,
@@ -79,8 +87,8 @@ export function getUSwap() {
   instance = createUSwap({
     config: {
       apiKeys: {
-        blockchair: process.env.NEXT_PUBLIC_BLOCKCHAIR_API_KEY,
-        uSwap: apiKeyOverride || process.env.NEXT_PUBLIC_USWAP_API_KEY
+        uSwap: apiKeyOverride || process.env.NEXT_PUBLIC_USWAP_API_KEY,
+        blockchair: 'sto' // fake key to just avoid logs like: No Blockchair API key found
       },
       rpcUrls: {
         [Chain.Ethereum]: ['https://ethereum-rpc.publicnode.com', 'https://eth.llamarpc.com']
@@ -90,6 +98,7 @@ export function getUSwap() {
       },
       envs: {
         apiUrl: process.env.NEXT_PUBLIC_USWAP_API_URL,
+        blockchairApiUrl: blockchairProxyUrl(),
         memolessApiUrl: process.env.NEXT_PUBLIC_MEMOLESS_API
       }
     }
