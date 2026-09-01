@@ -3,7 +3,6 @@ import { Fragment, useEffect, useMemo, useRef, useState } from 'react'
 import { useTranslations } from 'next-intl'
 import { useVirtualizer } from '@tanstack/react-virtual'
 import { Chain } from '@tcswap/core'
-import { ProviderName } from '@tcswap/helpers'
 import { Search } from 'lucide-react'
 import { Credenza, CredenzaContent, CredenzaHeader, CredenzaTitle } from '@/components/ui/credenza'
 import { Input } from '@/components/ui/input'
@@ -16,6 +15,7 @@ import { useIsWidget } from '@/hooks/use-is-widget'
 import { useMemolessAssets } from '@/hooks/use-memoless-assets'
 import { useMimir } from '@/hooks/use-mimir'
 import { useIsMobile } from '@/hooks/use-mobile'
+import { isAssetHalted } from '@/lib/swap-helpers'
 import { cn } from '@/lib/utils'
 
 const FEATURED_ASSETS = [
@@ -40,13 +40,6 @@ const FEATURED_ASSETS = [
   'ZEC.ZEC',
   'NEAR.NEAR'
 ]
-
-// Halt flags are keyed by source chain; for secured/trade assets it's the identifier prefix (BASE-USDC-0X...)
-const sourceChain = (asset: Asset) => {
-  if (asset.isSecuredAsset) return asset.identifier.split('-')[0]
-  if (asset.isTradeAsset) return asset.identifier.split('~')[0]
-  return asset.chain
-}
 
 interface SwapSelectAssetProps {
   isOpen: boolean
@@ -75,17 +68,7 @@ export const SwapSelectAsset = ({ isOpen, onOpenChange, selected, onSelectAsset 
 
   const memolessIdentifiers = useMemo(() => memolessAssets && new Set(memolessAssets.map(a => a.asset)), [memolessAssets])
 
-  const isAssetHalted = (asset: Asset) => {
-    const chain = sourceChain(asset)
-    const isHalted = (m: Record<string, number>) => m['HALTTRADING'] > 0 || m[`HALT${chain}TRADING`] > 0 || m[`HALT${chain}CHAIN`] > 0
-
-    const haltedOn: Partial<Record<ProviderName, boolean>> = {
-      [ProviderName.THORCHAIN]: isHalted(mimir),
-      [ProviderName.MAYACHAIN]: isHalted(mayaMimir)
-    }
-
-    return asset.providers.length > 0 && asset.providers.every(provider => haltedOn[provider])
-  }
+  const isHalted = (asset: Asset) => isAssetHalted(asset, mimir, mayaMimir)
 
   const chainMap: Map<FilterChain, Asset[]> = useMemo(() => {
     if (!assets?.length) return new Map()
@@ -198,7 +181,7 @@ export const SwapSelectAsset = ({ isOpen, onOpenChange, selected, onSelectAsset 
   }
 
   const handleAssetSelect = (asset: Asset) => {
-    if (isAssetHalted(asset)) return
+    if (isHalted(asset)) return
     onSelectAsset(asset)
     onOpenChange(false)
   }
@@ -321,10 +304,10 @@ export const SwapSelectAsset = ({ isOpen, onOpenChange, selected, onSelectAsset 
                           onClick={() => handleAssetSelect(asset)}
                           className={cn(
                             'mx-4 flex items-center justify-between gap-3 rounded-lg border border-transparent px-4 py-3 md:mr-8 md:ml-0',
-                            isAssetHalted(asset) ? 'cursor-not-allowed' : 'hover:bg-sub-container-modal/50 cursor-pointer'
+                            isHalted(asset) ? 'cursor-not-allowed' : 'hover:bg-sub-container-modal/50 cursor-pointer'
                           )}
                         >
-                          <div className={cn('flex items-center gap-3', isAssetHalted(asset) && 'opacity-50')}>
+                          <div className={cn('flex items-center gap-3', isHalted(asset) && 'opacity-50')}>
                             <AssetIcon key={asset.identifier} asset={asset} />
                             <div className="text-left">
                               <div className="text-txt-high-contrast flex max-w-40 items-center gap-1.5 truncate font-semibold">
@@ -346,7 +329,7 @@ export const SwapSelectAsset = ({ isOpen, onOpenChange, selected, onSelectAsset 
                               </div>
                             </div>
                           </div>
-                          {isAssetHalted(asset) ? (
+                          {isHalted(asset) ? (
                             <div className="border-jacob text-jacob rounded-full border px-1.5 text-[10px] font-semibold">
                               {t('selectAsset.currentlyUnavailable')}
                             </div>

@@ -74,13 +74,17 @@
       "enterAmount": "Enter Amount",
       "quoting": "Quoting",
       "noValidQuotes": "No Valid Quotes",
-      "tradingHalted": "Trading is Halted",
       "enterLimitPrice": "Enter limit price",
       "enterLimitOrder": "Enter Limit Order",
       "swap": "Swap",
       "connectWallet": "Connect {chain} Wallet",
       "insufficientBalance": "Insufficient Balance",
       "approve": "Approve {ticker}"
+    },
+    "halted": {
+      "title": "Trading is Halted",
+      "description": "The network has temporarily halted trading for this pair. Swaps will resume automatically once trading is restored.",
+      "descriptionChains": "The network has temporarily halted trading on {chains}. Swaps will resume automatically once trading is restored."
     },
     "toast": {
       "approvalTransaction": "Approval Transaction",

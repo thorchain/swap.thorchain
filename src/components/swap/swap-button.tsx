@@ -15,7 +15,7 @@ import { useQuote } from '@/hooks/use-quote'
 import { useSimulation } from '@/hooks/use-simulation'
 import { useAssetFrom, useAssetTo, useSwap } from '@/hooks/use-swap'
 import { useExternalWalletMode, useSelectedAccount, useSetExternalWalletMode } from '@/hooks/use-wallets'
-import { isTradingHaltedError, readableError } from '@/lib/errors'
+import { readableError } from '@/lib/errors'
 import { isMayaProvider, isTaprootAddress, waitForAllowance } from '@/lib/swap-helpers'
 import { getUSwap } from '@/lib/wallets'
 import { useIsLimitSwap, useLimitSwapBuyAmount } from '@/store/limit-swap-store'
@@ -45,7 +45,7 @@ export const SwapButton = ({ instantSwapSupported, instantSwapAvailable }: SwapB
   const isMemolessHalted = useIsMemolessHalted()
   const setExternalWalletMode = useSetExternalWalletMode()
   const { valueFrom } = useSwap()
-  const { quote, error: quoteError, isLoading: isQuoting, refetch: refetchQuote } = useQuote()
+  const { quote, isLoading: isQuoting, refetch: refetchQuote } = useQuote()
   const { isLoading: isSimulating, approveData } = useSimulation()
   const { balance, isLoading: isBalanceLoading } = useBalance()
   const { mimir } = useMimir()
@@ -116,12 +116,8 @@ export const SwapButton = ({ instantSwapSupported, instantSwapAvailable }: SwapB
 
     if (isQuoting || isSimulating) return { text: t('button.quoting'), spinner: true, accent: false }
 
-    if (!quote) {
-      // A halted chain is the one no-quote case the user can act on - it clears on its own - so name
-      // it instead of letting it read as an unroutable pair.
-      const text = quoteError && isTradingHaltedError(quoteError.message) ? t('button.tradingHalted') : t('button.noValidQuotes')
-      return { text, spinner: false, accent: false }
-    }
+    // A halt is called out by the banner under the button, so every no-quote case reads the same here.
+    if (!quote) return { text: t('button.noValidQuotes'), spinner: false, accent: false }
 
     if (isLimitSwap && limitSwapBuyAmount === '0') {
       return { text: t('button.enterLimitPrice'), spinner: false, accent: false }

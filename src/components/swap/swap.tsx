@@ -9,6 +9,7 @@ import { SwapAddressFrom } from '@/components/swap/swap-address-from'
 import { SwapButton } from '@/components/swap/swap-button'
 import { SwapDetails } from '@/components/swap/swap-details'
 import { SwapError } from '@/components/swap/swap-error'
+import { SwapHaltBanner } from '@/components/swap/swap-halt-banner'
 import { SwapInputFrom } from '@/components/swap/swap-input-from'
 import { SwapInputTo } from '@/components/swap/swap-input-to'
 import { SwapLimit } from '@/components/swap/swap-limit'
@@ -20,6 +21,7 @@ import { useQuote } from '@/hooks/use-quote'
 import { useSwapRates } from '@/hooks/use-rates'
 import { useResolveSource } from '@/hooks/use-resolve-source'
 import { useAssetFrom, useSwap } from '@/hooks/use-swap'
+import { useTradingHalt } from '@/hooks/use-trading-halt'
 import { useUrlParams } from '@/hooks/use-url-params'
 import { useSelectedAccount } from '@/hooks/use-wallets'
 import { resolvePriceImpact } from '@/lib/swap-helpers'
@@ -37,6 +39,7 @@ export const Swap = () => {
   const { assets: memolessAssets } = useMemolessAssets()
   const isMemolessHalted = useIsMemolessHalted()
   const { rateFrom, rateTo } = useSwapRates()
+  const { isHalted, chains: haltedChains } = useTradingHalt()
 
   useUrlParams()
   useResolveSource()
@@ -91,6 +94,12 @@ export const Swap = () => {
           {isLimitSwap && <SwapLimit quote={quote} />}
           <SwapButton instantSwapSupported={instantSwapSupported} instantSwapAvailable={!memolessError} />
         </div>
+
+        {isHalted && (
+          <div className="pt-2">
+            <SwapHaltBanner chains={haltedChains} />
+          </div>
+        )}
 
         <SwapDetails />
 

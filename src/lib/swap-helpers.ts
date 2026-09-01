@@ -2,6 +2,7 @@ import { assetFromString, Chain, getThorFactoryAssetDenom, getThorFactoryAssetTi
 import { ProviderName } from '@tcswap/helpers'
 import { QuoteResponseRoute } from '@tcswap/helpers/api'
 import { intervalToDuration } from 'date-fns'
+import { Asset } from '@/components/swap/asset'
 import { AssetRateMap } from '@/hooks/use-rates'
 
 export type FeeData = {
@@ -148,3 +149,27 @@ export const isMayaProvider = (provider?: string) => provider === 'MAYACHAIN' ||
 
 // Maya Protocol cannot observe or refund Taproot (bech32m) transactions.
 export const isTaprootAddress = (address: string) => address.toLowerCase().startsWith('bc1p')
+
+// Halt flags are keyed by source chain; for secured/trade assets it's the identifier prefix (BASE-USDC-0X...)
+export const assetSourceChain = (asset: Asset): string => {
+  if (asset.isSecuredAsset) return asset.identifier.split('-')[0]
+  if (asset.isTradeAsset) return asset.identifier.split('~')[0]
+  return asset.chain
+}
+
+type Mimir = Record<string, number>
+
+const isChainHalted = (mimir: Mimir, chain: string) => mimir['HALTTRADING'] > 0 || mimir[`HALT${chain}TRADING`] > 0 || mimir[`HALT${chain}CHAIN`] > 0
+
+// An asset is only unswappable when every provider listing it has halted its chain - one provider
+// halting while another still quotes is not a halt the user ever sees.
+export const isAssetHalted = (asset: Asset, mimir: Mimir, mayaMimir: Mimir): boolean => {
+  const chain = assetSourceChain(asset)
+
+  const haltedOn: Partial<Record<ProviderName, boolean>> = {
+    [ProviderName.THORCHAIN]: isChainHalted(mimir, chain),
+    [ProviderName.MAYACHAIN]: isChainHalted(mayaMimir, chain)
+  }
+
+  return asset.providers.length > 0 && asset.providers.every(provider => haltedOn[provider])
+}
