@@ -168,6 +168,8 @@
   "swap.recipient.paste": ["Paste", "Yapıştır"],
   "swap.recipient.invalidAddress": ["Invalid {chain} address", "Geçersiz {chain} adresi"],
   "swap.recipient.taprootNotSupported": ["Maya Protocol does not support Taproot addresses", "Maya Protocol, Taproot adreslerini desteklemiyor"],
+  "swap.recipient.delegatedNotSupported": ["This address uses EIP-7702 delegation and cannot receive the outbound. Revoke the delegation, or use a standard self-custody address", "Bu adres EIP-7702 yetki devri kullanıyor ve giden transferi alamaz. Yetki devrini iptal edin veya standart bir kendi kendine saklama adresi kullanın"],
+  "swap.recipient.contractNotSupported": ["This is a smart contract address and cannot receive the outbound. Use a self-custody wallet address", "Bu bir akıllı sözleşme adresidir ve giden transferi alamaz. Kendi kendine saklama cüzdan adresi kullanın"],
   "swap.recipient.titleAddresses": ["Enter Addresses", "Adresleri Gir"],
   "swap.recipient.titleReceiving": ["Enter Receiving Address", "Alıcı Adresi Gir"],
   "swap.recipient.enterRefundAddress": ["Enter refund address:", "İade adresini gir:"],
@@ -469,7 +471,5 @@
   "tx.status.unknown": ["Unknown", "Bilinmiyor"],
   "tx.leg.deposit": ["Deposit {ticker}", "{ticker} Yatır"],
   "tx.leg.send": ["Send {ticker}", "{ticker} Gönder"],
-  "tx.leg.swap": ["Swap {from} to {to}", "{from} → {to} Takas"],
-  "swap.recipient.delegatedNotSupported": ["This address uses EIP-7702 delegation and cannot receive the outbound. Revoke the delegation, or use a standard self-custody address", "Bu adres EIP-7702 yetki devri kullanıyor ve giden transferi alamaz. Yetki devrini iptal edin veya standart bir kendi kendine saklama adresi kullanın"],
-  "swap.recipient.contractNotSupported": ["This is a smart contract address and cannot receive the outbound. Use a self-custody wallet address", "Bu bir akıllı sözleşme adresidir ve giden transferi alamaz. Kendi kendine saklama cüzdan adresi kullanın"]
+  "tx.leg.swap": ["Swap {from} to {to}", "{from} → {to} Takas"]
 }

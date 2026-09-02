@@ -168,6 +168,8 @@
   "swap.recipient.paste": ["Paste", "Colar"],
   "swap.recipient.invalidAddress": ["Invalid {chain} address", "Endereço {chain} inválido"],
   "swap.recipient.taprootNotSupported": ["Maya Protocol does not support Taproot addresses", "O Maya Protocol não suporta endereços Taproot"],
+  "swap.recipient.delegatedNotSupported": ["This address uses EIP-7702 delegation and cannot receive the outbound. Revoke the delegation, or use a standard self-custody address", "Este endereço utiliza delegação EIP-7702 e não pode receber a transação de saída. Revogue a delegação ou utilize um endereço padrão de autocustódia"],
+  "swap.recipient.contractNotSupported": ["This is a smart contract address and cannot receive the outbound. Use a self-custody wallet address", "Este é um endereço de contrato inteligente e não pode receber a transação de saída. Utilize um endereço de carteira de autocustódia"],
   "swap.recipient.titleAddresses": ["Enter Addresses", "Inserir endereços"],
   "swap.recipient.titleReceiving": ["Enter Receiving Address", "Inserir endereço de recebimento"],
   "swap.recipient.enterRefundAddress": ["Enter refund address:", "Inserir endereço de reembolso:"],
@@ -469,7 +471,5 @@
   "tx.status.unknown": ["Unknown", "Desconhecido"],
   "tx.leg.deposit": ["Deposit {ticker}", "Depositar {ticker}"],
   "tx.leg.send": ["Send {ticker}", "Enviar {ticker}"],
-  "tx.leg.swap": ["Swap {from} to {to}", "Trocar {from} por {to}"],
-  "swap.recipient.delegatedNotSupported": ["This address uses EIP-7702 delegation and cannot receive the outbound. Revoke the delegation, or use a standard self-custody address", "Este endereço utiliza delegação EIP-7702 e não pode receber a transação de saída. Revogue a delegação ou utilize um endereço padrão de autocustódia"],
-  "swap.recipient.contractNotSupported": ["This is a smart contract address and cannot receive the outbound. Use a self-custody wallet address", "Este é um endereço de contrato inteligente e não pode receber a transação de saída. Utilize um endereço de carteira de autocustódia"]
+  "tx.leg.swap": ["Swap {from} to {to}", "Trocar {from} por {to}"]
 }

@@ -168,6 +168,8 @@
   "swap.recipient.paste": ["Paste", "วาง"],
   "swap.recipient.invalidAddress": ["Invalid {chain} address", "ที่อยู่ {chain} ไม่ถูกต้อง"],
   "swap.recipient.taprootNotSupported": ["Maya Protocol does not support Taproot addresses", "Maya Protocol ไม่รองรับที่อยู่ Taproot"],
+  "swap.recipient.delegatedNotSupported": ["This address uses EIP-7702 delegation and cannot receive the outbound. Revoke the delegation, or use a standard self-custody address", "ที่อยู่นี้ใช้การมอบสิทธิ์แบบ EIP-7702 จึงไม่สามารถรับยอดขาออกได้ กรุณาเพิกถอนการมอบสิทธิ์ หรือใช้ที่อยู่แบบเก็บรักษาเองตามมาตรฐาน"],
+  "swap.recipient.contractNotSupported": ["This is a smart contract address and cannot receive the outbound. Use a self-custody wallet address", "นี่คือที่อยู่สัญญาอัจฉริยะ จึงไม่สามารถรับยอดขาออกได้ กรุณาใช้ที่อยู่กระเป๋าเงินแบบเก็บรักษาเอง"],
   "swap.recipient.titleAddresses": ["Enter Addresses", "กรอกที่อยู่"],
   "swap.recipient.titleReceiving": ["Enter Receiving Address", "กรอกที่อยู่ผู้รับ"],
   "swap.recipient.enterRefundAddress": ["Enter refund address:", "กรอกที่อยู่สำหรับการคืนเงิน:"],
@@ -469,7 +471,5 @@
   "tx.status.unknown": ["Unknown", "ไม่ทราบ"],
   "tx.leg.deposit": ["Deposit {ticker}", "ฝาก {ticker}"],
   "tx.leg.send": ["Send {ticker}", "ส่ง {ticker}"],
-  "tx.leg.swap": ["Swap {from} to {to}", "แลกเปลี่ยน {from} เป็น {to}"],
-  "swap.recipient.delegatedNotSupported": ["This address uses EIP-7702 delegation and cannot receive the outbound. Revoke the delegation, or use a standard self-custody address", "ที่อยู่นี้ใช้การมอบสิทธิ์แบบ EIP-7702 จึงไม่สามารถรับยอดขาออกได้ กรุณาเพิกถอนการมอบสิทธิ์ หรือใช้ที่อยู่แบบเก็บรักษาเองตามมาตรฐาน"],
-  "swap.recipient.contractNotSupported": ["This is a smart contract address and cannot receive the outbound. Use a self-custody wallet address", "นี่คือที่อยู่สัญญาอัจฉริยะ จึงไม่สามารถรับยอดขาออกได้ กรุณาใช้ที่อยู่กระเป๋าเงินแบบเก็บรักษาเอง"]
+  "tx.leg.swap": ["Swap {from} to {to}", "แลกเปลี่ยน {from} เป็น {to}"]
 }

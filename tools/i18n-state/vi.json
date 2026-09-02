@@ -168,6 +168,8 @@
   "swap.recipient.paste": ["Paste", "Dán"],
   "swap.recipient.invalidAddress": ["Invalid {chain} address", "Địa chỉ {chain} không hợp lệ"],
   "swap.recipient.taprootNotSupported": ["Maya Protocol does not support Taproot addresses", "Maya Protocol không hỗ trợ địa chỉ Taproot"],
+  "swap.recipient.delegatedNotSupported": ["This address uses EIP-7702 delegation and cannot receive the outbound. Revoke the delegation, or use a standard self-custody address", "Địa chỉ này sử dụng ủy quyền EIP-7702 và không thể nhận giao dịch chuyển ra. Hãy thu hồi ủy quyền hoặc dùng địa chỉ tự lưu ký thông thường"],
+  "swap.recipient.contractNotSupported": ["This is a smart contract address and cannot receive the outbound. Use a self-custody wallet address", "Đây là địa chỉ hợp đồng thông minh và không thể nhận giao dịch chuyển ra. Hãy dùng địa chỉ ví tự lưu ký"],
   "swap.recipient.titleAddresses": ["Enter Addresses", "Nhập địa chỉ"],
   "swap.recipient.titleReceiving": ["Enter Receiving Address", "Nhập địa chỉ nhận"],
   "swap.recipient.enterRefundAddress": ["Enter refund address:", "Nhập địa chỉ hoàn tiền:"],
@@ -469,7 +471,5 @@
   "tx.status.unknown": ["Unknown", "Không xác định"],
   "tx.leg.deposit": ["Deposit {ticker}", "Nạp {ticker}"],
   "tx.leg.send": ["Send {ticker}", "Gửi {ticker}"],
-  "tx.leg.swap": ["Swap {from} to {to}", "Hoán đổi {from} sang {to}"],
-  "swap.recipient.delegatedNotSupported": ["This address uses EIP-7702 delegation and cannot receive the outbound. Revoke the delegation, or use a standard self-custody address", "Địa chỉ này sử dụng ủy quyền EIP-7702 và không thể nhận giao dịch chuyển ra. Hãy thu hồi ủy quyền hoặc dùng địa chỉ tự lưu ký thông thường"],
-  "swap.recipient.contractNotSupported": ["This is a smart contract address and cannot receive the outbound. Use a self-custody wallet address", "Đây là địa chỉ hợp đồng thông minh và không thể nhận giao dịch chuyển ra. Hãy dùng địa chỉ ví tự lưu ký"]
+  "tx.leg.swap": ["Swap {from} to {to}", "Hoán đổi {from} sang {to}"]
 }

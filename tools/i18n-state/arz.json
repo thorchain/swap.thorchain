@@ -168,6 +168,8 @@
   "swap.recipient.paste": ["Paste", "لصق"],
   "swap.recipient.invalidAddress": ["Invalid {chain} address", "عنوان {chain} غير صالح"],
   "swap.recipient.taprootNotSupported": ["Maya Protocol does not support Taproot addresses", "بروتوكول Maya مش بيدعم عناوين Taproot"],
+  "swap.recipient.delegatedNotSupported": ["This address uses EIP-7702 delegation and cannot receive the outbound. Revoke the delegation, or use a standard self-custody address", "العنوان ده بيستخدم تفويض EIP-7702 ومش هيقدر يستقبل التحويل الصادر. الغي التفويض، أو استخدم عنوان محفظة عادية بتتحكم فيها بنفسك"],
+  "swap.recipient.contractNotSupported": ["This is a smart contract address and cannot receive the outbound. Use a self-custody wallet address", "ده عنوان عقد ذكي ومش هيقدر يستقبل التحويل الصادر. استخدم عنوان محفظة بتتحكم فيها بنفسك"],
   "swap.recipient.titleAddresses": ["Enter Addresses", "اكتب العناوين"],
   "swap.recipient.titleReceiving": ["Enter Receiving Address", "اكتب عنوان الاستلام"],
   "swap.recipient.enterRefundAddress": ["Enter refund address:", "اكتب عنوان الاسترداد:"],
@@ -469,7 +471,5 @@
   "tx.status.unknown": ["Unknown", "غير معروف"],
   "tx.leg.deposit": ["Deposit {ticker}", "إيداع {ticker}"],
   "tx.leg.send": ["Send {ticker}", "إرسال {ticker}"],
-  "tx.leg.swap": ["Swap {from} to {to}", "تبديل {from} إلى {to}"],
-  "swap.recipient.delegatedNotSupported": ["This address uses EIP-7702 delegation and cannot receive the outbound. Revoke the delegation, or use a standard self-custody address", "العنوان ده بيستخدم تفويض EIP-7702 ومش هيقدر يستقبل التحويل الصادر. الغي التفويض، أو استخدم عنوان محفظة عادية بتتحكم فيها بنفسك"],
-  "swap.recipient.contractNotSupported": ["This is a smart contract address and cannot receive the outbound. Use a self-custody wallet address", "ده عنوان عقد ذكي ومش هيقدر يستقبل التحويل الصادر. استخدم عنوان محفظة بتتحكم فيها بنفسك"]
+  "tx.leg.swap": ["Swap {from} to {to}", "تبديل {from} إلى {to}"]
 }

@@ -168,6 +168,8 @@
   "swap.recipient.paste": ["Paste", "貼上"],
   "swap.recipient.invalidAddress": ["Invalid {chain} address", "無效的{chain}地址"],
   "swap.recipient.taprootNotSupported": ["Maya Protocol does not support Taproot addresses", "Maya Protocol 不支援 Taproot 地址"],
+  "swap.recipient.delegatedNotSupported": ["This address uses EIP-7702 delegation and cannot receive the outbound. Revoke the delegation, or use a standard self-custody address", "此地址使用 EIP-7702 委派，無法接收出金。請撤銷委派，或改用一般自我保管地址"],
+  "swap.recipient.contractNotSupported": ["This is a smart contract address and cannot receive the outbound. Use a self-custody wallet address", "此為智能合約地址，無法接收出金。請使用自我保管錢包地址"],
   "swap.recipient.titleAddresses": ["Enter Addresses", "輸入地址"],
   "swap.recipient.titleReceiving": ["Enter Receiving Address", "輸入接收地址"],
   "swap.recipient.enterRefundAddress": ["Enter refund address:", "輸入退款地址："],
@@ -469,7 +471,5 @@
   "tx.status.unknown": ["Unknown", "未知"],
   "tx.leg.deposit": ["Deposit {ticker}", "存入{ticker}"],
   "tx.leg.send": ["Send {ticker}", "發送{ticker}"],
-  "tx.leg.swap": ["Swap {from} to {to}", "將{from}兌換為{to}"],
-  "swap.recipient.delegatedNotSupported": ["This address uses EIP-7702 delegation and cannot receive the outbound. Revoke the delegation, or use a standard self-custody address", "此地址使用 EIP-7702 委派，無法接收出金。請撤銷委派，或改用一般自我保管地址"],
-  "swap.recipient.contractNotSupported": ["This is a smart contract address and cannot receive the outbound. Use a self-custody wallet address", "此為智能合約地址，無法接收出金。請使用自我保管錢包地址"]
+  "tx.leg.swap": ["Swap {from} to {to}", "將{from}兌換為{to}"]
 }

@@ -168,6 +168,8 @@
   "swap.recipient.paste": ["Paste", "Incolla"],
   "swap.recipient.invalidAddress": ["Invalid {chain} address", "Indirizzo {chain} non valido"],
   "swap.recipient.taprootNotSupported": ["Maya Protocol does not support Taproot addresses", "Maya Protocol non supporta gli indirizzi Taproot"],
+  "swap.recipient.delegatedNotSupported": ["This address uses EIP-7702 delegation and cannot receive the outbound. Revoke the delegation, or use a standard self-custody address", "Questo indirizzo utilizza la delega EIP-7702 e non può ricevere l'uscita. Revoca la delega oppure usa un indirizzo standard di self-custody"],
+  "swap.recipient.contractNotSupported": ["This is a smart contract address and cannot receive the outbound. Use a self-custody wallet address", "Questo è un indirizzo di smart contract e non può ricevere l'uscita. Usa l'indirizzo di un wallet self-custody"],
   "swap.recipient.titleAddresses": ["Enter Addresses", "Inserisca gli indirizzi", "Inserisci gli indirizzi"],
   "swap.recipient.titleReceiving": ["Enter Receiving Address", "Inserisca l'indirizzo di ricezione", "Inserisco l'indirizzo di ricezione"],
   "swap.recipient.enterRefundAddress": ["Enter refund address:", "Inserisca l'indirizzo di rimborso:", "Inserisci l'indirizzo di rimborso:"],
@@ -469,7 +471,5 @@
   "tx.status.unknown": ["Unknown", "Sconosciuto"],
   "tx.leg.deposit": ["Deposit {ticker}", "Deposita {ticker}"],
   "tx.leg.send": ["Send {ticker}", "Invia {ticker}"],
-  "tx.leg.swap": ["Swap {from} to {to}", "Scambia {from} con {to}"],
-  "swap.recipient.delegatedNotSupported": ["This address uses EIP-7702 delegation and cannot receive the outbound. Revoke the delegation, or use a standard self-custody address", "Questo indirizzo utilizza la delega EIP-7702 e non può ricevere l'uscita. Revoca la delega oppure usa un indirizzo standard di self-custody"],
-  "swap.recipient.contractNotSupported": ["This is a smart contract address and cannot receive the outbound. Use a self-custody wallet address", "Questo è un indirizzo di smart contract e non può ricevere l'uscita. Usa l'indirizzo di un wallet self-custody"]
+  "tx.leg.swap": ["Swap {from} to {to}", "Scambia {from} con {to}"]
 }

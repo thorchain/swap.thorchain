@@ -168,6 +168,8 @@
   "swap.recipient.paste": ["Paste", "Вставить"],
   "swap.recipient.invalidAddress": ["Invalid {chain} address", "Недействительный адрес {chain}"],
   "swap.recipient.taprootNotSupported": ["Maya Protocol does not support Taproot addresses", "Maya Protocol не поддерживает Taproot-адреса"],
+  "swap.recipient.delegatedNotSupported": ["This address uses EIP-7702 delegation and cannot receive the outbound. Revoke the delegation, or use a standard self-custody address", "Этот адрес использует делегирование EIP-7702 и не может принять исходящий перевод. Отзовите делегирование или используйте обычный некастодиальный адрес"],
+  "swap.recipient.contractNotSupported": ["This is a smart contract address and cannot receive the outbound. Use a self-custody wallet address", "Это адрес смарт-контракта, он не может принять исходящий перевод. Используйте адрес некастодиального кошелька"],
   "swap.recipient.titleAddresses": ["Enter Addresses", "Введите адреса"],
   "swap.recipient.titleReceiving": ["Enter Receiving Address", "Введите адрес получения"],
   "swap.recipient.enterRefundAddress": ["Enter refund address:", "Введите адрес возврата:"],
@@ -469,7 +471,5 @@
   "tx.status.unknown": ["Unknown", "Неизвестно"],
   "tx.leg.deposit": ["Deposit {ticker}", "Внести {ticker}"],
   "tx.leg.send": ["Send {ticker}", "Отправить {ticker}"],
-  "tx.leg.swap": ["Swap {from} to {to}", "Обменять {from} на {to}"],
-  "swap.recipient.delegatedNotSupported": ["This address uses EIP-7702 delegation and cannot receive the outbound. Revoke the delegation, or use a standard self-custody address", "Этот адрес использует делегирование EIP-7702 и не может принять исходящий перевод. Отзовите делегирование или используйте обычный некастодиальный адрес"],
-  "swap.recipient.contractNotSupported": ["This is a smart contract address and cannot receive the outbound. Use a self-custody wallet address", "Это адрес смарт-контракта, он не может принять исходящий перевод. Используйте адрес некастодиального кошелька"]
+  "tx.leg.swap": ["Swap {from} to {to}", "Обменять {from} на {to}"]
 }

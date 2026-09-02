@@ -168,6 +168,8 @@
   "swap.recipient.paste": ["Paste", "पेस्ट करें"],
   "swap.recipient.invalidAddress": ["Invalid {chain} address", "अमान्य {chain} पता"],
   "swap.recipient.taprootNotSupported": ["Maya Protocol does not support Taproot addresses", "Maya Protocol Taproot पतों का समर्थन नहीं करता"],
+  "swap.recipient.delegatedNotSupported": ["This address uses EIP-7702 delegation and cannot receive the outbound. Revoke the delegation, or use a standard self-custody address", "यह पता EIP-7702 डेलिगेशन का उपयोग करता है और आउटबाउंड प्राप्त नहीं कर सकता। डेलिगेशन रद्द करें, या कोई सामान्य सेल्फ-कस्टडी पता उपयोग करें"],
+  "swap.recipient.contractNotSupported": ["This is a smart contract address and cannot receive the outbound. Use a self-custody wallet address", "यह एक स्मार्ट कॉन्ट्रैक्ट पता है और आउटबाउंड प्राप्त नहीं कर सकता। सेल्फ-कस्टडी वॉलेट पते का उपयोग करें"],
   "swap.recipient.titleAddresses": ["Enter Addresses", "पते दर्ज करें"],
   "swap.recipient.titleReceiving": ["Enter Receiving Address", "प्राप्ति पता दर्ज करें"],
   "swap.recipient.enterRefundAddress": ["Enter refund address:", "रिफंड पता दर्ज करें:"],
@@ -469,7 +471,5 @@
   "tx.status.unknown": ["Unknown", "अज्ञात"],
   "tx.leg.deposit": ["Deposit {ticker}", "{ticker} जमा करें"],
   "tx.leg.send": ["Send {ticker}", "{ticker} भेजें"],
-  "tx.leg.swap": ["Swap {from} to {to}", "{from} को {to} में स्वैप करें"],
-  "swap.recipient.delegatedNotSupported": ["This address uses EIP-7702 delegation and cannot receive the outbound. Revoke the delegation, or use a standard self-custody address", "यह पता EIP-7702 डेलिगेशन का उपयोग करता है और आउटबाउंड प्राप्त नहीं कर सकता। डेलिगेशन रद्द करें, या कोई सामान्य सेल्फ-कस्टडी पता उपयोग करें"],
-  "swap.recipient.contractNotSupported": ["This is a smart contract address and cannot receive the outbound. Use a self-custody wallet address", "यह एक स्मार्ट कॉन्ट्रैक्ट पता है और आउटबाउंड प्राप्त नहीं कर सकता। सेल्फ-कस्टडी वॉलेट पते का उपयोग करें"]
+  "tx.leg.swap": ["Swap {from} to {to}", "{from} को {to} में स्वैप करें"]
 }

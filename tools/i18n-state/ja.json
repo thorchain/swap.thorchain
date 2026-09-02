@@ -168,6 +168,8 @@
   "swap.recipient.paste": ["Paste", "貼り付け"],
   "swap.recipient.invalidAddress": ["Invalid {chain} address", "無効な{chain}アドレスです"],
   "swap.recipient.taprootNotSupported": ["Maya Protocol does not support Taproot addresses", "Maya ProtocolはTaprootアドレスに対応していません"],
+  "swap.recipient.delegatedNotSupported": ["This address uses EIP-7702 delegation and cannot receive the outbound. Revoke the delegation, or use a standard self-custody address", "このアドレスは EIP-7702 の委任を使用しているため、送金を受け取れません。委任を取り消すか、通常のセルフカストディアドレスをご利用ください"],
+  "swap.recipient.contractNotSupported": ["This is a smart contract address and cannot receive the outbound. Use a self-custody wallet address", "これはスマートコントラクトアドレスのため、送金を受け取れません。セルフカストディウォレットのアドレスをご利用ください"],
   "swap.recipient.titleAddresses": ["Enter Addresses", "アドレスを入力"],
   "swap.recipient.titleReceiving": ["Enter Receiving Address", "受取アドレスを入力"],
   "swap.recipient.enterRefundAddress": ["Enter refund address:", "返金アドレスを入力:"],
@@ -469,7 +471,5 @@
   "tx.status.unknown": ["Unknown", "不明"],
   "tx.leg.deposit": ["Deposit {ticker}", "{ticker} を預け入れ"],
   "tx.leg.send": ["Send {ticker}", "{ticker} を送信"],
-  "tx.leg.swap": ["Swap {from} to {to}", "{from} を {to} にスワップ"],
-  "swap.recipient.delegatedNotSupported": ["This address uses EIP-7702 delegation and cannot receive the outbound. Revoke the delegation, or use a standard self-custody address", "このアドレスは EIP-7702 の委任を使用しているため、送金を受け取れません。委任を取り消すか、通常のセルフカストディアドレスをご利用ください"],
-  "swap.recipient.contractNotSupported": ["This is a smart contract address and cannot receive the outbound. Use a self-custody wallet address", "これはスマートコントラクトアドレスのため、送金を受け取れません。セルフカストディウォレットのアドレスをご利用ください"]
+  "tx.leg.swap": ["Swap {from} to {to}", "{from} を {to} にスワップ"]
 }

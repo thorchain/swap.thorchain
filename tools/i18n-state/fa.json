@@ -168,6 +168,8 @@
   "swap.recipient.paste": ["Paste", "چسباندن"],
   "swap.recipient.invalidAddress": ["Invalid {chain} address", "آدرس {chain} نامعتبر است"],
   "swap.recipient.taprootNotSupported": ["Maya Protocol does not support Taproot addresses", "پروتکل Maya از آدرس‌های Taproot پشتیبانی نمی‌کند"],
+  "swap.recipient.delegatedNotSupported": ["This address uses EIP-7702 delegation and cannot receive the outbound. Revoke the delegation, or use a standard self-custody address", "این آدرس از تفویض EIP-7702 استفاده می‌کند و نمی‌تواند تراکنش خروجی را دریافت کند. تفویض را لغو کنید یا از یک آدرس استاندارد خودنگهدار استفاده کنید"],
+  "swap.recipient.contractNotSupported": ["This is a smart contract address and cannot receive the outbound. Use a self-custody wallet address", "این یک آدرس قرارداد هوشمند است و نمی‌تواند تراکنش خروجی را دریافت کند. از آدرس یک کیف پول خودنگهدار استفاده کنید"],
   "swap.recipient.titleAddresses": ["Enter Addresses", "آدرس‌ها را وارد کنید"],
   "swap.recipient.titleReceiving": ["Enter Receiving Address", "آدرس دریافت را وارد کنید"],
   "swap.recipient.enterRefundAddress": ["Enter refund address:", "آدرس بازگشت وجه را وارد کنید:"],
@@ -469,7 +471,5 @@
   "tx.status.unknown": ["Unknown", "نامشخص"],
   "tx.leg.deposit": ["Deposit {ticker}", "واریز {ticker}"],
   "tx.leg.send": ["Send {ticker}", "ارسال {ticker}"],
-  "tx.leg.swap": ["Swap {from} to {to}", "تبادل {from} به {to}"],
-  "swap.recipient.delegatedNotSupported": ["This address uses EIP-7702 delegation and cannot receive the outbound. Revoke the delegation, or use a standard self-custody address", "این آدرس از تفویض EIP-7702 استفاده می‌کند و نمی‌تواند تراکنش خروجی را دریافت کند. تفویض را لغو کنید یا از یک آدرس استاندارد خودنگهدار استفاده کنید"],
-  "swap.recipient.contractNotSupported": ["This is a smart contract address and cannot receive the outbound. Use a self-custody wallet address", "این یک آدرس قرارداد هوشمند است و نمی‌تواند تراکنش خروجی را دریافت کند. از آدرس یک کیف پول خودنگهدار استفاده کنید"]
+  "tx.leg.swap": ["Swap {from} to {to}", "تبادل {from} به {to}"]
 }

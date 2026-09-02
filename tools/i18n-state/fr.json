@@ -168,6 +168,8 @@
   "swap.recipient.paste": ["Paste", "Coller"],
   "swap.recipient.invalidAddress": ["Invalid {chain} address", "Adresse {chain} invalide"],
   "swap.recipient.taprootNotSupported": ["Maya Protocol does not support Taproot addresses", "Maya Protocol ne prend pas en charge les adresses Taproot"],
+  "swap.recipient.delegatedNotSupported": ["This address uses EIP-7702 delegation and cannot receive the outbound. Revoke the delegation, or use a standard self-custody address", "Cette adresse utilise la délégation EIP-7702 et ne peut pas recevoir le transfert sortant. Révoquez la délégation ou utilisez une adresse d'auto-conservation standard"],
+  "swap.recipient.contractNotSupported": ["This is a smart contract address and cannot receive the outbound. Use a self-custody wallet address", "Il s'agit d'une adresse de contrat intelligent qui ne peut pas recevoir le transfert sortant. Utilisez une adresse de portefeuille d'auto-conservation"],
   "swap.recipient.titleAddresses": ["Enter Addresses", "Saisir les adresses"],
   "swap.recipient.titleReceiving": ["Enter Receiving Address", "Saisir l'adresse de réception"],
   "swap.recipient.enterRefundAddress": ["Enter refund address:", "Saisissez l'adresse de remboursement :"],
@@ -469,7 +471,5 @@
   "tx.status.unknown": ["Unknown", "Inconnu"],
   "tx.leg.deposit": ["Deposit {ticker}", "Déposer {ticker}"],
   "tx.leg.send": ["Send {ticker}", "Envoyer {ticker}"],
-  "tx.leg.swap": ["Swap {from} to {to}", "Échanger {from} en {to}"],
-  "swap.recipient.delegatedNotSupported": ["This address uses EIP-7702 delegation and cannot receive the outbound. Revoke the delegation, or use a standard self-custody address", "Cette adresse utilise la délégation EIP-7702 et ne peut pas recevoir le transfert sortant. Révoquez la délégation ou utilisez une adresse d'auto-conservation standard"],
-  "swap.recipient.contractNotSupported": ["This is a smart contract address and cannot receive the outbound. Use a self-custody wallet address", "Il s'agit d'une adresse de contrat intelligent qui ne peut pas recevoir le transfert sortant. Utilisez une adresse de portefeuille d'auto-conservation"]
+  "tx.leg.swap": ["Swap {from} to {to}", "Échanger {from} en {to}"]
 }
