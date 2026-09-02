@@ -16,6 +16,7 @@ import { SwapError } from '@/components/swap/swap-error'
 import { GenericButton } from '@/components/generic-button'
 import { Tooltip } from '@/components/tooltip'
 import { useIsMobile } from '@/hooks/use-mobile'
+import { useAddressCode } from '@/hooks/use-address-code'
 import { useResolvedName } from '@/hooks/use-resolved-name'
 import { AddressCheck, useValidAddress } from '@/hooks/use-valid-address'
 import { useAssetFrom, useAssetTo, useCustomInterval, useCustomQuantity, useSlippage, useSwap } from '@/hooks/use-swap'
@@ -74,6 +75,11 @@ export const SwapRecipient = ({ provider, onFetchQuote }: SwapRecipientProps) =>
   const destinationName = useResolvedName(destinationCheck.isInvalid ? destinationAddress : '', assetTo.chain)
   const refundName = useResolvedName(refundCheck.isInvalid ? refundAddress : '', assetFrom.chain)
 
+  // THORChain pays a native outbound through the Router's `to.send()`, so an address that runs code
+  // on receipt - a contract, or an EOA that delegated itself away under EIP-7702 - cannot be paid.
+  const destinationCode = useAddressCode(destinationAddress, assetTo.chain, destinationCheck.isValid && !destinationName.isResolving)
+  const isUnsupportedDestination = destinationCode.isDelegated || destinationCode.isContract
+
   useEffect(() => {
     if (destinationName.address) setDestinationAddress(destinationName.address)
   }, [destinationName.address])
@@ -121,6 +127,8 @@ export const SwapRecipient = ({ provider, onFetchQuote }: SwapRecipientProps) =>
     destinationCheck.isValid &&
     destinationAddress.length &&
     !isTaprootDestination &&
+    !isUnsupportedDestination &&
+    !destinationCode.isChecking &&
     !quoting &&
     (refundRequired ? refundCheck.isValid && refundAddress.length : true)
 
@@ -222,8 +230,17 @@ export const SwapRecipient = ({ provider, onFetchQuote }: SwapRecipientProps) =>
 
               <div className="flex flex-col gap-3">
                 {refundRequired && <div className="text-txt-label-small text-sm font-semibold">{t('recipient.enterReceivingAddress')}</div>}
-                {addressInput(assetTo, destinationAddress, setDestinationAddress, destinationCheck, destinationName.isResolving, options)}
+                {addressInput(
+                  assetTo,
+                  destinationAddress,
+                  setDestinationAddress,
+                  destinationCheck,
+                  destinationName.isResolving || destinationCode.isChecking,
+                  options
+                )}
                 {isTaprootDestination && <div className="text-lucian text-xs font-semibold">{t('recipient.taprootNotSupported')}</div>}
+                {destinationCode.isDelegated && <div className="text-lucian text-xs font-semibold">{t('recipient.delegatedNotSupported')}</div>}
+                {destinationCode.isContract && <div className="text-lucian text-xs font-semibold">{t('recipient.contractNotSupported')}</div>}
               </div>
             </div>
 
