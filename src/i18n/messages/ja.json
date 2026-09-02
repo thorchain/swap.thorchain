@@ -220,6 +220,8 @@
       "paste": "貼り付け",
       "invalidAddress": "無効な{chain}アドレスです",
       "taprootNotSupported": "Maya ProtocolはTaprootアドレスに対応していません",
+      "delegatedNotSupported": "このアドレスは EIP-7702 の委任を使用しているため、送金を受け取れません。委任を取り消すか、通常のセルフカストディアドレスをご利用ください",
+      "contractNotSupported": "これはスマートコントラクトアドレスのため、送金を受け取れません。セルフカストディウォレットのアドレスをご利用ください",
       "titleAddresses": "アドレスを入力",
       "titleReceiving": "受取アドレスを入力",
       "enterRefundAddress": "返金アドレスを入力:",

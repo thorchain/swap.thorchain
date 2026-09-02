@@ -220,6 +220,8 @@
       "paste": "Yapıştır",
       "invalidAddress": "Geçersiz {chain} adresi",
       "taprootNotSupported": "Maya Protocol, Taproot adreslerini desteklemiyor",
+      "delegatedNotSupported": "Bu adres EIP-7702 yetki devri kullanıyor ve giden transferi alamaz. Yetki devrini iptal edin veya standart bir kendi kendine saklama adresi kullanın",
+      "contractNotSupported": "Bu bir akıllı sözleşme adresidir ve giden transferi alamaz. Kendi kendine saklama cüzdan adresi kullanın",
       "titleAddresses": "Adresleri Gir",
       "titleReceiving": "Alıcı Adresi Gir",
       "enterRefundAddress": "İade adresini gir:",

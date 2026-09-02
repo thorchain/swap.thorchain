@@ -220,6 +220,8 @@
       "paste": "پیسٹ کریں",
       "invalidAddress": "غلط {chain} پتہ",
       "taprootNotSupported": "Maya Protocol Taproot ایڈریسز کو سپورٹ نہیں کرتا",
+      "delegatedNotSupported": "یہ ایڈریس EIP-7702 ڈیلیگیشن استعمال کرتا ہے اور آؤٹ باؤنڈ وصول نہیں کر سکتا۔ ڈیلیگیشن منسوخ کریں، یا کوئی معیاری سیلف کسٹڈی ایڈریس استعمال کریں",
+      "contractNotSupported": "یہ ایک اسمارٹ کنٹریکٹ ایڈریس ہے اور آؤٹ باؤنڈ وصول نہیں کر سکتا۔ سیلف کسٹڈی والیٹ ایڈریس استعمال کریں",
       "titleAddresses": "پتے درج کریں",
       "titleReceiving": "وصول کنندہ پتہ درج کریں",
       "enterRefundAddress": "ری فنڈ پتہ درج کریں:",

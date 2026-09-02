@@ -220,6 +220,8 @@
       "paste": "Einfügen",
       "invalidAddress": "Ungültige {chain}-Adresse",
       "taprootNotSupported": "Maya Protocol unterstützt keine Taproot-Adressen",
+      "delegatedNotSupported": "Diese Adresse nutzt EIP-7702-Delegation und kann den Auszahlungsbetrag nicht empfangen. Widerrufe die Delegation oder verwende eine reguläre Self-Custody-Adresse",
+      "contractNotSupported": "Dies ist eine Smart-Contract-Adresse und kann den Auszahlungsbetrag nicht empfangen. Verwende eine Self-Custody-Wallet-Adresse",
       "titleAddresses": "Adressen eingeben",
       "titleReceiving": "Empfangsadresse eingeben",
       "enterRefundAddress": "Rückerstattungsadresse eingeben:",

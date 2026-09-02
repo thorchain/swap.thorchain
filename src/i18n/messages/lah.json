@@ -220,6 +220,8 @@
       "paste": "پیسٹ کرو",
       "invalidAddress": "غلط {chain} پتہ",
       "taprootNotSupported": "Maya Protocol Taproot ایڈریساں نوں سپورٹ نئیں کردا",
+      "delegatedNotSupported": "ایہہ پتہ EIP-7702 ڈیلیگیشن ورتدا اے تے آؤٹ باؤنڈ نہیں لے سکدا۔ ڈیلیگیشن ہٹاؤ، یا کوئی عام سیلف-کسٹڈی پتہ ورتو",
+      "contractNotSupported": "ایہہ اک سمارٹ کانٹریکٹ پتہ اے تے آؤٹ باؤنڈ نہیں لے سکدا۔ کوئی سیلف-کسٹڈی والٹ پتہ ورتو",
       "titleAddresses": "پتے پاؤ",
       "titleReceiving": "وصول کرݨ والا پتہ پاؤ",
       "enterRefundAddress": "واپسی والا پتہ پاؤ:",

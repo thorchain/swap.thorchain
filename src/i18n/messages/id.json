@@ -220,6 +220,8 @@
       "paste": "Tempel",
       "invalidAddress": "Alamat {chain} tidak valid",
       "taprootNotSupported": "Maya Protocol tidak mendukung alamat Taproot",
+      "delegatedNotSupported": "Alamat ini menggunakan delegasi EIP-7702 dan tidak dapat menerima dana keluar. Cabut delegasinya, atau gunakan alamat self-custody standar",
+      "contractNotSupported": "Ini adalah alamat smart contract dan tidak dapat menerima dana keluar. Gunakan alamat wallet self-custody",
       "titleAddresses": "Masukkan alamat",
       "titleReceiving": "Masukkan alamat penerima",
       "enterRefundAddress": "Masukkan alamat pengembalian:",

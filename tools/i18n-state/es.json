@@ -469,5 +469,7 @@
   "tx.status.unknown": ["Unknown", "Desconocido"],
   "tx.leg.deposit": ["Deposit {ticker}", "Depositar {ticker}"],
   "tx.leg.send": ["Send {ticker}", "Enviar {ticker}"],
-  "tx.leg.swap": ["Swap {from} to {to}", "Intercambiar {from} por {to}"]
+  "tx.leg.swap": ["Swap {from} to {to}", "Intercambiar {from} por {to}"],
+  "swap.recipient.delegatedNotSupported": ["This address uses EIP-7702 delegation and cannot receive the outbound. Revoke the delegation, or use a standard self-custody address", "Esta dirección usa delegación EIP-7702 y no puede recibir la salida. Revoca la delegación o usa una dirección estándar de autocustodia"],
+  "swap.recipient.contractNotSupported": ["This is a smart contract address and cannot receive the outbound. Use a self-custody wallet address", "Esta es una dirección de contrato inteligente y no puede recibir la salida. Usa una dirección de billetera de autocustodia"]
 }

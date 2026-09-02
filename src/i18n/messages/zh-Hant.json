@@ -220,6 +220,8 @@
       "paste": "貼上",
       "invalidAddress": "無效的{chain}地址",
       "taprootNotSupported": "Maya Protocol 不支援 Taproot 地址",
+      "delegatedNotSupported": "此地址使用 EIP-7702 委派，無法接收出金。請撤銷委派，或改用一般自我保管地址",
+      "contractNotSupported": "此為智能合約地址，無法接收出金。請使用自我保管錢包地址",
       "titleAddresses": "輸入地址",
       "titleReceiving": "輸入接收地址",
       "enterRefundAddress": "輸入退款地址：",

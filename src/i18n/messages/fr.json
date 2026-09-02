@@ -220,6 +220,8 @@
       "paste": "Coller",
       "invalidAddress": "Adresse {chain} invalide",
       "taprootNotSupported": "Maya Protocol ne prend pas en charge les adresses Taproot",
+      "delegatedNotSupported": "Cette adresse utilise la délégation EIP-7702 et ne peut pas recevoir le transfert sortant. Révoquez la délégation ou utilisez une adresse d'auto-conservation standard",
+      "contractNotSupported": "Il s'agit d'une adresse de contrat intelligent qui ne peut pas recevoir le transfert sortant. Utilisez une adresse de portefeuille d'auto-conservation",
       "titleAddresses": "Saisir les adresses",
       "titleReceiving": "Saisir l'adresse de réception",
       "enterRefundAddress": "Saisissez l'adresse de remboursement :",

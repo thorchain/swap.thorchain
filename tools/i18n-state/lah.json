@@ -469,5 +469,7 @@
   "tx.status.unknown": ["Unknown", "اݨ جاݨیا"],
   "tx.leg.deposit": ["Deposit {ticker}", "{ticker} ڈیپازٹ کرو"],
   "tx.leg.send": ["Send {ticker}", "{ticker} بھیجو"],
-  "tx.leg.swap": ["Swap {from} to {to}", "{from} نوں {to} وچ تبادلہ کرو"]
+  "tx.leg.swap": ["Swap {from} to {to}", "{from} نوں {to} وچ تبادلہ کرو"],
+  "swap.recipient.delegatedNotSupported": ["This address uses EIP-7702 delegation and cannot receive the outbound. Revoke the delegation, or use a standard self-custody address", "ایہہ پتہ EIP-7702 ڈیلیگیشن ورتدا اے تے آؤٹ باؤنڈ نہیں لے سکدا۔ ڈیلیگیشن ہٹاؤ، یا کوئی عام سیلف-کسٹڈی پتہ ورتو"],
+  "swap.recipient.contractNotSupported": ["This is a smart contract address and cannot receive the outbound. Use a self-custody wallet address", "ایہہ اک سمارٹ کانٹریکٹ پتہ اے تے آؤٹ باؤنڈ نہیں لے سکدا۔ کوئی سیلف-کسٹڈی والٹ پتہ ورتو"]
 }

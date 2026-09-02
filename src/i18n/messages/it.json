@@ -220,6 +220,8 @@
       "paste": "Incolla",
       "invalidAddress": "Indirizzo {chain} non valido",
       "taprootNotSupported": "Maya Protocol non supporta gli indirizzi Taproot",
+      "delegatedNotSupported": "Questo indirizzo utilizza la delega EIP-7702 e non può ricevere l'uscita. Revoca la delega oppure usa un indirizzo standard di self-custody",
+      "contractNotSupported": "Questo è un indirizzo di smart contract e non può ricevere l'uscita. Usa l'indirizzo di un wallet self-custody",
       "titleAddresses": "Inserisci gli indirizzi",
       "titleReceiving": "Inserisco l'indirizzo di ricezione",
       "enterRefundAddress": "Inserisci l'indirizzo di rimborso:",

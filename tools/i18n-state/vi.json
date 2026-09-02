@@ -469,5 +469,7 @@
   "tx.status.unknown": ["Unknown", "Không xác định"],
   "tx.leg.deposit": ["Deposit {ticker}", "Nạp {ticker}"],
   "tx.leg.send": ["Send {ticker}", "Gửi {ticker}"],
-  "tx.leg.swap": ["Swap {from} to {to}", "Hoán đổi {from} sang {to}"]
+  "tx.leg.swap": ["Swap {from} to {to}", "Hoán đổi {from} sang {to}"],
+  "swap.recipient.delegatedNotSupported": ["This address uses EIP-7702 delegation and cannot receive the outbound. Revoke the delegation, or use a standard self-custody address", "Địa chỉ này sử dụng ủy quyền EIP-7702 và không thể nhận giao dịch chuyển ra. Hãy thu hồi ủy quyền hoặc dùng địa chỉ tự lưu ký thông thường"],
+  "swap.recipient.contractNotSupported": ["This is a smart contract address and cannot receive the outbound. Use a self-custody wallet address", "Đây là địa chỉ hợp đồng thông minh và không thể nhận giao dịch chuyển ra. Hãy dùng địa chỉ ví tự lưu ký"]
 }

@@ -220,6 +220,8 @@
       "paste": "Colar",
       "invalidAddress": "Endereço {chain} inválido",
       "taprootNotSupported": "O Maya Protocol não suporta endereços Taproot",
+      "delegatedNotSupported": "Este endereço utiliza delegação EIP-7702 e não pode receber a transação de saída. Revogue a delegação ou utilize um endereço padrão de autocustódia",
+      "contractNotSupported": "Este é um endereço de contrato inteligente e não pode receber a transação de saída. Utilize um endereço de carteira de autocustódia",
       "titleAddresses": "Inserir endereços",
       "titleReceiving": "Inserir endereço de recebimento",
       "enterRefundAddress": "Inserir endereço de reembolso:",

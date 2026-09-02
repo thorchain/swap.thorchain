@@ -220,6 +220,8 @@
       "paste": "Paste",
       "invalidAddress": "{chain} address no correct",
       "taprootNotSupported": "Maya Protocol no dey support Taproot address",
+      "delegatedNotSupported": "Dis address dey use EIP-7702 delegation so e no fit collect di outbound. Cancel di delegation, abi use normal self-custody address",
+      "contractNotSupported": "Dis one na smart contract address so e no fit collect di outbound. Use self-custody wallet address",
       "titleAddresses": "Put Addresses",
       "titleReceiving": "Put Receiving Address",
       "enterRefundAddress": "Put refund address:",

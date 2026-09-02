@@ -469,5 +469,7 @@
   "tx.status.unknown": ["Unknown", "অজানা"],
   "tx.leg.deposit": ["Deposit {ticker}", "{ticker} ডিপোজিট করুন"],
   "tx.leg.send": ["Send {ticker}", "{ticker} পাঠান"],
-  "tx.leg.swap": ["Swap {from} to {to}", "{from} থেকে {to} সোয়াপ করুন"]
+  "tx.leg.swap": ["Swap {from} to {to}", "{from} থেকে {to} সোয়াপ করুন"],
+  "swap.recipient.delegatedNotSupported": ["This address uses EIP-7702 delegation and cannot receive the outbound. Revoke the delegation, or use a standard self-custody address", "এই ঠিকানাটি EIP-7702 ডেলিগেশন ব্যবহার করে এবং আউটবাউন্ড গ্রহণ করতে পারে না। ডেলিগেশন প্রত্যাহার করুন, অথবা একটি স্ট্যান্ডার্ড সেল্ফ-কাস্টডি ঠিকানা ব্যবহার করুন"],
+  "swap.recipient.contractNotSupported": ["This is a smart contract address and cannot receive the outbound. Use a self-custody wallet address", "এটি একটি স্মার্ট কন্ট্র্যাক্ট ঠিকানা এবং আউটবাউন্ড গ্রহণ করতে পারে না। একটি সেল্ফ-কাস্টডি ওয়ালেট ঠিকানা ব্যবহার করুন"]
 }

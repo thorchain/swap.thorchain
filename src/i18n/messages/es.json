@@ -220,6 +220,8 @@
       "paste": "Pegar",
       "invalidAddress": "Dirección {chain} no válida",
       "taprootNotSupported": "Maya Protocol no admite direcciones Taproot",
+      "delegatedNotSupported": "Esta dirección usa delegación EIP-7702 y no puede recibir la salida. Revoca la delegación o usa una dirección estándar de autocustodia",
+      "contractNotSupported": "Esta es una dirección de contrato inteligente y no puede recibir la salida. Usa una dirección de billetera de autocustodia",
       "titleAddresses": "Ingresa las direcciones",
       "titleReceiving": "Ingresa la dirección de recepción",
       "enterRefundAddress": "Ingresa la dirección de reembolso:",

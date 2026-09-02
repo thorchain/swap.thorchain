@@ -469,5 +469,7 @@
   "tx.status.unknown": ["Unknown", "غير معروف"],
   "tx.leg.deposit": ["Deposit {ticker}", "إيداع {ticker}"],
   "tx.leg.send": ["Send {ticker}", "إرسال {ticker}"],
-  "tx.leg.swap": ["Swap {from} to {to}", "تبديل {from} إلى {to}"]
+  "tx.leg.swap": ["Swap {from} to {to}", "تبديل {from} إلى {to}"],
+  "swap.recipient.delegatedNotSupported": ["This address uses EIP-7702 delegation and cannot receive the outbound. Revoke the delegation, or use a standard self-custody address", "العنوان ده بيستخدم تفويض EIP-7702 ومش هيقدر يستقبل التحويل الصادر. الغي التفويض، أو استخدم عنوان محفظة عادية بتتحكم فيها بنفسك"],
+  "swap.recipient.contractNotSupported": ["This is a smart contract address and cannot receive the outbound. Use a self-custody wallet address", "ده عنوان عقد ذكي ومش هيقدر يستقبل التحويل الصادر. استخدم عنوان محفظة بتتحكم فيها بنفسك"]
 }

@@ -168,6 +168,8 @@
   "swap.recipient.paste": ["Paste", "ᛈᚨᛊᛏᛖ"],
   "swap.recipient.invalidAddress": ["Invalid {chain} address", "ᛁᚾᚹᚨᛚᛁᛞ {chain} ᚨᛞᛞᚱᛖᛊᛊ"],
   "swap.recipient.taprootNotSupported": ["Maya Protocol does not support Taproot addresses", "ᛗᚨᛁᚨ ᛈᚱᛟᛏᛟᚲᛟᛚ ᛞᛟᛖᛊ ᚾᛟᛏ ᛊᚢᛈᛈᛟᚱᛏ ᛏᚨᛈᚱᛟᛟᛏ ᚨᛞᛞᚱᛖᛊᛊᛖᛊ"],
+  "swap.recipient.delegatedNotSupported": ["This address uses EIP-7702 delegation and cannot receive the outbound. Revoke the delegation, or use a standard self-custody address", "ᚦᛁᛊ ᚨᛞᛞᚱᛖᛊᛊ ᚢᛊᛖᛊ ᛖᛁᛈ-7702 ᛞᛖᛚᛖᚷᚨᛏᛁᛟᚾ ᚨᚾᛞ ᚲᚨᚾᚾᛟᛏ ᚱᛖᚲᛖᛁᚹᛖ ᚦᛖ ᛟᚢᛏᛒᛟᚢᚾᛞ. ᚱᛖᚹᛟᚲᛖ ᚦᛖ ᛞᛖᛚᛖᚷᚨᛏᛁᛟᚾ, ᛟᚱ ᚢᛊᛖ ᚨ ᛊᛏᚨᚾᛞᚨᚱᛞ ᛊᛖᛚᚠ-ᚲᚢᛊᛏᛟᛞᛁ ᚨᛞᛞᚱᛖᛊᛊ"],
+  "swap.recipient.contractNotSupported": ["This is a smart contract address and cannot receive the outbound. Use a self-custody wallet address", "ᚦᛁᛊ ᛁᛊ ᚨ ᛊᛗᚨᚱᛏ ᚲᛟᚾᛏᚱᚨᚲᛏ ᚨᛞᛞᚱᛖᛊᛊ ᚨᚾᛞ ᚲᚨᚾᚾᛟᛏ ᚱᛖᚲᛖᛁᚹᛖ ᚦᛖ ᛟᚢᛏᛒᛟᚢᚾᛞ. ᚢᛊᛖ ᚨ ᛊᛖᛚᚠ-ᚲᚢᛊᛏᛟᛞᛁ ᚹᚨᛚᛚᛖᛏ ᚨᛞᛞᚱᛖᛊᛊ"],
   "swap.recipient.titleAddresses": ["Enter Addresses", "ᛖᚾᛏᛖᚱ ᚨᛞᛞᚱᛖᛊᛊᛖᛊ"],
   "swap.recipient.titleReceiving": ["Enter Receiving Address", "ᛖᚾᛏᛖᚱ ᚱᛖᚲᛖᛁᚹᛁᛜ ᚨᛞᛞᚱᛖᛊᛊ"],
   "swap.recipient.enterRefundAddress": ["Enter refund address:", "ᛖᚾᛏᛖᚱ ᚱᛖᚠᚢᚾᛞ ᚨᛞᛞᚱᛖᛊᛊ:"],

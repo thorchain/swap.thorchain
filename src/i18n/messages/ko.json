@@ -220,6 +220,8 @@
       "paste": "붙여넣기",
       "invalidAddress": "유효하지 않은 {chain} 주소",
       "taprootNotSupported": "Maya Protocol은 Taproot 주소를 지원하지 않습니다",
+      "delegatedNotSupported": "이 주소는 EIP-7702 위임을 사용하고 있어 출금을 수신할 수 없습니다. 위임을 해제하거나 일반 자가수탁 주소를 사용하세요",
+      "contractNotSupported": "스마트 컨트랙트 주소이므로 출금을 수신할 수 없습니다. 자가수탁 지갑 주소를 사용하세요",
       "titleAddresses": "주소 입력",
       "titleReceiving": "수령 주소 입력",
       "enterRefundAddress": "환불 주소 입력:",

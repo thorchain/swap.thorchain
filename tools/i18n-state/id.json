@@ -469,5 +469,7 @@
   "tx.status.unknown": ["Unknown", "Tidak diketahui"],
   "tx.leg.deposit": ["Deposit {ticker}", "Deposit {ticker}"],
   "tx.leg.send": ["Send {ticker}", "Kirim {ticker}"],
-  "tx.leg.swap": ["Swap {from} to {to}", "Tukar {from} ke {to}"]
+  "tx.leg.swap": ["Swap {from} to {to}", "Tukar {from} ke {to}"],
+  "swap.recipient.delegatedNotSupported": ["This address uses EIP-7702 delegation and cannot receive the outbound. Revoke the delegation, or use a standard self-custody address", "Alamat ini menggunakan delegasi EIP-7702 dan tidak dapat menerima dana keluar. Cabut delegasinya, atau gunakan alamat self-custody standar"],
+  "swap.recipient.contractNotSupported": ["This is a smart contract address and cannot receive the outbound. Use a self-custody wallet address", "Ini adalah alamat smart contract dan tidak dapat menerima dana keluar. Gunakan alamat wallet self-custody"]
 }

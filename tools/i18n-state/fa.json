@@ -469,5 +469,7 @@
   "tx.status.unknown": ["Unknown", "نامشخص"],
   "tx.leg.deposit": ["Deposit {ticker}", "واریز {ticker}"],
   "tx.leg.send": ["Send {ticker}", "ارسال {ticker}"],
-  "tx.leg.swap": ["Swap {from} to {to}", "تبادل {from} به {to}"]
+  "tx.leg.swap": ["Swap {from} to {to}", "تبادل {from} به {to}"],
+  "swap.recipient.delegatedNotSupported": ["This address uses EIP-7702 delegation and cannot receive the outbound. Revoke the delegation, or use a standard self-custody address", "این آدرس از تفویض EIP-7702 استفاده می‌کند و نمی‌تواند تراکنش خروجی را دریافت کند. تفویض را لغو کنید یا از یک آدرس استاندارد خودنگهدار استفاده کنید"],
+  "swap.recipient.contractNotSupported": ["This is a smart contract address and cannot receive the outbound. Use a self-custody wallet address", "این یک آدرس قرارداد هوشمند است و نمی‌تواند تراکنش خروجی را دریافت کند. از آدرس یک کیف پول خودنگهدار استفاده کنید"]
 }

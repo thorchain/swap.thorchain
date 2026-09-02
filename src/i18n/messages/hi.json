@@ -220,6 +220,8 @@
       "paste": "पेस्ट करें",
       "invalidAddress": "अमान्य {chain} पता",
       "taprootNotSupported": "Maya Protocol Taproot पतों का समर्थन नहीं करता",
+      "delegatedNotSupported": "यह पता EIP-7702 डेलिगेशन का उपयोग करता है और आउटबाउंड प्राप्त नहीं कर सकता। डेलिगेशन रद्द करें, या कोई सामान्य सेल्फ-कस्टडी पता उपयोग करें",
+      "contractNotSupported": "यह एक स्मार्ट कॉन्ट्रैक्ट पता है और आउटबाउंड प्राप्त नहीं कर सकता। सेल्फ-कस्टडी वॉलेट पते का उपयोग करें",
       "titleAddresses": "पते दर्ज करें",
       "titleReceiving": "प्राप्ति पता दर्ज करें",
       "enterRefundAddress": "रिफंड पता दर्ज करें:",
