@@ -21,10 +21,6 @@
     "history": "ประวัติ"
   },
   "announcement": {
-    "monero": {
-      "title": "Monero จะพร้อมให้เทรดเร็ว ๆ นี้",
-      "text": "การแลกเปลี่ยน XMR กำลังจะมาที่ THORChain — โปรดติดตาม"
-    },
     "dismiss": "ปิด"
   },
   "footer": {

@@ -2,8 +2,9 @@
 // Automatic UI translation, with protection for hand-reviewed translations.
 // The protocol is documented in docs/localization.md; the short version:
 //
-// English (src/i18n/messages/en.json) is the only input to translation, so
-// editing zh.json can never change en.json or any other locale. Every other
+// English (src/i18n/messages/en.json, plus the announcement banner's English
+// copy in src/content/banner.json — see docs/banner.md) is the only input to
+// translation, so editing zh.json can never change en.json or any other locale. Every other
 // locale is filled in from it, translating only what is new or whose English
 // changed, and output keeps English's key order so diffs stay small.
 //
@@ -40,6 +41,7 @@ import { dirname, join } from 'node:path'
 
 const HERE = dirname(fileURLToPath(import.meta.url))
 const MESSAGES_DIR = join(HERE, '..', 'src', 'i18n', 'messages')
+const BANNER_PATH = join(HERE, '..', 'src', 'content', 'banner.json')
 const STATE_DIR = join(HERE, 'i18n-state')
 const QUEUE_PATH = join(HERE, 'i18n-review-queue.json')
 const SOURCE_LOCALE = 'en'
@@ -139,11 +141,55 @@ function buildNested(enObj, flatValues, prefix = '') {
   return out
 }
 
+// ---- announcement banner --------------------------------------------------
+//
+// The banner's copy lives in src/content/banner.json next to its on/off switch
+// rather than in the message catalogue (docs/banner.md). It enters the flat key
+// space as `banner.<field>`, so the state files, the human-edit protection, the
+// review queue and pruning all apply to it unchanged.
+const BANNER_NS = 'banner'
+
+// A repo without the file at all (the test sandbox) simply has no banner strings.
+function readBanner() {
+  if (!existsSync(BANNER_PATH)) return null
+  const banner = readJson(BANNER_PATH)
+  if (!banner.locales) return null
+  if (!banner.locales[SOURCE_LOCALE]) {
+    console.error(`src/content/banner.json has no locales.${SOURCE_LOCALE} — the English copy is the source every other locale is written from.`)
+    process.exit(1)
+  }
+  return banner
+}
+
+// One locale's banner copy as flat keys.
+function bannerFlat(banner, locale) {
+  const out = {}
+  if (!banner) return out
+  for (const [field, value] of Object.entries(banner.locales[locale] || {})) {
+    if (typeof value === 'string') out[`${BANNER_NS}.${field}`] = value
+  }
+  return out
+}
+
+// The inverse of bannerFlat, in the field order English defines.
+function bannerBlock(banner, flat) {
+  const out = {}
+  for (const field of Object.keys(banner.locales[SOURCE_LOCALE])) {
+    const value = flat[`${BANNER_NS}.${field}`]
+    if (typeof value === 'string') out[field] = value
+  }
+  return out
+}
+
 // ---- locale discovery -----------------------------------------------------
 
-function discoverLocales() {
+function allLocales() {
   const files = readdirSync(MESSAGES_DIR).filter(f => f.endsWith('.json'))
-  const locales = files.map(f => f.slice(0, -'.json'.length)).filter(l => l !== SOURCE_LOCALE)
+  return files.map(f => f.slice(0, -'.json'.length)).filter(l => l !== SOURCE_LOCALE)
+}
+
+function discoverLocales() {
+  const locales = allLocales()
   return ONLY_LOCALES ? locales.filter(l => ONLY_LOCALES.has(l)) : locales
 }
 
@@ -291,9 +337,9 @@ function reviseChunk(entries, langName, localeCode) {
 // by a person — that is the whole human-edit detector, and it needs no
 // annotation from reviewers. The third entry only distinguishes a translation
 // a reviewer has just changed from one that has been sitting untouched.
-function planLocale(locale, enFlat, enKeys) {
+function planLocale(locale, enFlat, enKeys, banner) {
   const path = join(MESSAGES_DIR, `${locale}.json`)
-  const locFlat = existsSync(path) ? flatten(readJson(path)) : {}
+  const locFlat = { ...(existsSync(path) ? flatten(readJson(path)) : {}), ...bannerFlat(banner, locale) }
   const statePath = join(STATE_DIR, `${locale}.json`)
   const seeding = !existsSync(statePath)
   const state = seeding ? {} : readJson(statePath)
@@ -378,7 +424,14 @@ async function main() {
   }
 
   const en = readJson(join(MESSAGES_DIR, `${SOURCE_LOCALE}.json`))
-  const enFlat = flatten(en)
+  const banner = readBanner()
+  const enMessages = flatten(en)
+  if (banner && Object.keys(enMessages).some(k => k === BANNER_NS || k.startsWith(`${BANNER_NS}.`))) {
+    console.error(`"${BANNER_NS}" is reserved for src/content/banner.json — rename that key in src/i18n/messages/en.json.`)
+    process.exit(1)
+  }
+  // Banner keys come last so the state files keep a stable order.
+  const enFlat = { ...enMessages, ...bannerFlat(banner, SOURCE_LOCALE) }
   const enKeys = Object.keys(enFlat)
 
   const locales = discoverLocales()
@@ -390,7 +443,7 @@ async function main() {
 
   // Carried forward so a --locale run doesn't drop other locales' entries.
   const prevQueue = existsSync(QUEUE_PATH) ? readJson(QUEUE_PATH).locales || {} : {}
-  const plan = locales.map(l => planLocale(l, enFlat, enKeys))
+  const plan = locales.map(l => planLocale(l, enFlat, enKeys, banner))
   const totalPending = plan.reduce((n, p) => n + p.pending.length, 0)
   const totalReview = plan.reduce((n, p) => n + p.review.length, 0)
 
@@ -425,6 +478,7 @@ async function main() {
 
   mkdirSync(STATE_DIR, { recursive: true })
   const queue = { ...prevQueue }
+  const bannerCopy = {}
 
   for (const p of plan) {
     const { locale, path, statePath, locFlat, state, seeding, pending, removed, nextState, stale } = p
@@ -488,6 +542,7 @@ async function main() {
     for (const k of Object.keys(merged)) if (!(k in enFlat)) delete merged[k]
     writeJson(path, buildNested(en, merged))
     writeState(statePath, nextState)
+    if (banner) bannerCopy[locale] = bannerBlock(banner, merged)
 
     const translated = Object.keys(written).length - revisedKeys.size
     const parts = []
@@ -499,9 +554,24 @@ async function main() {
     console.log(`✓ ${locale} — ${parts.length ? parts.join(', ') : 'up to date'}`.padEnd(72))
   }
 
+  // Locales this run skipped (--locale) keep what they had; ones that no longer
+  // exist drop out.
+  if (banner) {
+    const copy = { [SOURCE_LOCALE]: banner.locales[SOURCE_LOCALE] }
+    for (const locale of allLocales()) {
+      const block = bannerCopy[locale] || banner.locales[locale]
+      if (block && Object.keys(block).length) copy[locale] = block
+    }
+    const next = JSON.stringify({ ...banner, locales: copy }, null, 2) + '\n'
+    if (next !== readFileSync(BANNER_PATH, 'utf8')) {
+      writeFileSync(BANNER_PATH, next)
+      console.log('✓ banner — copy written to src/content/banner.json')
+    }
+  }
+
   if (Object.keys(queue).length) {
     writeJson(QUEUE_PATH, {
-      note: 'Hand-reviewed translations whose English source has changed. These were NOT overwritten — a native speaker should confirm or update them in src/i18n/messages/<locale>.json.',
+      note: 'Hand-reviewed translations whose English source has changed. These were NOT overwritten — a native speaker should confirm or update them in src/i18n/messages/<locale>.json, or in src/content/banner.json for banner.* keys.',
       generated: new Date().toISOString(),
       locales: queue
     })

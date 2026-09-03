@@ -21,10 +21,6 @@
     "history": "History"
   },
   "announcement": {
-    "monero": {
-      "title": "Monero go ready for trading soon.",
-      "text": "XMR swaps dey come THORChain — stay tuned."
-    },
     "dismiss": "Close am"
   },
   "footer": {

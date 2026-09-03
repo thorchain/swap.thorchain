@@ -175,6 +175,45 @@ try {
   // 8. The documented escape hatch does what it says.
   run('--overwrite-human', '--locale', 'zh')
   check('--overwrite-human replaces hand edits', zh().menu.swap === '[MT] Swap now', zh().menu.swap)
+
+  // 9. The announcement banner keeps its copy in src/content/banner.json
+  //    (docs/banner.md) but rides this same pipeline, protection included.
+  const BANNER = join(SANDBOX, 'src', 'content', 'banner.json')
+  const banner = () => readJson(BANNER)
+  const setBanner = o => writeJson(BANNER, o)
+  mkdirSync(dirname(BANNER), { recursive: true })
+  setBanner({
+    enabled: true,
+    id: 'first-banner',
+    icon: '',
+    href: '',
+    locales: { en: { title: 'Monero is coming.' } }
+  })
+
+  run('--locale', 'zh')
+  check('banner copy is translated into its own config file', banner().locales.zh?.title === '[MT] Monero is coming.', banner().locales)
+  check('banner copy stays out of the message catalogue', !('banner' in zh()), zh())
+  check('a --locale run leaves other locales alone', !banner().locales.ko, banner().locales)
+
+  const edited = banner()
+  edited.locales.zh.title = '门罗币要来了（人工）'
+  setBanner(edited)
+  run('--locale', 'zh')
+  check('a hand-edited banner translation survives', banner().locales.zh.title === '门罗币要来了（人工）', banner().locales)
+  // Rewriting the English leaves a hand-corrected translation in place and
+  // queues it — the reason swapping banners means clearing the locale blocks.
+  const swapped = banner()
+  swapped.id = 'second-banner'
+  swapped.locales.en = { title: 'RUNEPool is live.' }
+  setBanner(swapped)
+  run('--locale', 'zh')
+  check('a hand-corrected banner translation is queued when its English moves', queued('zh', 'banner.title'), queue().locales?.zh)
+
+  // New copy with the locales cleared out.
+  setBanner({ enabled: true, id: 'third-banner', icon: '', href: '', locales: { en: { title: 'TCY staking is open.' } } })
+  run('--locale', 'zh')
+  check('a cleared locales block is refilled from the new English', banner().locales.zh.title === '[MT] TCY staking is open.', banner().locales)
+  check('a field English dropped is pruned', !('text' in (banner().locales.zh || {})), banner().locales)
 } catch (err) {
   console.log(`FAIL  the test harness threw — ${err.message}`)
   failures++

@@ -16,8 +16,6 @@
   "menu.genericError": ["Something went wrong", "Something no work well"],
   "header.wallet": ["Wallet", "Wallet"],
   "header.history": ["History", "History"],
-  "announcement.monero.title": ["Monero will be ready for trading soon.", "Monero go ready for trading soon."],
-  "announcement.monero.text": ["XMR swaps are coming to THORChain — stay tuned.", "XMR swaps dey come THORChain — stay tuned."],
   "announcement.dismiss": ["Dismiss", "Close am"],
   "footer.privacyPolicy": ["Privacy Policy", "Privacy Policy"],
   "footer.termsOfUse": ["Terms of Use", "Terms of Use"],
@@ -476,5 +474,7 @@
   "tx.status.unknown": ["Unknown", "We no sabi"],
   "tx.leg.deposit": ["Deposit {ticker}", "Deposit {ticker}"],
   "tx.leg.send": ["Send {ticker}", "Send {ticker}"],
-  "tx.leg.swap": ["Swap {from} to {to}", "Swap {from} to {to}"]
+  "tx.leg.swap": ["Swap {from} to {to}", "Swap {from} to {to}"],
+  "banner.title": ["Monero will be ready for trading soon.", "Monero go ready for trading soon."],
+  "banner.text": ["XMR swaps are coming to THORChain — stay tuned.", "XMR swaps dey come THORChain — stay tuned."]
 }

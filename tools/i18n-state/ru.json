@@ -16,8 +16,6 @@
   "menu.genericError": ["Something went wrong", "Что-то пошло не так"],
   "header.wallet": ["Wallet", "Кошелёк"],
   "header.history": ["History", "История"],
-  "announcement.monero.title": ["Monero will be ready for trading soon.", "Monero скоро станет доступен для торговли."],
-  "announcement.monero.text": ["XMR swaps are coming to THORChain — stay tuned.", "Обмены XMR скоро появятся в THORChain — следите за новостями."],
   "announcement.dismiss": ["Dismiss", "Закрыть"],
   "footer.privacyPolicy": ["Privacy Policy", "Политика конфиденциальности"],
   "footer.termsOfUse": ["Terms of Use", "Условия использования"],
@@ -476,5 +474,7 @@
   "tx.status.unknown": ["Unknown", "Неизвестно"],
   "tx.leg.deposit": ["Deposit {ticker}", "Внести {ticker}"],
   "tx.leg.send": ["Send {ticker}", "Отправить {ticker}"],
-  "tx.leg.swap": ["Swap {from} to {to}", "Обменять {from} на {to}"]
+  "tx.leg.swap": ["Swap {from} to {to}", "Обменять {from} на {to}"],
+  "banner.title": ["Monero will be ready for trading soon.", "Monero скоро станет доступен для торговли."],
+  "banner.text": ["XMR swaps are coming to THORChain — stay tuned.", "Обмены XMR скоро появятся в THORChain — следите за новостями."]
 }

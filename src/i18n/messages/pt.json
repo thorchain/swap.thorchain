@@ -21,10 +21,6 @@
     "history": "Histórico"
   },
   "announcement": {
-    "monero": {
-      "title": "Monero estará disponível para negociação em breve.",
-      "text": "As trocas de XMR estão chegando à THORChain — fique atento."
-    },
     "dismiss": "Dispensar"
   },
   "footer": {

@@ -21,10 +21,6 @@
     "history": "내역"
   },
   "announcement": {
-    "monero": {
-      "title": "Monero가 곧 거래 가능해집니다.",
-      "text": "XMR 스왑이 THORChain에 곧 추가됩니다 — 계속 지켜봐 주세요."
-    },
     "dismiss": "닫기"
   },
   "footer": {

@@ -21,10 +21,6 @@
     "history": "История"
   },
   "announcement": {
-    "monero": {
-      "title": "Monero скоро станет доступен для торговли.",
-      "text": "Обмены XMR скоро появятся в THORChain — следите за новостями."
-    },
     "dismiss": "Закрыть"
   },
   "footer": {

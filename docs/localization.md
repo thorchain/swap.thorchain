@@ -32,6 +32,13 @@ If a string is brand new and has never been translated, let the translator run f
 the same commit that introduces the English key cannot be distinguished from machine output yet, so it is not protected until the translator has seen
 it once.
 
+## The announcement banner
+
+One set of strings lives outside `src/i18n/messages/`: the announcement banner's copy, which sits in `src/content/banner.json` next to the on/off
+switch and icon it belongs with (see [banner.md](banner.md)). It is not an exception to anything above — the translator folds each string into the
+same flat key space as `banner.<field>`, so the state files, the human-edit detection, the review queue and the pruning of retired keys all work on it
+identically. To improve a banner translation, edit the value under `locales.<locale>` in that file instead of a message catalogue.
+
 ## How the protection works
 
 `tools/i18n-state/<locale>.json` records, per key, the English the translation was made from and what the translator wrote:
@@ -114,5 +121,6 @@ can clear them, so blocking on them would just be a permanently red check.
 
 ## CI
 
-`.github/workflows/i18n.yml` runs on any push to `main` that touches `src/i18n/messages/**`, and commits the result back with `[skip ci]`. Pushing a
-locale-only change is what records a reviewer's edits in the state files; that run makes no API calls unless something is actually untranslated.
+`.github/workflows/i18n.yml` runs on any push to `main` that touches `src/i18n/messages/**` or `src/content/banner.json`, and commits the result back
+with `[skip ci]`. Pushing a locale-only change is what records a reviewer's edits in the state files; that run makes no API calls unless something is
+actually untranslated.

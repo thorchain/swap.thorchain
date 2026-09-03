@@ -21,10 +21,6 @@
     "history": "ইতিহাস"
   },
   "announcement": {
-    "monero": {
-      "title": "Monero শীঘ্রই ট্রেডিংয়ের জন্য প্রস্তুত হবে।",
-      "text": "XMR সোয়াপ THORChain-এ আসছে — সাথে থাকুন।"
-    },
     "dismiss": "বন্ধ করুন"
   },
   "footer": {

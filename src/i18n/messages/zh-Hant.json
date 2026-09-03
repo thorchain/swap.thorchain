@@ -21,10 +21,6 @@
     "history": "歷史記錄"
   },
   "announcement": {
-    "monero": {
-      "title": "Monero 即將開放交易。",
-      "text": "XMR 兌換即將登陸 THORChain — 敬請期待。"
-    },
     "dismiss": "關閉"
   },
   "footer": {

@@ -21,10 +21,6 @@
     "history": "Geçmiş"
   },
   "announcement": {
-    "monero": {
-      "title": "Monero yakında işleme açılacak.",
-      "text": "XMR takasları THORChain'e geliyor — takipte kalın."
-    },
     "dismiss": "Kapat"
   },
   "footer": {

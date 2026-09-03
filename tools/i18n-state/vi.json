@@ -16,8 +16,6 @@
   "menu.genericError": ["Something went wrong", "Đã xảy ra lỗi"],
   "header.wallet": ["Wallet", "Ví"],
   "header.history": ["History", "Lịch sử"],
-  "announcement.monero.title": ["Monero will be ready for trading soon.", "Monero sẽ sớm sẵn sàng để giao dịch."],
-  "announcement.monero.text": ["XMR swaps are coming to THORChain — stay tuned.", "Hoán đổi XMR sắp có mặt trên THORChain — hãy đón xem."],
   "announcement.dismiss": ["Dismiss", "Đóng"],
   "footer.privacyPolicy": ["Privacy Policy", "Chính sách bảo mật"],
   "footer.termsOfUse": ["Terms of Use", "Điều khoản sử dụng"],
@@ -476,5 +474,7 @@
   "tx.status.unknown": ["Unknown", "Không xác định"],
   "tx.leg.deposit": ["Deposit {ticker}", "Nạp {ticker}"],
   "tx.leg.send": ["Send {ticker}", "Gửi {ticker}"],
-  "tx.leg.swap": ["Swap {from} to {to}", "Hoán đổi {from} sang {to}"]
+  "tx.leg.swap": ["Swap {from} to {to}", "Hoán đổi {from} sang {to}"],
+  "banner.title": ["Monero will be ready for trading soon.", "Monero sẽ sớm sẵn sàng để giao dịch."],
+  "banner.text": ["XMR swaps are coming to THORChain — stay tuned.", "Hoán đổi XMR sắp có mặt trên THORChain — hãy đón xem."]
 }

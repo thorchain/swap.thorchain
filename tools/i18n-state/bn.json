@@ -16,8 +16,6 @@
   "menu.genericError": ["Something went wrong", "কিছু একটা ভুল হয়েছে"],
   "header.wallet": ["Wallet", "ওয়ালেট"],
   "header.history": ["History", "ইতিহাস"],
-  "announcement.monero.title": ["Monero will be ready for trading soon.", "Monero শীঘ্রই ট্রেডিংয়ের জন্য প্রস্তুত হবে।"],
-  "announcement.monero.text": ["XMR swaps are coming to THORChain — stay tuned.", "XMR সোয়াপ THORChain-এ আসছে — সাথে থাকুন।"],
   "announcement.dismiss": ["Dismiss", "বন্ধ করুন"],
   "footer.privacyPolicy": ["Privacy Policy", "গোপনীয়তা নীতি"],
   "footer.termsOfUse": ["Terms of Use", "ব্যবহারের শর্তাবলি"],
@@ -476,5 +474,7 @@
   "tx.status.unknown": ["Unknown", "অজানা"],
   "tx.leg.deposit": ["Deposit {ticker}", "{ticker} ডিপোজিট করুন"],
   "tx.leg.send": ["Send {ticker}", "{ticker} পাঠান"],
-  "tx.leg.swap": ["Swap {from} to {to}", "{from} থেকে {to} সোয়াপ করুন"]
+  "tx.leg.swap": ["Swap {from} to {to}", "{from} থেকে {to} সোয়াপ করুন"],
+  "banner.title": ["Monero will be ready for trading soon.", "Monero শীঘ্রই ট্রেডিংয়ের জন্য প্রস্তুত হবে।"],
+  "banner.text": ["XMR swaps are coming to THORChain — stay tuned.", "XMR সোয়াপ THORChain-এ আসছে — সাথে থাকুন।"]
 }

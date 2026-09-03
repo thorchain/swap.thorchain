@@ -1,0 +1,104 @@
+{
+  "enabled": true,
+  "id": "monero-soon",
+  "icon": "/networks/xmr.svg",
+  "href": "",
+  "locales": {
+    "en": {
+      "title": "Monero will be ready for trading soon.",
+      "text": "XMR swaps are coming to THORChain — stay tuned."
+    },
+    "ar": {
+      "title": "سيكون Monero متاحًا للتداول قريبًا.",
+      "text": "عمليات تبادل XMR قادمة إلى THORChain — ترقّبوا ذلك."
+    },
+    "arz": {
+      "title": "Monero هيكون جاهز للتداول قريب.",
+      "text": "مبادلات XMR جاية على THORChain — استنونا."
+    },
+    "bn": {
+      "title": "Monero শীঘ্রই ট্রেডিংয়ের জন্য প্রস্তুত হবে।",
+      "text": "XMR সোয়াপ THORChain-এ আসছে — সাথে থাকুন।"
+    },
+    "de": {
+      "title": "Monero ist bald handelbar.",
+      "text": "XMR-Swaps kommen zu THORChain – bleib dran."
+    },
+    "en-Runr": {
+      "title": "ᛗᛟᚾᛖᚱᛟ ᚹᛁᛚᛚ ᛒᛖ ᚱᛖᚨᛞᛁ ᚠᛟᚱ ᛏᚱᚨᛞᛁᛜ ᛊᛟᛟᚾ.",
+      "text": "ᚲᛊᛗᚱ ᛊᚹᚨᛈᛊ ᚨᚱᛖ ᚲᛟᛗᛁᛜ ᛏᛟ ᚦᛟᚱᚲᚺᚨᛁᚾ — ᛊᛏᚨᛁ ᛏᚢᚾᛖᛞ."
+    },
+    "es": {
+      "title": "Monero estará disponible para operar próximamente.",
+      "text": "Los swaps de XMR llegan a THORChain — mantente atento."
+    },
+    "fa": {
+      "title": "Monero به‌زودی برای معامله آماده می‌شود.",
+      "text": "سوآپ‌های XMR به THORChain می‌آیند — همراه ما باشید."
+    },
+    "fr": {
+      "title": "Monero sera bientôt disponible à l'échange.",
+      "text": "Les swaps XMR arrivent sur THORChain — restez à l'écoute."
+    },
+    "hi": {
+      "title": "Monero जल्द ही ट्रेडिंग के लिए उपलब्ध होगा।",
+      "text": "XMR स्वैप THORChain पर आ रहे हैं — जुड़े रहें।"
+    },
+    "id": {
+      "title": "Monero akan segera tersedia untuk diperdagangkan.",
+      "text": "Swap XMR akan hadir di THORChain — pantau terus."
+    },
+    "it": {
+      "title": "Monero sarà presto disponibile per lo scambio.",
+      "text": "Gli swap di XMR stanno arrivando su THORChain — resta sintonizzato."
+    },
+    "ja": {
+      "title": "Monero がまもなく取引可能になります。",
+      "text": "XMR のスワップが THORChain に登場します。続報をお待ちください。"
+    },
+    "ko": {
+      "title": "Monero가 곧 거래 가능해집니다.",
+      "text": "XMR 스왑이 THORChain에 곧 추가됩니다 — 계속 지켜봐 주세요."
+    },
+    "lah": {
+      "title": "Monero چھیتی ٹریڈنگ لئی تیار ہوسی۔",
+      "text": "XMR تبادلے THORChain تے آ رہے نیں — نال رہو۔"
+    },
+    "pcm": {
+      "title": "Monero go ready for trading soon.",
+      "text": "XMR swaps dey come THORChain — stay tuned."
+    },
+    "pt": {
+      "title": "Monero estará disponível para negociação em breve.",
+      "text": "As trocas de XMR estão chegando à THORChain — fique atento."
+    },
+    "ru": {
+      "title": "Monero скоро станет доступен для торговли.",
+      "text": "Обмены XMR скоро появятся в THORChain — следите за новостями."
+    },
+    "th": {
+      "title": "Monero จะพร้อมให้เทรดเร็ว ๆ นี้",
+      "text": "การแลกเปลี่ยน XMR กำลังจะมาที่ THORChain — โปรดติดตาม"
+    },
+    "tr": {
+      "title": "Monero yakında işleme açılacak.",
+      "text": "XMR takasları THORChain'e geliyor — takipte kalın."
+    },
+    "ur": {
+      "title": "Monero جلد ٹریڈنگ کے لیے دستیاب ہوگا۔",
+      "text": "XMR تبادلے THORChain پر آ رہے ہیں — منتظر رہیں۔"
+    },
+    "vi": {
+      "title": "Monero sẽ sớm sẵn sàng để giao dịch.",
+      "text": "Hoán đổi XMR sắp có mặt trên THORChain — hãy đón xem."
+    },
+    "zh": {
+      "title": "Monero 即将开放交易。",
+      "text": "XMR 兑换即将登陆 THORChain — 敬请期待。"
+    },
+    "zh-Hant": {
+      "title": "Monero 即將開放交易。",
+      "text": "XMR 兌換即將登陸 THORChain — 敬請期待。"
+    }
+  }
+}

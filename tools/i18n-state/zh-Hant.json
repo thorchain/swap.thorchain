@@ -16,8 +16,6 @@
   "menu.genericError": ["Something went wrong", "出現錯誤"],
   "header.wallet": ["Wallet", "錢包"],
   "header.history": ["History", "歷史記錄"],
-  "announcement.monero.title": ["Monero will be ready for trading soon.", "Monero 即將開放交易。"],
-  "announcement.monero.text": ["XMR swaps are coming to THORChain — stay tuned.", "XMR 兌換即將登陸 THORChain — 敬請期待。"],
   "announcement.dismiss": ["Dismiss", "關閉"],
   "footer.privacyPolicy": ["Privacy Policy", "隱私政策"],
   "footer.termsOfUse": ["Terms of Use", "使用條款"],
@@ -476,5 +474,7 @@
   "tx.status.unknown": ["Unknown", "未知"],
   "tx.leg.deposit": ["Deposit {ticker}", "存入{ticker}"],
   "tx.leg.send": ["Send {ticker}", "發送{ticker}"],
-  "tx.leg.swap": ["Swap {from} to {to}", "將{from}兌換為{to}"]
+  "tx.leg.swap": ["Swap {from} to {to}", "將{from}兌換為{to}"],
+  "banner.title": ["Monero will be ready for trading soon.", "Monero 即將開放交易。"],
+  "banner.text": ["XMR swaps are coming to THORChain — stay tuned.", "XMR 兌換即將登陸 THORChain — 敬請期待。"]
 }

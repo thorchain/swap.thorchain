@@ -16,8 +16,6 @@
   "menu.genericError": ["Something went wrong", "문제가 발생했습니다"],
   "header.wallet": ["Wallet", "지갑"],
   "header.history": ["History", "내역"],
-  "announcement.monero.title": ["Monero will be ready for trading soon.", "Monero가 곧 거래 가능해집니다."],
-  "announcement.monero.text": ["XMR swaps are coming to THORChain — stay tuned.", "XMR 스왑이 THORChain에 곧 추가됩니다 — 계속 지켜봐 주세요."],
   "announcement.dismiss": ["Dismiss", "닫기"],
   "footer.privacyPolicy": ["Privacy Policy", "개인정보 처리방침"],
   "footer.termsOfUse": ["Terms of Use", "이용약관"],
@@ -476,5 +474,7 @@
   "tx.status.unknown": ["Unknown", "알 수 없음"],
   "tx.leg.deposit": ["Deposit {ticker}", "{ticker} 입금"],
   "tx.leg.send": ["Send {ticker}", "{ticker} 보내기"],
-  "tx.leg.swap": ["Swap {from} to {to}", "{from}을(를) {to}(으)로 스왑"]
+  "tx.leg.swap": ["Swap {from} to {to}", "{from}을(를) {to}(으)로 스왑"],
+  "banner.title": ["Monero will be ready for trading soon.", "Monero가 곧 거래 가능해집니다."],
+  "banner.text": ["XMR swaps are coming to THORChain — stay tuned.", "XMR 스왑이 THORChain에 곧 추가됩니다 — 계속 지켜봐 주세요."]
 }

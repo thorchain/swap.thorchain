@@ -21,10 +21,6 @@
     "history": "Cronologia"
   },
   "announcement": {
-    "monero": {
-      "title": "Monero sarà presto disponibile per lo scambio.",
-      "text": "Gli swap di XMR stanno arrivando su THORChain — resta sintonizzato."
-    },
     "dismiss": "Chiudi"
   },
   "footer": {

@@ -21,10 +21,6 @@
     "history": "السجل"
   },
   "announcement": {
-    "monero": {
-      "title": "سيكون Monero متاحًا للتداول قريبًا.",
-      "text": "عمليات تبادل XMR قادمة إلى THORChain — ترقّبوا ذلك."
-    },
     "dismiss": "إخفاء"
   },
   "footer": {

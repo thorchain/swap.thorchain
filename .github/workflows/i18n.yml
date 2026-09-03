@@ -1,20 +1,22 @@
 name: Translate UI strings
 
-# Whenever the English source (en.json) changes on main, translate the new or
-# modified strings into every other locale and commit the result back.
+# Whenever the English source (en.json, or the announcement banner's copy in
+# src/content/banner.json) changes on main, translate the new or modified
+# strings into every other locale and commit the result back.
 # Requires an I18N_API_KEY repository secret (or the provider's own key secret,
 # e.g. ANTHROPIC_API_KEY, which the script accepts as a fallback).
 #
-# Also runs when a locale file itself changes, so that a native speaker's
-# hand-written improvements are recorded in tools/i18n-state/<locale>.json and
-# protected from then on. Such a run makes no API calls unless something is
-# actually untranslated.
+# Also runs when a locale file (or a banner translation) itself changes, so that
+# a native speaker's hand-written improvements are recorded in
+# tools/i18n-state/<locale>.json and protected from then on. Such a run makes no
+# API calls unless something is actually untranslated.
 
 on:
   push:
     branches: [main]
     paths:
       - 'src/i18n/messages/**'
+      - 'src/content/banner.json'
   workflow_dispatch: {}
 
 # Avoid overlapping runs racing to commit translations.
@@ -60,7 +62,7 @@ jobs:
           {
             echo "## Hand-reviewed translations whose English changed"
             echo
-            echo "These were **not** overwritten. A native speaker should confirm or update them in \`src/i18n/messages/<locale>.json\`."
+            echo "These were **not** overwritten. A native speaker should confirm or update them in \`src/i18n/messages/<locale>.json\` (or \`src/content/banner.json\` for \`banner.*\` keys)."
             echo
             echo '| Locale | Key | English was | English now | Current translation |'
             echo '| --- | --- | --- | --- | --- |'
