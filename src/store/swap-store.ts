@@ -75,7 +75,7 @@ export const useSwapStore = create<SwapState>()(
     }),
     {
       name: 'tc-swap-store',
-      version: 2,
+      version: 3,
       onRehydrateStorage: () => state => {
         state?.setHasHydrated(true)
       },

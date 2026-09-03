@@ -194,5 +194,8 @@ export const isAssetHalted = (asset: Asset, mimir: Mimir, mayaMimir: Mimir): boo
     [ProviderName.MAYACHAIN]: isChainHalted(mayaMimir, chain)
   }
 
-  return asset.providers.length > 0 && asset.providers.every(provider => haltedOn[provider])
+  // `providers` can be absent on an asset restored from an older persisted store.
+  const providers = asset.providers ?? []
+
+  return providers.length > 0 && providers.every(provider => haltedOn[provider])
 }
