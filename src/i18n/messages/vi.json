@@ -524,6 +524,13 @@
     "typeSeedPhrase": "Nhập cụm từ khôi phục của bạn",
     "openKeystore": "Mở Keystore",
     "noTokensFound": "Không tìm thấy token",
+    "btcAddressType": {
+      "taproot": "Taproot",
+      "nativeSegwit": "Native SegWit",
+      "nestedSegwit": "Nested SegWit",
+      "legacy": "Legacy"
+    },
+    "btcAddressTypeHint": "Tài khoản này là {type}. Bitcoin lưu số dư riêng cho từng loại địa chỉ, nên số coin nằm ở loại địa chỉ khác sẽ không hiển thị ở đây — hãy đổi loại địa chỉ trong ví của bạn, hoặc kết nối lại bằng một đường dẫn phái sinh (derivation path) khác.",
     "addressCopied": "Đã sao chép địa chỉ",
     "copyAddress": "Sao chép địa chỉ",
     "disconnectWallet": "Ngắt kết nối {name}",

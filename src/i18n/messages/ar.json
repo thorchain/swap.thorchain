@@ -524,6 +524,13 @@
     "typeSeedPhrase": "اكتب عبارة الاستعادة الخاصة بك",
     "openKeystore": "فتح الـ Keystore",
     "noTokensFound": "لم يُعثَر على عملات",
+    "btcAddressType": {
+      "taproot": "Taproot",
+      "nativeSegwit": "Native SegWit",
+      "nestedSegwit": "Nested SegWit",
+      "legacy": "Legacy"
+    },
+    "btcAddressTypeHint": "هذا الحساب من نوع {type}. يحتفظ Bitcoin برصيد منفصل لكل نوع عنوان، لذا لن تظهر هنا العملات المحفوظة على نوع آخر — قم بتبديل نوع العنوان في محفظتك، أو أعد الاتصال عبر مسار اشتقاق مختلف.",
     "addressCopied": "تم نسخ العنوان",
     "copyAddress": "نسخ العنوان",
     "disconnectWallet": "قطع اتصال {name}",

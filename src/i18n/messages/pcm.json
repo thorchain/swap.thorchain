@@ -524,6 +524,13 @@
     "typeSeedPhrase": "Type your seed phrase",
     "openKeystore": "Open Keystore",
     "noTokensFound": "We no see any tokens",
+    "btcAddressType": {
+      "taproot": "Taproot",
+      "nativeSegwit": "Native SegWit",
+      "nestedSegwit": "Nested SegWit",
+      "legacy": "Legacy"
+    },
+    "btcAddressTypeHint": "Dis account na {type}. Bitcoin dey keep separate balance for every address type, so coin wey dey anoda type no go show here — change di address type for your wallet, or connect again with anoda derivation path.",
     "addressCopied": "We don copy di address",
     "copyAddress": "Copy Address",
     "disconnectWallet": "Disconnect {name}",

@@ -524,6 +524,13 @@
     "typeSeedPhrase": "Ketik seed phrase Anda",
     "openKeystore": "Buka Keystore",
     "noTokensFound": "Tidak ada token ditemukan",
+    "btcAddressType": {
+      "taproot": "Taproot",
+      "nativeSegwit": "Native SegWit",
+      "nestedSegwit": "Nested SegWit",
+      "legacy": "Legacy"
+    },
+    "btcAddressTypeHint": "Akun ini bertipe {type}. Bitcoin menyimpan saldo terpisah untuk setiap tipe alamat, sehingga koin yang tersimpan pada tipe lain tidak akan muncul di sini — ubah tipe alamat di dompet Anda, atau hubungkan kembali dengan jalur derivasi yang berbeda.",
     "addressCopied": "Alamat disalin",
     "copyAddress": "Salin alamat",
     "disconnectWallet": "Putuskan {name}",

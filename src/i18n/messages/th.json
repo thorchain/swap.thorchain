@@ -524,6 +524,13 @@
     "typeSeedPhrase": "พิมพ์ seed phrase ของคุณ",
     "openKeystore": "เปิด Keystore",
     "noTokensFound": "ไม่พบโทเคน",
+    "btcAddressType": {
+      "taproot": "Taproot",
+      "nativeSegwit": "Native SegWit",
+      "nestedSegwit": "Nested SegWit",
+      "legacy": "Legacy"
+    },
+    "btcAddressTypeHint": "บัญชีนี้เป็นแบบ {type} — Bitcoin จะแยกยอดคงเหลือตามประเภทที่อยู่ ดังนั้นเหรียญที่เก็บไว้ในที่อยู่ประเภทอื่นจะไม่แสดงที่นี่ กรุณาสลับประเภทที่อยู่ในกระเป๋าของคุณ หรือเชื่อมต่อใหม่ด้วย derivation path อื่น",
     "addressCopied": "คัดลอกที่อยู่แล้ว",
     "copyAddress": "คัดลอกที่อยู่",
     "disconnectWallet": "ยกเลิกการเชื่อมต่อ {name}",

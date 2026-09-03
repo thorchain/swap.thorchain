@@ -524,6 +524,13 @@
     "typeSeedPhrase": "Digita la tua seedphrase",
     "openKeystore": "Apri il Keystore",
     "noTokensFound": "Nessun token trovato",
+    "btcAddressType": {
+      "taproot": "Taproot",
+      "nativeSegwit": "Native SegWit",
+      "nestedSegwit": "Nested SegWit",
+      "legacy": "Legacy"
+    },
+    "btcAddressTypeHint": "Questo account è {type}. Bitcoin mantiene un saldo separato per ogni tipo di indirizzo, quindi le monete detenute su un altro tipo non verranno mostrate qui — cambia il tipo di indirizzo nel tuo wallet oppure riconnettiti con un percorso di derivazione diverso.",
     "addressCopied": "Indirizzo copiato",
     "copyAddress": "Copia l'indirizzo",
     "disconnectWallet": "Disconnetti {name}",

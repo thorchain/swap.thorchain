@@ -524,6 +524,13 @@
     "typeSeedPhrase": "اكتب عبارة الاسترداد بتاعتك",
     "openKeystore": "فتح Keystore",
     "noTokensFound": "مفيش توكنز",
+    "btcAddressType": {
+      "taproot": "Taproot",
+      "nativeSegwit": "Native SegWit",
+      "nestedSegwit": "Nested SegWit",
+      "legacy": "Legacy"
+    },
+    "btcAddressTypeHint": "الحساب ده من نوع {type}. البيتكوين بيحتفظ برصيد منفصل لكل نوع عنوان، يعني العملات اللى على نوع تانى مش هتظهر هنا — غيّر نوع العنوان من المحفظة بتاعتك، أو اتوصل من تانى بمسار اشتقاق مختلف.",
     "addressCopied": "تم نسخ العنوان",
     "copyAddress": "نسخ العنوان",
     "disconnectWallet": "قطع الاتصال بـ {name}",

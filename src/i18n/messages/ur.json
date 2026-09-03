@@ -524,6 +524,13 @@
     "typeSeedPhrase": "اپنا seed phrase ٹائپ کریں",
     "openKeystore": "Keystore کھولیں",
     "noTokensFound": "کوئی ٹوکن نہیں ملا",
+    "btcAddressType": {
+      "taproot": "Taproot",
+      "nativeSegwit": "Native SegWit",
+      "nestedSegwit": "Nested SegWit",
+      "legacy": "Legacy"
+    },
+    "btcAddressTypeHint": "یہ اکاؤنٹ {type} ہے۔ Bitcoin ہر ایڈریس ٹائپ کے لیے الگ بیلنس رکھتا ہے، اس لیے کسی دوسری ٹائپ پر موجود کوائنز یہاں نظر نہیں آئیں گے — اپنے والیٹ میں ایڈریس ٹائپ تبدیل کریں، یا کسی مختلف ڈیریویشن پاتھ پر دوبارہ کنیکٹ کریں۔",
     "addressCopied": "پتہ کاپی ہو گیا",
     "copyAddress": "پتہ کاپی کریں",
     "disconnectWallet": "{name} ڈسکنیکٹ کریں",

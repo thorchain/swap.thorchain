@@ -524,6 +524,13 @@
     "typeSeedPhrase": "Geben Sie Ihre Seed-Phrase ein",
     "openKeystore": "Keystore öffnen",
     "noTokensFound": "Keine Tokens gefunden",
+    "btcAddressType": {
+      "taproot": "Taproot",
+      "nativeSegwit": "Native SegWit",
+      "nestedSegwit": "Nested SegWit",
+      "legacy": "Legacy"
+    },
+    "btcAddressTypeHint": "Dieses Konto verwendet {type}. Bitcoin führt für jeden Adresstyp ein separates Guthaben, daher werden Coins eines anderen Typs hier nicht angezeigt — wechsle den Adresstyp in deiner Wallet oder verbinde dich erneut über einen anderen Ableitungspfad.",
     "addressCopied": "Adresse kopiert",
     "copyAddress": "Adresse kopieren",
     "disconnectWallet": "{name} trennen",

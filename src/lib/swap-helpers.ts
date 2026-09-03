@@ -150,6 +150,29 @@ export const isMayaProvider = (provider?: string) => provider === 'MAYACHAIN' ||
 // Maya Protocol cannot observe or refund Taproot (bech32m) transactions.
 export const isTaprootAddress = (address: string) => address.toLowerCase().startsWith('bc1p')
 
+// Bitcoin address encodings. Every type lives under its own BIP-44 purpose, so one seed
+// holds a separate balance per type — the usual reason a connected wallet looks empty.
+export type BtcAddressType = 'taproot' | 'nativeSegwit' | 'nestedSegwit' | 'legacy'
+
+export const btcAddressType = (address: string): BtcAddressType | undefined => {
+  const lower = address.toLowerCase()
+
+  if (lower.startsWith('bc1p')) return 'taproot'
+  if (lower.startsWith('bc1')) return 'nativeSegwit'
+  if (lower.startsWith('3')) return 'nestedSegwit'
+  if (lower.startsWith('1')) return 'legacy'
+
+  return undefined
+}
+
+// BIP-44 purpose → the address type a wallet must return for that path.
+export const BTC_PURPOSE_ADDRESS_TYPE: Record<number, BtcAddressType> = {
+  44: 'legacy',
+  49: 'nestedSegwit',
+  84: 'nativeSegwit',
+  86: 'taproot'
+}
+
 // Halt flags are keyed by source chain; for secured/trade assets it's the identifier prefix (BASE-USDC-0X...)
 export const assetSourceChain = (asset: Asset): string => {
   if (asset.isSecuredAsset) return asset.identifier.split('-')[0]

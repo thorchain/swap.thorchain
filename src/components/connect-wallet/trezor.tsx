@@ -24,14 +24,15 @@ const EVM_CHAINS = [Chain.Ethereum, Chain.Arbitrum, Chain.BinanceSmartChain, Cha
 const EVM_PATHS: PathPreset[] = [{ title: 'Default', pathTitle: "m/44'/60'/0'/0/{index}", path: index => [44, 60, 0, 0, index] }]
 
 // Trezor derives an address by BIP-44 path. The first element selects the UTXO
-// script type in the SDK (84 → native segwit, 49 → p2sh-segwit, 44 → legacy),
-// the second is the coin type — so every coin needs its own presets (unlike
-// Ledger, whose UI reuses one BTC-centric map and relies on SDK defaults).
-// Trezor has no taproot signer here, so taproot is intentionally omitted.
+// script type in the SDK (86 → taproot, 84 → native segwit, 49 → p2sh-segwit,
+// 44 → legacy), the second is the coin type — so every coin needs its own
+// presets (unlike Ledger, whose UI reuses one BTC-centric map and relies on SDK
+// defaults). Taproot is Bitcoin-only: Litecoin has never activated it.
 const CHAIN_PATH_MAP: Record<string, PathPreset[]> = {
   ...Object.fromEntries(EVM_CHAINS.map(c => [c, EVM_PATHS])),
   [Chain.Bitcoin]: [
     { title: 'Native SegWit', pathTitle: "m/84'/0'/0'/0/{index}", path: index => [84, 0, 0, 0, index] },
+    { title: 'Taproot', pathTitle: "m/86'/0'/0'/0/{index}", path: index => [86, 0, 0, 0, index] },
     { title: 'SegWit', pathTitle: "m/49'/0'/0'/0/{index}", path: index => [49, 0, 0, 0, index] },
     { title: 'Legacy', pathTitle: "m/44'/0'/0'/0/{index}", path: index => [44, 0, 0, 0, index] }
   ],

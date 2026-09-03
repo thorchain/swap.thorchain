@@ -524,6 +524,13 @@
     "typeSeedPhrase": "Введите вашу seed-фразу",
     "openKeystore": "Открыть хранилище ключей",
     "noTokensFound": "Токены не найдены",
+    "btcAddressType": {
+      "taproot": "Taproot",
+      "nativeSegwit": "Native SegWit",
+      "nestedSegwit": "Nested SegWit",
+      "legacy": "Legacy"
+    },
+    "btcAddressTypeHint": "Этот аккаунт — {type}. Bitcoin хранит отдельный баланс для каждого типа адреса, поэтому монеты на адресе другого типа здесь не отобразятся — измените тип адреса в кошельке или переподключитесь по другому пути деривации.",
     "addressCopied": "Адрес скопирован",
     "copyAddress": "Скопировать адрес",
     "disconnectWallet": "Отключить {name}",
