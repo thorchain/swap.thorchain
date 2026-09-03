@@ -11,7 +11,19 @@ import { WalletAccount } from '@/store/wallets-store'
 
 const ETH_RPC_URL = process.env.NEXT_PUBLIC_ALCHEMY_ETH_RPC_URL || 'https://eth.llamarpc.com'
 
-const ETH_SCAM_TICKERS = new Set(['HEX', 'AICC', 'ETHG'])
+// Spam tokens airdropped into user wallets. Prefer the address list: a ticker match also hides
+// any legitimate token that happens to share the symbol.
+const ETH_SCAM_TICKERS = new Set(['HEX', 'AICC', 'ETHG', 'PVC'])
+
+const SCAM_TOKEN_ADDRESSES = new Set([
+  '0x6051c1354ccc51b4d561e43b02735deae64768b8' // ETH.YRISE
+])
+
+const isScamToken = (b: AssetValue): boolean => {
+  const address = b.address?.toLowerCase()
+  if (address && SCAM_TOKEN_ADDRESSES.has(address)) return true
+  return b.chain === Chain.Ethereum && !!b.ticker && ETH_SCAM_TICKERS.has(b.ticker.toUpperCase())
+}
 
 function assetIdentifier(b: AssetValue): string {
   // Secured Asset canonical identifier is the bare "<CHAIN>-<SYMBOL>" form (no "THOR." prefix).
@@ -88,6 +100,7 @@ export const useWalletBalances = () => {
               const addr = t.contractAddress.toLowerCase()
               if (t.logo) alchemyLogoMap.set(addr, t.logo)
               if (existingAddresses.has(addr)) continue
+              if (SCAM_TOKEN_ADDRESSES.has(addr)) continue
               if (t.symbol && ETH_SCAM_TICKERS.has(t.symbol.toUpperCase())) continue
               const value = BigInt(t.tokenBalance).toString()
               try {
@@ -103,7 +116,7 @@ export const useWalletBalances = () => {
             }
           }
 
-          return { account, balances, alchemyLogoMap }
+          return { account, balances: balances.filter(b => !isScamToken(b)), alchemyLogoMap }
         })
       )
       return results.map((r, i) => ({
