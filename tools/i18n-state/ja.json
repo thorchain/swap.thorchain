@@ -95,7 +95,7 @@
   "swap.confirm.gasFee": ["{chain} Gas Fee", "{chain} Gas手数料"],
   "swap.confirm.exchange": ["Exchange", "交換"],
   "swap.confirm.button": ["Confirm", "確認"],
-  "swap.confirm.buttonLimit": ["Confim Limit Order", "指値注文を確認"],
+  "swap.confirm.buttonLimit": ["Confirm Limit Order", "指値注文を確認"],
   "swap.confirm.confirming": ["Confirming", "確認中"],
   "swap.warning.highPriceImpact": ["I understand the price impact is in addition to the slippage tolerance. I accept the high price impact on this swap", "価格への影響はSlippage許容範囲に加算されることを理解しています。このスワップで高い価格への影響を受け入れます"],
   "swap.warning.sendExact": ["I understand that I must send exactly the specified amount from a self-custody wallet. I understand that sending from a smart contract wallet, exchange address, delegated address, or an EIP 7702 wallet, will result in", "セルフカストディウォレットから指定された金額を正確に送金する必要があることを理解しています。スマートコントラクトウォレット、取引所アドレス、委任されたアドレス、またはEIP 7702ウォレットから送金すると、次の結果になることを理解しています:"],

@@ -95,7 +95,7 @@
   "swap.confirm.gasFee": ["{chain} Gas Fee", "{chain} Gas手續費"],
   "swap.confirm.exchange": ["Exchange", "交易所"],
   "swap.confirm.button": ["Confirm", "確認"],
-  "swap.confirm.buttonLimit": ["Confim Limit Order", "確認限價訂單"],
+  "swap.confirm.buttonLimit": ["Confirm Limit Order", "確認限價訂單"],
   "swap.confirm.confirming": ["Confirming", "確認中"],
   "swap.warning.highPriceImpact": ["I understand the price impact is in addition to the slippage tolerance. I accept the high price impact on this swap", "我理解價格影響是在Slippage容差之外的額外部分。我接受本次兌換的高價格影響。"],
   "swap.warning.sendExact": ["I understand that I must send exactly the specified amount from a self-custody wallet. I understand that sending from a smart contract wallet, exchange address, delegated address, or an EIP 7702 wallet, will result in", "我理解我必須從自託管錢包發送精確的指定金額。我理解從Smart Contract錢包、交易所地址、委託地址或EIP 7702錢包發送將導致"],

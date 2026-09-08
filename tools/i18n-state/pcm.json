@@ -95,7 +95,7 @@
   "swap.confirm.gasFee": ["{chain} Gas Fee", "{chain} Gas Fee"],
   "swap.confirm.exchange": ["Exchange", "Exchange"],
   "swap.confirm.button": ["Confirm", "Confam"],
-  "swap.confirm.buttonLimit": ["Confim Limit Order", "Confam Limit Order"],
+  "swap.confirm.buttonLimit": ["Confirm Limit Order", "Confam Limit Order"],
   "swap.confirm.confirming": ["Confirming", "Dey confam"],
   "swap.warning.highPriceImpact": ["I understand the price impact is in addition to the slippage tolerance. I accept the high price impact on this swap", "I understand say di price impact dey on top di slippage tolerance. I accept di high price impact on dis swap"],
   "swap.warning.sendExact": ["I understand that I must send exactly the specified amount from a self-custody wallet. I understand that sending from a smart contract wallet, exchange address, delegated address, or an EIP 7702 wallet, will result in", "I understand say I must send exactly di amount wey dem talk from a self-custody wallet. I understand say if I send from a smart contract wallet, exchange address, delegated address, or EIP 7702 wallet, e go cause"],

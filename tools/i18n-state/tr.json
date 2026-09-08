@@ -95,7 +95,7 @@
   "swap.confirm.gasFee": ["{chain} Gas Fee", "{chain} Gas Ücreti"],
   "swap.confirm.exchange": ["Exchange", "Borsa"],
   "swap.confirm.button": ["Confirm", "Onayla"],
-  "swap.confirm.buttonLimit": ["Confim Limit Order", "Limit Emrini Onayla"],
+  "swap.confirm.buttonLimit": ["Confirm Limit Order", "Limit Emrini Onayla"],
   "swap.confirm.confirming": ["Confirming", "Onaylanıyor"],
   "swap.warning.highPriceImpact": ["I understand the price impact is in addition to the slippage tolerance. I accept the high price impact on this swap", "Fiyat etkisinin Slippage toleransına ek olduğunu anlıyorum. Bu takastaki yüksek fiyat etkisini kabul ediyorum."],
   "swap.warning.sendExact": ["I understand that I must send exactly the specified amount from a self-custody wallet. I understand that sending from a smart contract wallet, exchange address, delegated address, or an EIP 7702 wallet, will result in", "Belirtilen tutarı bir öz saklamalı cüzdandan tam olarak göndermem gerektiğini anlıyorum. Bir Smart Contract cüzdanından, borsa adresinden, yetkilendirilmiş adresten veya EIP 7702 cüzdanından göndermek"],

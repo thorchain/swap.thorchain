@@ -95,7 +95,7 @@
   "swap.confirm.gasFee": ["{chain} Gas Fee", "{chain} Gas فیس"],
   "swap.confirm.exchange": ["Exchange", "ایکسچینج"],
   "swap.confirm.button": ["Confirm", "تصدیق کرو"],
-  "swap.confirm.buttonLimit": ["Confim Limit Order", "Limit آرڈر دی تصدیق کرو"],
+  "swap.confirm.buttonLimit": ["Confirm Limit Order", "Limit آرڈر دی تصدیق کرو"],
   "swap.confirm.confirming": ["Confirming", "تصدیق پئی ہوندی اے"],
   "swap.warning.highPriceImpact": ["I understand the price impact is in addition to the slippage tolerance. I accept the high price impact on this swap", "میں سمجھدا واں کہ قیمت تے اثر slippage برداشت توں علاوہ اے۔ میں ایس تبادلے تے ودھ قیمت اثر نوں قبول کردا واں"],
   "swap.warning.sendExact": ["I understand that I must send exactly the specified amount from a self-custody wallet. I understand that sending from a smart contract wallet, exchange address, delegated address, or an EIP 7702 wallet, will result in", "میں سمجھدا واں کہ مینوں سیلف کسٹڈی والٹ توں ٹھیک اوہی مقرر رقم بھیجݨی ضروری اے۔ میں سمجھدا واں کہ smart contract والٹ، ایکسچینج پتے، delegated پتے، یا EIP 7702 والٹ توں بھیجݨ نال"],

@@ -95,7 +95,7 @@
   "swap.confirm.gasFee": ["{chain} Gas Fee", "{chain} ᚷᚨᛊ ᚠᛖᛖ"],
   "swap.confirm.exchange": ["Exchange", "ᛖᚲᛊᚲᚺᚨᛜᛖ"],
   "swap.confirm.button": ["Confirm", "ᚲᛟᚾᚠᛁᚱᛗ"],
-  "swap.confirm.buttonLimit": ["Confim Limit Order", "ᚲᛟᚾᚠᛁᛗ ᛚᛁᛗᛁᛏ ᛟᚱᛞᛖᚱ"],
+  "swap.confirm.buttonLimit": ["Confirm Limit Order", "ᚲᛟᚾᚠᛁᚱᛗ ᛚᛁᛗᛁᛏ ᛟᚱᛞᛖᚱ"],
   "swap.confirm.confirming": ["Confirming", "ᚲᛟᚾᚠᛁᚱᛗᛁᛜ"],
   "swap.warning.highPriceImpact": ["I understand the price impact is in addition to the slippage tolerance. I accept the high price impact on this swap", "ᛁ ᚢᚾᛞᛖᚱᛊᛏᚨᚾᛞ ᚦᛖ ᛈᚱᛁᚲᛖ ᛁᛗᛈᚨᚲᛏ ᛁᛊ ᛁᚾ ᚨᛞᛞᛁᛏᛁᛟᚾ ᛏᛟ ᚦᛖ ᛊᛚᛁᛈᛈᚨᚷᛖ ᛏᛟᛚᛖᚱᚨᚾᚲᛖ. ᛁ ᚨᚲᚲᛖᛈᛏ ᚦᛖ ᚺᛁᚷᚺ ᛈᚱᛁᚲᛖ ᛁᛗᛈᚨᚲᛏ ᛟᚾ ᚦᛁᛊ ᛊᚹᚨᛈ"],
   "swap.warning.sendExact": ["I understand that I must send exactly the specified amount from a self-custody wallet. I understand that sending from a smart contract wallet, exchange address, delegated address, or an EIP 7702 wallet, will result in", "ᛁ ᚢᚾᛞᛖᚱᛊᛏᚨᚾᛞ ᚦᚨᛏ ᛁ ᛗᚢᛊᛏ ᛊᛖᚾᛞ ᛖᚲᛊᚨᚲᛏᛚᛁ ᚦᛖ ᛊᛈᛖᚲᛁᚠᛁᛖᛞ ᚨᛗᛟᚢᚾᛏ ᚠᚱᛟᛗ ᚨ ᛊᛖᛚᚠ-ᚲᚢᛊᛏᛟᛞᛁ ᚹᚨᛚᛚᛖᛏ. ᛁ ᚢᚾᛞᛖᚱᛊᛏᚨᚾᛞ ᚦᚨᛏ ᛊᛖᚾᛞᛁᛜ ᚠᚱᛟᛗ ᚨ ᛊᛗᚨᚱᛏ ᚲᛟᚾᛏᚱᚨᚲᛏ ᚹᚨᛚᛚᛖᛏ, ᛖᚲᛊᚲᚺᚨᛜᛖ ᚨᛞᛞᚱᛖᛊᛊ, ᛞᛖᛚᛖᚷᚨᛏᛖᛞ ᚨᛞᛞᚱᛖᛊᛊ, ᛟᚱ ᚨᚾ ᛖᛁᛈ 7702 ᚹᚨᛚᛚᛖᛏ, ᚹᛁᛚᛚ ᚱᛖᛊᚢᛚᛏ ᛁᚾ"],

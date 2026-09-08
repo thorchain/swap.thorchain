@@ -95,7 +95,7 @@
   "swap.confirm.gasFee": ["{chain} Gas Fee", "رسوم الـ Gas لـ {chain}"],
   "swap.confirm.exchange": ["Exchange", "سعر الصرف"],
   "swap.confirm.button": ["Confirm", "تأكيد"],
-  "swap.confirm.buttonLimit": ["Confim Limit Order", "تأكيد الأمر المحدد"],
+  "swap.confirm.buttonLimit": ["Confirm Limit Order", "تأكيد الأمر المحدد"],
   "swap.confirm.confirming": ["Confirming", "جاري التأكيد"],
   "swap.warning.highPriceImpact": ["I understand the price impact is in addition to the slippage tolerance. I accept the high price impact on this swap", "أنا فاهم إن تأثير السعر بيتضاف لحد تحمّل الـ Slippage. وقابل تأثير السعر العالي على التبديل ده"],
   "swap.warning.sendExact": ["I understand that I must send exactly the specified amount from a self-custody wallet. I understand that sending from a smart contract wallet, exchange address, delegated address, or an EIP 7702 wallet, will result in", "أنا فاهم إني لازم أبعت المبلغ المحدد بالظبط من محفظة بحفظ ذاتي. وأنا فاهم إن البعت من محفظة Smart Contract أو عنوان منصة أو عنوان مفوّض أو محفظة EIP 7702 هيأدي لـ"],

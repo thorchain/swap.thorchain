@@ -119,7 +119,7 @@
       "gasFee": "{chain} Gas Fee",
       "exchange": "Exchange",
       "button": "Confirm",
-      "buttonLimit": "Confim Limit Order",
+      "buttonLimit": "Confirm Limit Order",
       "confirming": "Confirming"
     },
     "warning": {
