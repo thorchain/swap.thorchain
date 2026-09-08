@@ -474,7 +474,5 @@
   "tx.status.unknown": ["Unknown", "نامشخص"],
   "tx.leg.deposit": ["Deposit {ticker}", "واریز {ticker}"],
   "tx.leg.send": ["Send {ticker}", "ارسال {ticker}"],
-  "tx.leg.swap": ["Swap {from} to {to}", "تبادل {from} به {to}"],
-  "banner.title": ["Monero will be ready for trading soon.", "Monero به‌زودی برای معامله آماده می‌شود."],
-  "banner.text": ["XMR swaps are coming to THORChain — stay tuned.", "سوآپ‌های XMR به THORChain می‌آیند — همراه ما باشید."]
+  "tx.leg.swap": ["Swap {from} to {to}", "تبادل {from} به {to}"]
 }

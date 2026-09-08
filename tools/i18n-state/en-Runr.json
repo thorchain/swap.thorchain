@@ -474,7 +474,5 @@
   "tx.status.unknown": ["Unknown", "ᚢᚾᚲᚾᛟᚹᚾ"],
   "tx.leg.deposit": ["Deposit {ticker}", "ᛞᛖᛈᛟᛊᛁᛏ {ticker}"],
   "tx.leg.send": ["Send {ticker}", "ᛊᛖᚾᛞ {ticker}"],
-  "tx.leg.swap": ["Swap {from} to {to}", "ᛊᚹᚨᛈ {from} ᛏᛟ {to}"],
-  "banner.title": ["Monero will be ready for trading soon.", "ᛗᛟᚾᛖᚱᛟ ᚹᛁᛚᛚ ᛒᛖ ᚱᛖᚨᛞᛁ ᚠᛟᚱ ᛏᚱᚨᛞᛁᛜ ᛊᛟᛟᚾ."],
-  "banner.text": ["XMR swaps are coming to THORChain — stay tuned.", "ᚲᛊᛗᚱ ᛊᚹᚨᛈᛊ ᚨᚱᛖ ᚲᛟᛗᛁᛜ ᛏᛟ ᚦᛟᚱᚲᚺᚨᛁᚾ — ᛊᛏᚨᛁ ᛏᚢᚾᛖᛞ."]
+  "tx.leg.swap": ["Swap {from} to {to}", "ᛊᚹᚨᛈ {from} ᛏᛟ {to}"]
 }

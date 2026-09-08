@@ -474,7 +474,5 @@
   "tx.status.unknown": ["Unknown", "未知"],
   "tx.leg.deposit": ["Deposit {ticker}", "存入{ticker}"],
   "tx.leg.send": ["Send {ticker}", "发送{ticker}"],
-  "tx.leg.swap": ["Swap {from} to {to}", "将{from}兑换为{to}"],
-  "banner.title": ["Monero will be ready for trading soon.", "Monero 即将开放交易。"],
-  "banner.text": ["XMR swaps are coming to THORChain — stay tuned.", "XMR 兑换即将登陆 THORChain — 敬请期待。"]
+  "tx.leg.swap": ["Swap {from} to {to}", "将{from}兑换为{to}"]
 }

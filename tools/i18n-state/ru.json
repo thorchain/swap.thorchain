@@ -474,7 +474,5 @@
   "tx.status.unknown": ["Unknown", "Неизвестно"],
   "tx.leg.deposit": ["Deposit {ticker}", "Внести {ticker}"],
   "tx.leg.send": ["Send {ticker}", "Отправить {ticker}"],
-  "tx.leg.swap": ["Swap {from} to {to}", "Обменять {from} на {to}"],
-  "banner.title": ["Monero will be ready for trading soon.", "Monero скоро станет доступен для торговли."],
-  "banner.text": ["XMR swaps are coming to THORChain — stay tuned.", "Обмены XMR скоро появятся в THORChain — следите за новостями."]
+  "tx.leg.swap": ["Swap {from} to {to}", "Обменять {from} на {to}"]
 }
