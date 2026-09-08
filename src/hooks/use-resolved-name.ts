@@ -14,7 +14,7 @@ interface ResolvedName {
 /** Looks `input` up as a THORName / MAYAName and resolves it to an address on `chain`. */
 export const useResolvedName = (input: string, chain: Chain): ResolvedName => {
   const candidate = isNameLike(input) ? input.trim().toLowerCase() : ''
-  const name = useDebouncedValue(candidate, 500)
+  const name = useDebouncedValue(candidate, 700)
   // Ignore a debounced value the input has already moved on from.
   const names = name.length > 0 && name === candidate ? [name] : []
 

@@ -167,17 +167,20 @@ export const SwapRecipient = ({ provider, onFetchQuote }: SwapRecipientProps) =>
             />
           )}
 
-          {busy ? (
-            <LoaderCircle size={20} className="text-txt-label-small absolute end-4 top-1/2 -translate-y-1/2 animate-spin" />
-          ) : address.length ? (
-            <GenericButton
-              size="small"
-              icon={<Icon name="trash" />}
-              className="absolute end-4 top-1/2 -translate-y-1/2"
-              onClick={() => {
-                setAddress('')
-              }}
-            />
+          {address.length ? (
+            <>
+              {/* Beside the clear button, not in place of it: waiting on a name lasts long enough that losing the button would be felt. */}
+              {busy && <LoaderCircle size={20} className="text-txt-label-small absolute end-14 top-1/2 -translate-y-1/2 animate-spin" />}
+
+              <GenericButton
+                size="small"
+                icon={<Icon name="trash" />}
+                className="absolute end-4 top-1/2 -translate-y-1/2"
+                onClick={() => {
+                  setAddress('')
+                }}
+              />
+            </>
           ) : (
             <div className="absolute end-4 top-1/2 flex -translate-y-1/2 gap-2">
               {[...options].map((account, index) => (
