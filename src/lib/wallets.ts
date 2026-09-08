@@ -9,7 +9,7 @@ import { ledgerWallet } from '@tcswap/wallets/ledger'
 import { okxWallet } from '@tcswap/wallets/okx'
 import { phantomWallet } from '@tcswap/wallets/phantom'
 import { trezorWallet } from '@tcswap/wallets/trezor'
-import { tronlinkWallet } from '@tcswap/wallets/tronlink'
+import { tronlinkWallet } from '@/lib/tronlink'
 import { vultisigWallet } from '@tcswap/wallets/vultisig'
 import { AppConfig } from '@/config'
 import { useWalletStore } from '@/store/wallets-store'
@@ -32,23 +32,6 @@ const defaultWallets = {
   ...trezorWallet,
   ...tronlinkWallet,
   ...vultisigWallet
-}
-
-// `window.tron` is TronLink's modern EIP-1193 provider and `eth_requestAccounts`
-// returns the currently approved account Docs: https://docs.tronlink.org/plugin-wallet/active-requests/
-async function syncTronLinkDefaultAddress(): Promise<void> {
-  const tron = (window as any)?.tron
-  const tronLink = (window as any)?.tronLink
-  if (!tron?.request || !tronLink?.tronWeb) return
-
-  const accounts = await tron.request({ method: 'eth_requestAccounts' })
-  const address = Array.isArray(accounts) ? accounts[0] : null
-  if (typeof address !== 'string') return
-
-  if (tronLink.tronWeb.defaultAddress?.base58 === address) return
-
-  const hex = tronLink.tronWeb.address?.toHex?.(address) ?? ''
-  tronLink.tronWeb.defaultAddress = { base58: address, hex }
 }
 
 function createUSwap(config: Parameters<typeof USwap>[0] = {}) {
@@ -141,10 +124,7 @@ export async function connectWallet(option: WalletOption, chains: Chain[], confi
     case WalletOption.VULTISIG:
       return connectEach(c => uSwap.connectVultisig(c))
     case WalletOption.TRONLINK:
-      return connectEach(async c => {
-        await syncTronLinkDefaultAddress()
-        return uSwap.connectTronLink(c)
-      })
+      return connectEach(c => uSwap.connectTronLink(c))
     case WalletOption.KEYSTORE:
       return uSwap.connectKeystore(chains, config?.phrase, config?.derivationPath)
     case WalletOption.LEDGER:
