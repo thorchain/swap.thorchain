@@ -176,26 +176,39 @@
       "titleCancel": "지정가 주문 취소",
       "descriptionModify": "이 지정가 주문을 수정하면 목표 가격이 업데이트됩니다. 수정 처리를 위해 소액의 네트워크 수수료가 부과됩니다.",
       "descriptionCancel": "이 지정가 주문을 취소하면 입금한 자금이 지갑으로 반환됩니다. 취소 처리를 위해 소액의 네트워크 수수료가 부과됩니다.",
+      "descriptionReplace": "THORChain은 진행 중인 주문의 만료 시점을 그대로 변경할 수 없으므로, 주문을 취소하고 입금액을 지갑으로 돌려보냅니다. 입금액이 돌아오는 즉시 동일한 페어와 가격에 새로운 만료 시점이 적용된 대체 주문이 열리며, 서명하시면 됩니다.",
       "fromCurrent": "현재가 대비 {percent}%",
       "youWillGet": "받게 될 금액",
+      "expiration": "만료",
+      "changeExpiration": "변경",
+      "expiryUnchanged": "이 주문의 만료와 동일 - 재등록할 내용이 없습니다",
+      "awaitingRefund": "주문이 취소되었습니다. 입금액이 돌아오기를 기다리는 중입니다 - 도착 즉시 대체 주문이 자동으로 등록되니 이 창을 열어 두세요.",
+      "placingReplacement": "입금액이 돌아왔습니다. 대체 주문을 등록하는 중입니다 - 지갑에서 확인해 주세요.",
       "button": {
         "modifying": "수정 중…",
         "cancelling": "취소 중…",
         "loading": "로딩 중…",
         "modifyOrder": "주문 수정",
-        "cancelOrder": "주문 취소"
+        "cancelOrder": "주문 취소",
+        "replaceOrder": "주문 취소 및 재등록",
+        "awaitingRefund": "입금액 반환 대기 중",
+        "placing": "대체 주문 등록 중...",
+        "confirmReplace": "확인 - 주문 취소 및 입금액 환불"
       },
       "error": {
         "loadInboundAddresses": "인바운드 주소를 불러오지 못했습니다",
         "cancelFailed": "지정가 스왑 취소에 실패했습니다",
         "modifyFailed": "지정가 스왑 수정에 실패했습니다",
+        "replaceFailed": "대체 주문 등록에 실패했습니다",
         "walletNotConnected": "지갑이 연결되지 않았습니다"
       },
       "toast": {
         "sendToCancel": "취소하려면 원래 지갑에서 {amount} {ticker}를 보내세요",
         "sendToModify": "수정하려면 원래 지갑에서 {amount} {ticker}를 보내세요",
         "cancelSubmitted": "취소 트랜잭션이 제출되었습니다",
-        "modifySubmitted": "수정 트랜잭션이 제출되었습니다"
+        "modifySubmitted": "수정 트랜잭션이 제출되었습니다",
+        "replaceSubmitted": "주문이 취소되었습니다 - 이 창을 열어 두세요. 입금액이 돌아오면 대체 주문이 등록됩니다",
+        "replacePlaced": "대체 지정가 주문이 등록되었습니다"
       },
       "warning": {
         "memolessDeposit": "이 주문을 {mode}하려면 주문을 생성한 원래 {chain} 지갑에서 입금을 보내세요",
@@ -205,7 +218,9 @@
         "switch": "이 주문을 {mode}하려면 {chain} 지갑으로 전환하세요",
         "addressMismatch": "연결된 지갑이 이 주문을 생성한 주소와 일치하지 않습니다",
         "tradingPaused": "{chain} 거래가 현재 일시 중지되었습니다",
-        "orderNotFound": "이 주문은 THORChain에서 더 이상 열려 있지 않습니다 - 이미 체결되었거나 만료되었을 수 있습니다"
+        "orderNotFound": "이 주문은 THORChain에서 더 이상 열려 있지 않습니다 - 이미 체결되었거나 만료되었을 수 있습니다",
+        "orderConfirming": "이 주문은 아직 {chain} 입금 확인을 기다리고 있습니다 - THORChain이 대기열에 등록한 후에 수정할 수 있습니다",
+        "expiryNeedsReplace": "진행 중인 주문에는 새로운 만료 시점을 적용할 수 없으므로, 주문을 취소하고 {chain} 입금액을 돌려보냅니다 - 도착하면 대체 주문이 서명 대기 상태로 열립니다"
       }
     },
     "quoteTimer": {

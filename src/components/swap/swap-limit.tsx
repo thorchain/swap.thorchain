@@ -1,6 +1,5 @@
 import { useEffect, useMemo, useState } from 'react'
 import { useTranslations } from 'next-intl'
-import { intervalToDuration } from 'date-fns'
 import { USwapNumber } from '@tcswap/core'
 import { QuoteResponseRoute } from '@tcswap/helpers/api'
 import { X } from 'lucide-react'
@@ -10,19 +9,22 @@ import { SwapLimitExpiry } from './swap-limit-expiry'
 import { useDialog } from '@/components/global-dialog'
 import { GenericButton } from '@/components/generic-button'
 import { buttonVariants } from '@/components/theme-button'
+import { useLimitSwapMaxAge } from '@/hooks/use-mimir'
 import { useAssetFrom, useAssetTo } from '@/hooks/use-swap'
+import { BLOCKS_PER_3_DAYS, BLOCKS_PER_DAY, BLOCKS_PER_HOUR, blocksToDuration, formatBlockDuration } from '@/lib/limit-swap'
 import { cn } from '@/lib/utils'
-import { useLimitSwapExpiry, useSetLimitSwapBuyAmount, useSetLimitSwapExpiry } from '@/store/limit-swap-store'
+import {
+  useLimitSwapExpiry,
+  usePendingLimitOrder,
+  useSetLimitSwapBuyAmount,
+  useSetLimitSwapExpiry,
+  useSetPendingLimitOrder
+} from '@/store/limit-swap-store'
 
 type PresetType = 5 | 10 | 'custom' | 'market'
 type SwapLimitProps = { quote?: QuoteResponseRoute }
 
 type ExpiryPreset = '1h' | '1d' | '3d' | 'custom' | undefined
-
-const BLOCKS_PER_MINUTE = 10
-const BLOCKS_PER_HOUR = 600
-const BLOCKS_PER_DAY = 14400
-const BLOCKS_PER_3_DAYS = 43200
 
 export const SwapLimit = ({ quote }: SwapLimitProps) => {
   const t = useTranslations('swap')
@@ -31,6 +33,9 @@ export const SwapLimit = ({ quote }: SwapLimitProps) => {
   const setLimitSwapBuyAmount = useSetLimitSwapBuyAmount()
   const setLimitSwapExpiry = useSetLimitSwapExpiry()
   const limitSwapExpiry = useLimitSwapExpiry()
+  const pendingLimitOrder = usePendingLimitOrder()
+  const setPendingLimitOrder = useSetPendingLimitOrder()
+  const maxExpiryBlocks = useLimitSwapMaxAge()
 
   const { openDialog } = useDialog()
   const [pricePerUnit, setPricePerUnit] = useState<USwapNumber | null | undefined>()
@@ -49,6 +54,16 @@ export const SwapLimit = ({ quote }: SwapLimitProps) => {
     setLimitSwapBuyAmount(undefined)
     setLimitSwapExpiry(BLOCKS_PER_HOUR)
   }, [assetFrom?.identifier, assetTo?.identifier, setLimitSwapBuyAmount, setLimitSwapExpiry])
+
+  // A limit order whose expiration was changed comes back here as a fresh order to place, carrying
+  // the price and the new expiry from the Modify dialog. Declared after the reset above so it wins.
+  useEffect(() => {
+    if (!pendingLimitOrder) return
+    setInputStr(undefined)
+    if (pendingLimitOrder.pricePerUnit) setPricePerUnit(new USwapNumber(pendingLimitOrder.pricePerUnit))
+    setLimitSwapExpiry(pendingLimitOrder.expiryBlocks)
+    setPendingLimitOrder(undefined)
+  }, [pendingLimitOrder, setLimitSwapExpiry, setPendingLimitOrder])
 
   useEffect(() => {
     if (!expectedBuyAmountPerUnit) return
@@ -107,9 +122,7 @@ export const SwapLimit = ({ quote }: SwapLimitProps) => {
 
   const customExpiryLabel = useMemo(() => {
     if (!limitSwapExpiry || activeExpiryPreset !== 'custom') return ''
-    const ms = (limitSwapExpiry / BLOCKS_PER_MINUTE) * 60 * 1000
-    const { days = 0, hours = 0, minutes = 0 } = intervalToDuration({ start: 0, end: ms })
-    return [days && `${days}d`, hours && `${hours}h`, minutes && `${minutes}m`].filter(Boolean).join(' ')
+    return formatBlockDuration(limitSwapExpiry)
   }, [limitSwapExpiry, activeExpiryPreset])
 
   const applyExpiryPreset = (preset: ExpiryPreset) => {
@@ -121,10 +134,10 @@ export const SwapLimit = ({ quote }: SwapLimitProps) => {
       case '3d':
         return setLimitSwapExpiry(BLOCKS_PER_3_DAYS)
       case 'custom': {
-        const ms = limitSwapExpiry ? (limitSwapExpiry / BLOCKS_PER_MINUTE) * 60 * 1000 : 0
-        const { days = 0, hours = 0, minutes = 0 } = intervalToDuration({ start: 0, end: ms })
+        const { days = 0, hours = 0, minutes = 0 } = blocksToDuration(limitSwapExpiry || 0)
         return openDialog(SwapLimitExpiry, {
           onApply: setLimitSwapExpiry,
+          maxBlocks: maxExpiryBlocks,
           initialDays: days ? String(days) : '',
           initialHours: hours ? String(hours) : '',
           initialMinutes: minutes ? String(minutes) : ''

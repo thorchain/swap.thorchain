@@ -176,26 +176,39 @@
       "titleCancel": "Hủy lệnh giới hạn",
       "descriptionModify": "Việc sửa lệnh giới hạn này sẽ cập nhật giá mục tiêu. Một khoản phí mạng nhỏ sẽ được tính để xử lý việc sửa đổi.",
       "descriptionCancel": "Việc hủy lệnh giới hạn này sẽ trả lại số tiền bạn đã gửi về ví của bạn. Một khoản phí mạng nhỏ sẽ được tính để xử lý việc hủy.",
+      "descriptionReplace": "THORChain không thể thay đổi trực tiếp thời hạn của một lệnh đang mở, vì vậy hành động này sẽ hủy lệnh và trả khoản nạp về ví của bạn. Ngay khi khoản nạp trở lại, lệnh thay thế sẽ mở ra để bạn ký - cùng cặp và cùng giá, với thời hạn mới.",
       "fromCurrent": "{percent}% so với hiện tại",
       "youWillGet": "Bạn sẽ nhận được",
+      "expiration": "Hết hạn",
+      "changeExpiration": "Thay đổi",
+      "expiryUnchanged": "Giống thời hạn của lệnh này - không có gì để đặt lại",
+      "awaitingRefund": "Đã hủy lệnh. Đang chờ khoản nạp của bạn trở lại - lệnh thay thế sẽ được đặt tự động ngay khi khoản nạp về, vì vậy hãy giữ cửa sổ này mở.",
+      "placingReplacement": "Khoản nạp của bạn đã trở lại. Đang đặt lệnh thay thế - hãy xác nhận trong ví của bạn.",
       "button": {
         "modifying": "Đang sửa...",
         "cancelling": "Đang hủy...",
         "loading": "Đang tải...",
         "modifyOrder": "Sửa lệnh",
-        "cancelOrder": "Hủy lệnh"
+        "cancelOrder": "Hủy lệnh",
+        "replaceOrder": "Hủy & Đặt lại lệnh",
+        "awaitingRefund": "Đang chờ khoản nạp của bạn",
+        "placing": "Đang đặt lệnh thay thế...",
+        "confirmReplace": "Xác nhận - hủy và hoàn khoản nạp của tôi"
       },
       "error": {
         "loadInboundAddresses": "Không thể tải địa chỉ nhận vào",
         "cancelFailed": "Không thể hủy lệnh hoán đổi giới hạn",
         "modifyFailed": "Không thể sửa lệnh hoán đổi giới hạn",
+        "replaceFailed": "Không thể đặt lệnh thay thế",
         "walletNotConnected": "Ví chưa được kết nối"
       },
       "toast": {
         "sendToCancel": "Gửi {amount} {ticker} từ ví gốc để hủy",
         "sendToModify": "Gửi {amount} {ticker} từ ví gốc để sửa",
         "cancelSubmitted": "Giao dịch hủy đã được gửi",
-        "modifySubmitted": "Giao dịch sửa đã được gửi"
+        "modifySubmitted": "Giao dịch sửa đã được gửi",
+        "replaceSubmitted": "Đã hủy lệnh - hãy giữ cửa sổ này mở, lệnh thay thế sẽ được đặt khi khoản nạp của bạn trở lại",
+        "replacePlaced": "Đã đặt lệnh giới hạn thay thế"
       },
       "warning": {
         "memolessDeposit": "Để {mode} lệnh này, hãy gửi khoản tiền nạp từ ví {chain} gốc đã đặt lệnh",
@@ -205,7 +218,9 @@
         "switch": "Chuyển sang ví {chain} để {mode} lệnh này",
         "addressMismatch": "Ví đã kết nối không khớp với địa chỉ đã đặt lệnh này",
         "tradingPaused": "Giao dịch {chain} hiện đang tạm dừng",
-        "orderNotFound": "Lệnh này không còn mở trên THORChain - có thể đã được khớp hoặc đã hết hạn"
+        "orderNotFound": "Lệnh này không còn mở trên THORChain - có thể đã được khớp hoặc đã hết hạn",
+        "orderConfirming": "Lệnh này vẫn đang chờ khoản nạp {chain} được xác nhận - có thể sửa đổi sau khi THORChain đã đưa lệnh vào hàng đợi",
+        "expiryNeedsReplace": "Không thể áp dụng thời hạn mới cho một lệnh đang mở, vì vậy hành động này sẽ hủy lệnh và gửi lại khoản nạp {chain} của bạn - lệnh thay thế sẽ mở ra để ký ngay khi khoản nạp về"
       }
     },
     "quoteTimer": {

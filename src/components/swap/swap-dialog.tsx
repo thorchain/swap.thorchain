@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useTranslations } from 'next-intl'
 import { Chain, FeeOption, getChainConfig, USwapNumber } from '@tcswap/core'
 import { ProviderName } from '@tcswap/helpers'
@@ -18,6 +18,7 @@ import { resolvePriceImpact } from '@/lib/swap-helpers'
 import { generateId } from '@/lib/utils'
 import { getUSwap } from '@/lib/wallets'
 import { useIsLimitSwap, useLimitSwapBuyAmount } from '@/store/limit-swap-store'
+import { useReplacementOrderStore, useSetReplacementOrder } from '@/store/replacement-order-store'
 import { useSetTransaction } from '@/store/transaction-store'
 
 interface SwapDialogProps {
@@ -35,9 +36,17 @@ export const SwapDialog = ({ provider, isOpen, onOpenChange }: SwapDialogProps) 
   const { refetch: refetchBalance } = useBalance()
   const [submitting, setSubmitting] = useState(false)
   const setTransaction = useSetTransaction()
+  const setReplacementOrder = useSetReplacementOrder()
   const isLimitSwap = useIsLimitSwap()
   const limitSwapBuyAmount = useLimitSwapBuyAmount()
   const { rateFrom, rateTo } = useSwapRates()
+
+  // A replacement order gets exactly one confirm screen: placed or dismissed, it is not offered again.
+  useEffect(() => {
+    return () => {
+      if (useReplacementOrderStore.getState().replacement?.consumed) setReplacementOrder(undefined)
+    }
+  }, [setReplacementOrder])
 
   const [quote, setQuote] = useState<QuoteResponseRoute | undefined>(undefined)
   const [highPriceImpactAccepted, setHighPriceImpactAccepted] = useState(false)
@@ -89,6 +98,8 @@ export const SwapDialog = ({ provider, isOpen, onOpenChange }: SwapDialogProps) 
 
         setAmountFrom('')
         refetchBalance()
+        // A parked replacement for a cancelled limit order has now been placed.
+        setReplacementOrder(undefined)
 
         onOpenChange(false)
       })

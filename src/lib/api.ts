@@ -212,7 +212,27 @@ export interface LimitSwapQueueItem {
     }
     target_asset: string
     trade_target: string
+    // Lifetime in blocks, taken from the interval field of the memo the order was placed with.
+    state?: { interval?: string }
   }
+  blocks_since_created?: string
+  time_to_expiry_blocks?: string
+}
+
+export interface TxStatusResponse {
+  out_txs?: { id: string; chain: string; coins: { asset: string; amount: string }[] }[]
+  stages?: { inbound_finalised?: { completed?: boolean } }
+}
+
+// THORNode indexes inbounds by the bare hash. A wallet hands back the `0x`-prefixed form, and
+// asking for that answers 200 with an empty, never-observed body rather than a 404 - so the
+// transaction silently looks like it never arrived. Every /thorchain/tx/* route needs this.
+export const thorTxId = (hash: string) => (hash.startsWith('0x') || hash.startsWith('0X') ? hash.slice(2) : hash)
+
+// An order's refund is published as an outbound of the *order's* inbound hash, so a cancelled
+// order is watched through the hash it was placed with, not the hash that cancelled it.
+export const getTxStatus = async (hash: string): Promise<TxStatusResponse> => {
+  return thornode.get(`/thorchain/tx/status/${thorTxId(hash)}`).then(res => res.data ?? {})
 }
 
 export const getLimitSwaps = async (sender: string): Promise<LimitSwapQueueItem[]> => {

@@ -474,5 +474,20 @@
   "tx.status.unknown": ["Unknown", "अज्ञात"],
   "tx.leg.deposit": ["Deposit {ticker}", "{ticker} जमा करें"],
   "tx.leg.send": ["Send {ticker}", "{ticker} भेजें"],
-  "tx.leg.swap": ["Swap {from} to {to}", "{from} को {to} में स्वैप करें"]
+  "tx.leg.swap": ["Swap {from} to {to}", "{from} को {to} में स्वैप करें"],
+  "swap.limitCancel.descriptionReplace": ["THORChain cannot change an open order's expiration in place, so this cancels the order and returns your deposit to your wallet. As soon as the deposit is back, the replacement order opens for you to sign - same pair and price, with the new expiration.", "THORChain किसी खुले ऑर्डर की एक्सपायरी को उसी जगह नहीं बदल सकता, इसलिए यह ऑर्डर रद्द करके आपकी जमा राशि आपके वॉलेट में वापस भेज देता है। जमा राशि वापस आते ही, हस्ताक्षर के लिए बदला हुआ ऑर्डर खुल जाएगा - वही जोड़ी और कीमत, नई एक्सपायरी के साथ।"],
+  "swap.limitCancel.expiration": ["Expires", "एक्सपायरी"],
+  "swap.limitCancel.changeExpiration": ["Change", "बदलें"],
+  "swap.limitCancel.expiryUnchanged": ["Same as this order's expiration - nothing to re-place", "इस ऑर्डर की एक्सपायरी के समान - दोबारा लगाने की ज़रूरत नहीं"],
+  "swap.limitCancel.awaitingRefund": ["Order cancelled. Waiting for your deposit to come back - the replacement is placed automatically as soon as it arrives, so keep this window open.", "ऑर्डर रद्द हो गया। आपकी जमा राशि वापस आने का इंतज़ार है - आते ही बदला हुआ ऑर्डर स्वतः लग जाएगा, इसलिए यह विंडो खुली रखें।"],
+  "swap.limitCancel.placingReplacement": ["Your deposit is back. Placing the replacement order - confirm it in your wallet.", "आपकी जमा राशि वापस आ गई है। बदला हुआ ऑर्डर लगाया जा रहा है - इसे अपने वॉलेट में पुष्टि करें।"],
+  "swap.limitCancel.button.replaceOrder": ["Cancel & Re-place Order", "ऑर्डर रद्द करें और दोबारा लगाएँ"],
+  "swap.limitCancel.button.awaitingRefund": ["Waiting for your deposit", "आपकी जमा राशि का इंतज़ार"],
+  "swap.limitCancel.button.placing": ["Placing replacement order...", "बदला हुआ ऑर्डर लगाया जा रहा है..."],
+  "swap.limitCancel.button.confirmReplace": ["Confirm - cancel and refund my deposit", "पुष्टि करें - रद्द करें और मेरी जमा राशि लौटाएँ"],
+  "swap.limitCancel.error.replaceFailed": ["Failed to place the replacement order", "बदला हुआ ऑर्डर लगाने में विफल"],
+  "swap.limitCancel.toast.replaceSubmitted": ["Order cancelled - keep this window open, the replacement is placed once your deposit is back", "ऑर्डर रद्द हो गया - यह विंडो खुली रखें, आपकी जमा राशि वापस आने पर बदला हुआ ऑर्डर लग जाएगा"],
+  "swap.limitCancel.toast.replacePlaced": ["Replacement limit order placed", "बदला हुआ लिमिट ऑर्डर लगा दिया गया"],
+  "swap.limitCancel.warning.orderConfirming": ["This order is still waiting on its {chain} deposit to confirm - it can be modified once THORChain has queued it", "यह ऑर्डर अभी भी अपनी {chain} जमा राशि की पुष्टि का इंतज़ार कर रहा है - THORChain द्वारा कतार में लगाए जाने के बाद इसे बदला जा सकता है"],
+  "swap.limitCancel.warning.expiryNeedsReplace": ["A new expiration cannot be applied to an open order, so this cancels it and sends your {chain} deposit back - the replacement opens for signing once it arrives", "किसी खुले ऑर्डर पर नई एक्सपायरी लागू नहीं की जा सकती, इसलिए यह उसे रद्द करके आपकी {chain} जमा राशि वापस भेज देता है - राशि आते ही बदला हुआ ऑर्डर हस्ताक्षर के लिए खुल जाएगा"]
 }

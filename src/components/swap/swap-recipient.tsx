@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { useTranslations } from 'next-intl'
 import { Chain } from '@tcswap/core'
 import { WalletIcon } from '@/components/wallet-icon'
@@ -27,6 +27,7 @@ import { prepareQuoteForLimitSwap } from '@/lib/memo-helpers'
 import { isMayaProvider, isTaprootAddress } from '@/lib/swap-helpers'
 import { cn, truncate } from '@/lib/utils'
 import { useIsLimitSwap, useLimitSwapBuyAmount, useLimitSwapExpiry } from '@/store/limit-swap-store'
+import { useReplacementOrder } from '@/store/replacement-order-store'
 import { WalletAccount } from '@/store/wallets-store'
 
 interface SwapRecipientProps {
@@ -50,9 +51,12 @@ export const SwapRecipient = ({ provider, onFetchQuote }: SwapRecipientProps) =>
 
   const { valueFrom } = useSwap()
   const [quoting, setQuoting] = useState(false)
+  const autoFetched = useRef(false)
   const [quoteError, setQuoteError] = useState<Error | undefined>()
 
-  const [destinationAddress, setDestinationAddress] = useState<string>('')
+  // A replacement for a cancelled limit order keeps the destination the original order paid out to.
+  const replacementOrder = useReplacementOrder()
+  const [destinationAddress, setDestinationAddress] = useState<string>(() => replacementOrder?.destination ?? '')
   const [refundAddress, setRefundAddress] = useState<string>('')
   const [warningChecked, setWarningChecked] = useState(false)
   const [warningCheckedLTC, setWarningCheckedLTC] = useState(false)
@@ -131,6 +135,15 @@ export const SwapRecipient = ({ provider, onFetchQuote }: SwapRecipientProps) =>
     !destinationCode.isChecking &&
     !quoting &&
     (refundRequired ? refundCheck.isValid && refundAddress.length : true)
+
+  // A replacement for a cancelled limit order already knows its destination, so it skips this step:
+  // the quote is fetched on mount and the dialog opens straight on the confirm screen.
+  useEffect(() => {
+    if (!replacementOrder?.consumed || autoFetched.current || !buttonEnabled) return
+    autoFetched.current = true
+    fetchQuote()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [replacementOrder?.consumed, buttonEnabled])
 
   const addressInput = (
     asset: Asset,

@@ -21,7 +21,7 @@ import { SwapLimitCancel } from '@/components/swap/swap-limit-cancel'
 import { GenericButton } from '@/components/generic-button'
 import { useRates } from '@/hooks/use-rates'
 import { useSyncTransactions } from '@/hooks/use-sync-transactions'
-import { useSelectedAccount } from '@/hooks/use-wallets'
+import { useAccounts, useSelectAccount } from '@/hooks/use-wallets'
 import { formatExpiration } from '@/lib/swap-helpers'
 import { cn, toCurrencyFixed, truncate } from '@/lib/utils'
 import { isTxPending, Transaction, useTransactions } from '@/store/transaction-store'
@@ -33,7 +33,8 @@ interface HistoryDialogProps {
 
 export const TransactionHistoryDialog = ({ isOpen, onOpenChange }: HistoryDialogProps) => {
   const transactions = useTransactions()
-  const selectedAccount = useSelectedAccount()
+  const accounts = useAccounts()
+  const selectAccount = useSelectAccount()
   const [expandTx, setExpandTx] = useState<string | null>(null)
   const { openDialog } = useDialog()
   const t = useTranslations('tx')
@@ -57,11 +58,23 @@ export const TransactionHistoryDialog = ({ isOpen, onOpenChange }: HistoryDialog
     return format(date, 'd MMMM')
   }
 
+  // Only the wallet that placed an order can take it off the book, so the actions follow that
+  // account - not the globally selected one, which `useResolveSource` keeps pinned to whatever the
+  // swap form is currently selling and clears whenever that chain is not connected.
+  const orderAccount = (tx: Transaction) =>
+    accounts.find(a => a.network === tx.assetFrom.chain && (!tx.addressFrom || a.address.toLowerCase() === tx.addressFrom.toLowerCase()))
+
   const onLimitModify = (mode: 'cancel' | 'modify', tx: Transaction) => {
     const isMemoless = !!tx.qrCodeData
-    if (!isMemoless && selectedAccount?.network !== tx.assetFrom.chain) {
+    const account = orderAccount(tx)
+
+    if (!isMemoless && !account) {
       return toast.error(t('onlyCreatorModify'))
     }
+
+    // The cancel dialog signs with the selected account. A memoless order is cancelled through a
+    // deposit channel instead, so its selection is left alone.
+    if (!isMemoless && account) selectAccount(account)
 
     openDialog(SwapLimitCancel, {
       mode,
@@ -71,6 +84,10 @@ export const TransactionHistoryDialog = ({ isOpen, onOpenChange }: HistoryDialog
         amountFrom: tx.amountFrom,
         amountTo: tx.amountTo,
         addressFrom: tx.addressFrom,
+        addressTo: tx.addressTo,
+        hash: tx.hash,
+        provider: tx.provider,
+        limitPrice: tx.limitPrice,
         limitSwapMemo: tx.limitSwapMemo,
         isMemoless
       }
@@ -98,14 +115,19 @@ export const TransactionHistoryDialog = ({ isOpen, onOpenChange }: HistoryDialog
               const rateFrom = rates[tx.assetFrom.identifier]
               const fiatFrom = rateFrom && rateFrom.mul(amountFrom)
 
-              const amountTo = new USwapNumber(tx.amountTo)
               const rateTo = rates[tx.assetTo.identifier]
-              const fiatTo = rateTo && rateTo.mul(amountTo)
 
               const isExpanded = expandTx === tx.uid
 
               const isLimitSwapPending = !!tx.limitSwapMemo && isTxPending(status)
               const isLimitSwapOpen = isLimitSwapPending && status !== 'not_started'
+
+              // `tx.amountTo` is the quote's expected output at the market rate when the order was
+              // placed. An order still waiting to fill will pay out its limit target instead, so an
+              // open limit order shows what it is actually holding out for.
+              const limitTarget = tx.limitPrice && isLimitSwapPending ? new USwapNumber(tx.limitPrice).mul(amountFrom) : null
+              const amountTo = limitTarget ?? new USwapNumber(tx.amountTo)
+              const fiatTo = rateTo && rateTo.mul(amountTo)
 
               const statusKey = isLimitSwapOpen ? 'open' : status
               const statusTitle = t.has(`status.${statusKey}`) ? t(`status.${statusKey}`) : status.replace('_', ' ')
@@ -128,7 +150,7 @@ export const TransactionHistoryDialog = ({ isOpen, onOpenChange }: HistoryDialog
 
               const showRQ =
                 tx.qrCodeData && !tx.hash && status !== 'expired' && status !== 'completed' && status !== 'refunded' && status !== 'failed'
-              const showLimitSwapActions = !!tx.limitSwapMemo && isTxPending(status) && (!!selectedAccount || !!tx.qrCodeData)
+              const showLimitSwapActions = !!tx.limitSwapMemo && isTxPending(status) && (!!orderAccount(tx) || !!tx.qrCodeData)
 
               const explorerLinks = getExplorerLinks(tx)
 

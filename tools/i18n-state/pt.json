@@ -474,5 +474,20 @@
   "tx.status.unknown": ["Unknown", "Desconhecido"],
   "tx.leg.deposit": ["Deposit {ticker}", "Depositar {ticker}"],
   "tx.leg.send": ["Send {ticker}", "Enviar {ticker}"],
-  "tx.leg.swap": ["Swap {from} to {to}", "Trocar {from} por {to}"]
+  "tx.leg.swap": ["Swap {from} to {to}", "Trocar {from} por {to}"],
+  "swap.limitCancel.descriptionReplace": ["THORChain cannot change an open order's expiration in place, so this cancels the order and returns your deposit to your wallet. As soon as the deposit is back, the replacement order opens for you to sign - same pair and price, with the new expiration.", "A THORChain não consegue alterar a expiração de uma ordem aberta, por isso isto cancela a ordem e devolve o seu depósito à sua carteira. Assim que o depósito regressar, a ordem de substituição abre para assinatura - mesmo par e preço, com a nova expiração."],
+  "swap.limitCancel.expiration": ["Expires", "Expira"],
+  "swap.limitCancel.changeExpiration": ["Change", "Alterar"],
+  "swap.limitCancel.expiryUnchanged": ["Same as this order's expiration - nothing to re-place", "Igual à expiração desta ordem - nada para recolocar"],
+  "swap.limitCancel.awaitingRefund": ["Order cancelled. Waiting for your deposit to come back - the replacement is placed automatically as soon as it arrives, so keep this window open.", "Ordem cancelada. A aguardar o regresso do seu depósito - a substituição é colocada automaticamente assim que chegar, por isso mantenha esta janela aberta."],
+  "swap.limitCancel.placingReplacement": ["Your deposit is back. Placing the replacement order - confirm it in your wallet.", "O seu depósito regressou. A colocar a ordem de substituição - confirme-a na sua carteira."],
+  "swap.limitCancel.button.replaceOrder": ["Cancel & Re-place Order", "Cancelar e Recolocar Ordem"],
+  "swap.limitCancel.button.awaitingRefund": ["Waiting for your deposit", "A aguardar o seu depósito"],
+  "swap.limitCancel.button.placing": ["Placing replacement order...", "A colocar ordem de substituição..."],
+  "swap.limitCancel.button.confirmReplace": ["Confirm - cancel and refund my deposit", "Confirmar - cancelar e reembolsar o meu depósito"],
+  "swap.limitCancel.error.replaceFailed": ["Failed to place the replacement order", "Falha ao colocar a ordem de substituição"],
+  "swap.limitCancel.toast.replaceSubmitted": ["Order cancelled - keep this window open, the replacement is placed once your deposit is back", "Ordem cancelada - mantenha esta janela aberta, a substituição é colocada assim que o seu depósito regressar"],
+  "swap.limitCancel.toast.replacePlaced": ["Replacement limit order placed", "Ordem limite de substituição colocada"],
+  "swap.limitCancel.warning.orderConfirming": ["This order is still waiting on its {chain} deposit to confirm - it can be modified once THORChain has queued it", "Esta ordem ainda aguarda a confirmação do depósito em {chain} - pode ser modificada depois de a THORChain a ter colocado em fila"],
+  "swap.limitCancel.warning.expiryNeedsReplace": ["A new expiration cannot be applied to an open order, so this cancels it and sends your {chain} deposit back - the replacement opens for signing once it arrives", "Não é possível aplicar uma nova expiração a uma ordem aberta, por isso isto cancela-a e devolve o seu depósito em {chain} - a substituição abre para assinatura assim que chegar"]
 }

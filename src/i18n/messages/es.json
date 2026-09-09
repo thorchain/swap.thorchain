@@ -176,26 +176,39 @@
       "titleCancel": "Cancelar orden límite",
       "descriptionModify": "Modificar esta orden límite actualizará el precio objetivo. Se cobrará una pequeña comisión de red para procesar la modificación.",
       "descriptionCancel": "Cancelar esta orden límite devolverá los fondos depositados a tu billetera. Se cobrará una pequeña comisión de red para procesar la cancelación.",
+      "descriptionReplace": "THORChain no puede modificar la expiración de una orden abierta, por lo que esto cancela la orden y devuelve tu depósito a tu billetera. En cuanto el depósito regrese, se abrirá la orden de reemplazo para que la firmes: mismo par y mismo precio, con la nueva expiración.",
       "fromCurrent": "{percent}% desde el actual",
       "youWillGet": "Recibirás",
+      "expiration": "Expira",
+      "changeExpiration": "Cambiar",
+      "expiryUnchanged": "Igual que la expiración de esta orden: no hay nada que volver a colocar",
+      "awaitingRefund": "Orden cancelada. Esperando a que regrese tu depósito: la orden de reemplazo se coloca automáticamente en cuanto llegue, así que mantén esta ventana abierta.",
+      "placingReplacement": "Tu depósito ha regresado. Colocando la orden de reemplazo: confírmala en tu billetera.",
       "button": {
         "modifying": "Modificando…",
         "cancelling": "Cancelando…",
         "loading": "Cargando…",
         "modifyOrder": "Modificar orden",
-        "cancelOrder": "Cancelar orden"
+        "cancelOrder": "Cancelar orden",
+        "replaceOrder": "Cancelar y recolocar orden",
+        "awaitingRefund": "Esperando tu depósito",
+        "placing": "Colocando orden de reemplazo...",
+        "confirmReplace": "Confirmar: cancelar y reembolsar mi depósito"
       },
       "error": {
         "loadInboundAddresses": "No se pudieron cargar las direcciones de entrada",
         "cancelFailed": "No se pudo cancelar el intercambio límite",
         "modifyFailed": "No se pudo modificar el intercambio límite",
+        "replaceFailed": "No se pudo colocar la orden de reemplazo",
         "walletNotConnected": "Wallet no conectada"
       },
       "toast": {
         "sendToCancel": "Envía {amount} {ticker} desde la billetera original para cancelar",
         "sendToModify": "Envía {amount} {ticker} desde la billetera original para modificar",
         "cancelSubmitted": "Transacción de cancelación enviada",
-        "modifySubmitted": "Transacción de modificación enviada"
+        "modifySubmitted": "Transacción de modificación enviada",
+        "replaceSubmitted": "Orden cancelada: mantén esta ventana abierta, el reemplazo se colocará cuando regrese tu depósito",
+        "replacePlaced": "Orden límite de reemplazo colocada"
       },
       "warning": {
         "memolessDeposit": "Para {mode} esta orden, envía el depósito desde la billetera {chain} original que la creó",
@@ -205,7 +218,9 @@
         "switch": "Cambia a una billetera {chain} para {mode} esta orden",
         "addressMismatch": "La billetera conectada no coincide con la dirección que creó esta orden",
         "tradingPaused": "El trading de {chain} está pausado actualmente",
-        "orderNotFound": "Esta orden ya no está abierta en THORChain: es posible que ya se haya ejecutado o haya expirado"
+        "orderNotFound": "Esta orden ya no está abierta en THORChain: es posible que ya se haya ejecutado o haya expirado",
+        "orderConfirming": "Esta orden aún espera la confirmación de su depósito en {chain}: podrá modificarse una vez que THORChain la haya puesto en cola",
+        "expiryNeedsReplace": "No se puede aplicar una nueva expiración a una orden abierta, por lo que esto la cancela y devuelve tu depósito en {chain}: la orden de reemplazo se abrirá para firmar cuando llegue"
       }
     },
     "quoteTimer": {

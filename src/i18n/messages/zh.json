@@ -176,26 +176,39 @@
       "titleCancel": "取消限价订单",
       "descriptionModify": "修改此限价订单将更新目标价格。处理此次修改将收取少量网络费用。",
       "descriptionCancel": "取消此限价订单将把您存入的资金退回至您的钱包。处理此次取消将收取少量网络费用。",
+      "descriptionReplace": "THORChain 无法直接修改未成交订单的到期时间，因此将取消该订单并把您的存入资金退回钱包。资金到账后，替代订单会立即生成，等待您签名——交易对和价格不变，仅到期时间更新。",
       "fromCurrent": "较当前{percent}%",
       "youWillGet": "您将获得",
+      "expiration": "到期时间",
+      "changeExpiration": "更改",
+      "expiryUnchanged": "与当前订单的到期时间相同——无需重新下单",
+      "awaitingRefund": "订单已取消。正在等待您的存入资金退回——资金到账后将自动下替代订单，请保持此窗口打开。",
+      "placingReplacement": "资金已退回。正在下替代订单——请在钱包中确认。",
       "button": {
         "modifying": "修改中…",
         "cancelling": "取消中…",
         "loading": "加载中…",
         "modifyOrder": "修改订单",
-        "cancelOrder": "取消订单"
+        "cancelOrder": "取消订单",
+        "replaceOrder": "取消并重新下单",
+        "awaitingRefund": "等待资金退回",
+        "placing": "正在下替代订单…",
+        "confirmReplace": "确认——取消订单并退回我的资金"
       },
       "error": {
         "loadInboundAddresses": "无法加载入站地址",
         "cancelFailed": "取消限价兑换失败",
         "modifyFailed": "修改限价兑换失败",
+        "replaceFailed": "替代订单下单失败",
         "walletNotConnected": "钱包未连接"
       },
       "toast": {
         "sendToCancel": "请从原钱包发送{amount} {ticker}以取消",
         "sendToModify": "请从原钱包发送{amount} {ticker}以修改",
         "cancelSubmitted": "取消交易已提交",
-        "modifySubmitted": "修改交易已提交"
+        "modifySubmitted": "修改交易已提交",
+        "replaceSubmitted": "订单已取消——请保持此窗口打开，资金退回后将自动下替代订单",
+        "replacePlaced": "替代限价单已下单"
       },
       "warning": {
         "memolessDeposit": "要{mode}此订单，请从最初下单的{chain}钱包发送存款",
@@ -205,7 +218,9 @@
         "switch": "切换到{chain}钱包以{mode}此订单",
         "addressMismatch": "已连接的钱包与下此订单的地址不匹配",
         "tradingPaused": "{chain}交易当前已暂停",
-        "orderNotFound": "该订单在 THORChain 上已不再挂单 — 可能已成交或已过期"
+        "orderNotFound": "该订单在 THORChain 上已不再挂单 — 可能已成交或已过期",
+        "orderConfirming": "该订单仍在等待其 {chain} 存入交易确认——待 THORChain 将其排入队列后即可修改",
+        "expiryNeedsReplace": "新的到期时间无法应用于未成交订单，因此将取消该订单并退回您的 {chain} 存入资金——资金到账后替代订单将生成并等待签名"
       }
     },
     "quoteTimer": {

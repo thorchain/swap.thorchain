@@ -176,26 +176,39 @@
       "titleCancel": "Batalkan limit order",
       "descriptionModify": "Mengubah limit order ini akan memperbarui harga target. Biaya jaringan kecil akan dikenakan untuk memproses perubahan ini.",
       "descriptionCancel": "Membatalkan limit order ini akan mengembalikan dana yang Anda setorkan ke dompet Anda. Biaya jaringan kecil akan dikenakan untuk memproses pembatalan ini.",
+      "descriptionReplace": "THORChain tidak dapat mengubah masa kedaluwarsa order yang terbuka secara langsung, jadi ini akan membatalkan order dan mengembalikan deposit Anda ke dompet. Segera setelah deposit kembali, order pengganti akan dibuka untuk Anda tanda tangani - pasangan dan harga yang sama, dengan masa kedaluwarsa baru.",
       "fromCurrent": "{percent}% dari harga saat ini",
       "youWillGet": "Anda akan menerima",
+      "expiration": "Kedaluwarsa",
+      "changeExpiration": "Ubah",
+      "expiryUnchanged": "Sama dengan masa kedaluwarsa order ini - tidak ada yang perlu dibuat ulang",
+      "awaitingRefund": "Order dibatalkan. Menunggu deposit Anda kembali - order pengganti dibuat otomatis segera setelah deposit tiba, jadi biarkan jendela ini tetap terbuka.",
+      "placingReplacement": "Deposit Anda telah kembali. Membuat order pengganti - konfirmasi di dompet Anda.",
       "button": {
         "modifying": "Mengubah...",
         "cancelling": "Membatalkan...",
         "loading": "Memuat...",
         "modifyOrder": "Ubah order",
-        "cancelOrder": "Batalkan order"
+        "cancelOrder": "Batalkan order",
+        "replaceOrder": "Batalkan & Buat Ulang Order",
+        "awaitingRefund": "Menunggu deposit Anda",
+        "placing": "Membuat order pengganti...",
+        "confirmReplace": "Konfirmasi - batalkan dan kembalikan deposit saya"
       },
       "error": {
         "loadInboundAddresses": "Gagal memuat alamat masuk",
         "cancelFailed": "Gagal membatalkan limit swap",
         "modifyFailed": "Gagal mengubah limit swap",
+        "replaceFailed": "Gagal membuat order pengganti",
         "walletNotConnected": "Wallet tidak terhubung"
       },
       "toast": {
         "sendToCancel": "Kirim {amount} {ticker} dari dompet asli untuk membatalkan",
         "sendToModify": "Kirim {amount} {ticker} dari dompet asli untuk mengubah",
         "cancelSubmitted": "Transaksi pembatalan terkirim",
-        "modifySubmitted": "Transaksi perubahan terkirim"
+        "modifySubmitted": "Transaksi perubahan terkirim",
+        "replaceSubmitted": "Order dibatalkan - biarkan jendela ini terbuka, order pengganti dibuat setelah deposit Anda kembali",
+        "replacePlaced": "Limit order pengganti telah dibuat"
       },
       "warning": {
         "memolessDeposit": "Untuk {mode} order ini, kirim deposit dari dompet {chain} asli yang membuatnya",
@@ -205,7 +218,9 @@
         "switch": "Beralih ke dompet {chain} untuk {mode} order ini",
         "addressMismatch": "Dompet yang terhubung tidak cocok dengan alamat yang membuat order ini",
         "tradingPaused": "Trading {chain} saat ini sedang dijeda",
-        "orderNotFound": "Order ini tidak lagi terbuka di THORChain - kemungkinan sudah terisi atau kedaluwarsa"
+        "orderNotFound": "Order ini tidak lagi terbuka di THORChain - kemungkinan sudah terisi atau kedaluwarsa",
+        "orderConfirming": "Order ini masih menunggu konfirmasi deposit {chain}-nya - order dapat diubah setelah THORChain memasukkannya ke dalam antrean",
+        "expiryNeedsReplace": "Masa kedaluwarsa baru tidak dapat diterapkan pada order yang terbuka, jadi ini akan membatalkannya dan mengirim kembali deposit {chain} Anda - order pengganti akan dibuka untuk ditandatangani setelah deposit tiba"
       }
     },
     "quoteTimer": {

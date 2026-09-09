@@ -176,26 +176,39 @@
       "titleCancel": "取消限價訂單",
       "descriptionModify": "修改此限價訂單將更新目標價格。處理此次修改將收取少量網絡費用。",
       "descriptionCancel": "取消此限價訂單將把您存入的資金退回至您的錢包。處理此次取消將收取少量網絡費用。",
+      "descriptionReplace": "THORChain 無法直接變更未成交訂單的到期時間，因此會取消該訂單並將您的存入資金退回錢包。資金一退回，系統即會開啟替代訂單供您簽署 — 相同交易對與價格，並套用新的到期時間。",
       "fromCurrent": "較目前{percent}%",
       "youWillGet": "您將獲得",
+      "expiration": "到期時間",
+      "changeExpiration": "變更",
+      "expiryUnchanged": "與此訂單的到期時間相同 — 無需重新掛單",
+      "awaitingRefund": "訂單已取消。正在等待您的存入資金退回 — 資金一到帳即會自動掛出替代訂單，請保持此視窗開啟。",
+      "placingReplacement": "您的資金已退回。正在掛出替代訂單 — 請在錢包中確認。",
       "button": {
         "modifying": "修改中…",
         "cancelling": "取消中…",
         "loading": "載入中…",
         "modifyOrder": "修改訂單",
-        "cancelOrder": "取消訂單"
+        "cancelOrder": "取消訂單",
+        "replaceOrder": "取消並重新掛單",
+        "awaitingRefund": "等待您的資金退回",
+        "placing": "正在掛出替代訂單…",
+        "confirmReplace": "確認 — 取消訂單並退回我的資金"
       },
       "error": {
         "loadInboundAddresses": "無法載入入站地址",
         "cancelFailed": "取消限價兌換失敗",
         "modifyFailed": "修改限價兌換失敗",
+        "replaceFailed": "掛出替代訂單失敗",
         "walletNotConnected": "錢包未連接"
       },
       "toast": {
         "sendToCancel": "請從原錢包發送{amount} {ticker}以取消",
         "sendToModify": "請從原錢包發送{amount} {ticker}以修改",
         "cancelSubmitted": "取消交易已提交",
-        "modifySubmitted": "修改交易已提交"
+        "modifySubmitted": "修改交易已提交",
+        "replaceSubmitted": "訂單已取消 — 請保持此視窗開啟，資金退回後即會掛出替代訂單",
+        "replacePlaced": "替代限價訂單已掛出"
       },
       "warning": {
         "memolessDeposit": "要{mode}此訂單，請從最初下單的{chain}錢包發送存款",
@@ -205,7 +218,9 @@
         "switch": "切換到{chain}錢包以{mode}此訂單",
         "addressMismatch": "已連接的錢包與下此訂單的地址不匹配",
         "tradingPaused": "{chain}交易目前已暫停",
-        "orderNotFound": "此訂單已不在 THORChain 上掛單中 — 可能已成交或已過期"
+        "orderNotFound": "此訂單已不在 THORChain 上掛單中 — 可能已成交或已過期",
+        "orderConfirming": "此訂單仍在等待其 {chain} 存入交易確認 — 待 THORChain 排入佇列後即可修改",
+        "expiryNeedsReplace": "新的到期時間無法套用至未成交訂單，因此會取消該訂單並將您的 {chain} 存入資金退回 — 資金到帳後即會開啟替代訂單供您簽署"
       }
     },
     "quoteTimer": {

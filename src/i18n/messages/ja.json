@@ -176,26 +176,39 @@
       "titleCancel": "指値注文のキャンセル",
       "descriptionModify": "この指値注文を変更すると、目標価格が更新されます。変更の処理には少額のネットワーク手数料が請求されます。",
       "descriptionCancel": "この指値注文をキャンセルすると、預け入れた資金がウォレットに返金されます。キャンセルの処理には少額のネットワーク手数料が請求されます。",
+      "descriptionReplace": "THORChain では未決済注文の有効期限をそのまま変更できないため、注文をキャンセルしてデポジットをウォレットに返金します。デポジットが戻り次第、同じペア・同じ価格で新しい有効期限の再注文が署名待ちとして開かれます。",
       "fromCurrent": "現在から{percent}%",
       "youWillGet": "受取額",
+      "expiration": "有効期限",
+      "changeExpiration": "変更",
+      "expiryUnchanged": "この注文の有効期限と同じです - 再発注の必要はありません",
+      "awaitingRefund": "注文をキャンセルしました。デポジットの返金をお待ちください - 返金が届き次第、再注文が自動的に行われますので、このウィンドウを開いたままにしてください。",
+      "placingReplacement": "デポジットが戻りました。再注文を発注中です - ウォレットで承認してください。",
       "button": {
         "modifying": "変更中…",
         "cancelling": "キャンセル中…",
         "loading": "読み込み中…",
         "modifyOrder": "注文を変更",
-        "cancelOrder": "注文をキャンセル"
+        "cancelOrder": "注文をキャンセル",
+        "replaceOrder": "キャンセルして再発注",
+        "awaitingRefund": "デポジットの返金待ち",
+        "placing": "再注文を発注中...",
+        "confirmReplace": "確認 - キャンセルしてデポジットを返金"
       },
       "error": {
         "loadInboundAddresses": "受信アドレスの読み込みに失敗しました",
         "cancelFailed": "指値スワップのキャンセルに失敗しました",
         "modifyFailed": "指値スワップの変更に失敗しました",
+        "replaceFailed": "再注文の発注に失敗しました",
         "walletNotConnected": "ウォレットが未接続です"
       },
       "toast": {
         "sendToCancel": "キャンセルするには元のウォレットから{amount} {ticker}を送信してください",
         "sendToModify": "変更するには元のウォレットから{amount} {ticker}を送信してください",
         "cancelSubmitted": "キャンセルトランザクションが送信されました",
-        "modifySubmitted": "変更トランザクションが送信されました"
+        "modifySubmitted": "変更トランザクションが送信されました",
+        "replaceSubmitted": "注文をキャンセルしました - デポジットが戻り次第、再注文が行われます。このウィンドウを開いたままにしてください",
+        "replacePlaced": "再指値注文を発注しました"
       },
       "warning": {
         "memolessDeposit": "この注文を{mode}するには、注文を行った元の{chain}ウォレットから預け入れを送信してください",
@@ -205,7 +218,9 @@
         "switch": "この注文を{mode}するには、{chain}ウォレットに切り替えてください",
         "addressMismatch": "接続中のウォレットがこの注文を行ったアドレスと一致しません",
         "tradingPaused": "{chain}の取引は現在停止されています",
-        "orderNotFound": "この注文はTHORChain上でこれ以上有効ではありません。すでに約定したか、期限切れの可能性があります"
+        "orderNotFound": "この注文はTHORChain上でこれ以上有効ではありません。すでに約定したか、期限切れの可能性があります",
+        "orderConfirming": "この注文は {chain} のデポジット確認を待っています - THORChain がキューに追加した後に変更できます",
+        "expiryNeedsReplace": "未決済注文には新しい有効期限を適用できないため、注文をキャンセルして {chain} のデポジットを返金します - 返金が届き次第、再注文が署名待ちとして開かれます"
       }
     },
     "quoteTimer": {

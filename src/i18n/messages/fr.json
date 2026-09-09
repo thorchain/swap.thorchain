@@ -176,26 +176,39 @@
       "titleCancel": "Annuler l'ordre limite",
       "descriptionModify": "La modification de cet ordre limite mettra à jour le prix cible. Des frais de réseau modiques seront facturés pour traiter la modification.",
       "descriptionCancel": "L'annulation de cet ordre limite renverra vos fonds déposés vers votre portefeuille. Des frais de réseau modiques seront facturés pour traiter l'annulation.",
+      "descriptionReplace": "THORChain ne peut pas modifier directement l'expiration d'un ordre ouvert : cette action annule donc l'ordre et renvoie votre dépôt vers votre wallet. Dès que le dépôt est revenu, l'ordre de remplacement s'ouvre pour signature — même paire et même prix, avec la nouvelle expiration.",
       "fromCurrent": "{percent}% par rapport au prix actuel",
       "youWillGet": "Vous recevrez",
+      "expiration": "Expire",
+      "changeExpiration": "Modifier",
+      "expiryUnchanged": "Identique à l'expiration de cet ordre — rien à replacer",
+      "awaitingRefund": "Ordre annulé. En attente du retour de votre dépôt — l'ordre de remplacement est placé automatiquement dès son arrivée, gardez donc cette fenêtre ouverte.",
+      "placingReplacement": "Votre dépôt est revenu. Placement de l'ordre de remplacement — confirmez-le dans votre wallet.",
       "button": {
         "modifying": "Modification...",
         "cancelling": "Annulation...",
         "loading": "Chargement...",
         "modifyOrder": "Modifier l'ordre",
-        "cancelOrder": "Annuler l'ordre"
+        "cancelOrder": "Annuler l'ordre",
+        "replaceOrder": "Annuler et replacer l'ordre",
+        "awaitingRefund": "En attente de votre dépôt",
+        "placing": "Placement de l'ordre de remplacement…",
+        "confirmReplace": "Confirmer — annuler et rembourser mon dépôt"
       },
       "error": {
         "loadInboundAddresses": "Échec du chargement des adresses entrantes",
         "cancelFailed": "Échec de l'annulation de l'échange limite",
         "modifyFailed": "Échec de la modification de l'échange limite",
+        "replaceFailed": "Échec du placement de l'ordre de remplacement",
         "walletNotConnected": "Portefeuille non connecté"
       },
       "toast": {
         "sendToCancel": "Envoyez {amount} {ticker} depuis le portefeuille d'origine pour annuler",
         "sendToModify": "Envoyez {amount} {ticker} depuis le portefeuille d'origine pour modifier",
         "cancelSubmitted": "Transaction d'annulation envoyée",
-        "modifySubmitted": "Transaction de modification envoyée"
+        "modifySubmitted": "Transaction de modification envoyée",
+        "replaceSubmitted": "Ordre annulé — gardez cette fenêtre ouverte, le remplacement sera placé dès le retour de votre dépôt",
+        "replacePlaced": "Ordre limite de remplacement placé"
       },
       "warning": {
         "memolessDeposit": "Pour {mode} cet ordre, envoyez le dépôt depuis le portefeuille {chain} d'origine qui l'a placé",
@@ -205,7 +218,9 @@
         "switch": "Basculez vers un portefeuille {chain} pour {mode} cet ordre",
         "addressMismatch": "Le portefeuille connecté ne correspond pas à l'adresse qui a placé cet ordre",
         "tradingPaused": "Le trading {chain} est actuellement en pause",
-        "orderNotFound": "Cet ordre n'est plus ouvert sur THORChain - il a peut-être déjà été exécuté ou expiré"
+        "orderNotFound": "Cet ordre n'est plus ouvert sur THORChain - il a peut-être déjà été exécuté ou expiré",
+        "orderConfirming": "Cet ordre attend encore la confirmation de son dépôt {chain} — il pourra être modifié une fois mis en file d'attente par THORChain",
+        "expiryNeedsReplace": "Une nouvelle expiration ne peut pas être appliquée à un ordre ouvert : celui-ci est donc annulé et votre dépôt {chain} vous est renvoyé — l'ordre de remplacement s'ouvre pour signature dès son arrivée"
       }
     },
     "quoteTimer": {

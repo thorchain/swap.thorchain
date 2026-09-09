@@ -176,26 +176,39 @@
       "titleCancel": "Limit Emrini İptal Et",
       "descriptionModify": "Bu limit emrini değiştirmek hedef fiyatı güncelleyecek. Değişikliği işlemek için küçük bir ağ ücreti alınır.",
       "descriptionCancel": "Bu limit emrini iptal etmek yatırdığın fonları cüzdanına geri gönderir. İptali işlemek için küçük bir ağ ücreti alınır.",
+      "descriptionReplace": "THORChain, açık bir emrin geçerlilik süresini yerinde değiştiremez; bu nedenle emir iptal edilir ve yatırdığınız tutar cüzdanınıza geri döner. Tutar geri geldiği anda, aynı parite ve fiyatla, yeni sona erme süresine sahip yeni emir imzanız için açılır.",
       "fromCurrent": "Mevcuda göre %{percent}",
       "youWillGet": "Alacağın miktar",
+      "expiration": "Sona erme",
+      "changeExpiration": "Değiştir",
+      "expiryUnchanged": "Bu emrin sona erme süresiyle aynı - yeniden oluşturmaya gerek yok",
+      "awaitingRefund": "Emir iptal edildi. Yatırdığınız tutarın geri gelmesi bekleniyor - tutar ulaşır ulaşmaz yeni emir otomatik olarak oluşturulur, bu yüzden bu pencereyi açık tutun.",
+      "placingReplacement": "Yatırdığınız tutar geri geldi. Yeni emir oluşturuluyor - cüzdanınızdan onaylayın.",
       "button": {
         "modifying": "Değiştiriliyor…",
         "cancelling": "İptal ediliyor…",
         "loading": "Yükleniyor…",
         "modifyOrder": "Emri Değiştir",
-        "cancelOrder": "Emri İptal Et"
+        "cancelOrder": "Emri İptal Et",
+        "replaceOrder": "Emri İptal Et ve Yeniden Oluştur",
+        "awaitingRefund": "Yatırdığınız tutar bekleniyor",
+        "placing": "Yeni emir oluşturuluyor...",
+        "confirmReplace": "Onayla - emri iptal et ve tutarımı iade et"
       },
       "error": {
         "loadInboundAddresses": "Gelen adresler yüklenemedi",
         "cancelFailed": "Limit takası iptal edilemedi",
         "modifyFailed": "Limit takası değiştirilemedi",
+        "replaceFailed": "Yeni emir oluşturulamadı",
         "walletNotConnected": "Cüzdan bağlı değil"
       },
       "toast": {
         "sendToCancel": "İptal etmek için orijinal cüzdandan {amount} {ticker} gönder",
         "sendToModify": "Değiştirmek için orijinal cüzdandan {amount} {ticker} gönder",
         "cancelSubmitted": "İptal işlemi gönderildi",
-        "modifySubmitted": "Değişiklik işlemi gönderildi"
+        "modifySubmitted": "Değişiklik işlemi gönderildi",
+        "replaceSubmitted": "Emir iptal edildi - bu pencereyi açık tutun, yatırdığınız tutar geri geldiğinde yeni emir oluşturulacak",
+        "replacePlaced": "Yeni limit emri oluşturuldu"
       },
       "warning": {
         "memolessDeposit": "Bu emri {mode} için, emri oluşturan orijinal {chain} cüzdanından yatırma gönder",
@@ -205,7 +218,9 @@
         "switch": "Bu emri {mode} için bir {chain} cüzdanına geç",
         "addressMismatch": "Bağlı cüzdan, bu emri oluşturan adresle eşleşmiyor",
         "tradingPaused": "{chain} işlemleri şu anda duraklatıldı",
-        "orderNotFound": "Bu emir artık THORChain üzerinde açık değil - önceden gerçekleşmiş veya süresi dolmuş olabilir"
+        "orderNotFound": "Bu emir artık THORChain üzerinde açık değil - önceden gerçekleşmiş veya süresi dolmuş olabilir",
+        "orderConfirming": "Bu emir hâlâ {chain} yatırma işleminin onaylanmasını bekliyor - THORChain sıraya aldıktan sonra değiştirilebilir",
+        "expiryNeedsReplace": "Açık bir emre yeni bir sona erme süresi uygulanamaz; bu nedenle emir iptal edilir ve {chain} yatırma tutarınız geri gönderilir - tutar ulaştığında yeni emir imzanız için açılır"
       }
     },
     "quoteTimer": {

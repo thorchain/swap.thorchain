@@ -176,26 +176,39 @@
       "titleCancel": "Limit-Order stornieren",
       "descriptionModify": "Durch das Ändern dieser Limit-Order wird der Zielpreis aktualisiert. Für die Bearbeitung der Änderung wird eine kleine Netzwerkgebühr erhoben.",
       "descriptionCancel": "Durch das Stornieren dieser Limit-Order werden Ihre eingezahlten Gelder an Ihre Wallet zurückgesendet. Für die Bearbeitung der Stornierung wird eine kleine Netzwerkgebühr erhoben.",
+      "descriptionReplace": "THORChain kann die Ablaufzeit einer offenen Order nicht direkt ändern. Daher wird die Order storniert und deine Einzahlung an deine Wallet zurückgesendet. Sobald die Einzahlung zurück ist, öffnet sich die Ersatz-Order zum Signieren – gleiches Paar und gleicher Preis, mit der neuen Ablaufzeit.",
       "fromCurrent": "{percent}% vom aktuellen Wert",
       "youWillGet": "Sie erhalten",
+      "expiration": "Läuft ab",
+      "changeExpiration": "Ändern",
+      "expiryUnchanged": "Entspricht der Ablaufzeit dieser Order – nichts neu zu platzieren",
+      "awaitingRefund": "Order storniert. Warte auf die Rücksendung deiner Einzahlung – die Ersatz-Order wird automatisch platziert, sobald sie eintrifft. Lass dieses Fenster daher geöffnet.",
+      "placingReplacement": "Deine Einzahlung ist zurück. Ersatz-Order wird platziert – bestätige sie in deiner Wallet.",
       "button": {
         "modifying": "Wird geändert...",
         "cancelling": "Wird storniert...",
         "loading": "Wird geladen...",
         "modifyOrder": "Order ändern",
-        "cancelOrder": "Order stornieren"
+        "cancelOrder": "Order stornieren",
+        "replaceOrder": "Order stornieren & neu platzieren",
+        "awaitingRefund": "Warte auf deine Einzahlung",
+        "placing": "Ersatz-Order wird platziert...",
+        "confirmReplace": "Bestätigen – Order stornieren und Einzahlung zurücksenden"
       },
       "error": {
         "loadInboundAddresses": "Inbound-Adressen konnten nicht geladen werden",
         "cancelFailed": "Limit-Swap konnte nicht storniert werden",
         "modifyFailed": "Limit-Swap konnte nicht geändert werden",
+        "replaceFailed": "Ersatz-Order konnte nicht platziert werden",
         "walletNotConnected": "Wallet nicht verbunden"
       },
       "toast": {
         "sendToCancel": "Senden Sie {amount} {ticker} von der ursprünglichen Wallet, um zu stornieren",
         "sendToModify": "Senden Sie {amount} {ticker} von der ursprünglichen Wallet, um zu ändern",
         "cancelSubmitted": "Stornierungstransaktion gesendet",
-        "modifySubmitted": "Änderungstransaktion gesendet"
+        "modifySubmitted": "Änderungstransaktion gesendet",
+        "replaceSubmitted": "Order storniert – lass dieses Fenster geöffnet, die Ersatz-Order wird platziert, sobald deine Einzahlung zurück ist",
+        "replacePlaced": "Ersatz-Limit-Order platziert"
       },
       "warning": {
         "memolessDeposit": "Um diese Order zu {mode}, senden Sie die Einzahlung von der ursprünglichen {chain}-Wallet, die sie platziert hat",
@@ -205,7 +218,9 @@
         "switch": "Wechseln Sie zu einer {chain}-Wallet, um diese Order zu {mode}",
         "addressMismatch": "Die verbundene Wallet stimmt nicht mit der Adresse überein, die diese Order platziert hat",
         "tradingPaused": "{chain}-Handel ist derzeit pausiert",
-        "orderNotFound": "Diese Order ist auf THORChain nicht mehr offen – sie wurde möglicherweise bereits ausgeführt oder ist abgelaufen"
+        "orderNotFound": "Diese Order ist auf THORChain nicht mehr offen – sie wurde möglicherweise bereits ausgeführt oder ist abgelaufen",
+        "orderConfirming": "Diese Order wartet noch auf die Bestätigung ihrer {chain}-Einzahlung – sie kann geändert werden, sobald THORChain sie eingereiht hat",
+        "expiryNeedsReplace": "Eine neue Ablaufzeit kann nicht auf eine offene Order angewendet werden. Daher wird sie storniert und deine {chain}-Einzahlung zurückgesendet – die Ersatz-Order öffnet sich zum Signieren, sobald sie eintrifft"
       }
     },
     "quoteTimer": {

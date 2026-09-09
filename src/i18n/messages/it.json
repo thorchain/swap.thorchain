@@ -176,26 +176,39 @@
       "titleCancel": "Annulla l'ordine limite",
       "descriptionModify": "La modifica di questo ordine limite aggiornerà il prezzo obiettivo. Verrà applicata una piccola commissione di rete per elaborare la modifica.",
       "descriptionCancel": "L'annullamento di questo ordine limite restituirà nel tuo wallet i fondi depositati. Verrà applicata una piccola commissione di rete per elaborare l'annullamento.",
+      "descriptionReplace": "THORChain non può modificare la scadenza di un ordine aperto, quindi l'ordine viene annullato e il deposito torna nel tuo wallet. Non appena il deposito è rientrato, l'ordine sostitutivo si apre per la firma: stessa coppia e stesso prezzo, con la nuova scadenza.",
       "fromCurrent": "{percent}% rispetto all'attuale",
       "youWillGet": "Riceverai",
+      "expiration": "Scade",
+      "changeExpiration": "Modifica",
+      "expiryUnchanged": "Uguale alla scadenza di questo ordine: nulla da ricreare",
+      "awaitingRefund": "Ordine annullato. In attesa del rientro del deposito: l'ordine sostitutivo viene creato automaticamente all'arrivo, quindi mantieni aperta questa finestra.",
+      "placingReplacement": "Il tuo deposito è rientrato. Creazione dell'ordine sostitutivo: confermalo nel tuo wallet.",
       "button": {
         "modifying": "Modifica in corso...",
         "cancelling": "Annullamento in corso...",
         "loading": "Caricamento in corso...",
         "modifyOrder": "Modifica l'ordine",
-        "cancelOrder": "Annulla l'ordine"
+        "cancelOrder": "Annulla l'ordine",
+        "replaceOrder": "Annulla e ricrea ordine",
+        "awaitingRefund": "In attesa del tuo deposito",
+        "placing": "Creazione ordine sostitutivo...",
+        "confirmReplace": "Conferma - annulla e rimborsa il mio deposito"
       },
       "error": {
         "loadInboundAddresses": "Caricamento degli indirizzi in entrata non riuscito",
         "cancelFailed": "Annullamento dello swap limite non riuscito",
         "modifyFailed": "Modifica dello swap limite non riuscita",
+        "replaceFailed": "Creazione dell'ordine sostitutivo non riuscita",
         "walletNotConnected": "Wallet non connesso"
       },
       "toast": {
         "sendToCancel": "Invia {amount} {ticker} dal wallet originale per annullare",
         "sendToModify": "Invia {amount} {ticker} dal wallet originale per modificare",
         "cancelSubmitted": "Transazione di annullamento inviata",
-        "modifySubmitted": "Transazione di modifica inviata"
+        "modifySubmitted": "Transazione di modifica inviata",
+        "replaceSubmitted": "Ordine annullato - mantieni aperta questa finestra, l'ordine sostitutivo viene creato al rientro del deposito",
+        "replacePlaced": "Ordine limite sostitutivo creato"
       },
       "warning": {
         "memolessDeposit": "Per {mode} questo ordine, invia il deposito dal wallet {chain} originale che l'ha effettuato",
@@ -205,7 +218,9 @@
         "switch": "Passa a un wallet {chain} per {mode} quest'ordine",
         "addressMismatch": "Il wallet connesso non corrisponde all'indirizzo che ha effettuato quest'ordine",
         "tradingPaused": "Il trading {chain} è attualmente sospeso",
-        "orderNotFound": "Questo ordine non è più aperto su THORChain - potrebbe essere già stato eseguito o scaduto"
+        "orderNotFound": "Questo ordine non è più aperto su THORChain - potrebbe essere già stato eseguito o scaduto",
+        "orderConfirming": "Questo ordine è ancora in attesa della conferma del deposito {chain}: potrà essere modificato una volta messo in coda da THORChain",
+        "expiryNeedsReplace": "Non è possibile applicare una nuova scadenza a un ordine aperto, quindi l'ordine viene annullato e il tuo deposito {chain} viene restituito: l'ordine sostitutivo sarà pronto per la firma al suo arrivo"
       }
     },
     "quoteTimer": {

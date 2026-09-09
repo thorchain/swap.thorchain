@@ -10,6 +10,8 @@ export const useSetAssetFrom = () => useSwapStore(state => state.setAssetFrom)
 export const useAssetTo = () => useSwapStore(state => state.assetTo)
 export const useSetAssetTo = () => useSwapStore(state => state.setAssetTo)
 
+export const useSetAmountFrom = () => useSwapStore(state => state.setAmountFrom)
+
 export const useSlippage = () => useSwapStore(state => state.slippage)
 export const useSetSlippage = () => useSwapStore(state => state.setSlippage)
 

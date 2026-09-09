@@ -474,5 +474,20 @@
   "tx.status.unknown": ["Unknown", "Неизвестно"],
   "tx.leg.deposit": ["Deposit {ticker}", "Внести {ticker}"],
   "tx.leg.send": ["Send {ticker}", "Отправить {ticker}"],
-  "tx.leg.swap": ["Swap {from} to {to}", "Обменять {from} на {to}"]
+  "tx.leg.swap": ["Swap {from} to {to}", "Обменять {from} на {to}"],
+  "swap.limitCancel.descriptionReplace": ["THORChain cannot change an open order's expiration in place, so this cancels the order and returns your deposit to your wallet. As soon as the deposit is back, the replacement order opens for you to sign - same pair and price, with the new expiration.", "THORChain не может изменить срок действия открытого ордера напрямую, поэтому ордер будет отменён, а ваш депозит вернётся в кошелёк. Как только депозит поступит обратно, откроется новый ордер для подписи — та же пара и цена, но с новым сроком действия."],
+  "swap.limitCancel.expiration": ["Expires", "Истекает"],
+  "swap.limitCancel.changeExpiration": ["Change", "Изменить"],
+  "swap.limitCancel.expiryUnchanged": ["Same as this order's expiration - nothing to re-place", "Совпадает со сроком действия этого ордера — переразмещать нечего"],
+  "swap.limitCancel.awaitingRefund": ["Order cancelled. Waiting for your deposit to come back - the replacement is placed automatically as soon as it arrives, so keep this window open.", "Ордер отменён. Ожидаем возврата депозита — новый ордер будет размещён автоматически, как только он поступит, поэтому не закрывайте это окно."],
+  "swap.limitCancel.placingReplacement": ["Your deposit is back. Placing the replacement order - confirm it in your wallet.", "Депозит вернулся. Размещаем новый ордер — подтвердите его в кошельке."],
+  "swap.limitCancel.button.replaceOrder": ["Cancel & Re-place Order", "Отменить и переразместить ордер"],
+  "swap.limitCancel.button.awaitingRefund": ["Waiting for your deposit", "Ожидание возврата депозита"],
+  "swap.limitCancel.button.placing": ["Placing replacement order...", "Размещение нового ордера..."],
+  "swap.limitCancel.button.confirmReplace": ["Confirm - cancel and refund my deposit", "Подтвердить — отменить и вернуть депозит"],
+  "swap.limitCancel.error.replaceFailed": ["Failed to place the replacement order", "Не удалось разместить новый ордер"],
+  "swap.limitCancel.toast.replaceSubmitted": ["Order cancelled - keep this window open, the replacement is placed once your deposit is back", "Ордер отменён — не закрывайте это окно, новый ордер будет размещён после возврата депозита"],
+  "swap.limitCancel.toast.replacePlaced": ["Replacement limit order placed", "Новый лимитный ордер размещён"],
+  "swap.limitCancel.warning.orderConfirming": ["This order is still waiting on its {chain} deposit to confirm - it can be modified once THORChain has queued it", "Этот ордер всё ещё ожидает подтверждения депозита в сети {chain} — его можно изменить после того, как THORChain поставит его в очередь"],
+  "swap.limitCancel.warning.expiryNeedsReplace": ["A new expiration cannot be applied to an open order, so this cancels it and sends your {chain} deposit back - the replacement opens for signing once it arrives", "Новый срок действия нельзя применить к открытому ордеру, поэтому он будет отменён, а ваш депозит {chain} возвращён — новый ордер откроется для подписи, как только средства поступят"]
 }

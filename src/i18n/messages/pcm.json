@@ -176,26 +176,39 @@
       "titleCancel": "Cancel Limit Order",
       "descriptionModify": "If you change dis limit order, e go update di target price. Small network fee go apply to process di change.",
       "descriptionCancel": "If you cancel dis limit order, dem go return di money wey you deposit to your wallet. Small network fee go apply to process di cancellation.",
+      "descriptionReplace": "THORChain no fit change when one open order go expire as e dey, so dis one go cancel di order and send your deposit back to your wallet. Once di deposit land back, di new order go open make you sign am - same pair and same price, with di new expiration.",
       "fromCurrent": "{percent}% from current",
       "youWillGet": "You go get",
+      "expiration": "E Go Expire",
+      "changeExpiration": "Change",
+      "expiryUnchanged": "Same as when dis order go expire - nothing to re-place",
+      "awaitingRefund": "Order don cancel. We dey wait your deposit make e come back - di new order go place by itself once e land, so make you no close dis window.",
+      "placingReplacement": "Your deposit don come back. We dey place di new order - confirm am inside your wallet.",
       "button": {
         "modifying": "Dey change...",
         "cancelling": "Dey cancel...",
         "loading": "Dey load...",
         "modifyOrder": "Change Order",
-        "cancelOrder": "Cancel Order"
+        "cancelOrder": "Cancel Order",
+        "replaceOrder": "Cancel & Place Order Again",
+        "awaitingRefund": "Dey wait your deposit",
+        "placing": "Dey place di new order...",
+        "confirmReplace": "Confirm - cancel and send my deposit back"
       },
       "error": {
         "loadInboundAddresses": "E no fit load inbound addresses",
         "cancelFailed": "E no fit cancel limit swap",
         "modifyFailed": "E no fit change limit swap",
+        "replaceFailed": "E no fit place di new order",
         "walletNotConnected": "Wallet no connect"
       },
       "toast": {
         "sendToCancel": "Send {amount} {ticker} from di original wallet to cancel",
         "sendToModify": "Send {amount} {ticker} from di original wallet to change am",
         "cancelSubmitted": "We don submit cancel transaction",
-        "modifySubmitted": "We don submit change transaction"
+        "modifySubmitted": "We don submit change transaction",
+        "replaceSubmitted": "Order don cancel - no close dis window, di new order go place once your deposit come back",
+        "replacePlaced": "New limit order don place"
       },
       "warning": {
         "memolessDeposit": "To {mode} dis order, send di deposit from di original {chain} wallet wey place am",
@@ -205,7 +218,9 @@
         "switch": "Switch to a {chain} wallet to {mode} dis order",
         "addressMismatch": "Di wallet wey connect no match di address wey place dis order",
         "tradingPaused": "{chain} trading don pause for now",
-        "orderNotFound": "Dis order no dey open again for THORChain - e fit don already complete or don expire"
+        "orderNotFound": "Dis order no dey open again for THORChain - e fit don already complete or don expire",
+        "orderConfirming": "Dis order still dey wait for im {chain} deposit to confirm - you go fit change am once THORChain queue am",
+        "expiryNeedsReplace": "You no fit put new expiration for order wey dey open, so dis one go cancel am and send your {chain} deposit back - di new order go open for signing once e land"
       }
     },
     "quoteTimer": {

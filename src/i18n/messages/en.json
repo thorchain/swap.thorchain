@@ -176,26 +176,39 @@
       "titleCancel": "Cancel Limit Order",
       "descriptionModify": "Modifying this limit order will update the target price. A small network fee will be charged to process the modification.",
       "descriptionCancel": "Cancelling this limit order will return your deposited funds to your wallet. A small network fee will be charged to process the cancellation.",
+      "descriptionReplace": "THORChain cannot change an open order's expiration in place, so this cancels the order and returns your deposit to your wallet. As soon as the deposit is back, the replacement order opens for you to sign - same pair and price, with the new expiration.",
       "fromCurrent": "{percent}% from current",
       "youWillGet": "You will get",
+      "expiration": "Expires",
+      "changeExpiration": "Change",
+      "expiryUnchanged": "Same as this order's expiration - nothing to re-place",
+      "awaitingRefund": "Order cancelled. Waiting for your deposit to come back - the replacement is placed automatically as soon as it arrives, so keep this window open.",
+      "placingReplacement": "Your deposit is back. Placing the replacement order - confirm it in your wallet.",
       "button": {
         "modifying": "Modifying...",
         "cancelling": "Cancelling...",
         "loading": "Loading...",
         "modifyOrder": "Modify Order",
-        "cancelOrder": "Cancel Order"
+        "cancelOrder": "Cancel Order",
+        "replaceOrder": "Cancel & Re-place Order",
+        "awaitingRefund": "Waiting for your deposit",
+        "placing": "Placing replacement order...",
+        "confirmReplace": "Confirm - cancel and refund my deposit"
       },
       "error": {
         "loadInboundAddresses": "Failed to load inbound addresses",
         "cancelFailed": "Failed to cancel limit swap",
         "modifyFailed": "Failed to modify limit swap",
+        "replaceFailed": "Failed to place the replacement order",
         "walletNotConnected": "Wallet not connected"
       },
       "toast": {
         "sendToCancel": "Send {amount} {ticker} from the original wallet to cancel",
         "sendToModify": "Send {amount} {ticker} from the original wallet to modify",
         "cancelSubmitted": "Cancel transaction submitted",
-        "modifySubmitted": "Modify transaction submitted"
+        "modifySubmitted": "Modify transaction submitted",
+        "replaceSubmitted": "Order cancelled - keep this window open, the replacement is placed once your deposit is back",
+        "replacePlaced": "Replacement limit order placed"
       },
       "warning": {
         "memolessDeposit": "To {mode} this order, send the deposit from the original {chain} wallet that placed it",
@@ -205,7 +218,9 @@
         "switch": "Switch to a {chain} wallet to {mode} this order",
         "addressMismatch": "Connected wallet does not match the address that placed this order",
         "tradingPaused": "{chain} trading is currently paused",
-        "orderNotFound": "This order is no longer open on THORChain - it may have already been filled or expired"
+        "orderNotFound": "This order is no longer open on THORChain - it may have already been filled or expired",
+        "orderConfirming": "This order is still waiting on its {chain} deposit to confirm - it can be modified once THORChain has queued it",
+        "expiryNeedsReplace": "A new expiration cannot be applied to an open order, so this cancels it and sends your {chain} deposit back - the replacement opens for signing once it arrives"
       }
     },
     "quoteTimer": {

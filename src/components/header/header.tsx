@@ -12,6 +12,7 @@ import { useDialog } from '@/components/global-dialog'
 import { GenericButton } from '@/components/generic-button'
 import { WalletSidebar } from '@/components/wallet-sidebar/wallet-sidebar'
 import { HeaderLogoText } from '@/components/header/header-logo-text'
+import { ReplacementOrderWatcher } from '@/components/swap/replacement-order-watcher'
 import { AppConfig } from '@/config'
 import { cn } from '@/lib/utils'
 
@@ -31,6 +32,7 @@ export function Header() {
 
   return (
     <>
+      <ReplacementOrderWatcher />
       <AnnouncementBanner />
       <header
         className={cn('bg-body sticky inset-x-0 top-0 z-50 container mx-auto p-4 transition-all duration-200', {

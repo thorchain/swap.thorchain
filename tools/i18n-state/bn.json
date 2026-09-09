@@ -474,5 +474,20 @@
   "tx.status.unknown": ["Unknown", "অজানা"],
   "tx.leg.deposit": ["Deposit {ticker}", "{ticker} ডিপোজিট করুন"],
   "tx.leg.send": ["Send {ticker}", "{ticker} পাঠান"],
-  "tx.leg.swap": ["Swap {from} to {to}", "{from} থেকে {to} সোয়াপ করুন"]
+  "tx.leg.swap": ["Swap {from} to {to}", "{from} থেকে {to} সোয়াপ করুন"],
+  "swap.limitCancel.descriptionReplace": ["THORChain cannot change an open order's expiration in place, so this cancels the order and returns your deposit to your wallet. As soon as the deposit is back, the replacement order opens for you to sign - same pair and price, with the new expiration.", "THORChain কোনো খোলা অর্ডারের মেয়াদ সরাসরি পরিবর্তন করতে পারে না, তাই এটি অর্ডারটি বাতিল করে আপনার ডিপোজিট আপনার ওয়ালেটে ফিরিয়ে দেয়। ডিপোজিট ফিরে আসার সঙ্গে সঙ্গেই প্রতিস্থাপিত অর্ডারটি আপনার সাইন করার জন্য খুলে যাবে - একই জোড়া ও দাম, নতুন মেয়াদসহ।"],
+  "swap.limitCancel.expiration": ["Expires", "মেয়াদ শেষ"],
+  "swap.limitCancel.changeExpiration": ["Change", "পরিবর্তন"],
+  "swap.limitCancel.expiryUnchanged": ["Same as this order's expiration - nothing to re-place", "এই অর্ডারের মেয়াদের সমান - পুনরায় বসানোর কিছু নেই"],
+  "swap.limitCancel.awaitingRefund": ["Order cancelled. Waiting for your deposit to come back - the replacement is placed automatically as soon as it arrives, so keep this window open.", "অর্ডার বাতিল হয়েছে। আপনার ডিপোজিট ফিরে আসার অপেক্ষা করা হচ্ছে - এটি পৌঁছালেই প্রতিস্থাপিত অর্ডার স্বয়ংক্রিয়ভাবে বসানো হবে, তাই এই উইন্ডোটি খোলা রাখুন।"],
+  "swap.limitCancel.placingReplacement": ["Your deposit is back. Placing the replacement order - confirm it in your wallet.", "আপনার ডিপোজিট ফিরে এসেছে। প্রতিস্থাপিত অর্ডার বসানো হচ্ছে - আপনার ওয়ালেটে এটি নিশ্চিত করুন।"],
+  "swap.limitCancel.button.replaceOrder": ["Cancel & Re-place Order", "অর্ডার বাতিল করে পুনরায় বসান"],
+  "swap.limitCancel.button.awaitingRefund": ["Waiting for your deposit", "আপনার ডিপোজিটের অপেক্ষায়"],
+  "swap.limitCancel.button.placing": ["Placing replacement order...", "প্রতিস্থাপিত অর্ডার বসানো হচ্ছে..."],
+  "swap.limitCancel.button.confirmReplace": ["Confirm - cancel and refund my deposit", "নিশ্চিত করুন - বাতিল করে আমার ডিপোজিট ফেরত দিন"],
+  "swap.limitCancel.error.replaceFailed": ["Failed to place the replacement order", "প্রতিস্থাপিত অর্ডার বসাতে ব্যর্থ হয়েছে"],
+  "swap.limitCancel.toast.replaceSubmitted": ["Order cancelled - keep this window open, the replacement is placed once your deposit is back", "অর্ডার বাতিল হয়েছে - এই উইন্ডোটি খোলা রাখুন, আপনার ডিপোজিট ফিরে এলেই প্রতিস্থাপিত অর্ডার বসানো হবে"],
+  "swap.limitCancel.toast.replacePlaced": ["Replacement limit order placed", "প্রতিস্থাপিত লিমিট অর্ডার বসানো হয়েছে"],
+  "swap.limitCancel.warning.orderConfirming": ["This order is still waiting on its {chain} deposit to confirm - it can be modified once THORChain has queued it", "এই অর্ডারটি এখনও তার {chain} ডিপোজিট নিশ্চিত হওয়ার অপেক্ষায় আছে - THORChain এটি কিউতে নেওয়ার পরেই এটি পরিবর্তন করা যাবে"],
+  "swap.limitCancel.warning.expiryNeedsReplace": ["A new expiration cannot be applied to an open order, so this cancels it and sends your {chain} deposit back - the replacement opens for signing once it arrives", "খোলা অর্ডারে নতুন মেয়াদ প্রয়োগ করা যায় না, তাই এটি অর্ডারটি বাতিল করে আপনার {chain} ডিপোজিট ফিরিয়ে পাঠায় - এটি পৌঁছালেই প্রতিস্থাপিত অর্ডার সাইন করার জন্য খুলে যাবে"]
 }

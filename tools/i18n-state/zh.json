@@ -474,5 +474,20 @@
   "tx.status.unknown": ["Unknown", "未知"],
   "tx.leg.deposit": ["Deposit {ticker}", "存入{ticker}"],
   "tx.leg.send": ["Send {ticker}", "发送{ticker}"],
-  "tx.leg.swap": ["Swap {from} to {to}", "将{from}兑换为{to}"]
+  "tx.leg.swap": ["Swap {from} to {to}", "将{from}兑换为{to}"],
+  "swap.limitCancel.descriptionReplace": ["THORChain cannot change an open order's expiration in place, so this cancels the order and returns your deposit to your wallet. As soon as the deposit is back, the replacement order opens for you to sign - same pair and price, with the new expiration.", "THORChain 无法直接修改未成交订单的到期时间，因此将取消该订单并把您的存入资金退回钱包。资金到账后，替代订单会立即生成，等待您签名——交易对和价格不变，仅到期时间更新。"],
+  "swap.limitCancel.expiration": ["Expires", "到期时间"],
+  "swap.limitCancel.changeExpiration": ["Change", "更改"],
+  "swap.limitCancel.expiryUnchanged": ["Same as this order's expiration - nothing to re-place", "与当前订单的到期时间相同——无需重新下单"],
+  "swap.limitCancel.awaitingRefund": ["Order cancelled. Waiting for your deposit to come back - the replacement is placed automatically as soon as it arrives, so keep this window open.", "订单已取消。正在等待您的存入资金退回——资金到账后将自动下替代订单，请保持此窗口打开。"],
+  "swap.limitCancel.placingReplacement": ["Your deposit is back. Placing the replacement order - confirm it in your wallet.", "资金已退回。正在下替代订单——请在钱包中确认。"],
+  "swap.limitCancel.button.replaceOrder": ["Cancel & Re-place Order", "取消并重新下单"],
+  "swap.limitCancel.button.awaitingRefund": ["Waiting for your deposit", "等待资金退回"],
+  "swap.limitCancel.button.placing": ["Placing replacement order...", "正在下替代订单…"],
+  "swap.limitCancel.button.confirmReplace": ["Confirm - cancel and refund my deposit", "确认——取消订单并退回我的资金"],
+  "swap.limitCancel.error.replaceFailed": ["Failed to place the replacement order", "替代订单下单失败"],
+  "swap.limitCancel.toast.replaceSubmitted": ["Order cancelled - keep this window open, the replacement is placed once your deposit is back", "订单已取消——请保持此窗口打开，资金退回后将自动下替代订单"],
+  "swap.limitCancel.toast.replacePlaced": ["Replacement limit order placed", "替代限价单已下单"],
+  "swap.limitCancel.warning.orderConfirming": ["This order is still waiting on its {chain} deposit to confirm - it can be modified once THORChain has queued it", "该订单仍在等待其 {chain} 存入交易确认——待 THORChain 将其排入队列后即可修改"],
+  "swap.limitCancel.warning.expiryNeedsReplace": ["A new expiration cannot be applied to an open order, so this cancels it and sends your {chain} deposit back - the replacement opens for signing once it arrives", "新的到期时间无法应用于未成交订单，因此将取消该订单并退回您的 {chain} 存入资金——资金到账后替代订单将生成并等待签名"]
 }

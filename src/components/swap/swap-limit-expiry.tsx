@@ -4,16 +4,13 @@ import { AlertTriangle, X } from 'lucide-react'
 import { Dialog, DialogContent, DialogTitle } from '@/components/ui/dialog'
 import { GenericButton } from '@/components/generic-button'
 import { Input } from '@/components/ui/input'
-
-const BLOCKS_PER_MINUTE = 10
-const BLOCKS_PER_HOUR = 600
-const BLOCKS_PER_DAY = 14400
-const MAX_DAYS = 3
+import { BLOCKS_PER_DAY, BLOCKS_PER_HOUR, BLOCKS_PER_MINUTE, DEFAULT_LIMIT_SWAP_MAX_AGE } from '@/lib/limit-swap'
 
 type SwapExpiryDialogProps = {
   isOpen: boolean
   onOpenChange: (open: boolean) => void
   onApply: (totalBlocks: number) => void
+  maxBlocks?: number
   initialDays?: string
   initialHours?: string
   initialMinutes?: string
@@ -23,11 +20,13 @@ export const SwapLimitExpiry = ({
   isOpen,
   onOpenChange,
   onApply,
+  maxBlocks = DEFAULT_LIMIT_SWAP_MAX_AGE,
   initialDays = '',
   initialHours = '',
   initialMinutes = ''
 }: SwapExpiryDialogProps) => {
   const t = useTranslations('swap')
+  const maxDays = maxBlocks / BLOCKS_PER_DAY
   const [customDays, setCustomDays] = useState(initialDays)
   const [customHours, setCustomHours] = useState(initialHours)
   const [customMinutes, setCustomMinutes] = useState(initialMinutes)
@@ -39,7 +38,7 @@ export const SwapLimitExpiry = ({
     return days + hours / 24 + minutes / 1440
   }, [customDays, customHours, customMinutes])
 
-  const exceedsMax = totalDays > MAX_DAYS
+  const exceedsMax = totalDays > maxDays
 
   const handleApply = () => {
     const days = parseFloat(customDays) || 0
@@ -94,7 +93,7 @@ export const SwapLimitExpiry = ({
 
         {exceedsMax && (
           <div className="mb-4 flex items-center gap-2 rounded-xl bg-jacob/10 px-4 py-3 text-sm text-jacob">
-            <AlertTriangle className="size-4 shrink-0" /> {t('expiry.maxExpiry', { days: MAX_DAYS })}
+            <AlertTriangle className="size-4 shrink-0" /> {t('expiry.maxExpiry', { days: maxDays })}
           </div>
         )}
 

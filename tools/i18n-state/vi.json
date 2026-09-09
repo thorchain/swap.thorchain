@@ -474,5 +474,20 @@
   "tx.status.unknown": ["Unknown", "Không xác định"],
   "tx.leg.deposit": ["Deposit {ticker}", "Nạp {ticker}"],
   "tx.leg.send": ["Send {ticker}", "Gửi {ticker}"],
-  "tx.leg.swap": ["Swap {from} to {to}", "Hoán đổi {from} sang {to}"]
+  "tx.leg.swap": ["Swap {from} to {to}", "Hoán đổi {from} sang {to}"],
+  "swap.limitCancel.descriptionReplace": ["THORChain cannot change an open order's expiration in place, so this cancels the order and returns your deposit to your wallet. As soon as the deposit is back, the replacement order opens for you to sign - same pair and price, with the new expiration.", "THORChain không thể thay đổi trực tiếp thời hạn của một lệnh đang mở, vì vậy hành động này sẽ hủy lệnh và trả khoản nạp về ví của bạn. Ngay khi khoản nạp trở lại, lệnh thay thế sẽ mở ra để bạn ký - cùng cặp và cùng giá, với thời hạn mới."],
+  "swap.limitCancel.expiration": ["Expires", "Hết hạn"],
+  "swap.limitCancel.changeExpiration": ["Change", "Thay đổi"],
+  "swap.limitCancel.expiryUnchanged": ["Same as this order's expiration - nothing to re-place", "Giống thời hạn của lệnh này - không có gì để đặt lại"],
+  "swap.limitCancel.awaitingRefund": ["Order cancelled. Waiting for your deposit to come back - the replacement is placed automatically as soon as it arrives, so keep this window open.", "Đã hủy lệnh. Đang chờ khoản nạp của bạn trở lại - lệnh thay thế sẽ được đặt tự động ngay khi khoản nạp về, vì vậy hãy giữ cửa sổ này mở."],
+  "swap.limitCancel.placingReplacement": ["Your deposit is back. Placing the replacement order - confirm it in your wallet.", "Khoản nạp của bạn đã trở lại. Đang đặt lệnh thay thế - hãy xác nhận trong ví của bạn."],
+  "swap.limitCancel.button.replaceOrder": ["Cancel & Re-place Order", "Hủy & Đặt lại lệnh"],
+  "swap.limitCancel.button.awaitingRefund": ["Waiting for your deposit", "Đang chờ khoản nạp của bạn"],
+  "swap.limitCancel.button.placing": ["Placing replacement order...", "Đang đặt lệnh thay thế..."],
+  "swap.limitCancel.button.confirmReplace": ["Confirm - cancel and refund my deposit", "Xác nhận - hủy và hoàn khoản nạp của tôi"],
+  "swap.limitCancel.error.replaceFailed": ["Failed to place the replacement order", "Không thể đặt lệnh thay thế"],
+  "swap.limitCancel.toast.replaceSubmitted": ["Order cancelled - keep this window open, the replacement is placed once your deposit is back", "Đã hủy lệnh - hãy giữ cửa sổ này mở, lệnh thay thế sẽ được đặt khi khoản nạp của bạn trở lại"],
+  "swap.limitCancel.toast.replacePlaced": ["Replacement limit order placed", "Đã đặt lệnh giới hạn thay thế"],
+  "swap.limitCancel.warning.orderConfirming": ["This order is still waiting on its {chain} deposit to confirm - it can be modified once THORChain has queued it", "Lệnh này vẫn đang chờ khoản nạp {chain} được xác nhận - có thể sửa đổi sau khi THORChain đã đưa lệnh vào hàng đợi"],
+  "swap.limitCancel.warning.expiryNeedsReplace": ["A new expiration cannot be applied to an open order, so this cancels it and sends your {chain} deposit back - the replacement opens for signing once it arrives", "Không thể áp dụng thời hạn mới cho một lệnh đang mở, vì vậy hành động này sẽ hủy lệnh và gửi lại khoản nạp {chain} của bạn - lệnh thay thế sẽ mở ra để ký ngay khi khoản nạp về"]
 }
