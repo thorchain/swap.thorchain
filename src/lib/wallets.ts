@@ -58,6 +58,14 @@ function blockchairProxyUrl() {
   return `${origin}/api/blockchair`
 }
 
+// Solana has no free endpoint a browser can use: api.mainnet-beta.solana.com 403s anything sending
+// an `Origin` header, and publicnode blocks the token-account call half of a balance needs. So the
+// toolbox talks to our own proxy (src/app/api/solana) instead, the same arrangement Blockchair has.
+function solanaProxyUrl() {
+  const origin = typeof window === 'undefined' ? AppConfig.baseUrl : window.location.origin
+  return `${origin}/api/solana`
+}
+
 // Trezor Connect requires a manifest (contact email + app URL) before it will open its popup.
 const trezorManifest = {
   email: AppConfig.supportEmail,
@@ -75,7 +83,8 @@ export function getUSwap() {
         blockchair: 'sto' // fake key to just avoid logs like: No Blockchair API key found
       },
       rpcUrls: {
-        [Chain.Ethereum]: ['https://ethereum-rpc.publicnode.com', 'https://eth.llamarpc.com']
+        [Chain.Ethereum]: ['https://ethereum-rpc.publicnode.com', 'https://eth.llamarpc.com'],
+        [Chain.Solana]: [solanaProxyUrl()]
       },
       integrations: {
         trezor: trezorManifest

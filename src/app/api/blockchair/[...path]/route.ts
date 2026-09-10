@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { apiError, methodNotAllowed } from '@/lib/api-error'
 import { rateLimit } from '@/lib/rate-limit'
+import { isSameOrigin } from '@/lib/same-origin'
 
 // Server-side proxy for the Blockchair calls the UTXO toolbox makes, so the
 // paid API key stays on the server instead of shipping in the client bundle.
@@ -41,33 +42,6 @@ function badPath() {
     'Unsupported Blockchair path',
     'This proxy only forwards the address, raw transaction, outputs and push endpoints for the supported UTXO chains.'
   )
-}
-
-/**
- * Same-origin only. `Sec-Fetch-Site` is a forbidden header name, so JavaScript
- * running on another site cannot forge it -- that is what stops someone else's
- * frontend from pointing at this route and spending our key. It is not a
- * defence against a scripted, non-browser caller, which can send any header it
- * likes; the rate limit is the brake for those.
- *
- * The client builds its URL from `window.location.origin`, so a real request is
- * same-origin whichever host serves the app -- swap.thorchain.org, a tcy./bond./
- * pool. subdomain, or localhost in dev -- and no host allowlist is needed.
- */
-function isSameOrigin(req: NextRequest) {
-  const site = req.headers.get('sec-fetch-site')
-  if (site) return site === 'same-origin'
-
-  // Browsers predating Sec-Fetch-* (Safari < 16.4) still send a Referer on a
-  // same-origin fetch, so fall back to matching its host against ours.
-  const referer = req.headers.get('referer')
-  if (!referer) return false
-
-  try {
-    return new URL(referer).host === req.headers.get('host')
-  } catch {
-    return false
-  }
 }
 
 async function forward(req: NextRequest, path: string[], endpoints: string[], body?: string) {
