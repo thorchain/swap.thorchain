@@ -9,7 +9,11 @@ import { isSameOrigin } from '@/lib/same-origin'
 // publicnode blocks `getTokenAccountsByOwner` (half of what a balance asks
 // for), and the rest want a key. Coming from our own origin sidesteps both, and
 // keeps the key server-side when SOLANA_RPC_URL points at a paid endpoint.
-const UPSTREAM = process.env.SOLANA_RPC_URL || 'https://api.mainnet-beta.solana.com'
+const CONFIGURED_UPSTREAM = process.env.SOLANA_RPC_URL
+const UPSTREAM = CONFIGURED_UPSTREAM || 'https://api.mainnet-beta.solana.com'
+
+// A stalled node would otherwise hold the handler — and the swap UI — open indefinitely.
+const UPSTREAM_TIMEOUT_MS = 15_000
 
 // A batch of balance calls is a few KB; anything beyond this is not the toolbox.
 const MAX_BODY_BYTES = 100_000
@@ -17,6 +21,21 @@ const MAX_BODY_BYTES = 100_000
 // Enough for the 30s balance refresh plus a swap in flight, per client per the
 // limiter's 10-minute window.
 const RATE_LIMIT = 600
+
+// The default upstream limits per IP, and behind this proxy every visitor shares
+// the server's one — fine for development, quietly throttled in production. Say
+// so once rather than leaving empty balances to be diagnosed from nothing.
+let warnedAboutDefaultUpstream = false
+
+function warnIfUnconfigured() {
+  if (CONFIGURED_UPSTREAM || warnedAboutDefaultUpstream) return
+  warnedAboutDefaultUpstream = true
+
+  console.warn(
+    `SOLANA_RPC_URL is not set, so Solana RPC calls fall back to ${UPSTREAM}, which rate limits per IP. ` +
+      'Every visitor of this deployment shares that one bucket -- point SOLANA_RPC_URL at a dedicated endpoint.'
+  )
+}
 
 // Every JSON-RPC method the toolbox needs is allowed -- pinning the list down
 // would break a swap the day the SDK reaches for one more -- but the shape is
@@ -45,10 +64,15 @@ export async function POST(req: NextRequest) {
     })
   }
 
+  // Checked before reading, so an oversized body is refused rather than buffered,
+  // and again after, in bytes rather than UTF-16 units, in case the header lied.
+  const tooLarge = () =>
+    apiError(413, 'payload_too_large', 'Request body is too large', `Solana JSON-RPC requests are limited to ${MAX_BODY_BYTES} bytes.`)
+
+  if (Number(req.headers.get('content-length')) > MAX_BODY_BYTES) return tooLarge()
+
   const body = await req.text()
-  if (body.length > MAX_BODY_BYTES) {
-    return apiError(413, 'payload_too_large', 'Request body is too large', `Solana JSON-RPC requests are limited to ${MAX_BODY_BYTES} bytes.`)
-  }
+  if (Buffer.byteLength(body) > MAX_BODY_BYTES) return tooLarge()
 
   try {
     if (!isJsonRpc(JSON.parse(body))) throw new Error('not a JSON-RPC request')
@@ -56,15 +80,23 @@ export async function POST(req: NextRequest) {
     return apiError(400, 'bad_request', 'Invalid JSON-RPC request', 'The body must be a JSON-RPC request object, or an array of them.')
   }
 
+  warnIfUnconfigured()
+
   const upstream = await fetch(UPSTREAM, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body,
-    cache: 'no-store'
+    cache: 'no-store',
+    signal: AbortSignal.timeout(UPSTREAM_TIMEOUT_MS)
   }).catch(() => null)
 
   if (!upstream) {
-    return apiError(502, 'upstream_unreachable', 'The Solana RPC is unreachable', 'The upstream node did not respond. Retry in a moment.')
+    return apiError(
+      502,
+      'upstream_unreachable',
+      'The Solana RPC is unreachable',
+      `The upstream node did not respond within ${UPSTREAM_TIMEOUT_MS / 1000} seconds. Retry in a moment.`
+    )
   }
 
   const payload = await upstream.text()

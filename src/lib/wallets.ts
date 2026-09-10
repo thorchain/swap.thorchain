@@ -3,6 +3,7 @@ import { EVMPlugin } from '@tcswap/plugins/evm'
 import { SolanaPlugin } from '@tcswap/plugins/solana'
 import { MayachainPlugin, ThorchainPlugin } from '@tcswap/plugins/thorchain'
 import { evmWallet } from '@tcswap/wallets/evm-extensions'
+import { exodusWallet } from '@tcswap/wallets/exodus'
 import { keplrWallet } from '@tcswap/wallets/keplr'
 import { keystoreWallet } from '@tcswap/wallets/keystore'
 import { ledgerWallet } from '@tcswap/wallets/ledger'
@@ -24,6 +25,7 @@ const defaultPlugins = {
 
 const defaultWallets = {
   ...evmWallet,
+  ...exodusWallet,
   ...keplrWallet,
   ...keystoreWallet,
   ...ledgerWallet,
@@ -134,6 +136,8 @@ export async function connectWallet(option: WalletOption, chains: Chain[], confi
       return connectEach(c => uSwap.connectVultisig(c))
     case WalletOption.TRONLINK:
       return connectEach(c => uSwap.connectTronLink(c))
+    case WalletOption.EXODUS:
+      return uSwap.connectExodus(chains)
     case WalletOption.KEYSTORE:
       return uSwap.connectKeystore(chains, config?.phrase, config?.derivationPath)
     case WalletOption.LEDGER:
@@ -158,7 +162,11 @@ export async function getAccounts(
 
   return chains
     .map(chain => {
-      const raw = uSwap.getAddress(chain)
+      // Scoped to this provider rather than `getAddress(chain)`, which answers from the chain slot —
+      // last connect wins. When one chain of a multi-chain connect fails, that files the wallet
+      // already on it under this provider: MetaMask's Ethereum address in an Exodus row, which then
+      // reads an empty balance and cannot sign, since every path here resolves the wallet by provider.
+      const raw = uSwap.getWallet(option, chain)?.address
       const address = Array.isArray(raw) ? raw[0] : raw
       if (!address) return null
       const mismatch = btcPathMismatch(chain, address, config?.derivationPath)
@@ -200,6 +208,7 @@ export const supportedChains = {
   [WalletOption.BRAVE]: evmWallet.connectEVMWallet.supportedChains,
   [WalletOption.COINBASE_WEB]: evmWallet.connectEVMWallet.supportedChains,
   [WalletOption.EIP6963]: evmWallet.connectEVMWallet.supportedChains,
+  [WalletOption.EXODUS]: exodusWallet.connectExodus.supportedChains,
   [WalletOption.KEPLR]: keplrWallet.connectKeplr.supportedChains,
   [WalletOption.KEYSTORE]: keystoreWallet.connectKeystore.supportedChains,
   [WalletOption.LEAP]: keplrWallet.connectKeplr.supportedChains,

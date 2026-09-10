@@ -9,6 +9,9 @@ import { isSameOrigin } from '@/lib/same-origin'
 // sends no key of its own; this route appends it.
 const UPSTREAM = 'https://api.blockchair.com'
 
+// A stalled upstream would otherwise hold the handler open indefinitely.
+const UPSTREAM_TIMEOUT_MS = 15_000
+
 // Chain slugs the toolbox derives from the UTXO chain (getUtxoApi -> baseUrl).
 const CHAINS = new Set(['bitcoin', 'bitcoin-cash', 'litecoin', 'dash', 'dogecoin', 'zcash'])
 
@@ -79,7 +82,8 @@ async function forward(req: NextRequest, path: string[], endpoints: string[], bo
     method: body === undefined ? 'GET' : 'POST',
     headers: body === undefined ? undefined : { 'Content-Type': 'application/json' },
     body,
-    cache: 'no-store'
+    cache: 'no-store',
+    signal: AbortSignal.timeout(UPSTREAM_TIMEOUT_MS)
   }).catch(() => null)
 
   if (!upstream) {

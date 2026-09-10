@@ -24,6 +24,10 @@ Two-component architecture:
 ## Key areas
 
 - `src/components/swap/` — swap flow UI; `src/lib/wallets.ts` — wallet/TCSwap SDK config (env vars in `.env.example`).
+- `src/lib/tronlink.ts` — a connector the SDK does not ship, registered in `wallets.ts` like any `@tcswap/wallets/*` one. Exodus is not one of
+  these: it lives in the SDK as `@tcswap/wallets/exodus` (the browser extension), added in `../TCSwap`. Mind the version — through 4.3.26 that
+  subpath was an alias for Exodus's unrelated Passkeys wallet, which has always had its own `@tcswap/wallets/passkeys` export and still does; only
+  4.3.27 onwards carries the extension connector, so `package.json` must ask for at least that.
 - `public/widget.js` + `src/app/widget/` — the embeddable swap iframe. The loader mirrors the host page's dark/light mode into the iframe: it reads
   the effective background painted behind the widget (so a `.dark` class, `data-theme`, or a CSS-variable swap all work without configuration), boots
   the iframe with `?theme=`, and pushes later changes over `postMessage` — `src/app/widget/theme.ts` holds that contract plus the pre-paint script

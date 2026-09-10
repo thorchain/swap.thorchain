@@ -72,6 +72,14 @@ export const WALLETS: WalletParams[] = [
     supportedChains: supportedChains[WalletOption.TRUSTWALLET_WEB]
   },
   {
+    key: 'exodus',
+    type: WalletType.browser,
+    label: 'Exodus',
+    option: WalletOption.EXODUS,
+    link: 'https://www.exodus.com/browser-extension',
+    supportedChains: supportedChains[WalletOption.EXODUS]
+  },
+  {
     key: 'keplr',
     type: WalletType.browser,
     label: 'Keplr',
@@ -134,6 +142,7 @@ export const isWalletAvailable = (option: WalletOption) => {
     case WalletOption.KEPLR: return window?.keplr
     case WalletOption.OKX: return window?.okxwallet
     case WalletOption.TRONLINK: return window?.tronLink || window?.tronWeb
+    case WalletOption.EXODUS: return window?.exodus || window?.ethereum?.isExodus
     case WalletOption.LEDGER:
     case WalletOption.TREZOR:
     case WalletOption.KEYSTORE: return true
