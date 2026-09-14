@@ -11,6 +11,7 @@ import { WebMcpTools } from '@/components/webmcp-tools'
 import { ChatwootWidget } from '@/components/chatwoot-widget'
 import { ReactQueryProvider } from '@/components/react-query/react-query-provider'
 import { WalletStoreHydration } from '@/components/wallet-store-hydration'
+import { ReferralCapture } from '@/components/referral-capture'
 import { AppConfig } from '@/config'
 import { getLangDir, type Locale } from '@/i18n/config'
 import './globals.css'
@@ -163,6 +164,7 @@ export default async function RootLayout({ children }: Readonly<{ children: Reac
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }} />
         <WebMcpTools />
         <WalletStoreHydration />
+        <ReferralCapture />
         <ReactQueryProvider>
           <NextIntlClientProvider locale={locale} messages={messages}>
             <ThemeProvider defaultTheme="light" attribute="class" disableTransitionOnChange>

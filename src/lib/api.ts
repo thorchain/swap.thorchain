@@ -2,6 +2,7 @@ import axios from 'axios'
 import { AssetValue, Chain, getChainConfig } from '@tcswap/core'
 import { BalanceResponse, QuoteRequest, USwapApi } from '@tcswap/helpers/api'
 import { normalizeThorBankDenom } from '@/lib/swap-helpers'
+import { referralHeaders } from '@/lib/referral'
 
 const uSwap = axios.create({
   baseURL: process.env.NEXT_PUBLIC_USWAP_API_URL,
@@ -146,7 +147,9 @@ export const getQuotes = async (
 ) => {
   return USwapApi.getSwapQuote(json as QuoteRequest, {
     abortController,
-    retry: { maxRetries: 0 }
+    retry: { maxRetries: 0 },
+    // Merged with the SDK's own x-api-key header, not substituted for it.
+    headers: referralHeaders()
   }).then(res => res.routes)
 }
 
