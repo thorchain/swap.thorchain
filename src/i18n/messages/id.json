@@ -559,6 +559,7 @@
     "externalWalletModeHalted": "Hubungkan dompet untuk terus melakukan swap.",
     "externalWalletAssetUnsupported": "Mode Dompet Eksternal hanya tersedia untuk aset Layer 1. Token ERC20 memerlukan persetujuan dompet dan tidak dapat digunakan dengan opsi ini.",
     "close": "Tutup",
+    "send": "Kirim",
     "sendToken": "Kirim {ticker}"
   },
   "common": {

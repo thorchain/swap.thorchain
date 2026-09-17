@@ -489,5 +489,6 @@
   "tx.status.unknown": ["Unknown", "अज्ञात"],
   "tx.leg.deposit": ["Deposit {ticker}", "{ticker} जमा करें"],
   "tx.leg.send": ["Send {ticker}", "{ticker} भेजें"],
-  "tx.leg.swap": ["Swap {from} to {to}", "{from} को {to} में स्वैप करें"]
+  "tx.leg.swap": ["Swap {from} to {to}", "{from} को {to} में स्वैप करें"],
+  "wallet.send": ["Send", "भेजें"]
 }

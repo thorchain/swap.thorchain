@@ -1,13 +1,18 @@
 import Image from 'next/image'
-import { Chain } from '@tcswap/core'
+import { Chain, isGasAsset } from '@tcswap/core'
 import { ChevronDown, ChevronUp, Loader2 } from 'lucide-react'
 import { useTranslations } from 'next-intl'
 import { toast } from 'sonner'
 import { chainLabel } from '@/components/connect-wallet/config'
+import { useDialog } from '@/components/global-dialog'
+import { Send } from '@/components/send/send'
 import { ChainWalletData } from '@/hooks/use-wallet-balances'
 import { btcAddressType } from '@/lib/swap-helpers'
 import { cn, toCurrencyFixed, truncate } from '@/lib/utils'
 import { WalletToken } from '@/components/wallet-sidebar/wallet-token'
+
+const footerButtonClass =
+  'text-txt-label-small hover:text-green-contrast hover:border-green-contrast flex flex-1 cursor-pointer items-center justify-center rounded-xl border py-1.5 text-sm disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:text-txt-label-small disabled:hover:border-border'
 
 interface WalletChainProps {
   data: ChainWalletData
@@ -18,8 +23,12 @@ interface WalletChainProps {
 
 export function WalletChain({ data, isExpanded, onToggle, disabled }: WalletChainProps) {
   const t = useTranslations('wallet')
+  const { openDialog } = useDialog()
   const { account, tokens, totalUsd, isLoading } = data
   const chainName = chainLabel(account.network)
+  const spendable = tokens.filter(t => t.amount > 0)
+  // Open the send dialog on the chain's gas asset when the user holds it — it's what most people mean by "send".
+  const sendToken = spendable.find(t => isGasAsset({ chain: account.network, symbol: t.balance.ticker })) ?? spendable[0]
 
   // Bitcoin derives a different address — and so a separate balance — per address type.
   // Naming the connected one turns "the site can't see my BTC" into a self-serve fix.
@@ -54,8 +63,8 @@ export function WalletChain({ data, isExpanded, onToggle, disabled }: WalletChai
 
       {isExpanded && (
         <div>
-          {tokens.filter(t => t.amount > 0).length > 0 ? (
-            tokens.filter(t => t.amount > 0).map((token, i) => <WalletToken bordered={false} key={i} token={token} account={account} />)
+          {spendable.length > 0 ? (
+            spendable.map((token, i) => <WalletToken bordered={false} key={i} token={token} account={account} />)
           ) : (
             <div className="text-txt-label-small px-4 py-1 text-xs">
               {t('noTokensFound')}
@@ -64,14 +73,23 @@ export function WalletChain({ data, isExpanded, onToggle, disabled }: WalletChai
           )}
           <div className="border-t py-1">
             <div className="mx-4 flex gap-2">
-              <div
-                className="text-txt-label-small hover:text-green-contrast hover:border-green-contrast flex flex-1 cursor-pointer items-center justify-center rounded-xl border py-1.5 text-sm"
+              <button
+                className={footerButtonClass}
                 onClick={() => {
                   navigator.clipboard.writeText(account.address).then(() => toast.success(t('addressCopied')))
                 }}
               >
                 {t('copyAddress')}
-              </div>
+              </button>
+              <button
+                className={footerButtonClass}
+                disabled={!sendToken}
+                onClick={() => {
+                  if (sendToken) openDialog(Send, { initialToken: sendToken, account })
+                }}
+              >
+                {t('send')}
+              </button>
             </div>
           </div>
         </div>

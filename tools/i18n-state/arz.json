@@ -489,5 +489,6 @@
   "tx.status.unknown": ["Unknown", "غير معروف"],
   "tx.leg.deposit": ["Deposit {ticker}", "إيداع {ticker}"],
   "tx.leg.send": ["Send {ticker}", "إرسال {ticker}"],
-  "tx.leg.swap": ["Swap {from} to {to}", "تبديل {from} إلى {to}"]
+  "tx.leg.swap": ["Swap {from} to {to}", "تبديل {from} إلى {to}"],
+  "wallet.send": ["Send", "إرسال"]
 }

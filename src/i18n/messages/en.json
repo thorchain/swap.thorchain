@@ -559,6 +559,7 @@
     "externalWalletModeHalted": "Connect a wallet to keep swapping.",
     "externalWalletAssetUnsupported": "External Wallet Mode is only available for Layer 1 assets. ERC20 tokens require wallet approval and cannot be used with this option.",
     "close": "Close",
+    "send": "Send",
     "sendToken": "Send {ticker}"
   },
   "common": {

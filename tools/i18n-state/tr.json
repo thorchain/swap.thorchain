@@ -489,5 +489,6 @@
   "tx.status.unknown": ["Unknown", "Bilinmiyor"],
   "tx.leg.deposit": ["Deposit {ticker}", "{ticker} Yatır"],
   "tx.leg.send": ["Send {ticker}", "{ticker} Gönder"],
-  "tx.leg.swap": ["Swap {from} to {to}", "{from} → {to} Takas"]
+  "tx.leg.swap": ["Swap {from} to {to}", "{from} → {to} Takas"],
+  "wallet.send": ["Send", "Gönder"]
 }

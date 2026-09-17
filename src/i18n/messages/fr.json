@@ -559,6 +559,7 @@
     "externalWalletModeHalted": "Connectez un portefeuille pour continuer à échanger.",
     "externalWalletAssetUnsupported": "Le mode Portefeuille externe n'est disponible que pour les actifs de couche 1. Les tokens ERC20 nécessitent une approbation du portefeuille et ne peuvent pas être utilisés avec cette option.",
     "close": "Fermer",
+    "send": "Envoyer",
     "sendToken": "Envoyer {ticker}"
   },
   "common": {

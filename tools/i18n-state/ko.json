@@ -489,5 +489,6 @@
   "tx.status.unknown": ["Unknown", "알 수 없음"],
   "tx.leg.deposit": ["Deposit {ticker}", "{ticker} 입금"],
   "tx.leg.send": ["Send {ticker}", "{ticker} 보내기"],
-  "tx.leg.swap": ["Swap {from} to {to}", "{from}을(를) {to}(으)로 스왑"]
+  "tx.leg.swap": ["Swap {from} to {to}", "{from}을(를) {to}(으)로 스왑"],
+  "wallet.send": ["Send", "보내기"]
 }
