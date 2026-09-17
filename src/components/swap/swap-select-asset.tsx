@@ -10,13 +10,14 @@ import { ScrollArea, ScrollBar } from '@/components/ui/scroll-area'
 import { AssetIcon } from '@/components/asset-icon'
 import { chainLabel } from '@/components/connect-wallet/config'
 import { Asset } from '@/components/swap/asset'
-import { useAssets } from '@/hooks/use-assets'
+import { useModeAssets } from '@/hooks/use-assets'
 import { useIsWidget } from '@/hooks/use-is-widget'
 import { useMemolessAssets } from '@/hooks/use-memoless-assets'
 import { useMimir } from '@/hooks/use-mimir'
 import { useIsMobile } from '@/hooks/use-mobile'
 import { isAssetHalted } from '@/lib/swap-helpers'
 import { cn } from '@/lib/utils'
+import { useIsPrivateSwap } from '@/store/private-swap-store'
 
 const FEATURED_ASSETS = [
   'AVAX.AVAX',
@@ -62,13 +63,15 @@ export const SwapSelectAsset = ({ isOpen, onOpenChange, selected, onSelectAsset 
   const [searchQuery, setSearchQuery] = useState('')
   const [showSecuredAssets, setShowSecuredAssets] = useState(false)
 
-  const { assets } = useAssets()
+  const { assets } = useModeAssets()
   const { mimir, mayaMimir } = useMimir()
   const { assets: memolessAssets } = useMemolessAssets()
+  const isPrivateSwap = useIsPrivateSwap()
 
   const memolessIdentifiers = useMemo(() => memolessAssets && new Set(memolessAssets.map(a => a.asset)), [memolessAssets])
 
-  const isHalted = (asset: Asset) => isAssetHalted(asset, mimir, mayaMimir)
+  // A Mimir halt stops the native protocols; a private swap never touches them.
+  const isHalted = (asset: Asset) => !isPrivateSwap && isAssetHalted(asset, mimir, mayaMimir)
 
   const chainMap: Map<FilterChain, Asset[]> = useMemo(() => {
     if (!assets?.length) return new Map()

@@ -490,5 +490,19 @@
   "tx.status.unknown": ["Unknown", "未知"],
   "tx.leg.deposit": ["Deposit {ticker}", "存入{ticker}"],
   "tx.leg.send": ["Send {ticker}", "发送{ticker}"],
-  "tx.leg.swap": ["Swap {from} to {to}", "将{from}兑换为{to}"]
+  "tx.leg.swap": ["Swap {from} to {to}", "将{from}兑换为{to}"],
+  "swap.tab.private": ["Private", "隐私"],
+  "swap.confirm.rate": ["Rate", "汇率"],
+  "swap.confirm.floatingRate": ["Floating", "浮动"],
+  "swap.confirm.floatingRateTooltip": ["A private swap is priced when your deposit is confirmed by the exchange, so the amount you receive can differ from the quote.", "隐私兑换的价格在交易所确认你的存入后才确定，因此你实际收到的数量可能与报价不同。"],
+  "swap.confirm.route": ["Route", "路由"],
+  "swap.confirm.routeTooltip": ["The exchanges your swap is routed through. A private swap passes through two, so neither can link where the funds came from to where they go.", "你的兑换所经过的交易所。隐私兑换会经过两家交易所，因此任何一家都无法将资金来源与去向关联起来。"],
+  "swap.warning.highPriceImpactPrivate": ["I understand the amount received is well below the value of the amount sent, and I accept that cost for this private swap", "我明白收到的数量远低于发送数量的价值，并接受本次隐私兑换的这一成本"],
+  "swap.instant.memoRequired": ["Memo (required)", "备注（必填）"],
+  "swap.private.title": ["Private swap via Houdini Swap", "通过 Houdini Swap 进行隐私兑换"],
+  "swap.private.description": ["Routed through two exchanges with no on-chain link between the deposit and the payout. No wallet connection needed: you send the deposit, Houdini delivers to your receiving address.", "经由两家交易所路由，存入与支付之间不存在链上关联。无需连接钱包：你发送存入资金，Houdini 将资产发送至你的收款地址。"],
+  "swap.private.duration": ["Takes about {duration}.", "大约需要 {duration}。"],
+  "swap.private.durationTypical": ["Takes about 15–45 minutes.", "大约需要 15–45 分钟。"],
+  "swap.private.limits": ["Limits: {min}–{max} {ticker}", "限额：{min}–{max} {ticker}"],
+  "tx.depositWindowClosed": ["Deposit window closed", "存入窗口已关闭"]
 }

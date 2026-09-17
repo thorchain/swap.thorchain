@@ -490,5 +490,19 @@
   "tx.status.unknown": ["Unknown", "نامشخص"],
   "tx.leg.deposit": ["Deposit {ticker}", "واریز {ticker}"],
   "tx.leg.send": ["Send {ticker}", "ارسال {ticker}"],
-  "tx.leg.swap": ["Swap {from} to {to}", "تبادل {from} به {to}"]
+  "tx.leg.swap": ["Swap {from} to {to}", "تبادل {from} به {to}"],
+  "swap.tab.private": ["Private", "خصوصی"],
+  "swap.confirm.rate": ["Rate", "نرخ"],
+  "swap.confirm.floatingRate": ["Floating", "شناور"],
+  "swap.confirm.floatingRateTooltip": ["A private swap is priced when your deposit is confirmed by the exchange, so the amount you receive can differ from the quote.", "قیمت‌گذاری سوآپ خصوصی زمانی انجام می‌شود که واریز شما توسط صرافی تأیید شود، بنابراین مبلغ دریافتی می‌تواند با پیش‌برآورد متفاوت باشد."],
+  "swap.confirm.route": ["Route", "مسیر"],
+  "swap.confirm.routeTooltip": ["The exchanges your swap is routed through. A private swap passes through two, so neither can link where the funds came from to where they go.", "صرافی‌هایی که سوآپ شما از آن‌ها عبور می‌کند. سوآپ خصوصی از دو صرافی می‌گذرد، بنابراین هیچ‌یک نمی‌تواند مبدأ وجوه را به مقصد آن‌ها پیوند دهد."],
+  "swap.warning.highPriceImpactPrivate": ["I understand the amount received is well below the value of the amount sent, and I accept that cost for this private swap", "می‌دانم که مبلغ دریافتی بسیار کمتر از ارزش مبلغ ارسالی است و این هزینه را برای این سوآپ خصوصی می‌پذیرم"],
+  "swap.instant.memoRequired": ["Memo (required)", "ممو (الزامی)"],
+  "swap.private.title": ["Private swap via Houdini Swap", "سوآپ خصوصی از طریق Houdini Swap"],
+  "swap.private.description": ["Routed through two exchanges with no on-chain link between the deposit and the payout. No wallet connection needed: you send the deposit, Houdini delivers to your receiving address.", "از دو صرافی عبور می‌کند و هیچ پیوند آن‌چین بین واریز و پرداخت وجود ندارد. نیازی به اتصال کیف پول نیست: شما واریز را انجام می‌دهید و Houdini مبلغ را به آدرس دریافت شما ارسال می‌کند."],
+  "swap.private.duration": ["Takes about {duration}.", "حدود {duration} طول می‌کشد."],
+  "swap.private.durationTypical": ["Takes about 15–45 minutes.", "حدود ۱۵ تا ۴۵ دقیقه طول می‌کشد."],
+  "swap.private.limits": ["Limits: {min}–{max} {ticker}", "محدودیت‌ها: {min}–{max} {ticker}"],
+  "tx.depositWindowClosed": ["Deposit window closed", "بازه زمانی واریز بسته شد"]
 }

@@ -53,7 +53,8 @@
   "swap": {
     "tab": {
       "swap": "スワップ",
-      "limit": "指値"
+      "limit": "指値",
+      "private": "プライベート"
     },
     "input": {
       "sell": "売却",
@@ -120,10 +121,16 @@
       "exchange": "交換",
       "button": "確認",
       "buttonLimit": "指値注文を確認",
-      "confirming": "確認中"
+      "confirming": "確認中",
+      "rate": "レート",
+      "floatingRate": "変動",
+      "floatingRateTooltip": "プライベートスワップでは、入金が取引所で確認された時点で価格が決まるため、受取額が見積もりと異なる場合があります。",
+      "route": "ルート",
+      "routeTooltip": "スワップが経由する取引所です。プライベートスワップは2つの取引所を経由するため、どちらも資金の送信元と送信先を結びつけることはできません。"
     },
     "warning": {
       "highPriceImpact": "価格への影響はSlippage許容範囲に加算されることを理解しています。このスワップで高い価格への影響を受け入れます",
+      "highPriceImpactPrivate": "受取額が送金額の価値を大きく下回ることを理解し、このプライベートスワップのコストとして受け入れます",
       "sendExact": "セルフカストディウォレットから指定された金額を正確に送金する必要があることを理解しています。スマートコントラクトウォレット、取引所アドレス、委任されたアドレス、またはEIP 7702ウォレットから送金すると、次の結果になることを理解しています:",
       "lossOfFunds": "資金の損失。",
       "ltcMweb": "LTC MWEBアドレスを使用すると、次の結果になることを理解しています:",
@@ -133,7 +140,8 @@
       "sendTitle": "{asset} を送信",
       "sendDescription": "セルフカストディウォレットから以下のアドレスへ正確に<b>{amount} {ticker}</b>を送信してください。",
       "qrCodeAlt": "QRコード",
-      "expiresIn": "有効期限"
+      "expiresIn": "有効期限",
+      "memoRequired": "メモ（必須）"
     },
     "error": {
       "memoMissing": "Memoがありません",
@@ -269,6 +277,13 @@
       "seconds": "~{count, plural, other {#秒}}",
       "reset": "リセット",
       "save": "保存"
+    },
+    "private": {
+      "title": "Houdini Swap によるプライベートスワップ",
+      "description": "2つの取引所を経由し、入金と出金の間にオンチェーンの関連付けは残りません。ウォレット接続は不要です。あなたが入金すると、Houdini が受取アドレスへ送金します。",
+      "duration": "所要時間は約 {duration} です。",
+      "durationTypical": "所要時間は約15〜45分です。",
+      "limits": "上限・下限: {min}〜{max} {ticker}"
     }
   },
   "send": {
@@ -572,6 +587,7 @@
     "onlyCreatorModify": "元のスワップ作成者のみが変更できます",
     "limitPrice": "指値価格",
     "expiresIn": "有効期限",
+    "depositWindowClosed": "入金受付期間が終了しました",
     "showQr": "QRを表示",
     "modify": "変更",
     "cancelOrder": "注文をキャンセル",

@@ -1,5 +1,6 @@
 import { Chain, getEIP6963Wallets, USwap, WalletOption } from '@tcswap/core'
 import { EVMPlugin } from '@tcswap/plugins/evm'
+import { HoudiniPlugin } from '@tcswap/plugins/houdini'
 import { SolanaPlugin } from '@tcswap/plugins/solana'
 import { MayachainPlugin, ThorchainPlugin } from '@tcswap/plugins/thorchain'
 import { evmWallet } from '@tcswap/wallets/evm-extensions'
@@ -18,6 +19,7 @@ import { BTC_PURPOSE_ADDRESS_TYPE, btcAddressType } from '@/lib/swap-helpers'
 
 const defaultPlugins = {
   ...EVMPlugin,
+  ...HoudiniPlugin,
   ...MayachainPlugin,
   ...ThorchainPlugin,
   ...SolanaPlugin

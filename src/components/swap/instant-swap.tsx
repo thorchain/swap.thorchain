@@ -72,6 +72,16 @@ export const InstantSwap = ({ assetFrom, assetTo, channel }: SwapMemolessChannel
               <div className="text-gray border-gray rounded-full border px-1.5 text-[10px] font-semibold">{chainLabel(assetFrom.chain)}</div>
             </div>
 
+            {channel.memo && (
+              <div className="flex flex-col items-center gap-1">
+                <div className="text-txt-label-small text-xs font-semibold">{t('instant.memoRequired')}</div>
+                <div className="flex items-center gap-2">
+                  <div className={cn('text-txt-high-contrast text-sm font-semibold break-all', { 'blur-xs': isBlurred })}>{channel.memo}</div>
+                  <CopyButton text={channel.memo} />
+                </div>
+              </div>
+            )}
+
             <div className="size-50 overflow-hidden rounded-4xl bg-white p-3">
               <Image src={channel.qrCodeData} alt={t('instant.qrCodeAlt')} className={cn('h-full w-full', { 'blur-sm': isBlurred })} width={200} height={200} />
             </div>

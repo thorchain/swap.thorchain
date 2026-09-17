@@ -490,5 +490,19 @@
   "tx.status.unknown": ["Unknown", "اݨ جاݨیا"],
   "tx.leg.deposit": ["Deposit {ticker}", "{ticker} ڈیپازٹ کرو"],
   "tx.leg.send": ["Send {ticker}", "{ticker} بھیجو"],
-  "tx.leg.swap": ["Swap {from} to {to}", "{from} نوں {to} وچ تبادلہ کرو"]
+  "tx.leg.swap": ["Swap {from} to {to}", "{from} نوں {to} وچ تبادلہ کرو"],
+  "swap.tab.private": ["Private", "پرائیویٹ"],
+  "swap.confirm.rate": ["Rate", "ریٹ"],
+  "swap.confirm.floatingRate": ["Floating", "فلوٹنگ"],
+  "swap.confirm.floatingRateTooltip": ["A private swap is priced when your deposit is confirmed by the exchange, so the amount you receive can differ from the quote.", "پرائیویٹ سواپ دا ریٹ اوس ویلے مقرر ہوندا اے جدوں تہاڈی جمع کیتی رقم ایکسچینج ولوں تصدیق ہو جاندی اے، ایس لئی جیہڑی رقم تُسیں وصول کردے او اوہ کوٹ توں وکھری ہو سکدی اے۔"],
+  "swap.confirm.route": ["Route", "روٹ"],
+  "swap.confirm.routeTooltip": ["The exchanges your swap is routed through. A private swap passes through two, so neither can link where the funds came from to where they go.", "اوہ ایکسچینج جنہاں وچوں تہاڈا سواپ لنگھدا اے۔ پرائیویٹ سواپ دو ایکسچینجاں وچوں لنگھدا اے، ایس لئی کوئی وی اے نئیں جوڑ سکدا کہ پیسے کتھوں آئے تے کتھے گئے۔"],
+  "swap.warning.highPriceImpactPrivate": ["I understand the amount received is well below the value of the amount sent, and I accept that cost for this private swap", "میں سمجھدا/سمجھدی ہاں کہ ملن والی رقم بھیجی گئی رقم دی قیمت توں کافی گھٹ اے، تے میں ایس پرائیویٹ سواپ لئی اے خرچہ منظور کردا/کردی ہاں"],
+  "swap.instant.memoRequired": ["Memo (required)", "میمو (لازمی)"],
+  "swap.private.title": ["Private swap via Houdini Swap", "Houdini Swap ذریعے پرائیویٹ سواپ"],
+  "swap.private.description": ["Routed through two exchanges with no on-chain link between the deposit and the payout. No wallet connection needed: you send the deposit, Houdini delivers to your receiving address.", "دو ایکسچینجاں وچوں لنگھدا اے تے ڈپازٹ اَتے پے آؤٹ وچکار کوئی آن-چین لنک نئیں ہوندا۔ والٹ جوڑن دی لوڑ نئیں: تُسیں ڈپازٹ بھیجدے او، Houdini تہاڈے وصولی پتے تے پہنچا دیندا اے۔"],
+  "swap.private.duration": ["Takes about {duration}.", "تقریباً {duration} لگدے نیں۔"],
+  "swap.private.durationTypical": ["Takes about 15–45 minutes.", "تقریباً 15–45 منٹ لگدے نیں۔"],
+  "swap.private.limits": ["Limits: {min}–{max} {ticker}", "حداں: {min}–{max} {ticker}"],
+  "tx.depositWindowClosed": ["Deposit window closed", "ڈپازٹ دی مدت مک گئی"]
 }

@@ -53,7 +53,8 @@
   "swap": {
     "tab": {
       "swap": "Intercambiar",
-      "limit": "Límite"
+      "limit": "Límite",
+      "private": "Privado"
     },
     "input": {
       "sell": "Vender",
@@ -120,10 +121,16 @@
       "exchange": "Plataforma",
       "button": "Confirmar",
       "buttonLimit": "Confirmar orden límite",
-      "confirming": "Confirmando"
+      "confirming": "Confirmando",
+      "rate": "Tasa",
+      "floatingRate": "Variable",
+      "floatingRateTooltip": "El precio de un swap privado se fija cuando el exchange confirma tu depósito, por lo que la cantidad que recibas puede diferir de la cotización.",
+      "route": "Ruta",
+      "routeTooltip": "Los exchanges por los que se enruta tu swap. Un swap privado pasa por dos, de modo que ninguno puede vincular el origen de los fondos con su destino."
     },
     "warning": {
       "highPriceImpact": "Entiendo que el impacto en el precio es adicional a la tolerancia de Slippage. Acepto el alto impacto en el precio de este intercambio.",
+      "highPriceImpactPrivate": "Entiendo que el importe recibido es muy inferior al valor del importe enviado y acepto ese coste para este swap privado",
       "sendExact": "Entiendo que debo enviar exactamente el monto especificado desde una billetera de autocustodia. Entiendo que enviar desde una billetera de Smart Contract, una dirección de exchange, una dirección delegada o una billetera EIP 7702 resultará en",
       "lossOfFunds": "pérdida de fondos.",
       "ltcMweb": "Entiendo que usar una dirección LTC MWEB resultará en",
@@ -133,7 +140,8 @@
       "sendTitle": "Enviar {asset}",
       "sendDescription": "Envía exactamente <b>{amount} {ticker}</b> a la dirección de abajo desde una billetera de autocustodia.",
       "qrCodeAlt": "Código QR",
-      "expiresIn": "Expira en"
+      "expiresIn": "Expira en",
+      "memoRequired": "Memo (obligatorio)"
     },
     "error": {
       "memoMissing": "Falta el Memo",
@@ -269,6 +277,13 @@
       "seconds": "~{count, plural, one {# segundo} other {# segundos}}",
       "reset": "Restablecer",
       "save": "Guardar"
+    },
+    "private": {
+      "title": "Swap privado a través de Houdini Swap",
+      "description": "Enrutado a través de dos exchanges, sin vínculo on-chain entre el depósito y el pago. No hace falta conectar la wallet: tú envías el depósito y Houdini entrega a tu dirección de recepción.",
+      "duration": "Tarda aproximadamente {duration}.",
+      "durationTypical": "Tarda entre 15 y 45 minutos aproximadamente.",
+      "limits": "Límites: {min}–{max} {ticker}"
     }
   },
   "send": {
@@ -572,6 +587,7 @@
     "onlyCreatorModify": "Solo el creador original del intercambio puede modificarlo",
     "limitPrice": "Precio límite",
     "expiresIn": "Expira en",
+    "depositWindowClosed": "Ventana de depósito cerrada",
     "showQr": "Mostrar QR",
     "modify": "Modificar",
     "cancelOrder": "Cancelar orden",

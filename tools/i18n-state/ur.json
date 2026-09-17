@@ -490,5 +490,19 @@
   "tx.status.unknown": ["Unknown", "نامعلوم"],
   "tx.leg.deposit": ["Deposit {ticker}", "{ticker} ڈپازٹ کریں"],
   "tx.leg.send": ["Send {ticker}", "{ticker} بھیجیں"],
-  "tx.leg.swap": ["Swap {from} to {to}", "{from} کا {to} میں تبادلہ کریں"]
+  "tx.leg.swap": ["Swap {from} to {to}", "{from} کا {to} میں تبادلہ کریں"],
+  "swap.tab.private": ["Private", "پرائیویٹ"],
+  "swap.confirm.rate": ["Rate", "شرح"],
+  "swap.confirm.floatingRate": ["Floating", "متغیر"],
+  "swap.confirm.floatingRateTooltip": ["A private swap is priced when your deposit is confirmed by the exchange, so the amount you receive can differ from the quote.", "پرائیویٹ سواپ کی قیمت اُس وقت طے ہوتی ہے جب ایکسچینج آپ کے ڈپازٹ کی تصدیق کرتا ہے، اس لیے آپ کو موصول ہونے والی رقم کوٹ سے مختلف ہو سکتی ہے۔"],
+  "swap.confirm.route": ["Route", "روٹ"],
+  "swap.confirm.routeTooltip": ["The exchanges your swap is routed through. A private swap passes through two, so neither can link where the funds came from to where they go.", "وہ ایکسچینجز جن کے ذریعے آپ کا سواپ بھیجا جاتا ہے۔ پرائیویٹ سواپ دو ایکسچینجز سے گزرتا ہے، اس لیے ان میں سے کوئی بھی یہ نہیں جوڑ سکتا کہ فنڈز کہاں سے آئے اور کہاں گئے۔"],
+  "swap.warning.highPriceImpactPrivate": ["I understand the amount received is well below the value of the amount sent, and I accept that cost for this private swap", "میں سمجھتا ہوں کہ موصول ہونے والی رقم بھیجی گئی رقم کی قیمت سے خاصی کم ہے، اور میں اس پرائیویٹ سواپ کے لیے یہ لاگت قبول کرتا ہوں"],
+  "swap.instant.memoRequired": ["Memo (required)", "میمو (لازمی)"],
+  "swap.private.title": ["Private swap via Houdini Swap", "Houdini Swap کے ذریعے پرائیویٹ سواپ"],
+  "swap.private.description": ["Routed through two exchanges with no on-chain link between the deposit and the payout. No wallet connection needed: you send the deposit, Houdini delivers to your receiving address.", "دو ایکسچینجز کے ذریعے روٹ کیا جاتا ہے، ڈپازٹ اور ادائیگی کے درمیان کوئی آن چین تعلق نہیں ہوتا۔ والیٹ کنیکٹ کرنے کی ضرورت نہیں: آپ ڈپازٹ بھیجتے ہیں اور Houdini آپ کے وصولی پتے پر رقم پہنچا دیتا ہے۔"],
+  "swap.private.duration": ["Takes about {duration}.", "تقریباً {duration} لگتے ہیں۔"],
+  "swap.private.durationTypical": ["Takes about 15–45 minutes.", "تقریباً 15–45 منٹ لگتے ہیں۔"],
+  "swap.private.limits": ["Limits: {min}–{max} {ticker}", "حدود: {min}–{max} {ticker}"],
+  "tx.depositWindowClosed": ["Deposit window closed", "ڈپازٹ ونڈو بند ہو گئی"]
 }

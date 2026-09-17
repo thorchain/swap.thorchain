@@ -142,7 +142,8 @@ export const TransactionHistoryDialog = ({ isOpen, onOpenChange }: HistoryDialog
                   qrCodeData: tx.qrCodeData,
                   address: tx.addressDeposit,
                   value: tx.amountFrom,
-                  expiration: tx.expiration
+                  expiration: tx.expiration,
+                  memo: tx.depositMemo
                 }
 
                 openDialog(InstantSwapChannelDialog, { assetFrom: tx.assetFrom, assetTo: tx.assetTo, channel: channel })
@@ -243,16 +244,20 @@ export const TransactionHistoryDialog = ({ isOpen, onOpenChange }: HistoryDialog
                           <div className="flex items-center justify-end py-1">
                             {showRQ && tx.expiration && (
                               <div className="text-txt-label-small flex-1 pl-1 text-xs font-semibold">
-                                <span>
-                                  {t('expiresIn')} &nbsp;
-                                  {formatDuration(
-                                    intervalToDuration({
-                                      start: now.getTime(),
-                                      end: tx.expiration * 1000
-                                    }),
-                                    { format: ['hours', 'minutes'], zero: false }
-                                  )}
-                                </span>
+                                {tx.expiration * 1000 > now.getTime() ? (
+                                  <span>
+                                    {t('expiresIn')} &nbsp;
+                                    {formatDuration(
+                                      intervalToDuration({
+                                        start: now.getTime(),
+                                        end: tx.expiration * 1000
+                                      }),
+                                      { format: ['hours', 'minutes'], zero: false }
+                                    )}
+                                  </span>
+                                ) : (
+                                  <span>{t('depositWindowClosed')}</span>
+                                )}
                               </div>
                             )}
                             {showRQ && (
@@ -396,6 +401,8 @@ function getExplorerLinks(tx: Transaction): ExplorerLink[] {
 
   add(sourceUrl)
   if (tx.provider === ProviderName.THORCHAIN && tx.hash) add(`https://thorchain.net/tx/${tx.hash}`)
+  // A Houdini order's only explorer is its public order page - it also carries the support chat.
+  if (tx.provider === ProviderName.HOUDINI && tx.providerSwapId) add(`https://app.houdiniswap.com/order-details?houdiniId=${tx.providerSwapId}`)
   add(destUrl)
 
   return links

@@ -490,5 +490,19 @@
   "tx.status.unknown": ["Unknown", "अज्ञात"],
   "tx.leg.deposit": ["Deposit {ticker}", "{ticker} जमा करें"],
   "tx.leg.send": ["Send {ticker}", "{ticker} भेजें"],
-  "tx.leg.swap": ["Swap {from} to {to}", "{from} को {to} में स्वैप करें"]
+  "tx.leg.swap": ["Swap {from} to {to}", "{from} को {to} में स्वैप करें"],
+  "swap.tab.private": ["Private", "निजी"],
+  "swap.confirm.rate": ["Rate", "दर"],
+  "swap.confirm.floatingRate": ["Floating", "परिवर्तनशील"],
+  "swap.confirm.floatingRateTooltip": ["A private swap is priced when your deposit is confirmed by the exchange, so the amount you receive can differ from the quote.", "निजी स्वैप की कीमत तब तय होती है जब एक्सचेंज आपकी जमा राशि की पुष्टि करता है, इसलिए आपको मिलने वाली राशि कोट से अलग हो सकती है।"],
+  "swap.confirm.route": ["Route", "रूट"],
+  "swap.confirm.routeTooltip": ["The exchanges your swap is routed through. A private swap passes through two, so neither can link where the funds came from to where they go.", "वे एक्सचेंज जिनके ज़रिए आपका स्वैप रूट होता है। निजी स्वैप दो एक्सचेंज से होकर गुज़रता है, ताकि कोई भी यह न जोड़ सके कि फंड कहाँ से आया और कहाँ गया।"],
+  "swap.warning.highPriceImpactPrivate": ["I understand the amount received is well below the value of the amount sent, and I accept that cost for this private swap", "मैं समझता/समझती हूँ कि प्राप्त होने वाली राशि भेजी गई राशि के मूल्य से काफ़ी कम है, और मैं इस निजी स्वैप के लिए यह लागत स्वीकार करता/करती हूँ"],
+  "swap.instant.memoRequired": ["Memo (required)", "मेमो (आवश्यक)"],
+  "swap.private.title": ["Private swap via Houdini Swap", "Houdini Swap के ज़रिए निजी स्वैप"],
+  "swap.private.description": ["Routed through two exchanges with no on-chain link between the deposit and the payout. No wallet connection needed: you send the deposit, Houdini delivers to your receiving address.", "दो एक्सचेंज के ज़रिए रूट किया जाता है, जिसमें जमा और भुगतान के बीच कोई ऑन-चेन लिंक नहीं होता। वॉलेट कनेक्ट करने की ज़रूरत नहीं: आप जमा भेजते हैं, और Houdini आपके प्राप्ति पते पर डिलीवर करता है।"],
+  "swap.private.duration": ["Takes about {duration}.", "लगभग {duration} लगते हैं।"],
+  "swap.private.durationTypical": ["Takes about 15–45 minutes.", "लगभग 15–45 मिनट लगते हैं।"],
+  "swap.private.limits": ["Limits: {min}–{max} {ticker}", "सीमाएँ: {min}–{max} {ticker}"],
+  "tx.depositWindowClosed": ["Deposit window closed", "जमा विंडो बंद हो गई"]
 }

@@ -53,7 +53,8 @@
   "swap": {
     "tab": {
       "swap": "Takas",
-      "limit": "Limit"
+      "limit": "Limit",
+      "private": "Özel"
     },
     "input": {
       "sell": "Sat",
@@ -120,10 +121,16 @@
       "exchange": "Borsa",
       "button": "Onayla",
       "buttonLimit": "Limit Emrini Onayla",
-      "confirming": "Onaylanıyor"
+      "confirming": "Onaylanıyor",
+      "rate": "Kur",
+      "floatingRate": "Değişken",
+      "floatingRateTooltip": "Özel takasın fiyatı, yatırdığınız tutar borsa tarafından onaylandığında belirlenir; bu nedenle alacağınız miktar teklif edilenden farklı olabilir.",
+      "route": "Rota",
+      "routeTooltip": "Takasınızın yönlendirildiği borsalar. Özel takas iki borsadan geçer; böylece hiçbiri paranın nereden geldiğini nereye gittiğiyle ilişkilendiremez."
     },
     "warning": {
       "highPriceImpact": "Fiyat etkisinin Slippage toleransına ek olduğunu anlıyorum. Bu takastaki yüksek fiyat etkisini kabul ediyorum.",
+      "highPriceImpactPrivate": "Alınan miktarın, gönderilen miktarın değerinin çok altında olduğunu anlıyorum ve bu özel takas için söz konusu maliyeti kabul ediyorum",
       "sendExact": "Belirtilen tutarı bir öz saklamalı cüzdandan tam olarak göndermem gerektiğini anlıyorum. Bir Smart Contract cüzdanından, borsa adresinden, yetkilendirilmiş adresten veya EIP 7702 cüzdanından göndermek",
       "lossOfFunds": "fon kaybına yol açar.",
       "ltcMweb": "LTC MWEB adresi kullanmak",
@@ -133,7 +140,8 @@
       "sendTitle": "{asset} Gönder",
       "sendDescription": "Aşağıdaki adrese öz saklamalı bir cüzdandan tam olarak <b>{amount} {ticker}</b> gönder.",
       "qrCodeAlt": "QR Kodu",
-      "expiresIn": "Sona erme"
+      "expiresIn": "Sona erme",
+      "memoRequired": "Memo (zorunlu)"
     },
     "error": {
       "memoMissing": "Memo eksik",
@@ -269,6 +277,13 @@
       "seconds": "~{count, plural, one {# saniye} other {# saniye}}",
       "reset": "Sıfırla",
       "save": "Kaydet"
+    },
+    "private": {
+      "title": "Houdini Swap ile özel takas",
+      "description": "Yatırma ile ödeme arasında zincir üzerinde hiçbir bağlantı olmadan iki borsa üzerinden yönlendirilir. Cüzdan bağlantısı gerekmez: yatırmayı siz yaparsınız, Houdini alım adresinize gönderir.",
+      "duration": "Yaklaşık {duration} sürer.",
+      "durationTypical": "Yaklaşık 15–45 dakika sürer.",
+      "limits": "Limitler: {min}–{max} {ticker}"
     }
   },
   "send": {
@@ -572,6 +587,7 @@
     "onlyCreatorModify": "Yalnızca takası oluşturan kişi değiştirebilir",
     "limitPrice": "Limit fiyatı",
     "expiresIn": "Sona erme",
+    "depositWindowClosed": "Yatırma penceresi kapandı",
     "showQr": "QR Göster",
     "modify": "Değiştir",
     "cancelOrder": "Emri İptal Et",

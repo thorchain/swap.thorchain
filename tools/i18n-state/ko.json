@@ -490,5 +490,19 @@
   "tx.status.unknown": ["Unknown", "알 수 없음"],
   "tx.leg.deposit": ["Deposit {ticker}", "{ticker} 입금"],
   "tx.leg.send": ["Send {ticker}", "{ticker} 보내기"],
-  "tx.leg.swap": ["Swap {from} to {to}", "{from}을(를) {to}(으)로 스왑"]
+  "tx.leg.swap": ["Swap {from} to {to}", "{from}을(를) {to}(으)로 스왑"],
+  "swap.tab.private": ["Private", "프라이빗"],
+  "swap.confirm.rate": ["Rate", "환율"],
+  "swap.confirm.floatingRate": ["Floating", "변동"],
+  "swap.confirm.floatingRateTooltip": ["A private swap is priced when your deposit is confirmed by the exchange, so the amount you receive can differ from the quote.", "프라이빗 스왑은 거래소가 입금을 확인하는 시점에 가격이 결정되므로, 실제 수령 금액은 견적과 다를 수 있습니다."],
+  "swap.confirm.route": ["Route", "경로"],
+  "swap.confirm.routeTooltip": ["The exchanges your swap is routed through. A private swap passes through two, so neither can link where the funds came from to where they go.", "스왑이 거치는 거래소입니다. 프라이빗 스왑은 두 곳을 거치므로 어느 쪽도 자금의 출처와 도착지를 연결할 수 없습니다."],
+  "swap.warning.highPriceImpactPrivate": ["I understand the amount received is well below the value of the amount sent, and I accept that cost for this private swap", "수령 금액이 송금 금액의 가치보다 훨씬 적다는 점을 이해하며, 이 프라이빗 스왑에 대한 해당 비용을 수용합니다"],
+  "swap.instant.memoRequired": ["Memo (required)", "메모 (필수)"],
+  "swap.private.title": ["Private swap via Houdini Swap", "Houdini Swap을 통한 프라이빗 스왑"],
+  "swap.private.description": ["Routed through two exchanges with no on-chain link between the deposit and the payout. No wallet connection needed: you send the deposit, Houdini delivers to your receiving address.", "두 개의 거래소를 거쳐 입금과 지급 사이에 온체인 연결이 남지 않습니다. 지갑 연결이 필요 없습니다. 입금만 보내면 Houdini가 수령 주소로 전달합니다."],
+  "swap.private.duration": ["Takes about {duration}.", "약 {duration} 소요됩니다."],
+  "swap.private.durationTypical": ["Takes about 15–45 minutes.", "약 15~45분 소요됩니다."],
+  "swap.private.limits": ["Limits: {min}–{max} {ticker}", "한도: {min}~{max} {ticker}"],
+  "tx.depositWindowClosed": ["Deposit window closed", "입금 시간 마감"]
 }

@@ -13,6 +13,8 @@ export const SwapProvider = ({ provider }: { provider: ProviderName }) => {
     icon = 'near'
   } else if (provider === 'ONEINCH') {
     icon = 'oneinch'
+  } else if (provider === 'HOUDINI') {
+    icon = 'houdini'
   }
 
   return (

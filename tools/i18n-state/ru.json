@@ -490,5 +490,19 @@
   "tx.status.unknown": ["Unknown", "Неизвестно"],
   "tx.leg.deposit": ["Deposit {ticker}", "Внести {ticker}"],
   "tx.leg.send": ["Send {ticker}", "Отправить {ticker}"],
-  "tx.leg.swap": ["Swap {from} to {to}", "Обменять {from} на {to}"]
+  "tx.leg.swap": ["Swap {from} to {to}", "Обменять {from} на {to}"],
+  "swap.tab.private": ["Private", "Приватный"],
+  "swap.confirm.rate": ["Rate", "Курс"],
+  "swap.confirm.floatingRate": ["Floating", "Плавающий"],
+  "swap.confirm.floatingRateTooltip": ["A private swap is priced when your deposit is confirmed by the exchange, so the amount you receive can differ from the quote.", "Цена приватного свапа определяется в момент подтверждения вашего депозита биржей, поэтому полученная сумма может отличаться от котировки."],
+  "swap.confirm.route": ["Route", "Маршрут"],
+  "swap.confirm.routeTooltip": ["The exchanges your swap is routed through. A private swap passes through two, so neither can link where the funds came from to where they go.", "Биржи, через которые проходит ваш свап. Приватный свап идёт через две, поэтому ни одна из них не может связать источник средств с адресом получения."],
+  "swap.warning.highPriceImpactPrivate": ["I understand the amount received is well below the value of the amount sent, and I accept that cost for this private swap", "Я понимаю, что получаемая сумма значительно ниже стоимости отправленной, и принимаю эти издержки для данного приватного свапа"],
+  "swap.instant.memoRequired": ["Memo (required)", "Мемо (обязательно)"],
+  "swap.private.title": ["Private swap via Houdini Swap", "Приватный свап через Houdini Swap"],
+  "swap.private.description": ["Routed through two exchanges with no on-chain link between the deposit and the payout. No wallet connection needed: you send the deposit, Houdini delivers to your receiving address.", "Проходит через две биржи без он-чейн связи между депозитом и выплатой. Подключение кошелька не требуется: вы отправляете депозит, а Houdini переводит средства на ваш адрес получения."],
+  "swap.private.duration": ["Takes about {duration}.", "Занимает около {duration}."],
+  "swap.private.durationTypical": ["Takes about 15–45 minutes.", "Занимает около 15–45 минут."],
+  "swap.private.limits": ["Limits: {min}–{max} {ticker}", "Лимиты: {min}–{max} {ticker}"],
+  "tx.depositWindowClosed": ["Deposit window closed", "Окно для депозита закрыто"]
 }

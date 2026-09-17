@@ -490,5 +490,19 @@
   "tx.status.unknown": ["Unknown", "ไม่ทราบ"],
   "tx.leg.deposit": ["Deposit {ticker}", "ฝาก {ticker}"],
   "tx.leg.send": ["Send {ticker}", "ส่ง {ticker}"],
-  "tx.leg.swap": ["Swap {from} to {to}", "แลกเปลี่ยน {from} เป็น {to}"]
+  "tx.leg.swap": ["Swap {from} to {to}", "แลกเปลี่ยน {from} เป็น {to}"],
+  "swap.tab.private": ["Private", "ส่วนตัว"],
+  "swap.confirm.rate": ["Rate", "อัตรา"],
+  "swap.confirm.floatingRate": ["Floating", "ลอยตัว"],
+  "swap.confirm.floatingRateTooltip": ["A private swap is priced when your deposit is confirmed by the exchange, so the amount you receive can differ from the quote.", "การสวอปแบบส่วนตัวจะคิดราคาเมื่อเงินฝากของคุณได้รับการยืนยันจากตลาดแลกเปลี่ยน ดังนั้นจำนวนที่คุณได้รับอาจแตกต่างจากใบเสนอราคา"],
+  "swap.confirm.route": ["Route", "เส้นทาง"],
+  "swap.confirm.routeTooltip": ["The exchanges your swap is routed through. A private swap passes through two, so neither can link where the funds came from to where they go.", "ตลาดแลกเปลี่ยนที่การสวอปของคุณถูกส่งผ่าน การสวอปแบบส่วนตัวจะผ่านสองแห่ง ทำให้ไม่มีฝ่ายใดเชื่อมโยงแหล่งที่มาของเงินกับปลายทางได้"],
+  "swap.warning.highPriceImpactPrivate": ["I understand the amount received is well below the value of the amount sent, and I accept that cost for this private swap", "ฉันเข้าใจว่าจำนวนที่ได้รับต่ำกว่ามูลค่าของจำนวนที่ส่งไปอย่างมาก และฉันยอมรับต้นทุนดังกล่าวสำหรับการสวอปแบบส่วนตัวนี้"],
+  "swap.instant.memoRequired": ["Memo (required)", "Memo (จำเป็น)"],
+  "swap.private.title": ["Private swap via Houdini Swap", "สวอปแบบส่วนตัวผ่าน Houdini Swap"],
+  "swap.private.description": ["Routed through two exchanges with no on-chain link between the deposit and the payout. No wallet connection needed: you send the deposit, Houdini delivers to your receiving address.", "ส่งผ่านตลาดแลกเปลี่ยนสองแห่งโดยไม่มีการเชื่อมโยงบนเชนระหว่างเงินฝากและเงินที่จ่ายออก ไม่ต้องเชื่อมต่อกระเป๋าเงิน: คุณส่งเงินฝาก แล้ว Houdini จะส่งไปยังที่อยู่รับของคุณ"],
+  "swap.private.duration": ["Takes about {duration}.", "ใช้เวลาประมาณ {duration}"],
+  "swap.private.durationTypical": ["Takes about 15–45 minutes.", "ใช้เวลาประมาณ 15–45 นาที"],
+  "swap.private.limits": ["Limits: {min}–{max} {ticker}", "ขีดจำกัด: {min}–{max} {ticker}"],
+  "tx.depositWindowClosed": ["Deposit window closed", "ปิดช่วงเวลาการฝากแล้ว"]
 }

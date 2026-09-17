@@ -28,6 +28,10 @@ Two-component architecture:
   these: it lives in the SDK as `@tcswap/wallets/exodus` (the browser extension), added in `../TCSwap`. Mind the version — through 4.3.26 that
   subpath was an alias for Exodus's unrelated Passkeys wallet, which has always had its own `@tcswap/wallets/passkeys` export and still does; only
   4.3.27 onwards carries the extension connector, so `package.json` must ask for at least that.
+- `isPrivateSwap` in `src/store/limit-swap-store.ts` + `src/components/swap/swap-private-note.tsx` — the PRIVATE tab: the swap is routed through Houdini Swap
+  (`AppConfig.privateProvider`, `providers: ["HOUDINI"]` on the aggregator, `@tcswap/plugins/houdini` in the SDK) instead of the native protocols. Each
+  tab has its own asset list (`useModeAssets` in `src/hooks/use-assets.ts`), and a private route is priced floating and tracked by its Houdini order
+  id (`Transaction.providerSwapId`). See `docs/private-swaps.md` before touching any `HOUDINI` branch.
 - `public/widget.js` + `src/app/widget/` — the embeddable swap iframe. The loader mirrors the host page's dark/light mode into the iframe: it reads
   the effective background painted behind the widget (so a `.dark` class, `data-theme`, or a CSS-variable swap all work without configuration), boots
   the iframe with `?theme=`, and pushes later changes over `postMessage` — `src/app/widget/theme.ts` holds that contract plus the pre-paint script

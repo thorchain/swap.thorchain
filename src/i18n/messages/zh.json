@@ -53,7 +53,8 @@
   "swap": {
     "tab": {
       "swap": "兑换",
-      "limit": "限价"
+      "limit": "限价",
+      "private": "隐私"
     },
     "input": {
       "sell": "卖出",
@@ -120,10 +121,16 @@
       "exchange": "交易所",
       "button": "确认",
       "buttonLimit": "确认限价订单",
-      "confirming": "确认中"
+      "confirming": "确认中",
+      "rate": "汇率",
+      "floatingRate": "浮动",
+      "floatingRateTooltip": "隐私兑换的价格在交易所确认你的存入后才确定，因此你实际收到的数量可能与报价不同。",
+      "route": "路由",
+      "routeTooltip": "你的兑换所经过的交易所。隐私兑换会经过两家交易所，因此任何一家都无法将资金来源与去向关联起来。"
     },
     "warning": {
       "highPriceImpact": "我理解价格影响是在Slippage容差之外的额外部分。我接受本次兑换的高价格影响。",
+      "highPriceImpactPrivate": "我明白收到的数量远低于发送数量的价值，并接受本次隐私兑换的这一成本",
       "sendExact": "我理解我必须从自托管钱包发送精确的指定金额。我理解从Smart Contract钱包、交易所地址、委托地址或EIP 7702钱包发送将导致",
       "lossOfFunds": "资金损失。",
       "ltcMweb": "我理解使用LTC MWEB地址将导致",
@@ -133,7 +140,8 @@
       "sendTitle": "发送{asset}",
       "sendDescription": "请从自托管钱包向下方地址精确发送<b>{amount} {ticker}</b>。",
       "qrCodeAlt": "二维码",
-      "expiresIn": "剩余时间"
+      "expiresIn": "剩余时间",
+      "memoRequired": "备注（必填）"
     },
     "error": {
       "memoMissing": "缺少Memo",
@@ -269,6 +277,13 @@
       "seconds": "~{count, plural, other {#秒}}",
       "reset": "重置",
       "save": "保存"
+    },
+    "private": {
+      "title": "通过 Houdini Swap 进行隐私兑换",
+      "description": "经由两家交易所路由，存入与支付之间不存在链上关联。无需连接钱包：你发送存入资金，Houdini 将资产发送至你的收款地址。",
+      "duration": "大约需要 {duration}。",
+      "durationTypical": "大约需要 15–45 分钟。",
+      "limits": "限额：{min}–{max} {ticker}"
     }
   },
   "send": {
@@ -572,6 +587,7 @@
     "onlyCreatorModify": "只有原兑换创建者才能修改",
     "limitPrice": "限价",
     "expiresIn": "剩余时间",
+    "depositWindowClosed": "存入窗口已关闭",
     "showQr": "显示二维码",
     "modify": "修改",
     "cancelOrder": "取消订单",

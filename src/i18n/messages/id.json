@@ -53,7 +53,8 @@
   "swap": {
     "tab": {
       "swap": "Tukar",
-      "limit": "Limit"
+      "limit": "Limit",
+      "private": "Privat"
     },
     "input": {
       "sell": "Jual",
@@ -120,10 +121,16 @@
       "exchange": "Tukar",
       "button": "Konfirmasi",
       "buttonLimit": "Konfirmasi limit order",
-      "confirming": "Mengonfirmasi"
+      "confirming": "Mengonfirmasi",
+      "rate": "Kurs",
+      "floatingRate": "Mengambang",
+      "floatingRateTooltip": "Swap privat dihargai saat deposit Anda dikonfirmasi oleh bursa, sehingga jumlah yang Anda terima bisa berbeda dari penawaran.",
+      "route": "Rute",
+      "routeTooltip": "Bursa yang dilalui swap Anda. Swap privat melewati dua bursa, sehingga tidak ada yang bisa menghubungkan asal dana dengan tujuannya."
     },
     "warning": {
       "highPriceImpact": "Saya memahami bahwa price impact merupakan tambahan dari toleransi slippage. Saya menerima price impact tinggi pada swap ini",
+      "highPriceImpactPrivate": "Saya memahami jumlah yang diterima jauh di bawah nilai jumlah yang dikirim, dan saya menerima biaya tersebut untuk swap privat ini",
       "sendExact": "Saya memahami bahwa saya harus mengirim tepat sebesar jumlah yang ditentukan dari dompet self-custody. Saya memahami bahwa mengirim dari dompet smart contract, alamat bursa, alamat yang didelegasikan, atau dompet EIP 7702, akan mengakibatkan",
       "lossOfFunds": "kehilangan dana.",
       "ltcMweb": "Saya memahami bahwa menggunakan alamat LTC MWEB akan mengakibatkan",
@@ -133,7 +140,8 @@
       "sendTitle": "Kirim {asset}",
       "sendDescription": "Kirim tepat <b>{amount} {ticker}</b> ke alamat di bawah ini dari dompet self-custody.",
       "qrCodeAlt": "Kode QR",
-      "expiresIn": "Kedaluwarsa dalam"
+      "expiresIn": "Kedaluwarsa dalam",
+      "memoRequired": "Memo (wajib)"
     },
     "error": {
       "memoMissing": "Memo tidak ada",
@@ -269,6 +277,13 @@
       "seconds": "~{count, plural, other {# detik}}",
       "reset": "Atur ulang",
       "save": "Simpan"
+    },
+    "private": {
+      "title": "Swap privat via Houdini Swap",
+      "description": "Dirutekan melalui dua bursa tanpa keterkaitan on-chain antara deposit dan pembayaran. Tidak perlu menghubungkan dompet: Anda mengirim deposit, Houdini mengirimkan ke alamat penerima Anda.",
+      "duration": "Membutuhkan sekitar {duration}.",
+      "durationTypical": "Membutuhkan sekitar 15–45 menit.",
+      "limits": "Batas: {min}–{max} {ticker}"
     }
   },
   "send": {
@@ -572,6 +587,7 @@
     "onlyCreatorModify": "Hanya pembuat swap asli yang dapat mengubah",
     "limitPrice": "Harga limit",
     "expiresIn": "Kedaluwarsa dalam",
+    "depositWindowClosed": "Jendela deposit telah ditutup",
     "showQr": "Tampilkan QR",
     "modify": "Ubah",
     "cancelOrder": "Batalkan order",

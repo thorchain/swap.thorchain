@@ -63,7 +63,9 @@ export const SwapRecipient = ({ provider, onFetchQuote }: SwapRecipientProps) =>
 
   if (!assetFrom || !assetTo) return null
 
-  const refundRequired = !selectedAccount && provider === 'NEAR'
+  // A deposit-address provider refunds a failed order to an address it is told, so without a
+  // wallet to read one from, the user names it.
+  const refundRequired = !selectedAccount && (provider === 'NEAR' || provider === 'HOUDINI')
   const options = accounts.filter(a => a.network === assetTo.chain)
   const isMayachain = isMayaProvider(provider)
   const isTaprootDestination = isMayachain && assetTo.chain === Chain.Bitcoin && isTaprootAddress(destinationAddress)

@@ -23,9 +23,13 @@ export interface Transaction {
   status: TxStatus
   details?: any
   qrCodeData?: string
+  // A memo/tag the deposit must carry (a provider's deposit tag), shown with the QR code.
+  depositMemo?: string
   expiration?: number
   limitSwapMemo?: string
   limitPrice?: string
+  // The provider's own id for the swap, when it tracks by one instead of by hash (Houdini order id).
+  providerSwapId?: string
 }
 
 interface TransactionStore {

@@ -490,5 +490,19 @@
   "tx.status.unknown": ["Unknown", "不明"],
   "tx.leg.deposit": ["Deposit {ticker}", "{ticker} を預け入れ"],
   "tx.leg.send": ["Send {ticker}", "{ticker} を送信"],
-  "tx.leg.swap": ["Swap {from} to {to}", "{from} を {to} にスワップ"]
+  "tx.leg.swap": ["Swap {from} to {to}", "{from} を {to} にスワップ"],
+  "swap.tab.private": ["Private", "プライベート"],
+  "swap.confirm.rate": ["Rate", "レート"],
+  "swap.confirm.floatingRate": ["Floating", "変動"],
+  "swap.confirm.floatingRateTooltip": ["A private swap is priced when your deposit is confirmed by the exchange, so the amount you receive can differ from the quote.", "プライベートスワップでは、入金が取引所で確認された時点で価格が決まるため、受取額が見積もりと異なる場合があります。"],
+  "swap.confirm.route": ["Route", "ルート"],
+  "swap.confirm.routeTooltip": ["The exchanges your swap is routed through. A private swap passes through two, so neither can link where the funds came from to where they go.", "スワップが経由する取引所です。プライベートスワップは2つの取引所を経由するため、どちらも資金の送信元と送信先を結びつけることはできません。"],
+  "swap.warning.highPriceImpactPrivate": ["I understand the amount received is well below the value of the amount sent, and I accept that cost for this private swap", "受取額が送金額の価値を大きく下回ることを理解し、このプライベートスワップのコストとして受け入れます"],
+  "swap.instant.memoRequired": ["Memo (required)", "メモ（必須）"],
+  "swap.private.title": ["Private swap via Houdini Swap", "Houdini Swap によるプライベートスワップ"],
+  "swap.private.description": ["Routed through two exchanges with no on-chain link between the deposit and the payout. No wallet connection needed: you send the deposit, Houdini delivers to your receiving address.", "2つの取引所を経由し、入金と出金の間にオンチェーンの関連付けは残りません。ウォレット接続は不要です。あなたが入金すると、Houdini が受取アドレスへ送金します。"],
+  "swap.private.duration": ["Takes about {duration}.", "所要時間は約 {duration} です。"],
+  "swap.private.durationTypical": ["Takes about 15–45 minutes.", "所要時間は約15〜45分です。"],
+  "swap.private.limits": ["Limits: {min}–{max} {ticker}", "上限・下限: {min}〜{max} {ticker}"],
+  "tx.depositWindowClosed": ["Deposit window closed", "入金受付期間が終了しました"]
 }

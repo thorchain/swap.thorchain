@@ -82,6 +82,7 @@ export const providerLabel = (provider: ProviderName): string => {
   if (provider === 'MAYACHAIN' || provider === 'MAYACHAIN_STREAMING') return 'Maya Protocol'
   if (provider === 'NEAR') return 'Near'
   if (provider === 'ONEINCH') return '1inch'
+  if (provider === 'HOUDINI') return 'Houdini Swap'
   return 'Unknown'
 }
 
@@ -147,6 +148,10 @@ export function normalizeThorBankDenom(denom: string): string | null {
 
 export const isMayaProvider = (provider?: string) => provider === 'MAYACHAIN' || provider === 'MAYACHAIN_STREAMING'
 
+// A private swap routed through Houdini: a plain transfer to a deposit address, priced floating
+// and settled off-chain, so slippage protection and price impact do not apply.
+export const isHoudiniProvider = (provider?: string) => provider === 'HOUDINI'
+
 // Maya Protocol cannot observe or refund Taproot (bech32m) transactions.
 export const isTaprootAddress = (address: string) => address.toLowerCase().startsWith('bc1p')
 
@@ -194,8 +199,9 @@ export const isAssetHalted = (asset: Asset, mimir: Mimir, mayaMimir: Mimir): boo
     [ProviderName.MAYACHAIN]: isChainHalted(mayaMimir, chain)
   }
 
-  // `providers` can be absent on an asset restored from an older persisted store.
-  const providers = asset.providers ?? []
+  // `providers` can be absent on an asset restored from an older persisted store. Only the
+  // native protocols raise halt flags; a listing elsewhere (Houdini) neither halts nor un-halts.
+  const providers = (asset.providers ?? []).filter(provider => provider in haltedOn)
 
   return providers.length > 0 && providers.every(provider => haltedOn[provider])
 }

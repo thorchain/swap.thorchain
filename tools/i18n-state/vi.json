@@ -490,5 +490,19 @@
   "tx.status.unknown": ["Unknown", "Không xác định"],
   "tx.leg.deposit": ["Deposit {ticker}", "Nạp {ticker}"],
   "tx.leg.send": ["Send {ticker}", "Gửi {ticker}"],
-  "tx.leg.swap": ["Swap {from} to {to}", "Hoán đổi {from} sang {to}"]
+  "tx.leg.swap": ["Swap {from} to {to}", "Hoán đổi {from} sang {to}"],
+  "swap.tab.private": ["Private", "Riêng tư"],
+  "swap.confirm.rate": ["Rate", "Tỷ giá"],
+  "swap.confirm.floatingRate": ["Floating", "Thả nổi"],
+  "swap.confirm.floatingRateTooltip": ["A private swap is priced when your deposit is confirmed by the exchange, so the amount you receive can differ from the quote.", "Giao dịch riêng tư được định giá khi sàn xác nhận khoản tiền bạn gửi, nên số tiền bạn nhận có thể khác với báo giá."],
+  "swap.confirm.route": ["Route", "Lộ trình"],
+  "swap.confirm.routeTooltip": ["The exchanges your swap is routed through. A private swap passes through two, so neither can link where the funds came from to where they go.", "Các sàn mà giao dịch của bạn được định tuyến qua. Giao dịch riêng tư đi qua hai sàn, nên không sàn nào có thể liên kết nguồn tiền với nơi tiền được chuyển đến."],
+  "swap.warning.highPriceImpactPrivate": ["I understand the amount received is well below the value of the amount sent, and I accept that cost for this private swap", "Tôi hiểu rằng số tiền nhận được thấp hơn nhiều so với giá trị số tiền đã gửi, và tôi chấp nhận chi phí đó cho giao dịch riêng tư này"],
+  "swap.instant.memoRequired": ["Memo (required)", "Memo (bắt buộc)"],
+  "swap.private.title": ["Private swap via Houdini Swap", "Swap riêng tư qua Houdini Swap"],
+  "swap.private.description": ["Routed through two exchanges with no on-chain link between the deposit and the payout. No wallet connection needed: you send the deposit, Houdini delivers to your receiving address.", "Được định tuyến qua hai sàn giao dịch, không có liên kết on-chain giữa khoản tiền gửi và khoản chi trả. Không cần kết nối ví: bạn gửi tiền, Houdini chuyển đến địa chỉ nhận của bạn."],
+  "swap.private.duration": ["Takes about {duration}.", "Mất khoảng {duration}."],
+  "swap.private.durationTypical": ["Takes about 15–45 minutes.", "Mất khoảng 15–45 phút."],
+  "swap.private.limits": ["Limits: {min}–{max} {ticker}", "Giới hạn: {min}–{max} {ticker}"],
+  "tx.depositWindowClosed": ["Deposit window closed", "Đã hết thời gian gửi tiền"]
 }

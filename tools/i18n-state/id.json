@@ -490,5 +490,19 @@
   "tx.status.unknown": ["Unknown", "Tidak diketahui"],
   "tx.leg.deposit": ["Deposit {ticker}", "Deposit {ticker}"],
   "tx.leg.send": ["Send {ticker}", "Kirim {ticker}"],
-  "tx.leg.swap": ["Swap {from} to {to}", "Tukar {from} ke {to}"]
+  "tx.leg.swap": ["Swap {from} to {to}", "Tukar {from} ke {to}"],
+  "swap.tab.private": ["Private", "Privat"],
+  "swap.confirm.rate": ["Rate", "Kurs"],
+  "swap.confirm.floatingRate": ["Floating", "Mengambang"],
+  "swap.confirm.floatingRateTooltip": ["A private swap is priced when your deposit is confirmed by the exchange, so the amount you receive can differ from the quote.", "Swap privat dihargai saat deposit Anda dikonfirmasi oleh bursa, sehingga jumlah yang Anda terima bisa berbeda dari penawaran."],
+  "swap.confirm.route": ["Route", "Rute"],
+  "swap.confirm.routeTooltip": ["The exchanges your swap is routed through. A private swap passes through two, so neither can link where the funds came from to where they go.", "Bursa yang dilalui swap Anda. Swap privat melewati dua bursa, sehingga tidak ada yang bisa menghubungkan asal dana dengan tujuannya."],
+  "swap.warning.highPriceImpactPrivate": ["I understand the amount received is well below the value of the amount sent, and I accept that cost for this private swap", "Saya memahami jumlah yang diterima jauh di bawah nilai jumlah yang dikirim, dan saya menerima biaya tersebut untuk swap privat ini"],
+  "swap.instant.memoRequired": ["Memo (required)", "Memo (wajib)"],
+  "swap.private.title": ["Private swap via Houdini Swap", "Swap privat via Houdini Swap"],
+  "swap.private.description": ["Routed through two exchanges with no on-chain link between the deposit and the payout. No wallet connection needed: you send the deposit, Houdini delivers to your receiving address.", "Dirutekan melalui dua bursa tanpa keterkaitan on-chain antara deposit dan pembayaran. Tidak perlu menghubungkan dompet: Anda mengirim deposit, Houdini mengirimkan ke alamat penerima Anda."],
+  "swap.private.duration": ["Takes about {duration}.", "Membutuhkan sekitar {duration}."],
+  "swap.private.durationTypical": ["Takes about 15–45 minutes.", "Membutuhkan sekitar 15–45 menit."],
+  "swap.private.limits": ["Limits: {min}–{max} {ticker}", "Batas: {min}–{max} {ticker}"],
+  "tx.depositWindowClosed": ["Deposit window closed", "Jendela deposit telah ditutup"]
 }

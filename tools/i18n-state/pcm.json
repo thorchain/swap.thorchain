@@ -490,5 +490,19 @@
   "tx.status.unknown": ["Unknown", "We no sabi"],
   "tx.leg.deposit": ["Deposit {ticker}", "Deposit {ticker}"],
   "tx.leg.send": ["Send {ticker}", "Send {ticker}"],
-  "tx.leg.swap": ["Swap {from} to {to}", "Swap {from} to {to}"]
+  "tx.leg.swap": ["Swap {from} to {to}", "Swap {from} to {to}"],
+  "swap.tab.private": ["Private", "Private"],
+  "swap.confirm.rate": ["Rate", "Rate"],
+  "swap.confirm.floatingRate": ["Floating", "Floating"],
+  "swap.confirm.floatingRateTooltip": ["A private swap is priced when your deposit is confirmed by the exchange, so the amount you receive can differ from the quote.", "Private swap na when di exchange confirm your deposit dem go price am, so di amount wey you go collect fit different from di quote."],
+  "swap.confirm.route": ["Route", "Route"],
+  "swap.confirm.routeTooltip": ["The exchanges your swap is routed through. A private swap passes through two, so neither can link where the funds came from to where they go.", "Na di exchanges wey your swap dey pass through. Private swap dey pass through two, so none of dem go fit link where di money come from to where e dey go."],
+  "swap.warning.highPriceImpactPrivate": ["I understand the amount received is well below the value of the amount sent, and I accept that cost for this private swap", "I understand say di amount wey I go collect dey well below di value of wetin I send, and I accept dat cost for dis private swap"],
+  "swap.instant.memoRequired": ["Memo (required)", "Memo (compulsory)"],
+  "swap.private.title": ["Private swap via Houdini Swap", "Private swap through Houdini Swap"],
+  "swap.private.description": ["Routed through two exchanges with no on-chain link between the deposit and the payout. No wallet connection needed: you send the deposit, Houdini delivers to your receiving address.", "Dem route am through two exchanges wit no on-chain link between di deposit and di payout. You no need connect wallet: you send di deposit, Houdini go deliver am to your receiving address."],
+  "swap.private.duration": ["Takes about {duration}.", "E go take around {duration}."],
+  "swap.private.durationTypical": ["Takes about 15–45 minutes.", "E go take around 15–45 minutes."],
+  "swap.private.limits": ["Limits: {min}–{max} {ticker}", "Limits: {min}–{max} {ticker}"],
+  "tx.depositWindowClosed": ["Deposit window closed", "Deposit window don close"]
 }

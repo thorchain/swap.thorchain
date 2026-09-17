@@ -53,7 +53,8 @@
   "swap": {
     "tab": {
       "swap": "兌換",
-      "limit": "限價"
+      "limit": "限價",
+      "private": "隱私"
     },
     "input": {
       "sell": "賣出",
@@ -120,10 +121,16 @@
       "exchange": "交易所",
       "button": "確認",
       "buttonLimit": "確認限價訂單",
-      "confirming": "確認中"
+      "confirming": "確認中",
+      "rate": "匯率",
+      "floatingRate": "浮動",
+      "floatingRateTooltip": "隱私交換的價格會在交易所確認您的存入款項時才確定，因此實際收到的金額可能與報價不同。",
+      "route": "路徑",
+      "routeTooltip": "您的交換所經過的交易所。隱私交換會經過兩間交易所，因此任一方都無法將資金來源與去向連結起來。"
     },
     "warning": {
       "highPriceImpact": "我理解價格影響是在Slippage容差之外的額外部分。我接受本次兌換的高價格影響。",
+      "highPriceImpactPrivate": "我了解收到的金額遠低於送出的金額價值，並接受此隱私交換所產生的成本",
       "sendExact": "我理解我必須從自託管錢包發送精確的指定金額。我理解從Smart Contract錢包、交易所地址、委託地址或EIP 7702錢包發送將導致",
       "lossOfFunds": "資金損失。",
       "ltcMweb": "我理解使用LTC MWEB地址將導致",
@@ -133,7 +140,8 @@
       "sendTitle": "發送{asset}",
       "sendDescription": "請從自託管錢包向下方地址精確發送<b>{amount} {ticker}</b>。",
       "qrCodeAlt": "二維碼",
-      "expiresIn": "剩餘時間"
+      "expiresIn": "剩餘時間",
+      "memoRequired": "Memo（必填）"
     },
     "error": {
       "memoMissing": "缺少Memo",
@@ -269,6 +277,13 @@
       "seconds": "~{count, plural, other {#秒}}",
       "reset": "重置",
       "save": "儲存"
+    },
+    "private": {
+      "title": "透過 Houdini Swap 進行隱私交換",
+      "description": "經由兩間交易所路由，存入與撥款之間沒有鏈上關聯。無需連接錢包：您送出存款，Houdini 會將資金發送至您的接收地址。",
+      "duration": "約需 {duration}。",
+      "durationTypical": "約需 15–45 分鐘。",
+      "limits": "限額：{min}–{max} {ticker}"
     }
   },
   "send": {
@@ -572,6 +587,7 @@
     "onlyCreatorModify": "只有原兌換建立者才能修改",
     "limitPrice": "限價",
     "expiresIn": "剩餘時間",
+    "depositWindowClosed": "存入時間已結束",
     "showQr": "顯示二維碼",
     "modify": "修改",
     "cancelOrder": "取消訂單",

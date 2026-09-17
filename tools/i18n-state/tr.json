@@ -490,5 +490,19 @@
   "tx.status.unknown": ["Unknown", "Bilinmiyor"],
   "tx.leg.deposit": ["Deposit {ticker}", "{ticker} Yatır"],
   "tx.leg.send": ["Send {ticker}", "{ticker} Gönder"],
-  "tx.leg.swap": ["Swap {from} to {to}", "{from} → {to} Takas"]
+  "tx.leg.swap": ["Swap {from} to {to}", "{from} → {to} Takas"],
+  "swap.tab.private": ["Private", "Özel"],
+  "swap.confirm.rate": ["Rate", "Kur"],
+  "swap.confirm.floatingRate": ["Floating", "Değişken"],
+  "swap.confirm.floatingRateTooltip": ["A private swap is priced when your deposit is confirmed by the exchange, so the amount you receive can differ from the quote.", "Özel takasın fiyatı, yatırdığınız tutar borsa tarafından onaylandığında belirlenir; bu nedenle alacağınız miktar teklif edilenden farklı olabilir."],
+  "swap.confirm.route": ["Route", "Rota"],
+  "swap.confirm.routeTooltip": ["The exchanges your swap is routed through. A private swap passes through two, so neither can link where the funds came from to where they go.", "Takasınızın yönlendirildiği borsalar. Özel takas iki borsadan geçer; böylece hiçbiri paranın nereden geldiğini nereye gittiğiyle ilişkilendiremez."],
+  "swap.warning.highPriceImpactPrivate": ["I understand the amount received is well below the value of the amount sent, and I accept that cost for this private swap", "Alınan miktarın, gönderilen miktarın değerinin çok altında olduğunu anlıyorum ve bu özel takas için söz konusu maliyeti kabul ediyorum"],
+  "swap.instant.memoRequired": ["Memo (required)", "Memo (zorunlu)"],
+  "swap.private.title": ["Private swap via Houdini Swap", "Houdini Swap ile özel takas"],
+  "swap.private.description": ["Routed through two exchanges with no on-chain link between the deposit and the payout. No wallet connection needed: you send the deposit, Houdini delivers to your receiving address.", "Yatırma ile ödeme arasında zincir üzerinde hiçbir bağlantı olmadan iki borsa üzerinden yönlendirilir. Cüzdan bağlantısı gerekmez: yatırmayı siz yaparsınız, Houdini alım adresinize gönderir."],
+  "swap.private.duration": ["Takes about {duration}.", "Yaklaşık {duration} sürer."],
+  "swap.private.durationTypical": ["Takes about 15–45 minutes.", "Yaklaşık 15–45 dakika sürer."],
+  "swap.private.limits": ["Limits: {min}–{max} {ticker}", "Limitler: {min}–{max} {ticker}"],
+  "tx.depositWindowClosed": ["Deposit window closed", "Yatırma penceresi kapandı"]
 }

@@ -13,7 +13,7 @@ import { SwapRecipient } from '@/components/swap/swap-recipient'
 import { GenericButton } from '@/components/generic-button'
 import { useSwapRates } from '@/hooks/use-rates'
 import { useAssetFrom, useAssetTo, useSwap } from '@/hooks/use-swap'
-import { resolvePriceImpact } from '@/lib/swap-helpers'
+import { isHoudiniProvider, resolvePriceImpact } from '@/lib/swap-helpers'
 import { generateId } from '@/lib/utils'
 import { useIsLimitSwap, useLimitSwapBuyAmount } from '@/store/limit-swap-store'
 import { useSetTransaction } from '@/store/transaction-store'
@@ -29,6 +29,8 @@ export interface DepositChannel {
   address: string
   value: string
   expiration?: number
+  // A memo the deposit must carry (a provider's deposit tag); none for a plain transfer.
+  memo?: string
 }
 
 export const InstantSwapDialog = ({ provider, isOpen, onOpenChange }: InstantSwapDialogProps) => {
@@ -53,12 +55,13 @@ export const InstantSwapDialog = ({ provider, isOpen, onOpenChange }: InstantSwa
 
   if (!assetFrom || !assetTo) return null
 
-  const createChannel = (quote: QuoteResponseRoute, qrCodeData: string, address: string, value: string, expiration?: number) => {
+  const createChannel = (quote: QuoteResponseRoute, qrCodeData: string, address: string, value: string, expiration?: number, memo?: string) => {
     setChannel({
       qrCodeData,
       address,
       value,
-      expiration
+      expiration,
+      memo
     })
 
     const sentAmount = new USwapNumber(value)
@@ -77,22 +80,36 @@ export const InstantSwapDialog = ({ provider, isOpen, onOpenChange }: InstantSwa
       addressDeposit: address,
       status: 'not_started',
       qrCodeData,
+      depositMemo: memo,
       expiration,
       limitSwapMemo: isLimitSwap ? quote.memo : undefined,
       limitPrice:
         isLimitSwap && limitSwapBuyAmount && !sentAmount.eq(0)
           ? USwapNumber.fromBigInt(BigInt(limitSwapBuyAmount), 8).div(sentAmount).toSignificant()
-          : undefined
+          : undefined,
+      providerSwapId: quote.meta?.houdini?.houdiniId
     })
   }
 
   const onConfirm = () => {
     if (!quote || !assetFrom) return
 
-    if (provider === 'NEAR') {
-      if (!quote.inboundAddress || !quote.qrCodeDataURL) return
+    // A deposit-address provider created the order on the non-dry quote: the deposit address,
+    // exact amount and QR code are already on the route, so there is no channel to register.
+    if (provider === 'NEAR' || provider === 'HOUDINI') {
+      if (!quote.inboundAddress || !quote.qrCodeDataURL) {
+        setError(new Error(t('error.preflightRequest')))
+        return
+      }
 
-      createChannel(quote, quote.qrCodeDataURL, quote.inboundAddress, quote.sellAmount, quote.expiration ? Number(quote.expiration) : undefined)
+      createChannel(
+        quote,
+        quote.qrCodeDataURL,
+        quote.inboundAddress,
+        quote.sellAmount,
+        quote.expiration ? Number(quote.expiration) : undefined,
+        provider === 'HOUDINI' ? quote.memo : undefined
+      )
 
       return
     }
@@ -179,7 +196,7 @@ export const InstantSwapDialog = ({ provider, isOpen, onOpenChange }: InstantSwa
                 <SwapAddressWarning
                   checked={highPriceImpactAccepted}
                   onCheckedChange={setHighPriceImpactAccepted}
-                  text={t('warning.highPriceImpact')}
+                  text={isHoudiniProvider(provider) ? t('warning.highPriceImpactPrivate') : t('warning.highPriceImpact')}
                 />
               )}
               <GenericButton

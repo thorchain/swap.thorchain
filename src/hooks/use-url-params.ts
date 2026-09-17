@@ -3,7 +3,7 @@
 import { usePathname, useSearchParams } from 'next/navigation'
 import { useEffect, useRef } from 'react'
 import { Asset } from '@/components/swap/asset'
-import { useAssets } from '@/hooks/use-assets'
+import { useModeAssets } from '@/hooks/use-assets'
 import { useSwapStore } from '@/store/swap-store'
 
 const DEFAULT_SELL = 'BTC.BTC'
@@ -50,7 +50,7 @@ export const useUrlParams = () => {
   const pathname = usePathname()
   const searchParams = useSearchParams()
   const isWidget = pathname.startsWith('/widget')
-  const { assets } = useAssets()
+  const { assets } = useModeAssets()
   const { assetFrom, assetTo, hasHydrated, setAssetFrom, setAssetTo } = useSwapStore()
 
   // Init store from URL (once)

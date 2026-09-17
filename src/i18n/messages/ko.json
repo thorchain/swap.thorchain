@@ -53,7 +53,8 @@
   "swap": {
     "tab": {
       "swap": "스왑",
-      "limit": "지정가"
+      "limit": "지정가",
+      "private": "프라이빗"
     },
     "input": {
       "sell": "판매",
@@ -120,10 +121,16 @@
       "exchange": "거래소",
       "button": "확인",
       "buttonLimit": "지정가 주문 확인",
-      "confirming": "확인 중"
+      "confirming": "확인 중",
+      "rate": "환율",
+      "floatingRate": "변동",
+      "floatingRateTooltip": "프라이빗 스왑은 거래소가 입금을 확인하는 시점에 가격이 결정되므로, 실제 수령 금액은 견적과 다를 수 있습니다.",
+      "route": "경로",
+      "routeTooltip": "스왑이 거치는 거래소입니다. 프라이빗 스왑은 두 곳을 거치므로 어느 쪽도 자금의 출처와 도착지를 연결할 수 없습니다."
     },
     "warning": {
       "highPriceImpact": "가격 영향이 슬리피지 허용 오차에 더해진다는 것을 이해합니다. 이 스왑의 높은 가격 영향을 수용합니다.",
+      "highPriceImpactPrivate": "수령 금액이 송금 금액의 가치보다 훨씬 적다는 점을 이해하며, 이 프라이빗 스왑에 대한 해당 비용을 수용합니다",
       "sendExact": "자기 수탁 지갑에서 지정된 금액을 정확히 보내야 함을 이해합니다. Smart Contract 지갑, 거래소 주소, 위임 주소 또는 EIP 7702 지갑에서 보내면",
       "lossOfFunds": "자금 손실이 발생합니다.",
       "ltcMweb": "LTC MWEB 주소를 사용하면",
@@ -133,7 +140,8 @@
       "sendTitle": "{asset} 보내기",
       "sendDescription": "자기 수탁 지갑에서 아래 주소로 정확히 <b>{amount} {ticker}</b>를 보내세요.",
       "qrCodeAlt": "QR 코드",
-      "expiresIn": "만료까지"
+      "expiresIn": "만료까지",
+      "memoRequired": "메모 (필수)"
     },
     "error": {
       "memoMissing": "Memo가 없습니다",
@@ -269,6 +277,13 @@
       "seconds": "~{count, plural, other {#초}}",
       "reset": "초기화",
       "save": "저장"
+    },
+    "private": {
+      "title": "Houdini Swap을 통한 프라이빗 스왑",
+      "description": "두 개의 거래소를 거쳐 입금과 지급 사이에 온체인 연결이 남지 않습니다. 지갑 연결이 필요 없습니다. 입금만 보내면 Houdini가 수령 주소로 전달합니다.",
+      "duration": "약 {duration} 소요됩니다.",
+      "durationTypical": "약 15~45분 소요됩니다.",
+      "limits": "한도: {min}~{max} {ticker}"
     }
   },
   "send": {
@@ -572,6 +587,7 @@
     "onlyCreatorModify": "최초 스왑 생성자만 수정할 수 있습니다",
     "limitPrice": "지정가",
     "expiresIn": "만료까지",
+    "depositWindowClosed": "입금 시간 마감",
     "showQr": "QR 보기",
     "modify": "수정",
     "cancelOrder": "주문 취소",

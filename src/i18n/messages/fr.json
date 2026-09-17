@@ -53,7 +53,8 @@
   "swap": {
     "tab": {
       "swap": "Swap",
-      "limit": "Limite"
+      "limit": "Limite",
+      "private": "Privé"
     },
     "input": {
       "sell": "Vendre",
@@ -120,10 +121,16 @@
       "exchange": "Échange",
       "button": "Confirmer",
       "buttonLimit": "Confirmer l'ordre limite",
-      "confirming": "Confirmation"
+      "confirming": "Confirmation",
+      "rate": "Taux",
+      "floatingRate": "Variable",
+      "floatingRateTooltip": "Le prix d'un swap privé est fixé lorsque votre dépôt est confirmé par la plateforme d'échange : le montant reçu peut donc différer du devis.",
+      "route": "Itinéraire",
+      "routeTooltip": "Les plateformes d'échange par lesquelles passe votre swap. Un swap privé en traverse deux, afin qu'aucune ne puisse relier la provenance des fonds à leur destination."
     },
     "warning": {
       "highPriceImpact": "Je comprends que l'impact sur le prix s'ajoute à la tolérance au slippage. J'accepte l'impact élevé sur le prix de cet échange",
+      "highPriceImpactPrivate": "Je comprends que le montant reçu est bien inférieur à la valeur du montant envoyé, et j'accepte ce coût pour ce swap privé",
       "sendExact": "Je comprends que je dois envoyer exactement le montant indiqué depuis un portefeuille auto-hébergé. Je comprends qu'un envoi depuis un portefeuille de smart contract, une adresse d'exchange, une adresse déléguée ou un portefeuille EIP 7702 entraînera une",
       "lossOfFunds": "perte de fonds.",
       "ltcMweb": "Je comprends que l'utilisation d'une adresse LTC MWEB entraînera une",
@@ -133,7 +140,8 @@
       "sendTitle": "Envoyer {asset}",
       "sendDescription": "Envoyez exactement <b>{amount} {ticker}</b> à l'adresse ci-dessous depuis un portefeuille auto-hébergé.",
       "qrCodeAlt": "QR Code",
-      "expiresIn": "Expire dans"
+      "expiresIn": "Expire dans",
+      "memoRequired": "Mémo (requis)"
     },
     "error": {
       "memoMissing": "Le Memo est manquant",
@@ -269,6 +277,13 @@
       "seconds": "~{count, plural, one {# seconde} other {# secondes}}",
       "reset": "Réinitialiser",
       "save": "Enregistrer"
+    },
+    "private": {
+      "title": "Swap privé via Houdini Swap",
+      "description": "Acheminé via deux plateformes d'échange, sans lien on-chain entre le dépôt et le versement. Aucune connexion de portefeuille nécessaire : vous envoyez le dépôt, Houdini effectue le versement à votre adresse de réception.",
+      "duration": "Prend environ {duration}.",
+      "durationTypical": "Prend environ 15 à 45 minutes.",
+      "limits": "Limites : {min}–{max} {ticker}"
     }
   },
   "send": {
@@ -572,6 +587,7 @@
     "onlyCreatorModify": "Seul le créateur initial de l'échange peut le modifier",
     "limitPrice": "Prix limite",
     "expiresIn": "Expire dans",
+    "depositWindowClosed": "Fenêtre de dépôt fermée",
     "showQr": "Afficher le QR",
     "modify": "Modifier",
     "cancelOrder": "Annuler l'ordre",

@@ -14,7 +14,7 @@ import { useBalance } from '@/hooks/use-balance'
 import { useSwapRates } from '@/hooks/use-rates'
 import { useAssetFrom, useAssetTo, useSwap } from '@/hooks/use-swap'
 import { readableError } from '@/lib/errors'
-import { resolvePriceImpact } from '@/lib/swap-helpers'
+import { isHoudiniProvider, resolvePriceImpact } from '@/lib/swap-helpers'
 import { generateId } from '@/lib/utils'
 import { getUSwap } from '@/lib/wallets'
 import { useIsLimitSwap, useLimitSwapBuyAmount } from '@/store/limit-swap-store'
@@ -83,7 +83,9 @@ export const SwapDialog = ({ provider, isOpen, onOpenChange }: SwapDialogProps) 
           estimatedTime: quote.estimatedTime?.total,
           assetFrom: assetFrom,
           assetTo: assetTo,
-          amountFrom: valueFrom.toSignificant(),
+          // A Houdini order restates the deposit with the venue's own rounding, and the plugin
+          // sends exactly `route.sellAmount`; the history shows what was actually sent.
+          amountFrom: isHoudiniProvider(provider) ? quote.sellAmount : valueFrom.toSignificant(),
           amountTo: new USwapNumber(quote.expectedBuyAmount).toSignificant(),
           addressFrom: quote.sourceAddress,
           addressTo: quote.destinationAddress || '',
@@ -93,7 +95,8 @@ export const SwapDialog = ({ provider, isOpen, onOpenChange }: SwapDialogProps) 
           limitPrice:
             isLimitSwap && limitSwapBuyAmount && !valueFrom.eq(0)
               ? USwapNumber.fromBigInt(BigInt(limitSwapBuyAmount), 8).div(valueFrom).toSignificant()
-              : undefined
+              : undefined,
+          providerSwapId: quote.meta?.houdini?.houdiniId
         })
 
         setAmountFrom('')
@@ -128,7 +131,7 @@ export const SwapDialog = ({ provider, isOpen, onOpenChange }: SwapDialogProps) 
                 <SwapAddressWarning
                   checked={highPriceImpactAccepted}
                   onCheckedChange={setHighPriceImpactAccepted}
-                  text={t('warning.highPriceImpact')}
+                  text={isHoudiniProvider(provider) ? t('warning.highPriceImpactPrivate') : t('warning.highPriceImpact')}
                 />
               )}
               <GenericButton colorType="3" size="large" className="w-full" onClick={() => onConfirm()} disabled={!quote || submitting || confirmBlocked}>

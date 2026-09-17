@@ -16,7 +16,7 @@ import { SwapProvider } from '@/components/swap/swap-provider'
 import { InfoTooltip } from '@/components/tooltip'
 import { useRates, useSwapRates } from '@/hooks/use-rates'
 import { useAssetFrom, useAssetTo, useSlippage } from '@/hooks/use-swap'
-import { formatExpiration, resolveFees } from '@/lib/swap-helpers'
+import { formatExpiration, isHoudiniProvider, resolveFees } from '@/lib/swap-helpers'
 import { cn, toCurrencyFixed, truncate } from '@/lib/utils'
 import { useIsLimitSwap, useLimitSwapBuyAmount } from '@/store/limit-swap-store'
 
@@ -75,6 +75,11 @@ export const SwapConfirm = ({ quote, priceImpact }: SwapConfirmProps) => {
   }, [limitBuyAmount, expectedBuyAmount])
 
   const displayBuyAmount = isLimitSwap && limitBuyAmount ? limitBuyAmount : expectedBuyAmount
+
+  // A private swap is priced floating and settled off-chain by Houdini: the payout is re-priced
+  // when the deposit lands, so slippage protection has nothing to say about it. Price impact stays -
+  // it is the USD cost of the route, which is what the user is weighing against privacy.
+  const isPrivate = isHoudiniProvider(quote.providers[0])
 
   return (
     <>
@@ -203,6 +208,26 @@ export const SwapConfirm = ({ quote, priceImpact }: SwapConfirmProps) => {
                   </div>
                 </div>
               </>
+            ) : isPrivate ? (
+              <>
+                <div className="text-txt-label-small flex justify-between text-sm">
+                  <div className="flex items-center gap-1">
+                    <span>{t('confirm.rate')}</span>
+                    <InfoTooltip>{t('confirm.floatingRateTooltip')}</InfoTooltip>
+                  </div>
+                  <span className="text-txt-high-contrast font-semibold">{t('confirm.floatingRate')}</span>
+                </div>
+
+                {quote.meta?.houdini?.swapName && (
+                  <div className="text-txt-label-small flex justify-between text-sm">
+                    <div className="flex items-center gap-1">
+                      <span>{t('confirm.route')}</span>
+                      <InfoTooltip>{t('confirm.routeTooltip')}</InfoTooltip>
+                    </div>
+                    <span className="text-txt-high-contrast font-semibold">{quote.meta.houdini.swapName}</span>
+                  </div>
+                )}
+              </>
             ) : (
               <div className="text-txt-label-small flex justify-between text-sm">
                 <div className="flex items-center gap-1">
@@ -230,7 +255,7 @@ export const SwapConfirm = ({ quote, priceImpact }: SwapConfirmProps) => {
               </div>
             )}
 
-            {!isLimitSwap && slippageTolerance && slippageTolerance.gt(0) && (
+            {!isLimitSwap && !isPrivate && slippageTolerance && slippageTolerance.gt(0) && (
               <div className="text-txt-label-small flex justify-between text-sm">
                 <div className="flex items-center gap-1">
                   {t('confirm.slippageTolerance')}

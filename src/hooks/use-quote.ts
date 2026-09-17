@@ -6,6 +6,7 @@ import { AppConfig } from '@/config'
 import { useAssetFrom, useAssetTo, useCustomInterval, useCustomQuantity, useSlippage, useSwap } from '@/hooks/use-swap'
 import { getQuotes } from '@/lib/api'
 import { resolveQuoteError } from '@/lib/errors'
+import { useIsPrivateSwap } from '@/store/private-swap-store'
 
 type UseQuote = {
   isLoading: boolean
@@ -21,6 +22,7 @@ export const useQuote = (): UseQuote => {
   const assetTo = useAssetTo()
   const customInterval = useCustomInterval()
   const customQuantity = useCustomQuantity()
+  const isPrivateSwap = useIsPrivateSwap()
 
   const queryKey = [
     'quote',
@@ -31,7 +33,8 @@ export const useQuote = (): UseQuote => {
     assetTo?.chain,
     slippage,
     customInterval,
-    customQuantity
+    customQuantity,
+    isPrivateSwap
   ]
 
   const {
@@ -46,19 +49,19 @@ export const useQuote = (): UseQuote => {
       if (valueFrom.eqValue(0)) return
       if (!assetFrom?.identifier || !assetTo?.identifier) return
 
+      // The PRIVATE tab quotes the private provider alone; streaming is a native-protocol option.
       return getQuotes(
         {
           buyAsset: assetTo.identifier,
           sellAsset: assetFrom.identifier,
           sellAmount: valueFrom.toSignificant(),
           slippage: slippage ?? 99,
-          providers: AppConfig.providers,
-          streamingInterval: customInterval,
-          streamingQuantity: customQuantity
+          providers: isPrivateSwap ? [AppConfig.privateProvider] : AppConfig.providers,
+          ...(!isPrivateSwap && { streamingInterval: customInterval, streamingQuantity: customQuantity })
         },
         createAbortController(signal)
       ).then(quotes => {
-        if (AppConfig.id === 'thorchain') {
+        if (AppConfig.id === 'thorchain' && !isPrivateSwap) {
           const thorchainQuote =
             quotes.find(q => q.providers[0] === ProviderName.THORCHAIN_STREAMING) || quotes.find(q => q.providers[0] === ProviderName.THORCHAIN)
 

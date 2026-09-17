@@ -53,7 +53,8 @@
   "swap": {
     "tab": {
       "swap": "Swap",
-      "limit": "Limit"
+      "limit": "Limit",
+      "private": "Private"
     },
     "input": {
       "sell": "Sell",
@@ -120,10 +121,16 @@
       "exchange": "Exchange",
       "button": "Confirm",
       "buttonLimit": "Confirm Limit Order",
-      "confirming": "Confirming"
+      "confirming": "Confirming",
+      "rate": "Rate",
+      "floatingRate": "Floating",
+      "floatingRateTooltip": "A private swap is priced when your deposit is confirmed by the exchange, so the amount you receive can differ from the quote.",
+      "route": "Route",
+      "routeTooltip": "The exchanges your swap is routed through. A private swap passes through two, so neither can link where the funds came from to where they go."
     },
     "warning": {
       "highPriceImpact": "I understand the price impact is in addition to the slippage tolerance. I accept the high price impact on this swap",
+      "highPriceImpactPrivate": "I understand the amount received is well below the value of the amount sent, and I accept that cost for this private swap",
       "sendExact": "I understand that I must send exactly the specified amount from a self-custody wallet. I understand that sending from a smart contract wallet, exchange address, delegated address, or an EIP 7702 wallet, will result in",
       "lossOfFunds": "loss of funds.",
       "ltcMweb": "I understand that using an LTC MWEB address will result in",
@@ -133,7 +140,8 @@
       "sendTitle": "Send {asset}",
       "sendDescription": "Send exactly <b>{amount} {ticker}</b> to the address below from a self custody wallet.",
       "qrCodeAlt": "QR Code",
-      "expiresIn": "Expires in"
+      "expiresIn": "Expires in",
+      "memoRequired": "Memo (required)"
     },
     "error": {
       "memoMissing": "Memo is missing",
@@ -269,6 +277,13 @@
       "seconds": "~{count, plural, one {# second} other {# seconds}}",
       "reset": "Reset",
       "save": "Save"
+    },
+    "private": {
+      "title": "Private swap via Houdini Swap",
+      "description": "Routed through two exchanges with no on-chain link between the deposit and the payout. No wallet connection needed: you send the deposit, Houdini delivers to your receiving address.",
+      "duration": "Takes about {duration}.",
+      "durationTypical": "Takes about 15–45 minutes.",
+      "limits": "Limits: {min}–{max} {ticker}"
     }
   },
   "send": {
@@ -572,6 +587,7 @@
     "onlyCreatorModify": "Only the original swap creator can modify",
     "limitPrice": "Limit price",
     "expiresIn": "Expires in",
+    "depositWindowClosed": "Deposit window closed",
     "showQr": "Show QR",
     "modify": "Modify",
     "cancelOrder": "Cancel Order",

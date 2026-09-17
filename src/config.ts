@@ -8,6 +8,8 @@ export const AppConfig = {
     'Swap Bitcoin to Ethereum and other cryptocurrencies instantly with THORChain. Native BTC swaps with no bridges, wrapping, or centralized exchanges.',
   baseUrl: 'https://swap.thorchain.org',
   providers: [ProviderName.THORCHAIN, ProviderName.MAYACHAIN],
+  // The PRIVATE tab quotes this provider alone; its assets are listed only there.
+  privateProvider: ProviderName.HOUDINI,
   favicon: '/favicon.ico',
   logo: '/logo.svg',
   logoLink: 'https://www.thorchain.org',

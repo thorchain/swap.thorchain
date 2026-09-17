@@ -490,5 +490,19 @@
   "tx.status.unknown": ["Unknown", "Inconnu"],
   "tx.leg.deposit": ["Deposit {ticker}", "Déposer {ticker}"],
   "tx.leg.send": ["Send {ticker}", "Envoyer {ticker}"],
-  "tx.leg.swap": ["Swap {from} to {to}", "Échanger {from} en {to}"]
+  "tx.leg.swap": ["Swap {from} to {to}", "Échanger {from} en {to}"],
+  "swap.tab.private": ["Private", "Privé"],
+  "swap.confirm.rate": ["Rate", "Taux"],
+  "swap.confirm.floatingRate": ["Floating", "Variable"],
+  "swap.confirm.floatingRateTooltip": ["A private swap is priced when your deposit is confirmed by the exchange, so the amount you receive can differ from the quote.", "Le prix d'un swap privé est fixé lorsque votre dépôt est confirmé par la plateforme d'échange : le montant reçu peut donc différer du devis."],
+  "swap.confirm.route": ["Route", "Itinéraire"],
+  "swap.confirm.routeTooltip": ["The exchanges your swap is routed through. A private swap passes through two, so neither can link where the funds came from to where they go.", "Les plateformes d'échange par lesquelles passe votre swap. Un swap privé en traverse deux, afin qu'aucune ne puisse relier la provenance des fonds à leur destination."],
+  "swap.warning.highPriceImpactPrivate": ["I understand the amount received is well below the value of the amount sent, and I accept that cost for this private swap", "Je comprends que le montant reçu est bien inférieur à la valeur du montant envoyé, et j'accepte ce coût pour ce swap privé"],
+  "swap.instant.memoRequired": ["Memo (required)", "Mémo (requis)"],
+  "swap.private.title": ["Private swap via Houdini Swap", "Swap privé via Houdini Swap"],
+  "swap.private.description": ["Routed through two exchanges with no on-chain link between the deposit and the payout. No wallet connection needed: you send the deposit, Houdini delivers to your receiving address.", "Acheminé via deux plateformes d'échange, sans lien on-chain entre le dépôt et le versement. Aucune connexion de portefeuille nécessaire : vous envoyez le dépôt, Houdini effectue le versement à votre adresse de réception."],
+  "swap.private.duration": ["Takes about {duration}.", "Prend environ {duration}."],
+  "swap.private.durationTypical": ["Takes about 15–45 minutes.", "Prend environ 15 à 45 minutes."],
+  "swap.private.limits": ["Limits: {min}–{max} {ticker}", "Limites : {min}–{max} {ticker}"],
+  "tx.depositWindowClosed": ["Deposit window closed", "Fenêtre de dépôt fermée"]
 }
