@@ -464,6 +464,7 @@
   "wallet.externalWalletModeHalted": ["Connect a wallet to keep swapping.", "میمو توں بغیر سویپ ہُنے روکے ہوئے نیں۔ سویپ جاری رکھن لئی والٹ کنیکٹ کرو۔", "سواپ جاری رکھݨ لئی کوئی والٹ جوڑو۔"],
   "wallet.externalWalletAssetUnsupported": ["External Wallet Mode is only available for Layer 1 assets. ERC20 tokens require wallet approval and cannot be used with this option.", "بیرونی والٹ موڈ صرف لیئر 1 اثاثیاں لئی دستیاب اے۔ ERC20 ٹوکناں نوں والٹ دی منظوری دی لوڑ ہوندی اے تے اوہ ایس آپشن نال نئیں ورتے جا سکدے۔"],
   "wallet.close": ["Close", "بند کرو"],
+  "wallet.send": ["Send", "بھیجو"],
   "wallet.sendToken": ["Send {ticker}", "{ticker} بھیجو"],
   "common.close": ["Close", "بند کرو"],
   "tx.title": ["History", "تاریخ"],
@@ -489,6 +490,5 @@
   "tx.status.unknown": ["Unknown", "اݨ جاݨیا"],
   "tx.leg.deposit": ["Deposit {ticker}", "{ticker} ڈیپازٹ کرو"],
   "tx.leg.send": ["Send {ticker}", "{ticker} بھیجو"],
-  "tx.leg.swap": ["Swap {from} to {to}", "{from} نوں {to} وچ تبادلہ کرو"],
-  "wallet.send": ["Send", "بھیجو"]
+  "tx.leg.swap": ["Swap {from} to {to}", "{from} نوں {to} وچ تبادلہ کرو"]
 }

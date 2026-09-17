@@ -464,6 +464,7 @@
   "wallet.externalWalletModeHalted": ["Connect a wallet to keep swapping.", "メモレススワップは現在停止中です。ウォレットを接続してスワップを続けてください。", "スワップを続けるにはウォレットを接続してください。"],
   "wallet.externalWalletAssetUnsupported": ["External Wallet Mode is only available for Layer 1 assets. ERC20 tokens require wallet approval and cannot be used with this option.", "外部ウォレットモードはレイヤー1資産のみ対応しています。ERC20トークンはウォレットの承認が必要なため、このオプションでは利用できません。"],
   "wallet.close": ["Close", "閉じる"],
+  "wallet.send": ["Send", "送信"],
   "wallet.sendToken": ["Send {ticker}", "{ticker} を送信"],
   "common.close": ["Close", "閉じる"],
   "tx.title": ["History", "履歴"],
@@ -489,6 +490,5 @@
   "tx.status.unknown": ["Unknown", "不明"],
   "tx.leg.deposit": ["Deposit {ticker}", "{ticker} を預け入れ"],
   "tx.leg.send": ["Send {ticker}", "{ticker} を送信"],
-  "tx.leg.swap": ["Swap {from} to {to}", "{from} を {to} にスワップ"],
-  "wallet.send": ["Send", "送信"]
+  "tx.leg.swap": ["Swap {from} to {to}", "{from} を {to} にスワップ"]
 }

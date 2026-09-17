@@ -464,6 +464,7 @@
   "wallet.externalWalletModeHalted": ["Connect a wallet to keep swapping.", "Les swaps sans mémo sont actuellement suspendus. Connectez un portefeuille pour continuer à échanger.", "Connectez un portefeuille pour continuer à échanger."],
   "wallet.externalWalletAssetUnsupported": ["External Wallet Mode is only available for Layer 1 assets. ERC20 tokens require wallet approval and cannot be used with this option.", "Le mode Portefeuille externe n'est disponible que pour les actifs de couche 1. Les tokens ERC20 nécessitent une approbation du portefeuille et ne peuvent pas être utilisés avec cette option."],
   "wallet.close": ["Close", "Fermer"],
+  "wallet.send": ["Send", "Envoyer"],
   "wallet.sendToken": ["Send {ticker}", "Envoyer {ticker}"],
   "common.close": ["Close", "Fermer"],
   "tx.title": ["History", "Historique"],
@@ -489,6 +490,5 @@
   "tx.status.unknown": ["Unknown", "Inconnu"],
   "tx.leg.deposit": ["Deposit {ticker}", "Déposer {ticker}"],
   "tx.leg.send": ["Send {ticker}", "Envoyer {ticker}"],
-  "tx.leg.swap": ["Swap {from} to {to}", "Échanger {from} en {to}"],
-  "wallet.send": ["Send", "Envoyer"]
+  "tx.leg.swap": ["Swap {from} to {to}", "Échanger {from} en {to}"]
 }
