@@ -277,13 +277,6 @@
       "seconds": "~{count, plural, other {#秒}}",
       "reset": "重置",
       "save": "保存"
-    },
-    "private": {
-      "title": "通过 Houdini Swap 进行隐私兑换",
-      "description": "经由两家交易所路由，存入与支付之间不存在链上关联。无需连接钱包：你发送存入资金，Houdini 将资产发送至你的收款地址。",
-      "duration": "大约需要 {duration}。",
-      "durationTypical": "大约需要 15–45 分钟。",
-      "limits": "限额：{min}–{max} {ticker}"
     }
   },
   "send": {

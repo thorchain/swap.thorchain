@@ -277,13 +277,6 @@
       "seconds": "~{count, plural, one {# segundo} other {# segundos}}",
       "reset": "Redefinir",
       "save": "Salvar"
-    },
-    "private": {
-      "title": "Troca privada via Houdini Swap",
-      "description": "Encaminhada através de duas exchanges, sem ligação on-chain entre o depósito e o pagamento. Não é necessário ligar a carteira: envia o depósito e a Houdini entrega no seu endereço de receção.",
-      "duration": "Demora cerca de {duration}.",
-      "durationTypical": "Demora cerca de 15–45 minutos.",
-      "limits": "Limites: {min}–{max} {ticker}"
     }
   },
   "send": {

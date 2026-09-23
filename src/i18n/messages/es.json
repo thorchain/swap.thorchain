@@ -277,13 +277,6 @@
       "seconds": "~{count, plural, one {# segundo} other {# segundos}}",
       "reset": "Restablecer",
       "save": "Guardar"
-    },
-    "private": {
-      "title": "Swap privado a través de Houdini Swap",
-      "description": "Enrutado a través de dos exchanges, sin vínculo on-chain entre el depósito y el pago. No hace falta conectar la wallet: tú envías el depósito y Houdini entrega a tu dirección de recepción.",
-      "duration": "Tarda aproximadamente {duration}.",
-      "durationTypical": "Tarda entre 15 y 45 minutos aproximadamente.",
-      "limits": "Límites: {min}–{max} {ticker}"
     }
   },
   "send": {

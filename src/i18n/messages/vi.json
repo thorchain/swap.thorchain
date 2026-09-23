@@ -277,13 +277,6 @@
       "seconds": "~{count, plural, other {# giây}}",
       "reset": "Đặt lại",
       "save": "Lưu"
-    },
-    "private": {
-      "title": "Swap riêng tư qua Houdini Swap",
-      "description": "Được định tuyến qua hai sàn giao dịch, không có liên kết on-chain giữa khoản tiền gửi và khoản chi trả. Không cần kết nối ví: bạn gửi tiền, Houdini chuyển đến địa chỉ nhận của bạn.",
-      "duration": "Mất khoảng {duration}.",
-      "durationTypical": "Mất khoảng 15–45 phút.",
-      "limits": "Giới hạn: {min}–{max} {ticker}"
     }
   },
   "send": {

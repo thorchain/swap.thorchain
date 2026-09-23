@@ -277,13 +277,6 @@
       "seconds": "~{count, plural, other {#秒}}",
       "reset": "リセット",
       "save": "保存"
-    },
-    "private": {
-      "title": "Houdini Swap によるプライベートスワップ",
-      "description": "2つの取引所を経由し、入金と出金の間にオンチェーンの関連付けは残りません。ウォレット接続は不要です。あなたが入金すると、Houdini が受取アドレスへ送金します。",
-      "duration": "所要時間は約 {duration} です。",
-      "durationTypical": "所要時間は約15〜45分です。",
-      "limits": "上限・下限: {min}〜{max} {ticker}"
     }
   },
   "send": {

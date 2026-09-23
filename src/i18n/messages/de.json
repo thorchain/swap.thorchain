@@ -277,13 +277,6 @@
       "seconds": "~{count, plural, one {# Sekunde} other {# Sekunden}}",
       "reset": "Zurücksetzen",
       "save": "Speichern"
-    },
-    "private": {
-      "title": "Privater Swap über Houdini Swap",
-      "description": "Über zwei Börsen geleitet, ohne On-Chain-Verbindung zwischen Einzahlung und Auszahlung. Keine Wallet-Verbindung nötig: Du sendest die Einzahlung, Houdini liefert an deine Empfangsadresse.",
-      "duration": "Dauert etwa {duration}.",
-      "durationTypical": "Dauert etwa 15–45 Minuten.",
-      "limits": "Limits: {min}–{max} {ticker}"
     }
   },
   "send": {

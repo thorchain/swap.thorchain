@@ -277,13 +277,6 @@
       "seconds": "~{count, plural, other {#초}}",
       "reset": "초기화",
       "save": "저장"
-    },
-    "private": {
-      "title": "Houdini Swap을 통한 프라이빗 스왑",
-      "description": "두 개의 거래소를 거쳐 입금과 지급 사이에 온체인 연결이 남지 않습니다. 지갑 연결이 필요 없습니다. 입금만 보내면 Houdini가 수령 주소로 전달합니다.",
-      "duration": "약 {duration} 소요됩니다.",
-      "durationTypical": "약 15~45분 소요됩니다.",
-      "limits": "한도: {min}~{max} {ticker}"
     }
   },
   "send": {

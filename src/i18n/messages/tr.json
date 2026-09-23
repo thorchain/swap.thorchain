@@ -277,13 +277,6 @@
       "seconds": "~{count, plural, one {# saniye} other {# saniye}}",
       "reset": "Sıfırla",
       "save": "Kaydet"
-    },
-    "private": {
-      "title": "Houdini Swap ile özel takas",
-      "description": "Yatırma ile ödeme arasında zincir üzerinde hiçbir bağlantı olmadan iki borsa üzerinden yönlendirilir. Cüzdan bağlantısı gerekmez: yatırmayı siz yaparsınız, Houdini alım adresinize gönderir.",
-      "duration": "Yaklaşık {duration} sürer.",
-      "durationTypical": "Yaklaşık 15–45 dakika sürer.",
-      "limits": "Limitler: {min}–{max} {ticker}"
     }
   },
   "send": {

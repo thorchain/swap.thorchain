@@ -277,13 +277,6 @@
       "seconds": "~{count, plural, other {# second}}",
       "reset": "Reset",
       "save": "Save"
-    },
-    "private": {
-      "title": "Private swap through Houdini Swap",
-      "description": "Dem route am through two exchanges wit no on-chain link between di deposit and di payout. You no need connect wallet: you send di deposit, Houdini go deliver am to your receiving address.",
-      "duration": "E go take around {duration}.",
-      "durationTypical": "E go take around 15–45 minutes.",
-      "limits": "Limits: {min}–{max} {ticker}"
     }
   },
   "send": {

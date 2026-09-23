@@ -19,13 +19,14 @@ PRIVATE tab ──quote──▶ api.thorchain.org/v1/quote  providers: ["HOUDIN
 - **This app** — `isPrivateSwap` in `src/store/limit-swap-store.ts` (the tab; each mode's setter clears the other, re-exported from
   `src/store/private-swap-store.ts`), `AppConfig.privateProvider`,
   `useModeAssets` / `isAssetInMode` in `src/hooks/use-assets.ts` (each tab has its own asset list; `PRIVATE_SWAP_CHAINS` limits Houdini's catalogue to
-  chains this app can validate addresses for and show), `useQuote` (quotes the private provider alone), `SwapPrivateNote`, and the `HOUDINI` branches in
-  the recipient / confirm / deposit / wallet dialogs and the history dialog.
+  chains this app can validate addresses for and show), `useQuote` (quotes the private provider alone), and the `HOUDINI` branches in the recipient /
+  confirm / deposit / wallet dialogs and the history dialog. The tab itself carries no explanatory block: what a private route costs in time and what
+  its limits are come from the quote, and the confirm screen is where they are stated.
 
 ## The flow, step by step
 
 1. **Quote** — `useQuote` asks for `providers: [HOUDINI]` without streaming options. The dry route carries `meta.houdini.{quoteId, min, max, swapName,
-   markup}`; the note under the inputs shows the limits and the ETA.
+   markup}`, and an amount outside the route's limits comes back as a quote error the form shows like any other.
 2. **Addresses** — `SwapRecipient` asks for the receiving address and, without a wallet, a refund address on the sell chain (Houdini refunds a failed
    order there). With a wallet the source address is the refund address.
 3. **Order** — the non-dry quote creates the Houdini order. `inboundAddress` is the deposit address, `sellAmount` is the exact amount the order expects

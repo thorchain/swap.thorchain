@@ -1859,7 +1859,10 @@
     "Close",
     "ᚲᛚᛟᛊᛖ"
   ],
-  "wallet.send": ["Send", "ᛊᛖᚾᛞ"],
+  "wallet.send": [
+    "Send",
+    "ᛊᛖᚾᛞ"
+  ],
   "wallet.sendToken": [
     "Send {ticker}",
     "ᛊᛖᚾᛞ {ticker}"
@@ -1995,26 +1998,6 @@
   "swap.instant.memoRequired": [
     "Memo (required)",
     "ᛗᛖᛗᛟ (ᚱᛖᚲᚢᛁᚱᛖᛞ)"
-  ],
-  "swap.private.title": [
-    "Private swap via Houdini Swap",
-    "ᛈᚱᛁᚹᚨᛏᛖ ᛊᚹᚨᛈ ᚹᛁᚨ ᚺᛟᚢᛞᛁᚾᛁ ᛊᚹᚨᛈ"
-  ],
-  "swap.private.description": [
-    "Routed through two exchanges with no on-chain link between the deposit and the payout. No wallet connection needed: you send the deposit, Houdini delivers to your receiving address.",
-    "ᚱᛟᚢᛏᛖᛞ ᚦᚱᛟᚢᚷᚺ ᛏᚹᛟ ᛖᚲᛊᚲᚺᚨᛜᛖᛊ ᚹᛁᚦ ᚾᛟ ᛟᚾ-ᚲᚺᚨᛁᚾ ᛚᛁᚾᚲ ᛒᛖᛏᚹᛖᛖᚾ ᚦᛖ ᛞᛖᛈᛟᛊᛁᛏ ᚨᚾᛞ ᚦᛖ ᛈᚨᛁᛟᚢᛏ. ᚾᛟ ᚹᚨᛚᛚᛖᛏ ᚲᛟᚾᚾᛖᚲᛏᛁᛟᚾ ᚾᛖᛖᛞᛖᛞ: ᛁᛟᚢ ᛊᛖᚾᛞ ᚦᛖ ᛞᛖᛈᛟᛊᛁᛏ, ᚺᛟᚢᛞᛁᚾᛁ ᛞᛖᛚᛁᚹᛖᚱᛊ ᛏᛟ ᛁᛟᚢᚱ ᚱᛖᚲᛖᛁᚹᛁᛜ ᚨᛞᛞᚱᛖᛊᛊ."
-  ],
-  "swap.private.duration": [
-    "Takes about {duration}.",
-    "ᛏᚨᚲᛖᛊ ᚨᛒᛟᚢᛏ {duration}."
-  ],
-  "swap.private.durationTypical": [
-    "Takes about 15–45 minutes.",
-    "ᛏᚨᚲᛖᛊ ᚨᛒᛟᚢᛏ 15–45 ᛗᛁᚾᚢᛏᛖᛊ."
-  ],
-  "swap.private.limits": [
-    "Limits: {min}–{max} {ticker}",
-    "ᛚᛁᛗᛁᛏᛊ: {min}–{max} {ticker}"
   ],
   "tx.depositWindowClosed": [
     "Deposit window closed",
