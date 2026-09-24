@@ -16,6 +16,9 @@ export const translateError = (message: string): string => {
     return 'Insufficient funds'
   }
 
+  // The aggregator could not fund the deposit from the wallet's UTXOs (amount + network fee).
+  if (message.includes('toolbox_utxo_insufficient_balance')) return 'Insufficient balance to cover the network fee'
+
   if (message.includes('swap Source and Target cannot be the same')) return 'Source and Target cannot be the same'
 
   if (message.includes('user rejected action')) return 'Transaction Cancelled'
