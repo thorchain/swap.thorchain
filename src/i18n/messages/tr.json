@@ -277,6 +277,15 @@
       "seconds": "~{count, plural, one {# saniye} other {# saniye}}",
       "reset": "Sıfırla",
       "save": "Kaydet"
+    },
+    "private": {
+      "disclaimer": "Bu işlem THORChain protokolü üzerinden gerçekleşmez. İşlemi gerçekleştirmek için merkezi borsa ortaklarını kullanan Houdini Swap üzerinden yürütülür.",
+      "amlScreening": "İşlemler kara para aklamayı önleme ve terörizmin finansmanıyla mücadele taramasından geçer.",
+      "complianceHold": "Fonlar uyumluluk incelemesi için tutulabilir.",
+      "kycRequired": "Kimlik doğrulaması (KYC) istenebilir.",
+      "refundNotGuaranteed": "KYC olmadan iade garanti edilmez.",
+      "support": "İşleminiz işaretlenirse, Houdini’nin 7/24 destek ekibi iade talebi veya doğrulama konusunda yardımcı olabilir. İadeler, borsa ortağının incelemesine ve gereksinimlerine tabidir.",
+      "acknowledge": "Bunun ayrı bir üçüncü taraf hizmeti olduğunu, fonlarımın tutulabileceğini ve KYC istenebileceğini anlıyorum."
     }
   },
   "send": {

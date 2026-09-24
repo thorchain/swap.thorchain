@@ -14,6 +14,7 @@ import { SwapHaltBanner } from '@/components/swap/swap-halt-banner'
 import { SwapInputFrom } from '@/components/swap/swap-input-from'
 import { SwapInputTo } from '@/components/swap/swap-input-to'
 import { SwapLimit } from '@/components/swap/swap-limit'
+import { SwapPrivateDisclaimer } from '@/components/swap/swap-private-disclaimer'
 import { SwapSettings } from '@/components/swap/swap-settings'
 import { SwapToggleAssets } from '@/components/swap/swap-toggle-assets'
 import { isAssetInMode, useAssets } from '@/hooks/use-assets'
@@ -144,6 +145,7 @@ export const Swap = () => {
           <SwapToggleAssets />
           <SwapInputTo priceImpact={priceImpact} />
           {isLimitSwap && <SwapLimit quote={quote} />}
+          {isPrivateSwap && <SwapPrivateDisclaimer />}
           <SwapButton instantSwapSupported={instantSwapSupported} instantSwapAvailable={!memolessError} />
         </div>
 

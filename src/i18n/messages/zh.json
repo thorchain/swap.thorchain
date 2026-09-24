@@ -277,6 +277,15 @@
       "seconds": "~{count, plural, other {#秒}}",
       "reset": "重置",
       "save": "保存"
+    },
+    "private": {
+      "disclaimer": "此笔交易不通过 THORChain 协议执行，而是通过 Houdini Swap 完成，该服务使用中心化交易所合作伙伴进行处理。",
+      "amlScreening": "交易将接受反洗钱与反恐怖主义融资审查。",
+      "complianceHold": "资金可能因合规审查而被冻结。",
+      "kycRequired": "可能需要进行身份验证（KYC）。",
+      "refundNotGuaranteed": "未完成 KYC 时无法保证退款。",
+      "support": "如被标记，Houdini 的 7×24 小时客服可协助提交退款申请或完成验证。退款须经交易所合作伙伴审核并符合其要求。",
+      "acknowledge": "我了解这是一项独立的第三方服务，我的资金可能被冻结，并且可能需要进行 KYC。"
     }
   },
   "send": {

@@ -277,6 +277,15 @@
       "seconds": "~{count, plural, other {#초}}",
       "reset": "초기화",
       "save": "저장"
+    },
+    "private": {
+      "disclaimer": "이 거래는 THORChain 프로토콜을 통해 실행되지 않습니다. 중앙화 거래소 파트너를 이용해 거래를 처리하는 Houdini Swap을 통해 진행됩니다.",
+      "amlScreening": "거래는 자금세탁 방지(AML) 및 테러자금 조달 방지(CFT) 심사를 거칩니다.",
+      "complianceHold": "컴플라이언스 검토를 위해 자금이 보류될 수 있습니다.",
+      "kycRequired": "신원 인증(KYC)이 요구될 수 있습니다.",
+      "refundNotGuaranteed": "KYC 없이는 환불이 보장되지 않습니다.",
+      "support": "문제가 감지된 경우 Houdini의 24/7 지원팀이 환불 요청 또는 인증 절차를 도와드릴 수 있습니다. 환불은 거래소 파트너의 검토 및 요건에 따릅니다.",
+      "acknowledge": "이것이 별도의 제3자 서비스이며, 내 자금이 보류될 수 있고 KYC가 요구될 수 있음을 이해합니다."
     }
   },
   "send": {

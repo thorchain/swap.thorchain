@@ -277,6 +277,15 @@
       "seconds": "~{count, plural, one {# seconde} other {# secondes}}",
       "reset": "Réinitialiser",
       "save": "Enregistrer"
+    },
+    "private": {
+      "disclaimer": "Cette transaction ne passe pas par le protocole THORChain. Elle est exécutée via Houdini Swap, qui utilise des partenaires d'échange centralisés pour la traiter.",
+      "amlScreening": "Les transactions font l'objet d'un contrôle contre le blanchiment d'argent et le financement du terrorisme.",
+      "complianceHold": "Les fonds peuvent être bloqués pour un contrôle de conformité.",
+      "kycRequired": "Une vérification d'identité (KYC) peut être exigée.",
+      "refundNotGuaranteed": "Un remboursement sans KYC n'est pas garanti.",
+      "support": "En cas de signalement, le support 24/7 de Houdini peut vous aider à formuler une demande de remboursement ou de vérification. Les remboursements sont soumis à l'examen et aux exigences du partenaire d'échange.",
+      "acknowledge": "Je comprends qu'il s'agit d'un service tiers distinct, que mes fonds peuvent être bloqués et qu'une vérification KYC peut être exigée."
     }
   },
   "send": {

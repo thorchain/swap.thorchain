@@ -277,6 +277,15 @@
       "seconds": "~{count, plural, other {# giây}}",
       "reset": "Đặt lại",
       "save": "Lưu"
+    },
+    "private": {
+      "disclaimer": "Giao dịch này không được thực hiện qua giao thức THORChain. Giao dịch đi qua Houdini Swap, dịch vụ sử dụng các sàn giao dịch tập trung đối tác để xử lý.",
+      "amlScreening": "Các giao dịch phải trải qua quá trình sàng lọc chống rửa tiền và chống tài trợ khủng bố.",
+      "complianceHold": "Tiền có thể bị giữ lại để xem xét tuân thủ.",
+      "kycRequired": "Có thể yêu cầu xác minh danh tính (KYC).",
+      "refundNotGuaranteed": "Việc hoàn tiền mà không có KYC không được đảm bảo.",
+      "support": "Nếu bị gắn cờ, bộ phận hỗ trợ 24/7 của Houdini có thể trợ giúp yêu cầu hoàn tiền hoặc xác minh. Việc hoàn tiền tùy thuộc vào quá trình xem xét và yêu cầu của sàn giao dịch đối tác.",
+      "acknowledge": "Tôi hiểu rằng đây là dịch vụ riêng của bên thứ ba và tiền của tôi có thể bị giữ lại cũng như có thể phải thực hiện KYC."
     }
   },
   "send": {

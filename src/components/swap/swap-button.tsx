@@ -19,6 +19,7 @@ import { readableError } from '@/lib/errors'
 import { isMayaProvider, isTaprootAddress, waitForAllowance } from '@/lib/swap-helpers'
 import { getUSwap } from '@/lib/wallets'
 import { useIsLimitSwap, useLimitSwapBuyAmount } from '@/store/limit-swap-store'
+import { useIsPrivateSwap, usePrivateSwapAcknowledged } from '@/store/private-swap-store'
 
 interface SwapButtonProps {
   instantSwapSupported: boolean
@@ -41,6 +42,8 @@ export const SwapButton = ({ instantSwapSupported, instantSwapAvailable }: SwapB
   const selectedAccount = useSelectedAccount()
   const isLimitSwap = useIsLimitSwap()
   const limitSwapBuyAmount = useLimitSwapBuyAmount()
+  const isPrivateSwap = useIsPrivateSwap()
+  const privateSwapAcknowledged = usePrivateSwapAcknowledged()
   const externalWalletMode = useExternalWalletMode()
   const isMemolessHalted = useIsMemolessHalted()
   const setExternalWalletMode = useSetExternalWalletMode()
@@ -177,6 +180,12 @@ export const SwapButton = ({ instantSwapSupported, instantSwapAvailable }: SwapB
   }
 
   const state = getState()
+
+  // A private swap leaves the native protocols, so it cannot start until the disclaimer is accepted.
+  if (isPrivateSwap && !privateSwapAcknowledged && state.accent) {
+    state.accent = false
+    state.onClick = undefined
+  }
 
   return (
     <AnimatedButton
