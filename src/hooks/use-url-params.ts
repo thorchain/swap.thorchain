@@ -44,6 +44,14 @@ function resolveAsset(assets: Asset[], token: string | null, fallback: string): 
   return assets.find(a => a.identifier === fallback)
 }
 
+const readPair = (pathname: string, params: Pick<URLSearchParams, 'get'>) =>
+  pathname.startsWith('/widget') ? { sell: params.get('from'), buy: params.get('to') } : parsePath(pathname)
+
+// The buy asset the address bar names. It is never rewritten to a same-asset (private send) pair,
+// so it still holds the last real buy asset when the PRIVATE tab is left.
+export const urlBuyAsset = (assets: Asset[]) =>
+  resolveAsset(assets, readPair(window.location.pathname, new URLSearchParams(window.location.search)).buy, DEFAULT_BUY)
+
 export const useUrlParams = () => {
   const initialized = useRef(false)
   const skipNextSync = useRef(true)
@@ -57,7 +65,7 @@ export const useUrlParams = () => {
   useEffect(() => {
     if (!assets?.length || !hasHydrated || initialized.current) return
 
-    const { sell, buy } = isWidget ? { sell: searchParams.get('from'), buy: searchParams.get('to') } : parsePath(pathname)
+    const { sell, buy } = readPair(pathname, searchParams)
     const sellAsset = resolveAsset(assets, sell, DEFAULT_SELL)
     const buyAsset = resolveAsset(assets, buy, DEFAULT_BUY)
 
@@ -75,6 +83,9 @@ export const useUrlParams = () => {
       skipNextSync.current = false
       return
     }
+    // A same-asset pair exists only on the PRIVATE tab, which the URL does not carry: opened as a
+    // link it would land on the native tab as an invalid pair, so the address keeps the last real pair.
+    if (assetFrom.identifier === assetTo.identifier) return
     const newPath = `/${SELL}${toSlug(assetFrom)}${BUY}${toSlug(assetTo)}`
     const newUrl = `${newPath}${window.location.search}`
     if (window.location.pathname + window.location.search !== newUrl) {

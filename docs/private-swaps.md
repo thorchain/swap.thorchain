@@ -45,6 +45,10 @@ PRIVATE tab ──quote──▶ api.thorchain.org/v1/quote  providers: ["HOUDIN
 - **No XRP sells, self-custody destinations.** A CEX deposit on XRP is identified by a destination tag and the SDK's XRP toolbox only carries
   free-text memos, so the aggregator refuses XRP as the sell asset. Buying XRP privately works, but only to a self-custody address: no destination
   tag/memo is sent with the order, so an exchange-hosted receiving address on a memo chain would be paid untagged.
+- **Same-asset pairs ("private send").** Houdini routes an asset to itself (BTC → BTC to an unlinked address), a sizeable share of private
+  volume. Only this tab allows it: `setAssetFrom` / `setAssetTo` in `src/store/swap-store.ts` skip the usual flip-on-same-asset while
+  `isPrivateSwap` is on, and switching to another tab replaces the buy side. The `/sell-<asset>-buy-<asset>` URL is left unchanged: the
+  tab is not in the URL, so a same-asset path would open as an invalid native pair; `useUrlParams` keeps the last distinct pair instead.
 - **Deposit memos.** When the order needs a deposit memo (ATOM, TON, RUNE to a venue that uses one) it arrives as `route.memo`, is stored on the
   transaction as `depositMemo`, and is shown beside the QR code — which then encodes the bare address, as it does for any token deposit, since a
   payment URI cannot carry a memo and would read a token amount as native coin.

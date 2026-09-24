@@ -25,7 +25,7 @@ import { useSwapRates } from '@/hooks/use-rates'
 import { useResolveSource } from '@/hooks/use-resolve-source'
 import { useAssetFrom, useSetAssetFrom, useSetAssetTo, useSwap } from '@/hooks/use-swap'
 import { useTradingHalt } from '@/hooks/use-trading-halt'
-import { useUrlParams } from '@/hooks/use-url-params'
+import { urlBuyAsset, useUrlParams } from '@/hooks/use-url-params'
 import { useSelectedAccount } from '@/hooks/use-wallets'
 import { resolvePriceImpact } from '@/lib/swap-helpers'
 import { cn } from '@/lib/utils'
@@ -88,7 +88,9 @@ export const Swap = () => {
       assets.find(a => inMode(a) && a.identifier !== other?.identifier)
 
     const nextFrom = inMode(assetFrom) ? assetFrom : replacement(DEFAULT_SELL, assetTo)
-    const nextTo = inMode(assetTo) ? assetTo : replacement(DEFAULT_BUY, nextFrom)
+    // A same-asset pair (a private send) is only a pair on the PRIVATE tab; leaving it restores the URL's buy asset.
+    const keepTo = inMode(assetTo) && (isPrivateSwap || assetTo?.identifier !== nextFrom?.identifier)
+    const nextTo = keepTo ? assetTo : replacement(urlBuyAsset(assets)?.identifier ?? DEFAULT_BUY, nextFrom)
 
     if (nextFrom && nextFrom !== assetFrom) setAssetFrom(nextFrom)
     if (nextTo && nextTo !== assetTo) setAssetTo(nextTo)

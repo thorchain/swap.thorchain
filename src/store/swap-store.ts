@@ -1,8 +1,13 @@
 import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
 import { Asset } from '@/components/swap/asset'
+import { useLimitSwapStore } from '@/store/limit-swap-store'
 
 const INITIAL_AMOUNT_FROM = 1
+
+// Picking the asset already on the other side flips the pair, except on the PRIVATE tab: Houdini
+// routes an asset to itself (BTC -> BTC, a "private send"), the native protocols do not.
+const flipsOnSameAsset = () => !useLimitSwapStore.getState().isPrivateSwap
 
 export const INITIAL_SLIPPAGE = 1
 export const INITIAL_CUSTOM_INTERVAL = 0
@@ -48,7 +53,7 @@ export const useSwapStore = create<SwapState>()(
 
         set({
           assetFrom: asset,
-          assetTo: assetTo?.identifier === asset.identifier ? assetFrom : assetTo
+          assetTo: flipsOnSameAsset() && assetTo?.identifier === asset.identifier ? assetFrom : assetTo
         })
       },
 
@@ -56,7 +61,7 @@ export const useSwapStore = create<SwapState>()(
         const { assetFrom, assetTo } = get()
 
         set({
-          assetFrom: assetFrom?.identifier === asset.identifier ? assetTo : assetFrom,
+          assetFrom: flipsOnSameAsset() && assetFrom?.identifier === asset.identifier ? assetTo : assetFrom,
           assetTo: asset
         })
       },
