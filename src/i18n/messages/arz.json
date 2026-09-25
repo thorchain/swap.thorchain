@@ -279,10 +279,8 @@
       "save": "حفظ"
     },
     "private": {
-      "disclaimer": "المبادلة دي بتستخدم خدمة Houdini Swap الخارجية وشركاء من المنصات المركزية. وهي مش بتمر من خلال THORChain.",
-      "routing": "المبادلات بتتوجّه من خلال أكتر من منصة عشان عناوين المصدر والوجهة تفضل سرية على الشبكة. <link>اقرأ المزيد</link>.",
-      "support": "فريق دعم Houdini متاح 24/7 عشان يساعدك في أي مشكلة. <link>الدعم</link>.",
-      "acknowledge": "أنا فاهم إن دي خدمة منفصلة مش مقدمة من THORChain"
+      "disclaimer": "الـ Private Swap شغّال بواسطة Houdini Swap. <link>اقرا كمان</link>.",
+      "acknowledge": "أنا موافق على <link>شروط الخدمة</link>."
     }
   },
   "send": {

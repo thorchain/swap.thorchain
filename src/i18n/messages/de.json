@@ -279,10 +279,8 @@
       "save": "Speichern"
     },
     "private": {
-      "disclaimer": "Dieser Swap nutzt den Drittanbieterdienst von Houdini Swap und dessen zentralisierte Börsenpartner. Er läuft nicht über THORChain.",
-      "routing": "Swaps werden über mehrere Börsen geleitet, sodass Quell- und Zieladresse on-chain vertraulich bleiben. <link>Mehr erfahren</link>.",
-      "support": "Das Support-Team von Houdini hilft rund um die Uhr bei allen Problemen. <link>Support</link>.",
-      "acknowledge": "Ich verstehe, dass dies ein separater Dienst ist, der nicht von THORChain bereitgestellt wird"
+      "disclaimer": "Private Swap wird von Houdini Swap bereitgestellt. <link>Mehr erfahren</link>.",
+      "acknowledge": "Ich akzeptiere die <link>Nutzungsbedingungen</link>."
     }
   },
   "send": {

@@ -279,10 +279,8 @@
       "save": "Lưu"
     },
     "private": {
-      "disclaimer": "Giao dịch hoán đổi này sử dụng dịch vụ bên thứ ba của Houdini Swap và các đối tác sàn giao dịch tập trung. Giao dịch không đi qua THORChain.",
-      "routing": "Các giao dịch hoán đổi được định tuyến qua nhiều sàn giao dịch nên địa chỉ nguồn và địa chỉ đích được giữ bí mật trên chuỗi. <link>Tìm hiểu thêm</link>.",
-      "support": "Đội ngũ hỗ trợ 24/7 của Houdini luôn sẵn sàng trợ giúp mọi vấn đề. <link>Hỗ trợ</link>.",
-      "acknowledge": "Tôi hiểu rằng đây là một dịch vụ riêng biệt không do THORChain cung cấp"
+      "disclaimer": "Private Swap được cung cấp bởi Houdini Swap. <link>Tìm hiểu thêm</link>.",
+      "acknowledge": "Tôi chấp nhận <link>Điều khoản Dịch vụ</link>."
     }
   },
   "send": {

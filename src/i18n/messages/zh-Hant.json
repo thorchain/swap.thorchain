@@ -279,10 +279,8 @@
       "save": "儲存"
     },
     "private": {
-      "disclaimer": "此交換使用 Houdini Swap 的第三方服務及中心化交易所合作夥伴，不會經由 THORChain 進行。",
-      "routing": "交換會透過多家交易所路由，因此來源與目標地址在鏈上保持隱密。<link>了解更多</link>。",
-      "support": "Houdini 的 24/7 支援團隊可協助處理任何問題。<link>支援</link>。",
-      "acknowledge": "我瞭解這是獨立服務，並非由 THORChain 提供"
+      "disclaimer": "Private Swap 由 Houdini Swap 提供技術支援。<link>了解更多</link>。",
+      "acknowledge": "我接受<link>服務條款</link>。"
     }
   },
   "send": {

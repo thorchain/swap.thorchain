@@ -279,10 +279,8 @@
       "save": "保存"
     },
     "private": {
-      "disclaimer": "このスワップは Houdini Swap のサードパーティサービスおよび中央集権型取引所パートナーを利用します。THORChain を経由しません。",
-      "routing": "スワップは複数の取引所を経由してルーティングされるため、送信元・送信先アドレスはオンチェーン上で秘匿されます。<link>詳細はこちら</link>。",
-      "support": "Houdini の24時間365日対応サポートチームが、あらゆる問題をサポートします。<link>サポート</link>。",
-      "acknowledge": "これはTHORChainが提供するものではない別のサービスであることを理解しています"
+      "disclaimer": "Private Swap は Houdini Swap によって提供されています。<link>詳細はこちら</link>。",
+      "acknowledge": "<link>利用規約</link>に同意します。"
     }
   },
   "send": {

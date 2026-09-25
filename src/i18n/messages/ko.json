@@ -279,10 +279,8 @@
       "save": "저장"
     },
     "private": {
-      "disclaimer": "이 스왑은 Houdini Swap의 서드파티 서비스와 중앙화 거래소 파트너를 이용합니다. THORChain을 거치지 않습니다.",
-      "routing": "스왑이 여러 거래소를 경유하므로 출발 주소와 도착 주소가 온체인에서 비공개로 유지됩니다. <link>자세히 보기</link>.",
-      "support": "Houdini의 연중무휴 지원팀이 모든 문제를 도와드립니다. <link>지원</link>.",
-      "acknowledge": "이 서비스는 THORChain에서 제공하지 않는 별도의 서비스임을 이해합니다"
+      "disclaimer": "Private Swap은 Houdini Swap으로 구동됩니다. <link>자세히 보기</link>.",
+      "acknowledge": "<link>서비스 약관</link>에 동의합니다."
     }
   },
   "send": {

@@ -279,10 +279,8 @@
       "save": "Kaydet"
     },
     "private": {
-      "disclaimer": "Bu takas, Houdini Swap'ın üçüncü taraf hizmetini ve merkezi borsa ortaklarını kullanır. THORChain üzerinden gerçekleşmez.",
-      "routing": "Takaslar birden fazla borsa üzerinden yönlendirilir, böylece kaynak ve hedef adresler zincir üzerinde gizli kalır. <link>Daha Fazla Bilgi</link>.",
-      "support": "Houdini'nin 7/24 destek ekibi her türlü sorunda yardımcı olmak için hazırdır. <link>Destek</link>.",
-      "acknowledge": "Bunun THORChain tarafından sağlanmayan ayrı bir hizmet olduğunu anlıyorum"
+      "disclaimer": "Private Swap, Houdini Swap tarafından desteklenmektedir. <link>Daha Fazla Bilgi</link>.",
+      "acknowledge": "<link>Hizmet Şartları</link>'nı kabul ediyorum."
     }
   },
   "send": {

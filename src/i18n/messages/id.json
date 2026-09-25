@@ -279,10 +279,8 @@
       "save": "Simpan"
     },
     "private": {
-      "disclaimer": "Swap ini menggunakan layanan pihak ketiga Houdini Swap dan mitra bursa terpusat. Swap ini tidak melalui THORChain.",
-      "routing": "Swap dirutekan melalui beberapa bursa sehingga alamat asal dan tujuan bersifat rahasia di on-chain. <link>Selengkapnya</link>.",
-      "support": "Tim dukungan Houdini tersedia 24/7 untuk membantu setiap masalah. <link>Dukungan</link>.",
-      "acknowledge": "Saya memahami bahwa ini adalah layanan terpisah yang tidak disediakan oleh THORChain"
+      "disclaimer": "Private Swap didukung oleh Houdini Swap. <link>Selengkapnya</link>.",
+      "acknowledge": "Saya menerima <link>Ketentuan Layanan</link>."
     }
   },
   "send": {
