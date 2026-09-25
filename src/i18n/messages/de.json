@@ -279,13 +279,10 @@
       "save": "Speichern"
     },
     "private": {
-      "disclaimer": "Dieser Handel wird nicht über das THORChain-Protokoll ausgeführt. Er läuft über Houdini Swap, das zur Abwicklung zentralisierte Börsenpartner nutzt.",
-      "amlScreening": "Transaktionen werden auf Geldwäsche und Terrorismusfinanzierung überprüft.",
-      "complianceHold": "Gelder können für eine Compliance-Prüfung zurückgehalten werden.",
-      "kycRequired": "Eine Identitätsprüfung (KYC) kann erforderlich sein.",
-      "refundNotGuaranteed": "Eine Rückerstattung ohne KYC ist nicht garantiert.",
-      "support": "Im Verdachtsfall kann der 24/7-Support von Houdini bei einem Rückerstattungsantrag oder der Verifizierung helfen. Rückerstattungen unterliegen der Prüfung und den Anforderungen des Börsenpartners.",
-      "acknowledge": "Ich verstehe, dass dies ein separater Drittanbieterdienst ist und dass meine Gelder zurückgehalten werden können und eine KYC erforderlich sein kann."
+      "disclaimer": "Dieser Swap nutzt den Drittanbieterdienst von Houdini Swap und dessen zentralisierte Börsenpartner. Er läuft nicht über THORChain.",
+      "routing": "Swaps werden über mehrere Börsen geleitet, sodass Quell- und Zieladresse on-chain vertraulich bleiben. <link>Mehr erfahren</link>.",
+      "support": "Das Support-Team von Houdini hilft rund um die Uhr bei allen Problemen. <link>Support</link>.",
+      "acknowledge": "Ich verstehe, dass dies ein separater Dienst ist, der nicht von THORChain bereitgestellt wird"
     }
   },
   "send": {

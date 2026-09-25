@@ -279,13 +279,10 @@
       "save": "Save"
     },
     "private": {
-      "disclaimer": "Dis trade no dey run through THORChain protocol. E dey pass through Houdini Swap, wey dey use centralized exchange partners take process am.",
-      "amlScreening": "Dem dey check all transaction for anti-money laundering and counter-terrorist financing.",
-      "complianceHold": "Dem fit hold your money for compliance review.",
-      "kycRequired": "Dem fit ask you for identity verification (KYC).",
-      "refundNotGuaranteed": "Refund without KYC no dey guaranteed.",
-      "support": "If dem flag am, Houdini 24/7 support fit help you with refund request or verification. Refund dey depend on wetin di exchange partner go check and wetin dem need.",
-      "acknowledge": "I understand say dis na separate third-party service, say dem fit hold my money, and say dem fit require KYC."
+      "disclaimer": "Dis swap dey use Houdini Swap third-party service plus centralized exchange partners. E no dey pass through THORChain.",
+      "routing": "Swaps dey pass through plenty exchanges so dat di source and destination addresses go dey confidential for chain. <link>Read More</link>.",
+      "support": "Houdini support team dey available 24/7 to helep you with any wahala. <link>Support</link>.",
+      "acknowledge": "I understand say na different service dis, no be THORChain dey provide am"
     }
   },
   "send": {

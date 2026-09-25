@@ -279,13 +279,10 @@
       "save": "Simpan"
     },
     "private": {
-      "disclaimer": "Transaksi ini tidak dieksekusi melalui protokol THORChain. Transaksi diproses melalui Houdini Swap, yang menggunakan mitra bursa terpusat untuk memprosesnya.",
-      "amlScreening": "Transaksi melalui penyaringan anti pencucian uang dan pencegahan pendanaan terorisme.",
-      "complianceHold": "Dana dapat ditahan untuk tinjauan kepatuhan.",
-      "kycRequired": "Verifikasi identitas (KYC) mungkin diperlukan.",
-      "refundNotGuaranteed": "Pengembalian dana tanpa KYC tidak dijamin.",
-      "support": "Jika ditandai, dukungan 24/7 Houdini dapat membantu permintaan pengembalian dana atau verifikasi. Pengembalian dana tunduk pada tinjauan dan persyaratan mitra bursa.",
-      "acknowledge": "Saya memahami bahwa ini adalah layanan pihak ketiga yang terpisah dan bahwa dana saya dapat ditahan serta KYC mungkin diperlukan."
+      "disclaimer": "Swap ini menggunakan layanan pihak ketiga Houdini Swap dan mitra bursa terpusat. Swap ini tidak melalui THORChain.",
+      "routing": "Swap dirutekan melalui beberapa bursa sehingga alamat asal dan tujuan bersifat rahasia di on-chain. <link>Selengkapnya</link>.",
+      "support": "Tim dukungan Houdini tersedia 24/7 untuk membantu setiap masalah. <link>Dukungan</link>.",
+      "acknowledge": "Saya memahami bahwa ini adalah layanan terpisah yang tidak disediakan oleh THORChain"
     }
   },
   "send": {

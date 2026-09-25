@@ -279,13 +279,10 @@
       "save": "Save"
     },
     "private": {
-      "disclaimer": "This trade does not execute through the THORChain protocol. It goes through Houdini Swap, which uses centralized exchange partners to process it.",
-      "amlScreening": "Transactions undergo anti-money laundering and counter-terrorist financing screening.",
-      "complianceHold": "Funds may be held for compliance review.",
-      "kycRequired": "Identity verification (KYC) may be required.",
-      "refundNotGuaranteed": "A refund without KYC is not guaranteed.",
-      "support": "If flagged, Houdini’s 24/7 support can assist with a refund request or verification. Refunds are subject to the exchange partner’s review and requirements.",
-      "acknowledge": "I understand this is a separate third-party service and that my funds may be held and KYC may be required."
+      "disclaimer": "This swap uses Houdini Swap’s third-party service and centralized exchange partners. It does not go through THORChain.",
+      "routing": "Swaps route through multiple exchanges so the source and destination addresses are confidential on chain. <link>Read More</link>.",
+      "support": "Houdini’s 24/7 support team is available to assist with any issues. <link>Support</link>.",
+      "acknowledge": "I understand this is a separate service not provided by THORChain"
     }
   },
   "send": {
