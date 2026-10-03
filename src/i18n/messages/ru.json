@@ -175,7 +175,8 @@
       "days": "Дни",
       "hours": "Часы",
       "minutes": "Минуты",
-      "maxExpiry": "Максимальный срок действия — {days} дн.",
+      "maxExpiryDuration": "Максимальный срок действия — {duration}",
+      "minExpiryDuration": "Срок действия должен быть больше {duration}",
       "apply": "Применить"
     },
     "limit": {

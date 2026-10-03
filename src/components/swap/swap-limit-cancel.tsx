@@ -23,7 +23,7 @@ import { SwapLimitExpiry } from '@/components/swap/swap-limit-expiry'
 import { GenericButton } from '@/components/generic-button'
 import { buttonVariants } from '@/components/theme-button'
 import { useMemolessAssets } from '@/hooks/use-memoless-assets'
-import { useIsMemolessHalted, useLimitSwapMaxAge } from '@/hooks/use-mimir'
+import { useIsLimitSwapPaused, useIsMemolessHalted, useLimitSwapMaxAge } from '@/hooks/use-mimir'
 import { useSelectedAccount } from '@/hooks/use-wallets'
 import { getInboundAddresses, getLimitSwaps, getTxStatus } from '@/lib/api'
 import { placeLimitOrder } from '@/lib/place-limit-order'
@@ -80,6 +80,7 @@ export const SwapLimitCancel = ({ isOpen, onOpenChange, mode, transaction }: Swa
   const { assets: memolessAssets } = useMemolessAssets()
   const isMemolessHalted = useIsMemolessHalted()
   const maxExpiryBlocks = useLimitSwapMaxAge()
+  const isLimitSwapPaused = useIsLimitSwapPaused()
 
   // If the window is closed while waiting, the global watcher picks the replacement up instead.
   useEffect(() => {
@@ -329,7 +330,7 @@ export const SwapLimitCancel = ({ isOpen, onOpenChange, mode, transaction }: Swa
       destination,
       sourceAddress: selectedAccount.address,
       pricePerUnit: price,
-      expiryBlocks
+      expiryBlocks: Math.min(expiryBlocks, maxExpiryBlocks)
     })
       .then(({ hash: newHash, route }) => {
         setTransaction({
@@ -646,20 +647,23 @@ export const SwapLimitCancel = ({ isOpen, onOpenChange, mode, transaction }: Swa
                         </div>
                       )}
                     </div>
-                    <Select
-                      value={expiryPreset === 'custom' ? '__custom__' : (expiryPreset ?? '__current__')}
-                      onValueChange={v => applyExpiryPreset(v as ExpiryPreset)}
-                    >
-                      <SelectTrigger className={cn(buttonVariants({ variant: 'secondarySmall' }), 'h-8 py-0')}>
-                        {t('limitCancel.changeExpiration')}
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="1h">{t('limit.oneHour')}</SelectItem>
-                        <SelectItem value="1d">{t('limit.oneDay')}</SelectItem>
-                        <SelectItem value="3d">{t('limit.threeDays')}</SelectItem>
-                        <SelectItem value="custom">{t('limit.custom')}</SelectItem>
-                      </SelectContent>
-                    </Select>
+                    {/* Changing the expiry re-places the order, which a paused limit queue would not take. */}
+                    {!isLimitSwapPaused && (
+                      <Select
+                        value={expiryPreset === 'custom' ? '__custom__' : (expiryPreset ?? '__current__')}
+                        onValueChange={v => applyExpiryPreset(v as ExpiryPreset)}
+                      >
+                        <SelectTrigger className={cn(buttonVariants({ variant: 'secondarySmall' }), 'h-8 py-0')}>
+                          {t('limitCancel.changeExpiration')}
+                        </SelectTrigger>
+                        <SelectContent>
+                          {maxExpiryBlocks >= BLOCKS_PER_HOUR && <SelectItem value="1h">{t('limit.oneHour')}</SelectItem>}
+                          {maxExpiryBlocks >= BLOCKS_PER_DAY && <SelectItem value="1d">{t('limit.oneDay')}</SelectItem>}
+                          {maxExpiryBlocks >= BLOCKS_PER_3_DAYS && <SelectItem value="3d">{t('limit.threeDays')}</SelectItem>}
+                          <SelectItem value="custom">{t('limit.custom')}</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    )}
                   </div>
                 </>
               )}

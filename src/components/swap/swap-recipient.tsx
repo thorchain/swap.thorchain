@@ -26,6 +26,7 @@ import { resolveQuoteError } from '@/lib/errors'
 import { prepareQuoteForLimitSwap } from '@/lib/memo-helpers'
 import { isMayaProvider, isPrivateSend, isTaprootAddress } from '@/lib/swap-helpers'
 import { cn, truncate } from '@/lib/utils'
+import { useIsLimitSwapPaused, useLimitSwapMaxAge } from '@/hooks/use-mimir'
 import { useIsLimitSwap, useLimitSwapBuyAmount, useLimitSwapExpiry } from '@/store/limit-swap-store'
 import { useReplacementOrder } from '@/store/replacement-order-store'
 import { WalletAccount } from '@/store/wallets-store'
@@ -48,6 +49,8 @@ export const SwapRecipient = ({ provider, onFetchQuote }: SwapRecipientProps) =>
   const isLimitSwap = useIsLimitSwap()
   const limitSwapBuyAmount = useLimitSwapBuyAmount()
   const limitSwapExpiry = useLimitSwapExpiry()
+  const limitSwapMaxAge = useLimitSwapMaxAge()
+  const isLimitSwapPaused = useIsLimitSwapPaused()
 
   const { valueFrom } = useSwap()
   const [quoting, setQuoting] = useState(false)
@@ -122,7 +125,7 @@ export const SwapRecipient = ({ provider, onFetchQuote }: SwapRecipientProps) =>
 
         // For THORChain limit orders, modify the memo to use limit order format
         if (isLimitSwap && isThorchain) {
-          quote = prepareQuoteForLimitSwap(quote, limitSwapBuyAmount, limitSwapExpiry)
+          quote = prepareQuoteForLimitSwap(quote, limitSwapBuyAmount, Math.min(limitSwapExpiry, limitSwapMaxAge))
         }
 
         onFetchQuote(quote)
@@ -143,6 +146,7 @@ export const SwapRecipient = ({ provider, onFetchQuote }: SwapRecipientProps) =>
     !isUnsupportedDestination &&
     !destinationCode.isChecking &&
     !quoting &&
+    !(isLimitSwap && isLimitSwapPaused) &&
     (refundRequired ? refundCheck.isValid && refundAddress.length : true)
 
   // A replacement for a cancelled limit order already knows its destination, so it skips this step:

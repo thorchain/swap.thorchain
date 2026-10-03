@@ -65,6 +65,12 @@ export const SwapLimit = ({ quote }: SwapLimitProps) => {
     setPendingLimitOrder(undefined)
   }, [pendingLimitOrder, setLimitSwapExpiry, setPendingLimitOrder])
 
+  // STREAMINGLIMITSWAPMAXAGE can drop while the form is open; THORChain would cut a longer expiry
+  // short anyway, so the chosen one follows the live maximum down.
+  useEffect(() => {
+    if (limitSwapExpiry > maxExpiryBlocks) setLimitSwapExpiry(maxExpiryBlocks)
+  }, [limitSwapExpiry, maxExpiryBlocks, setLimitSwapExpiry])
+
   useEffect(() => {
     if (!expectedBuyAmountPerUnit) return
     if (pricePerUnit === undefined) {
@@ -161,9 +167,9 @@ export const SwapLimit = ({ quote }: SwapLimitProps) => {
               {activeExpiryPreset === 'custom' ? customExpiryLabel : activeExpiryPreset || '1h'}
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="1h">{t('limit.oneHour')}</SelectItem>
-              <SelectItem value="1d">{t('limit.oneDay')}</SelectItem>
-              <SelectItem value="3d">{t('limit.threeDays')}</SelectItem>
+              {maxExpiryBlocks >= BLOCKS_PER_HOUR && <SelectItem value="1h">{t('limit.oneHour')}</SelectItem>}
+              {maxExpiryBlocks >= BLOCKS_PER_DAY && <SelectItem value="1d">{t('limit.oneDay')}</SelectItem>}
+              {maxExpiryBlocks >= BLOCKS_PER_3_DAYS && <SelectItem value="3d">{t('limit.threeDays')}</SelectItem>}
               <SelectItem value="custom">{t('limit.custom')}</SelectItem>
             </SelectContent>
           </Select>

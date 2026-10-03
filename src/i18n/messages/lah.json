@@ -175,7 +175,8 @@
       "days": "دن",
       "hours": "گھنٹے",
       "minutes": "منٹ",
-      "maxExpiry": "زیادہ سے زیادہ ختم ہوݨ دا ویلہ {days} دن اے",
+      "maxExpiryDuration": "ودھ توں ودھ میعاد {duration} اے",
+      "minExpiryDuration": "میعاد {duration} توں ودھ ہوݨی چاہیدی اے",
       "apply": "لاگو کرو"
     },
     "limit": {

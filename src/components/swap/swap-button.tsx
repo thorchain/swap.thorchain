@@ -10,7 +10,7 @@ import { useDialog } from '@/components/global-dialog'
 import { InstantSwapDialog } from '@/components/swap/instant-swap-dialog'
 import { SwapDialog } from '@/components/swap/swap-dialog'
 import { useBalance } from '@/hooks/use-balance'
-import { useIsMemolessHalted, useMimir } from '@/hooks/use-mimir'
+import { useIsLimitSwapPaused, useIsMemolessHalted, useMimir } from '@/hooks/use-mimir'
 import { useQuote } from '@/hooks/use-quote'
 import { useSimulation } from '@/hooks/use-simulation'
 import { useAssetFrom, useAssetTo, useSwap } from '@/hooks/use-swap'
@@ -52,8 +52,9 @@ export const SwapButton = ({ instantSwapSupported, instantSwapAvailable }: SwapB
   const { isLoading: isSimulating, approveData } = useSimulation()
   const { balance, isLoading: isBalanceLoading } = useBalance()
   const { mimir } = useMimir()
+  const isLimitSwapPaused = useIsLimitSwapPaused()
   const isMayaChain = isMayaProvider(quote?.providers[0])
-  const isLimitSwapDisabled = mimir['ENABLEADVSWAPQUEUE'] === 2 || isMayaChain
+  const isLimitSwapDisabled = mimir['ENABLEADVSWAPQUEUE'] === 2 || isLimitSwapPaused || isMayaChain
   const actionLabel = isLimitSwap
     ? t('button.enterLimitOrder')
     : isPrivateSend(isPrivateSwap, assetFrom, assetTo)

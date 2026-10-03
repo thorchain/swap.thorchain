@@ -1,10 +1,10 @@
 import { useQuery } from '@tanstack/react-query'
 import { getMayaMimir, getMimir } from '@/lib/api'
-import { DEFAULT_LIMIT_SWAP_MAX_AGE } from '@/lib/limit-swap'
+import { DEFAULT_LIMIT_SWAP_MAX_AGE, MIN_LIMIT_SWAP_MAX_AGE } from '@/lib/limit-swap'
 
 // Mimir carries kill switches (halted chains, HALTMEMOLESS, ENABLEADVSWAPQUEUE) that gate what the
-// UI offers, so it is polled instead of cached for the whole session.
-const MIMIR_REFRESH_MS = 5 * 60 * 1000
+// UI offers, so it is polled every minute for the screens to react while open.
+const MIMIR_REFRESH_MS = 60 * 1000
 
 export const useMimir = () => {
   const { data: mimir, isLoading } = useQuery({
@@ -39,9 +39,12 @@ export const useIsMemolessHalted = () => {
 }
 
 // THORChain expires a limit order `STREAMINGLIMITSWAPMAXAGE` blocks after it was placed, and
-// rejects any longer expiry set in the memo, so the UI caps its own picker with the live value.
+// ignores any longer expiry set in the memo, so the UI caps its own picker with the live value.
 export const useLimitSwapMaxAge = () => {
   const { mimir } = useMimir()
+  const maxAge = mimir['STREAMINGLIMITSWAPMAXAGE']
 
-  return mimir['STREAMINGLIMITSWAPMAXAGE'] || DEFAULT_LIMIT_SWAP_MAX_AGE
+  return maxAge > 0 ? maxAge : DEFAULT_LIMIT_SWAP_MAX_AGE
 }
+
+export const useIsLimitSwapPaused = () => useLimitSwapMaxAge() <= MIN_LIMIT_SWAP_MAX_AGE

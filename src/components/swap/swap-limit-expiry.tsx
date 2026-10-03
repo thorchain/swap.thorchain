@@ -4,7 +4,7 @@ import { AlertTriangle, X } from 'lucide-react'
 import { Dialog, DialogContent, DialogTitle } from '@/components/ui/dialog'
 import { GenericButton } from '@/components/generic-button'
 import { Input } from '@/components/ui/input'
-import { BLOCKS_PER_DAY, BLOCKS_PER_HOUR, BLOCKS_PER_MINUTE, DEFAULT_LIMIT_SWAP_MAX_AGE } from '@/lib/limit-swap'
+import { BLOCKS_PER_DAY, BLOCKS_PER_HOUR, BLOCKS_PER_MINUTE, DEFAULT_LIMIT_SWAP_MAX_AGE, formatBlockDuration, MIN_LIMIT_SWAP_MAX_AGE } from '@/lib/limit-swap'
 
 type SwapExpiryDialogProps = {
   isOpen: boolean
@@ -26,26 +26,23 @@ export const SwapLimitExpiry = ({
   initialMinutes = ''
 }: SwapExpiryDialogProps) => {
   const t = useTranslations('swap')
-  const maxDays = maxBlocks / BLOCKS_PER_DAY
   const [customDays, setCustomDays] = useState(initialDays)
   const [customHours, setCustomHours] = useState(initialHours)
   const [customMinutes, setCustomMinutes] = useState(initialMinutes)
 
-  const totalDays = useMemo(() => {
+  const totalBlocks = useMemo(() => {
     const days = parseFloat(customDays) || 0
     const hours = parseFloat(customHours) || 0
     const minutes = parseFloat(customMinutes) || 0
-    return days + hours / 24 + minutes / 1440
+    return Math.round(days * BLOCKS_PER_DAY + hours * BLOCKS_PER_HOUR + minutes * BLOCKS_PER_MINUTE)
   }, [customDays, customHours, customMinutes])
 
-  const exceedsMax = totalDays > maxDays
+  const exceedsMax = totalBlocks > maxBlocks
+  // An order this short would expire about as soon as it is queued - the same cutoff that pauses limit swaps.
+  const belowMin = totalBlocks > 0 && totalBlocks <= MIN_LIMIT_SWAP_MAX_AGE
 
   const handleApply = () => {
-    const days = parseFloat(customDays) || 0
-    const hours = parseFloat(customHours) || 0
-    const minutes = parseFloat(customMinutes) || 0
-    const totalBlocks = Math.round(days * BLOCKS_PER_DAY + hours * BLOCKS_PER_HOUR + minutes * BLOCKS_PER_MINUTE)
-    if (totalBlocks > 0) onApply(totalBlocks)
+    if (totalBlocks > MIN_LIMIT_SWAP_MAX_AGE) onApply(totalBlocks)
     onOpenChange(false)
   }
 
@@ -91,9 +88,15 @@ export const SwapLimitExpiry = ({
           ))}
         </div>
 
+        {belowMin && (
+          <div className="mb-4 flex items-center gap-2 rounded-xl bg-jacob/10 px-4 py-3 text-sm text-jacob">
+            <AlertTriangle className="size-4 shrink-0" /> {t('expiry.minExpiryDuration', { duration: formatBlockDuration(MIN_LIMIT_SWAP_MAX_AGE) })}
+          </div>
+        )}
+
         {exceedsMax && (
           <div className="mb-4 flex items-center gap-2 rounded-xl bg-jacob/10 px-4 py-3 text-sm text-jacob">
-            <AlertTriangle className="size-4 shrink-0" /> {t('expiry.maxExpiry', { days: maxDays })}
+            <AlertTriangle className="size-4 shrink-0" /> {t('expiry.maxExpiryDuration', { duration: formatBlockDuration(maxBlocks) })}
           </div>
         )}
 
@@ -102,7 +105,7 @@ export const SwapLimitExpiry = ({
           colorType="3"
           size="small"
           onClick={handleApply}
-          disabled={(!customDays && !customHours && !customMinutes) || exceedsMax}
+          disabled={(!customDays && !customHours && !customMinutes) || exceedsMax || belowMin}
         >
           {t('expiry.apply')}
         </GenericButton>

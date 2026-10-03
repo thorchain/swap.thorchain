@@ -175,7 +175,8 @@
       "days": "Days",
       "hours": "Hours",
       "minutes": "Minutes",
-      "maxExpiry": "Maximum expiry na {days} days",
+      "maxExpiryDuration": "Maximum expiry na {duration}",
+      "minExpiryDuration": "Expiry must long pass {duration}",
       "apply": "Apply"
     },
     "limit": {

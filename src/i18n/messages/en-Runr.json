@@ -175,7 +175,8 @@
       "days": "ᛞᚨᛁᛊ",
       "hours": "ᚺᛟᚢᚱᛊ",
       "minutes": "ᛗᛁᚾᚢᛏᛖᛊ",
-      "maxExpiry": "ᛗᚨᚲᛊᛁᛗᚢᛗ ᛖᚲᛊᛈᛁᚱᛁ ᛁᛊ {days} ᛞᚨᛁᛊ",
+      "maxExpiryDuration": "ᛗᚨᚲᛊᛁᛗᚢᛗ ᛖᚲᛊᛈᛁᚱᛁ ᛁᛊ {duration}",
+      "minExpiryDuration": "ᛖᚲᛊᛈᛁᚱᛁ ᛗᚢᛊᛏ ᛒᛖ ᛚᛟᛜᛖᚱ ᚦᚨᚾ {duration}",
       "apply": "ᚨᛈᛈᛚᛁ"
     },
     "limit": {

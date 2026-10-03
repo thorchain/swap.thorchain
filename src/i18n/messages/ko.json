@@ -175,7 +175,8 @@
       "days": "일",
       "hours": "시간",
       "minutes": "분",
-      "maxExpiry": "최대 만료 기간은 {days}일입니다",
+      "maxExpiryDuration": "최대 만료 시간은 {duration}입니다",
+      "minExpiryDuration": "만료 시간은 {duration}보다 길어야 합니다",
       "apply": "적용"
     },
     "limit": {

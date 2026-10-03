@@ -175,7 +175,8 @@
       "days": "দিন",
       "hours": "ঘণ্টা",
       "minutes": "মিনিট",
-      "maxExpiry": "সর্বোচ্চ মেয়াদ {days} দিন",
+      "maxExpiryDuration": "সর্বোচ্চ মেয়াদ {duration}",
+      "minExpiryDuration": "মেয়াদ {duration}-এর চেয়ে দীর্ঘ হতে হবে",
       "apply": "প্রয়োগ করুন"
     },
     "limit": {

@@ -175,7 +175,8 @@
       "days": "أيام",
       "hours": "ساعات",
       "minutes": "دقائق",
-      "maxExpiry": "أقصى مدة انتهاء هي {days} يومًا",
+      "maxExpiryDuration": "الحد الأقصى لمدة الانتهاء هو {duration}",
+      "minExpiryDuration": "يجب أن تكون مدة الانتهاء أطول من {duration}",
       "apply": "تطبيق"
     },
     "limit": {

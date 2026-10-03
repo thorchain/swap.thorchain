@@ -175,7 +175,8 @@
       "days": "วัน",
       "hours": "ชั่วโมง",
       "minutes": "นาที",
-      "maxExpiry": "การหมดอายุสูงสุดคือ {days} วัน",
+      "maxExpiryDuration": "ระยะเวลาหมดอายุสูงสุดคือ {duration}",
+      "minExpiryDuration": "ระยะเวลาหมดอายุต้องนานกว่า {duration}",
       "apply": "ใช้งาน"
     },
     "limit": {

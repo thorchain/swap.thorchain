@@ -175,7 +175,8 @@
       "days": "Gün",
       "hours": "Saat",
       "minutes": "Dakika",
-      "maxExpiry": "Maksimum sona erme süresi {days} gündür",
+      "maxExpiryDuration": "Maksimum geçerlilik süresi {duration}",
+      "minExpiryDuration": "Geçerlilik süresi {duration} değerinden uzun olmalıdır",
       "apply": "Uygula"
     },
     "limit": {

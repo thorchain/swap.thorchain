@@ -175,7 +175,8 @@
       "days": "Días",
       "hours": "Horas",
       "minutes": "Minutos",
-      "maxExpiry": "La expiración máxima es de {days} días",
+      "maxExpiryDuration": "El vencimiento máximo es {duration}",
+      "minExpiryDuration": "El vencimiento debe ser mayor que {duration}",
       "apply": "Aplicar"
     },
     "limit": {

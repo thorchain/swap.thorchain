@@ -175,7 +175,8 @@
       "days": "天",
       "hours": "小時",
       "minutes": "分鐘",
-      "maxExpiry": "最長有效期為{days}天",
+      "maxExpiryDuration": "最長到期時間為 {duration}",
+      "minExpiryDuration": "到期時間必須長於 {duration}",
       "apply": "套用"
     },
     "limit": {

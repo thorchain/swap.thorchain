@@ -175,7 +175,8 @@
       "days": "أيام",
       "hours": "ساعات",
       "minutes": "دقايق",
-      "maxExpiry": "أقصى مدة لانتهاء الصلاحية هي {days} يوم",
+      "maxExpiryDuration": "أقصى مدة صلاحية هي {duration}",
+      "minExpiryDuration": "مدة الصلاحية لازم تكون أطول من {duration}",
       "apply": "تطبيق"
     },
     "limit": {

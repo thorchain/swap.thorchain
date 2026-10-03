@@ -175,7 +175,8 @@
       "days": "Ngày",
       "hours": "Giờ",
       "minutes": "Phút",
-      "maxExpiry": "Thời gian hết hạn tối đa là {days} ngày",
+      "maxExpiryDuration": "Thời hạn tối đa là {duration}",
+      "minExpiryDuration": "Thời hạn phải dài hơn {duration}",
       "apply": "Áp dụng"
     },
     "limit": {

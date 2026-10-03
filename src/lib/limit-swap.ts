@@ -16,6 +16,11 @@ export const ORDER_POLL_MS = 15_000
 // default and the fallback when mimir has not loaded yet.
 export const DEFAULT_LIMIT_SWAP_MAX_AGE = BLOCKS_PER_3_DAYS
 
+// Node operators pause limit orders by dropping STREAMINGLIMITSWAPMAXAGE to a handful of blocks
+// rather than flipping ENABLEADVSWAPQUEUE. At a minute or less an order would expire about as soon
+// as it is queued, so the limit flow is treated as unavailable.
+export const MIN_LIMIT_SWAP_MAX_AGE = BLOCKS_PER_MINUTE
+
 const blocksToMs = (blocks: number) => (blocks / BLOCKS_PER_MINUTE) * 60 * 1000
 
 export const blocksToDate = (blocks: number) => new Date(Date.now() + blocksToMs(blocks))

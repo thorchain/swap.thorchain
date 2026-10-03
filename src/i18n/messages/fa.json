@@ -175,7 +175,8 @@
       "days": "روز",
       "hours": "ساعت",
       "minutes": "دقیقه",
-      "maxExpiry": "حداکثر انقضا {days} روز است",
+      "maxExpiryDuration": "حداکثر زمان انقضا {duration} است",
+      "minExpiryDuration": "زمان انقضا باید بیشتر از {duration} باشد",
       "apply": "اعمال"
     },
     "limit": {

@@ -175,7 +175,8 @@
       "days": "दिन",
       "hours": "घंटे",
       "minutes": "मिनट",
-      "maxExpiry": "अधिकतम समाप्ति {days} दिन है",
+      "maxExpiryDuration": "अधिकतम समाप्ति {duration} है",
+      "minExpiryDuration": "समाप्ति अवधि {duration} से अधिक होनी चाहिए",
       "apply": "लागू करें"
     },
     "limit": {

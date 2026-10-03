@@ -175,7 +175,8 @@
       "days": "Hari",
       "hours": "Jam",
       "minutes": "Menit",
-      "maxExpiry": "Kedaluwarsa maksimum adalah {days} hari",
+      "maxExpiryDuration": "Kedaluwarsa maksimum adalah {duration}",
+      "minExpiryDuration": "Kedaluwarsa harus lebih lama dari {duration}",
       "apply": "Terapkan"
     },
     "limit": {

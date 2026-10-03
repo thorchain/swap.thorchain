@@ -175,7 +175,8 @@
       "days": "دن",
       "hours": "گھنٹے",
       "minutes": "منٹ",
-      "maxExpiry": "زیادہ سے زیادہ میعاد {days} دن ہے",
+      "maxExpiryDuration": "زیادہ سے زیادہ میعاد {duration} ہے",
+      "minExpiryDuration": "میعاد {duration} سے زیادہ ہونی چاہیے",
       "apply": "لاگو کریں"
     },
     "limit": {

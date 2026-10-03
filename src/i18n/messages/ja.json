@@ -175,7 +175,8 @@
       "days": "日",
       "hours": "時間",
       "minutes": "分",
-      "maxExpiry": "最大有効期限は{days}日です",
+      "maxExpiryDuration": "最大有効期限は{duration}です",
+      "minExpiryDuration": "有効期限は{duration}より長く設定してください",
       "apply": "適用"
     },
     "limit": {
