@@ -508,6 +508,7 @@
   "tx.sourceAddress": ["Source Address", "Адрес отправителя"],
   "tx.destinationAddress": ["Destination Address", "Адрес получателя"],
   "tx.remaining": ["{time} remaining", "Осталось {time}"],
+  "tx.sentTo": ["To {address}", "Получателю {address}"],
   "tx.status.not_started": ["Deposit Pending", "Ожидание депозита", "Депозит в обработке"],
   "tx.status.pending": ["Pending", "В ожидании", "В обработке"],
   "tx.status.swapping": ["Swapping", "Обмен"],
@@ -517,11 +518,10 @@
   "tx.status.expired": ["Expired", "Истекло"],
   "tx.status.refunded": ["Refunded", "Возвращено"],
   "tx.status.unknown": ["Unknown", "Неизвестно"],
+  "tx.status.sent": ["Sent", "Отправлено"],
+  "tx.status.broadcast": ["Submitted", "Отправлено в сеть"],
   "tx.leg.deposit": ["Deposit {ticker}", "Внести {ticker}"],
   "tx.leg.send": ["Send {ticker}", "Отправить {ticker}"],
   "tx.leg.privateRoute": ["Route {ticker} privately", "Приватный маршрут для {ticker}"],
-  "tx.leg.swap": ["Swap {from} to {to}", "Обменять {from} на {to}"],
-  "tx.sentTo": ["To {address}", "Получателю {address}"],
-  "tx.status.sent": ["Sent", "Отправлено"],
-  "tx.status.broadcast": ["Submitted", "Отправлено в сеть"]
+  "tx.leg.swap": ["Swap {from} to {to}", "Обменять {from} на {to}"]
 }

@@ -508,6 +508,7 @@
   "tx.sourceAddress": ["Source Address", "آدرس مبدأ"],
   "tx.destinationAddress": ["Destination Address", "آدرس مقصد"],
   "tx.remaining": ["{time} remaining", "{time} باقی‌مانده"],
+  "tx.sentTo": ["To {address}", "به {address}"],
   "tx.status.not_started": ["Deposit Pending", "در انتظار واریز"],
   "tx.status.pending": ["Pending", "در انتظار"],
   "tx.status.swapping": ["Swapping", "در حال تبادل"],
@@ -517,11 +518,10 @@
   "tx.status.expired": ["Expired", "منقضی‌شده"],
   "tx.status.refunded": ["Refunded", "بازپرداخت‌شده"],
   "tx.status.unknown": ["Unknown", "نامشخص"],
+  "tx.status.sent": ["Sent", "ارسال شد"],
+  "tx.status.broadcast": ["Submitted", "ثبت شد"],
   "tx.leg.deposit": ["Deposit {ticker}", "واریز {ticker}"],
   "tx.leg.send": ["Send {ticker}", "ارسال {ticker}"],
   "tx.leg.privateRoute": ["Route {ticker} privately", "مسیریابی {ticker} به‌صورت خصوصی"],
-  "tx.leg.swap": ["Swap {from} to {to}", "تبادل {from} به {to}"],
-  "tx.sentTo": ["To {address}", "به {address}"],
-  "tx.status.sent": ["Sent", "ارسال شد"],
-  "tx.status.broadcast": ["Submitted", "ثبت شد"]
+  "tx.leg.swap": ["Swap {from} to {to}", "تبادل {from} به {to}"]
 }

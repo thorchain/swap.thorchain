@@ -508,6 +508,7 @@
   "tx.sourceAddress": ["Source Address", "ที่อยู่ต้นทาง"],
   "tx.destinationAddress": ["Destination Address", "ที่อยู่ปลายทาง"],
   "tx.remaining": ["{time} remaining", "เหลืออีก {time}"],
+  "tx.sentTo": ["To {address}", "ไปยัง {address}"],
   "tx.status.not_started": ["Deposit Pending", "รอการฝากเงิน"],
   "tx.status.pending": ["Pending", "รอดำเนินการ"],
   "tx.status.swapping": ["Swapping", "กำลังแลกเปลี่ยน"],
@@ -517,11 +518,10 @@
   "tx.status.expired": ["Expired", "หมดอายุ"],
   "tx.status.refunded": ["Refunded", "คืนเงินแล้ว"],
   "tx.status.unknown": ["Unknown", "ไม่ทราบ"],
+  "tx.status.sent": ["Sent", "ส่งแล้ว"],
+  "tx.status.broadcast": ["Submitted", "ส่งคำสั่งแล้ว"],
   "tx.leg.deposit": ["Deposit {ticker}", "ฝาก {ticker}"],
   "tx.leg.send": ["Send {ticker}", "ส่ง {ticker}"],
   "tx.leg.privateRoute": ["Route {ticker} privately", "กำหนดเส้นทาง {ticker} แบบส่วนตัว"],
-  "tx.leg.swap": ["Swap {from} to {to}", "แลกเปลี่ยน {from} เป็น {to}"],
-  "tx.sentTo": ["To {address}", "ไปยัง {address}"],
-  "tx.status.sent": ["Sent", "ส่งแล้ว"],
-  "tx.status.broadcast": ["Submitted", "ส่งคำสั่งแล้ว"]
+  "tx.leg.swap": ["Swap {from} to {to}", "แลกเปลี่ยน {from} เป็น {to}"]
 }

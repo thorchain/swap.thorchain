@@ -508,6 +508,7 @@
   "tx.sourceAddress": ["Source Address", "Kaynak Adres"],
   "tx.destinationAddress": ["Destination Address", "Hedef Adres"],
   "tx.remaining": ["{time} remaining", "{time} kaldı"],
+  "tx.sentTo": ["To {address}", "Alıcı: {address}"],
   "tx.status.not_started": ["Deposit Pending", "Yatırma Bekleniyor"],
   "tx.status.pending": ["Pending", "Beklemede"],
   "tx.status.swapping": ["Swapping", "Takas ediliyor"],
@@ -517,11 +518,10 @@
   "tx.status.expired": ["Expired", "Süresi doldu"],
   "tx.status.refunded": ["Refunded", "İade edildi"],
   "tx.status.unknown": ["Unknown", "Bilinmiyor"],
+  "tx.status.sent": ["Sent", "Gönderildi"],
+  "tx.status.broadcast": ["Submitted", "İletildi"],
   "tx.leg.deposit": ["Deposit {ticker}", "{ticker} Yatır"],
   "tx.leg.send": ["Send {ticker}", "{ticker} Gönder"],
   "tx.leg.privateRoute": ["Route {ticker} privately", "{ticker} gizli olarak yönlendir"],
-  "tx.leg.swap": ["Swap {from} to {to}", "{from} → {to} Takas"],
-  "tx.sentTo": ["To {address}", "Alıcı: {address}"],
-  "tx.status.sent": ["Sent", "Gönderildi"],
-  "tx.status.broadcast": ["Submitted", "İletildi"]
+  "tx.leg.swap": ["Swap {from} to {to}", "{from} → {to} Takas"]
 }

@@ -508,6 +508,7 @@
   "tx.sourceAddress": ["Source Address", "উৎস ঠিকানা"],
   "tx.destinationAddress": ["Destination Address", "গন্তব্য ঠিকানা"],
   "tx.remaining": ["{time} remaining", "{time} বাকি"],
+  "tx.sentTo": ["To {address}", "{address} এ"],
   "tx.status.not_started": ["Deposit Pending", "ডিপোজিট মুলতুবি"],
   "tx.status.pending": ["Pending", "মুলতুবি"],
   "tx.status.swapping": ["Swapping", "সোয়াপ করা হচ্ছে"],
@@ -517,11 +518,10 @@
   "tx.status.expired": ["Expired", "মেয়াদ শেষ"],
   "tx.status.refunded": ["Refunded", "ফেরত দেওয়া হয়েছে"],
   "tx.status.unknown": ["Unknown", "অজানা"],
+  "tx.status.sent": ["Sent", "পাঠানো হয়েছে"],
+  "tx.status.broadcast": ["Submitted", "জমা দেওয়া হয়েছে"],
   "tx.leg.deposit": ["Deposit {ticker}", "{ticker} ডিপোজিট করুন"],
   "tx.leg.send": ["Send {ticker}", "{ticker} পাঠান"],
   "tx.leg.privateRoute": ["Route {ticker} privately", "{ticker} গোপনে রুট করুন"],
-  "tx.leg.swap": ["Swap {from} to {to}", "{from} থেকে {to} সোয়াপ করুন"],
-  "tx.sentTo": ["To {address}", "{address} এ"],
-  "tx.status.sent": ["Sent", "পাঠানো হয়েছে"],
-  "tx.status.broadcast": ["Submitted", "জমা দেওয়া হয়েছে"]
+  "tx.leg.swap": ["Swap {from} to {to}", "{from} থেকে {to} সোয়াপ করুন"]
 }

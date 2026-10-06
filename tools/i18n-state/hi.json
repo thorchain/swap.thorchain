@@ -508,6 +508,7 @@
   "tx.sourceAddress": ["Source Address", "स्रोत पता"],
   "tx.destinationAddress": ["Destination Address", "गंतव्य पता"],
   "tx.remaining": ["{time} remaining", "{time} शेष"],
+  "tx.sentTo": ["To {address}", "{address} को"],
   "tx.status.not_started": ["Deposit Pending", "जमा लंबित"],
   "tx.status.pending": ["Pending", "लंबित"],
   "tx.status.swapping": ["Swapping", "स्वैप किया जा रहा है"],
@@ -517,11 +518,10 @@
   "tx.status.expired": ["Expired", "समाप्त"],
   "tx.status.refunded": ["Refunded", "रिफंड किया गया"],
   "tx.status.unknown": ["Unknown", "अज्ञात"],
+  "tx.status.sent": ["Sent", "भेजा गया"],
+  "tx.status.broadcast": ["Submitted", "सबमिट किया गया"],
   "tx.leg.deposit": ["Deposit {ticker}", "{ticker} जमा करें"],
   "tx.leg.send": ["Send {ticker}", "{ticker} भेजें"],
   "tx.leg.privateRoute": ["Route {ticker} privately", "{ticker} को निजी तौर पर रूट करें"],
-  "tx.leg.swap": ["Swap {from} to {to}", "{from} को {to} में स्वैप करें"],
-  "tx.sentTo": ["To {address}", "{address} को"],
-  "tx.status.sent": ["Sent", "भेजा गया"],
-  "tx.status.broadcast": ["Submitted", "सबमिट किया गया"]
+  "tx.leg.swap": ["Swap {from} to {to}", "{from} को {to} में स्वैप करें"]
 }

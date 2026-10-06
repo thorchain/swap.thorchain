@@ -508,6 +508,7 @@
   "tx.sourceAddress": ["Source Address", "Source پتہ"],
   "tx.destinationAddress": ["Destination Address", "Destination پتہ"],
   "tx.remaining": ["{time} remaining", "{time} باقی"],
+  "tx.sentTo": ["To {address}", "{address} نوں"],
   "tx.status.not_started": ["Deposit Pending", "ڈیپازٹ بقایا"],
   "tx.status.pending": ["Pending", "بقایا"],
   "tx.status.swapping": ["Swapping", "تبادلہ پیا ہوندا اے"],
@@ -517,11 +518,10 @@
   "tx.status.expired": ["Expired", "ختم ہو گیا"],
   "tx.status.refunded": ["Refunded", "واپس کیتا"],
   "tx.status.unknown": ["Unknown", "اݨ جاݨیا"],
+  "tx.status.sent": ["Sent", "بھیجیا گیا"],
+  "tx.status.broadcast": ["Submitted", "جمع کرایا گیا"],
   "tx.leg.deposit": ["Deposit {ticker}", "{ticker} ڈیپازٹ کرو"],
   "tx.leg.send": ["Send {ticker}", "{ticker} بھیجو"],
   "tx.leg.privateRoute": ["Route {ticker} privately", "{ticker} نوں نجی طور تے روٹ کرو"],
-  "tx.leg.swap": ["Swap {from} to {to}", "{from} نوں {to} وچ تبادلہ کرو"],
-  "tx.sentTo": ["To {address}", "{address} نوں"],
-  "tx.status.sent": ["Sent", "بھیجیا گیا"],
-  "tx.status.broadcast": ["Submitted", "جمع کرایا گیا"]
+  "tx.leg.swap": ["Swap {from} to {to}", "{from} نوں {to} وچ تبادلہ کرو"]
 }

@@ -508,6 +508,7 @@
   "tx.sourceAddress": ["Source Address", "Địa chỉ nguồn"],
   "tx.destinationAddress": ["Destination Address", "Địa chỉ đích"],
   "tx.remaining": ["{time} remaining", "Còn lại {time}"],
+  "tx.sentTo": ["To {address}", "Đến {address}"],
   "tx.status.not_started": ["Deposit Pending", "Đang chờ nạp tiền"],
   "tx.status.pending": ["Pending", "Đang chờ"],
   "tx.status.swapping": ["Swapping", "Đang hoán đổi"],
@@ -517,11 +518,10 @@
   "tx.status.expired": ["Expired", "Đã hết hạn"],
   "tx.status.refunded": ["Refunded", "Đã hoàn tiền"],
   "tx.status.unknown": ["Unknown", "Không xác định"],
+  "tx.status.sent": ["Sent", "Đã gửi"],
+  "tx.status.broadcast": ["Submitted", "Đã gửi lên mạng"],
   "tx.leg.deposit": ["Deposit {ticker}", "Nạp {ticker}"],
   "tx.leg.send": ["Send {ticker}", "Gửi {ticker}"],
   "tx.leg.privateRoute": ["Route {ticker} privately", "Định tuyến {ticker} riêng tư"],
-  "tx.leg.swap": ["Swap {from} to {to}", "Hoán đổi {from} sang {to}"],
-  "tx.sentTo": ["To {address}", "Đến {address}"],
-  "tx.status.sent": ["Sent", "Đã gửi"],
-  "tx.status.broadcast": ["Submitted", "Đã gửi lên mạng"]
+  "tx.leg.swap": ["Swap {from} to {to}", "Hoán đổi {from} sang {to}"]
 }

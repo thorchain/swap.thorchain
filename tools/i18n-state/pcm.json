@@ -508,6 +508,7 @@
   "tx.sourceAddress": ["Source Address", "Source Address"],
   "tx.destinationAddress": ["Destination Address", "Destination Address"],
   "tx.remaining": ["{time} remaining", "{time} remain"],
+  "tx.sentTo": ["To {address}", "To {address}"],
   "tx.status.not_started": ["Deposit Pending", "Deposit Dey Pending"],
   "tx.status.pending": ["Pending", "Pending"],
   "tx.status.swapping": ["Swapping", "Dey Swap"],
@@ -517,11 +518,10 @@
   "tx.status.expired": ["Expired", "E Don Expire"],
   "tx.status.refunded": ["Refunded", "Refunded"],
   "tx.status.unknown": ["Unknown", "We no sabi"],
+  "tx.status.sent": ["Sent", "Don Send"],
+  "tx.status.broadcast": ["Submitted", "Don Submit"],
   "tx.leg.deposit": ["Deposit {ticker}", "Deposit {ticker}"],
   "tx.leg.send": ["Send {ticker}", "Send {ticker}"],
   "tx.leg.privateRoute": ["Route {ticker} privately", "Carry {ticker} pass private road"],
-  "tx.leg.swap": ["Swap {from} to {to}", "Swap {from} to {to}"],
-  "tx.sentTo": ["To {address}", "To {address}"],
-  "tx.status.sent": ["Sent", "Don Send"],
-  "tx.status.broadcast": ["Submitted", "Don Submit"]
+  "tx.leg.swap": ["Swap {from} to {to}", "Swap {from} to {to}"]
 }

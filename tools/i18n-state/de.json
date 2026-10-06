@@ -508,6 +508,7 @@
   "tx.sourceAddress": ["Source Address", "Quelladresse"],
   "tx.destinationAddress": ["Destination Address", "Zieladresse"],
   "tx.remaining": ["{time} remaining", "{time} verbleibend"],
+  "tx.sentTo": ["To {address}", "An {address}"],
   "tx.status.not_started": ["Deposit Pending", "Einzahlung ausstehend"],
   "tx.status.pending": ["Pending", "Ausstehend"],
   "tx.status.swapping": ["Swapping", "Swap läuft"],
@@ -517,11 +518,10 @@
   "tx.status.expired": ["Expired", "Abgelaufen"],
   "tx.status.refunded": ["Refunded", "Erstattet"],
   "tx.status.unknown": ["Unknown", "Unbekannt"],
+  "tx.status.sent": ["Sent", "Gesendet"],
+  "tx.status.broadcast": ["Submitted", "Übermittelt"],
   "tx.leg.deposit": ["Deposit {ticker}", "{ticker} einzahlen"],
   "tx.leg.send": ["Send {ticker}", "{ticker} senden"],
   "tx.leg.privateRoute": ["Route {ticker} privately", "{ticker} privat routen"],
-  "tx.leg.swap": ["Swap {from} to {to}", "{from} zu {to} swappen"],
-  "tx.sentTo": ["To {address}", "An {address}"],
-  "tx.status.sent": ["Sent", "Gesendet"],
-  "tx.status.broadcast": ["Submitted", "Übermittelt"]
+  "tx.leg.swap": ["Swap {from} to {to}", "{from} zu {to} swappen"]
 }

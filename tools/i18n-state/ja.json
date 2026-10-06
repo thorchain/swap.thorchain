@@ -508,6 +508,7 @@
   "tx.sourceAddress": ["Source Address", "送信元アドレス"],
   "tx.destinationAddress": ["Destination Address", "送信先アドレス"],
   "tx.remaining": ["{time} remaining", "残り{time}"],
+  "tx.sentTo": ["To {address}", "送信先 {address}"],
   "tx.status.not_started": ["Deposit Pending", "預け入れ保留中"],
   "tx.status.pending": ["Pending", "保留中"],
   "tx.status.swapping": ["Swapping", "スワップ中"],
@@ -517,11 +518,10 @@
   "tx.status.expired": ["Expired", "期限切れ"],
   "tx.status.refunded": ["Refunded", "返金済み"],
   "tx.status.unknown": ["Unknown", "不明"],
+  "tx.status.sent": ["Sent", "送信済み"],
+  "tx.status.broadcast": ["Submitted", "送信中", "送信受付済み"],
   "tx.leg.deposit": ["Deposit {ticker}", "{ticker} を預け入れ"],
   "tx.leg.send": ["Send {ticker}", "{ticker} を送信"],
   "tx.leg.privateRoute": ["Route {ticker} privately", "{ticker} をプライベートにルーティング"],
-  "tx.leg.swap": ["Swap {from} to {to}", "{from} を {to} にスワップ"],
-  "tx.sentTo": ["To {address}", "送信先 {address}"],
-  "tx.status.sent": ["Sent", "送信済み"],
-  "tx.status.broadcast": ["Submitted", "送信中"]
+  "tx.leg.swap": ["Swap {from} to {to}", "{from} を {to} にスワップ"]
 }

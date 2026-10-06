@@ -508,6 +508,7 @@
   "tx.sourceAddress": ["Source Address", "Alamat sumber"],
   "tx.destinationAddress": ["Destination Address", "Alamat tujuan"],
   "tx.remaining": ["{time} remaining", "{time} tersisa"],
+  "tx.sentTo": ["To {address}", "Ke {address}"],
   "tx.status.not_started": ["Deposit Pending", "Deposit tertunda"],
   "tx.status.pending": ["Pending", "Tertunda"],
   "tx.status.swapping": ["Swapping", "Menukar"],
@@ -517,11 +518,10 @@
   "tx.status.expired": ["Expired", "Kedaluwarsa"],
   "tx.status.refunded": ["Refunded", "Dikembalikan"],
   "tx.status.unknown": ["Unknown", "Tidak diketahui"],
+  "tx.status.sent": ["Sent", "Terkirim"],
+  "tx.status.broadcast": ["Submitted", "Dikirim"],
   "tx.leg.deposit": ["Deposit {ticker}", "Deposit {ticker}"],
   "tx.leg.send": ["Send {ticker}", "Kirim {ticker}"],
   "tx.leg.privateRoute": ["Route {ticker} privately", "Rutekan {ticker} secara privat"],
-  "tx.leg.swap": ["Swap {from} to {to}", "Tukar {from} ke {to}"],
-  "tx.sentTo": ["To {address}", "Ke {address}"],
-  "tx.status.sent": ["Sent", "Terkirim"],
-  "tx.status.broadcast": ["Submitted", "Dikirim"]
+  "tx.leg.swap": ["Swap {from} to {to}", "Tukar {from} ke {to}"]
 }

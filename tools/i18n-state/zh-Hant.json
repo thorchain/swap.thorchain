@@ -508,6 +508,7 @@
   "tx.sourceAddress": ["Source Address", "來源地址"],
   "tx.destinationAddress": ["Destination Address", "目標地址"],
   "tx.remaining": ["{time} remaining", "剩餘{time}"],
+  "tx.sentTo": ["To {address}", "至 {address}"],
   "tx.status.not_started": ["Deposit Pending", "等待存款"],
   "tx.status.pending": ["Pending", "處理中"],
   "tx.status.swapping": ["Swapping", "兌換中"],
@@ -517,11 +518,10 @@
   "tx.status.expired": ["Expired", "已過期"],
   "tx.status.refunded": ["Refunded", "已退款"],
   "tx.status.unknown": ["Unknown", "未知"],
+  "tx.status.sent": ["Sent", "已送出"],
+  "tx.status.broadcast": ["Submitted", "已提交"],
   "tx.leg.deposit": ["Deposit {ticker}", "存入{ticker}"],
   "tx.leg.send": ["Send {ticker}", "發送{ticker}"],
   "tx.leg.privateRoute": ["Route {ticker} privately", "以私密方式轉送 {ticker}"],
-  "tx.leg.swap": ["Swap {from} to {to}", "將{from}兌換為{to}"],
-  "tx.sentTo": ["To {address}", "至 {address}"],
-  "tx.status.sent": ["Sent", "已送出"],
-  "tx.status.broadcast": ["Submitted", "已提交"]
+  "tx.leg.swap": ["Swap {from} to {to}", "將{from}兌換為{to}"]
 }

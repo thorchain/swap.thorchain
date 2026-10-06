@@ -508,6 +508,7 @@
   "tx.sourceAddress": ["Source Address", "عنوان المصدر"],
   "tx.destinationAddress": ["Destination Address", "عنوان الوجهة"],
   "tx.remaining": ["{time} remaining", "باقي {time}"],
+  "tx.sentTo": ["To {address}", "لـ {address}"],
   "tx.status.not_started": ["Deposit Pending", "الإيداع معلّق"],
   "tx.status.pending": ["Pending", "قيد الانتظار"],
   "tx.status.swapping": ["Swapping", "جاري التبديل"],
@@ -517,11 +518,10 @@
   "tx.status.expired": ["Expired", "منتهي الصلاحية"],
   "tx.status.refunded": ["Refunded", "تم الاسترداد"],
   "tx.status.unknown": ["Unknown", "غير معروف"],
+  "tx.status.sent": ["Sent", "تم الإرسال"],
+  "tx.status.broadcast": ["Submitted", "تم التقديم"],
   "tx.leg.deposit": ["Deposit {ticker}", "إيداع {ticker}"],
   "tx.leg.send": ["Send {ticker}", "إرسال {ticker}"],
   "tx.leg.privateRoute": ["Route {ticker} privately", "وجّه {ticker} بشكل خاص"],
-  "tx.leg.swap": ["Swap {from} to {to}", "تبديل {from} إلى {to}"],
-  "tx.sentTo": ["To {address}", "لـ {address}"],
-  "tx.status.sent": ["Sent", "تم الإرسال"],
-  "tx.status.broadcast": ["Submitted", "تم التقديم"]
+  "tx.leg.swap": ["Swap {from} to {to}", "تبديل {from} إلى {to}"]
 }
