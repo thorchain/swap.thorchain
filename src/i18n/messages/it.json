@@ -611,6 +611,7 @@
     "sourceAddress": "Indirizzo di origine",
     "destinationAddress": "Indirizzo di destinazione",
     "remaining": "{time} rimanenti",
+    "sentTo": "A {address}",
     "status": {
       "not_started": "Deposito in sospeso",
       "pending": "In sospeso",
@@ -620,7 +621,9 @@
       "failed": "Non riuscito",
       "expired": "Scaduto",
       "refunded": "Rimborsato",
-      "unknown": "Sconosciuto"
+      "unknown": "Sconosciuto",
+      "sent": "Inviato",
+      "broadcast": "Trasmesso"
     },
     "leg": {
       "deposit": "Deposita {ticker}",

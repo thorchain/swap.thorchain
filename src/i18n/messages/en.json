@@ -611,6 +611,7 @@
     "sourceAddress": "Source Address",
     "destinationAddress": "Destination Address",
     "remaining": "{time} remaining",
+    "sentTo": "To {address}",
     "status": {
       "not_started": "Deposit Pending",
       "pending": "Pending",
@@ -620,7 +621,9 @@
       "failed": "Failed",
       "expired": "Expired",
       "refunded": "Refunded",
-      "unknown": "Unknown"
+      "unknown": "Unknown",
+      "sent": "Sent",
+      "broadcast": "Submitted"
     },
     "leg": {
       "deposit": "Deposit {ticker}",

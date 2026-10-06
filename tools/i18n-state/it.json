@@ -520,5 +520,8 @@
   "tx.leg.deposit": ["Deposit {ticker}", "Deposita {ticker}"],
   "tx.leg.send": ["Send {ticker}", "Invia {ticker}"],
   "tx.leg.privateRoute": ["Route {ticker} privately", "Instrada {ticker} privatamente"],
-  "tx.leg.swap": ["Swap {from} to {to}", "Scambia {from} con {to}"]
+  "tx.leg.swap": ["Swap {from} to {to}", "Scambia {from} con {to}"],
+  "tx.sentTo": ["To {address}", "A {address}"],
+  "tx.status.sent": ["Sent", "Inviato"],
+  "tx.status.broadcast": ["Submitted", "Inviata"]
 }

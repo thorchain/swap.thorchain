@@ -611,6 +611,7 @@
     "sourceAddress": "Adresse source",
     "destinationAddress": "Adresse de destination",
     "remaining": "{time} restant",
+    "sentTo": "Vers {address}",
     "status": {
       "not_started": "Dépôt en attente",
       "pending": "En attente",
@@ -620,7 +621,9 @@
       "failed": "Échoué",
       "expired": "Expiré",
       "refunded": "Remboursé",
-      "unknown": "Inconnu"
+      "unknown": "Inconnu",
+      "sent": "Envoyé",
+      "broadcast": "Soumis"
     },
     "leg": {
       "deposit": "Déposer {ticker}",

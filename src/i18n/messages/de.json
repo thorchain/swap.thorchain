@@ -611,6 +611,7 @@
     "sourceAddress": "Quelladresse",
     "destinationAddress": "Zieladresse",
     "remaining": "{time} verbleibend",
+    "sentTo": "An {address}",
     "status": {
       "not_started": "Einzahlung ausstehend",
       "pending": "Ausstehend",
@@ -620,7 +621,9 @@
       "failed": "Fehlgeschlagen",
       "expired": "Abgelaufen",
       "refunded": "Erstattet",
-      "unknown": "Unbekannt"
+      "unknown": "Unbekannt",
+      "sent": "Gesendet",
+      "broadcast": "Übermittelt"
     },
     "leg": {
       "deposit": "{ticker} einzahlen",

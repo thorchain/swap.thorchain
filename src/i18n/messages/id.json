@@ -611,6 +611,7 @@
     "sourceAddress": "Alamat sumber",
     "destinationAddress": "Alamat tujuan",
     "remaining": "{time} tersisa",
+    "sentTo": "Ke {address}",
     "status": {
       "not_started": "Deposit tertunda",
       "pending": "Tertunda",
@@ -620,7 +621,9 @@
       "failed": "Gagal",
       "expired": "Kedaluwarsa",
       "refunded": "Dikembalikan",
-      "unknown": "Tidak diketahui"
+      "unknown": "Tidak diketahui",
+      "sent": "Terkirim",
+      "broadcast": "Dikirim"
     },
     "leg": {
       "deposit": "Deposit {ticker}",

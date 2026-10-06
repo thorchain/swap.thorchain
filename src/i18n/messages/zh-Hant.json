@@ -611,6 +611,7 @@
     "sourceAddress": "來源地址",
     "destinationAddress": "目標地址",
     "remaining": "剩餘{time}",
+    "sentTo": "至 {address}",
     "status": {
       "not_started": "等待存款",
       "pending": "處理中",
@@ -620,7 +621,9 @@
       "failed": "失敗",
       "expired": "已過期",
       "refunded": "已退款",
-      "unknown": "未知"
+      "unknown": "未知",
+      "sent": "已送出",
+      "broadcast": "已提交"
     },
     "leg": {
       "deposit": "存入{ticker}",

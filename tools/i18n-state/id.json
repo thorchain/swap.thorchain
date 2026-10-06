@@ -520,5 +520,8 @@
   "tx.leg.deposit": ["Deposit {ticker}", "Deposit {ticker}"],
   "tx.leg.send": ["Send {ticker}", "Kirim {ticker}"],
   "tx.leg.privateRoute": ["Route {ticker} privately", "Rutekan {ticker} secara privat"],
-  "tx.leg.swap": ["Swap {from} to {to}", "Tukar {from} ke {to}"]
+  "tx.leg.swap": ["Swap {from} to {to}", "Tukar {from} ke {to}"],
+  "tx.sentTo": ["To {address}", "Ke {address}"],
+  "tx.status.sent": ["Sent", "Terkirim"],
+  "tx.status.broadcast": ["Submitted", "Dikirim"]
 }

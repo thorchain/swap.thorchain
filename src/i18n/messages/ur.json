@@ -611,6 +611,7 @@
     "sourceAddress": "ماخذ پتہ",
     "destinationAddress": "منزل پتہ",
     "remaining": "{time} باقی",
+    "sentTo": "بنام {address}",
     "status": {
       "not_started": "ڈپازٹ زیرِ التواء",
       "pending": "زیرِ التواء",
@@ -620,7 +621,9 @@
       "failed": "ناکام",
       "expired": "میعاد ختم",
       "refunded": "رقم واپس",
-      "unknown": "نامعلوم"
+      "unknown": "نامعلوم",
+      "sent": "بھیج دیا گیا",
+      "broadcast": "جمع کرا دیا گیا"
     },
     "leg": {
       "deposit": "{ticker} ڈپازٹ کریں",

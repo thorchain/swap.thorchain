@@ -611,6 +611,7 @@
     "sourceAddress": "উৎস ঠিকানা",
     "destinationAddress": "গন্তব্য ঠিকানা",
     "remaining": "{time} বাকি",
+    "sentTo": "{address} এ",
     "status": {
       "not_started": "ডিপোজিট মুলতুবি",
       "pending": "মুলতুবি",
@@ -620,7 +621,9 @@
       "failed": "ব্যর্থ হয়েছে",
       "expired": "মেয়াদ শেষ",
       "refunded": "ফেরত দেওয়া হয়েছে",
-      "unknown": "অজানা"
+      "unknown": "অজানা",
+      "sent": "পাঠানো হয়েছে",
+      "broadcast": "জমা দেওয়া হয়েছে"
     },
     "leg": {
       "deposit": "{ticker} ডিপোজিট করুন",

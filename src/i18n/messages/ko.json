@@ -611,6 +611,7 @@
     "sourceAddress": "보내는 주소",
     "destinationAddress": "받는 주소",
     "remaining": "{time} 남음",
+    "sentTo": "받는 주소: {address}",
     "status": {
       "not_started": "입금 대기 중",
       "pending": "대기 중",
@@ -620,7 +621,9 @@
       "failed": "실패",
       "expired": "만료됨",
       "refunded": "환불됨",
-      "unknown": "알 수 없음"
+      "unknown": "알 수 없음",
+      "sent": "전송 완료",
+      "broadcast": "제출됨"
     },
     "leg": {
       "deposit": "{ticker} 입금",

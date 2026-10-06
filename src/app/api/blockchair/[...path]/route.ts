@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { apiError, methodNotAllowed } from '@/lib/api-error'
 import { rateLimit } from '@/lib/rate-limit'
+import { BLOCKCHAIR_CHAINS } from '@/lib/blockchair'
 import { isSameOrigin } from '@/lib/same-origin'
 
 // Server-side proxy for the Blockchair calls the UTXO toolbox makes, so the
@@ -12,12 +13,10 @@ const UPSTREAM = 'https://api.blockchair.com'
 // A stalled upstream would otherwise hold the handler open indefinitely.
 const UPSTREAM_TIMEOUT_MS = 15_000
 
-// Chain slugs the toolbox derives from the UTXO chain (getUtxoApi -> baseUrl).
-const CHAINS = new Set(['bitcoin', 'bitcoin-cash', 'litecoin', 'dash', 'dogecoin', 'zcash'])
+const CHAINS = new Set(Object.values(BLOCKCHAIR_CHAINS))
 
-// Only the endpoints the toolbox actually calls, so the key can't be used as a
-// general-purpose Blockchair account by anyone who finds this route.
-const GET_ENDPOINTS = ['dashboards/address/', 'raw/transaction/', 'outputs']
+// Only the endpoints the toolbox and history's send lookup
+const GET_ENDPOINTS = ['dashboards/address/', 'dashboards/transaction/', 'raw/transaction/', 'outputs']
 const POST_ENDPOINTS = ['push/transaction']
 
 function resolveUpstream(path: string[], endpoints: string[]) {
@@ -35,6 +34,9 @@ function resolveUpstream(path: string[], endpoints: string[]) {
     return null
   }
 
+  // The comma-separated batch form costs more on our key, and history never needs it.
+  if (endpoint.startsWith('dashboards/transaction/') && endpoint.includes(',')) return null
+
   return `${UPSTREAM}/${chain}/${rest.map(encodeURIComponent).join('/')}`
 }
 
@@ -43,7 +45,7 @@ function badPath() {
     404,
     'not_found',
     'Unsupported Blockchair path',
-    'This proxy only forwards the address, raw transaction, outputs and push endpoints for the supported UTXO chains.'
+    'This proxy only forwards the address, transaction, raw transaction, outputs and push endpoints for the supported UTXO chains.'
   )
 }
 

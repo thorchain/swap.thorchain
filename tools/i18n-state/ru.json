@@ -520,5 +520,8 @@
   "tx.leg.deposit": ["Deposit {ticker}", "Внести {ticker}"],
   "tx.leg.send": ["Send {ticker}", "Отправить {ticker}"],
   "tx.leg.privateRoute": ["Route {ticker} privately", "Приватный маршрут для {ticker}"],
-  "tx.leg.swap": ["Swap {from} to {to}", "Обменять {from} на {to}"]
+  "tx.leg.swap": ["Swap {from} to {to}", "Обменять {from} на {to}"],
+  "tx.sentTo": ["To {address}", "Получателю {address}"],
+  "tx.status.sent": ["Sent", "Отправлено"],
+  "tx.status.broadcast": ["Submitted", "Отправлено в сеть"]
 }

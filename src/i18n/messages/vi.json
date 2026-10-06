@@ -611,6 +611,7 @@
     "sourceAddress": "Địa chỉ nguồn",
     "destinationAddress": "Địa chỉ đích",
     "remaining": "Còn lại {time}",
+    "sentTo": "Đến {address}",
     "status": {
       "not_started": "Đang chờ nạp tiền",
       "pending": "Đang chờ",
@@ -620,7 +621,9 @@
       "failed": "Thất bại",
       "expired": "Đã hết hạn",
       "refunded": "Đã hoàn tiền",
-      "unknown": "Không xác định"
+      "unknown": "Không xác định",
+      "sent": "Đã gửi",
+      "broadcast": "Đã gửi lên mạng"
     },
     "leg": {
       "deposit": "Nạp {ticker}",

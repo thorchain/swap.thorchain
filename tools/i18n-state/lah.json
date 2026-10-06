@@ -520,5 +520,8 @@
   "tx.leg.deposit": ["Deposit {ticker}", "{ticker} ڈیپازٹ کرو"],
   "tx.leg.send": ["Send {ticker}", "{ticker} بھیجو"],
   "tx.leg.privateRoute": ["Route {ticker} privately", "{ticker} نوں نجی طور تے روٹ کرو"],
-  "tx.leg.swap": ["Swap {from} to {to}", "{from} نوں {to} وچ تبادلہ کرو"]
+  "tx.leg.swap": ["Swap {from} to {to}", "{from} نوں {to} وچ تبادلہ کرو"],
+  "tx.sentTo": ["To {address}", "{address} نوں"],
+  "tx.status.sent": ["Sent", "بھیجیا گیا"],
+  "tx.status.broadcast": ["Submitted", "جمع کرایا گیا"]
 }

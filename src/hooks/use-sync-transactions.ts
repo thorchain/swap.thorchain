@@ -3,7 +3,48 @@ import { getChainConfig } from '@tcswap/core'
 import { ProviderName } from '@tcswap/helpers'
 import { AxiosError } from 'axios'
 import { getTrack } from '@/lib/api'
-import { isTxPending, isTxTerminal, usePendingTransactions, useSetTransactionDetails, useSetTransactionStatus } from '@/store/transaction-store'
+import { getTransferStatus, transferDropWindow } from '@/lib/transfer-status'
+import { SendTransaction, TxStatus, usePendingTransactions, useSetTransactionDetails, useSetTransactionStatus } from '@/store/transaction-store'
+
+// A send still unseen past its drop window becomes 'unknown' - but only after this many inconclusive
+// lookups, at most one per poll interval, so a single erroring or lagging node can't freeze a
+// confirmed send. Refocus and remount refetches don't count extra.
+const SEND_POLL_MS = 15_000
+const LAPSED_MISSES_BEFORE_UNKNOWN = 8
+const lapsedMisses = new Map<string, { count: number; at: number }>()
+
+const syncSend = async (tx: SendTransaction, setStatus: (uid: string, status: TxStatus) => void) => {
+  if (typeof tx.hash !== 'string' || !tx.hash) {
+    setStatus(tx.uid, 'broadcast')
+    return null
+  }
+
+  const lookup = await getTransferStatus(tx.assetFrom.chain, tx.hash).then(
+    status => ({ status, error: undefined }),
+    (error: unknown) => ({ status: 'pending' as const, error })
+  )
+  const isLapsed = Date.now() - new Date(tx.timestamp).getTime() > transferDropWindow(tx.assetFrom.chain)
+
+  if (lookup.status === 'completed' || lookup.status === 'failed') {
+    lapsedMisses.delete(tx.uid)
+    setStatus(tx.uid, lookup.status)
+  } else if (lookup.status === 'unsupported') {
+    setStatus(tx.uid, 'broadcast')
+  } else if (isLapsed) {
+    const now = Date.now()
+    const last = lapsedMisses.get(tx.uid)
+    // A little slack, so a poll that lands just early still counts.
+    const misses = !last ? 1 : now - last.at >= SEND_POLL_MS - 1_000 ? last.count + 1 : last.count
+    if (misses !== last?.count) lapsedMisses.set(tx.uid, { count: misses, at: now })
+    if (misses >= LAPSED_MISSES_BEFORE_UNKNOWN) {
+      lapsedMisses.delete(tx.uid)
+      setStatus(tx.uid, 'unknown')
+    }
+  }
+
+  if (lookup.error) throw lookup.error
+  return lookup.status
+}
 
 export const useSyncTransactions = () => {
   const pendingTransactions = usePendingTransactions()
@@ -13,10 +54,14 @@ export const useSyncTransactions = () => {
   const queries = pendingTransactions.map(tx => {
     return {
       queryKey: ['transaction', tx.uid],
-      enabled: isTxPending(tx.status) || (!tx.details && !isTxTerminal(tx.status)),
-      refetchInterval: 5_000,
+      // Sends hit public nodes and Blockchair's shared key, so they poll slower.
+      refetchInterval: tx.kind === 'send' ? SEND_POLL_MS : 5_000,
+      // syncSend counts failed lookups itself.
+      ...(tx.kind === 'send' && { retry: false }),
       refetchIntervalInBackground: false,
       queryFn: () => {
+        if (tx.kind === 'send') return syncSend(tx, setTransactionStatus)
+
         // A deposit channel the provider has not seen a deposit into: once its window closes there
         // is nothing to track. Not for a Houdini order - Houdini watches the deposit itself and
         // reports EXPIRED (or a late deposit's CONFIRMING) as the order's own status, so the local

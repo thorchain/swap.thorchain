@@ -4,7 +4,7 @@ import { Fragment, useEffect, useMemo, useState } from 'react'
 import { assetFromString, Chain, ChainId, ChainIdToChain, getExplorerTxUrl, USwapNumber } from '@tcswap/core'
 import { ProviderName } from '@tcswap/helpers'
 import { format, formatDuration, intervalToDuration, isSameDay, isToday, isYesterday } from 'date-fns'
-import { CircleAlert, CircleCheck, ClockFading, Undo2, X } from 'lucide-react'
+import { CircleAlert, CircleCheck, ClockFading, SendHorizontal, Undo2, X } from 'lucide-react'
 import { toast } from 'sonner'
 import { useTranslations } from 'next-intl'
 import { Credenza, CredenzaContent, CredenzaHeader, CredenzaTitle } from '@/components/ui/credenza'
@@ -129,7 +129,10 @@ export const TransactionHistoryDialog = ({ isOpen, onOpenChange }: HistoryDialog
               const amountTo = limitTarget ?? new USwapNumber(tx.amountTo)
               const fiatTo = rateTo && rateTo.mul(amountTo)
 
-              const statusKey = isLimitSwapOpen ? 'open' : status
+              const isSend = tx.kind === 'send'
+              const fromAddress: string | undefined = details?.fromAddress ?? tx.addressFrom
+              const toAddress: string = details?.toAddress ?? tx.addressTo
+              const statusKey = isLimitSwapOpen ? 'open' : isSend && status === 'completed' ? 'sent' : status
               const statusTitle = t.has(`status.${statusKey}`) ? t(`status.${statusKey}`) : status.replace('_', ' ')
 
               const showRemainingTime = status === 'pending' && tx.estimatedTime && !isLimitSwapOpen
@@ -195,6 +198,8 @@ export const TransactionHistoryDialog = ({ isOpen, onOpenChange }: HistoryDialog
                             <ClockFading className="text-lucian" size={24} />
                           ) : status === 'refunded' ? (
                             <Undo2 className="text-txt-label-small" size={24} />
+                          ) : status === 'broadcast' ? (
+                            <SendHorizontal className="text-txt-label-small" size={24} />
                           ) : (
                             <CircleAlert className="text-txt-label-small" size={24} />
                           )}
@@ -218,7 +223,9 @@ export const TransactionHistoryDialog = ({ isOpen, onOpenChange }: HistoryDialog
                             <DecimalText className="break-all" amount={amountTo.toSignificant()} symbol={tx.assetTo?.ticker} />
                           </span>
                           <span className="text-txt-label-small text-xs font-medium">
-                            {fiatTo && toCurrencyFixed(fiatTo.toCurrency('$', { trimTrailingZeros: false }))}
+                            {isSend
+                              ? t('sentTo', { address: truncate(tx.addressTo) })
+                              : fiatTo && toCurrencyFixed(fiatTo.toCurrency('$', { trimTrailingZeros: false }))}
                           </span>
                         </div>
                         {tx.assetTo && <AssetIcon asset={tx.assetTo} />}
@@ -288,34 +295,34 @@ export const TransactionHistoryDialog = ({ isOpen, onOpenChange }: HistoryDialog
                       </div>
                     )}
 
-                    {isExpanded && details && (
-                      <>
-                        <div className="mt-3 space-y-4 border-t py-4 text-xs font-semibold">
-                          {details.fromAddress && (
-                            <div className="text-txt-label-small flex items-center justify-between">
-                              <span>{t('sourceAddress')}</span>
-                              <div className="flex items-center gap-2">
-                                <span className="text-txt-high-contrast">{truncate(details.fromAddress)}</span>
-                                <CopyButton text={details.fromAddress} />
-                              </div>
-                            </div>
-                          )}
-
+                    {isExpanded && (details || isSend) && (
+                      <div className="mt-3 space-y-4 border-t py-4 text-xs font-semibold">
+                        {fromAddress && (
                           <div className="text-txt-label-small flex items-center justify-between">
-                            <span>{t('destinationAddress')}</span>
+                            <span>{t('sourceAddress')}</span>
                             <div className="flex items-center gap-2">
-                              <span className="text-txt-high-contrast">{truncate(details.toAddress)}</span>
-                              <CopyButton text={details.toAddress} />
+                              <span className="text-txt-high-contrast">{truncate(fromAddress)}</span>
+                              <CopyButton text={fromAddress} />
                             </div>
                           </div>
-                        </div>
+                        )}
 
-                        <div className="space-y-4 border-t py-4 text-xs font-semibold">
-                          {details.legs.map((legTx: any, i: number) => {
-                            return <div key={i}>{renderLeg(tx, legTx, i, t)}</div>
-                          })}
+                        <div className="text-txt-label-small flex items-center justify-between">
+                          <span>{t('destinationAddress')}</span>
+                          <div className="flex items-center gap-2">
+                            <span className="text-txt-high-contrast">{truncate(toAddress)}</span>
+                            <CopyButton text={toAddress} />
+                          </div>
                         </div>
-                      </>
+                      </div>
+                    )}
+
+                    {isExpanded && details && (
+                      <div className="space-y-4 border-t py-4 text-xs font-semibold">
+                        {details.legs.map((legTx: any, i: number) => {
+                          return <div key={i}>{renderLeg(tx, legTx, i, t)}</div>
+                        })}
+                      </div>
                     )}
                     {isExpanded && explorerLinks.length > 0 && (
                       <div className="flex flex-wrap justify-end gap-2 border-t pt-3">

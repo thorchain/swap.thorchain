@@ -520,5 +520,8 @@
   "tx.leg.deposit": ["Deposit {ticker}", "Nạp {ticker}"],
   "tx.leg.send": ["Send {ticker}", "Gửi {ticker}"],
   "tx.leg.privateRoute": ["Route {ticker} privately", "Định tuyến {ticker} riêng tư"],
-  "tx.leg.swap": ["Swap {from} to {to}", "Hoán đổi {from} sang {to}"]
+  "tx.leg.swap": ["Swap {from} to {to}", "Hoán đổi {from} sang {to}"],
+  "tx.sentTo": ["To {address}", "Đến {address}"],
+  "tx.status.sent": ["Sent", "Đã gửi"],
+  "tx.status.broadcast": ["Submitted", "Đã gửi lên mạng"]
 }

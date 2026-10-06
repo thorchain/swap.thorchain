@@ -4,11 +4,11 @@ import { persist } from 'zustand/middleware'
 import { useShallow } from 'zustand/react/shallow'
 import { Asset } from '@/components/swap/asset'
 
-export type TxStatus = 'not_started' | 'pending' | 'swapping' | 'completed' | 'failed' | 'expired' | 'refunded' | 'unknown'
+// 'broadcast': a send history cannot confirm on its chain - known to be submitted, nothing more.
+export type TxStatus = 'not_started' | 'pending' | 'swapping' | 'completed' | 'failed' | 'expired' | 'refunded' | 'unknown' | 'broadcast'
 
-export interface Transaction {
+interface BaseTransaction {
   uid: string
-  provider: ProviderName
   chainId: string
   hash?: string
   timestamp: Date
@@ -31,6 +31,19 @@ export interface Transaction {
   // The provider's own id for the swap, when it tracks by one instead of by hash (Houdini order id).
   providerSwapId?: string
 }
+
+export interface SwapTransaction extends BaseTransaction {
+  kind?: undefined
+  provider: ProviderName
+}
+
+// A plain transfer from the Send dialog, confirmed against its own chain (src/lib/transfer-status.ts).
+export interface SendTransaction extends BaseTransaction {
+  kind: 'send'
+  provider?: undefined
+}
+
+export type Transaction = SwapTransaction | SendTransaction
 
 interface TransactionStore {
   transactions: Transaction[]
@@ -119,5 +132,7 @@ export const useHasTransactions = () => transactionStore(state => state.transact
 export const isTxPending = (status: string) => status === 'not_started' || status === 'swapping' || status === 'pending'
 export const isTxTerminal = (status: string) => status === 'completed' || status === 'failed' || status === 'expired' || status === 'refunded'
 
-export const usePendingTransactions = () =>
-  transactionStore(useShallow(state => state.transactions.filter(t => isTxPending(t.status) || (!t.details && !isTxTerminal(t.status)))))
+// Sends never get tracker details, so they are only polled while pending.
+const isTxSyncable = (tx: Transaction) => isTxPending(tx.status) || (tx.kind !== 'send' && !tx.details && !isTxTerminal(tx.status))
+
+export const usePendingTransactions = () => transactionStore(useShallow(state => state.transactions.filter(isTxSyncable)))

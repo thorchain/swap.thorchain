@@ -520,5 +520,8 @@
   "tx.leg.deposit": ["Deposit {ticker}", "{ticker} 입금"],
   "tx.leg.send": ["Send {ticker}", "{ticker} 보내기"],
   "tx.leg.privateRoute": ["Route {ticker} privately", "{ticker} 비공개 라우팅"],
-  "tx.leg.swap": ["Swap {from} to {to}", "{from}을(를) {to}(으)로 스왑"]
+  "tx.leg.swap": ["Swap {from} to {to}", "{from}을(를) {to}(으)로 스왑"],
+  "tx.sentTo": ["To {address}", "받는 주소: {address}"],
+  "tx.status.sent": ["Sent", "전송 완료"],
+  "tx.status.broadcast": ["Submitted", "제출됨"]
 }

@@ -520,5 +520,8 @@
   "tx.leg.deposit": ["Deposit {ticker}", "إيداع {ticker}"],
   "tx.leg.send": ["Send {ticker}", "إرسال {ticker}"],
   "tx.leg.privateRoute": ["Route {ticker} privately", "توجيه {ticker} بشكل خاص"],
-  "tx.leg.swap": ["Swap {from} to {to}", "تبادل {from} إلى {to}"]
+  "tx.leg.swap": ["Swap {from} to {to}", "تبادل {from} إلى {to}"],
+  "tx.sentTo": ["To {address}", "إلى {address}"],
+  "tx.status.sent": ["Sent", "تم الإرسال"],
+  "tx.status.broadcast": ["Submitted", "تم الإرسال للشبكة"]
 }

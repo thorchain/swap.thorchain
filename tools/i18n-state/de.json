@@ -520,5 +520,8 @@
   "tx.leg.deposit": ["Deposit {ticker}", "{ticker} einzahlen"],
   "tx.leg.send": ["Send {ticker}", "{ticker} senden"],
   "tx.leg.privateRoute": ["Route {ticker} privately", "{ticker} privat routen"],
-  "tx.leg.swap": ["Swap {from} to {to}", "{from} zu {to} swappen"]
+  "tx.leg.swap": ["Swap {from} to {to}", "{from} zu {to} swappen"],
+  "tx.sentTo": ["To {address}", "An {address}"],
+  "tx.status.sent": ["Sent", "Gesendet"],
+  "tx.status.broadcast": ["Submitted", "Übermittelt"]
 }

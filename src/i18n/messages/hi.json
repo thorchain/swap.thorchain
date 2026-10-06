@@ -611,6 +611,7 @@
     "sourceAddress": "स्रोत पता",
     "destinationAddress": "गंतव्य पता",
     "remaining": "{time} शेष",
+    "sentTo": "{address} को",
     "status": {
       "not_started": "जमा लंबित",
       "pending": "लंबित",
@@ -620,7 +621,9 @@
       "failed": "विफल",
       "expired": "समाप्त",
       "refunded": "रिफंड किया गया",
-      "unknown": "अज्ञात"
+      "unknown": "अज्ञात",
+      "sent": "भेजा गया",
+      "broadcast": "सबमिट किया गया"
     },
     "leg": {
       "deposit": "{ticker} जमा करें",

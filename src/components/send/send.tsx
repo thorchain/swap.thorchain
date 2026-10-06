@@ -44,9 +44,10 @@ import { useAccounts } from '@/hooks/use-wallets'
 import { houdiniQuoteRates, useRates } from '@/hooks/use-rates'
 import { readableError } from '@/lib/errors'
 import { formatExpiration } from '@/lib/swap-helpers'
+import { canTrackTransfer } from '@/lib/transfer-status'
 import { getUSwap } from '@/lib/wallets'
 import { usePrivateSwapAcknowledged } from '@/store/private-swap-store'
-import { useSetTransaction } from '@/store/transaction-store'
+import { Transaction, useSetTransaction } from '@/store/transaction-store'
 import { WalletAccount } from '@/store/wallets-store'
 import { DecimalText } from '@/components/decimal/decimal-text'
 import { cn, generateId, toCurrencyFixed, truncate } from '@/lib/utils'
@@ -181,6 +182,15 @@ export function Send({ isOpen, onOpenChange, initialToken, account }: SendDialog
     void estimate()
   }, [isOpen, selectedToken, selectedAccount, gasAsset])
 
+  // The send is already broadcast: a failure to record it must not read as a failed send and invite a second one.
+  const recordTransaction = (build: () => Transaction) => {
+    try {
+      setTransaction(build())
+    } catch (error) {
+      console.error('Failed to record the send in history:', error)
+    }
+  }
+
   // Placing the order is the non-dry quote; the deposit is then the Houdini plugin's transfer, but
   // signed by this dialog's account - `uSwap.swap` would pick whichever wallet connected the chain last.
   const handlePrivateSend = () => {
@@ -206,7 +216,7 @@ export function Send({ isOpen, onOpenChange, initialToken, account }: SendDialog
           ...(route.memo && { memo: route.memo })
         })
 
-        setTransaction({
+        recordTransaction(() => ({
           uid: generateId(),
           provider: AppConfig.privateProvider,
           chainId: getChainConfig(chain).chainId,
@@ -223,7 +233,7 @@ export function Send({ isOpen, onOpenChange, initialToken, account }: SendDialog
           addressDeposit: route.inboundAddress,
           status: 'pending',
           providerSwapId: houdiniId
-        })
+        }))
         onOpenChange(false)
       })
       .catch((err: any) => {
@@ -253,7 +263,27 @@ export function Send({ isOpen, onOpenChange, initialToken, account }: SendDialog
 
     const broadcast = (wallet as any)
       .transfer({ assetValue, recipient, feeOptionKey: FeeOption.Fast })
-      .then(() => onOpenChange(false))
+      .then((hash: unknown) => {
+        recordTransaction(() => {
+          const chain = selectedToken.balance.chain
+          const sent = assetValue.getValue('string')
+          return {
+            uid: generateId(),
+            kind: 'send',
+            chainId: getChainConfig(chain).chainId,
+            hash: typeof hash === 'string' && hash ? hash : undefined,
+            timestamp: new Date(),
+            assetFrom: selectedAsset,
+            assetTo: selectedAsset,
+            amountFrom: sent,
+            amountTo: sent,
+            addressFrom: selectedAccount.address,
+            addressTo: recipient,
+            status: typeof hash === 'string' && hash && canTrackTransfer(chain) ? 'pending' : 'broadcast'
+          }
+        })
+        onOpenChange(false)
+      })
       .catch((err: any) => {
         setSubmitting(false)
         throw err

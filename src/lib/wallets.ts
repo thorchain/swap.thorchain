@@ -57,7 +57,7 @@ export function setUSwapApiKey(apiKey: string) {
 // The Blockchair API key stays on the server, so the UTXO toolbox talks to our
 // own proxy (src/app/api/blockchair) instead of api.blockchair.com. The SDK's
 // request client builds a `new URL(...)`, so this has to be absolute.
-function blockchairProxyUrl() {
+export function blockchairProxyUrl() {
   const origin = typeof window === 'undefined' ? AppConfig.baseUrl : window.location.origin
   return `${origin}/api/blockchair`
 }

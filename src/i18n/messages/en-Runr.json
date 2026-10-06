@@ -611,6 +611,7 @@
     "sourceAddress": "ᛊᛟᚢᚱᚲᛖ ᚨᛞᛞᚱᛖᛊᛊ",
     "destinationAddress": "ᛞᛖᛊᛏᛁᚾᚨᛏᛁᛟᚾ ᚨᛞᛞᚱᛖᛊᛊ",
     "remaining": "{time} ᚱᛖᛗᚨᛁᚾᛁᛜ",
+    "sentTo": "ᛏᛟ {address}",
     "status": {
       "not_started": "ᛞᛖᛈᛟᛊᛁᛏ ᛈᛖᚾᛞᛁᛜ",
       "pending": "ᛈᛖᚾᛞᛁᛜ",
@@ -620,7 +621,9 @@
       "failed": "ᚠᚨᛁᛚᛖᛞ",
       "expired": "ᛖᚲᛊᛈᛁᚱᛖᛞ",
       "refunded": "ᚱᛖᚠᚢᚾᛞᛖᛞ",
-      "unknown": "ᚢᚾᚲᚾᛟᚹᚾ"
+      "unknown": "ᚢᚾᚲᚾᛟᚹᚾ",
+      "sent": "ᛊᛖᚾᛏ",
+      "broadcast": "ᛊᚢᛒᛗᛁᛏᛏᛖᛞ"
     },
     "leg": {
       "deposit": "ᛞᛖᛈᛟᛊᛁᛏ {ticker}",

@@ -611,6 +611,7 @@
     "sourceAddress": "ที่อยู่ต้นทาง",
     "destinationAddress": "ที่อยู่ปลายทาง",
     "remaining": "เหลืออีก {time}",
+    "sentTo": "ไปยัง {address}",
     "status": {
       "not_started": "รอการฝากเงิน",
       "pending": "รอดำเนินการ",
@@ -620,7 +621,9 @@
       "failed": "ล้มเหลว",
       "expired": "หมดอายุ",
       "refunded": "คืนเงินแล้ว",
-      "unknown": "ไม่ทราบ"
+      "unknown": "ไม่ทราบ",
+      "sent": "ส่งแล้ว",
+      "broadcast": "ส่งคำสั่งแล้ว"
     },
     "leg": {
       "deposit": "ฝาก {ticker}",

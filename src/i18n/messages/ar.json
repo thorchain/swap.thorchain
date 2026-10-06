@@ -611,6 +611,7 @@
     "sourceAddress": "عنوان المصدر",
     "destinationAddress": "عنوان الوجهة",
     "remaining": "متبقٍّ {time}",
+    "sentTo": "إلى {address}",
     "status": {
       "not_started": "الإيداع معلّق",
       "pending": "معلّق",
@@ -620,7 +621,9 @@
       "failed": "فشل",
       "expired": "منتهٍ",
       "refunded": "تمت إعادته",
-      "unknown": "غير معروف"
+      "unknown": "غير معروف",
+      "sent": "تم الإرسال",
+      "broadcast": "تم الإرسال للشبكة"
     },
     "leg": {
       "deposit": "إيداع {ticker}",

@@ -611,6 +611,7 @@
     "sourceAddress": "Адрес отправителя",
     "destinationAddress": "Адрес получателя",
     "remaining": "Осталось {time}",
+    "sentTo": "Получателю {address}",
     "status": {
       "not_started": "Депозит в обработке",
       "pending": "В обработке",
@@ -620,7 +621,9 @@
       "failed": "Не удалось",
       "expired": "Истекло",
       "refunded": "Возвращено",
-      "unknown": "Неизвестно"
+      "unknown": "Неизвестно",
+      "sent": "Отправлено",
+      "broadcast": "Отправлено в сеть"
     },
     "leg": {
       "deposit": "Внести {ticker}",

@@ -520,5 +520,8 @@
   "tx.leg.deposit": ["Deposit {ticker}", "ฝาก {ticker}"],
   "tx.leg.send": ["Send {ticker}", "ส่ง {ticker}"],
   "tx.leg.privateRoute": ["Route {ticker} privately", "กำหนดเส้นทาง {ticker} แบบส่วนตัว"],
-  "tx.leg.swap": ["Swap {from} to {to}", "แลกเปลี่ยน {from} เป็น {to}"]
+  "tx.leg.swap": ["Swap {from} to {to}", "แลกเปลี่ยน {from} เป็น {to}"],
+  "tx.sentTo": ["To {address}", "ไปยัง {address}"],
+  "tx.status.sent": ["Sent", "ส่งแล้ว"],
+  "tx.status.broadcast": ["Submitted", "ส่งคำสั่งแล้ว"]
 }

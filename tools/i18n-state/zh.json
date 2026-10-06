@@ -520,5 +520,8 @@
   "tx.leg.deposit": ["Deposit {ticker}", "存入{ticker}"],
   "tx.leg.send": ["Send {ticker}", "发送{ticker}"],
   "tx.leg.privateRoute": ["Route {ticker} privately", "私密路由 {ticker}"],
-  "tx.leg.swap": ["Swap {from} to {to}", "将{from}兑换为{to}"]
+  "tx.leg.swap": ["Swap {from} to {to}", "将{from}兑换为{to}"],
+  "tx.sentTo": ["To {address}", "至 {address}"],
+  "tx.status.sent": ["Sent", "已发送"],
+  "tx.status.broadcast": ["Submitted", "已提交"]
 }

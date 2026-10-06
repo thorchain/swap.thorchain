@@ -520,5 +520,8 @@
   "tx.leg.deposit": ["Deposit {ticker}", "{ticker} を預け入れ"],
   "tx.leg.send": ["Send {ticker}", "{ticker} を送信"],
   "tx.leg.privateRoute": ["Route {ticker} privately", "{ticker} をプライベートにルーティング"],
-  "tx.leg.swap": ["Swap {from} to {to}", "{from} を {to} にスワップ"]
+  "tx.leg.swap": ["Swap {from} to {to}", "{from} を {to} にスワップ"],
+  "tx.sentTo": ["To {address}", "送信先 {address}"],
+  "tx.status.sent": ["Sent", "送信済み"],
+  "tx.status.broadcast": ["Submitted", "送信中"]
 }

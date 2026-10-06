@@ -611,6 +611,7 @@
     "sourceAddress": "Kaynak Adres",
     "destinationAddress": "Hedef Adres",
     "remaining": "{time} kaldı",
+    "sentTo": "Alıcı: {address}",
     "status": {
       "not_started": "Yatırma Bekleniyor",
       "pending": "Beklemede",
@@ -620,7 +621,9 @@
       "failed": "Başarısız",
       "expired": "Süresi doldu",
       "refunded": "İade edildi",
-      "unknown": "Bilinmiyor"
+      "unknown": "Bilinmiyor",
+      "sent": "Gönderildi",
+      "broadcast": "İletildi"
     },
     "leg": {
       "deposit": "{ticker} Yatır",

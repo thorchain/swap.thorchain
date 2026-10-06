@@ -611,6 +611,7 @@
     "sourceAddress": "آدرس مبدأ",
     "destinationAddress": "آدرس مقصد",
     "remaining": "{time} باقی‌مانده",
+    "sentTo": "به {address}",
     "status": {
       "not_started": "در انتظار واریز",
       "pending": "در انتظار",
@@ -620,7 +621,9 @@
       "failed": "ناموفق",
       "expired": "منقضی‌شده",
       "refunded": "بازپرداخت‌شده",
-      "unknown": "نامشخص"
+      "unknown": "نامشخص",
+      "sent": "ارسال شد",
+      "broadcast": "ثبت شد"
     },
     "leg": {
       "deposit": "واریز {ticker}",

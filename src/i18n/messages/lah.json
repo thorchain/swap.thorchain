@@ -611,6 +611,7 @@
     "sourceAddress": "Source پتہ",
     "destinationAddress": "Destination پتہ",
     "remaining": "{time} باقی",
+    "sentTo": "{address} نوں",
     "status": {
       "not_started": "ڈیپازٹ بقایا",
       "pending": "بقایا",
@@ -620,7 +621,9 @@
       "failed": "ناکام",
       "expired": "ختم ہو گیا",
       "refunded": "واپس کیتا",
-      "unknown": "اݨ جاݨیا"
+      "unknown": "اݨ جاݨیا",
+      "sent": "بھیجیا گیا",
+      "broadcast": "جمع کرایا گیا"
     },
     "leg": {
       "deposit": "{ticker} ڈیپازٹ کرو",
