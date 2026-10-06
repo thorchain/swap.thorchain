@@ -155,10 +155,10 @@
       "memoMissing": "缺少Memo",
       "calculateSuggestedAmount": "无法计算建议金额",
       "preflightRequest": "预检请求失败",
-      "preflightMemoless": "预检无Memo请求失败",
+      "preflightMemoless": "外部钱包模式请求预检失败",
       "minAmountNoWallet": "未连接钱包时的最小兑换金额为{amount} {ticker}",
       "unknown": "未知错误",
-      "memolessHalted": "THORChain 目前已暂停免 memo 交换。请连接 {chain} 钱包进行交换。"
+      "memolessHalted": "外部钱包模式的交换当前已暂停。请连接 {chain} 钱包进行交换。"
     },
     "feeDialog": {
       "title": "已含在汇率中的费用",
@@ -229,8 +229,8 @@
       },
       "warning": {
         "memolessDeposit": "要{mode}此订单，请从最初下单的{chain}钱包发送存款",
-        "connectOrMemoless": "连接{chain}钱包或使用无Memo存款来{mode}此订单",
-        "memolessHalted": "无Memo存款目前已被THORChain暂停 - 请连接最初下单的{chain}钱包来{mode}此订单",
+        "connectOrMemoless": "请连接 {chain} 钱包或使用外部钱包模式来 {mode} 此订单",
+        "memolessHalted": "外部钱包模式当前已暂停 - 请连接原来的 {chain} 钱包来 {mode} 此订单",
         "connect": "连接{chain}钱包以{mode}此订单",
         "switch": "切换到{chain}钱包以{mode}此订单",
         "addressMismatch": "已连接的钱包与下此订单的地址不匹配",

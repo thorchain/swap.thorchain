@@ -155,10 +155,10 @@
       "memoMissing": "Memo eksik",
       "calculateSuggestedAmount": "Önerilen tutar hesaplanamadı",
       "preflightRequest": "Ön kontrol isteği başarısız oldu",
-      "preflightMemoless": "Memo'suz ön kontrol isteği başarısız oldu",
+      "preflightMemoless": "Harici Cüzdan Modu isteğinin ön kontrolü başarısız oldu",
       "minAmountNoWallet": "Bağlı cüzdan olmadan minimum takas tutarı {amount} {ticker}'dir",
       "unknown": "Bilinmeyen Hata",
-      "memolessHalted": "Memosuz takaslar şu anda THORChain tarafından duraklatıldı. Takas yapmak için bir {chain} cüzdanı bağlayın."
+      "memolessHalted": "Harici Cüzdan Modu ile takas şu anda duraklatıldı. Takas yapmak için bir {chain} cüzdanı bağlayın."
     },
     "feeDialog": {
       "title": "Kura Dahil Ücretler",
@@ -229,8 +229,8 @@
       },
       "warning": {
         "memolessDeposit": "Bu emri {mode} için, emri oluşturan orijinal {chain} cüzdanından yatırma gönder",
-        "connectOrMemoless": "Bu emri {mode} için bir {chain} cüzdanı bağla veya Memo'suz yatırmayı kullan",
-        "memolessHalted": "Memo'suz yatırmalar şu anda THORChain tarafından durduruldu - bu emri {mode} için orijinal {chain} cüzdanını bağla",
+        "connectOrMemoless": "Bu emri {mode} etmek için bir {chain} cüzdanı bağlayın veya Harici Cüzdan Modu'nu kullanın",
+        "memolessHalted": "Harici Cüzdan Modu şu anda duraklatıldı - bu emri {mode} etmek için orijinal {chain} cüzdanını bağlayın",
         "connect": "Bu emri {mode} için bir {chain} cüzdanı bağla",
         "switch": "Bu emri {mode} için bir {chain} cüzdanına geç",
         "addressMismatch": "Bağlı cüzdan, bu emri oluşturan adresle eşleşmiyor",

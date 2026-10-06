@@ -52,7 +52,7 @@ export default function AboutPage() {
           <section>
             <h2 className="text-txt-high-contrast text-xl font-semibold">Self-custody</h2>
             <p className="mt-3">
-              Connected-wallet transactions are signed locally by the user. Memoless swaps let a user send funds from a self-custody wallet to a
+              Connected-wallet transactions are signed locally by the user. External Wallet Mode lets a user send funds from a self-custody wallet to a
               time-limited deposit address. THORChain Swap does not hold private keys, sign transactions for users, or custody funds.
             </p>
           </section>

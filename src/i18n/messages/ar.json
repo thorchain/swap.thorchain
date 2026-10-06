@@ -155,10 +155,10 @@
       "memoMissing": "الـ Memo مفقود",
       "calculateSuggestedAmount": "تعذّر حساب المبلغ المقترح",
       "preflightRequest": "تعذّر التحقق المسبق من الطلب",
-      "preflightMemoless": "تعذّر التحقق المسبق من الطلب بلا Memo",
+      "preflightMemoless": "فشل التحقق المسبق من طلب وضع المحفظة الخارجية",
       "minAmountNoWallet": "الحد الأدنى لمبلغ التبادل بدون محفظة متصلة هو {amount} {ticker}",
       "unknown": "خطأ غير معروف",
-      "memolessHalted": "عمليات التبديل بدون مذكرة (memoless) متوقفة مؤقتًا من قِبل THORChain حاليًا. اربط محفظة {chain} لإجراء التبديل."
+      "memolessHalted": "تم إيقاف التبادل في وضع المحفظة الخارجية مؤقتًا. قم بتوصيل محفظة {chain} لإجراء التبادل."
     },
     "feeDialog": {
       "title": "الرسوم المضمّنة في السعر",
@@ -229,8 +229,8 @@
       },
       "warning": {
         "memolessDeposit": "لـ {mode} هذا الأمر، أرسِل الإيداع من محفظة {chain} الأصلية التي أنشأته",
-        "connectOrMemoless": "اربط محفظة {chain} أو استخدم الإيداع بلا Memo لـ {mode} هذا الأمر",
-        "memolessHalted": "الإيداعات بلا Memo متوقفة مؤقتًا من قِبل THORChain حاليًا - اربط محفظة {chain} الأصلية لـ {mode} هذا الأمر",
+        "connectOrMemoless": "قم بتوصيل محفظة {chain} أو استخدم وضع المحفظة الخارجية لـ{mode} هذا الأمر",
+        "memolessHalted": "تم إيقاف وضع المحفظة الخارجية مؤقتًا - قم بتوصيل محفظة {chain} الأصلية لـ{mode} هذا الأمر",
         "connect": "اربط محفظة {chain} لـ {mode} هذا الأمر",
         "switch": "بدّل إلى محفظة {chain} لـ {mode} هذا الأمر",
         "addressMismatch": "المحفظة المتصلة لا تطابق العنوان الذي أنشأ هذا الأمر",

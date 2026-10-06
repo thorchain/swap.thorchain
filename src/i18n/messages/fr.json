@@ -155,10 +155,10 @@
       "memoMissing": "Le Memo est manquant",
       "calculateSuggestedAmount": "Échec du calcul du montant suggéré",
       "preflightRequest": "Échec de la vérification préalable de la requête",
-      "preflightMemoless": "Échec de la vérification préalable de la requête sans Memo",
+      "preflightMemoless": "Échec de la pré-vérification de la demande en mode portefeuille externe",
       "minAmountNoWallet": "Le montant minimum d'échange sans portefeuille connecté est de {amount} {ticker}",
       "unknown": "Erreur inconnue",
-      "memolessHalted": "Les swaps sans mémo sont actuellement suspendus par THORChain. Connectez un portefeuille {chain} pour échanger."
+      "memolessHalted": "Les swaps en mode portefeuille externe sont actuellement suspendus. Connectez un portefeuille {chain} pour échanger."
     },
     "feeDialog": {
       "title": "Frais inclus dans le taux",
@@ -229,8 +229,8 @@
       },
       "warning": {
         "memolessDeposit": "Pour {mode} cet ordre, envoyez le dépôt depuis le portefeuille {chain} d'origine qui l'a placé",
-        "connectOrMemoless": "Connectez un portefeuille {chain} ou utilisez le dépôt sans Memo pour {mode} cet ordre",
-        "memolessHalted": "Les dépôts sans Memo sont actuellement suspendus par THORChain - connectez le portefeuille {chain} d'origine pour {mode} cet ordre",
+        "connectOrMemoless": "Connectez un portefeuille {chain} ou utilisez le mode portefeuille externe pour {mode} cet ordre",
+        "memolessHalted": "Le mode portefeuille externe est actuellement suspendu - connectez le portefeuille {chain} d'origine pour {mode} cet ordre",
         "connect": "Connectez un portefeuille {chain} pour {mode} cet ordre",
         "switch": "Basculez vers un portefeuille {chain} pour {mode} cet ordre",
         "addressMismatch": "Le portefeuille connecté ne correspond pas à l'adresse qui a placé cet ordre",

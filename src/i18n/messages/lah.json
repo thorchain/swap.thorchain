@@ -155,10 +155,10 @@
       "memoMissing": "Memo غائب اے",
       "calculateSuggestedAmount": "تجویز کردہ رقم کڈھݨ وچ ناکامی",
       "preflightRequest": "preflight درخواست وچ ناکامی",
-      "preflightMemoless": "memoless preflight درخواست وچ ناکامی",
+      "preflightMemoless": "External Wallet Mode دی درخواست دی پری فلائٹ جانچ ناکام ہو گئی",
       "minAmountNoWallet": "بغیر کنیکٹ کیتے والٹ دے کم از کم تبادلہ رقم {amount} {ticker} اے",
       "unknown": "اݨ جاݨی خرابی",
-      "memolessHalted": "میمو توں بغیر سواپ ہُن THORChain ولّوں روکے گئے نیں۔ سواپ کرن لئی {chain} والٹ کنیکٹ کرو۔"
+      "memolessHalted": "External Wallet Mode وچ سواپ کرنا ہݨے روکیا گیا اے۔ سواپ کرن لئی {chain} والٹ کنیکٹ کرو۔"
     },
     "feeDialog": {
       "title": "ریٹ وچ شامل فیساں",
@@ -229,8 +229,8 @@
       },
       "warning": {
         "memolessDeposit": "ایہ آرڈر {mode} کرݨ لئی، اوسے اصل {chain} والٹ توں ڈیپازٹ بھیجو جیہڑے ایہ رکھیا سی",
-        "connectOrMemoless": "ایہ آرڈر {mode} کرݨ لئی {chain} والٹ کنیکٹ کرو یا memoless ڈیپازٹ ورتو",
-        "memolessHalted": "memoless ڈیپازٹ ہُݨ THORChain نے روک رکھے نیں - ایہ آرڈر {mode} کرݨ لئی اصل {chain} والٹ کنیکٹ کرو",
+        "connectOrMemoless": "ایس آرڈر نوں {mode} کرن لئی {chain} والٹ کنیکٹ کرو یا External Wallet Mode ورتو",
+        "memolessHalted": "External Wallet Mode ہݨے روکیا گیا اے - ایس آرڈر نوں {mode} کرن لئی اصلی {chain} والٹ کنیکٹ کرو",
         "connect": "ایہ آرڈر {mode} کرݨ لئی {chain} والٹ کنیکٹ کرو",
         "switch": "ایہ آرڈر {mode} کرݨ لئی {chain} والٹ تے سوئچ کرو",
         "addressMismatch": "کنیکٹ کیتا والٹ اوس پتے نال نئیں ملدا جیہڑے ایہ آرڈر رکھیا سی",

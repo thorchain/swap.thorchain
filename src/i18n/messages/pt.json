@@ -155,10 +155,10 @@
       "memoMissing": "Memo ausente",
       "calculateSuggestedAmount": "Falha ao calcular a quantia sugerida",
       "preflightRequest": "Falha ao validar a solicitação",
-      "preflightMemoless": "Falha ao validar a solicitação sem memo",
+      "preflightMemoless": "Falha na verificação prévia da solicitação do Modo de Carteira Externa",
       "minAmountNoWallet": "A quantia mínima de troca sem uma carteira conectada é {amount} {ticker}",
       "unknown": "Erro desconhecido",
-      "memolessHalted": "As swaps sem memo estão pausadas pela THORChain neste momento. Conecte uma carteira {chain} para fazer a swap."
+      "memolessHalted": "A troca no Modo de Carteira Externa está pausada no momento. Conecte uma carteira {chain} para trocar."
     },
     "feeDialog": {
       "title": "Taxas incluídas na cotação",
@@ -229,8 +229,8 @@
       },
       "warning": {
         "memolessDeposit": "Para {mode} esta ordem, envie o depósito da carteira {chain} original que a criou",
-        "connectOrMemoless": "Conecte uma carteira {chain} ou use o depósito sem memo para {mode} esta ordem",
-        "memolessHalted": "A THORChain pausou os depósitos sem memo no momento - conecte a carteira {chain} original para {mode} esta ordem",
+        "connectOrMemoless": "Conecte uma carteira {chain} ou use o Modo de Carteira Externa para {mode} esta ordem",
+        "memolessHalted": "O Modo de Carteira Externa está pausado no momento - conecte a carteira {chain} original para {mode} esta ordem",
         "connect": "Conecte uma carteira {chain} para {mode} esta ordem",
         "switch": "Mude para uma carteira {chain} para {mode} esta ordem",
         "addressMismatch": "A carteira conectada não corresponde ao endereço que criou esta ordem",

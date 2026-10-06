@@ -155,10 +155,10 @@
       "memoMissing": "Memo अनुपस्थित है",
       "calculateSuggestedAmount": "सुझाई गई राशि की गणना करने में विफल",
       "preflightRequest": "अनुरोध को प्रीफ़्लाइट करने में विफल",
-      "preflightMemoless": "memoless अनुरोध को प्रीफ़्लाइट करने में विफल",
+      "preflightMemoless": "External Wallet Mode अनुरोध की प्रीफ़्लाइट जाँच विफल रही",
       "minAmountNoWallet": "कनेक्ट किए गए वॉलेट के बिना न्यूनतम स्वैप राशि {amount} {ticker} है",
       "unknown": "अज्ञात त्रुटि",
-      "memolessHalted": "Memoless स्वैप अभी THORChain द्वारा रोके गए हैं। स्वैप करने के लिए {chain} वॉलेट कनेक्ट करें।"
+      "memolessHalted": "External Wallet Mode में स्वैप करना अभी रुका हुआ है। स्वैप करने के लिए {chain} वॉलेट कनेक्ट करें।"
     },
     "feeDialog": {
       "title": "दर में शामिल शुल्क",
@@ -229,8 +229,8 @@
       },
       "warning": {
         "memolessDeposit": "इस ऑर्डर को {mode} करने के लिए, इसे रखने वाले मूल {chain} वॉलेट से जमा भेजें",
-        "connectOrMemoless": "इस ऑर्डर को {mode} करने के लिए एक {chain} वॉलेट कनेक्ट करें या memoless जमा का उपयोग करें",
-        "memolessHalted": "memoless जमा इस समय THORChain द्वारा रोके गए हैं - इस ऑर्डर को {mode} करने के लिए मूल {chain} वॉलेट कनेक्ट करें",
+        "connectOrMemoless": "इस ऑर्डर को {mode} करने के लिए {chain} वॉलेट कनेक्ट करें या External Wallet Mode का उपयोग करें",
+        "memolessHalted": "External Wallet Mode अभी रुका हुआ है - इस ऑर्डर को {mode} करने के लिए मूल {chain} वॉलेट कनेक्ट करें",
         "connect": "इस ऑर्डर को {mode} करने के लिए एक {chain} वॉलेट कनेक्ट करें",
         "switch": "इस ऑर्डर को {mode} करने के लिए एक {chain} वॉलेट पर स्विच करें",
         "addressMismatch": "कनेक्ट किया गया वॉलेट इस ऑर्डर को रखने वाले पते से मेल नहीं खाता",

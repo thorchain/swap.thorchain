@@ -155,10 +155,10 @@
       "memoMissing": "Memo tidak ada",
       "calculateSuggestedAmount": "Gagal menghitung jumlah yang disarankan",
       "preflightRequest": "Gagal melakukan preflight permintaan",
-      "preflightMemoless": "Gagal melakukan preflight permintaan tanpa memo",
+      "preflightMemoless": "Gagal melakukan pemeriksaan awal permintaan Mode Dompet Eksternal",
       "minAmountNoWallet": "Jumlah swap minimum tanpa dompet yang terhubung adalah {amount} {ticker}",
       "unknown": "Kesalahan tidak diketahui",
-      "memolessHalted": "Swap memoless sedang dijeda oleh THORChain saat ini. Hubungkan wallet {chain} untuk melakukan swap."
+      "memolessHalted": "Swap dalam Mode Dompet Eksternal sedang dijeda saat ini. Hubungkan dompet {chain} untuk melakukan swap."
     },
     "feeDialog": {
       "title": "Biaya termasuk dalam kurs",
@@ -229,8 +229,8 @@
       },
       "warning": {
         "memolessDeposit": "Untuk {mode} order ini, kirim deposit dari dompet {chain} asli yang membuatnya",
-        "connectOrMemoless": "Hubungkan dompet {chain} atau gunakan deposit tanpa memo untuk {mode} order ini",
-        "memolessHalted": "Deposit tanpa memo sedang dijeda oleh THORChain saat ini - hubungkan dompet {chain} asli untuk {mode} order ini",
+        "connectOrMemoless": "Hubungkan dompet {chain} atau gunakan Mode Dompet Eksternal untuk {mode} order ini",
+        "memolessHalted": "Mode Dompet Eksternal sedang dijeda saat ini - hubungkan dompet {chain} asli untuk {mode} order ini",
         "connect": "Hubungkan dompet {chain} untuk {mode} order ini",
         "switch": "Beralih ke dompet {chain} untuk {mode} order ini",
         "addressMismatch": "Dompet yang terhubung tidak cocok dengan alamat yang membuat order ini",

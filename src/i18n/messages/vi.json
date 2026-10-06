@@ -155,10 +155,10 @@
       "memoMissing": "Thiếu Memo",
       "calculateSuggestedAmount": "Không thể tính số lượng đề xuất",
       "preflightRequest": "Không thể kiểm tra trước yêu cầu",
-      "preflightMemoless": "Không thể kiểm tra trước yêu cầu không Memo",
+      "preflightMemoless": "Không thể kiểm tra trước yêu cầu Chế độ Ví Ngoài",
       "minAmountNoWallet": "Số lượng hoán đổi tối thiểu khi chưa kết nối ví là {amount} {ticker}",
       "unknown": "Lỗi không xác định",
-      "memolessHalted": "Giao dịch swap không cần memo hiện đang tạm dừng trên THORChain. Hãy kết nối ví {chain} để swap."
+      "memolessHalted": "Hoán đổi ở Chế độ Ví Ngoài đang tạm dừng. Hãy kết nối ví {chain} để hoán đổi."
     },
     "feeDialog": {
       "title": "Phí đã bao gồm trong tỷ giá",
@@ -229,8 +229,8 @@
       },
       "warning": {
         "memolessDeposit": "Để {mode} lệnh này, hãy gửi khoản tiền nạp từ ví {chain} gốc đã đặt lệnh",
-        "connectOrMemoless": "Kết nối ví {chain} hoặc dùng khoản tiền nạp không Memo để {mode} lệnh này",
-        "memolessHalted": "Các khoản tiền nạp không Memo hiện đang bị THORChain tạm dừng - hãy kết nối ví {chain} gốc để {mode} lệnh này",
+        "connectOrMemoless": "Kết nối ví {chain} hoặc dùng Chế độ Ví Ngoài để {mode} lệnh này",
+        "memolessHalted": "Chế độ Ví Ngoài đang tạm dừng - hãy kết nối ví {chain} ban đầu để {mode} lệnh này",
         "connect": "Kết nối ví {chain} để {mode} lệnh này",
         "switch": "Chuyển sang ví {chain} để {mode} lệnh này",
         "addressMismatch": "Ví đã kết nối không khớp với địa chỉ đã đặt lệnh này",

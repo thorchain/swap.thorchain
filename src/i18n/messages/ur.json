@@ -155,10 +155,10 @@
       "memoMissing": "Memo موجود نہیں ہے",
       "calculateSuggestedAmount": "تجویز کردہ رقم کا حساب لگانے میں ناکامی",
       "preflightRequest": "preflight درخواست میں ناکامی",
-      "preflightMemoless": "memoless preflight درخواست میں ناکامی",
+      "preflightMemoless": "بیرونی والیٹ موڈ کی درخواست کی پری فلائٹ جانچ ناکام رہی",
       "minAmountNoWallet": "کنیکٹ شدہ والٹ کے بغیر کم از کم تبادلہ رقم {amount} {ticker} ہے",
       "unknown": "نامعلوم خرابی",
-      "memolessHalted": "میمو کے بغیر سواپس اس وقت THORChain کی جانب سے روکے گئے ہیں۔ سواپ کرنے کے لیے {chain} والیٹ منسلک کریں۔"
+      "memolessHalted": "بیرونی والیٹ موڈ میں سواپ فی الحال معطل ہے۔ سواپ کرنے کے لیے {chain} والیٹ منسلک کریں۔"
     },
     "feeDialog": {
       "title": "ریٹ میں شامل فیس",
@@ -229,8 +229,8 @@
       },
       "warning": {
         "memolessDeposit": "اس آرڈر کو {mode} کرنے کے لیے، وہی اصل {chain} والٹ سے ڈپازٹ بھیجیں جس نے یہ رکھا تھا",
-        "connectOrMemoless": "اس آرڈر کو {mode} کرنے کے لیے ایک {chain} والٹ کنیکٹ کریں یا memoless ڈپازٹ استعمال کریں",
-        "memolessHalted": "memoless ڈپازٹ اس وقت THORChain نے روک رکھے ہیں - اس آرڈر کو {mode} کرنے کے لیے اصل {chain} والٹ کنیکٹ کریں",
+        "connectOrMemoless": "اس آرڈر کو {mode} کرنے کے لیے {chain} والیٹ منسلک کریں یا بیرونی والیٹ موڈ استعمال کریں",
+        "memolessHalted": "بیرونی والیٹ موڈ فی الحال معطل ہے - اس آرڈر کو {mode} کرنے کے لیے اصل {chain} والیٹ منسلک کریں",
         "connect": "اس آرڈر کو {mode} کرنے کے لیے ایک {chain} والٹ کنیکٹ کریں",
         "switch": "اس آرڈر کو {mode} کرنے کے لیے ایک {chain} والٹ پر سوئچ کریں",
         "addressMismatch": "کنیکٹ شدہ والٹ اس پتے سے مطابقت نہیں رکھتا جس نے یہ آرڈر رکھا تھا",

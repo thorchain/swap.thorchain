@@ -20,7 +20,7 @@ export function SwapPage() {
         </p>
         <h2>Self-custody and transaction safety</h2>
         <p>
-          Connect your own wallet and sign transactions locally, or use a memoless instant swap with no wallet connection at all: send funds to a
+          Connect your own wallet and sign transactions locally, or use External Wallet Mode to swap with no wallet connection at all: send funds to a
           deposit address and receive the swapped asset at your destination address. Quotes show the expected output, fees, slippage, and estimated
           settlement time before you commit. The interface also supports streaming swaps, limit orders, liquidity pools, node bonding, and THORName
           registration.

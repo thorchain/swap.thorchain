@@ -155,10 +155,10 @@
       "memoMissing": "Falta el Memo",
       "calculateSuggestedAmount": "No se pudo calcular el monto sugerido",
       "preflightRequest": "No se pudo verificar la solicitud",
-      "preflightMemoless": "No se pudo verificar la solicitud sin Memo",
+      "preflightMemoless": "Error al verificar la solicitud en Modo Billetera Externa",
       "minAmountNoWallet": "El monto mínimo de intercambio sin una billetera conectada es {amount} {ticker}",
       "unknown": "Error desconocido",
-      "memolessHalted": "Los swaps sin memo están pausados por THORChain en este momento. Conecta una billetera de {chain} para hacer swap."
+      "memolessHalted": "Los swaps en Modo Billetera Externa están pausados en este momento. Conecta una billetera de {chain} para hacer swap."
     },
     "feeDialog": {
       "title": "Comisiones incluidas en la tasa",
@@ -229,8 +229,8 @@
       },
       "warning": {
         "memolessDeposit": "Para {mode} esta orden, envía el depósito desde la billetera {chain} original que la creó",
-        "connectOrMemoless": "Conecta una billetera {chain} o usa el depósito sin Memo para {mode} esta orden",
-        "memolessHalted": "Los depósitos sin Memo están pausados por THORChain en este momento - conecta la billetera {chain} original para {mode} esta orden",
+        "connectOrMemoless": "Conecta una billetera de {chain} o usa el Modo Billetera Externa para {mode} esta orden",
+        "memolessHalted": "El Modo Billetera Externa está pausado en este momento: conecta la billetera original de {chain} para {mode} esta orden",
         "connect": "Conecta una billetera {chain} para {mode} esta orden",
         "switch": "Cambia a una billetera {chain} para {mode} esta orden",
         "addressMismatch": "La billetera conectada no coincide con la dirección que creó esta orden",

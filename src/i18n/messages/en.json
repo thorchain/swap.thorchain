@@ -155,10 +155,10 @@
       "memoMissing": "Memo is missing",
       "calculateSuggestedAmount": "Failed to calculate suggested amount",
       "preflightRequest": "Failed to preflight request",
-      "preflightMemoless": "Failed to preflight memoless request",
+      "preflightMemoless": "Failed to preflight External Wallet Mode request",
       "minAmountNoWallet": "Minimum swap amount without a connected wallet is {amount} {ticker}",
       "unknown": "Unknown Error",
-      "memolessHalted": "Memoless swaps are paused by THORChain right now. Connect a {chain} wallet to swap."
+      "memolessHalted": "Swapping in External Wallet Mode is paused right now. Connect a {chain} wallet to swap."
     },
     "feeDialog": {
       "title": "Fees Included in the Rate",
@@ -229,8 +229,8 @@
       },
       "warning": {
         "memolessDeposit": "To {mode} this order, send the deposit from the original {chain} wallet that placed it",
-        "connectOrMemoless": "Connect a {chain} wallet or use the memoless deposit to {mode} this order",
-        "memolessHalted": "Memoless deposits are paused by THORChain right now - connect the original {chain} wallet to {mode} this order",
+        "connectOrMemoless": "Connect a {chain} wallet or use External Wallet Mode to {mode} this order",
+        "memolessHalted": "External Wallet Mode is paused right now - connect the original {chain} wallet to {mode} this order",
         "connect": "Connect a {chain} wallet to {mode} this order",
         "switch": "Switch to a {chain} wallet to {mode} this order",
         "addressMismatch": "Connected wallet does not match the address that placed this order",
