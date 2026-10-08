@@ -24,11 +24,11 @@ export const preferredAssetOf = (record?: NameRecord): string => {
   return asset === '.' ? '' : asset
 }
 
-/** "ETH.USDC-0XA0B8…" → "USDC (ETH)", "BTC.BTC" → "BTC". */
+/** "ETH.USDC-0XA0B8…" → "ETH.USDC", "BTC.BTC" → "BTC". Chain first, so a sorted list reads grouped by chain. */
 export const formatPreferredAsset = (asset: string): string => {
   const [chain, symbol = ''] = asset.split('.')
   const ticker = symbol.split('-')[0]
-  return ticker === chain ? ticker : `${ticker} (${chain})`
+  return ticker === chain ? ticker : `${chain}.${ticker}`
 }
 
 export const chainOfAsset = (asset: string): string => asset.split('.')[0]

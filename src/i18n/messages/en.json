@@ -518,13 +518,12 @@
       "preferredAsset": "Preferred asset",
       "preferredAssetInfo": "Affiliate fees earned by {name} are automatically swapped to the preferred asset and sent to its alias address on that chain.",
       "selectAsset": "Select asset",
-      "aliasAddress": "Alias address ({chain})",
+      "aliasAddress": "Alias Address ({chain})",
       "enterAliasAddress": "Enter a valid address",
-      "preferredAssetOptional": "Preferred asset (optional)",
+      "preferredAssetOptional": "Select Preferred Asset",
       "assetDefault": "{ticker} (default)",
       "saveAddress": "Save address",
-      "manage": "Manage",
-      "aliasAddressTitle": "Alias address"
+      "manage": "Manage"
     }
   },
   "wallet": {
