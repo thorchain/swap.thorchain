@@ -428,7 +428,9 @@
   "send.thorname.preferredAsset": ["Preferred asset", "পছন্দের অ্যাসেট"],
   "send.thorname.preferredAssetInfo": ["Affiliate fees earned by {name} are automatically swapped to the preferred asset and sent to its alias address on that chain.", "{name} এর অর্জিত অ্যাফিলিয়েট ফি স্বয়ংক্রিয়ভাবে পছন্দের অ্যাসেটে রূপান্তরিত হয়ে সেই চেইনের অ্যালিয়াস ঠিকানায় পাঠানো হয়।"],
   "send.thorname.selectAsset": ["Select asset", "অ্যাসেট নির্বাচন করুন"],
+  "send.thorname.aliasAddress": ["Alias Address ({chain})", "উপনাম ঠিকানা ({chain})"],
   "send.thorname.enterAliasAddress": ["Enter a valid address", "একটি বৈধ ঠিকানা লিখুন"],
+  "send.thorname.preferredAssetOptional": ["Select Preferred Asset", "পছন্দের অ্যাসেট নির্বাচন করুন"],
   "send.thorname.assetDefault": ["{ticker} (default)", "{ticker} (ডিফল্ট)"],
   "send.thorname.saveAddress": ["Save address", "ঠিকানা সংরক্ষণ করুন"],
   "send.thorname.manage": ["Manage", "পরিচালনা"],
@@ -520,7 +522,5 @@
   "tx.leg.deposit": ["Deposit {ticker}", "{ticker} ডিপোজিট করুন"],
   "tx.leg.send": ["Send {ticker}", "{ticker} পাঠান"],
   "tx.leg.privateRoute": ["Route {ticker} privately", "{ticker} গোপনে রুট করুন"],
-  "tx.leg.swap": ["Swap {from} to {to}", "{from} থেকে {to} সোয়াপ করুন"],
-  "send.thorname.aliasAddress": ["Alias Address ({chain})", "উপনাম ঠিকানা ({chain})"],
-  "send.thorname.preferredAssetOptional": ["Select Preferred Asset", "পছন্দের অ্যাসেট নির্বাচন করুন"]
+  "tx.leg.swap": ["Swap {from} to {to}", "{from} থেকে {to} সোয়াপ করুন"]
 }

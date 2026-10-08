@@ -428,7 +428,9 @@
   "send.thorname.preferredAsset": ["Preferred asset", "Preferred asset"],
   "send.thorname.preferredAssetInfo": ["Affiliate fees earned by {name} are automatically swapped to the preferred asset and sent to its alias address on that chain.", "Affiliate fees wey {name} earn go automatically swap to di preferred asset and go send go im alias address for dat chain."],
   "send.thorname.selectAsset": ["Select asset", "Choose asset"],
+  "send.thorname.aliasAddress": ["Alias Address ({chain})", "Alias Address ({chain})"],
   "send.thorname.enterAliasAddress": ["Enter a valid address", "Put correct address"],
+  "send.thorname.preferredAssetOptional": ["Select Preferred Asset", "Pick di Asset Wey You Prefer"],
   "send.thorname.assetDefault": ["{ticker} (default)", "{ticker} (default)"],
   "send.thorname.saveAddress": ["Save address", "Save address"],
   "send.thorname.manage": ["Manage", "Manage"],
@@ -520,7 +522,5 @@
   "tx.leg.deposit": ["Deposit {ticker}", "Deposit {ticker}"],
   "tx.leg.send": ["Send {ticker}", "Send {ticker}"],
   "tx.leg.privateRoute": ["Route {ticker} privately", "Carry {ticker} pass private road"],
-  "tx.leg.swap": ["Swap {from} to {to}", "Swap {from} to {to}"],
-  "send.thorname.aliasAddress": ["Alias Address ({chain})", "Alias Address ({chain})"],
-  "send.thorname.preferredAssetOptional": ["Select Preferred Asset", "Pick di Asset Wey You Prefer"]
+  "tx.leg.swap": ["Swap {from} to {to}", "Swap {from} to {to}"]
 }

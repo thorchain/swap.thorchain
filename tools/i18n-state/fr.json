@@ -428,7 +428,9 @@
   "send.thorname.preferredAsset": ["Preferred asset", "Actif préféré"],
   "send.thorname.preferredAssetInfo": ["Affiliate fees earned by {name} are automatically swapped to the preferred asset and sent to its alias address on that chain.", "Les frais d'affiliation gagnés par {name} sont automatiquement échangés contre l'actif préféré et envoyés à son adresse d'alias sur cette chaîne."],
   "send.thorname.selectAsset": ["Select asset", "Sélectionner un actif"],
+  "send.thorname.aliasAddress": ["Alias Address ({chain})", "Adresse alias ({chain})"],
   "send.thorname.enterAliasAddress": ["Enter a valid address", "Saisissez une adresse valide"],
+  "send.thorname.preferredAssetOptional": ["Select Preferred Asset", "Sélectionner l'actif préféré"],
   "send.thorname.assetDefault": ["{ticker} (default)", "{ticker} (par défaut)"],
   "send.thorname.saveAddress": ["Save address", "Enregistrer l'adresse"],
   "send.thorname.manage": ["Manage", "Gérer"],
@@ -520,7 +522,5 @@
   "tx.leg.deposit": ["Deposit {ticker}", "Déposer {ticker}"],
   "tx.leg.send": ["Send {ticker}", "Envoyer {ticker}"],
   "tx.leg.privateRoute": ["Route {ticker} privately", "Router {ticker} en privé"],
-  "tx.leg.swap": ["Swap {from} to {to}", "Échanger {from} en {to}"],
-  "send.thorname.aliasAddress": ["Alias Address ({chain})", "Adresse alias ({chain})"],
-  "send.thorname.preferredAssetOptional": ["Select Preferred Asset", "Sélectionner l'actif préféré"]
+  "tx.leg.swap": ["Swap {from} to {to}", "Échanger {from} en {to}"]
 }

@@ -428,7 +428,9 @@
   "send.thorname.preferredAsset": ["Preferred asset", "Tercih edilen varlık"],
   "send.thorname.preferredAssetInfo": ["Affiliate fees earned by {name} are automatically swapped to the preferred asset and sent to its alias address on that chain.", "{name} tarafından kazanılan ortaklık ücretleri otomatik olarak tercih edilen varlığa takas edilir ve o zincirdeki takma ad adresine gönderilir."],
   "send.thorname.selectAsset": ["Select asset", "Varlık seç"],
+  "send.thorname.aliasAddress": ["Alias Address ({chain})", "Takma Ad Adresi ({chain})"],
   "send.thorname.enterAliasAddress": ["Enter a valid address", "Geçerli bir adres girin"],
+  "send.thorname.preferredAssetOptional": ["Select Preferred Asset", "Tercih Edilen Varlığı Seçin"],
   "send.thorname.assetDefault": ["{ticker} (default)", "{ticker} (varsayılan)"],
   "send.thorname.saveAddress": ["Save address", "Adresi kaydet"],
   "send.thorname.manage": ["Manage", "Yönet"],
@@ -520,7 +522,5 @@
   "tx.leg.deposit": ["Deposit {ticker}", "{ticker} Yatır"],
   "tx.leg.send": ["Send {ticker}", "{ticker} Gönder"],
   "tx.leg.privateRoute": ["Route {ticker} privately", "{ticker} gizli olarak yönlendir"],
-  "tx.leg.swap": ["Swap {from} to {to}", "{from} → {to} Takas"],
-  "send.thorname.aliasAddress": ["Alias Address ({chain})", "Takma Ad Adresi ({chain})"],
-  "send.thorname.preferredAssetOptional": ["Select Preferred Asset", "Tercih Edilen Varlığı Seçin"]
+  "tx.leg.swap": ["Swap {from} to {to}", "{from} → {to} Takas"]
 }

@@ -428,7 +428,9 @@
   "send.thorname.preferredAsset": ["Preferred asset", "دارایی ترجیحی"],
   "send.thorname.preferredAssetInfo": ["Affiliate fees earned by {name} are automatically swapped to the preferred asset and sent to its alias address on that chain.", "کارمزدهای معرفی که {name} کسب می‌کند به‌طور خودکار به دارایی ترجیحی تبدیل شده و به آدرس مستعار آن در همان شبکه ارسال می‌شود."],
   "send.thorname.selectAsset": ["Select asset", "انتخاب دارایی"],
+  "send.thorname.aliasAddress": ["Alias Address ({chain})", "آدرس مستعار ({chain})"],
   "send.thorname.enterAliasAddress": ["Enter a valid address", "یک آدرس معتبر وارد کنید"],
+  "send.thorname.preferredAssetOptional": ["Select Preferred Asset", "انتخاب دارایی ترجیحی"],
   "send.thorname.assetDefault": ["{ticker} (default)", "{ticker} (پیش‌فرض)"],
   "send.thorname.saveAddress": ["Save address", "ذخیره آدرس"],
   "send.thorname.manage": ["Manage", "مدیریت"],
@@ -520,7 +522,5 @@
   "tx.leg.deposit": ["Deposit {ticker}", "واریز {ticker}"],
   "tx.leg.send": ["Send {ticker}", "ارسال {ticker}"],
   "tx.leg.privateRoute": ["Route {ticker} privately", "مسیریابی {ticker} به‌صورت خصوصی"],
-  "tx.leg.swap": ["Swap {from} to {to}", "تبادل {from} به {to}"],
-  "send.thorname.aliasAddress": ["Alias Address ({chain})", "آدرس مستعار ({chain})"],
-  "send.thorname.preferredAssetOptional": ["Select Preferred Asset", "انتخاب دارایی ترجیحی"]
+  "tx.leg.swap": ["Swap {from} to {to}", "تبادل {from} به {to}"]
 }

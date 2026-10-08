@@ -428,7 +428,9 @@
   "send.thorname.preferredAsset": ["Preferred asset", "پسندیدہ اثاثہ"],
   "send.thorname.preferredAssetInfo": ["Affiliate fees earned by {name} are automatically swapped to the preferred asset and sent to its alias address on that chain.", "{name} دی کمائی ہوئی ایفیلیئیٹ فیس آپے ای پسندیدہ اثاثے وچ سویپ ہو کے اوس چین اُتے ایس دے عرفی پتے تے بھیجی جاندی اے۔"],
   "send.thorname.selectAsset": ["Select asset", "اثاثہ چنو"],
+  "send.thorname.aliasAddress": ["Alias Address ({chain})", "عرف پتہ ({chain})"],
   "send.thorname.enterAliasAddress": ["Enter a valid address", "ٹھیک پتہ لکھو"],
+  "send.thorname.preferredAssetOptional": ["Select Preferred Asset", "پسندیدہ اثاثہ چُنو"],
   "send.thorname.assetDefault": ["{ticker} (default)", "{ticker} (ڈیفالٹ)"],
   "send.thorname.saveAddress": ["Save address", "پتہ محفوظ کرو"],
   "send.thorname.manage": ["Manage", "منظم کرو"],
@@ -520,7 +522,5 @@
   "tx.leg.deposit": ["Deposit {ticker}", "{ticker} ڈیپازٹ کرو"],
   "tx.leg.send": ["Send {ticker}", "{ticker} بھیجو"],
   "tx.leg.privateRoute": ["Route {ticker} privately", "{ticker} نوں نجی طور تے روٹ کرو"],
-  "tx.leg.swap": ["Swap {from} to {to}", "{from} نوں {to} وچ تبادلہ کرو"],
-  "send.thorname.aliasAddress": ["Alias Address ({chain})", "عرف پتہ ({chain})"],
-  "send.thorname.preferredAssetOptional": ["Select Preferred Asset", "پسندیدہ اثاثہ چُنو"]
+  "tx.leg.swap": ["Swap {from} to {to}", "{from} نوں {to} وچ تبادلہ کرو"]
 }
