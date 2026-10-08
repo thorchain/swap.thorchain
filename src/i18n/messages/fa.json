@@ -520,11 +520,10 @@
       "selectAsset": "انتخاب دارایی",
       "aliasAddress": "آدرس مستعار ({chain})",
       "enterAliasAddress": "یک آدرس معتبر وارد کنید",
-      "preferredAssetOptional": "دارایی ترجیحی (اختیاری)",
+      "preferredAssetOptional": "انتخاب دارایی ترجیحی",
       "assetDefault": "{ticker} (پیش‌فرض)",
       "saveAddress": "ذخیره آدرس",
-      "manage": "مدیریت",
-      "aliasAddressTitle": "آدرس مستعار"
+      "manage": "مدیریت"
     }
   },
   "wallet": {

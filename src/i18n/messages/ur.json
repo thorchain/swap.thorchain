@@ -520,11 +520,10 @@
       "selectAsset": "اثاثہ منتخب کریں",
       "aliasAddress": "عرفی پتہ ({chain})",
       "enterAliasAddress": "درست پتہ درج کریں",
-      "preferredAssetOptional": "ترجیحی اثاثہ (اختیاری)",
+      "preferredAssetOptional": "ترجیحی اثاثہ منتخب کریں",
       "assetDefault": "{ticker} (ڈیفالٹ)",
       "saveAddress": "پتہ محفوظ کریں",
-      "manage": "منظم کریں",
-      "aliasAddressTitle": "عرفی پتہ"
+      "manage": "منظم کریں"
     }
   },
   "wallet": {

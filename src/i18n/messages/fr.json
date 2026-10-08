@@ -518,13 +518,12 @@
       "preferredAsset": "Actif préféré",
       "preferredAssetInfo": "Les frais d'affiliation gagnés par {name} sont automatiquement échangés contre l'actif préféré et envoyés à son adresse d'alias sur cette chaîne.",
       "selectAsset": "Sélectionner un actif",
-      "aliasAddress": "Adresse d'alias ({chain})",
+      "aliasAddress": "Adresse alias ({chain})",
       "enterAliasAddress": "Saisissez une adresse valide",
-      "preferredAssetOptional": "Actif préféré (facultatif)",
+      "preferredAssetOptional": "Sélectionner l'actif préféré",
       "assetDefault": "{ticker} (par défaut)",
       "saveAddress": "Enregistrer l'adresse",
-      "manage": "Gérer",
-      "aliasAddressTitle": "Adresse d'alias"
+      "manage": "Gérer"
     }
   },
   "wallet": {

@@ -520,11 +520,10 @@
       "selectAsset": "ᛊᛖᛚᛖᚲᛏ ᚨᛊᛊᛖᛏ",
       "aliasAddress": "ᚨᛚᛁᚨᛊ ᚨᛞᛞᚱᛖᛊᛊ ({chain})",
       "enterAliasAddress": "ᛖᚾᛏᛖᚱ ᚨ ᚹᚨᛚᛁᛞ ᚨᛞᛞᚱᛖᛊᛊ",
-      "preferredAssetOptional": "ᛈᚱᛖᚠᛖᚱᚱᛖᛞ ᚨᛊᛊᛖᛏ (ᛟᛈᛏᛁᛟᚾᚨᛚ)",
+      "preferredAssetOptional": "ᛊᛖᛚᛖᚲᛏ ᛈᚱᛖᚠᛖᚱᚱᛖᛞ ᚨᛊᛊᛖᛏ",
       "assetDefault": "{ticker} (ᛞᛖᚠᚨᚢᛚᛏ)",
       "saveAddress": "ᛊᚨᚡᛖ ᚨᛞᛞᚱᛖᛊᛊ",
-      "manage": "ᛗᚨᚾᚨᚷᛖ",
-      "aliasAddressTitle": "ᚨᛚᛁᚨᛊ ᚨᛞᛞᚱᛖᛊᛊ"
+      "manage": "ᛗᚨᚾᚨᚷᛖ"
     }
   },
   "wallet": {

@@ -428,13 +428,10 @@
   "send.thorname.preferredAsset": ["Preferred asset", "สินทรัพย์ที่ต้องการ"],
   "send.thorname.preferredAssetInfo": ["Affiliate fees earned by {name} are automatically swapped to the preferred asset and sent to its alias address on that chain.", "ค่าธรรมเนียมพันธมิตรที่ {name} ได้รับจะถูกสวอปเป็นสินทรัพย์ที่ต้องการโดยอัตโนมัติ และส่งไปยังที่อยู่แฝง (alias) บนเชนนั้น"],
   "send.thorname.selectAsset": ["Select asset", "เลือกสินทรัพย์"],
-  "send.thorname.aliasAddress": ["Alias address ({chain})", "ที่อยู่แฝง ({chain})"],
   "send.thorname.enterAliasAddress": ["Enter a valid address", "กรอกที่อยู่ที่ถูกต้อง"],
-  "send.thorname.preferredAssetOptional": ["Preferred asset (optional)", "สินทรัพย์ที่ต้องการ (ไม่บังคับ)"],
   "send.thorname.assetDefault": ["{ticker} (default)", "{ticker} (ค่าเริ่มต้น)"],
   "send.thorname.saveAddress": ["Save address", "บันทึกที่อยู่"],
   "send.thorname.manage": ["Manage", "จัดการ"],
-  "send.thorname.aliasAddressTitle": ["Alias address", "ที่อยู่แฝง"],
   "wallet.chains": ["Chains", "เครือข่าย"],
   "wallet.deselectAll": ["Deselect All", "ยกเลิกการเลือกทั้งหมด"],
   "wallet.selectAll": ["Select All", "เลือกทั้งหมด"],
@@ -523,5 +520,7 @@
   "tx.leg.deposit": ["Deposit {ticker}", "ฝาก {ticker}"],
   "tx.leg.send": ["Send {ticker}", "ส่ง {ticker}"],
   "tx.leg.privateRoute": ["Route {ticker} privately", "กำหนดเส้นทาง {ticker} แบบส่วนตัว"],
-  "tx.leg.swap": ["Swap {from} to {to}", "แลกเปลี่ยน {from} เป็น {to}"]
+  "tx.leg.swap": ["Swap {from} to {to}", "แลกเปลี่ยน {from} เป็น {to}"],
+  "send.thorname.aliasAddress": ["Alias Address ({chain})", "ที่อยู่นามแฝง ({chain})"],
+  "send.thorname.preferredAssetOptional": ["Select Preferred Asset", "เลือกสินทรัพย์ที่ต้องการ"]
 }

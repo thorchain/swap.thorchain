@@ -428,13 +428,10 @@
   "send.thorname.preferredAsset": ["Preferred asset", "Предпочтительный актив"],
   "send.thorname.preferredAssetInfo": ["Affiliate fees earned by {name} are automatically swapped to the preferred asset and sent to its alias address on that chain.", "Партнёрские комиссии, заработанные {name}, автоматически обмениваются на предпочтительный актив и отправляются на его алиас-адрес в соответствующей сети."],
   "send.thorname.selectAsset": ["Select asset", "Выберите актив"],
-  "send.thorname.aliasAddress": ["Alias address ({chain})", "Алиас-адрес ({chain})"],
   "send.thorname.enterAliasAddress": ["Enter a valid address", "Введите корректный адрес"],
-  "send.thorname.preferredAssetOptional": ["Preferred asset (optional)", "Предпочтительный актив (необязательно)"],
   "send.thorname.assetDefault": ["{ticker} (default)", "{ticker} (по умолчанию)"],
   "send.thorname.saveAddress": ["Save address", "Сохранить адрес"],
   "send.thorname.manage": ["Manage", "Управление"],
-  "send.thorname.aliasAddressTitle": ["Alias address", "Алиас-адрес"],
   "wallet.chains": ["Chains", "Сети"],
   "wallet.deselectAll": ["Deselect All", "Снять выбор со всех"],
   "wallet.selectAll": ["Select All", "Выбрать все"],
@@ -523,5 +520,7 @@
   "tx.leg.deposit": ["Deposit {ticker}", "Внести {ticker}"],
   "tx.leg.send": ["Send {ticker}", "Отправить {ticker}"],
   "tx.leg.privateRoute": ["Route {ticker} privately", "Приватный маршрут для {ticker}"],
-  "tx.leg.swap": ["Swap {from} to {to}", "Обменять {from} на {to}"]
+  "tx.leg.swap": ["Swap {from} to {to}", "Обменять {from} на {to}"],
+  "send.thorname.aliasAddress": ["Alias Address ({chain})", "Адрес алиаса ({chain})"],
+  "send.thorname.preferredAssetOptional": ["Select Preferred Asset", "Выберите предпочитаемый актив"]
 }

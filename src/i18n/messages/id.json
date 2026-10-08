@@ -518,13 +518,12 @@
       "preferredAsset": "Aset pilihan",
       "preferredAssetInfo": "Biaya afiliasi yang diperoleh {name} otomatis ditukar ke aset pilihan dan dikirim ke alamat alias di chain tersebut.",
       "selectAsset": "Pilih aset",
-      "aliasAddress": "Alamat alias ({chain})",
+      "aliasAddress": "Alamat Alias ({chain})",
       "enterAliasAddress": "Masukkan alamat yang valid",
-      "preferredAssetOptional": "Aset pilihan (opsional)",
+      "preferredAssetOptional": "Pilih Aset Pilihan",
       "assetDefault": "{ticker} (default)",
       "saveAddress": "Simpan alamat",
-      "manage": "Kelola",
-      "aliasAddressTitle": "Alamat alias"
+      "manage": "Kelola"
     }
   },
   "wallet": {

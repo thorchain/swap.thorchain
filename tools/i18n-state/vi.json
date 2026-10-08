@@ -428,13 +428,10 @@
   "send.thorname.preferredAsset": ["Preferred asset", "Tài sản ưu tiên"],
   "send.thorname.preferredAssetInfo": ["Affiliate fees earned by {name} are automatically swapped to the preferred asset and sent to its alias address on that chain.", "Phí liên kết mà {name} kiếm được sẽ tự động được hoán đổi sang tài sản ưu tiên và gửi đến địa chỉ bí danh trên chuỗi đó."],
   "send.thorname.selectAsset": ["Select asset", "Chọn tài sản"],
-  "send.thorname.aliasAddress": ["Alias address ({chain})", "Địa chỉ bí danh ({chain})"],
   "send.thorname.enterAliasAddress": ["Enter a valid address", "Nhập địa chỉ hợp lệ"],
-  "send.thorname.preferredAssetOptional": ["Preferred asset (optional)", "Tài sản ưu tiên (không bắt buộc)"],
   "send.thorname.assetDefault": ["{ticker} (default)", "{ticker} (mặc định)"],
   "send.thorname.saveAddress": ["Save address", "Lưu địa chỉ"],
   "send.thorname.manage": ["Manage", "Quản lý"],
-  "send.thorname.aliasAddressTitle": ["Alias address", "Địa chỉ bí danh"],
   "wallet.chains": ["Chains", "Chuỗi"],
   "wallet.deselectAll": ["Deselect All", "Bỏ chọn tất cả"],
   "wallet.selectAll": ["Select All", "Chọn tất cả"],
@@ -523,5 +520,7 @@
   "tx.leg.deposit": ["Deposit {ticker}", "Nạp {ticker}"],
   "tx.leg.send": ["Send {ticker}", "Gửi {ticker}"],
   "tx.leg.privateRoute": ["Route {ticker} privately", "Định tuyến {ticker} riêng tư"],
-  "tx.leg.swap": ["Swap {from} to {to}", "Hoán đổi {from} sang {to}"]
+  "tx.leg.swap": ["Swap {from} to {to}", "Hoán đổi {from} sang {to}"],
+  "send.thorname.aliasAddress": ["Alias Address ({chain})", "Địa chỉ bí danh ({chain})"],
+  "send.thorname.preferredAssetOptional": ["Select Preferred Asset", "Chọn tài sản ưu tiên"]
 }

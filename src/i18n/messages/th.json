@@ -518,13 +518,12 @@
       "preferredAsset": "สินทรัพย์ที่ต้องการ",
       "preferredAssetInfo": "ค่าธรรมเนียมพันธมิตรที่ {name} ได้รับจะถูกสวอปเป็นสินทรัพย์ที่ต้องการโดยอัตโนมัติ และส่งไปยังที่อยู่แฝง (alias) บนเชนนั้น",
       "selectAsset": "เลือกสินทรัพย์",
-      "aliasAddress": "ที่อยู่แฝง ({chain})",
+      "aliasAddress": "ที่อยู่นามแฝง ({chain})",
       "enterAliasAddress": "กรอกที่อยู่ที่ถูกต้อง",
-      "preferredAssetOptional": "สินทรัพย์ที่ต้องการ (ไม่บังคับ)",
+      "preferredAssetOptional": "เลือกสินทรัพย์ที่ต้องการ",
       "assetDefault": "{ticker} (ค่าเริ่มต้น)",
       "saveAddress": "บันทึกที่อยู่",
-      "manage": "จัดการ",
-      "aliasAddressTitle": "ที่อยู่แฝง"
+      "manage": "จัดการ"
     }
   },
   "wallet": {

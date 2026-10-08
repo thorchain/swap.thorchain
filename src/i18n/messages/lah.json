@@ -518,13 +518,12 @@
       "preferredAsset": "پسندیدہ اثاثہ",
       "preferredAssetInfo": "{name} دی کمائی ہوئی ایفیلیئیٹ فیس آپے ای پسندیدہ اثاثے وچ سویپ ہو کے اوس چین اُتے ایس دے عرفی پتے تے بھیجی جاندی اے۔",
       "selectAsset": "اثاثہ چنو",
-      "aliasAddress": "عرفی پتہ ({chain})",
+      "aliasAddress": "عرف پتہ ({chain})",
       "enterAliasAddress": "ٹھیک پتہ لکھو",
-      "preferredAssetOptional": "پسندیدہ اثاثہ (اختیاری)",
+      "preferredAssetOptional": "پسندیدہ اثاثہ چُنو",
       "assetDefault": "{ticker} (ڈیفالٹ)",
       "saveAddress": "پتہ محفوظ کرو",
-      "manage": "منظم کرو",
-      "aliasAddressTitle": "عرفی پتہ"
+      "manage": "منظم کرو"
     }
   },
   "wallet": {

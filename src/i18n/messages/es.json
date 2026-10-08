@@ -518,13 +518,12 @@
       "preferredAsset": "Activo preferido",
       "preferredAssetInfo": "Las comisiones de afiliado que gana {name} se intercambian automáticamente por el activo preferido y se envían a su dirección de alias en esa cadena.",
       "selectAsset": "Seleccionar activo",
-      "aliasAddress": "Dirección de alias ({chain})",
+      "aliasAddress": "Dirección alias ({chain})",
       "enterAliasAddress": "Introduce una dirección válida",
-      "preferredAssetOptional": "Activo preferido (opcional)",
+      "preferredAssetOptional": "Seleccionar activo preferido",
       "assetDefault": "{ticker} (predeterminado)",
       "saveAddress": "Guardar dirección",
-      "manage": "Gestionar",
-      "aliasAddressTitle": "Dirección de alias"
+      "manage": "Gestionar"
     }
   },
   "wallet": {

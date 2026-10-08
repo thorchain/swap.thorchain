@@ -520,11 +520,10 @@
       "selectAsset": "アセットを選択",
       "aliasAddress": "エイリアスアドレス（{chain}）",
       "enterAliasAddress": "有効なアドレスを入力してください",
-      "preferredAssetOptional": "優先アセット（任意）",
+      "preferredAssetOptional": "優先アセットを選択",
       "assetDefault": "{ticker}（デフォルト）",
       "saveAddress": "アドレスを保存",
-      "manage": "管理",
-      "aliasAddressTitle": "エイリアスアドレス"
+      "manage": "管理"
     }
   },
   "wallet": {

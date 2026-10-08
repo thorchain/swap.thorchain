@@ -520,11 +520,10 @@
       "selectAsset": "اختر الأصل",
       "aliasAddress": "عنوان الاسم المستعار ({chain})",
       "enterAliasAddress": "أدخل عنوانًا صالحًا",
-      "preferredAssetOptional": "الأصل المفضّل (اختياري)",
+      "preferredAssetOptional": "اختر الأصل المفضّل",
       "assetDefault": "{ticker} (افتراضي)",
       "saveAddress": "حفظ العنوان",
-      "manage": "إدارة",
-      "aliasAddressTitle": "عنوان الاسم المستعار"
+      "manage": "إدارة"
     }
   },
   "wallet": {

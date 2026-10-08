@@ -518,13 +518,12 @@
       "preferredAsset": "Предпочтительный актив",
       "preferredAssetInfo": "Партнёрские комиссии, заработанные {name}, автоматически обмениваются на предпочтительный актив и отправляются на его алиас-адрес в соответствующей сети.",
       "selectAsset": "Выберите актив",
-      "aliasAddress": "Алиас-адрес ({chain})",
+      "aliasAddress": "Адрес алиаса ({chain})",
       "enterAliasAddress": "Введите корректный адрес",
-      "preferredAssetOptional": "Предпочтительный актив (необязательно)",
+      "preferredAssetOptional": "Выберите предпочитаемый актив",
       "assetDefault": "{ticker} (по умолчанию)",
       "saveAddress": "Сохранить адрес",
-      "manage": "Управление",
-      "aliasAddressTitle": "Алиас-адрес"
+      "manage": "Управление"
     }
   },
   "wallet": {

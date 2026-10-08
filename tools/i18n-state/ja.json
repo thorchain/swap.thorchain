@@ -428,13 +428,10 @@
   "send.thorname.preferredAsset": ["Preferred asset", "優先アセット"],
   "send.thorname.preferredAssetInfo": ["Affiliate fees earned by {name} are automatically swapped to the preferred asset and sent to its alias address on that chain.", "{name} が獲得したアフィリエイト手数料は自動的に優先アセットにスワップされ、そのチェーンのエイリアスアドレスに送られます。"],
   "send.thorname.selectAsset": ["Select asset", "アセットを選択"],
-  "send.thorname.aliasAddress": ["Alias address ({chain})", "エイリアスアドレス（{chain}）"],
   "send.thorname.enterAliasAddress": ["Enter a valid address", "有効なアドレスを入力してください"],
-  "send.thorname.preferredAssetOptional": ["Preferred asset (optional)", "優先アセット（任意）"],
   "send.thorname.assetDefault": ["{ticker} (default)", "{ticker}（デフォルト）"],
   "send.thorname.saveAddress": ["Save address", "アドレスを保存"],
   "send.thorname.manage": ["Manage", "管理"],
-  "send.thorname.aliasAddressTitle": ["Alias address", "エイリアスアドレス"],
   "wallet.chains": ["Chains", "チェーン"],
   "wallet.deselectAll": ["Deselect All", "すべて選択解除"],
   "wallet.selectAll": ["Select All", "すべて選択"],
@@ -523,5 +520,7 @@
   "tx.leg.deposit": ["Deposit {ticker}", "{ticker} を預け入れ"],
   "tx.leg.send": ["Send {ticker}", "{ticker} を送信"],
   "tx.leg.privateRoute": ["Route {ticker} privately", "{ticker} をプライベートにルーティング"],
-  "tx.leg.swap": ["Swap {from} to {to}", "{from} を {to} にスワップ"]
+  "tx.leg.swap": ["Swap {from} to {to}", "{from} を {to} にスワップ"],
+  "send.thorname.aliasAddress": ["Alias Address ({chain})", "エイリアスアドレス（{chain}）"],
+  "send.thorname.preferredAssetOptional": ["Select Preferred Asset", "優先アセットを選択"]
 }

@@ -428,13 +428,10 @@
   "send.thorname.preferredAsset": ["Preferred asset", "偏好資產"],
   "send.thorname.preferredAssetInfo": ["Affiliate fees earned by {name} are automatically swapped to the preferred asset and sent to its alias address on that chain.", "{name} 賺取的聯盟費用會自動兌換為偏好資產，並發送到該鏈上的別名地址。"],
   "send.thorname.selectAsset": ["Select asset", "選擇資產"],
-  "send.thorname.aliasAddress": ["Alias address ({chain})", "別名地址（{chain}）"],
   "send.thorname.enterAliasAddress": ["Enter a valid address", "請輸入有效地址"],
-  "send.thorname.preferredAssetOptional": ["Preferred asset (optional)", "偏好資產（選填）"],
   "send.thorname.assetDefault": ["{ticker} (default)", "{ticker}（預設）"],
   "send.thorname.saveAddress": ["Save address", "儲存地址"],
   "send.thorname.manage": ["Manage", "管理"],
-  "send.thorname.aliasAddressTitle": ["Alias address", "別名地址"],
   "wallet.chains": ["Chains", "鏈"],
   "wallet.deselectAll": ["Deselect All", "取消全選"],
   "wallet.selectAll": ["Select All", "全選"],
@@ -523,5 +520,7 @@
   "tx.leg.deposit": ["Deposit {ticker}", "存入{ticker}"],
   "tx.leg.send": ["Send {ticker}", "發送{ticker}"],
   "tx.leg.privateRoute": ["Route {ticker} privately", "以私密方式轉送 {ticker}"],
-  "tx.leg.swap": ["Swap {from} to {to}", "將{from}兌換為{to}"]
+  "tx.leg.swap": ["Swap {from} to {to}", "將{from}兌換為{to}"],
+  "send.thorname.aliasAddress": ["Alias Address ({chain})", "別名地址（{chain}）"],
+  "send.thorname.preferredAssetOptional": ["Select Preferred Asset", "選擇偏好資產"]
 }

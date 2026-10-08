@@ -520,11 +520,10 @@
       "selectAsset": "选择资产",
       "aliasAddress": "别名地址（{chain}）",
       "enterAliasAddress": "请输入有效地址",
-      "preferredAssetOptional": "偏好资产（选填）",
+      "preferredAssetOptional": "选择首选资产",
       "assetDefault": "{ticker}（默认）",
       "saveAddress": "保存地址",
-      "manage": "管理",
-      "aliasAddressTitle": "别名地址"
+      "manage": "管理"
     }
   },
   "wallet": {

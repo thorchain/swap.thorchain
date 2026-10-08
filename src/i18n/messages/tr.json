@@ -518,13 +518,12 @@
       "preferredAsset": "Tercih edilen varlık",
       "preferredAssetInfo": "{name} tarafından kazanılan ortaklık ücretleri otomatik olarak tercih edilen varlığa takas edilir ve o zincirdeki takma ad adresine gönderilir.",
       "selectAsset": "Varlık seç",
-      "aliasAddress": "Takma ad adresi ({chain})",
+      "aliasAddress": "Takma Ad Adresi ({chain})",
       "enterAliasAddress": "Geçerli bir adres girin",
-      "preferredAssetOptional": "Tercih edilen varlık (isteğe bağlı)",
+      "preferredAssetOptional": "Tercih Edilen Varlığı Seçin",
       "assetDefault": "{ticker} (varsayılan)",
       "saveAddress": "Adresi kaydet",
-      "manage": "Yönet",
-      "aliasAddressTitle": "Takma ad adresi"
+      "manage": "Yönet"
     }
   },
   "wallet": {

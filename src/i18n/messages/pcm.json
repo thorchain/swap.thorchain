@@ -518,13 +518,12 @@
       "preferredAsset": "Preferred asset",
       "preferredAssetInfo": "Affiliate fees wey {name} earn go automatically swap to di preferred asset and go send go im alias address for dat chain.",
       "selectAsset": "Choose asset",
-      "aliasAddress": "Alias address ({chain})",
+      "aliasAddress": "Alias Address ({chain})",
       "enterAliasAddress": "Put correct address",
-      "preferredAssetOptional": "Preferred asset (optional)",
+      "preferredAssetOptional": "Pick di Asset Wey You Prefer",
       "assetDefault": "{ticker} (default)",
       "saveAddress": "Save address",
-      "manage": "Manage",
-      "aliasAddressTitle": "Alias address"
+      "manage": "Manage"
     }
   },
   "wallet": {

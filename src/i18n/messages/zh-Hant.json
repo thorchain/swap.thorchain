@@ -520,11 +520,10 @@
       "selectAsset": "選擇資產",
       "aliasAddress": "別名地址（{chain}）",
       "enterAliasAddress": "請輸入有效地址",
-      "preferredAssetOptional": "偏好資產（選填）",
+      "preferredAssetOptional": "選擇偏好資產",
       "assetDefault": "{ticker}（預設）",
       "saveAddress": "儲存地址",
-      "manage": "管理",
-      "aliasAddressTitle": "別名地址"
+      "manage": "管理"
     }
   },
   "wallet": {

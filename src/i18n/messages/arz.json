@@ -518,13 +518,12 @@
       "preferredAsset": "الأصل المفضّل",
       "preferredAssetInfo": "رسوم الإحالة اللي بيكسبها {name} بتتحوّل تلقائيًا للأصل المفضّل وبتتبعت لعنوان الاسم البديل على الشبكة دي.",
       "selectAsset": "اختار الأصل",
-      "aliasAddress": "عنوان الاسم البديل ({chain})",
+      "aliasAddress": "العنوان المستعار ({chain})",
       "enterAliasAddress": "اكتب عنوان صحيح",
-      "preferredAssetOptional": "الأصل المفضّل (اختياري)",
+      "preferredAssetOptional": "اختار الأصل المفضّل",
       "assetDefault": "{ticker} (افتراضي)",
       "saveAddress": "احفظ العنوان",
-      "manage": "إدارة",
-      "aliasAddressTitle": "عنوان الاسم البديل"
+      "manage": "إدارة"
     }
   },
   "wallet": {

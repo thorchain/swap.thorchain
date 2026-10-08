@@ -520,11 +520,10 @@
       "selectAsset": "Asset auswählen",
       "aliasAddress": "Alias-Adresse ({chain})",
       "enterAliasAddress": "Gültige Adresse eingeben",
-      "preferredAssetOptional": "Bevorzugtes Asset (optional)",
+      "preferredAssetOptional": "Bevorzugtes Asset auswählen",
       "assetDefault": "{ticker} (Standard)",
       "saveAddress": "Adresse speichern",
-      "manage": "Verwalten",
-      "aliasAddressTitle": "Alias-Adresse"
+      "manage": "Verwalten"
     }
   },
   "wallet": {

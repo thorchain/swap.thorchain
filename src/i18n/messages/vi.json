@@ -520,11 +520,10 @@
       "selectAsset": "Chọn tài sản",
       "aliasAddress": "Địa chỉ bí danh ({chain})",
       "enterAliasAddress": "Nhập địa chỉ hợp lệ",
-      "preferredAssetOptional": "Tài sản ưu tiên (không bắt buộc)",
+      "preferredAssetOptional": "Chọn tài sản ưu tiên",
       "assetDefault": "{ticker} (mặc định)",
       "saveAddress": "Lưu địa chỉ",
-      "manage": "Quản lý",
-      "aliasAddressTitle": "Địa chỉ bí danh"
+      "manage": "Quản lý"
     }
   },
   "wallet": {

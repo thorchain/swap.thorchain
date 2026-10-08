@@ -428,13 +428,10 @@
   "send.thorname.preferredAsset": ["Preferred asset", "ᛈᚱᛖᚠᛖᚱᚱᛖᛞ ᚨᛊᛊᛖᛏ"],
   "send.thorname.preferredAssetInfo": ["Affiliate fees earned by {name} are automatically swapped to the preferred asset and sent to its alias address on that chain.", "ᚨᚠᚠᛁᛚᛁᚨᛏᛖ ᚠᛖᛖᛊ ᛖᚨᚱᚾᛖᛞ ᛒᛁ {name} ᚨᚱᛖ ᚨᚢᛏᛟᛗᚨᛏᛁᚲᚨᛚᛚᛁ ᛊᚹᚨᛈᛈᛖᛞ ᛏᛟ ᛏᚺᛖ ᛈᚱᛖᚠᛖᚱᚱᛖᛞ ᚨᛊᛊᛖᛏ ᚨᚾᛞ ᛊᛖᚾᛏ ᛏᛟ ᛁᛏᛊ ᚨᛚᛁᚨᛊ ᚨᛞᛞᚱᛖᛊᛊ ᛟᚾ ᛏᚺᚨᛏ ᚲᚺᚨᛁᚾ."],
   "send.thorname.selectAsset": ["Select asset", "ᛊᛖᛚᛖᚲᛏ ᚨᛊᛊᛖᛏ"],
-  "send.thorname.aliasAddress": ["Alias address ({chain})", "ᚨᛚᛁᚨᛊ ᚨᛞᛞᚱᛖᛊᛊ ({chain})"],
   "send.thorname.enterAliasAddress": ["Enter a valid address", "ᛖᚾᛏᛖᚱ ᚨ ᚹᚨᛚᛁᛞ ᚨᛞᛞᚱᛖᛊᛊ"],
-  "send.thorname.preferredAssetOptional": ["Preferred asset (optional)", "ᛈᚱᛖᚠᛖᚱᚱᛖᛞ ᚨᛊᛊᛖᛏ (ᛟᛈᛏᛁᛟᚾᚨᛚ)"],
   "send.thorname.assetDefault": ["{ticker} (default)", "{ticker} (ᛞᛖᚠᚨᚢᛚᛏ)"],
   "send.thorname.saveAddress": ["Save address", "ᛊᚨᚡᛖ ᚨᛞᛞᚱᛖᛊᛊ"],
   "send.thorname.manage": ["Manage", "ᛗᚨᚾᚨᚷᛖ"],
-  "send.thorname.aliasAddressTitle": ["Alias address", "ᚨᛚᛁᚨᛊ ᚨᛞᛞᚱᛖᛊᛊ"],
   "wallet.chains": ["Chains", "ᚲᚺᚨᛁᚾᛊ"],
   "wallet.deselectAll": ["Deselect All", "ᛞᛖᛊᛖᛚᛖᚲᛏ ᚨᛚᛚ"],
   "wallet.selectAll": ["Select All", "ᛊᛖᛚᛖᚲᛏ ᚨᛚᛚ"],
@@ -523,5 +520,7 @@
   "tx.leg.deposit": ["Deposit {ticker}", "ᛞᛖᛈᛟᛊᛁᛏ {ticker}"],
   "tx.leg.send": ["Send {ticker}", "ᛊᛖᚾᛞ {ticker}"],
   "tx.leg.privateRoute": ["Route {ticker} privately", "ᚱᛟᚢᛏᛖ {ticker} ᛈᚱᛁᚹᚨᛏᛖᛚᛁ"],
-  "tx.leg.swap": ["Swap {from} to {to}", "ᛊᚹᚨᛈ {from} ᛏᛟ {to}"]
+  "tx.leg.swap": ["Swap {from} to {to}", "ᛊᚹᚨᛈ {from} ᛏᛟ {to}"],
+  "send.thorname.aliasAddress": ["Alias Address ({chain})", "ᚨᛚᛁᚨᛊ ᚨᛞᛞᚱᛖᛊᛊ ({chain})"],
+  "send.thorname.preferredAssetOptional": ["Select Preferred Asset", "ᛊᛖᛚᛖᚲᛏ ᛈᚱᛖᚠᛖᚱᚱᛖᛞ ᚨᛊᛊᛖᛏ"]
 }

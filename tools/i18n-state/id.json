@@ -428,13 +428,10 @@
   "send.thorname.preferredAsset": ["Preferred asset", "Aset pilihan"],
   "send.thorname.preferredAssetInfo": ["Affiliate fees earned by {name} are automatically swapped to the preferred asset and sent to its alias address on that chain.", "Biaya afiliasi yang diperoleh {name} otomatis ditukar ke aset pilihan dan dikirim ke alamat alias di chain tersebut."],
   "send.thorname.selectAsset": ["Select asset", "Pilih aset"],
-  "send.thorname.aliasAddress": ["Alias address ({chain})", "Alamat alias ({chain})"],
   "send.thorname.enterAliasAddress": ["Enter a valid address", "Masukkan alamat yang valid"],
-  "send.thorname.preferredAssetOptional": ["Preferred asset (optional)", "Aset pilihan (opsional)"],
   "send.thorname.assetDefault": ["{ticker} (default)", "{ticker} (default)"],
   "send.thorname.saveAddress": ["Save address", "Simpan alamat"],
   "send.thorname.manage": ["Manage", "Kelola"],
-  "send.thorname.aliasAddressTitle": ["Alias address", "Alamat alias"],
   "wallet.chains": ["Chains", "Chain"],
   "wallet.deselectAll": ["Deselect All", "Batalkan semua pilihan"],
   "wallet.selectAll": ["Select All", "Pilih semua"],
@@ -523,5 +520,7 @@
   "tx.leg.deposit": ["Deposit {ticker}", "Deposit {ticker}"],
   "tx.leg.send": ["Send {ticker}", "Kirim {ticker}"],
   "tx.leg.privateRoute": ["Route {ticker} privately", "Rutekan {ticker} secara privat"],
-  "tx.leg.swap": ["Swap {from} to {to}", "Tukar {from} ke {to}"]
+  "tx.leg.swap": ["Swap {from} to {to}", "Tukar {from} ke {to}"],
+  "send.thorname.aliasAddress": ["Alias Address ({chain})", "Alamat Alias ({chain})"],
+  "send.thorname.preferredAssetOptional": ["Select Preferred Asset", "Pilih Aset Pilihan"]
 }
