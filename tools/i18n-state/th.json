@@ -242,7 +242,7 @@
   "send.title": ["Send", "ส่ง"],
   "send.send": ["Send", "ส่ง"],
   "send.sendPrivately": ["Send Privately", "ส่งแบบส่วนตัว"],
-  "send.tab.privateSend": ["Private Send", "ส่งแบบส่วนตัว"],
+  "send.tab.privateSend": ["PrivateSend", "ส่งแบบส่วนตัว"],
   "send.amount": ["Amount", "จำนวน"],
   "send.clear": ["Clear", "ล้าง"],
   "send.balanceLabel": ["Balance:", "ยอดคงเหลือ:"],

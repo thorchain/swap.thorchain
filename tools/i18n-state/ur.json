@@ -242,7 +242,7 @@
   "send.title": ["Send", "بھیجیں"],
   "send.send": ["Send", "بھیجیں"],
   "send.sendPrivately": ["Send Privately", "نجی طور پر بھیجیں"],
-  "send.tab.privateSend": ["Private Send", "نجی ترسیل"],
+  "send.tab.privateSend": ["PrivateSend", "نجی‌ترسیل"],
   "send.amount": ["Amount", "رقم"],
   "send.clear": ["Clear", "صاف کریں"],
   "send.balanceLabel": ["Balance:", "بیلنس:"],

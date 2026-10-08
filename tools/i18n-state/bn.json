@@ -242,7 +242,7 @@
   "send.title": ["Send", "পাঠান"],
   "send.send": ["Send", "পাঠান"],
   "send.sendPrivately": ["Send Privately", "গোপনে পাঠান"],
-  "send.tab.privateSend": ["Private Send", "প্রাইভেট সেন্ড"],
+  "send.tab.privateSend": ["PrivateSend", "প্রাইভেটসেন্ড"],
   "send.amount": ["Amount", "পরিমাণ"],
   "send.clear": ["Clear", "মুছুন"],
   "send.balanceLabel": ["Balance:", "ব্যালেন্স:"],

@@ -242,7 +242,7 @@
   "send.title": ["Send", "Invia"],
   "send.send": ["Send", "Invia"],
   "send.sendPrivately": ["Send Privately", "Invia in privato"],
-  "send.tab.privateSend": ["Private Send", "Invio privato"],
+  "send.tab.privateSend": ["PrivateSend", "InvioPrivato"],
   "send.amount": ["Amount", "Importo"],
   "send.clear": ["Clear", "Cancella"],
   "send.balanceLabel": ["Balance:", "Saldo:"],

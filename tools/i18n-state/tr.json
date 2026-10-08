@@ -242,7 +242,7 @@
   "send.title": ["Send", "Gönder"],
   "send.send": ["Send", "Gönder"],
   "send.sendPrivately": ["Send Privately", "Gizli Gönder"],
-  "send.tab.privateSend": ["Private Send", "Gizli Gönderim"],
+  "send.tab.privateSend": ["PrivateSend", "GizliGönderim"],
   "send.amount": ["Amount", "Tutar"],
   "send.clear": ["Clear", "Temizle"],
   "send.balanceLabel": ["Balance:", "Bakiye:"],

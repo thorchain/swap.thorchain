@@ -302,7 +302,7 @@
     "send": "Gönder",
     "sendPrivately": "Gizli Gönder",
     "tab": {
-      "privateSend": "Gizli Gönderim"
+      "privateSend": "GizliGönderim"
     },
     "amount": "Tutar",
     "clear": "Temizle",

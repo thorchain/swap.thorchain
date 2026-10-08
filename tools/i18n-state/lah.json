@@ -242,7 +242,7 @@
   "send.title": ["Send", "بھیجو"],
   "send.send": ["Send", "بھیجو"],
   "send.sendPrivately": ["Send Privately", "نجی طور تے گھلو"],
-  "send.tab.privateSend": ["Private Send", "نجی گھلاوا"],
+  "send.tab.privateSend": ["PrivateSend", "نجی‌گھلاوا"],
   "send.amount": ["Amount", "رقم"],
   "send.clear": ["Clear", "صاف کرو"],
   "send.balanceLabel": ["Balance:", "بیلنس:"],

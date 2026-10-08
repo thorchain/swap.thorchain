@@ -242,7 +242,7 @@
   "send.title": ["Send", "ارسال"],
   "send.send": ["Send", "ارسال"],
   "send.sendPrivately": ["Send Privately", "ارسال خصوصی"],
-  "send.tab.privateSend": ["Private Send", "ارسال خصوصی"],
+  "send.tab.privateSend": ["PrivateSend", "ارسال‌خصوصی"],
   "send.amount": ["Amount", "مقدار"],
   "send.clear": ["Clear", "پاک کردن"],
   "send.balanceLabel": ["Balance:", "موجودی:"],

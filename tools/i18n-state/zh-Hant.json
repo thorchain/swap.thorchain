@@ -242,7 +242,7 @@
   "send.title": ["Send", "發送"],
   "send.send": ["Send", "發送"],
   "send.sendPrivately": ["Send Privately", "私密發送"],
-  "send.tab.privateSend": ["Private Send", "私密發送"],
+  "send.tab.privateSend": ["PrivateSend", "私密發送"],
   "send.amount": ["Amount", "金額"],
   "send.clear": ["Clear", "清除"],
   "send.balanceLabel": ["Balance:", "餘額："],

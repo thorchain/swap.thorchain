@@ -242,7 +242,7 @@
   "send.title": ["Send", "إرسال"],
   "send.send": ["Send", "إرسال"],
   "send.sendPrivately": ["Send Privately", "ابعت بشكل خاص"],
-  "send.tab.privateSend": ["Private Send", "إرسال خاص"],
+  "send.tab.privateSend": ["PrivateSend", "إرسال‌خاص"],
   "send.amount": ["Amount", "المبلغ"],
   "send.clear": ["Clear", "مسح"],
   "send.balanceLabel": ["Balance:", "الرصيد:"],

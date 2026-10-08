@@ -242,7 +242,7 @@
   "send.title": ["Send", "Gửi"],
   "send.send": ["Send", "Gửi"],
   "send.sendPrivately": ["Send Privately", "Gửi riêng tư"],
-  "send.tab.privateSend": ["Private Send", "Gửi riêng tư"],
+  "send.tab.privateSend": ["PrivateSend", "GửiRiêngTư"],
   "send.amount": ["Amount", "Số lượng"],
   "send.clear": ["Clear", "Xóa"],
   "send.balanceLabel": ["Balance:", "Số dư:"],

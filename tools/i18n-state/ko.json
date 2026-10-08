@@ -242,7 +242,7 @@
   "send.title": ["Send", "보내기"],
   "send.send": ["Send", "보내기"],
   "send.sendPrivately": ["Send Privately", "비공개로 전송"],
-  "send.tab.privateSend": ["Private Send", "비공개 전송"],
+  "send.tab.privateSend": ["PrivateSend", "비공개전송"],
   "send.amount": ["Amount", "금액"],
   "send.clear": ["Clear", "지우기"],
   "send.balanceLabel": ["Balance:", "잔액:"],

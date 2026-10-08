@@ -242,7 +242,7 @@
   "send.title": ["Send", "Kirim"],
   "send.send": ["Send", "Kirim"],
   "send.sendPrivately": ["Send Privately", "Kirim Secara Privat"],
-  "send.tab.privateSend": ["Private Send", "Kirim Privat"],
+  "send.tab.privateSend": ["PrivateSend", "KirimPrivat"],
   "send.amount": ["Amount", "Jumlah"],
   "send.clear": ["Clear", "Bersihkan"],
   "send.balanceLabel": ["Balance:", "Saldo:"],

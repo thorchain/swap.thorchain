@@ -242,7 +242,7 @@
   "send.title": ["Send", "送信"],
   "send.send": ["Send", "送信"],
   "send.sendPrivately": ["Send Privately", "プライベート送金"],
-  "send.tab.privateSend": ["Private Send", "プライベート送金"],
+  "send.tab.privateSend": ["PrivateSend", "プライベート送金"],
   "send.amount": ["Amount", "金額"],
   "send.clear": ["Clear", "クリア"],
   "send.balanceLabel": ["Balance:", "残高:"],
