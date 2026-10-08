@@ -6,6 +6,7 @@ import { TokenBalance } from '@/hooks/use-wallet-balances'
 import { cn, toCurrencyFixed } from '@/lib/utils'
 import { WalletAccount } from '@/store/wallets-store'
 import { Icon } from '@/components/icons'
+import { Tooltip } from '@/components/tooltip'
 
 interface TokenRowProps {
   token: TokenBalance
@@ -42,15 +43,17 @@ export function WalletToken({ token, bordered, account }: TokenRowProps) {
             </div>
           )}
         </div>
-        <button
-          onClick={() => {
-            openDialog(Send, { initialToken: token, account })
-          }}
-          className="text-txt-label-small hover:text-green-contrast cursor-pointer"
-          aria-label={t('sendToken', { ticker: balance.ticker })}
-        >
-          <Icon name="send" className="size-6" />
-        </button>
+        <Tooltip content={t('send')}>
+          <button
+            onClick={() => {
+              openDialog(Send, { initialToken: token, account })
+            }}
+            className="text-txt-label-small hover:text-green-contrast cursor-pointer"
+            aria-label={t('sendToken', { ticker: balance.ticker })}
+          >
+            <Icon name="send" className="size-6" />
+          </button>
+        </Tooltip>
       </div>
     </div>
   )
