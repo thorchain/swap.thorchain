@@ -6,6 +6,7 @@ import { assetIdentifierStr } from '@/components/send/send-helpers'
 import { Asset } from '@/components/swap/asset'
 import { useAssets } from '@/hooks/use-assets'
 import { useDebouncedValue } from '@/hooks/use-debounced-value'
+import { isQuoteFor } from '@/hooks/use-quote'
 import { TokenBalance } from '@/hooks/use-wallet-balances'
 import { getQuotes } from '@/lib/api'
 import { resolveQuoteError } from '@/lib/errors'
@@ -46,17 +47,20 @@ export const usePrivateSendQuote = (asset: Asset | undefined, amount: string, so
   const debouncedAmount = useDebouncedValue(amount, 500)
   const settled = debouncedAmount === amount && parseFloat(amount) > 0
 
-  const { data, isFetching, error } = useQuery({
+  const { data, isFetching, isPlaceholderData, error } = useQuery({
     queryKey: ['private-send-quote', asset?.identifier, debouncedAmount, sourceAddress],
     queryFn: () => privateSendQuote(asset!, debouncedAmount, sourceAddress),
     enabled: enabled && !!asset && settled,
+    placeholderData: previous => (previous && isQuoteFor(previous, asset?.identifier, asset?.identifier) ? previous : undefined),
     retry: false,
     staleTime: 30_000
   })
 
   const active = enabled && !!asset && parseFloat(amount) > 0
   return {
-    quote: active && settled ? data : undefined,
+    quote: active && settled && !isPlaceholderData ? data : undefined,
+    // The quote to price the asset by: `quote`, or while the amount settles, the previous one.
+    pricingQuote: active ? data : undefined,
     isLoading: active && (!settled || isFetching),
     error: active && settled && !isFetching ? error : null
   }

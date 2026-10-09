@@ -6,12 +6,15 @@ import { AppConfig } from '@/config'
 import { useAssetFrom, useAssetTo, useCustomInterval, useCustomQuantity, useSlippage, useSwap } from '@/hooks/use-swap'
 import { getQuotes } from '@/lib/api'
 import { resolveQuoteError } from '@/lib/errors'
+import { isHoudiniProvider } from '@/lib/swap-helpers'
 import { useIsPrivateSend, useIsPrivateSwap } from '@/store/private-swap-store'
 
 type UseQuote = {
   isLoading: boolean
   refetch: (options?: RefetchOptions) => void
   quote?: QuoteResponseRoute
+  // The quote to price the pair by: `quote`, or while it refetches, the previous one for the same pair.
+  pricingQuote?: QuoteResponseRoute
   error: Error | null
 }
 
@@ -45,6 +48,7 @@ export const useQuote = (): UseQuote => {
     refetch,
     isLoading,
     isRefetching,
+    isPlaceholderData,
     error
   } = useQuery({
     queryKey: queryKey,
@@ -78,6 +82,10 @@ export const useQuote = (): UseQuote => {
         )
       })
     },
+    placeholderData: previous =>
+      previous && isQuoteFor(previous, assetFrom?.identifier, assetTo?.identifier) && isHoudiniProvider(previous.providers[0]) === isPrivateSwap
+        ? previous
+        : undefined,
     enabled: !!(!valueFrom.eqValue(0) && assetFrom?.identifier && assetTo?.identifier && pairMatchesMode),
     retry: false,
     refetchOnMount: false
@@ -88,10 +96,14 @@ export const useQuote = (): UseQuote => {
   return {
     isLoading: isLoading || isRefetching,
     refetch,
-    quote: isLoading || isRefetching || error ? undefined : quote,
+    quote: isLoading || isRefetching || isPlaceholderData || error ? undefined : quote,
+    pricingQuote: error ? undefined : quote,
     error: newError
   }
 }
+
+export const isQuoteFor = (quote: QuoteResponseRoute, sellAsset?: string, buyAsset?: string) =>
+  quote.sellAsset.toLowerCase() === sellAsset?.toLowerCase() && quote.buyAsset.toLowerCase() === buyAsset?.toLowerCase()
 
 function createAbortController(signal: AbortSignal) {
   const controller = new AbortController()

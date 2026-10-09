@@ -14,7 +14,7 @@ import { PriceImpact } from '@/components/swap/price-impact'
 import { SwapFeeDialog } from '@/components/swap/swap-fee-dialog'
 import { SwapProvider } from '@/components/swap/swap-provider'
 import { InfoTooltip } from '@/components/tooltip'
-import { useRates, useSwapRates } from '@/hooks/use-rates'
+import { houdiniQuoteRates, useRates, useSwapRates } from '@/hooks/use-rates'
 import { useAssetFrom, useAssetTo, useSlippage } from '@/hooks/use-swap'
 import { formatExpiration, isHoudiniProvider, isPrivateSend, resolveFees } from '@/lib/swap-helpers'
 import { cn, toCurrencyFixed, truncate } from '@/lib/utils'
@@ -25,6 +25,8 @@ interface SwapConfirmProps {
   priceImpact?: USwapNumber
 }
 
+const isSameAsset = (a: string, b: string) => a.toLowerCase() === b.toLowerCase()
+
 export const SwapConfirm = ({ quote, priceImpact }: SwapConfirmProps) => {
   const t = useTranslations('swap')
   const assetFrom = useAssetFrom()
@@ -33,11 +35,13 @@ export const SwapConfirm = ({ quote, priceImpact }: SwapConfirmProps) => {
   const isLimitSwap = useIsLimitSwap()
   const limitSwapBuyAmount = useLimitSwapBuyAmount()
 
-  if (!assetFrom || !assetTo) return null
-
   const identifiers = useMemo(() => quote.fees.map(f => f.asset).sort(), [quote.fees])
   const { rates } = useRates(identifiers, quote.providers[0])
-  const { rateFrom, rateTo } = useSwapRates()
+  const swapRates = useSwapRates()
+  // A Houdini route prices its own pair (a pool's price can be stale or missing).
+  const quoteRates = useMemo(() => houdiniQuoteRates(quote), [quote])
+  const rateFrom = quoteRates.rateFrom ?? swapRates.rateFrom
+  const rateTo = quoteRates.rateTo ?? swapRates.rateTo
 
   const sellAmount = new USwapNumber(quote.sellAmount)
   const expectedBuyAmount = new USwapNumber(quote.expectedBuyAmount)
@@ -56,11 +60,10 @@ export const SwapConfirm = ({ quote, priceImpact }: SwapConfirmProps) => {
     return expectedBuyAmount.mul(new USwapNumber(100).sub(slippageTolerance)).div(100)
   }, [expectedBuyAmount, slippageTolerance])
 
-  // Fees in a pair asset the pools cannot price (Houdini-only) take the swap's own rate for it.
-  const feeRates = {
-    ...(rateFrom && { [quote.sellAsset]: rateFrom }),
-    ...(rateTo && { [quote.buyAsset]: rateTo }),
-    ...rates
+  const feeRates = { ...rates }
+  for (const { asset } of quote.fees) {
+    const pairRate = isSameAsset(asset, quote.buyAsset) ? quoteRates.rateTo : isSameAsset(asset, quote.sellAsset) ? quoteRates.rateFrom : undefined
+    if (pairRate) feeRates[asset] = pairRate
   }
   const { inbound, outbound, liquidity, platform, included } = resolveFees(quote, feeRates)
   const { openDialog } = useDialog()
@@ -81,6 +84,8 @@ export const SwapConfirm = ({ quote, priceImpact }: SwapConfirmProps) => {
   }, [limitBuyAmount, expectedBuyAmount])
 
   const displayBuyAmount = isLimitSwap && limitBuyAmount ? limitBuyAmount : expectedBuyAmount
+
+  if (!assetFrom || !assetTo) return null
 
   // A private swap is priced floating and settled off-chain by Houdini: the payout is re-priced
   // when the deposit lands, so slippage protection has nothing to say about it. Price impact stays -

@@ -41,7 +41,7 @@ import { SwapPrivateDisclaimer } from '@/components/swap/swap-private-disclaimer
 import { AppConfig } from '@/config'
 import { TokenBalance, useWalletBalances } from '@/hooks/use-wallet-balances'
 import { useAccounts } from '@/hooks/use-wallets'
-import { houdiniQuoteRates, useRates } from '@/hooks/use-rates'
+import { houdiniQuoteRates, preferRate, useRates } from '@/hooks/use-rates'
 import { readableError } from '@/lib/errors'
 import { formatExpiration } from '@/lib/swap-helpers'
 import { canTrackTransfer } from '@/lib/transfer-status'
@@ -111,11 +111,12 @@ export function Send({ isOpen, onOpenChange, initialToken, account }: SendDialog
   const gasAsset = useMemo(() => AssetValue.from({ chain: selectedToken.balance.chain, value: 0 }), [selectedToken.balance.chain])
   const gasAssetIdentifier = assetIdentifierStr(gasAsset)
 
-  const { rates } = useRates([assetIdentifierStr(selectedToken.balance), gasAssetIdentifier])
+  const tokenIdentifier = assetIdentifierStr(selectedToken.balance)
+  const { rates } = useRates([tokenIdentifier, gasAssetIdentifier])
   const privateAsset = findPrivateAsset(selectedToken)
   const privateQuote = usePrivateSendQuote(privateAsset, amount, selectedAccount.address, isPrivate)
-  // Houdini lists tokens no pool prices; its quote carries a USD value of its own.
-  const rate = rates[assetIdentifierStr(selectedToken.balance)] ?? (privateQuote.quote && houdiniQuoteRates(privateQuote.quote).rateFrom)
+  const houdiniRates = useMemo(() => (privateQuote.pricingQuote ? houdiniQuoteRates(privateQuote.pricingQuote) : {}), [privateQuote.pricingQuote])
+  const rate = preferRate(isPrivate, rates[tokenIdentifier], houdiniRates.rateFrom)
 
   const numericAmount = parseFloat(amount) || 0
   const fiatValue = rate ? rate.mul(numericAmount) : new USwapNumber(0)
@@ -300,7 +301,7 @@ export function Send({ isOpen, onOpenChange, initialToken, account }: SendDialog
   const tokenFilter = isPrivate ? (token: TokenBalance) => !!findPrivateAsset(token) : undefined
   const totalTokenCount = walletData.reduce((sum, { tokens }) => sum + tokens.filter(t => t.amount > 0 && (!tokenFilter || tokenFilter(t))).length, 0)
   const selectedAsset = tokenToAsset(selectedToken)
-  const feeRate = rates[gasAssetIdentifier]
+  const feeRate = gasAssetIdentifier === tokenIdentifier ? rate : rates[gasAssetIdentifier]
   const feeUsd = txFee && feeRate ? feeRate.mul(parseFloat(txFee.amount.toSignificant())) : undefined
   const insufficientBalance = numericAmount > 0 && selectedToken.balance.lt(amount)
   const canSend =
@@ -312,7 +313,8 @@ export function Send({ isOpen, onOpenChange, initialToken, account }: SendDialog
     !submitting &&
     (!isPrivate || (!!privateQuote.quote && privateAcknowledged))
   const recipientGets = privateQuote.quote && new USwapNumber(privateQuote.quote.expectedBuyAmount)
-  const recipientGetsUsd = recipientGets && rate && rate.mul(recipientGets)
+  const recipientRate = preferRate(isPrivate, rates[tokenIdentifier], houdiniRates.rateTo)
+  const recipientGetsUsd = recipientGets && recipientRate && recipientRate.mul(recipientGets)
   const estimatedTime = privateQuote.quote?.estimatedTime?.total
 
   const openTokenSelector = () => {

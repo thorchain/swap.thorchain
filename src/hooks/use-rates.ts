@@ -6,6 +6,7 @@ import { QuoteResponseRoute } from '@tcswap/helpers/api'
 import { useQuote } from '@/hooks/use-quote'
 import { useAssetFrom, useAssetTo } from '@/hooks/use-swap'
 import { getDexScreenerTokens, getMayaMidgardCacaoPrice, getMayaMidgardPools, getMidgardPools, getMidgardRunePrice } from '@/lib/api'
+import { isHoudiniProvider } from '@/lib/swap-helpers'
 
 export type AssetRateMap = Record<string, USwapNumber>
 export type AssetLogoMap = Record<string, string>
@@ -165,27 +166,23 @@ export const useSwapRates = () => {
   const assetFrom = useAssetFrom()
   const assetTo = useAssetTo()
   const identifiers = [assetFrom?.identifier, assetTo?.identifier].filter(Boolean).sort() as string[]
-  const { quote } = useQuote()
+  const { pricingQuote: quote } = useQuote()
   const { rates } = useRates(identifiers, quote?.providers[0])
-  const houdiniRates = useHoudiniQuoteRates()
+  const houdiniRates = useMemo(() => (quote ? houdiniQuoteRates(quote) : {}), [quote])
+  const isPrivate = isHoudiniProvider(quote?.providers[0])
 
   return {
-    rateFrom: assetFrom && (rates[assetFrom.identifier] ?? houdiniRates.rateFrom),
-    rateTo: assetTo && (rates[assetTo.identifier] ?? houdiniRates.rateTo)
+    rateFrom: assetFrom && preferRate(isPrivate, rates[assetFrom.identifier], houdiniRates.rateFrom),
+    rateTo: assetTo && preferRate(isPrivate, rates[assetTo.identifier], houdiniRates.rateTo)
   }
 }
 
+// A private route is priced by Houdini first: a halted pool keeps its last price, which drifts off the market.
+export const preferRate = (isPrivate: boolean, poolRate?: USwapNumber, houdiniRate?: USwapNumber) =>
+  isPrivate ? (houdiniRate ?? poolRate) : (poolRate ?? houdiniRate)
+
 // Houdini lists assets no THORChain/Maya pool prices (NEAR, TON, …); its quote carries USD values of
 // its own. `amountOutUsd` prices the payout, and on a private send the sell side is the same asset.
-export const useHoudiniQuoteRates = (): { rateFrom?: USwapNumber; rateTo?: USwapNumber } => {
-  const assetFrom = useAssetFrom()
-  const assetTo = useAssetTo()
-  const { quote } = useQuote()
-  if (!quote || quote.sellAsset !== assetFrom?.identifier || quote.buyAsset !== assetTo?.identifier) return {}
-
-  return houdiniQuoteRates(quote)
-}
-
 export const houdiniQuoteRates = (quote: QuoteResponseRoute): { rateFrom?: USwapNumber; rateTo?: USwapNumber } => {
   const houdini = quote.meta?.houdini
   if (!houdini) return {}
