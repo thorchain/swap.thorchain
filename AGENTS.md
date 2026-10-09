@@ -68,11 +68,9 @@ Two-component architecture:
   `src/lib/agent/idempotency.ts`.
 - `src/lib/rate-limit.ts` — per-client limiter shared by `/mcp` and the support endpoints. Key on `cf-connecting-ip` (or the *last* forwarded hop),
   never the first `x-forwarded-for` entry: the edge appends to whatever the caller sent, so the leftmost value is forgeable.
-- `src/lib/chatwoot.ts` — bug reports and feature requests are delivered into a Chatwoot **API-channel** inbox via its unauthenticated public Client
-  API (`CHATWOOT_BASE_URL` + `CHATWOOT_INBOX_IDENTIFIER`); `/api/report-bug` falls back to Brevo email when Chatwoot is unset or fails.
-  `src/components/chatwoot-widget.tsx` is the separate live-chat **Website-channel** widget, rendered only when `NEXT_PUBLIC_CHATWOOT_WEBSITE_TOKEN`
-  is set. Agent replies only reach a reporter by email if the Chatwoot account has the `email_continuity_on_api_channel` feature enabled — it is off
-  by default and replies are silently dropped without it.
+- `src/components/chatwoot-widget.tsx` — the live-chat widget (a Chatwoot **Website-channel** inbox), rendered only when
+  `NEXT_PUBLIC_CHATWOOT_WEBSITE_TOKEN` is set. There is no bug-report form or `/api/report-bug` endpoint any more — support is live chat
+  and email.
 - `server.json` (repo root) + `src/app/.well-known/mcp-registry-auth/route.ts` — the official MCP Registry record and its domain-ownership proof
   (served from `MCP_REGISTRY_AUTH`). Keep `server.json`'s `version` in step with `MCP_SERVER_INFO.version`; publishing steps are in
   `docs/agent-readiness/mcp-registry.md`.

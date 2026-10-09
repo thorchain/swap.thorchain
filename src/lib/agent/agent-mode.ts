@@ -47,8 +47,8 @@ const capabilities = [
   },
   {
     id: 'submit-feedback',
-    summary: 'Subscribe to updates or file a bug report through the public REST API.',
-    access: `POST ${AppConfig.baseUrl}/api/v1/newsletter, POST ${AppConfig.baseUrl}/api/v1/report-bug`,
+    summary: 'Subscribe to updates through the public REST API.',
+    access: `POST ${AppConfig.baseUrl}/api/v1/newsletter`,
     authentication: 'none (rate limited, Idempotency-Key supported)'
   }
 ]

@@ -24,7 +24,7 @@ async function handlePost(req: NextRequest) {
 
   const apiKey = process.env.BREVO_API_KEY
   if (!apiKey) {
-    return apiError(500, 'server_misconfigured', 'Server misconfiguration', 'The subscription provider is not configured. Retry later or report the issue via POST /api/report-bug.')
+    return apiError(500, 'server_misconfigured', 'Server misconfiguration', 'The subscription provider is not configured. Retry later.')
   }
 
   const res = await fetch('https://api.brevo.com/v3/contacts', {

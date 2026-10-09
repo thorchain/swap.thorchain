@@ -5,8 +5,7 @@ import { useLocale } from 'next-intl'
 import { useTheme } from 'next-themes'
 import type { Locale } from '@/i18n/config'
 
-// Live chat, backed by a Website inbox. Separate from the API inbox that
-// `/api/report-bug` writes to.
+// Live chat, backed by a Chatwoot Website inbox.
 const BASE_URL = process.env.NEXT_PUBLIC_CHATWOOT_BASE_URL
 const WEBSITE_TOKEN = process.env.NEXT_PUBLIC_CHATWOOT_WEBSITE_TOKEN
 

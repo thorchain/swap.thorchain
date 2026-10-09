@@ -222,7 +222,7 @@ export default function DevelopersPage() {
             ))}
           </ul>
           <p>
-            <strong>Idempotency:</strong> both POST endpoints accept an <code>Idempotency-Key</code> header (any unique string, max 255 chars). A
+            <strong>Idempotency:</strong> the POST endpoint accepts an <code>Idempotency-Key</code> header (any unique string, max 255 chars). A
             retry with the same key within one hour replays the original JSON response — marked with an <code>Idempotency-Replayed: true</code>{' '}
             response header — instead of re-executing the operation. <code>429</code> and <code>5xx</code> outcomes are not stored, so retrying after
             them can succeed.
@@ -346,9 +346,6 @@ export default function DevelopersPage() {
               <a className="underline" href={`mailto:${AppConfig.supportEmail}`}>
                 {AppConfig.supportEmail}
               </a>
-            </li>
-            <li>
-              Bug reports and feature requests: <code>POST /api/report-bug</code>
             </li>
           </ul>
         </Section>

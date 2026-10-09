@@ -71,9 +71,8 @@ The server never holds keys, signs, or submits transactions.
 Documented in the OpenAPI description (${AppConfig.baseUrl}/.well-known/openapi.json) and API catalog (${AppConfig.baseUrl}/.well-known/api-catalog):
 
 - POST /api/v1/newsletter — subscribe an email address to updates.
-- POST /api/v1/report-bug — submit a bug report or feature request.
 
-Both are unauthenticated and rate limited per client (429 with Retry-After when exceeded), and both accept an \`Idempotency-Key\` header so retries never duplicate a submission. The API is versioned in the URL path (/api/v1/); unversioned /api/* paths remain as stable aliases.
+It is unauthenticated and rate limited per client (429 with Retry-After when exceeded), and accepts an \`Idempotency-Key\` header so retries never duplicate a submission. The API is versioned in the URL path (/api/v1/); unversioned /api/* paths remain as stable aliases.
 These are the site's own support endpoints; swap quotes are not served under ${AppConfig.baseUrl}/api — use the MCP server or the aggregator backend described above.
 
 ## SDKs
@@ -296,9 +295,8 @@ The server supports MCP Apps (io.modelcontextprotocol/ui): \`get_swap_quote\` li
 Described by OpenAPI 3.1 at ${AppConfig.baseUrl}/.well-known/openapi.json. Versioned in the URL path; \`/api/v1/\` is canonical and unversioned \`/api/*\` paths are stable aliases.
 
 - \`POST /api/v1/newsletter\` — subscribe an email address to updates
-- \`POST /api/v1/report-bug\` — submit a bug report or feature request
 
-Both are unauthenticated, rate limited per client (429 with Retry-After), and accept an \`Idempotency-Key\` header: a retry with the same key within one hour replays the original response (\`Idempotency-Replayed: true\`) instead of re-executing. Every non-2xx response is JSON with \`error\`, \`code\`, \`hint\`, and \`documentation\` fields. Swap quotes are NOT served under ${AppConfig.baseUrl}/api — use the MCP server or the aggregator backend.
+It is unauthenticated, rate limited per client (429 with Retry-After), and accept an \`Idempotency-Key\` header: a retry with the same key within one hour replays the original response (\`Idempotency-Replayed: true\`) instead of re-executing. Every non-2xx response is JSON with \`error\`, \`code\`, \`hint\`, and \`documentation\` fields. Swap quotes are NOT served under ${AppConfig.baseUrl}/api — use the MCP server or the aggregator backend.
 
 ## Authentication
 
@@ -345,5 +343,4 @@ ${DEVELOPER_DOCS.map(doc => `- ${AppConfig.baseUrl}/developers/${doc.slug} — $
 ## Support
 
 - Email: ${AppConfig.supportEmail}
-- Bug reports: \`POST /api/v1/report-bug\`
 `

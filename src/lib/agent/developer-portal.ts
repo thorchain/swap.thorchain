@@ -13,12 +13,6 @@ export const developerEndpoints = [
     summary: 'Subscribe an email address to THORChain Swap updates.'
   },
   {
-    method: 'POST',
-    path: '/api/v1/report-bug',
-    authentication: 'none',
-    summary: 'Submit a bug report or feature request.'
-  },
-  {
     method: 'GET',
     path: '/.well-known/status',
     authentication: 'none',
@@ -163,7 +157,7 @@ ${developerEndpoints.map(endpoint => `- \`${endpoint.method} ${endpoint.path}\` 
 
 ### Idempotency
 
-Both POST endpoints accept an \`Idempotency-Key\` header (any unique string, max 255 chars). A retry with the same key within one hour replays the original JSON response — marked with an \`Idempotency-Replayed: true\` response header — instead of re-executing the operation, so network-failure retries never duplicate a subscription or report. 429 and 5xx outcomes are not stored, so retrying after them can succeed.
+The POST endpoint accepts an \`Idempotency-Key\` header (any unique string, max 255 chars). A retry with the same key within one hour replays the original JSON response — marked with an \`Idempotency-Replayed: true\` response header — instead of re-executing the operation, so network-failure retries never duplicate a subscription. 429 and 5xx outcomes are not stored, so retrying after them can succeed.
 
 ### Versioning and Deprecation
 
@@ -212,5 +206,4 @@ ${developerDiscoveryLinks.map(link => `- [${link.path}](${AppConfig.baseUrl}${li
 ## Support
 
 - Email: ${AppConfig.supportEmail}
-- Bug reports and feature requests: \`POST /api/report-bug\`
 `

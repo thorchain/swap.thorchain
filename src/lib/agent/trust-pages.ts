@@ -27,5 +27,5 @@ export const contactMarkdown = `# Contact THORChain Swap
 
 ## Security Warning
 
-Never send anyone your seed phrase, private key, wallet backup, or signing credentials. Legitimate support will never ask for them. Do not include wallet secrets, private account data, or confidential credentials in bug reports.
+Never send anyone your seed phrase, private key, wallet backup, or signing credentials. Legitimate support will never ask for them. Do not include wallet secrets, private account data, or confidential credentials in support messages.
 `

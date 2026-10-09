@@ -107,11 +107,6 @@ const apiCatalog = json({
           href: `${AppConfig.baseUrl}/api/v1/newsletter`,
           type: 'application/json',
           title: 'Newsletter subscription API'
-        },
-        {
-          href: `${AppConfig.baseUrl}/api/v1/report-bug`,
-          type: 'application/json',
-          title: 'Bug report API'
         }
       ],
       'service-desc': [

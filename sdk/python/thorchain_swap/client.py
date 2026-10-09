@@ -98,24 +98,6 @@ class ThorchainSwapClient:
         """Subscribe an email address to THORChain Swap updates."""
         return self._post_json("/api/v1/newsletter", {"email": email}, idempotency_key)
 
-    def report_bug(
-        self,
-        description: str,
-        email: Optional[str] = None,
-        report_type: Optional[str] = None,
-        page: Optional[str] = None,
-        idempotency_key: Optional[str] = None,
-    ) -> Dict[str, Any]:
-        """File a bug report or feature request."""
-        body: Dict[str, Any] = {"description": description}
-        if email:
-            body["email"] = email
-        if report_type:
-            body["type"] = report_type
-        if page:
-            body["page"] = page
-        return self._post_json("/api/v1/report-bug", body, idempotency_key)
-
     # --- internals -------------------------------------------------------
 
     def _call_tool(self, name: str, arguments: Dict[str, Any]) -> Any:

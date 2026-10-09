@@ -73,8 +73,9 @@ Score page: https://ora.ai/score/swap.thorchain.org Rescan: `POST https://ora.ai
 - **Agent platform configs** — repo-root `AGENTS.md` with instructions for AI coding agents (the repo is public at
   github.com/thorchain/swap.thorchain); linked from llms.txt, the developer portal, the site AGENTS.md, and the homepage's server-rendered section so
   probes can find it without guessing.
-- **Idempotency-Key support** — `src/lib/agent/idempotency.ts` (in-memory, single-instance deploy, 1-hour retention) wraps both POST endpoints;
-  repeated keys replay the original response with `Idempotency-Replayed: true`. Declared as a header parameter on both operations in the OpenAPI
+- **Idempotency-Key support** — `src/lib/agent/idempotency.ts` (in-memory, single-instance deploy, 1-hour retention) wraps the POST endpoint
+  (`/api/v1/newsletter`; `/api/v1/report-bug` was removed in October 2026); repeated keys replay the original response with
+  `Idempotency-Replayed: true`. Declared as a header parameter on the operation in the OpenAPI
   description and documented in the developer portal.
 - **REST versioning / deprecation policy** — `/api/v1/` is the canonical path prefix (`src/app/api/v1/*` re-export the handlers); unversioned `/api/*`
   paths remain stable aliases. Policy documented in the OpenAPI info description and the developer portal: breaking changes ship as a new `/api/vN`

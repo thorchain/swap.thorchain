@@ -151,18 +151,6 @@ func (c *Client) SubscribeNewsletter(ctx context.Context, email, idempotencyKey 
 	return c.postJSON(ctx, "/api/v1/newsletter", map[string]any{"email": email}, idempotencyKey, nil)
 }
 
-// ReportBug files a bug report or feature request.
-func (c *Client) ReportBug(ctx context.Context, description, email, reportType, idempotencyKey string) error {
-	body := map[string]any{"description": description}
-	if email != "" {
-		body["email"] = email
-	}
-	if reportType != "" {
-		body["type"] = reportType
-	}
-	return c.postJSON(ctx, "/api/v1/report-bug", body, idempotencyKey, nil)
-}
-
 func (c *Client) callTool(ctx context.Context, name string, arguments map[string]any, out any) error {
 	var result struct {
 		Content []struct {

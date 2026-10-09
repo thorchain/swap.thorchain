@@ -68,15 +68,15 @@ ${developerEndpoints.map(endpoint => `- \`${endpoint.method} ${endpoint.path}\` 
 ## Example
 
 \`\`\`bash
-curl -s ${base}/api/v1/report-bug \\
+curl -s ${base}/api/v1/newsletter \\
   -H 'Content-Type: application/json' \\
-  -H 'Idempotency-Key: 5f1c1a2e-report-1' \\
-  -d '{"description":"Quote refresh spins forever on BTC to ETH","type":"bug","email":"you@example.com"}'
+  -H 'Idempotency-Key: 5f1c1a2e-subscribe-1' \\
+  -d '{"email":"you@example.com"}'
 \`\`\`
 
 ## Idempotency
 
-Both POST endpoints accept an \`Idempotency-Key\` header (any unique string, max 255 characters). A retry with the same key within one hour replays the original JSON response and marks it with \`Idempotency-Replayed: true\` instead of re-executing the operation. 429 and 5xx outcomes are not stored, so retrying after those can still succeed.
+The POST endpoint accepts an \`Idempotency-Key\` header (any unique string, max 255 characters). A retry with the same key within one hour replays the original JSON response and marks it with \`Idempotency-Replayed: true\` instead of re-executing the operation. 429 and 5xx outcomes are not stored, so retrying after those can still succeed.
 
 ## Errors
 
