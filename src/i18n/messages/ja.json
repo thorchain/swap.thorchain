@@ -29,26 +29,10 @@
     "riskPolicy": "リスクポリシー",
     "riskTooltip": "このウェブサイトは細心の注意を払って構築されていますが、意図しない不具合により、サイトの誤動作や資金の損失につながる可能性があります。これらのリスクを理解し、受け入れた場合にのみ続行してください。",
     "builtBy": "開発元",
-    "reportBug": "バグの報告／機能のリクエスト",
     "forAgents": "AIエージェント向け",
     "developers": "開発者",
     "liveChat": "ライブチャット",
-    "support": "サポート",
-    "bug": {
-      "title": "バグの報告／機能のリクエスト",
-      "success": "ありがとうございます。報告が送信されました。",
-      "close": "閉じる",
-      "emailLabel": "メールアドレス（任意）",
-      "descriptionLabel": "説明",
-      "descriptionPlaceholder": "バグ／機能について説明してください",
-      "attachmentLabel": "添付ファイル（任意）",
-      "attachFile": "ファイルを添付",
-      "sending": "送信中…",
-      "send": "報告を送信",
-      "attachmentTooLarge": "ファイルサイズが大きすぎます。添付ファイルは{size}MB未満にしてください。",
-      "attachmentFailed": "そのファイルを読み込めませんでした。別のファイルをお試しください。",
-      "failed": "報告の送信に失敗しました"
-    }
+    "support": "サポート"
   },
   "swap": {
     "tab": {

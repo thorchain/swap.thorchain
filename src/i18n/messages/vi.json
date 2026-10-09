@@ -29,26 +29,10 @@
     "riskPolicy": "Chính sách rủi ro",
     "riskTooltip": "Mặc dù trang web này được xây dựng cẩn thận, nó vẫn có thể chứa các lỗi ngoài ý muốn dẫn đến trục trặc và thậm chí mất tiền. Chỉ tiếp tục nếu bạn hiểu và chấp nhận những rủi ro này.",
     "builtBy": "Được xây dựng bởi",
-    "reportBug": "Báo lỗi / Yêu cầu tính năng",
     "forAgents": "Dành cho AI Agent",
     "developers": "Nhà phát triển",
     "liveChat": "Trò chuyện trực tiếp",
-    "support": "Hỗ trợ",
-    "bug": {
-      "title": "Báo lỗi / Yêu cầu tính năng",
-      "success": "Cảm ơn bạn! Báo cáo của bạn đã được gửi.",
-      "close": "Đóng",
-      "emailLabel": "Email (tùy chọn)",
-      "descriptionLabel": "Mô tả",
-      "descriptionPlaceholder": "Mô tả lỗi / tính năng",
-      "attachmentLabel": "Tệp đính kèm (tùy chọn)",
-      "attachFile": "Đính kèm tệp",
-      "sending": "Đang gửi...",
-      "send": "Gửi báo cáo",
-      "attachmentTooLarge": "Tệp đó quá lớn. Tệp đính kèm phải nhỏ hơn {size} MB.",
-      "attachmentFailed": "Không thể đọc tệp đó. Hãy thử tệp khác.",
-      "failed": "Gửi báo cáo thất bại"
-    }
+    "support": "Hỗ trợ"
   },
   "swap": {
     "tab": {

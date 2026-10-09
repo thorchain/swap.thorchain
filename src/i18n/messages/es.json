@@ -29,26 +29,10 @@
     "riskPolicy": "Política de riesgos",
     "riskTooltip": "Aunque esta web ha sido creada con cuidado, puede contener errores que provoquen fallos en la web e incluso la pérdida de fondos. Continúa sólo si entiendes y aceptas los riesgos que conlleva el uso de esta web.",
     "builtBy": "Desarrollado por",
-    "reportBug": "Notificar un error / Solicitar una función",
     "forAgents": "Para agentes de IA",
     "developers": "Desarrolladores",
     "liveChat": "Chat en vivo",
-    "support": "Soporte",
-    "bug": {
-      "title": "Notificar un error / Solicitar una función",
-      "success": "¡Gracias! Tu notificación ha sido enviada.",
-      "close": "Cerrar",
-      "emailLabel": "Email (opcional)",
-      "descriptionLabel": "Descripción",
-      "descriptionPlaceholder": "Describe el error / función",
-      "attachmentLabel": "Adjunto (opcional)",
-      "attachFile": "Adjuntar un archivo",
-      "sending": "Enviando…",
-      "send": "Enviar notificación",
-      "attachmentTooLarge": "Ese archivo es demasiado grande. Los archivos adjuntos deben pesar menos de {size} MB.",
-      "attachmentFailed": "No se pudo leer ese archivo. Prueba con otro.",
-      "failed": "Error al enviar notificación"
-    }
+    "support": "Soporte"
   },
   "swap": {
     "tab": {

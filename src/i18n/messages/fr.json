@@ -29,26 +29,10 @@
     "riskPolicy": "Politique de risque",
     "riskTooltip": "Bien que ce site web soit conçu avec soin, il peut contenir des bugs involontaires susceptibles d’entraîner des dysfonctionnements, voire une perte d’argent. Ne poursuivez votre navigation que si vous comprenez et acceptez ces risques.",
     "builtBy": "Conçu par",
-    "reportBug": "Signaler un bug / Demander une fonctionnalité",
     "forAgents": "Pour les agents IA",
     "developers": "Développeurs",
     "liveChat": "Chat en direct",
-    "support": "Assistance",
-    "bug": {
-      "title": "Signaler un bug / Demander une fonctionnalité",
-      "success": "Merci ! Votre rapport a été envoyé.",
-      "close": "Fermer",
-      "emailLabel": "E-mail (facultatif)",
-      "descriptionLabel": "Description",
-      "descriptionPlaceholder": "Décrivez le bug / la fonctionnalité",
-      "attachmentLabel": "Pièce jointe (facultatif)",
-      "attachFile": "Joindre un fichier",
-      "sending": "Envoi...",
-      "send": "Envoyer le rapport",
-      "attachmentTooLarge": "Ce fichier est trop volumineux. Les pièces jointes doivent faire moins de {size} Mo.",
-      "attachmentFailed": "Ce fichier n'a pas pu être lu. Essayez-en un autre.",
-      "failed": "Échec de l'envoi du rapport"
-    }
+    "support": "Assistance"
   },
   "swap": {
     "tab": {

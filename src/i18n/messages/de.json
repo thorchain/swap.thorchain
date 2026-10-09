@@ -29,26 +29,10 @@
     "riskPolicy": "Risikorichtlinie",
     "riskTooltip": "Diese Website wird mit Sorgfalt entwickelt, kann jedoch unbeabsichtigte Fehler enthalten, die zu Fehlfunktionen der Website und sogar zum Verlust von Geldern führen können. Fahren Sie nur fort, wenn Sie diese Risiken verstehen und akzeptieren.",
     "builtBy": "Entwickelt von",
-    "reportBug": "Fehler melden / Funktion anfragen",
     "forAgents": "Für KI-Agenten",
     "developers": "Entwickler",
     "liveChat": "Live-Chat",
-    "support": "Support",
-    "bug": {
-      "title": "Fehler melden / Funktion anfragen",
-      "success": "Vielen Dank! Ihre Meldung wurde gesendet.",
-      "close": "Schließen",
-      "emailLabel": "E-Mail (optional)",
-      "descriptionLabel": "Beschreibung",
-      "descriptionPlaceholder": "Beschreiben Sie den Fehler / die Funktion",
-      "attachmentLabel": "Anhang (optional)",
-      "attachFile": "Datei anhängen",
-      "sending": "Wird gesendet...",
-      "send": "Meldung senden",
-      "attachmentTooLarge": "Diese Datei ist zu groß. Anhänge dürfen maximal {size} MB groß sein.",
-      "attachmentFailed": "Diese Datei konnte nicht gelesen werden. Bitte versuche es mit einer anderen.",
-      "failed": "Meldung konnte nicht gesendet werden"
-    }
+    "support": "Support"
   },
   "swap": {
     "tab": {

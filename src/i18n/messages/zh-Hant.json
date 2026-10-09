@@ -29,26 +29,10 @@
     "riskPolicy": "風險政策",
     "riskTooltip": "本網站雖經精心建構，但仍可能存在意外漏洞，從而導致網站故障甚至資金損失。請僅在您理解並接受這些風險後繼續操作。",
     "builtBy": "建構方",
-    "reportBug": "報告漏洞 / 功能",
     "forAgents": "面向 AI 代理",
     "developers": "開發者",
     "liveChat": "線上客服",
-    "support": "支援",
-    "bug": {
-      "title": "報告漏洞 / 功能",
-      "success": "謝謝！您的報告已發送。",
-      "close": "關閉",
-      "emailLabel": "郵箱（可選）",
-      "descriptionLabel": "描述",
-      "descriptionPlaceholder": "描述漏洞 / 功能",
-      "attachmentLabel": "附件（可選）",
-      "attachFile": "附加檔案",
-      "sending": "發送中…",
-      "send": "發送報告",
-      "attachmentTooLarge": "檔案過大。附件必須小於 {size} MB。",
-      "attachmentFailed": "無法讀取該檔案，請改用其他檔案。",
-      "failed": "報告發送失敗"
-    }
+    "support": "支援"
   },
   "swap": {
     "tab": {

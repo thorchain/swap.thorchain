@@ -29,26 +29,10 @@
     "riskPolicy": "风险政策",
     "riskTooltip": "本网站虽经精心构建，但仍可能存在意外漏洞，从而导致网站故障甚至资金损失。请仅在您理解并接受这些风险后继续操作。",
     "builtBy": "构建方",
-    "reportBug": "报告漏洞 / 功能",
     "forAgents": "面向 AI 智能体",
     "developers": "开发者",
     "liveChat": "在线客服",
-    "support": "支持",
-    "bug": {
-      "title": "报告漏洞 / 功能",
-      "success": "谢谢！您的报告已发送。",
-      "close": "关闭",
-      "emailLabel": "邮箱（可选）",
-      "descriptionLabel": "描述",
-      "descriptionPlaceholder": "描述漏洞 / 功能",
-      "attachmentLabel": "附件（可选）",
-      "attachFile": "添加附件",
-      "sending": "发送中…",
-      "send": "发送报告",
-      "attachmentTooLarge": "该文件过大。附件必须小于 {size} MB。",
-      "attachmentFailed": "无法读取该文件。请尝试其他文件。",
-      "failed": "报告发送失败"
-    }
+    "support": "支持"
   },
   "swap": {
     "tab": {

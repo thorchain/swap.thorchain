@@ -29,26 +29,10 @@
     "riskPolicy": "Risk Policy",
     "riskTooltip": "Even as we build dis website with care, e fit get bugs wey we no plan for, wey fit make di site no work well or even make you lose money. Continue only if you understand and accept dis risks.",
     "builtBy": "Built by",
-    "reportBug": "Report a Bug / Request a Feature",
     "forAgents": "For AI Agents",
     "developers": "Developers",
     "liveChat": "Live Chat",
-    "support": "Help",
-    "bug": {
-      "title": "Report a Bug / Request a Feature",
-      "success": "Thank you! We don receive your report.",
-      "close": "Close",
-      "emailLabel": "Email (optional)",
-      "descriptionLabel": "Description",
-      "descriptionPlaceholder": "Talk about di bug / feature",
-      "attachmentLabel": "Attachment (optional)",
-      "attachFile": "Attach a file",
-      "sending": "Dey send...",
-      "send": "Send Report",
-      "attachmentTooLarge": "Dis file too big. Attachment must dey under {size} MB.",
-      "attachmentFailed": "We no fit read dis file. Try anoda one.",
-      "failed": "E no fit send report"
-    }
+    "support": "Help"
   },
   "swap": {
     "tab": {

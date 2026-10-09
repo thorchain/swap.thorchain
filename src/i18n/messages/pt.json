@@ -29,26 +29,10 @@
     "riskPolicy": "Política de riscos",
     "riskTooltip": "Embora este site seja desenvolvido com cuidado, ele pode conter falhas não intencionais que podem causar mau funcionamento e até perda de fundos. Prossiga apenas se você entender e aceitar esses riscos.",
     "builtBy": "Desenvolvido por",
-    "reportBug": "Relatar um bug / Solicitar um recurso",
     "forAgents": "Para agentes de IA",
     "developers": "Programadores",
     "liveChat": "Chat ao Vivo",
-    "support": "Suporte",
-    "bug": {
-      "title": "Relatar um bug / Solicitar um recurso",
-      "success": "Obrigado! Seu relatório foi enviado.",
-      "close": "Fechar",
-      "emailLabel": "E-mail (opcional)",
-      "descriptionLabel": "Descrição",
-      "descriptionPlaceholder": "Descreva o bug / recurso",
-      "attachmentLabel": "Anexo (opcional)",
-      "attachFile": "Anexar um arquivo",
-      "sending": "Enviando...",
-      "send": "Enviar relatório",
-      "attachmentTooLarge": "Esse ficheiro é demasiado grande. Os anexos têm de ter menos de {size} MB.",
-      "attachmentFailed": "Não foi possível ler esse ficheiro. Tente outro.",
-      "failed": "Falha ao enviar o relatório"
-    }
+    "support": "Suporte"
   },
   "swap": {
     "tab": {

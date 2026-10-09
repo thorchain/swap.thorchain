@@ -29,26 +29,10 @@
     "riskPolicy": "Informativa sui rischi",
     "riskTooltip": "Sebbene questo sito sia realizzato con cura, potrebbe presentare bug imprevisti che potrebbero causare malfunzionamenti e persino la perdita di fondi. Prosegui solo se comprendi e accetti questi rischi.",
     "builtBy": "Realizzato da",
-    "reportBug": "Segnala un bug / Richiedi una funzionalità",
     "forAgents": "Per agenti IA",
     "developers": "Sviluppatori",
     "liveChat": "Chat dal vivo",
-    "support": "Supporto",
-    "bug": {
-      "title": "Segnala un bug / Richiedi una funzionalità",
-      "success": "Grazie! La tua segnalazione è stata inviata.",
-      "close": "Chiudi",
-      "emailLabel": "Email (facoltativa)",
-      "descriptionLabel": "Descrizione",
-      "descriptionPlaceholder": "Descrivi il bug / la funzionalità",
-      "attachmentLabel": "Allegato (facoltativo)",
-      "attachFile": "Allega un file",
-      "sending": "Invio in corso...",
-      "send": "Invia segnalazione",
-      "attachmentTooLarge": "Il file è troppo grande. Gli allegati devono essere inferiori a {size} MB.",
-      "attachmentFailed": "Impossibile leggere il file. Provane un altro.",
-      "failed": "Invio della segnalazione non riuscito"
-    }
+    "support": "Supporto"
   },
   "swap": {
     "tab": {

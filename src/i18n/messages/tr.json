@@ -29,26 +29,10 @@
     "riskPolicy": "Risk Politikası",
     "riskTooltip": "Bu web sitesi özenle oluşturulmuş olsa da, sitenin hatalı çalışmasına ve hatta fon kaybına yol açabilecek istenmeyen hatalar içerebilir. Yalnızca bu riskleri anlıyor ve kabul ediyorsan devam et.",
     "builtBy": "Geliştiren",
-    "reportBug": "Hata / Özellik Bildir",
     "forAgents": "Yapay Zekâ Ajanları için",
     "developers": "Geliştiriciler",
     "liveChat": "Canlı Sohbet",
-    "support": "Destek",
-    "bug": {
-      "title": "Hata / Özellik Bildir",
-      "success": "Teşekkürler! Bildirimin gönderildi.",
-      "close": "Kapat",
-      "emailLabel": "E-posta (isteğe bağlı)",
-      "descriptionLabel": "Açıklama",
-      "descriptionPlaceholder": "Hatayı / özelliği açıkla",
-      "attachmentLabel": "Ek (isteğe bağlı)",
-      "attachFile": "Dosya ekle",
-      "sending": "Gönderiliyor…",
-      "send": "Bildirimi Gönder",
-      "attachmentTooLarge": "Bu dosya çok büyük. Ekler {size} MB'ın altında olmalıdır.",
-      "attachmentFailed": "Bu dosya okunamadı. Başka bir dosya deneyin.",
-      "failed": "Bildirim gönderilemedi"
-    }
+    "support": "Destek"
   },
   "swap": {
     "tab": {
