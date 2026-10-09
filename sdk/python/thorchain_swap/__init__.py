@@ -12,4 +12,4 @@ from .client import (
 )
 
 __all__ = ["DEFAULT_BASE_URL", "ThorchainSwapClient", "ThorchainSwapError"]
-__version__ = "0.1.0"
+__version__ = "0.2.0"

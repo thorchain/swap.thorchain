@@ -46,7 +46,7 @@ const capabilities = [
     authentication: 'partner account'
   },
   {
-    id: 'submit-feedback',
+    id: 'subscribe-updates',
     summary: 'Subscribe to updates through the public REST API.',
     access: `POST ${AppConfig.baseUrl}/api/v1/newsletter`,
     authentication: 'none (rate limited, Idempotency-Key supported)'

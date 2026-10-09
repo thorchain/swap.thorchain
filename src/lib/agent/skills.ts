@@ -42,7 +42,7 @@ There are no accounts, no bridges, and no wrapped assets.
 - Read public discovery documents (llms.txt, AGENTS.md, developers.md, pricing.md).
 - Open the swap interface and the pool, bond, memo, TCY, and THORName interfaces.
 - Fetch quotes, pools, and network data through the public MCP server.
-- Submit feedback only through the documented public API.
+- Send feedback or support requests by email to ${AppConfig.supportEmail} or as a GitHub issue — never through the newsletter API.
 
 ## Related Skills
 

@@ -109,13 +109,11 @@ export function buildOpenApiDocument() {
                 'invalid_json',
                 'invalid_idempotency_key',
                 'invalid_email',
-                'missing_description',
                 'method_not_allowed',
                 'not_found',
                 'rate_limited',
                 'server_misconfigured',
-                'upstream_error',
-                'delivery_failed'
+                'upstream_error'
               ]
             },
             hint: { type: 'string', description: 'Suggested resolution for the caller.' },

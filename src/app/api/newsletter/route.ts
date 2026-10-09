@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
+import { AppConfig } from '@/config'
 import { apiError, methodNotAllowed } from '@/lib/api-error'
 import { withIdempotency } from '@/lib/agent/idempotency'
 import { rateLimit } from '@/lib/rate-limit'
@@ -24,7 +25,7 @@ async function handlePost(req: NextRequest) {
 
   const apiKey = process.env.BREVO_API_KEY
   if (!apiKey) {
-    return apiError(500, 'server_misconfigured', 'Server misconfiguration', 'The subscription provider is not configured. Retry later.')
+    return apiError(500, 'server_misconfigured', 'Server misconfiguration', `The subscription provider is not configured. Retry later or contact ${AppConfig.supportEmail}.`)
   }
 
   const res = await fetch('https://api.brevo.com/v3/contacts', {

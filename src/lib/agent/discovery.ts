@@ -296,7 +296,7 @@ Described by OpenAPI 3.1 at ${AppConfig.baseUrl}/.well-known/openapi.json. Versi
 
 - \`POST /api/v1/newsletter\` — subscribe an email address to updates
 
-It is unauthenticated, rate limited per client (429 with Retry-After), and accept an \`Idempotency-Key\` header: a retry with the same key within one hour replays the original response (\`Idempotency-Replayed: true\`) instead of re-executing. Every non-2xx response is JSON with \`error\`, \`code\`, \`hint\`, and \`documentation\` fields. Swap quotes are NOT served under ${AppConfig.baseUrl}/api — use the MCP server or the aggregator backend.
+It is unauthenticated, rate limited per client (429 with Retry-After), and accepts an \`Idempotency-Key\` header: a retry with the same key within one hour replays the original response (\`Idempotency-Replayed: true\`) instead of re-executing. Every non-2xx response is JSON with \`error\`, \`code\`, \`hint\`, and \`documentation\` fields. Swap quotes are NOT served under ${AppConfig.baseUrl}/api — use the MCP server or the aggregator backend.
 
 ## Authentication
 

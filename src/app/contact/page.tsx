@@ -4,11 +4,11 @@ import { AppConfig } from '@/config'
 
 export const metadata: Metadata = {
   title: 'Contact THORChain Swap',
-  description: 'Official support, community, and bug-reporting channels for THORChain Swap.',
+  description: 'Official support and community channels for THORChain Swap.',
   alternates: { canonical: `${AppConfig.baseUrl}/contact` },
   openGraph: {
     title: 'Contact THORChain Swap',
-    description: 'Support, community, and bug-reporting channels for THORChain Swap.',
+    description: 'Support and community channels for THORChain Swap.',
     url: `${AppConfig.baseUrl}/contact`,
     siteName: 'THORChain Swap',
     type: 'website'
@@ -61,7 +61,7 @@ export default function ContactPage() {
           <section>
             <h2 className="text-txt-high-contrast text-xl font-semibold">Bugs and developer questions</h2>
             <p className="mt-3">
-              Report reproducible interface issues through the in-app “Report a Bug” action or the public source repository. Do not include wallet
+              Report reproducible interface issues by email to {AppConfig.supportEmail} or through the public source repository. Do not include wallet
               secrets, private account data, or confidential credentials.
             </p>
             <ul className="mt-3 list-disc space-y-1 pl-5">

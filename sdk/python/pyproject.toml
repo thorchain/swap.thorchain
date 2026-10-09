@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "thorchain-swap"
-version = "0.1.0"
+version = "0.2.0"
 description = "Official client for the public THORChain Swap APIs: swap quotes, liquidity pools, network status, and support endpoints."
 readme = "README.md"
 requires-python = ">=3.9"
