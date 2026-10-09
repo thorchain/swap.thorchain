@@ -101,12 +101,24 @@ export interface ThorMemberPool {
   assetAddress: string
 }
 
-// Midgard reverse-lookup of every LP position held by a THOR (RUNE) address.
-// 404 / empty body for an address with no positions ⇒ empty list.
-export const getThorMember = async (address: string): Promise<ThorMemberPool[]> => {
+// Midgard reverse-lookup of every LP position held by any of the given
+// addresses. Both sides are searched: a THOR (RUNE) address finds symmetric and
+// RUNE-only positions, an asset-chain address finds asset-only (asymmetric) ones,
+// which have no RUNE address. Midgard takes a comma-separated list; a position
+// matched by more than one address is returned once.
+// 404 / empty body when none of the addresses has a position ⇒ empty list.
+export const getThorMember = async (addresses: string[]): Promise<ThorMemberPool[]> => {
+  if (!addresses.length) return []
   try {
-    const res = await midgard.get(`/v2/member/${address}`)
-    return Array.isArray(res.data?.pools) ? res.data.pools : []
+    const res = await midgard.get(`/v2/member/${addresses.map(encodeURIComponent).join(',')}`)
+    const pools: ThorMemberPool[] = Array.isArray(res.data?.pools) ? res.data.pools : []
+    const seen = new Set<string>()
+    return pools.filter(p => {
+      const key = [p.pool, p.runeAddress, p.assetAddress].join('|').toLowerCase()
+      if (seen.has(key)) return false
+      seen.add(key)
+      return true
+    })
   } catch {
     return []
   }

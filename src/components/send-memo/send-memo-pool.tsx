@@ -2,7 +2,7 @@
 
 import { ReactNode, useEffect, useMemo, useState } from 'react'
 import { useTranslations } from 'next-intl'
-import { Chain, FeeOption, USwapNumber } from '@tcswap/core'
+import { AssetValue, Chain, FeeOption, USwapNumber } from '@tcswap/core'
 import { ChevronDown, Info } from 'lucide-react'
 import { toast } from 'sonner'
 import { AnimatedButton } from '@/components/animated-button'
@@ -17,7 +17,7 @@ import { GenericButton } from '@/components/generic-button'
 import { assetIdentifierStr, tokenToAsset } from '@/components/send/send-helpers'
 import { SendSelectToken } from '@/components/send/send-select-token'
 import { PoolSelect } from '@/components/send-memo/pool-select'
-import { poolToAsset } from '@/components/send-memo/pool-helpers'
+import { parsePoolAsset, poolToAsset } from '@/components/send-memo/pool-helpers'
 import { isRuneToken } from '@/components/send-memo/send-memo-helpers'
 import { SwapAddressFrom } from '@/components/swap/swap-address-from'
 import { ScrollArea } from '@/components/ui/scroll-area'
@@ -28,7 +28,7 @@ import { useThorPools } from '@/hooks/pool/use-thor-pools'
 import { useThorMember } from '@/hooks/pool/use-thor-member'
 import { useRuneProvider } from '@/hooks/pool/use-rune-provider'
 import { useAssets } from '@/hooks/use-assets'
-import { getThorInboundAddresses } from '@/lib/thorchain-api'
+import { getThorInboundAddresses, ThorMemberPool } from '@/lib/thorchain-api'
 import { getUSwap } from '@/lib/wallets'
 import { WalletAccount } from '@/store/wallets-store'
 import { cn, toCurrencyFixed } from '@/lib/utils'
@@ -52,8 +52,11 @@ export function SendMemoPool() {
   const activeAccount = useSelectedAccount()
   const thorAccount = activeAccount?.network === Chain.THORChain ? activeAccount : accounts.find(a => a.network === Chain.THORChain)
 
-  // LP and RUNEPool positions for the selected THOR address
-  const { positions } = useThorMember(thorAccount?.address)
+  // LP positions for every connected address: an asset-only (asymmetric) position
+  // has no RUNE address and is found only by its asset-chain address.
+  // RUNEPool positions are THOR-only.
+  const memberAddresses = useMemo(() => accounts.map(a => a.address), [accounts])
+  const { positions } = useThorMember(memberAddresses)
   const { provider: runeProvider } = useRuneProvider(thorAccount?.address)
 
   const [tab, setTab] = useState<PoolTab>('add')
@@ -98,16 +101,6 @@ export function SendMemoPool() {
     return live ?? { ...selectedToken, balance: selectedToken.balance.set(0), amount: 0 }
   }, [walletData, addAccount, selectedToken])
 
-  // Keep the global selection on the chain the active tab needs: the deposit
-  // asset's chain on Add, THORChain on Withdraw/RUNEPool. A specific account
-  // already on that chain (e.g. picked in the dropdown) is left untouched.
-  useEffect(() => {
-    const wanted = tab === 'add' ? selectedToken?.balance.chain : Chain.THORChain
-    if (wanted && activeAccount?.network !== wanted) {
-      selectAccount(accounts.find(a => a.network === wanted))
-    }
-  }, [tab, selectedToken, activeAccount, accounts])
-
   const numericAmount = parseFloat(amount) || 0
   const fiatValue = tokenRate ? tokenRate.mul(numericAmount) : new USwapNumber(0)
 
@@ -117,10 +110,38 @@ export function SendMemoPool() {
   const numericPercent = parseFloat(percent) || 0
   const basisPoints = Math.min(10000, Math.max(0, Math.round(numericPercent * 100)))
 
+  // The LP position in the selected withdraw pool, preferring one the THOR
+  // account can withdraw.
+  const isThorPosition = (p: ThorMemberPool) => !!thorAccount && p.runeAddress.toLowerCase() === thorAccount.address.toLowerCase()
+  const withdrawPosition = useMemo(() => {
+    const inPool = positions.filter(p => p.pool.toLowerCase() === withdrawPool.toLowerCase())
+    return inPool.find(isThorPosition) ?? inPool[0]
+  }, [positions, withdrawPool, thorAccount])
+
+  // A position whose RUNE side is the THOR account is withdrawn with a THORChain
+  // MsgDeposit. Any other (an asset-only asym position has no RUNE address) is
+  // withdrawn from its asset address, the same way an asym deposit is made.
+  const withdrawAssetAccount = useMemo(() => {
+    if (!withdrawPosition || isThorPosition(withdrawPosition)) return undefined
+    const { chain } = parsePoolAsset(withdrawPosition.pool)
+    return accounts.find(a => a.network === chain && a.address.toLowerCase() === withdrawPosition.assetAddress.toLowerCase())
+  }, [withdrawPosition, accounts, thorAccount])
+  const isAssetWithdraw = tab === 'withdraw' && !!withdrawAssetAccount
+
+  // Keep the global selection on the chain the active tab needs: the deposit
+  // asset's chain on Add, the position's asset chain on an asset-side Withdraw,
+  // THORChain otherwise. A specific account already on that chain (e.g. picked
+  // in the dropdown) is left untouched.
+  useEffect(() => {
+    const wanted = tab === 'add' ? selectedToken?.balance.chain : isAssetWithdraw ? withdrawAssetAccount?.network : Chain.THORChain
+    if (wanted && activeAccount?.network !== wanted) {
+      selectAccount(isAssetWithdraw ? withdrawAssetAccount : accounts.find(a => a.network === wanted))
+    }
+  }, [tab, selectedToken, activeAccount, accounts, isAssetWithdraw, withdrawAssetAccount])
+
   // Redeemable RUNE / asset for the LP position in the selected withdraw pool.
   // A member's share of the pool depth is liquidityUnits / pool_units; all
   // on-chain balances are in 1e8 base units.
-  const withdrawPosition = useMemo(() => positions.find(p => p.pool.toLowerCase() === withdrawPool.toLowerCase()), [positions, withdrawPool])
   const withdrawPoolData = useMemo(() => pools.find(p => p.asset.toLowerCase() === withdrawPool.toLowerCase()), [pools, withdrawPool])
   const redeemable = useMemo(() => {
     if (!withdrawPosition || !withdrawPoolData) return null
@@ -176,13 +197,25 @@ export function SendMemoPool() {
       return true
     }
     if (tab === 'withdraw') {
-      if (!thorAccount || !withdrawPool) return false
+      if ((!thorAccount && !withdrawAssetAccount) || !withdrawPool) return false
       return basisPoints > 0
     }
     // runepool
     if (!thorAccount) return false
     return basisPoints > 0
-  }, [submitting, tab, selectedToken, addAccount, numericAmount, isRuneDeposit, targetPool, thorAccount, withdrawPool, basisPoints])
+  }, [
+    submitting,
+    tab,
+    selectedToken,
+    addAccount,
+    numericAmount,
+    isRuneDeposit,
+    targetPool,
+    thorAccount,
+    withdrawAssetAccount,
+    withdrawPool,
+    basisPoints
+  ])
 
   const broadcast = (promise: Promise<unknown>) => {
     toast.promise(
@@ -229,6 +262,24 @@ export function SendMemoPool() {
             })
           )
         }
+      } else if (isAssetWithdraw && withdrawAssetAccount) {
+        // Asset-side LP withdraw: the memo rides on a dust-sized gas-asset deposit
+        // from the position's asset address to the inbound vault.
+        const chain = withdrawAssetAccount.network
+        const inbound = (await getThorInboundAddresses()).find(i => i.chain === chain)
+        if (!inbound) throw new Error(t('pool.inboundUnavailable'))
+        if (inbound.halted || inbound.chain_lp_actions_paused) throw new Error(t('pool.chainHalted'))
+        const dustThreshold = BigInt(inbound.dust_threshold || '0')
+        const sendAmount = ((dustThreshold > 0n ? dustThreshold : 10000n) * 2n).toString()
+        broadcast(
+          (uSwap as any).thorchain.deposit({
+            assetValue: AssetValue.from({ chain, value: sendAmount, fromBaseDecimal: 8 }),
+            recipient: inbound.address,
+            router: inbound.router,
+            memo,
+            feeOptionKey: FeeOption.Fast
+          })
+        )
       } else {
         // Withdraw LP and RUNEPool withdraw are zero-value MsgDeposits from THORChain.
         if (!thorAccount) throw new Error(t('error.walletNotConnected'))
@@ -262,7 +313,7 @@ export function SendMemoPool() {
     })
   }
 
-  const needConnect = tab === 'add' ? accounts.length === 0 : !thorAccount
+  const needConnect = tab === 'add' || tab === 'withdraw' ? accounts.length === 0 : !thorAccount
 
   const submitLabel = (() => {
     if (tab === 'add') {
@@ -303,7 +354,9 @@ export function SendMemoPool() {
         </ScrollArea>
         {tab === 'add'
           ? selectedToken && <SwapAddressFrom chain={selectedToken.balance.chain} />
-          : thorAccount && <SwapAddressFrom chain={Chain.THORChain} />}
+          : isAssetWithdraw
+            ? withdrawAssetAccount && <SwapAddressFrom chain={withdrawAssetAccount.network} />
+            : thorAccount && <SwapAddressFrom chain={Chain.THORChain} />}
       </div>
 
       <div className="bg-modal rounded-20 relative space-y-1.25 border p-2.5">
@@ -418,7 +471,7 @@ export function SendMemoPool() {
               />
             )}
 
-            {withdrawPool && thorAccount && (
+            {withdrawPool && accounts.length > 0 && (
               <WithdrawStats
                 redeemable={redeemable}
                 basisPoints={basisPoints}
@@ -468,7 +521,7 @@ export function SendMemoPool() {
         </AnimatedButton>
       </div>
 
-      {tab !== 'add' && (
+      {tab !== 'add' && !isAssetWithdraw && (
         <div className="text-txt-label-small flex items-center justify-between px-4 text-xs">
           <div className="flex items-center gap-1">{t('transactionFee')}</div>
           <span>0.02 RUNE {runeRate && ` (${toCurrencyFixed(runeRate.mul(0.02).toCurrency('$', { trimTrailingZeros: false }))})`}</span>
