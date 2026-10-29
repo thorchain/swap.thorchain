@@ -15,8 +15,8 @@ admin /banner ──save──▶ data/banner.json ──▶ admin /api/banner
 ```
 
 Nothing about a swap depends on the banner, so it never competes with the requests that matter: the first fetch waits for the browser to go idle (at
-most 3s), and the header renders without it until then. A published change is on screen within about ten minutes. Nothing is baked into the build: if the
-admin cannot be reached this app keeps serving the last banner it saw, and a cold start with the admin down shows no banner at all rather than
+most 3s), and the header renders without it until then. A published change is on screen within about ten minutes. Nothing is baked into the build: if
+the admin cannot be reached this app keeps serving the last banner it saw, and a cold start with the admin down shows no banner at all rather than
 resurrecting an old one.
 
 `BANNER_API_URL` overrides where `src/app/api/banner/route.ts` reads from (default `https://affiliate.thorchain.org/api/banner`) — point it at a local
@@ -24,14 +24,15 @@ admin to work on the banner.
 
 ## What the editor controls
 
-| Field      | Meaning                                             |
-| ---------- | --------------------------------------------------- |
-| Show       | The on/off switch. Off means nobody sees it.        |
-| Headline   | Required. The bold first sentence.                  |
-| Text       | Optional sentence after the headline.               |
-| Link label | Optional. Rendered as a link when a URL is set too. |
-| Link URL   | Optional, `https://` only.                          |
-| Icon       | Optional. Upload an image.                          |
+| Field          | Meaning                                               |
+| -------------- | ----------------------------------------------------- |
+| Show           | The on/off switch. Off means nobody sees it.          |
+| Headline       | Required. The bold first sentence.                    |
+| Text           | Optional sentence after the headline.                 |
+| Link label     | Optional. Rendered as a link when a URL is set too.   |
+| Link URL       | Optional, `https://` only.                            |
+| Clickable text | Optional. Links the headline and text to the URL too. |
+| Icon           | Optional. Upload an image.                            |
 
 The icon (SVG, PNG, JPEG, WebP or GIF, under 512 KB) is stored beside the JSON in the admin and published at its `/api/banner/icon`, which this app
 proxies at the same path — so `icon` is always a path on our own origin, never another host, and the `?v=` on it is a hash of the bytes, making it

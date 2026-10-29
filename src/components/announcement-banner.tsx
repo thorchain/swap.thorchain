@@ -40,6 +40,13 @@ export function AnnouncementBanner() {
     }
   }
 
+  const message = (
+    <>
+      <span className="text-txt-contrast-1-default font-medium">{strings.title}</span>{' '}
+      {strings.text && <span className="text-txt-label-small">{strings.text}</span>}
+    </>
+  )
+
   return (
     <div className="border-stroke-swap-bloc bg-swap-bloc border-b">
       <div className="relative container mx-auto flex items-center justify-center gap-2.5 px-10 py-2.5 sm:px-12">
@@ -48,8 +55,13 @@ export function AnnouncementBanner() {
         {/* eslint-disable-next-line @next/next/no-img-element */}
         {icon && <img src={icon} alt="" width={20} height={20} className="size-5 shrink-0 rounded-full" />}
         <p className="text-center text-sm">
-          <span className="text-txt-contrast-1-default font-medium">{strings.title}</span>{' '}
-          {strings.text && <span className="text-txt-label-small">{strings.text}</span>}
+          {banner.href && banner.linkText ? (
+            <a href={banner.href} target="_blank" rel="noopener noreferrer" className="underline-offset-2 hover:underline">
+              {message}
+            </a>
+          ) : (
+            message
+          )}
           {banner.href && strings.link && (
             <a
               href={banner.href}
