@@ -83,13 +83,30 @@ export function buildOpenApiDocument() {
           summary: 'Return discovery endpoint status.',
           operationId: 'getDiscoveryStatus',
           responses: {
-            '200': { description: 'Discovery endpoint is available.' }
+            '200': {
+              description: 'Discovery endpoint is available.',
+              content: {
+                'application/json': {
+                  schema: { $ref: '#/components/schemas/DiscoveryStatus' }
+                }
+              }
+            }
           }
         }
       }
     },
     components: {
       schemas: {
+        DiscoveryStatus: {
+          type: 'object',
+          description: "Availability of this site's discovery documents, not the health of upstream swap services.",
+          properties: {
+            status: { type: 'string', const: 'ok', description: 'The discovery endpoint is available.' },
+            service: { type: 'string', const: 'thorchain-swap', description: 'Service publishing these discovery documents.' },
+            url: { type: 'string', format: 'uri', description: 'Canonical origin of the service.', examples: [AppConfig.baseUrl] }
+          },
+          required: ['status', 'service', 'url']
+        },
         Success: {
           type: 'object',
           properties: {

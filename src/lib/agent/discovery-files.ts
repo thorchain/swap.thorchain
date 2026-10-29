@@ -49,6 +49,7 @@ const agentsJson = json({
     documentation: `${AppConfig.baseUrl}/developers/auth`
   },
   discovery: {
+    ard: `${AppConfig.baseUrl}/.well-known/ard.json`,
     llms: `${AppConfig.baseUrl}/llms.txt`,
     agents: `${AppConfig.baseUrl}/AGENTS.md`,
     skills: `${AppConfig.baseUrl}/.well-known/agent-skills/index.json`,
@@ -265,6 +266,22 @@ const status = json({
   url: AppConfig.baseUrl
 })
 
+const developerLlmsTxt = `# THORChain Swap Developer Resources
+
+> Focused index for integrating with THORChain Swap. Public MCP tools are anonymous and read-only; the separate aggregator API requires an affiliate API key.
+
+## Guides
+
+${DEVELOPER_DOCS.map(doc => `- [${doc.navTitle}](${AppConfig.baseUrl}/developers/${doc.slug}.md): ${doc.description}`).join('\n')}
+
+## Machine-readable references
+
+- [OpenAPI](${AppConfig.baseUrl}/openapi.json): typed public support endpoints
+- [MCP server card](${AppConfig.baseUrl}/.well-known/mcp/server-card.json): tools, transport, and quote view
+- [ARD catalog](${AppConfig.baseUrl}/.well-known/ard.json): published agent resources
+- [Root index](${AppConfig.baseUrl}/llms.txt): product pages and all agent resources
+`
+
 // Homepage markdown variant, served when a client Accepts text/markdown on /.
 export const homeMarkdown = `# THORChain Swap
 
@@ -315,6 +332,7 @@ export interface DiscoveryFile {
 export const discoveryFiles: Record<string, DiscoveryFile> = {
   '/index.md': { contentType: MARKDOWN, body: homeMarkdown },
   '/llms.txt': { contentType: MARKDOWN, body: llmsTxt },
+  '/developers/llms.txt': { contentType: MARKDOWN, body: developerLlmsTxt },
   '/llms-full.md': { contentType: MARKDOWN, body: llmsFullMarkdown },
   '/llms-full.txt': { contentType: MARKDOWN, body: llmsFullMarkdown },
   '/AGENTS.md': { contentType: MARKDOWN, body: agentsMarkdown },
@@ -334,6 +352,7 @@ export const discoveryFiles: Record<string, DiscoveryFile> = {
   },
   '/.well-known/agent-skills/index.json': { contentType: JSON_TYPE, body: agentSkillsIndex },
   '/.well-known/ai-catalog.json': { contentType: JSON_TYPE, body: aiCatalog },
+  '/.well-known/ard.json': { contentType: JSON_TYPE, body: aiCatalog },
   '/.well-known/status': { contentType: JSON_TYPE, body: status },
   '/.well-known/mcp.json': { contentType: JSON_TYPE, body: mcpServerCard },
   '/.well-known/mcp/manifest.json': { contentType: JSON_TYPE, body: mcpServerCard },

@@ -133,6 +133,7 @@ Do not use this site for fiat on/off-ramps, NFTs, derivatives, or custodial acco
 
 - [Developer portal](${AppConfig.baseUrl}/developers): THORChain Swap API docs, quickstart, MCP server, auth scopes, and sandbox
 - [Developer portal (markdown)](${AppConfig.baseUrl}/developers.md): the same documentation as markdown
+- [Developer section index](${AppConfig.baseUrl}/developers/llms.txt): focused index of API, MCP, authentication, and SDK guides
 ${DEVELOPER_DOCS.map(doc => `- [THORChain Swap ${doc.navTitle}](${AppConfig.baseUrl}/developers/${doc.slug}): ${doc.description}`).join('\n')}
 - [SDK packages](${AppConfig.baseUrl}/developers/sdks): ${SDK_PACKAGES.map(pkg => `${pkg.language} (\`${pkg.name}\`)`).join(', ')}
 - [Affiliate program](${AppConfig.affiliateLink}): free \`x-api-key\` for the swap aggregator API (quotes and routing), affiliate/service fee splits, the embeddable widget, and earnings reporting — register, verify your email, key issued on approval
@@ -149,6 +150,7 @@ ${DEVELOPER_DOCS.map(doc => `- [THORChain Swap ${doc.navTitle}](${AppConfig.base
 - [OpenAPI description](${AppConfig.baseUrl}/.well-known/openapi.json): public REST endpoints
 - [API catalog](${AppConfig.baseUrl}/.well-known/api-catalog): RFC 9727 linkset of public APIs
 - [ARD AI catalog](${AppConfig.baseUrl}/.well-known/ai-catalog.json): consolidated discovery of MCP, A2A, OpenAPI, API catalog, and Agent Skills resources
+- [ARD catalog](${AppConfig.baseUrl}/.well-known/ard.json): canonical discovery path; the AI Catalog alias remains available
 - [Agent skills index](${AppConfig.baseUrl}/.well-known/agent-skills/index.json): published agent skills
 - [auth.md](${AppConfig.baseUrl}/auth.md): authentication model for agents — none needed for this site's surfaces
 - [Markdown twins](${AppConfig.baseUrl}/index.md): append \`.md\` to any content page URL for a markdown version (\`/index.md\`, \`/about.md\`, \`/contact.md\`, \`/developers.md\`, \`/sell-btc-buy-eth.md\`), or send \`Accept: text/markdown\`

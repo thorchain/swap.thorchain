@@ -133,6 +133,9 @@ export const MCP_ENDPOINT_ALIASES = new Set([
 // client that only knows the endpoint URL can still read the manifest.
 export const mcpServerCard = {
   name: MCP_SERVER_INFO.name,
+  title: MCP_SERVER_INFO.title,
+  icon: `${AppConfig.baseUrl}${AppConfig.logo}`,
+  icons: [{ src: `${AppConfig.baseUrl}${AppConfig.logo}`, mimeType: 'image/svg+xml' }],
   description: 'Read-only THORChain quote, liquidity-pool, and network-status tools. The server never holds keys, signs, or submits transactions.',
   version: MCP_SERVER_INFO.version,
   serverInfo: MCP_SERVER_INFO,

@@ -121,6 +121,7 @@ THORChain Swap runs a public [Model Context Protocol](https://modelcontextprotoc
 - **Protocol versions:** 2025-06-18, 2025-03-26, 2024-11-05
 - **Manifest:** [${base}/.well-known/mcp/server-card.json](${base}/.well-known/mcp/server-card.json) (also served by \`GET ${base}/mcp\`)
 - **Authentication:** none — no key, no token, no OAuth
+- **Official registry:** [THORChain Swap](https://registry.modelcontextprotocol.io/v0.1/servers/org.thorchain.swap%2Fthorchain-swap/versions/latest) — published as \`org.thorchain.swap/thorchain-swap\`
 
 ## Add it to a client
 

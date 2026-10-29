@@ -7,8 +7,10 @@ Dependency-free (standard library only), and needs no API key, token, or sign-in
 ## Install
 
 ```bash
-pip install thorchain-swap
+pip install "git+https://github.com/thorchain/swap.thorchain#subdirectory=sdk/python"
 ```
+
+The client is currently distributed from this repository. A PyPI release has not yet been published.
 
 ## Use
 

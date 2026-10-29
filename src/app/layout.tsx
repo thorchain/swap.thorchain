@@ -160,6 +160,7 @@ export default async function RootLayout({ children }: Readonly<{ children: Reac
         {/* Agent discovery links; React hoists them into <head>. */}
         <link rel="mcp-server-card" type="application/mcp-server-card+json" href="/.well-known/mcp/server-card.json" />
         <link rel="ai-catalog" type="application/json" href="/.well-known/ai-catalog.json" />
+        <link rel="ard" type="application/json" href="/.well-known/ard.json" />
         <link rel="alternate" type="text/markdown" title="llms.txt" href="/llms.txt" />
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }} />
         <WebMcpTools />

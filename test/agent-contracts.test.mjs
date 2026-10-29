@@ -111,6 +111,8 @@ async function testHomepageMetadataAndStructure() {
   assert.ok(application.sameAs?.includes('https://github.com/thorchain/swap.thorchain'))
   assert.deepEqual(application.subjectOf, { '@id': `${CANONICAL_ORIGIN}/developers#webpage` })
   assert.ok(body.includes('rel="ai-catalog"'), 'homepage should advertise the ARD catalog in HTML discovery')
+  assert.ok(body.includes('rel="ard"') && body.includes('/.well-known/ard.json'), 'homepage should advertise the canonical ARD catalog')
+  assert.match(response.headers.get('link') || '', /<\/\.well-known\/ard\.json>; rel="ard"/)
   assert.ok(
     body.includes('rel="mcp-server-card" type="application/mcp-server-card+json"'),
     'homepage should advertise the canonical MCP card with its protocol media type'
@@ -301,6 +303,8 @@ async function testArdCatalogEnumeratesTruthfulResources() {
   const { response, value: catalog } = await json('/.well-known/ai-catalog.json')
   assert.match(response.headers.get('content-type') || '', /^application\/json/i)
   assert.equal(catalog.specVersion, '1.0')
+  const canonical = await json('/.well-known/ard.json')
+  assert.deepEqual(canonical.value, catalog, 'canonical ARD and legacy AI Catalog must describe the same resources')
   assert.equal(catalog.host?.displayName, 'THORChain Swap')
   assert.ok(Array.isArray(catalog.entries) && catalog.entries.length >= 5, 'ARD catalog should enumerate the primary agent resources')
 
@@ -376,10 +380,33 @@ async function testOpenApiIsAnonymousAndTruthful() {
       for (const response of Object.values(operation.responses || {})) {
         assert.equal(typeof response?.description, 'string', `${method.toUpperCase()} ${path} responses need descriptions`)
       }
+      for (const [status, response] of Object.entries(operation.responses || {})) {
+        if (status.startsWith('2')) {
+          assert.ok(response.content?.['application/json']?.schema, `${method.toUpperCase()} ${path} success responses need JSON schemas`)
+        }
+      }
     }
   }
   assert.ok(operations.length >= 2, 'OpenAPI should expose its public operations')
   assertNoOAuthEndpointAdvertised(body, 'OpenAPI')
+  const status = (await json('/.well-known/status')).value
+  const statusSchema = openapi.components.schemas.DiscoveryStatus
+  for (const key of statusSchema.required) assert.ok(key in status, `live discovery status must include ${key}`)
+  assert.equal(status.status, statusSchema.properties.status.const)
+  assert.equal(status.service, statusSchema.properties.service.const)
+  assert.equal(status.url, CANONICAL_ORIGIN)
+}
+
+async function testDeveloperSectionIndex() {
+  const root = await request('/llms.txt')
+  assert.ok(root.body.includes(`${CANONICAL_ORIGIN}/developers/llms.txt`), 'root index must link the focused developer index')
+  const index = await request('/developers/llms.txt')
+  assert.equal(index.response.status, 200)
+  assert.match(index.response.headers.get('content-type') || '', /^text\/markdown/)
+  for (const slug of ['quickstart', 'api', 'mcp', 'auth', 'sdks', 'webhooks']) {
+    assert.ok(index.body.includes(`/developers/${slug}.md`), `developer index must link ${slug}`)
+    assert.equal((await request(`/developers/${slug}.md`)).response.status, 200)
+  }
 }
 
 async function testApiCatalogConformsToRfc9727() {
@@ -437,6 +464,11 @@ async function testMcpServerCardAliasesAndAgreement() {
     assert.equal(typeof card.name, 'string', `${paths[index]} needs top-level name`)
     assert.equal(typeof card.description, 'string', `${paths[index]} needs top-level description`)
     assert.equal(typeof card.version, 'string', `${paths[index]} needs top-level version`)
+    assert.equal(card.title, 'THORChain Swap')
+    assert.equal(card.icons?.[0]?.src, card.icon)
+    const icon = await request(new URL(card.icon).pathname)
+    assert.equal(icon.response.status, 200, 'server-card icon must be reachable')
+    assert.match(icon.response.headers.get('content-type') || '', /^image\//)
     // Every way the card states its endpoint must state the same one.
     assert.equal(card.serverUrl, `${CANONICAL_ORIGIN}/mcp`)
     assert.equal(card.endpoint, `${CANONICAL_ORIGIN}/mcp`)
@@ -659,6 +691,7 @@ const tests = [
   testSdkPackagesArePublishedAndPointHome,
   testArdCatalogEnumeratesTruthfulResources,
   testOpenApiIsAnonymousAndTruthful,
+  testDeveloperSectionIndex,
   testApiCatalogConformsToRfc9727,
   testMcpServerCardAliasesAndAgreement,
   testMcpManifestIsReachableFromEveryStandardPath,

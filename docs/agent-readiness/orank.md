@@ -119,9 +119,9 @@ Score page: https://ora.ai/score/swap.thorchain.org Rescan: `POST https://ora.ai
   declares `homepage: https://github.com/thorchain/TCSwap`; naming the product domain in its npm metadata would help the same check, but that is a
   change for the TCSwap repo, not this one.
 
-- **MCP Registry listing** — the server works but is not listed at `registry.modelcontextprotocol.io`, which is what most clients search.
+- **MCP Registry listing** — already published as `org.thorchain.swap/thorchain-swap` version `0.4.1`; verified October 28, 2026.
   `server.json` and the `/.well-known/mcp-registry-auth` route are in the repo; publishing needs an Ed25519 key, the `MCP_REGISTRY_AUTH` env var
-  deployed, and one `mcp-publisher publish` run. Full steps: `docs/agent-readiness/mcp-registry.md`.
+  deployed, and one `mcp-publisher publish` run for future releases. Full steps: `docs/agent-readiness/mcp-registry.md`.
 
 ## Gaps deliberately not addressed
 

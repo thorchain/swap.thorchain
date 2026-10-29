@@ -1,8 +1,7 @@
 # Publishing the MCP server to the official registry
 
-The MCP server at `https://swap.thorchain.org/mcp` works today — any client that is handed the URL can use it. What it is not yet is **discoverable**:
-it is absent from the official MCP Registry (`registry.modelcontextprotocol.io`), which is what Claude, VS Code, the GitHub MCP registry, and the
-downstream aggregators read when a user searches for a server by name.
+The server is already published in the official registry as `org.thorchain.swap/thorchain-swap`, version `0.4.1` (published August 24, 2026; verified
+October 28). These instructions are for subsequent releases. Reuse the existing namespace and ownership credentials.
 
 Publishing is metadata-only (the registry hosts no artifacts) and needs one deploy plus one CLI run.
 
