@@ -378,8 +378,9 @@ export function SendMemoBond({ account, initialTab = 'bond' }: BondFormProps) {
 }
 
 const rune = (value: number, digits = 0) => `${value.toLocaleString(undefined, { maximumFractionDigits: digits })} RUNE`
+// Whole dollars: at these sizes the cents are noise.
 const usd = (value: number, runeRate?: USwapNumber) =>
-  runeRate ? toCurrencyFixed(runeRate.mul(value).toCurrency('$', { trimTrailingZeros: false })) : null
+  runeRate ? `$${Math.round(runeRate.mul(value).getValue('number')).toLocaleString('en-US')}` : null
 const percent = (value: number) => `${(value * 100).toFixed(1)}%`
 
 function BondSummary({ position, runeRate, historyLoading }: { position: BondPosition; runeRate?: USwapNumber; historyLoading: boolean }) {
@@ -388,29 +389,29 @@ function BondSummary({ position, runeRate, historyLoading }: { position: BondPos
   return (
     <div className="grid grid-cols-2 gap-2">
       <div className="bg-modal rounded-xl border p-3">
-        <p className="text-txt-label-small mb-1 text-xs tracking-wide uppercase">{t('bond.track.bond')}</p>
+        <p className="text-txt-label-small mb-1 text-sm tracking-wide uppercase">{t('bond.track.bond')}</p>
         <p className="text-txt-high-contrast text-lg font-bold">{rune(position.bond)}</p>
-        {runeRate && <p className="text-txt-label-small text-xs">{usd(position.bond, runeRate)}</p>}
+        {runeRate && <p className="text-txt-label-small text-sm">{usd(position.bond, runeRate)}</p>}
       </div>
       <div className="bg-modal rounded-xl border p-3">
-        <p className="text-txt-label-small mb-1 text-xs tracking-wide uppercase">{t('bond.track.nextReward')}</p>
+        <p className="text-txt-label-small mb-1 text-sm tracking-wide uppercase">{t('bond.track.nextReward')}</p>
         <p className="text-txt-high-contrast text-lg font-bold">{rune(position.nextReward, 1)}</p>
-        {runeRate && <p className="text-txt-label-small text-xs">{usd(position.nextReward, runeRate)}</p>}
+        {runeRate && <p className="text-txt-label-small text-sm">{usd(position.nextReward, runeRate)}</p>}
       </div>
       <div className="bg-modal rounded-xl border p-3">
-        <p className="text-txt-label-small mb-1 text-xs tracking-wide uppercase">{t('bond.track.effectiveApr')}</p>
+        <p className="text-txt-label-small mb-1 text-sm tracking-wide uppercase">{t('bond.track.effectiveApr')}</p>
         <p className="text-txt-high-contrast text-lg font-bold">{percent(position.apr)}</p>
-        <p className="text-txt-label-small text-xs">{t('bond.track.perYear', { amount: rune(position.yearlyReward) })}</p>
+        <p className="text-txt-label-small text-sm">{t('bond.track.perYear', { amount: rune(position.yearlyReward) })}</p>
         {runeRate && (
-          <p className="text-txt-label-small text-xs">{t('bond.track.perYear', { amount: usd(position.yearlyReward, runeRate) ?? '' })}</p>
+          <p className="text-txt-label-small text-sm">{t('bond.track.perYear', { amount: usd(position.yearlyReward, runeRate) ?? '' })}</p>
         )}
       </div>
       <div className="bg-modal rounded-xl border p-3" title={t('bond.track.totalRewardsHint')}>
-        <p className="text-txt-label-small mb-1 text-xs tracking-wide uppercase">{t('bond.track.totalRewards')}</p>
+        <p className="text-txt-label-small mb-1 text-sm tracking-wide uppercase">{t('bond.track.totalRewards')}</p>
         {position.totalRewards !== undefined ? (
           <>
             <p className="text-txt-high-contrast text-lg font-bold">{rune(position.totalRewards)}</p>
-            {runeRate && <p className="text-txt-label-small text-xs">{usd(position.totalRewards, runeRate)}</p>}
+            {runeRate && <p className="text-txt-label-small text-sm">{usd(position.totalRewards, runeRate)}</p>}
           </>
         ) : historyLoading ? (
           <LoaderCircle size={20} className="text-txt-label-small mt-1 animate-spin" />
@@ -427,9 +428,9 @@ function BondNodesTable({ position, runeRate }: { position: BondPosition; runeRa
 
   return (
     <div className="bg-swap-bloc rounded-15 overflow-x-auto border">
-      <table className="w-full text-xs tabular-nums">
+      <table className="w-full text-sm tabular-nums">
         <thead>
-          <tr className="text-txt-label-small text-[10px] tracking-wide uppercase">
+          <tr className="text-txt-label-small text-xs tracking-wide uppercase">
             <th className="px-3 py-2 text-start font-medium">{t('bond.track.node')}</th>
             <th className="px-3 py-2 text-end font-medium">{t('bond.track.bond')}</th>
             <th className="px-3 py-2 text-end font-medium">{t('bond.track.apr')}</th>
@@ -451,11 +452,11 @@ function BondNodesTable({ position, runeRate }: { position: BondPosition; runeRa
                   <span className={cn('size-1.5 shrink-0 rounded-full', node.status === 'Active' ? 'bg-green-default' : 'bg-txt-label-small')} />
                   {node.address.slice(-4)}
                 </a>
-                <div className="text-txt-label-small ps-3 text-[10px]">{node.status}</div>
+                <div className="text-txt-label-small ps-3 text-xs">{node.status}</div>
               </td>
               <td className="px-3 py-2 text-end">
                 <div className="font-medium">{node.bond.toLocaleString(undefined, { maximumFractionDigits: 0 })}</div>
-                {runeRate && <div className="text-txt-label-small text-[10px]">{usd(node.bond, runeRate)}</div>}
+                {runeRate && <div className="text-txt-label-small text-xs">{usd(node.bond, runeRate)}</div>}
               </td>
               <td className="px-3 py-2 text-end">{percent(node.apr)}</td>
               <td className="text-txt-label-small px-3 py-2 text-end">{(node.fee * 100).toFixed(0)}%</td>
