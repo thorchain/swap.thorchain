@@ -1,5 +1,5 @@
 import Image from 'next/image'
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { Chain, WalletOption } from '@tcswap/core'
 import { useTranslations } from 'next-intl'
 import { Credenza, CredenzaContent, CredenzaHeader, CredenzaTitle } from '@/components/ui/credenza'
@@ -13,6 +13,7 @@ import { WalletIcon } from '@/components/wallet-icon'
 import { Icon } from '@/components/icons'
 import { useWallets } from '@/hooks/use-wallets'
 import { cn } from '@/lib/utils'
+import { preloadWalletConnect, walletConnectEnabled } from '@/lib/wallets'
 
 interface ConnectWalletProps {
   isOpen: boolean
@@ -25,6 +26,10 @@ export const ConnectWallet = ({ isOpen, onOpenChange, chain }: ConnectWalletProp
   const [selectedWallet, setSelectedWallet] = useState<WalletParams | undefined>(undefined)
   const [selectedChain, setSelectedChain] = useState<Chain | undefined>(chain)
   const { connectedWallets } = useWallets()
+
+  useEffect(() => {
+    if (isOpen && walletConnectEnabled()) preloadWalletConnect()
+  }, [isOpen])
 
   const chains = useMemo(
     () =>
