@@ -20,7 +20,7 @@ export function isCacaoToken(t: TokenBalance): boolean {
   return t.balance.chain === Chain.Maya && t.balance.ticker === 'CACAO'
 }
 
-const ZERO_PAYLOAD_PREFIXES = ['unbond', 'leave', 'rebond', 'pool-', 'tcy-', 'withdraw', 'wd:', '-:', 'operator', 'm=<']
+const ZERO_PAYLOAD_PREFIXES = ['unbond', 'leave', 'rebond', 'bondyield', 'pool-', 'tcy-', 'withdraw', 'wd:', '-:', 'operator', 'm=<']
 
 export function isZeroPayloadMemo(memo: string): boolean {
   const lower = memo.toLowerCase().trim()
@@ -32,6 +32,12 @@ const THOR_ADDRESS_RE = /^thor1[a-z0-9]{38}$/
 
 export function isThorAddress(s: string): boolean {
   return THOR_ADDRESS_RE.test(s.trim())
+}
+
+const THORNAME_RE = /^[a-zA-Z0-9\-_+]{1,30}$/
+
+export function isThorName(s: string): boolean {
+  return THORNAME_RE.test(s.trim())
 }
 
 export function parsePlaceholders(template: string): string[] {

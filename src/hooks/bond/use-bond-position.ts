@@ -1,6 +1,6 @@
 import { useQueries, useQuery } from '@tanstack/react-query'
 import { BLOCKS_PER_YEAR } from '@/components/send-memo/send-memo-helpers'
-import { BondAction, getBondActions, getBondProviderNodes, getLastChurnHeight, getThorNodeInfo } from '@/lib/api'
+import { BondAction, ThorNodeInfo, getBondActions, getBondProviderNodes, getLastChurnHeight, getThorNodeInfo } from '@/lib/api'
 import { getThorLastBlock } from '@/lib/thorchain-api'
 
 export interface BondedNode {
@@ -58,6 +58,33 @@ function netDeposits(address: string, actions: BondAction[]) {
   return { net, unknown }
 }
 
+// The node's bond APR over the churn window, and what a given provider address
+// keeps of it after the operator fee.
+export function nodeAprForProvider(info: ThorNodeInfo, blocks: number, address: string) {
+  const totalBond = parseInt(info.total_bond) / 1e8
+  const award = parseInt(info.current_award) / 1e8
+  const yearly = (award / blocks) * BLOCKS_PER_YEAR
+  const apr = totalBond > 0 ? yearly / totalBond : 0
+  // node_operator_fee is in basis points (10000 = 100%)
+  const fee = parseInt(info.bond_providers?.node_operator_fee ?? '0') / 10000
+  // The operator pays no fee on its own bond; the fee it collects from others is not yield on this bond
+  const feePaid = info.node_operator_address === address ? 0 : fee
+  return { apr, fee, feePaid, netApr: apr * (1 - feePaid) }
+}
+
+// Blocks since the last churn: the window current_award accrued over
+export const useBondRewardPeriod = (enabled: boolean) =>
+  useQuery({
+    queryKey: ['bond-reward-period'],
+    queryFn: async () => {
+      const [churnHeight, height] = await Promise.all([getLastChurnHeight(), getThorLastBlock()])
+      return { blocks: Math.max(height - churnHeight, 1) }
+    },
+    enabled,
+    refetchOnWindowFocus: false,
+    staleTime: 30 * 1000
+  })
+
 export const useBondPosition = (address: string) => {
   const trimmed = address.trim()
 
@@ -69,16 +96,7 @@ export const useBondPosition = (address: string) => {
     staleTime: 30 * 1000
   })
 
-  const period = useQuery({
-    queryKey: ['bond-reward-period'],
-    queryFn: async () => {
-      const [churnHeight, height] = await Promise.all([getLastChurnHeight(), getThorLastBlock()])
-      return { blocks: Math.max(height - churnHeight, 1) }
-    },
-    enabled: trimmed.length > 0,
-    refetchOnWindowFocus: false,
-    staleTime: 30 * 1000
-  })
+  const period = useBondRewardPeriod(trimmed.length > 0)
 
   const history = useQuery({
     queryKey: ['bond-actions', trimmed],
@@ -121,15 +139,9 @@ export const useBondPosition = (address: string) => {
       const bond = parseInt(provider?.bond ?? n.bond) / 1e8
       const totalBond = parseInt(info.total_bond) / 1e8
       const award = parseInt(info.current_award) / 1e8
-      // node_operator_fee is in basis points (10000 = 100%)
-      const fee = parseInt(info.bond_providers?.node_operator_fee ?? '0') / 10000
+      const { apr, fee, feePaid, netApr } = nodeAprForProvider(info, period.data.blocks, trimmed)
       const share = totalBond > 0 ? bond / totalBond : 0
-      // The operator pays no fee on its own bond; the fee it collects from others is not yield on this bond
-      const feePaid = info.node_operator_address === trimmed ? 0 : fee
       const nextReward = award * share * (1 - feePaid)
-      const yearly = (award / period.data.blocks) * BLOCKS_PER_YEAR
-      const apr = totalBond > 0 ? yearly / totalBond : 0
-      const netApr = apr * (1 - feePaid)
       return { address: n.address, status: info.status, bond, apr, fee, netApr, nextReward }
     })
 

@@ -199,7 +199,8 @@ export interface ThorNodeInfo {
   slash_points: number
   jail?: { release_height: number; reason: string }
   bond_providers: {
-    providers: { bond_address: string; bond: string }[]
+    // bps and payout_target are the provider's Bond Yield (ADR-029) settings; absent until configured
+    providers: { bond_address: string; bond: string; bps?: number; payout_target?: string }[]
     node_operator_fee: string
   }
 }
