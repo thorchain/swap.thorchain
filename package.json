@@ -10,7 +10,8 @@
     "test:agent-contracts": "node test/agent-contracts.test.mjs",
     "test:i18n": "node test/i18n-protocol.test.mjs",
     "i18n:translate": "node tools/i18n-translate.mjs",
-    "i18n:check": "node tools/i18n-translate.mjs --check"
+    "i18n:check": "node tools/i18n-translate.mjs --check",
+    "test:oath-wallet": "node --test test/oath-walletconnect.test.mjs"
   },
   "dependencies": {
     "@bitgo/utxo-lib": "^1.9.5",
@@ -39,6 +40,7 @@
     "@tcswap/plugins": "^4.2.32",
     "@tcswap/toolboxes": "^4.3.32",
     "@tcswap/wallets": "^4.3.36",
+    "@walletconnect/modal-core": "2.7.0",
     "axios": "^1.12.2",
     "bitcoinjs-lib": "^7.0.0",
     "cashaddrjs": "^0.4.4",

@@ -16,6 +16,7 @@ import { tronlinkWallet } from '@/lib/tronlink'
 import { vultisigWallet } from '@tcswap/wallets/vultisig'
 import { preloadWalletconnect, walletconnectWallet } from '@tcswap/wallets/walletconnect'
 import { AppConfig } from '@/config'
+import { connectOathWallet, isIOSDevice, queueWalletConnect } from '@/lib/oath-walletconnect'
 import { useWalletStore } from '@/store/wallets-store'
 import { BTC_PURPOSE_ADDRESS_TYPE, btcAddressType } from '@/lib/swap-helpers'
 
@@ -158,7 +159,12 @@ export async function connectWallet(option: WalletOption, chains: Chain[], confi
       return uSwap.connectExodus(chains)
     case WalletOption.WALLETCONNECT:
       // One session — one QR scan — for every chain; `restoreOnly` reuses a stored one rather than show a QR code.
-      return uSwap.connectWalletconnect(chains, { metadata: walletConnectMetadata, restoreOnly: config?.restoreOnly })
+      return queueWalletConnect(async () => {
+        const connect = () => uSwap.connectWalletconnect(chains, { metadata: walletConnectMetadata, restoreOnly: config?.restoreOnly })
+        if (config?.walletKey !== 'oath' || config?.restoreOnly) return connect()
+        const controllers = await import('@walletconnect/modal-core')
+        return connectOathWallet(controllers, isIOSDevice(navigator), connect, () => uSwap.disconnectWallet(WalletOption.WALLETCONNECT))
+      })
     case WalletOption.KEYSTORE:
       return uSwap.connectKeystore(chains, config?.phrase, config?.derivationPath)
     case WalletOption.LEDGER:

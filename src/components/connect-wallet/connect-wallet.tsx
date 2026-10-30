@@ -1,7 +1,9 @@
 import Image from 'next/image'
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import { Chain, WalletOption } from '@tcswap/core'
 import { useTranslations } from 'next-intl'
+import { toast } from 'sonner'
+import { GenericButton } from '@/components/generic-button'
 import { Credenza, CredenzaContent, CredenzaHeader, CredenzaTitle } from '@/components/ui/credenza'
 import { ScrollArea } from '@/components/ui/scroll-area'
 import { BrowserWallet } from '@/components/connect-wallet/browser-wallet'
@@ -11,7 +13,7 @@ import { Ledger } from '@/components/connect-wallet/ledger'
 import { Trezor } from '@/components/connect-wallet/trezor'
 import { WalletIcon } from '@/components/wallet-icon'
 import { Icon } from '@/components/icons'
-import { useWallets } from '@/hooks/use-wallets'
+import { useHasHydrated, useWallets } from '@/hooks/use-wallets'
 import { cn } from '@/lib/utils'
 import { preloadWalletConnect, walletConnectEnabled } from '@/lib/wallets'
 
@@ -25,7 +27,25 @@ export const ConnectWallet = ({ isOpen, onOpenChange, chain }: ConnectWalletProp
   const t = useTranslations('wallet')
   const [selectedWallet, setSelectedWallet] = useState<WalletParams | undefined>(undefined)
   const [selectedChain, setSelectedChain] = useState<Chain | undefined>(chain)
-  const { connectedWallets } = useWallets()
+  const { connectedWallets, connect, disconnect } = useWallets()
+  const isHydrated = useHasHydrated()
+  const connectingOath = useRef(false)
+
+  const connectOath = async (wallet: WalletParams, replace = false) => {
+    if (connectingOath.current || !isHydrated) return
+    connectingOath.current = true
+    if (replace) disconnect(WalletOption.WALLETCONNECT)
+    // Close the selector so it cannot block the SDK's QR modal or iOS handoff.
+    onOpenChange(false)
+    const requested = selectedChain ? [selectedChain] : wallet.supportedChains
+    try {
+      const accounts = await connect(WalletOption.WALLETCONNECT, requested, { walletKey: 'oath' }, () => t('oathConnectionFailed'))
+      const missing = accounts.length ? requested.filter(chain => !accounts.some(account => account.network === chain)) : []
+      if (missing.length) toast.warning(t('chainsNotConnected', { name: wallet.label, chains: missing.map(chainLabel).join(', ') }))
+    } finally {
+      connectingOath.current = false
+    }
+  }
 
   useEffect(() => {
     if (isOpen && walletConnectEnabled()) preloadWalletConnect()
@@ -60,6 +80,10 @@ export const ConnectWallet = ({ isOpen, onOpenChange, chain }: ConnectWalletProp
   }, [])
 
   const onSelectWallet = (wallet: WalletParams) => {
+    if (wallet.key === 'oath' && !connectedWallets.includes(WalletOption.WALLETCONNECT)) {
+      void connectOath(wallet)
+      return
+    }
     setSelectedWallet(prev => (prev === wallet ? undefined : wallet))
     setSelectedChain(undefined)
   }
@@ -68,25 +92,34 @@ export const ConnectWallet = ({ isOpen, onOpenChange, chain }: ConnectWalletProp
     setSelectedChain(prev => (prev === chain ? undefined : chain))
   }
 
-  const isWalletHighlighted = (walletOption: WalletOption) => {
-    if (!selectedChain) return true
-
-    const wallet = WALLETS.find(w => w.option === walletOption)
-    return wallet && wallet.supportedChains.includes(selectedChain)
-  }
+  const isWalletHighlighted = (wallet: WalletParams) => !selectedChain || wallet.supportedChains.includes(selectedChain)
 
   const walletList = (wallets: WalletParams[]) => {
     return wallets.map((wallet, index) => {
-      const isConnected = connectedWallets.find(w => w === wallet.option)
+      const isOath = wallet.key === 'oath'
+      const isConnected = !isOath && connectedWallets.includes(wallet.option)
       const isInstalled = isWalletAvailable(wallet.option)
       const isSelected = wallet === selectedWallet
-      const isHighlighted = isWalletHighlighted(wallet.option)
+      const isHighlighted = isWalletHighlighted(wallet)
       const isClickable =
-        isInstalled && isHighlighted && (!isConnected || wallet.option === WalletOption.LEDGER || wallet.option === WalletOption.TREZOR)
+        isInstalled &&
+        isHighlighted &&
+        (!isOath || isHydrated) &&
+        (!isConnected || wallet.option === WalletOption.LEDGER || wallet.option === WalletOption.TREZOR)
 
       return (
         <div
-          key={index}
+          key={wallet.key}
+          role="button"
+          tabIndex={isClickable ? 0 : -1}
+          aria-disabled={!isClickable}
+          aria-label={wallet.label}
+          onKeyDown={event => {
+            if (isClickable && (event.key === 'Enter' || event.key === ' ')) {
+              event.preventDefault()
+              onSelectWallet(wallet)
+            }
+          }}
           className={cn('mb-1 flex items-center space-x-3 rounded-2xl border border-transparent p-3', {
             'border-border-btn-modal-hover': isSelected,
             'opacity-25': !isHighlighted,
@@ -102,7 +135,9 @@ export const ConnectWallet = ({ isOpen, onOpenChange, chain }: ConnectWalletProp
           <div className="flex-1">
             <div className="text-txt-high-contrast font-medium">{wallet.label}</div>
             <div className="text-xs">
-              {isInstalled ? (
+              {isOath ? (
+                <span>{t('oathMobile')}</span>
+              ) : isInstalled ? (
                 isConnected ? (
                   <span className="text-green-contrast">{t('connected')}</span>
                 ) : (
@@ -123,6 +158,17 @@ export const ConnectWallet = ({ isOpen, onOpenChange, chain }: ConnectWalletProp
   const renderSelectedWallet = (wallet: WalletParams) => {
     const onConnect = () => {
       onOpenChange(false)
+    }
+
+    if (wallet.key === 'oath') {
+      return (
+        <div className="space-y-4 px-4 pb-4 md:px-8 md:pb-8">
+          <p className="text-txt-label-small text-sm">{t('oathExistingSession')}</p>
+          <GenericButton colorType="3" size="large" onClick={() => void connectOath(wallet, true)}>
+            {t('oathReplaceSession')}
+          </GenericButton>
+        </div>
+      )
     }
 
     if (wallet.type === WalletType.browser) {
