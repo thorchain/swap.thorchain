@@ -288,6 +288,7 @@
   "send.bond.nodeNotFound": ["Node not found", "لم يُعثَر على الـ Node"],
   "send.bond.enterNewAddress": ["Enter New Address", "أدخل العنوان الجديد"],
   "send.bond.invalidNewAddress": ["Invalid New Address", "عنوان جديد غير صالح"],
+  "send.bond.newAddressNotWhitelisted": ["New address is not whitelisted on this node", "العنوان الجديد غير مُدرج في القائمة البيضاء لهذه العقدة"],
   "send.bond.bond": ["Bond", "Bond"],
   "send.bond.unbond": ["Unbond", "Unbond"],
   "send.bond.rebond": ["Rebond", "Rebond"],
@@ -304,6 +305,7 @@
   "send.bond.yield.payoutAddressPlaceholder": ["Enter a RUNE address or THORName", "أدخل عنوان RUNE أو THORName"],
   "send.bond.yield.noPayoutAddress": ["There is currently no payout address setup", "لا يوجد حاليًا عنوان دفع مُعدّ"],
   "send.bond.yield.currentTarget": ["Payouts are currently sent to {target}", "يتم حاليًا إرسال المدفوعات إلى {target}"],
+  "send.bond.yield.clearTargetHint": ["Payouts will be sent to your bond address", "سيتم إرسال المدفوعات إلى عنوان الـ bond الخاص بك"],
   "send.bond.yield.effectiveApr": ["Effective APR", "APR الفعلي"],
   "send.bond.yield.effectivePayout": ["Effective Payout", "الدفع الفعلي"],
   "send.bond.yield.notProvider": ["No bond on this node", "لا يوجد Bond على هذه العقدة"],
@@ -558,7 +560,5 @@
   "tx.leg.deposit": ["Deposit {ticker}", "إيداع {ticker}"],
   "tx.leg.send": ["Send {ticker}", "إرسال {ticker}"],
   "tx.leg.privateRoute": ["Route {ticker} privately", "توجيه {ticker} بشكل خاص"],
-  "tx.leg.swap": ["Swap {from} to {to}", "تبادل {from} إلى {to}"],
-  "send.bond.newAddressNotWhitelisted": ["New address is not whitelisted on this node", "العنوان الجديد غير مُدرج في القائمة البيضاء لهذه العقدة"],
-  "send.bond.yield.clearTargetHint": ["Payouts will be sent to your bond address", "سيتم إرسال المدفوعات إلى عنوان الـ bond الخاص بك"]
+  "tx.leg.swap": ["Swap {from} to {to}", "تبادل {from} إلى {to}"]
 }

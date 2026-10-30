@@ -288,6 +288,7 @@
   "send.bond.nodeNotFound": ["Node not found", "Node tidak ditemukan"],
   "send.bond.enterNewAddress": ["Enter New Address", "Masukkan alamat baru"],
   "send.bond.invalidNewAddress": ["Invalid New Address", "Alamat baru tidak valid"],
+  "send.bond.newAddressNotWhitelisted": ["New address is not whitelisted on this node", "Alamat baru tidak masuk daftar putih pada node ini"],
   "send.bond.bond": ["Bond", "Bond"],
   "send.bond.unbond": ["Unbond", "Unbond"],
   "send.bond.rebond": ["Rebond", "Rebond"],
@@ -304,6 +305,7 @@
   "send.bond.yield.payoutAddressPlaceholder": ["Enter a RUNE address or THORName", "Masukkan alamat RUNE atau THORName"],
   "send.bond.yield.noPayoutAddress": ["There is currently no payout address setup", "Saat ini belum ada alamat pembayaran yang diatur"],
   "send.bond.yield.currentTarget": ["Payouts are currently sent to {target}", "Pembayaran saat ini dikirim ke {target}"],
+  "send.bond.yield.clearTargetHint": ["Payouts will be sent to your bond address", "Pembayaran akan dikirim ke alamat bond Anda"],
   "send.bond.yield.effectiveApr": ["Effective APR", "APR Efektif"],
   "send.bond.yield.effectivePayout": ["Effective Payout", "Pembayaran Efektif"],
   "send.bond.yield.notProvider": ["No bond on this node", "Tidak ada bond di node ini"],
@@ -558,7 +560,5 @@
   "tx.leg.deposit": ["Deposit {ticker}", "Deposit {ticker}"],
   "tx.leg.send": ["Send {ticker}", "Kirim {ticker}"],
   "tx.leg.privateRoute": ["Route {ticker} privately", "Rutekan {ticker} secara privat"],
-  "tx.leg.swap": ["Swap {from} to {to}", "Tukar {from} ke {to}"],
-  "send.bond.newAddressNotWhitelisted": ["New address is not whitelisted on this node", "Alamat baru tidak masuk daftar putih pada node ini"],
-  "send.bond.yield.clearTargetHint": ["Payouts will be sent to your bond address", "Pembayaran akan dikirim ke alamat bond Anda"]
+  "tx.leg.swap": ["Swap {from} to {to}", "Tukar {from} ke {to}"]
 }

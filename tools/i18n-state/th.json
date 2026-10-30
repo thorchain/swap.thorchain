@@ -288,6 +288,7 @@
   "send.bond.nodeNotFound": ["Node not found", "ไม่พบ node"],
   "send.bond.enterNewAddress": ["Enter New Address", "กรอกที่อยู่ใหม่"],
   "send.bond.invalidNewAddress": ["Invalid New Address", "ที่อยู่ใหม่ไม่ถูกต้อง"],
+  "send.bond.newAddressNotWhitelisted": ["New address is not whitelisted on this node", "ที่อยู่ใหม่ไม่อยู่ในรายการที่อนุญาต (whitelist) ของโหนดนี้"],
   "send.bond.bond": ["Bond", "Bond"],
   "send.bond.unbond": ["Unbond", "Unbond"],
   "send.bond.rebond": ["Rebond", "Rebond"],
@@ -304,6 +305,7 @@
   "send.bond.yield.payoutAddressPlaceholder": ["Enter a RUNE address or THORName", "ใส่ที่อยู่ RUNE หรือ THORName"],
   "send.bond.yield.noPayoutAddress": ["There is currently no payout address setup", "ขณะนี้ยังไม่ได้ตั้งค่าที่อยู่รับเงิน"],
   "send.bond.yield.currentTarget": ["Payouts are currently sent to {target}", "ขณะนี้การจ่ายผลตอบแทนถูกส่งไปที่ {target}"],
+  "send.bond.yield.clearTargetHint": ["Payouts will be sent to your bond address", "เงินที่จ่ายออกจะถูกส่งไปยังที่อยู่ bond ของคุณ"],
   "send.bond.yield.effectiveApr": ["Effective APR", "APR ที่แท้จริง"],
   "send.bond.yield.effectivePayout": ["Effective Payout", "การจ่ายผลตอบแทนที่แท้จริง"],
   "send.bond.yield.notProvider": ["No bond on this node", "ไม่มี bond บนโหนดนี้"],
@@ -558,7 +560,5 @@
   "tx.leg.deposit": ["Deposit {ticker}", "ฝาก {ticker}"],
   "tx.leg.send": ["Send {ticker}", "ส่ง {ticker}"],
   "tx.leg.privateRoute": ["Route {ticker} privately", "กำหนดเส้นทาง {ticker} แบบส่วนตัว"],
-  "tx.leg.swap": ["Swap {from} to {to}", "แลกเปลี่ยน {from} เป็น {to}"],
-  "send.bond.newAddressNotWhitelisted": ["New address is not whitelisted on this node", "ที่อยู่ใหม่ไม่อยู่ในรายการที่อนุญาต (whitelist) ของโหนดนี้"],
-  "send.bond.yield.clearTargetHint": ["Payouts will be sent to your bond address", "เงินที่จ่ายออกจะถูกส่งไปยังที่อยู่ bond ของคุณ"]
+  "tx.leg.swap": ["Swap {from} to {to}", "แลกเปลี่ยน {from} เป็น {to}"]
 }

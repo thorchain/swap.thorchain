@@ -288,6 +288,7 @@
   "send.bond.nodeNotFound": ["Node not found", "نود یافت نشد"],
   "send.bond.enterNewAddress": ["Enter New Address", "آدرس جدید را وارد کنید"],
   "send.bond.invalidNewAddress": ["Invalid New Address", "آدرس جدید نامعتبر"],
+  "send.bond.newAddressNotWhitelisted": ["New address is not whitelisted on this node", "آدرس جدید در این نود در فهرست سفید قرار ندارد"],
   "send.bond.bond": ["Bond", "Bond"],
   "send.bond.unbond": ["Unbond", "Unbond"],
   "send.bond.rebond": ["Rebond", "Rebond"],
@@ -304,6 +305,7 @@
   "send.bond.yield.payoutAddressPlaceholder": ["Enter a RUNE address or THORName", "یک آدرس RUNE یا THORName وارد کنید"],
   "send.bond.yield.noPayoutAddress": ["There is currently no payout address setup", "در حال حاضر هیچ آدرس پرداختی تنظیم نشده است"],
   "send.bond.yield.currentTarget": ["Payouts are currently sent to {target}", "پرداخت‌ها در حال حاضر به {target} ارسال می‌شوند"],
+  "send.bond.yield.clearTargetHint": ["Payouts will be sent to your bond address", "پرداخت‌ها به آدرس باند شما ارسال خواهد شد"],
   "send.bond.yield.effectiveApr": ["Effective APR", "APR مؤثر"],
   "send.bond.yield.effectivePayout": ["Effective Payout", "پرداخت مؤثر"],
   "send.bond.yield.notProvider": ["No bond on this node", "بوندی روی این نود وجود ندارد"],
@@ -558,7 +560,5 @@
   "tx.leg.deposit": ["Deposit {ticker}", "واریز {ticker}"],
   "tx.leg.send": ["Send {ticker}", "ارسال {ticker}"],
   "tx.leg.privateRoute": ["Route {ticker} privately", "مسیریابی {ticker} به‌صورت خصوصی"],
-  "tx.leg.swap": ["Swap {from} to {to}", "تبادل {from} به {to}"],
-  "send.bond.newAddressNotWhitelisted": ["New address is not whitelisted on this node", "آدرس جدید در این نود در فهرست سفید قرار ندارد"],
-  "send.bond.yield.clearTargetHint": ["Payouts will be sent to your bond address", "پرداخت‌ها به آدرس باند شما ارسال خواهد شد"]
+  "tx.leg.swap": ["Swap {from} to {to}", "تبادل {from} به {to}"]
 }

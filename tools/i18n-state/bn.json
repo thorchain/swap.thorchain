@@ -288,6 +288,7 @@
   "send.bond.nodeNotFound": ["Node not found", "Node পাওয়া যায়নি"],
   "send.bond.enterNewAddress": ["Enter New Address", "নতুন ঠিকানা লিখুন"],
   "send.bond.invalidNewAddress": ["Invalid New Address", "অবৈধ নতুন ঠিকানা"],
+  "send.bond.newAddressNotWhitelisted": ["New address is not whitelisted on this node", "নতুন ঠিকানাটি এই নোডে হোয়াইটলিস্ট করা নেই"],
   "send.bond.bond": ["Bond", "Bond"],
   "send.bond.unbond": ["Unbond", "Unbond"],
   "send.bond.rebond": ["Rebond", "Rebond"],
@@ -304,6 +305,7 @@
   "send.bond.yield.payoutAddressPlaceholder": ["Enter a RUNE address or THORName", "একটি RUNE ঠিকানা বা THORName লিখুন"],
   "send.bond.yield.noPayoutAddress": ["There is currently no payout address setup", "বর্তমানে কোনো পেআউট ঠিকানা সেট করা নেই"],
   "send.bond.yield.currentTarget": ["Payouts are currently sent to {target}", "পেআউট বর্তমানে {target}-এ পাঠানো হয়"],
+  "send.bond.yield.clearTargetHint": ["Payouts will be sent to your bond address", "পেআউটগুলো আপনার বন্ড ঠিকানায় পাঠানো হবে"],
   "send.bond.yield.effectiveApr": ["Effective APR", "কার্যকর APR"],
   "send.bond.yield.effectivePayout": ["Effective Payout", "কার্যকর পেআউট"],
   "send.bond.yield.notProvider": ["No bond on this node", "এই নোডে কোনো বন্ড নেই"],
@@ -558,7 +560,5 @@
   "tx.leg.deposit": ["Deposit {ticker}", "{ticker} ডিপোজিট করুন"],
   "tx.leg.send": ["Send {ticker}", "{ticker} পাঠান"],
   "tx.leg.privateRoute": ["Route {ticker} privately", "{ticker} গোপনে রুট করুন"],
-  "tx.leg.swap": ["Swap {from} to {to}", "{from} থেকে {to} সোয়াপ করুন"],
-  "send.bond.newAddressNotWhitelisted": ["New address is not whitelisted on this node", "নতুন ঠিকানাটি এই নোডে হোয়াইটলিস্ট করা নেই"],
-  "send.bond.yield.clearTargetHint": ["Payouts will be sent to your bond address", "পেআউটগুলো আপনার বন্ড ঠিকানায় পাঠানো হবে"]
+  "tx.leg.swap": ["Swap {from} to {to}", "{from} থেকে {to} সোয়াপ করুন"]
 }

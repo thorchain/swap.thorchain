@@ -288,6 +288,7 @@
   "send.bond.nodeNotFound": ["Node not found", "Node introuvable"],
   "send.bond.enterNewAddress": ["Enter New Address", "Saisir la nouvelle adresse"],
   "send.bond.invalidNewAddress": ["Invalid New Address", "Nouvelle adresse invalide"],
+  "send.bond.newAddressNotWhitelisted": ["New address is not whitelisted on this node", "La nouvelle adresse n'est pas sur la liste blanche de ce nœud"],
   "send.bond.bond": ["Bond", "Bond"],
   "send.bond.unbond": ["Unbond", "Unbond"],
   "send.bond.rebond": ["Rebond", "Rebond"],
@@ -304,6 +305,7 @@
   "send.bond.yield.payoutAddressPlaceholder": ["Enter a RUNE address or THORName", "Saisissez une adresse RUNE ou un THORName"],
   "send.bond.yield.noPayoutAddress": ["There is currently no payout address setup", "Aucune adresse de versement n'est configurée actuellement"],
   "send.bond.yield.currentTarget": ["Payouts are currently sent to {target}", "Les versements sont actuellement envoyés à {target}"],
+  "send.bond.yield.clearTargetHint": ["Payouts will be sent to your bond address", "Les paiements seront envoyés à votre adresse de bond"],
   "send.bond.yield.effectiveApr": ["Effective APR", "APR effectif"],
   "send.bond.yield.effectivePayout": ["Effective Payout", "Versement effectif"],
   "send.bond.yield.notProvider": ["No bond on this node", "Aucun bond sur ce nœud"],
@@ -558,7 +560,5 @@
   "tx.leg.deposit": ["Deposit {ticker}", "Déposer {ticker}"],
   "tx.leg.send": ["Send {ticker}", "Envoyer {ticker}"],
   "tx.leg.privateRoute": ["Route {ticker} privately", "Router {ticker} en privé"],
-  "tx.leg.swap": ["Swap {from} to {to}", "Échanger {from} en {to}"],
-  "send.bond.newAddressNotWhitelisted": ["New address is not whitelisted on this node", "La nouvelle adresse n'est pas sur la liste blanche de ce nœud"],
-  "send.bond.yield.clearTargetHint": ["Payouts will be sent to your bond address", "Les paiements seront envoyés à votre adresse de bond"]
+  "tx.leg.swap": ["Swap {from} to {to}", "Échanger {from} en {to}"]
 }

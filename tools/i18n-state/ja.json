@@ -288,6 +288,7 @@
   "send.bond.nodeNotFound": ["Node not found", "Nodeが見つかりません"],
   "send.bond.enterNewAddress": ["Enter New Address", "新しいアドレスを入力"],
   "send.bond.invalidNewAddress": ["Invalid New Address", "無効な新しいアドレスです"],
+  "send.bond.newAddressNotWhitelisted": ["New address is not whitelisted on this node", "新しいアドレスはこのノードでホワイトリストに登録されていません"],
   "send.bond.bond": ["Bond", "Bond"],
   "send.bond.unbond": ["Unbond", "Unbond"],
   "send.bond.rebond": ["Rebond", "Rebond"],
@@ -304,6 +305,7 @@
   "send.bond.yield.payoutAddressPlaceholder": ["Enter a RUNE address or THORName", "RUNEアドレスまたはTHORNameを入力"],
   "send.bond.yield.noPayoutAddress": ["There is currently no payout address setup", "現在、支払いアドレスは設定されていません"],
   "send.bond.yield.currentTarget": ["Payouts are currently sent to {target}", "現在、支払いは{target}に送られます"],
+  "send.bond.yield.clearTargetHint": ["Payouts will be sent to your bond address", "支払いはボンドアドレスに送金されます"],
   "send.bond.yield.effectiveApr": ["Effective APR", "実効APR"],
   "send.bond.yield.effectivePayout": ["Effective Payout", "実効支払い額"],
   "send.bond.yield.notProvider": ["No bond on this node", "このノードにボンドがありません"],
@@ -558,7 +560,5 @@
   "tx.leg.deposit": ["Deposit {ticker}", "{ticker} を預け入れ"],
   "tx.leg.send": ["Send {ticker}", "{ticker} を送信"],
   "tx.leg.privateRoute": ["Route {ticker} privately", "{ticker} をプライベートにルーティング"],
-  "tx.leg.swap": ["Swap {from} to {to}", "{from} を {to} にスワップ"],
-  "send.bond.newAddressNotWhitelisted": ["New address is not whitelisted on this node", "新しいアドレスはこのノードでホワイトリストに登録されていません"],
-  "send.bond.yield.clearTargetHint": ["Payouts will be sent to your bond address", "支払いはボンドアドレスに送金されます"]
+  "tx.leg.swap": ["Swap {from} to {to}", "{from} を {to} にスワップ"]
 }

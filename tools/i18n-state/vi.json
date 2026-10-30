@@ -288,6 +288,7 @@
   "send.bond.nodeNotFound": ["Node not found", "Không tìm thấy node"],
   "send.bond.enterNewAddress": ["Enter New Address", "Nhập địa chỉ mới"],
   "send.bond.invalidNewAddress": ["Invalid New Address", "Địa chỉ mới không hợp lệ"],
+  "send.bond.newAddressNotWhitelisted": ["New address is not whitelisted on this node", "Địa chỉ mới chưa được đưa vào danh sách cho phép trên node này"],
   "send.bond.bond": ["Bond", "Bond"],
   "send.bond.unbond": ["Unbond", "Unbond"],
   "send.bond.rebond": ["Rebond", "Rebond"],
@@ -304,6 +305,7 @@
   "send.bond.yield.payoutAddressPlaceholder": ["Enter a RUNE address or THORName", "Nhập địa chỉ RUNE hoặc THORName"],
   "send.bond.yield.noPayoutAddress": ["There is currently no payout address setup", "Hiện chưa thiết lập địa chỉ chi trả"],
   "send.bond.yield.currentTarget": ["Payouts are currently sent to {target}", "Các khoản chi trả hiện được gửi tới {target}"],
+  "send.bond.yield.clearTargetHint": ["Payouts will be sent to your bond address", "Khoản chi trả sẽ được gửi đến địa chỉ bond của bạn"],
   "send.bond.yield.effectiveApr": ["Effective APR", "APR thực tế"],
   "send.bond.yield.effectivePayout": ["Effective Payout", "Chi trả thực tế"],
   "send.bond.yield.notProvider": ["No bond on this node", "Không có bond trên node này"],
@@ -558,7 +560,5 @@
   "tx.leg.deposit": ["Deposit {ticker}", "Nạp {ticker}"],
   "tx.leg.send": ["Send {ticker}", "Gửi {ticker}"],
   "tx.leg.privateRoute": ["Route {ticker} privately", "Định tuyến {ticker} riêng tư"],
-  "tx.leg.swap": ["Swap {from} to {to}", "Hoán đổi {from} sang {to}"],
-  "send.bond.newAddressNotWhitelisted": ["New address is not whitelisted on this node", "Địa chỉ mới chưa được đưa vào danh sách cho phép trên node này"],
-  "send.bond.yield.clearTargetHint": ["Payouts will be sent to your bond address", "Khoản chi trả sẽ được gửi đến địa chỉ bond của bạn"]
+  "tx.leg.swap": ["Swap {from} to {to}", "Hoán đổi {from} sang {to}"]
 }

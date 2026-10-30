@@ -288,6 +288,7 @@
   "send.bond.nodeNotFound": ["Node not found", "未找到節點"],
   "send.bond.enterNewAddress": ["Enter New Address", "輸入新地址"],
   "send.bond.invalidNewAddress": ["Invalid New Address", "無效的新地址"],
+  "send.bond.newAddressNotWhitelisted": ["New address is not whitelisted on this node", "新位址未列入此節點的白名單"],
   "send.bond.bond": ["Bond", "Bond"],
   "send.bond.unbond": ["Unbond", "Unbond"],
   "send.bond.rebond": ["Rebond", "Rebond"],
@@ -304,6 +305,7 @@
   "send.bond.yield.payoutAddressPlaceholder": ["Enter a RUNE address or THORName", "輸入 RUNE 地址或 THORName"],
   "send.bond.yield.noPayoutAddress": ["There is currently no payout address setup", "目前尚未設定撥付地址"],
   "send.bond.yield.currentTarget": ["Payouts are currently sent to {target}", "撥付目前傳送至 {target}"],
+  "send.bond.yield.clearTargetHint": ["Payouts will be sent to your bond address", "收益將發送至您的 bond 位址"],
   "send.bond.yield.effectiveApr": ["Effective APR", "實際年化報酬率"],
   "send.bond.yield.effectivePayout": ["Effective Payout", "實際撥付"],
   "send.bond.yield.notProvider": ["No bond on this node", "此節點上沒有 bond"],
@@ -558,7 +560,5 @@
   "tx.leg.deposit": ["Deposit {ticker}", "存入{ticker}"],
   "tx.leg.send": ["Send {ticker}", "發送{ticker}"],
   "tx.leg.privateRoute": ["Route {ticker} privately", "以私密方式轉送 {ticker}"],
-  "tx.leg.swap": ["Swap {from} to {to}", "將{from}兌換為{to}"],
-  "send.bond.newAddressNotWhitelisted": ["New address is not whitelisted on this node", "新位址未列入此節點的白名單"],
-  "send.bond.yield.clearTargetHint": ["Payouts will be sent to your bond address", "收益將發送至您的 bond 位址"]
+  "tx.leg.swap": ["Swap {from} to {to}", "將{from}兌換為{to}"]
 }

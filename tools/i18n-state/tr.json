@@ -288,6 +288,7 @@
   "send.bond.nodeNotFound": ["Node not found", "Node bulunamadı"],
   "send.bond.enterNewAddress": ["Enter New Address", "Yeni Adres Gir"],
   "send.bond.invalidNewAddress": ["Invalid New Address", "Geçersiz Yeni Adres"],
+  "send.bond.newAddressNotWhitelisted": ["New address is not whitelisted on this node", "Yeni adres bu düğümde beyaz listede değil"],
   "send.bond.bond": ["Bond", "Bond"],
   "send.bond.unbond": ["Unbond", "Unbond"],
   "send.bond.rebond": ["Rebond", "Rebond"],
@@ -304,6 +305,7 @@
   "send.bond.yield.payoutAddressPlaceholder": ["Enter a RUNE address or THORName", "Bir RUNE adresi veya THORName girin"],
   "send.bond.yield.noPayoutAddress": ["There is currently no payout address setup", "Şu anda tanımlı bir ödeme adresi yok"],
   "send.bond.yield.currentTarget": ["Payouts are currently sent to {target}", "Ödemeler şu anda {target} adresine gönderiliyor"],
+  "send.bond.yield.clearTargetHint": ["Payouts will be sent to your bond address", "Ödemeler bond adresinize gönderilecek"],
   "send.bond.yield.effectiveApr": ["Effective APR", "Efektif APR"],
   "send.bond.yield.effectivePayout": ["Effective Payout", "Efektif Ödeme"],
   "send.bond.yield.notProvider": ["No bond on this node", "Bu düğümde bond yok"],
@@ -558,7 +560,5 @@
   "tx.leg.deposit": ["Deposit {ticker}", "{ticker} Yatır"],
   "tx.leg.send": ["Send {ticker}", "{ticker} Gönder"],
   "tx.leg.privateRoute": ["Route {ticker} privately", "{ticker} gizli olarak yönlendir"],
-  "tx.leg.swap": ["Swap {from} to {to}", "{from} → {to} Takas"],
-  "send.bond.newAddressNotWhitelisted": ["New address is not whitelisted on this node", "Yeni adres bu düğümde beyaz listede değil"],
-  "send.bond.yield.clearTargetHint": ["Payouts will be sent to your bond address", "Ödemeler bond adresinize gönderilecek"]
+  "tx.leg.swap": ["Swap {from} to {to}", "{from} → {to} Takas"]
 }

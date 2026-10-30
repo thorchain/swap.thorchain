@@ -288,6 +288,7 @@
   "send.bond.nodeNotFound": ["Node not found", "Node non trovato", "Nodo non trovato"],
   "send.bond.enterNewAddress": ["Enter New Address", "Inserisca il nuovo indirizzo", "Inserisci il nuovo indirizzo"],
   "send.bond.invalidNewAddress": ["Invalid New Address", "Nuovo indirizzo non valido"],
+  "send.bond.newAddressNotWhitelisted": ["New address is not whitelisted on this node", "Il nuovo indirizzo non è nella whitelist di questo nodo"],
   "send.bond.bond": ["Bond", "Bond"],
   "send.bond.unbond": ["Unbond", "Unbond"],
   "send.bond.rebond": ["Rebond", "Rebond"],
@@ -304,6 +305,7 @@
   "send.bond.yield.payoutAddressPlaceholder": ["Enter a RUNE address or THORName", "Inserisci un indirizzo RUNE o THORName"],
   "send.bond.yield.noPayoutAddress": ["There is currently no payout address setup", "Al momento non è impostato alcun indirizzo di pagamento"],
   "send.bond.yield.currentTarget": ["Payouts are currently sent to {target}", "I pagamenti vengono attualmente inviati a {target}"],
+  "send.bond.yield.clearTargetHint": ["Payouts will be sent to your bond address", "I pagamenti saranno inviati al tuo indirizzo di bond"],
   "send.bond.yield.effectiveApr": ["Effective APR", "APR effettivo"],
   "send.bond.yield.effectivePayout": ["Effective Payout", "Pagamento effettivo"],
   "send.bond.yield.notProvider": ["No bond on this node", "Nessun bond su questo nodo"],
@@ -558,7 +560,5 @@
   "tx.leg.deposit": ["Deposit {ticker}", "Deposita {ticker}"],
   "tx.leg.send": ["Send {ticker}", "Invia {ticker}"],
   "tx.leg.privateRoute": ["Route {ticker} privately", "Instrada {ticker} privatamente"],
-  "tx.leg.swap": ["Swap {from} to {to}", "Scambia {from} con {to}"],
-  "send.bond.newAddressNotWhitelisted": ["New address is not whitelisted on this node", "Il nuovo indirizzo non è nella whitelist di questo nodo"],
-  "send.bond.yield.clearTargetHint": ["Payouts will be sent to your bond address", "I pagamenti saranno inviati al tuo indirizzo di bond"]
+  "tx.leg.swap": ["Swap {from} to {to}", "Scambia {from} con {to}"]
 }

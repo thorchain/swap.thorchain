@@ -288,6 +288,7 @@
   "send.bond.nodeNotFound": ["Node not found", "Node نہیں ملا"],
   "send.bond.enterNewAddress": ["Enter New Address", "نیا پتہ درج کریں"],
   "send.bond.invalidNewAddress": ["Invalid New Address", "غلط نیا پتہ"],
+  "send.bond.newAddressNotWhitelisted": ["New address is not whitelisted on this node", "نیا ایڈریس اس نوڈ پر وائٹ لسٹ نہیں ہے"],
   "send.bond.bond": ["Bond", "Bond"],
   "send.bond.unbond": ["Unbond", "Unbond"],
   "send.bond.rebond": ["Rebond", "Rebond"],
@@ -304,6 +305,7 @@
   "send.bond.yield.payoutAddressPlaceholder": ["Enter a RUNE address or THORName", "RUNE ایڈریس یا THORName درج کریں"],
   "send.bond.yield.noPayoutAddress": ["There is currently no payout address setup", "فی الحال کوئی ادائیگی ایڈریس مقرر نہیں ہے"],
   "send.bond.yield.currentTarget": ["Payouts are currently sent to {target}", "ادائیگیاں فی الحال {target} کو بھیجی جاتی ہیں"],
+  "send.bond.yield.clearTargetHint": ["Payouts will be sent to your bond address", "ادائیگیاں آپ کے بانڈ ایڈریس پر بھیجی جائیں گی"],
   "send.bond.yield.effectiveApr": ["Effective APR", "مؤثر APR"],
   "send.bond.yield.effectivePayout": ["Effective Payout", "مؤثر ادائیگی"],
   "send.bond.yield.notProvider": ["No bond on this node", "اس نوڈ پر کوئی بانڈ نہیں"],
@@ -558,7 +560,5 @@
   "tx.leg.deposit": ["Deposit {ticker}", "{ticker} ڈپازٹ کریں"],
   "tx.leg.send": ["Send {ticker}", "{ticker} بھیجیں"],
   "tx.leg.privateRoute": ["Route {ticker} privately", "{ticker} کو نجی طور پر روٹ کریں"],
-  "tx.leg.swap": ["Swap {from} to {to}", "{from} کا {to} میں تبادلہ کریں"],
-  "send.bond.newAddressNotWhitelisted": ["New address is not whitelisted on this node", "نیا ایڈریس اس نوڈ پر وائٹ لسٹ نہیں ہے"],
-  "send.bond.yield.clearTargetHint": ["Payouts will be sent to your bond address", "ادائیگیاں آپ کے بانڈ ایڈریس پر بھیجی جائیں گی"]
+  "tx.leg.swap": ["Swap {from} to {to}", "{from} کا {to} میں تبادلہ کریں"]
 }

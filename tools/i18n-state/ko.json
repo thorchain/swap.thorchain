@@ -288,6 +288,7 @@
   "send.bond.nodeNotFound": ["Node not found", "노드를 찾을 수 없습니다"],
   "send.bond.enterNewAddress": ["Enter New Address", "새 주소 입력"],
   "send.bond.invalidNewAddress": ["Invalid New Address", "유효하지 않은 새 주소"],
+  "send.bond.newAddressNotWhitelisted": ["New address is not whitelisted on this node", "새 주소가 이 노드의 화이트리스트에 등록되어 있지 않습니다"],
   "send.bond.bond": ["Bond", "Bond"],
   "send.bond.unbond": ["Unbond", "Unbond"],
   "send.bond.rebond": ["Rebond", "Rebond"],
@@ -304,6 +305,7 @@
   "send.bond.yield.payoutAddressPlaceholder": ["Enter a RUNE address or THORName", "RUNE 주소 또는 THORName 입력"],
   "send.bond.yield.noPayoutAddress": ["There is currently no payout address setup", "현재 설정된 지급 주소가 없습니다"],
   "send.bond.yield.currentTarget": ["Payouts are currently sent to {target}", "현재 지급은 {target}(으)로 전송됩니다"],
+  "send.bond.yield.clearTargetHint": ["Payouts will be sent to your bond address", "지급금은 본드 주소로 전송됩니다"],
   "send.bond.yield.effectiveApr": ["Effective APR", "실질 APR"],
   "send.bond.yield.effectivePayout": ["Effective Payout", "실질 지급액"],
   "send.bond.yield.notProvider": ["No bond on this node", "이 노드에 본드가 없습니다"],
@@ -558,7 +560,5 @@
   "tx.leg.deposit": ["Deposit {ticker}", "{ticker} 입금"],
   "tx.leg.send": ["Send {ticker}", "{ticker} 보내기"],
   "tx.leg.privateRoute": ["Route {ticker} privately", "{ticker} 비공개 라우팅"],
-  "tx.leg.swap": ["Swap {from} to {to}", "{from}을(를) {to}(으)로 스왑"],
-  "send.bond.newAddressNotWhitelisted": ["New address is not whitelisted on this node", "새 주소가 이 노드의 화이트리스트에 등록되어 있지 않습니다"],
-  "send.bond.yield.clearTargetHint": ["Payouts will be sent to your bond address", "지급금은 본드 주소로 전송됩니다"]
+  "tx.leg.swap": ["Swap {from} to {to}", "{from}을(를) {to}(으)로 스왑"]
 }
