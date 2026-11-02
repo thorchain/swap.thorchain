@@ -1,6 +1,7 @@
 'use client'
 
 import { ReactNode, useEffect, useMemo, useRef, useState } from 'react'
+import { useQueryClient } from '@tanstack/react-query'
 import { useSearchParams } from 'next/navigation'
 import { useTranslations } from 'next-intl'
 import { Chain, USwapNumber } from '@tcswap/core'
@@ -58,6 +59,7 @@ interface BondFormProps {
 export function SendMemoBond({ account, initialTab = 'bond' }: BondFormProps) {
   const t = useTranslations('send')
   const uSwap = getUSwap()
+  const queryClient = useQueryClient()
   const { openDialog } = useDialog()
   const { walletData } = useWalletBalances()
 
@@ -101,13 +103,7 @@ export function SendMemoBond({ account, initialTab = 'bond' }: BondFormProps) {
 
   const trackTab = tab === 'track'
   const bondAddressValid = isThorAddress(bondAddress)
-  const {
-    position,
-    nodeOperator,
-    isLoading: positionLoading,
-    isHistoryLoading,
-    error: positionError
-  } = useBondPosition(trackTab && bondAddressValid ? bondAddress : '')
+  const { position, nodeOperator, isLoading: positionLoading, error: positionError } = useBondPosition(trackTab && bondAddressValid ? bondAddress : '')
 
   // On load only: the URL is rewritten below, and reacting to it would undo what the user typed
   useEffect(() => {
@@ -167,7 +163,7 @@ export function SendMemoBond({ account, initialTab = 'bond' }: BondFormProps) {
   useEffect(() => {
     yieldPercentEdited.current = false
     payoutEdited.current = false
-  }, [tab, nodeAddress])
+  }, [tab, nodeAddress, walletThorAddress])
   useEffect(() => {
     if (!yieldTab || yieldPercentEdited.current) return
     setYieldPercent(storedBps ? String(storedBps / 100) : '')
@@ -272,6 +268,10 @@ export function SendMemoBond({ account, initialTab = 'bond' }: BondFormProps) {
         setNewAddress('')
         setAmount('')
         setPayoutAddress('')
+        // The send changed the bond state these queries cache, and re-entering the node
+        // within their staleTime would show (and seed the form from) the pre-send values
+        queryClient.invalidateQueries({ queryKey: ['node-info'] })
+        queryClient.invalidateQueries({ queryKey: ['bond-provider-nodes'] })
       })
       .catch((err: any) => {
         setSubmitting(false)
@@ -386,7 +386,9 @@ export function SendMemoBond({ account, initialTab = 'bond' }: BondFormProps) {
                 <div className="text-txt-label-small text-sm">
                   {tab === 'rebond' && !amount.trim()
                     ? t('bond.rebondZeroHint')
-                    : `${toCurrencyFixed(fiatValue.toCurrency('$', { trimTrailingZeros: false }))} (${fiatPercent.toFixed(0)}%)`}
+                    : runeRate
+                      ? `${toCurrencyFixed(fiatValue.toCurrency('$', { trimTrailingZeros: false }))} (${fiatPercent.toFixed(0)}%)`
+                      : `${fiatPercent.toFixed(0)}%`}
                 </div>
               </div>
 
@@ -397,7 +399,6 @@ export function SendMemoBond({ account, initialTab = 'bond' }: BondFormProps) {
                     <span className="text-txt-high-contrast text-sm font-bold">{selectedAsset.ticker}</span>
                     <span className="text-txt-label-small text-xs">{chainLabel(runeToken.balance.chain)}</span>
                   </div>
-                  <Icon name="arrow-s-down" className="text-txt-label-small size-4" />
                 </div>
               )}
             </div>
@@ -427,9 +428,39 @@ export function SendMemoBond({ account, initialTab = 'bond' }: BondFormProps) {
           <>
             {walletBond > 0 && (
               <>
+                {/* With yield on and no stored target, the chain pays the provider's own address */}
+                <BondAddressRow
+                  label={t('bond.yield.payoutAddress')}
+                  address={storedPayoutTarget || (storedBps ? walletThorAddress : t('bond.yield.noPayoutAddress'))}
+                >
+                  <p className="text-txt-high-contrast text-sm font-bold">{storedBps / 100}%</p>
+                </BondAddressRow>
+
+                <div className="grid grid-cols-2 gap-1.25">
+                  <div className="bg-swap-bloc rounded-15 border p-4">
+                    <p className="text-txt-label-small mb-1 text-xs tracking-wide uppercase">{t('bond.yield.effectiveApr')}</p>
+                    <p className="text-txt-high-contrast text-lg font-bold">{percent(compoundApr)}</p>
+                    <p className="text-txt-label-small text-sm">{t('bond.track.perYear', { amount: rune(walletBond * compoundApr) })}</p>
+                    {runeRate && (
+                      <p className="text-txt-label-small text-sm">
+                        {t('bond.track.perYear', { amount: usd(walletBond * compoundApr, runeRate) ?? '' })}
+                      </p>
+                    )}
+                  </div>
+                  <div className="bg-swap-bloc rounded-15 border p-4">
+                    <p className="text-txt-label-small mb-1 text-xs tracking-wide uppercase">{t('bond.yield.effectivePayout')}</p>
+                    <p className="text-txt-high-contrast text-lg font-bold">{percent(payoutApr)}</p>
+                    <p className="text-txt-label-small text-sm">{t('bond.track.perYear', { amount: rune(walletBond * payoutApr) })}</p>
+                    {runeRate && (
+                      <p className="text-txt-label-small text-sm">
+                        {t('bond.track.perYear', { amount: usd(walletBond * payoutApr, runeRate) ?? '' })}
+                      </p>
+                    )}
+                  </div>
+                </div>
+
                 <div className="bg-swap-bloc rounded-15 border p-7">
-                  <div className="text-txt-label-small font-semibold">{t('bond.yield.payout')}</div>
-                  <div className="text-txt-label-small mb-3 text-sm">{t('bond.yield.payoutPlaceholder')}</div>
+                  <div className="text-txt-label-small mb-3 font-semibold">{t('bond.yield.payout')}</div>
                   <DecimalInput
                     className="text-txt-high-contrast w-full bg-transparent text-2xl font-medium outline-none"
                     amount={yieldPercent}
@@ -465,36 +496,9 @@ export function SendMemoBond({ account, initialTab = 'bond' }: BondFormProps) {
                         'border-destructive focus-visible:ring-destructive'
                     )}
                   />
-                  <div className="text-txt-label-small mt-2 text-xs break-all">
-                    {storedPayoutTarget && !payoutTrimmed
-                      ? t('bond.yield.clearTargetHint')
-                      : storedPayoutTarget
-                        ? t('bond.yield.currentTarget', { target: storedPayoutTarget })
-                        : t('bond.yield.noPayoutAddress')}
-                  </div>
-                </div>
-
-                <div className="grid grid-cols-2 gap-1.25">
-                  <div className="bg-swap-bloc rounded-15 border p-4">
-                    <p className="text-txt-label-small mb-1 text-xs tracking-wide uppercase">{t('bond.yield.effectiveApr')}</p>
-                    <p className="text-txt-high-contrast text-lg font-bold">{percent(compoundApr)}</p>
-                    <p className="text-txt-label-small text-sm">{t('bond.track.perYear', { amount: rune(walletBond * compoundApr) })}</p>
-                    {runeRate && (
-                      <p className="text-txt-label-small text-sm">
-                        {t('bond.track.perYear', { amount: usd(walletBond * compoundApr, runeRate) ?? '' })}
-                      </p>
-                    )}
-                  </div>
-                  <div className="bg-swap-bloc rounded-15 border p-4">
-                    <p className="text-txt-label-small mb-1 text-xs tracking-wide uppercase">{t('bond.yield.effectivePayout')}</p>
-                    <p className="text-txt-high-contrast text-lg font-bold">{percent(payoutApr)}</p>
-                    <p className="text-txt-label-small text-sm">{t('bond.track.perYear', { amount: rune(walletBond * payoutApr) })}</p>
-                    {runeRate && (
-                      <p className="text-txt-label-small text-sm">
-                        {t('bond.track.perYear', { amount: usd(walletBond * payoutApr, runeRate) ?? '' })}
-                      </p>
-                    )}
-                  </div>
+                  {storedPayoutTarget && !payoutTrimmed && (
+                    <div className="text-txt-label-small mt-2 text-xs">{t('bond.yield.clearTargetHint')}</div>
+                  )}
                 </div>
               </>
             )}
@@ -519,7 +523,7 @@ export function SendMemoBond({ account, initialTab = 'bond' }: BondFormProps) {
             ) : position.nodes.length === 0 ? (
               <p className="text-txt-label-small text-sm">{t('bond.track.noBonds')}</p>
             ) : (
-              <BondSummary position={position} runeRate={runeRate} historyLoading={isHistoryLoading} />
+              <BondSummary position={position} runeRate={runeRate} />
             )}
           </div>
         )}
@@ -607,7 +611,7 @@ const usd = (value: number, runeRate?: USwapNumber) =>
   runeRate ? `$${Math.round(runeRate.mul(value).getValue('number')).toLocaleString('en-US')}` : null
 const percent = (value: number) => `${(value * 100).toFixed(1)}%`
 
-function BondSummary({ position, runeRate, historyLoading }: { position: BondPosition; runeRate?: USwapNumber; historyLoading: boolean }) {
+function BondSummary({ position, runeRate }: { position: BondPosition; runeRate?: USwapNumber }) {
   const t = useTranslations('send')
 
   return (
@@ -630,18 +634,11 @@ function BondSummary({ position, runeRate, historyLoading }: { position: BondPos
           <p className="text-txt-label-small text-sm">{t('bond.track.perYear', { amount: usd(position.yearlyReward, runeRate) ?? '' })}</p>
         )}
       </div>
-      <div className="bg-modal rounded-xl border p-3" title={t('bond.track.totalRewardsHint')}>
-        <p className="text-txt-label-small mb-1 text-sm tracking-wide uppercase">{t('bond.track.totalRewards')}</p>
-        {position.totalRewards !== undefined ? (
-          <>
-            <p className="text-txt-high-contrast text-lg font-bold">{rune(position.totalRewards)}</p>
-            {runeRate && <p className="text-txt-label-small text-sm">{usd(position.totalRewards, runeRate)}</p>}
-          </>
-        ) : historyLoading ? (
-          <LoaderCircle size={20} className="text-txt-label-small mt-1 animate-spin" />
-        ) : (
-          <p className="text-txt-high-contrast text-lg font-bold">—</p>
-        )}
+      <div className="bg-modal rounded-xl border p-3">
+        <p className="text-txt-label-small mb-1 text-sm tracking-wide uppercase">{t('bond.track.effectiveYield')}</p>
+        <p className="text-txt-high-contrast text-lg font-bold">{percent(position.yieldApr)}</p>
+        <p className="text-txt-label-small text-sm">{t('bond.track.perYear', { amount: rune(position.yearlyYield) })}</p>
+        {runeRate && <p className="text-txt-label-small text-sm">{t('bond.track.perYear', { amount: usd(position.yearlyYield, runeRate) ?? '' })}</p>}
       </div>
     </div>
   )
@@ -659,6 +656,7 @@ function BondNodesTable({ position, runeRate }: { position: BondPosition; runeRa
             <th className="px-3 py-2 text-end font-medium">{t('bond.track.bond')}</th>
             <th className="px-3 py-2 text-end font-medium">{t('bond.track.apr')}</th>
             <th className="px-3 py-2 text-end font-medium">{t('bond.track.fee')}</th>
+            <th className="px-3 py-2 text-end font-medium">{t('bond.track.yield')}</th>
             <th className="px-3 py-2 text-end font-medium">{t('bond.track.netApr')}</th>
           </tr>
         </thead>
@@ -684,7 +682,8 @@ function BondNodesTable({ position, runeRate }: { position: BondPosition; runeRa
               </td>
               <td className="px-3 py-2 text-end">{percent(node.apr)}</td>
               <td className="text-txt-label-small px-3 py-2 text-end">{(node.fee * 100).toFixed(0)}%</td>
-              <td className="text-green-contrast px-3 py-2 text-end font-semibold">{percent(node.netApr)}</td>
+              <td className="text-txt-label-small px-3 py-2 text-end">{(node.yieldShare * 100).toFixed(0)}%</td>
+              <td className="px-3 py-2 text-end">{percent(node.netApr)}</td>
             </tr>
           ))}
         </tbody>

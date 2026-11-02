@@ -219,33 +219,6 @@ export const getBondProviderNodes = async (address: string): Promise<BondProvide
   return midgard.get(`/v2/bonds/${address}`).then(res => res.data)
 }
 
-export interface BondAction {
-  type: 'bond' | 'unbond' | 'rebond'
-  status: string
-  in: { address: string; coins: { amount: string }[] }[]
-  out: { coins: { amount: string }[] }[]
-  metadata: {
-    bond?: { nodeAddress: string; memo?: string }
-    rebond?: { nodeAddress: string; newBondAddress: string }
-  }
-}
-
-// A truncated history would misstate rewards, so more than this is an error
-const BOND_ACTIONS_MAX_PAGES = 20
-
-// Midgard also matches an address named in the memo, so this includes actions signed by others
-export const getBondActions = async (address: string): Promise<BondAction[]> => {
-  const actions: BondAction[] = []
-  let nextPageToken: string | undefined
-  for (let page = 0; page < BOND_ACTIONS_MAX_PAGES; page++) {
-    const { data } = await midgard.get('/v2/actions', { params: { address, type: 'bond,unbond,rebond', limit: 50, nextPageToken } })
-    actions.push(...data.actions)
-    nextPageToken = data.actions.length ? data.meta?.nextPageToken : undefined
-    if (!nextPageToken) return actions
-  }
-  throw new Error('Bond history too long')
-}
-
 // current_award accrues from the last churn
 export const getLastChurnHeight = async (): Promise<number> => {
   const { data } = await midgard.get('/v2/churns')

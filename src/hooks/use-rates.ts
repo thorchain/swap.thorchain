@@ -69,7 +69,8 @@ export const useRates = (identifiers: string[], provider?: ProviderName): { rate
     staleTime: 3 * 60_000,
     refetchOnMount: false,
     refetchOnWindowFocus: false,
-    retry: false
+    // One failed fetch would otherwise blank all pricing for the session
+    retry: 2
   })
 
   // Collect Solana mint addresses for tokens not covered by Midgard pools
