@@ -304,7 +304,6 @@
   "send.bond.yield.payoutAddressPlaceholder": ["Enter a RUNE address or THORName", "اكتب عنوان RUNE أو THORName"],
   "send.bond.yield.noPayoutAddress": ["There is no payout address set up", "مفيش عنوان صرف متظبط"],
   "send.bond.yield.clearTargetHint": ["Payouts will be sent to your bond address", "المدفوعات هتتبعت لعنوان الـ bond بتاعك"],
-  "send.bond.yield.clearTargetHint": ["Payouts will be sent to your bond address", "المدفوعات هتتبعت لعنوان الـ bond بتاعك"],
   "send.bond.yield.effectiveApr": ["Effective APR", "APR الفعلي"],
   "send.bond.yield.effectivePayout": ["Effective Payout", "الصرف الفعلي"],
   "send.bond.yield.notProvider": ["No bond on this node", "مفيش بوند على النود ده"],
