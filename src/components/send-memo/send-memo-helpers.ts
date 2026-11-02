@@ -34,12 +34,6 @@ export function isThorAddress(s: string): boolean {
   return THOR_ADDRESS_RE.test(s.trim())
 }
 
-const THORNAME_RE = /^[a-zA-Z0-9\-_+]{1,30}$/
-
-export function isThorName(s: string): boolean {
-  return THORNAME_RE.test(s.trim())
-}
-
 export function parsePlaceholders(template: string): string[] {
   return template
     .split(':')

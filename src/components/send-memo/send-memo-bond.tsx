@@ -3,7 +3,6 @@
 import { ReactNode, useEffect, useMemo, useRef, useState } from 'react'
 import { useSearchParams } from 'next/navigation'
 import { useTranslations } from 'next-intl'
-import { useQuery } from '@tanstack/react-query'
 import { Chain, USwapNumber } from '@tcswap/core'
 import { LoaderCircle } from 'lucide-react'
 import { toast } from 'sonner'
@@ -18,14 +17,16 @@ import { DecimalText } from '@/components/decimal/decimal-text'
 import { Icon } from '@/components/icons'
 import { GenericButton } from '@/components/generic-button'
 import { tokenToAsset } from '@/components/send/send-helpers'
-import { isRuneToken, isThorAddress, isThorName } from '@/components/send-memo/send-memo-helpers'
+import { isRuneToken, isThorAddress } from '@/components/send-memo/send-memo-helpers'
 import { useWalletBalances } from '@/hooks/use-wallet-balances'
 import { useSelectedAccount } from '@/hooks/use-wallets'
 import { useResolveAccount } from '@/hooks/use-resolve-account'
 import { useRates } from '@/hooks/use-rates'
 import { useNodeInfo } from '@/hooks/bond/use-node-info'
 import { BondPosition, nodeAprForProvider, useBondPosition, useBondRewardPeriod } from '@/hooks/bond/use-bond-position'
-import { getThorName } from '@/lib/thorchain-api'
+import { useThorName } from '@/hooks/thorname/use-thorname'
+import { useDebouncedValue } from '@/hooks/use-debounced-value'
+import { isNameLike } from '@/lib/name-resolution'
 import { deleteCookie, readCookie, writeCookie } from '@/lib/cookies'
 import { getUSwap } from '@/lib/wallets'
 import { WalletAccount } from '@/store/wallets-store'
@@ -188,21 +189,17 @@ export function SendMemoBond({ account, initialTab = 'bond' }: BondFormProps) {
 
   // A thor1-prefixed target must be a full address: a truncated paste is not a THORName
   const payoutTrimmed = payoutAddress.trim()
-  const payoutIsName = !!payoutTrimmed && !payoutTrimmed.startsWith('thor1') && !isThorAddress(payoutTrimmed) && isThorName(payoutTrimmed)
+  const payoutIsName = !!payoutTrimmed && !payoutTrimmed.startsWith('thor1') && !isThorAddress(payoutTrimmed) && isNameLike(payoutTrimmed)
   const payoutShapeValid = !payoutTrimmed || isThorAddress(payoutTrimmed) || payoutIsName
   // THORNames are stored lowercase on-chain
   const payoutTarget = payoutIsName ? payoutTrimmed.toLowerCase() : payoutTrimmed
   // The chain requires the THORName to exist and be owned by the submitting provider
   const payoutName = yieldTab && payoutIsName ? payoutTarget : ''
-  const thorNameQuery = useQuery({
-    queryKey: ['thorname', payoutName],
-    queryFn: () => getThorName(payoutName),
-    enabled: !!payoutName,
-    refetchOnWindowFocus: false,
-    staleTime: 30 * 1000,
-    retry: false
-  })
-  const payoutNameOwned = !!thorNameQuery.data && thorNameQuery.data.owner === walletThorAddress
+  const debouncedPayoutName = useDebouncedValue(payoutName, 700)
+  // Ignore a debounced value the input has already moved on from
+  const thorName = useThorName(debouncedPayoutName && debouncedPayoutName === payoutName ? [debouncedPayoutName] : [])
+  const payoutNameChecking = !!payoutName && (debouncedPayoutName !== payoutName || thorName.isLoading)
+  const payoutNameOwned = thorName.thorNames[0]?.owner === walletThorAddress
   const payoutAddressValid = !payoutTrimmed || isThorAddress(payoutTrimmed) || (payoutIsName && payoutNameOwned)
 
   const quickAmountBase = tab === 'bond' ? (runeToken?.amount ?? 0) : walletBond
@@ -300,9 +297,9 @@ export function SendMemoBond({ account, initialTab = 'bond' }: BondFormProps) {
       if (!yieldBpsValid) return t('bond.yield.enterPercent')
       if (!payoutShapeValid) return t('bond.yield.invalidPayoutAddress')
       if (payoutIsName) {
-        if (thorNameQuery.isLoading) return t('bond.yield.checkingName')
-        if (thorNameQuery.isError) return t('bond.yield.nameLookupFailed')
-        if (!thorNameQuery.data) return t('bond.yield.nameNotFound')
+        if (payoutNameChecking) return t('bond.yield.checkingName')
+        if (thorName.isError) return t('bond.yield.nameLookupFailed')
+        if (!thorName.thorNames[0]) return t('bond.yield.nameNotFound')
         if (!payoutNameOwned) return t('bond.yield.nameNotOwned')
       }
       return yieldBps === 0 ? t('bond.yield.disable') : t('bond.yield.set')
@@ -345,7 +342,7 @@ export function SendMemoBond({ account, initialTab = 'bond' }: BondFormProps) {
           invalid={!!addressValue.trim() && !addressValid}
         />
 
-        {!trackTab && !yieldTab && nodeInfo && walletThorAddress && (
+        {!trackTab && nodeInfo && walletThorAddress && (
           <BondAddressRow label={tab === 'rebond' ? t('bond.currentBondAddress') : t('bond.bondAddress')} address={walletThorAddress}>
             <p className="text-txt-high-contrast text-sm font-bold">{rune(walletBond, 2)}</p>
             {runeRate && <p className="text-txt-label-small text-sm">{usd(walletBond, runeRate)}</p>}
@@ -428,11 +425,6 @@ export function SendMemoBond({ account, initialTab = 'bond' }: BondFormProps) {
 
         {yieldTab && nodeInfo && walletThorAddress && (
           <>
-            <BondAddressRow label={t('bond.bondAddress')} address={walletThorAddress}>
-              <p className="text-txt-high-contrast text-sm font-bold">{rune(walletBond, 2)}</p>
-              {runeRate && <p className="text-txt-label-small text-sm">{usd(walletBond, runeRate)}</p>}
-            </BondAddressRow>
-
             {walletBond > 0 && (
               <>
                 <div className="bg-swap-bloc rounded-15 border p-7">
@@ -469,7 +461,7 @@ export function SendMemoBond({ account, initialTab = 'bond' }: BondFormProps) {
                     className={cn(
                       'bg-modal border-border-sub-container-modal-low',
                       // No red border on a failed lookup: that is not the user's mistake
-                      (!payoutShapeValid || (payoutIsName && !thorNameQuery.isLoading && !thorNameQuery.isError && !payoutNameOwned)) &&
+                      (!payoutShapeValid || (payoutIsName && !payoutNameChecking && !thorName.isError && !payoutNameOwned)) &&
                         'border-destructive focus-visible:ring-destructive'
                     )}
                   />
