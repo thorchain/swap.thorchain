@@ -157,21 +157,11 @@ export function SendMemoBond({ account, initialTab = 'bond' }: BondFormProps) {
   // The spec types bps as an integer, but the sibling int64 fields arrive as strings, so parse defensively
   const storedBps = parseInt(String(walletProvider?.bps ?? 0)) || 0
   const storedPayoutTarget = walletProvider?.payout_target ?? ''
-  // Seed the inputs from the stored settings, but never over what the user typed
-  const yieldPercentEdited = useRef(false)
-  const payoutEdited = useRef(false)
+  // The yield inputs are a draft for the entered node, so they start over with it
   useEffect(() => {
-    yieldPercentEdited.current = false
-    payoutEdited.current = false
-  }, [tab, nodeAddress, walletThorAddress])
-  useEffect(() => {
-    if (!yieldTab || yieldPercentEdited.current) return
-    setYieldPercent(storedBps ? String(storedBps / 100) : '')
-  }, [yieldTab, storedBps, nodeInfo?.node_address])
-  useEffect(() => {
-    if (!yieldTab || payoutEdited.current) return
-    setPayoutAddress(storedPayoutTarget)
-  }, [yieldTab, storedPayoutTarget, nodeInfo?.node_address])
+    setYieldPercent('')
+    setPayoutAddress('')
+  }, [nodeAddress])
 
   const rewardPeriod = useBondRewardPeriod(yieldTab && !!nodeInfo)
   const netApr = nodeInfo && rewardPeriod.data ? nodeAprForProvider(nodeInfo, rewardPeriod.data.blocks, walletThorAddress).netApr : 0
@@ -179,7 +169,8 @@ export function SendMemoBond({ account, initialTab = 'bond' }: BondFormProps) {
   const yieldBps = yieldPercent.trim() === '' ? undefined : Math.round(parseFloat(yieldPercent) * 100)
   // A positive share that rounds to 0 bps would disable the yield instead
   const yieldBpsValid = yieldBps !== undefined && yieldBps >= 0 && yieldBps <= 10000 && !(yieldBps === 0 && parseFloat(yieldPercent) > 0)
-  const payoutFraction = yieldBpsValid ? yieldBps / 10000 : 0
+  // While nothing is typed, the tiles show the stored setting rather than a 0% draft
+  const payoutFraction = yieldBpsValid ? yieldBps / 10000 : storedBps / 10000
   const compoundApr = netApr * (1 - payoutFraction)
   const payoutApr = netApr * payoutFraction
 
@@ -246,10 +237,8 @@ export function SendMemoBond({ account, initialTab = 'bond' }: BondFormProps) {
     } else if (tab === 'rebond') {
       memo = `REBOND:${nodeAddress.trim()}:${newAddress.trim()}:${amountE8}`
     } else if (tab === 'yield') {
-      // An omitted target preserves the stored one, so a cleared field must overwrite it with the
-      // provider's own address to restore direct payouts. BPS 0 disables and clears it either way.
-      const target = payoutTarget || (storedPayoutTarget ? walletThorAddress : '')
-      memo = `BONDYIELD:${nodeAddress.trim()}:${yieldBps}${yieldBps && target ? `:${target}` : ''}`
+      // An omitted target preserves the stored one, which the summary row shows; BPS 0 disables and clears it
+      memo = `BONDYIELD:${nodeAddress.trim()}:${yieldBps}${yieldBps && payoutTarget ? `:${payoutTarget}` : ''}`
     }
 
     setSubmitting(true)
@@ -325,6 +314,7 @@ export function SendMemoBond({ account, initialTab = 'bond' }: BondFormProps) {
             onClick={() => {
               setTab(key)
               setAmount('')
+              setYieldPercent('')
               setPayoutAddress('')
               if (key !== 'track') writeBondAddressParam('')
             }}
@@ -448,7 +438,7 @@ export function SendMemoBond({ account, initialTab = 'bond' }: BondFormProps) {
                     )}
                   </div>
                   <div className="bg-swap-bloc rounded-15 border p-4">
-                    <p className="text-txt-label-small mb-1 text-xs tracking-wide uppercase">{t('bond.yield.effectivePayout')}</p>
+                    <p className="text-txt-label-small mb-1 text-xs tracking-wide uppercase">{t('bond.track.effectiveYield')}</p>
                     <p className="text-txt-high-contrast text-lg font-bold">{percent(payoutApr)}</p>
                     <p className="text-txt-label-small text-sm">{t('bond.track.perYear', { amount: rune(walletBond * payoutApr) })}</p>
                     {runeRate && (
@@ -464,10 +454,7 @@ export function SendMemoBond({ account, initialTab = 'bond' }: BondFormProps) {
                   <DecimalInput
                     className="text-txt-high-contrast w-full bg-transparent text-2xl font-medium outline-none"
                     amount={yieldPercent}
-                    onAmountChange={v => {
-                      yieldPercentEdited.current = true
-                      setYieldPercent(v)
-                    }}
+                    onAmountChange={setYieldPercent}
                     suffix="%"
                     isAllowed={({ floatValue }) => floatValue === undefined || floatValue <= 100}
                     autoComplete="off"
@@ -482,10 +469,7 @@ export function SendMemoBond({ account, initialTab = 'bond' }: BondFormProps) {
                   <Textarea
                     placeholder={t('bond.yield.payoutAddressPlaceholder')}
                     value={payoutAddress}
-                    onChange={e => {
-                      payoutEdited.current = true
-                      setPayoutAddress(e.target.value)
-                    }}
+                    onChange={e => setPayoutAddress(e.target.value)}
                     spellCheck={false}
                     autoCorrect="off"
                     autoCapitalize="none"
@@ -496,9 +480,6 @@ export function SendMemoBond({ account, initialTab = 'bond' }: BondFormProps) {
                         'border-destructive focus-visible:ring-destructive'
                     )}
                   />
-                  {storedPayoutTarget && !payoutTrimmed && (
-                    <div className="text-txt-label-small mt-2 text-xs">{t('bond.yield.clearTargetHint')}</div>
-                  )}
                 </div>
               </>
             )}
