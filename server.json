@@ -1,18 +1,17 @@
 {
   "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
-  "name": "org.thorchain.swap/thorchain-swap",
-  "title": "THORChain Swap",
-  "description": "Read-only THORChain swap quotes, liquidity pools, and network status.",
-  "version": "0.4.1",
-  "websiteUrl": "https://swap.thorchain.org/developers/mcp",
+  "name": "org.thorchain/thorchain-mcp",
+  "title": "THORChain MCP",
+  "description": "Read-only THORChain data: pools, network, nodes, vaults, transactions, Midgard history.",
   "repository": {
-    "url": "https://github.com/thorchain/swap.thorchain",
-    "source": "github"
+    "url": "https://gitlab.com/thorchain/thorchain-mcp",
+    "source": "gitlab"
   },
+  "version": "1.0.0",
   "remotes": [
     {
       "type": "streamable-http",
-      "url": "https://swap.thorchain.org/mcp"
+      "url": "https://mcp.thorchain.org/mcp"
     }
   ]
 }

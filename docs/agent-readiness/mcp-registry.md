@@ -1,70 +1,36 @@
-# Publishing the MCP server to the official registry
+# Canonical THORChain MCP Registry entry
 
-The server is already published in the official registry as `org.thorchain.swap/thorchain-swap`, version `0.4.1` (published August 24, 2026; verified
-October 28). These instructions are for subsequent releases. Reuse the existing namespace and ownership credentials.
+THORChain Swap discovers the core MCP server under **`org.thorchain/thorchain-mcp`**. The
+[official registry record](https://registry.modelcontextprotocol.io/v0.1/servers/org.thorchain%2Fthorchain-mcp/versions/latest) was verified November
+4, 2026: title **THORChain MCP**, version **1.0.0**, active, published October 21, 2026.
 
-Publishing is metadata-only (the registry hosts no artifacts) and needs one deploy plus one CLI run.
+- Canonical Streamable HTTP endpoint: `https://mcp.thorchain.org/mcp`
+- Live server card: `https://mcp.thorchain.org/.well-known/mcp/server-card.json`
+- Core source and deployment owner: <https://gitlab.com/thorchain/thorchain-mcp>
 
-## What is already in the repo
+## This repository's responsibility
 
-- `server.json` (repo root) — the registry record: name `org.thorchain.swap/thorchain-swap`, a `remotes` entry of type `streamable-http` pointing at
-  `https://swap.thorchain.org/mcp`, `websiteUrl`, and `repository`. Keep `version` in step with `MCP_SERVER_INFO.version` in
-  `src/lib/agent/mcp-tools.ts`.
-- `src/app/.well-known/mcp-registry-auth/route.ts` — serves the domain-ownership proof from the `MCP_REGISTRY_AUTH` environment variable, and 404s
-  when it is unset.
+`src/lib/agent/core-mcp.ts` owns the canonical identity and URLs used throughout this site's discovery documents. Selected tool descriptors are
+examples, not a copy of the full tool inventory. The live core card and `tools/list` own the current tools, protocol revisions, version, and
+capabilities. The local card mirrors that live metadata and adds THORChain branding; it does not advertise the retired local quote UI resource.
 
-## Why HTTP authentication
+`server.json` is a reference copy of the canonical published registry record. **Do not publish a separate swap-site registry entry or generate
+registry credentials from this repository.** Core releases and registry publication belong to the core MCP repository and its maintainers. A version
+in the reference record does not pin the live server; clients should use the core card and registry for current metadata.
 
-The registry ties a namespace to proven ownership. GitHub auth would force the name `io.github.thorchain/*`; domain auth gives the reverse-DNS name of
-a domain you control. Of the two domain methods, **HTTP** needs nothing outside this deployment — we already serve `/.well-known/` on
-swap.thorchain.org — while DNS needs a TXT record on the zone.
+The former `org.thorchain.swap/thorchain-swap` entry and the swap-only three-tool implementation are historical. Discovery on this site points to the
+canonical core identity above. The current core source's publication files use `org.thorchain.mcp/thorchain-mcp`; that differs from the verified
+published record. Preserve `org.thorchain/thorchain-mcp` here and resolve any future namespace/publication work with core maintainers.
 
-Verifying `swap.thorchain.org` yields the namespace `org.thorchain.swap/*`, which is what `server.json` uses. If someone with DNS access to
-`thorchain.org` would rather claim the shorter `org.thorchain/*`, use DNS authentication on that zone instead and rename the server in `server.json`
-to `org.thorchain/swap` — the two are mutually exclusive, so pick before the first publish (renaming later means republishing under a new name).
+## Compatibility URLs and clients
 
-## Steps
+- `/mcp` and `/.well-known/mcp` permanently redirect with HTTP 308 to the canonical endpoint.
+- Server-card aliases serve a live core card for GET/HEAD and redirect POST/OPTIONS to the canonical endpoint.
+- New clients and Python/Go helpers call the canonical MCP URL directly. The official TypeScript MCP SDK defaults to same-origin redirects and rejects
+  this cross-origin redirect unless redirect following is enabled explicitly. Site support REST calls keep the swap origin.
+- Core requires `Content-Type: application/json` and `Accept: application/json, text/event-stream`; parse JSON-RPC from SSE `data:` events.
+- Redirects preserve the method and body, but do not translate old tool names, string quote amounts, pool filters, or the old network payload.
 
-1. **Generate a key pair** (keep `key.pem` secret — anyone holding it can publish under the namespace):
-
-   ```bash
-   openssl genpkey -algorithm Ed25519 -out key.pem
-   PUBLIC_KEY="$(openssl pkey -in key.pem -pubout -outform DER | tail -c 32 | base64)"
-   echo "v=MCPv1; k=ed25519; p=${PUBLIC_KEY}"
-   ```
-
-2. **Publish the proof.** Set that whole line as `MCP_REGISTRY_AUTH` in the production environment and deploy. Verify:
-
-   ```bash
-   curl https://swap.thorchain.org/.well-known/mcp-registry-auth
-   ```
-
-3. **Install the publisher:**
-
-   ```bash
-   brew install mcp-publisher   # or the release binary from github.com/modelcontextprotocol/registry
-   ```
-
-4. **Log in and publish** from the repo root (where `server.json` lives):
-
-   ```bash
-   PRIVATE_KEY="$(openssl pkey -in key.pem -noout -text | grep -A3 "priv:" | tail -n +2 | tr -d ' :\n')"
-   mcp-publisher login http --domain swap.thorchain.org --private-key "${PRIVATE_KEY}"
-   mcp-publisher publish
-   ```
-
-5. **Confirm the listing:**
-
-   ```bash
-   curl "https://registry.modelcontextprotocol.io/v0.1/servers?search=thorchain"
-   ```
-
-## Afterwards
-
-- Bump `version` in `server.json` and re-run `mcp-publisher publish` whenever the tool surface changes; the registry keeps version records.
-- Publishing can be automated from CI — see the registry's GitHub Actions guide — but that means putting the private key in repository secrets, so a
-  manual run per release is a reasonable trade for a server that changes rarely.
-- The registry is the upstream that subregistries mirror, so one publish covers most client-side discovery. Directory listings that are editorial
-  rather than automated (the ChatGPT app directory, for example) remain separate submissions.
-
-Source: https://modelcontextprotocol.io/registry/remote-servers and https://modelcontextprotocol.io/registry/authentication
+See `/developers/mcp` (source: `src/lib/agent/developer-docs.ts`) and the SDK READMEs for migration details. No API key, token, or OAuth setup is
+needed for the canonical hosted server. The core endpoint currently returns 405 to OPTIONS and has no browser CORS allowance, so browser cross-origin
+fetch cannot call it. Native/server-side MCP clients can connect directly. Rate limits and HTTP behavior belong to the core deployment.

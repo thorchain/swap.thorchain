@@ -3,7 +3,7 @@ import { agentsMarkdown, authMarkdown, llmsFullMarkdown, llmsTxt } from '@/lib/a
 import { developersMarkdown } from '@/lib/agent/developer-portal'
 import { AGENT_SKILLS } from '@/lib/agent/skills'
 import { pricingMarkdown } from '@/lib/agent/pricing'
-import { MCP_SERVER_INFO, MCP_TOOLS, mcpServerCard as mcpServerCardValue } from '@/lib/agent/mcp-tools'
+import { CORE_MCP, CORE_MCP_TOOLS } from '@/lib/agent/core-mcp'
 import { DEVELOPER_DOCS } from '@/lib/agent/developer-docs'
 import { buildOpenApiDocument } from '@/lib/agent/openapi'
 
@@ -18,23 +18,23 @@ const json = (value: unknown) => JSON.stringify(value, null, 2)
 
 const openApiBody = json(buildOpenApiDocument())
 
-const mcpServerCard = json(mcpServerCardValue)
-
 const agentsJson = json({
   name: 'THORChain Swap',
   description: 'Public web interface for native cross-chain swaps powered by THORChain and Maya Protocol.',
   url: AppConfig.baseUrl,
   documentation: `${AppConfig.baseUrl}/AGENTS.md`,
   mcp: {
-    serverInfo: MCP_SERVER_INFO,
+    serverInfo: { name: CORE_MCP.name, title: CORE_MCP.title },
+    registry: { name: CORE_MCP.registryName, url: CORE_MCP.registryUrl },
     transport: {
       type: 'streamable-http',
-      endpoint: `${AppConfig.baseUrl}/mcp`
+      endpoint: CORE_MCP.endpoint
     },
     serverCard: `${AppConfig.baseUrl}/.well-known/mcp/server-card.json`,
     manifest: `${AppConfig.baseUrl}/.well-known/mcp.json`,
     authentication: { type: 'none' },
-    tools: MCP_TOOLS.map(({ name, description }) => ({ name, description }))
+    toolsScope: 'Selected examples; tools/list at the canonical endpoint is authoritative.',
+    tools: CORE_MCP_TOOLS.map(({ name, description, inputSchema }) => ({ name, description, inputSchema }))
   },
   apis: {
     openapi: `${AppConfig.baseUrl}/openapi.json`,
@@ -80,7 +80,7 @@ const agentCard = json({
       protocolVersion: '1.0.0'
     },
     {
-      url: `${AppConfig.baseUrl}/mcp`,
+      url: CORE_MCP.endpoint,
       protocolBinding: 'MCP',
       protocolVersion: '2025-06-18'
     }
@@ -180,7 +180,8 @@ const trustManifest = (claims: string[]) => ({
     privacyPolicy: AppConfig.privacyPolicyLink,
     contact: `mailto:${AppConfig.supportEmail}`,
     contactPage: `${AppConfig.baseUrl}/contact`,
-    dataRetention: 'The public discovery, MCP, and quote surfaces store no caller data; support submissions are retained only to answer them.'
+    dataRetention:
+      'Core MCP request logging and retention are controlled by the core deployment. This catalog describes public protocol resources; support submissions are retained only to answer them.'
   },
   signature: null
 })
@@ -192,13 +193,13 @@ const CUSTODY_CLAIMS = [
 ]
 
 const DISCOVERY_CLAIMS = [
-  'Descriptive metadata only: the document describes public resources on this origin.',
-  'Served from the same TLS origin as the resources it describes.'
+  'Descriptive metadata only: the document identifies canonical public resources and their origins.',
+  'Resource URLs use HTTPS; the canonical MCP deployment is a separate origin.'
 ]
 
 // Agentic Resource Discovery (ARD) v0.9 draft manifest. The draft's
 // ai-catalog schema currently identifies its document format as specVersion
-// "1.0". Keep entries URL-based and limited to resources served by this host;
+// "1.0". Keep entries URL-based; the local MCP card mirrors the core service.
 // do not claim signatures, attestations, or decentralized identifiers that the
 // deployment does not provide.
 const aiCatalog = json({
@@ -212,13 +213,14 @@ const aiCatalog = json({
   entries: [
     {
       identifier: 'urn:air:swap.thorchain.org:mcp:server',
-      displayName: 'THORChain Swap MCP server',
+      displayName: CORE_MCP.title,
       type: 'application/mcp-server-card+json',
       url: `${AppConfig.baseUrl}/.well-known/mcp/server-card.json`,
-      description: 'Read-only THORChain quote, liquidity-pool, and network-status tools.',
+      description: 'Canonical THORChain MCP server; this card mirrors the core service and its complete live tool list.',
       tags: ['mcp', 'thorchain', 'swap'],
-      capabilities: MCP_TOOLS.map(tool => tool.name),
-      version: MCP_SERVER_INFO.version,
+      capabilities: CORE_MCP_TOOLS.map(tool => tool.name),
+      capabilitiesScope: 'Selected examples; the linked card contains the complete live core inventory.',
+      registry: { name: CORE_MCP.registryName, url: CORE_MCP.registryUrl },
       trustManifest: trustManifest(CUSTODY_CLAIMS)
     },
     {
@@ -268,7 +270,7 @@ const status = json({
 
 const developerLlmsTxt = `# THORChain Swap Developer Resources
 
-> Focused index for integrating with THORChain Swap. Public MCP tools are anonymous and read-only; the separate aggregator API requires an affiliate API key.
+> Focused index for integrating with THORChain Swap. The canonical THORChain MCP service is anonymous; the separate aggregator API requires an affiliate API key.
 
 ## Guides
 
@@ -277,7 +279,8 @@ ${DEVELOPER_DOCS.map(doc => `- [${doc.navTitle}](${AppConfig.baseUrl}/developers
 ## Machine-readable references
 
 - [OpenAPI](${AppConfig.baseUrl}/openapi.json): typed public support endpoints
-- [MCP server card](${AppConfig.baseUrl}/.well-known/mcp/server-card.json): tools, transport, and quote view
+- [MCP server card](${AppConfig.baseUrl}/.well-known/mcp/server-card.json): mirrors the core service's live tools and transport
+- [Official MCP Registry](${CORE_MCP.registryUrl}): ${CORE_MCP.registryName}
 - [ARD catalog](${AppConfig.baseUrl}/.well-known/ard.json): published agent resources
 - [Root index](${AppConfig.baseUrl}/llms.txt): product pages and all agent resources
 `
@@ -342,9 +345,6 @@ export const discoveryFiles: Record<string, DiscoveryFile> = {
   '/agents.json': { contentType: JSON_TYPE, body: agentsJson },
   '/openapi.json': { contentType: 'application/vnd.oai.openapi+json; charset=utf-8', body: openApiBody },
   '/.well-known/openapi.json': { contentType: 'application/vnd.oai.openapi+json; charset=utf-8', body: openApiBody },
-  '/.well-known/mcp-server-card': { contentType: JSON_TYPE, body: mcpServerCard },
-  '/.well-known/mcp-server-card.json': { contentType: JSON_TYPE, body: mcpServerCard },
-  '/.well-known/mcp/server-card.json': { contentType: 'application/mcp-server-card+json; charset=utf-8', body: mcpServerCard },
   '/.well-known/agent-card.json': { contentType: 'application/a2a-agent-card+json; charset=utf-8', body: agentCard },
   '/.well-known/api-catalog': {
     contentType: 'application/linkset+json; profile="https://www.rfc-editor.org/info/rfc9727"; charset=utf-8',
@@ -354,9 +354,6 @@ export const discoveryFiles: Record<string, DiscoveryFile> = {
   '/.well-known/ai-catalog.json': { contentType: JSON_TYPE, body: aiCatalog },
   '/.well-known/ard.json': { contentType: JSON_TYPE, body: aiCatalog },
   '/.well-known/status': { contentType: JSON_TYPE, body: status },
-  '/.well-known/mcp.json': { contentType: JSON_TYPE, body: mcpServerCard },
-  '/.well-known/mcp/manifest.json': { contentType: JSON_TYPE, body: mcpServerCard },
-  '/mcp.json': { contentType: JSON_TYPE, body: mcpServerCard },
   ...Object.fromEntries(DEVELOPER_DOCS.map(doc => [`/developers/${doc.slug}.md`, { contentType: MARKDOWN, body: doc.markdown }])),
   ...Object.fromEntries(AGENT_SKILLS.map(skill => [skill.path, { contentType: MARKDOWN, body: skill.markdown }]))
 }

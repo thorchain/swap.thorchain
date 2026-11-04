@@ -1,6 +1,36 @@
 import { AppConfig } from '@/config'
+import { CORE_MCP, CORE_MCP_TOOLS } from '@/lib/agent/core-mcp'
+import { mcpQuoteExample, mcpResponseExample } from '@/lib/agent/developer-portal'
 import { DEVELOPER_DOCS } from '@/lib/agent/developer-docs'
 import { SDK_PACKAGES } from '@/lib/agent/sdks'
+
+const coreMcpReference = `## MCP Server
+
+Use the canonical ${CORE_MCP.title} server, registered as [\`${CORE_MCP.registryName}\`](${CORE_MCP.registryUrl}). It provides read-only THORChain data from THORNode and Midgard without authentication.
+
+- Endpoint: ${CORE_MCP.endpoint} (JSON-RPC over HTTP POST)
+- Live core server card: ${CORE_MCP.serverCard}
+- This site's live card mirror: ${AppConfig.baseUrl}/.well-known/mcp/server-card.json (with THORChain branding)
+- Core source and deployment: ${CORE_MCP.repository}
+
+Selected tools only; call \`tools/list\` for the complete current inventory and input schemas:
+
+${CORE_MCP_TOOLS.map(tool => `- \`${tool.name}\` — ${tool.description}`).join('\n')}
+
+The core \`quote_swap\` input amount is an integer in 1e8 base units. Its schema accepts \`from_asset\`, \`to_asset\`, \`amount\`, and optional \`destination\`, \`affiliate\`, \`affiliate_bps\`. Core \`list_pools\` accepts \`limit\` and \`offset\`; \`get_network_summary\` takes no parameters. For executable instructions use \`prepare_swap\` with a confirmed destination; the user still signs and sends funds.
+
+\`\`\`bash
+${mcpQuoteExample}
+\`\`\`
+
+Send both media types in \`Accept\` and parse SSE \`data:\` events as JSON-RPC. Read \`result.structuredContent.data\` for the payload and \`_metadata\` for its source and freshness. Illustrative response:
+
+\`\`\`text
+${mcpResponseExample}
+\`\`\`
+
+The live core card and initialization response own the protocol revisions, tool inventory, capabilities, and limits. This site's old \`/mcp\` URL permanently redirects to the canonical endpoint without translating legacy tool names or parameters. Configure new clients with the canonical URL directly. The server never holds keys, signs, or submits transactions.
+`
 
 export const agentsMarkdown = `# AGENTS.md — THORChain Swap
 
@@ -30,7 +60,7 @@ The application consists of two components:
 
 The UI additionally reads protocol metadata (pools, network parameters, balances, THORNames, inbound addresses) directly from public THORNode and Midgard APIs.
 
-Agents without an aggregator key can use the memoless API or the public MCP server below, which serves quote, pool, and network data from THORNode with no authentication.
+Agents without an aggregator key can use the memoless API or the public MCP server below, which serves THORChain data from THORNode and Midgard without authentication.
 
 ## Developer Portal
 
@@ -38,25 +68,7 @@ Full developer documentation lives at ${AppConfig.baseUrl}/developers (markdown:
 
 ${DEVELOPER_DOCS.map(doc => `- ${AppConfig.baseUrl}/developers/${doc.slug} — ${doc.navTitle} (markdown: ${AppConfig.baseUrl}/developers/${doc.slug}.md)`).join('\n')}
 
-## MCP Server
-
-A public, unauthenticated, rate-limited MCP server (streamable HTTP, stateless, JSON responses) is available at:
-
-- Endpoint: ${AppConfig.baseUrl}/mcp (\`GET\` returns the server card; JSON-RPC over \`POST\`)
-- Server card: ${AppConfig.baseUrl}/.well-known/mcp/server-card.json (aliases: /.well-known/mcp.json, /mcp.json)
-
-Tools (read-only, each with a typed JSON Schema in \`tools/list\`):
-
-- \`get_swap_quote\` — swap quote for an asset pair. Required: \`from_asset\`, \`to_asset\`, \`amount\` (1e8 base units). Optional: \`destination\`, \`streaming_interval\`.
-- \`list_pools\` — liquidity pools with status, depths, and USD asset price. Optional: \`status\` (Available/Staged/Suspended), \`asset\`, \`limit\`.
-- \`get_network_status\` — current THORChain network parameters. Optional: \`fields\` (array of top-level keys to return).
-
-No credential is required or accepted; calls are rate limited to 60 requests per 10 minutes per client. See ${AppConfig.baseUrl}/auth.md.
-
-The server supports MCP Apps (io.modelcontextprotocol/ui): \`get_swap_quote\` links a \`ui://thorchain-swap/swap-quote\` view via \`_meta.ui.resourceUri\`, so hosts that support MCP Apps can render quotes as an interactive panel. Hosts without MCP Apps support get plain JSON.
-
-The server never holds keys, signs, or submits transactions.
-
+${coreMcpReference}
 ## Public Pages
 
 - Swap: ${AppConfig.baseUrl}/
@@ -115,15 +127,15 @@ export const llmsTxt = `# THORChain Swap
 - UI: this site (${AppConfig.baseUrl})
 - Backend API: the THORChain/Maya swap aggregator — quotes and routing at https://api.thorchain.org/v1 (\`x-api-key\` gated; free keys via the affiliate program at ${AppConfig.affiliateLink}), memoless (instant) swaps at https://api.thorchain.org/memoless/api/v1 (no key required)
 - Protocol metadata (pools, network, names, balances): public THORNode and Midgard APIs
-- Keyless agent access to quotes, pools, and network data: MCP server at ${AppConfig.baseUrl}/mcp
+- Keyless agent access to quotes, pools, and network data: MCP server at ${CORE_MCP.endpoint}
 
 ## When To Use THORChain Swap
 
-Reach for this site (or its MCP server) when a user wants to:
+Reach for this site (or the canonical core MCP server) when a user wants to:
 
 - Swap native layer-1 assets — BTC, ETH, stablecoins, and other supported chain assets — without bridges, wrapped tokens, or custodial accounts.
-- Get a live cross-chain swap quote (expected output, fees, slippage, memo, inbound address): call the \`get_swap_quote\` MCP tool at ${AppConfig.baseUrl}/mcp, no API key needed.
-- Check THORChain liquidity pool depths or network status: \`list_pools\` and \`get_network_status\` MCP tools.
+- Get a live cross-chain swap quote (expected output, fees, slippage, memo, inbound address): call the \`quote_swap\` MCP tool at ${CORE_MCP.endpoint}, no API key needed.
+- Check THORChain liquidity pool depths or network status: \`list_pools\` and \`get_network_summary\` MCP tools.
 - Swap without connecting a wallet: direct the user to the memoless (instant) swap flow at ${AppConfig.baseUrl}/, where they send funds to a deposit address.
 - Register or look up THORNames, bond to nodes, or manage liquidity positions: use the dedicated interfaces listed below.
 
@@ -146,7 +158,8 @@ ${DEVELOPER_DOCS.map(doc => `- [THORChain Swap ${doc.navTitle}](${AppConfig.base
 
 - [Agent library (full)](${AppConfig.baseUrl}/llms-full.md): the complete single-file reference — URL scheme, MCP examples, asset notation, quote semantics, REST endpoints, and safety rules (also at [/llms-full.txt](${AppConfig.baseUrl}/llms-full.txt))
 - [AGENTS.md](${AppConfig.baseUrl}/AGENTS.md): guidance for AI agents using this site
-- [MCP server card](${AppConfig.baseUrl}/.well-known/mcp/server-card.json): public MCP server with swap-quote, pool, and network tools
+- [MCP registry entry](${CORE_MCP.registryUrl}): canonical \`${CORE_MCP.registryName}\` identity
+- [MCP server card](${AppConfig.baseUrl}/.well-known/mcp/server-card.json): live core server-card mirror with THORChain branding
 - [OpenAPI description](${AppConfig.baseUrl}/.well-known/openapi.json): public REST endpoints
 - [API catalog](${AppConfig.baseUrl}/.well-known/api-catalog): RFC 9727 linkset of public APIs
 - [ARD AI catalog](${AppConfig.baseUrl}/.well-known/ai-catalog.json): consolidated discovery of MCP, A2A, OpenAPI, API catalog, and Agent Skills resources
@@ -173,13 +186,13 @@ How agents authenticate against THORChain Swap (${AppConfig.baseUrl}): anonymous
 
 ## Audience
 
-Agents and developers using the public THORChain Swap web interface, its public MCP server, and its public support APIs.
+Agents and developers using the public THORChain Swap web interface, the canonical core MCP server, and the site's public support APIs.
 
 ## Current Authentication Model
 
 The public web interface requires no account authentication for browsing. Wallet connection and transaction signing are performed by user-controlled wallets in the browser; memoless ("instant") swaps work without connecting a wallet.
 
-The public MCP server at ${AppConfig.baseUrl}/mcp and the public support APIs are anonymous and rate limited per client. No credential issued by this site can move funds, sign a transaction, or read anything that is not already public.
+The canonical core MCP server at ${CORE_MCP.endpoint} and this site's public support APIs are anonymous. Support API rate limits are enforced by this site; core MCP limits belong to the core deployment. No credential issued by this site can move funds, sign a transaction, or read anything that is not already public.
 
 The swap aggregator backend that powers the UI (https://api.thorchain.org/v1) is separate: it requires an \`x-api-key\` header. Keys are free and issued through the affiliate program — register at ${AppConfig.affiliateLink} with your name, email, website, and Telegram, verify the email, and the key is issued once the account is approved. The same account sets affiliate/service fee splits, embeds the swap widget, and tracks earnings. The memoless API (https://api.thorchain.org/memoless/api/v1) requires no API key.
 
@@ -189,7 +202,7 @@ Two different things, often confused:
 
 | Want to | Need | How |
 | --- | --- | --- |
-| Read quotes, pools, network state | Nothing at all | Call ${AppConfig.baseUrl}/mcp directly |
+| Read quotes, pools, network state | Nothing at all | Call ${CORE_MCP.endpoint} directly |
 | Build a swap flow on the aggregator, earn affiliate fees, embed the widget | An \`x-api-key\` for https://api.thorchain.org/v1 | Apply at ${AppConfig.affiliateLink} (free, reviewed) |
 
 ## No Authorization Server
@@ -199,10 +212,10 @@ This site runs no authorization server and issues no tokens. There is deliberate
 Add the MCP server to any client with the URL alone:
 
 \`\`\`bash
-claude mcp add --transport http thorchain-swap ${AppConfig.baseUrl}/mcp
+claude mcp add --transport http thorchain ${CORE_MCP.endpoint}
 \`\`\`
 
-If a client asks for an OAuth client ID, API key, or bearer token for ${AppConfig.baseUrl}/mcp, leave it blank — none exists.
+If a client asks for an OAuth client ID, API key, or bearer token for ${CORE_MCP.endpoint}, leave it blank — none exists.
 
 ## Partner API Keys
 
@@ -259,39 +272,16 @@ The path pattern is \`/sell-<asset>-buy-<asset>\`. Native gas assets may use jus
 ## Asset Notation and Amounts
 
 - Assets use \`CHAIN.SYMBOL\` notation: \`BTC.BTC\`, \`ETH.ETH\`, \`ETH.USDC-0XA0B86991C6218B36C1D19D4A2E9EB0CE3606EB48\` (token contract appended after a hyphen, uppercase).
-- Amounts across THORChain APIs are strings in 1e8 base units regardless of the asset's native decimals: \`"100000000"\` = 1 BTC = 1 ETH = 1 RUNE.
+- Amounts use 1e8 base units regardless of the asset's native decimals: \`100000000\` = 1 BTC = 1 ETH = 1 RUNE. Core MCP amount inputs are integers; returned amount fields are generally strings.
 
 ## Quote Semantics
 
 - Quotes are indicative and time-sensitive; re-fetch before presenting.
-- A quote with a \`destination\` address includes a usable \`memo\` and \`inbound_address\`. Both expire at \`expiry\` (unix seconds) — never reuse them after expiry.
-- \`expected_amount_out\` is the estimate after fees; \`fees\` itemizes them; \`slippage_bps\` is the price impact.
+- Use core \`prepare_swap\` with a confirmed destination for executable deposit instructions. Any memo and inbound address expire at \`expiry\` (unix seconds); never reuse them after expiry.
+- \`expected_amount_out\` is the estimate after fees; \`fees\` itemizes them; \`fees.slippage_bps\` is the price impact.
 - \`recommended_min_amount_in\` is the smallest economically sensible input; below it, fees dominate.
-- Streaming swaps (\`streaming_interval\` blocks between sub-swaps) trade speed for better pricing on large amounts.
 
-## MCP Server
-
-Public, unauthenticated, rate-limited MCP server (streamable HTTP, stateless, JSON responses, POST only):
-
-- Endpoint: ${AppConfig.baseUrl}/mcp
-- Server card: ${AppConfig.baseUrl}/.well-known/mcp/server-card.json
-
-Read-only tools, each with a typed JSON Schema returned by \`tools/list\`:
-
-- \`get_swap_quote\` — swap quote for an asset pair. Required \`from_asset\`, \`to_asset\`, \`amount\` (1e8 base units); optional \`destination\`, \`streaming_interval\`
-- \`list_pools\` — liquidity pools with status, depths, and USD asset price. Optional \`status\` (Available/Staged/Suspended), \`asset\`, \`limit\`
-- \`get_network_status\` — current THORChain network parameters. Optional \`fields\` (array of top-level keys to project)
-
-Example:
-
-\`\`\`bash
-curl -s ${AppConfig.baseUrl}/mcp \\
-  -H 'Content-Type: application/json' \\
-  -d '{"jsonrpc":"2.0","id":1,"method":"tools/call","params":{"name":"get_swap_quote","arguments":{"from_asset":"BTC.BTC","to_asset":"ETH.ETH","amount":"100000000"}}}'
-\`\`\`
-
-The server supports MCP Apps (io.modelcontextprotocol/ui): \`get_swap_quote\` links the \`ui://thorchain-swap/swap-quote\` view via \`_meta.ui.resourceUri\`; hosts without MCP Apps get plain JSON. The server never holds keys, signs, or submits transactions.
-
+${coreMcpReference}
 ## REST API
 
 Described by OpenAPI 3.1 at ${AppConfig.baseUrl}/.well-known/openapi.json. Versioned in the URL path; \`/api/v1/\` is canonical and unversioned \`/api/*\` paths are stable aliases.

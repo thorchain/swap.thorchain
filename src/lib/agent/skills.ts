@@ -1,5 +1,6 @@
 import { createHash } from 'node:crypto'
 import { AppConfig } from '@/config'
+import { CORE_MCP } from '@/lib/agent/core-mcp'
 
 // Published agent skills, one per capability area, served under
 // /.well-known/agent-skills/<name>/SKILL.md and indexed in index.json.
@@ -9,7 +10,7 @@ import { AppConfig } from '@/config'
 const frontmatter = (skill: { name: string; description: string; tags: string[] }) => `---
 name: ${skill.name}
 description: ${skill.description}
-version: 1.0.0
+version: 1.1.0
 license: MIT
 homepage: ${AppConfig.baseUrl}
 tags: [${skill.tags.join(', ')}]
@@ -25,7 +26,7 @@ const SAFETY = `## Safety Rules
 - Confirm the destination address with the user before they submit any transaction.
 - A transaction is irreversible once broadcast. Say so before the user commits.`
 
-const MCP_NOTE = `The public MCP server at ${AppConfig.baseUrl}/mcp is unauthenticated, rate limited, read-only, and needs no API key, token, or OAuth client. It never holds keys, signs, or submits transactions.`
+const MCP_NOTE = `The canonical ${CORE_MCP.title} server at ${CORE_MCP.endpoint}, registered as [${CORE_MCP.registryName}](${CORE_MCP.registryUrl}), needs no API key, token, or OAuth client. Send \`Content-Type: application/json\` and \`Accept: application/json, text/event-stream\`; parse SSE \`data:\` events as JSON-RPC. Read \`result.structuredContent.data\` for the payload and \`_metadata\` for source/freshness. Get the complete live schemas from \`tools/list\` and ${CORE_MCP.serverCard}. It never holds keys, signs, or submits transactions.`
 
 const overview = `# THORChain Swap Agent Skill
 
@@ -61,7 +62,7 @@ ${SAFETY}
 - ${AppConfig.baseUrl}/developers.md
 - ${AppConfig.baseUrl}/pricing.md
 - ${AppConfig.baseUrl}/.well-known/openapi.json
-- ${AppConfig.baseUrl}/.well-known/mcp/server-card.json
+- ${CORE_MCP.serverCard}
 `
 
 const quotes = `# THORChain Swap Quotes
@@ -76,7 +77,7 @@ A user asks what they would receive swapping one native asset for another — "h
 
 ${MCP_NOTE}
 
-Call the \`get_swap_quote\` tool:
+Call the \`quote_swap\` tool:
 
 \`\`\`json
 {
@@ -84,12 +85,11 @@ Call the \`get_swap_quote\` tool:
   "id": 1,
   "method": "tools/call",
   "params": {
-    "name": "get_swap_quote",
+    "name": "quote_swap",
     "arguments": {
       "from_asset": "BTC.BTC",
       "to_asset": "ETH.ETH",
-      "amount": "100000000",
-      "destination": "0x…"
+      "amount": 100000000
     }
   }
 }
@@ -98,14 +98,14 @@ Call the \`get_swap_quote\` tool:
 ## Conventions
 
 - Assets use \`CHAIN.SYMBOL\` notation: \`BTC.BTC\`, \`ETH.ETH\`, \`ETH.USDC-0XA0B86991C6218B36C1D19D4A2E9EB0CE3606EB48\`.
-- Amounts are strings in 1e8 base units — \`100000000\` is 1 BTC, regardless of the chain's own decimals.
-- \`destination\` is optional, but without it the quote has no usable memo.
+- Core MCP amount inputs are integers in 1e8 base units; returned amounts are generally strings — \`100000000\` is 1 BTC, regardless of the chain's own decimals.
+- \`destination\` is optional for pricing. For executable deposit instructions, use core \`prepare_swap\` with a confirmed destination and never reuse its instructions after expiry.
 
 ## Reading The Result
 
 - \`expected_amount_out\` — the estimate **after** fees. This is the number to quote a user.
-- \`fees\` — itemized: inbound gas, outbound fee, liquidity fee, and any provider service fee.
-- \`slippage_bps\` — price impact in basis points; grows with size against pool depth.
+- \`fees\` — the returned outbound, liquidity, and affiliate fees. Source-chain gas is paid separately by the user's wallet.
+- \`fees.slippage_bps\` — price impact in basis points; grows with size against pool depth.
 - \`recommended_min_amount_in\` — below this, fees dominate and the trade is not economical.
 - \`memo\` and \`inbound_address\` — the transaction details. **Both expire.** Never reuse them after expiry, and never present a stale pair.
 
@@ -126,20 +126,19 @@ A user asks which assets are swappable, how deep a pool is, whether a chain is h
 
 ${MCP_NOTE}
 
-- \`list_pools\` — every pool with \`asset\`, \`status\`, \`balance_asset\`, \`balance_rune\`, and \`asset_tor_price\` (USD price of the asset).
-- \`get_network_status\` — current network parameters, including outbound fees and halt-related gas information.
-
-Neither tool takes arguments.
+- \`list_pools\` — a pool array under \`structuredContent.data\` with \`asset\`, \`status\`, \`balance_asset\`, and \`balance_rune\`. Supports integer \`limit\` and \`offset\` for pagination.
+- \`get_network_summary\` — compact node counts, APY, reserve, pooled RUNE, churn height, and vault migration status; takes no parameters.
+- Core \`get_inbound_addresses\`, \`get_mimir\`, and \`get_outbound_fees\` provide chain halt configuration and fees. Read their exact current schemas from \`tools/list\`.
 
 ## Interpreting Pools
 
-- \`status\` is \`Available\` for pools open to trading; anything else cannot be swapped right now.
+- \`status\` is \`available\` for pools open to trading; anything else cannot be swapped right now.
 - Depths (\`balance_asset\`, \`balance_rune\`) are strings in 1e8 base units. Pool depth determines slippage — a trade that is small against a deep pool is cheap, the same trade against a shallow pool is not.
-- \`asset_tor_price\` is the USD price in 1e8 units, useful for converting quotes to fiat for display.
+- Price fields may be empty in a pool response; do not infer a USD price when one is absent.
 
 ## Halts
 
-Chains can be halted individually by the protocol. A halted chain means swaps in or out of that chain will not proceed, even though a quote may still compute. Check network status before telling a user a swap is available.
+Chains can be halted individually by the protocol. A halted chain means swaps in or out of that chain will not proceed, even though a quote may still compute. Check core \`get_inbound_addresses\` and \`get_mimir\` before telling a user a swap is available; the compact network summary does not replace chain halt checks.
 
 ${SAFETY}
 `
@@ -169,7 +168,7 @@ THORChain can pause memoless swaps without halting any chain, by setting \`HALTM
 
 ## What An Agent Should And Should Not Do
 
-- **Do** explain the flow, help pick the pair, and surface the quote via \`get_swap_quote\`.
+- **Do** explain the flow, help pick the pair, and surface the quote via \`quote_swap\`.
 - **Do** make the user verify the destination address character by character before sending — output goes there permanently.
 - **Do** warn that deposit addresses and quotes expire, and that sending after expiry risks loss or refund delay.
 - **Do not** send funds, hold funds, or complete the transfer for the user. The user always moves their own money.
