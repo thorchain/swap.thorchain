@@ -11,5 +11,8 @@ export const useNodeInfo = (address: string) => {
     staleTime: 30 * 1000 // 30 seconds
   })
 
-  return { nodeInfo: data, isLoading: trimmed.length > 0 && isLoading, error }
+  // THORNode answers 200 with status "Unknown" for an address that is no node
+  const nodeInfo = data && data.status !== 'Unknown' ? data : undefined
+
+  return { nodeInfo, isLoading: trimmed.length > 0 && isLoading, error }
 }

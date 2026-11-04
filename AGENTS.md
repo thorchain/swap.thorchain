@@ -32,6 +32,14 @@ Two-component architecture:
   where `connectEVMWallet` with `WalletOption.BRAVE` gets the EVM account only, from whichever extension owns `window.ethereum`. Rabby is
   `WalletOption.RABBY` (4.3.35 onwards) on the SDK's `connectEVMWallet`, which uses the provider Rabby announces over EIP-6963 (rdns `io.rabby`)
   rather than `window.ethereum` — Rabby takes that from MetaMask only when set as the default wallet, and flags it `isMetaMask` too.
+  WalletConnect is the SDK's `@tcswap/wallets/walletconnect` (`connectWalletconnect`), listed only when
+  `NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID` is set. One QR scan connects every selected chain the wallet supports; the app warns about the rest.
+  A reload restores the stored sessions without a QR code (`restoreOnly`), and a session ended from the phone removes its chains
+  (`onWalletconnectDisconnect`, then `disconnectWallet(WALLETCONNECT, chains)`). The connect dialog calls `preloadWalletconnect` when it opens, so
+  the QR modal opens at once, and `isWalletconnectDismissed` tells a closed QR modal from a real error. Needs `@tcswap/wallets` 4.3.36 or later.
+- Disconnect a wallet with core's `disconnectWallet` (`@tcswap/core` 4.1.36 or later), not `disconnectChain` per chain. A chain holds only
+  the last wallet connected on it, so `disconnectChain` may hit another wallet; `disconnectWallet` ends only this wallet's sessions and
+  hands each chain back to another connected wallet.
 - `isPrivateSwap` in `src/store/limit-swap-store.ts` — the PRIVATE tab: the swap is routed through Houdini Swap
   (`AppConfig.privateProvider`, `providers: ["HOUDINI"]` on the aggregator, `@tcswap/plugins/houdini` in the SDK) instead of the native protocols. Each
   tab has its own asset list (`useModeAssets` in `src/hooks/use-assets.ts`), and a private route is priced floating and tracked by its Houdini order

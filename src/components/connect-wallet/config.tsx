@@ -1,11 +1,12 @@
 import { Chain, getEIP6963Provider, getMetaMaskProvider, okxMobileEnabled, RABBY_RDNS, WalletOption } from '@tcswap/core'
 import { getChainConfig } from '@tcswap/helpers'
 import { getBraveEVMProvider, getBraveSolanaProvider } from '@tcswap/wallets/brave'
-import { supportedChains } from '@/lib/wallets'
+import { supportedChains, walletConnectEnabled } from '@/lib/wallets'
 
 export enum WalletType {
   browser,
-  hardware
+  hardware,
+  mobile
 }
 
 export type WalletParams = {
@@ -120,6 +121,19 @@ export const WALLETS: WalletParams[] = [
     link: 'https://www.tronlink.org',
     supportedChains: supportedChains[WalletOption.TRONLINK]
   },
+  // Listed only with a Reown project id.
+  ...(walletConnectEnabled()
+    ? [
+        {
+          key: 'walletconnect',
+          type: WalletType.mobile,
+          label: 'WalletConnect',
+          option: WalletOption.WALLETCONNECT,
+          link: 'https://walletconnect.network',
+          supportedChains: supportedChains[WalletOption.WALLETCONNECT]
+        }
+      ]
+    : []),
   {
     key: 'ledger',
     type: WalletType.hardware,
@@ -165,6 +179,7 @@ export const isWalletAvailable = (option: WalletOption) => {
     case WalletOption.LEDGER:
     case WalletOption.TREZOR:
     case WalletOption.KEYSTORE: return true
+    case WalletOption.WALLETCONNECT: return walletConnectEnabled()
 
     case WalletOption.BRAVE:
       return getBraveSolanaProvider() || getBraveEVMProvider()

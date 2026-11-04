@@ -12,6 +12,8 @@ export type Banner = {
   id: string
   icon: string
   href: string
+  // When set, the headline and text link to `href` too, not just the link label.
+  linkText: boolean
   locales: Record<string, Partial<BannerCopy> | undefined>
 }
 
@@ -30,7 +32,7 @@ const copy = (value: unknown): Partial<BannerCopy> | undefined => {
 // Everything crossing the wire goes through here: a malformed payload costs the
 // banner, never the header it renders in.
 export function normalizeBanner(value: unknown): Banner {
-  if (!value || typeof value !== 'object') return { enabled: false, id: '', icon: '', href: '', locales: {} }
+  if (!value || typeof value !== 'object') return { enabled: false, id: '', icon: '', href: '', linkText: false, locales: {} }
   const raw = value as Record<string, unknown>
   const rawLocales = raw.locales && typeof raw.locales === 'object' ? (raw.locales as Record<string, unknown>) : {}
 
@@ -45,6 +47,7 @@ export function normalizeBanner(value: unknown): Banner {
     id: str(raw.id),
     icon: str(raw.icon),
     href: str(raw.href),
+    linkText: raw.linkText === true,
     locales
   }
 }

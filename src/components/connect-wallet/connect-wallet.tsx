@@ -1,5 +1,5 @@
 import Image from 'next/image'
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { Chain, WalletOption } from '@tcswap/core'
 import { useTranslations } from 'next-intl'
 import { Credenza, CredenzaContent, CredenzaHeader, CredenzaTitle } from '@/components/ui/credenza'
@@ -13,6 +13,7 @@ import { WalletIcon } from '@/components/wallet-icon'
 import { Icon } from '@/components/icons'
 import { useWallets } from '@/hooks/use-wallets'
 import { cn } from '@/lib/utils'
+import { preloadWalletConnect, walletConnectEnabled } from '@/lib/wallets'
 
 interface ConnectWalletProps {
   isOpen: boolean
@@ -26,6 +27,10 @@ export const ConnectWallet = ({ isOpen, onOpenChange, chain }: ConnectWalletProp
   const [selectedChain, setSelectedChain] = useState<Chain | undefined>(chain)
   const { connectedWallets } = useWallets()
 
+  useEffect(() => {
+    if (isOpen && walletConnectEnabled()) preloadWalletConnect()
+  }, [isOpen])
+
   const chains = useMemo(
     () =>
       [...ALL_CHAINS, ...COMING_SOON_CHAINS].sort((a, b) => {
@@ -34,25 +39,27 @@ export const ConnectWallet = ({ isOpen, onOpenChange, chain }: ConnectWalletProp
     []
   )
 
-  const wallets = useMemo(() => {
-    const installed: WalletParams[] = []
-    const others: WalletParams[] = []
-
-    WALLETS.forEach(wallet => {
-      if (isWalletAvailable(wallet.option)) {
-        installed.push(wallet)
-      } else {
-        others.push(wallet)
-      }
-    })
-
+  const walletGroups = useMemo(() => {
     const sortByLabel = (a: WalletParams, b: WalletParams) => a.label.localeCompare(b.label)
 
-    installed.sort(sortByLabel)
-    others.sort(sortByLabel)
+    // Installed wallets first, the ones still to install after, each half alphabetical.
+    const sortGroup = (type: WalletType) => {
+      const group = WALLETS.filter(w => w.type === type)
+      const installed = group.filter(w => isWalletAvailable(w.option)).sort(sortByLabel)
+      const others = group.filter(w => !isWalletAvailable(w.option)).sort(sortByLabel)
+      return [...installed, ...others]
+    }
 
-    return [...installed, ...others]
-  }, [])
+    // WalletConnect stays on top of the mobile list regardless of the alphabet.
+    const isWC = (w: WalletParams) => w.option === WalletOption.WALLETCONNECT
+    const mobile = sortGroup(WalletType.mobile).sort((a, b) => Number(isWC(b)) - Number(isWC(a)))
+
+    return [
+      { key: 'browser', label: t('browser'), wallets: sortGroup(WalletType.browser) },
+      { key: 'hardware', label: t('hardware'), wallets: sortGroup(WalletType.hardware) },
+      { key: 'mobile', label: t('mobile'), wallets: mobile }
+    ].filter(group => group.wallets.length > 0)
+  }, [t])
 
   const onSelectWallet = (wallet: WalletParams) => {
     setSelectedWallet(prev => (prev === wallet ? undefined : wallet))
@@ -71,7 +78,7 @@ export const ConnectWallet = ({ isOpen, onOpenChange, chain }: ConnectWalletProp
   }
 
   const walletList = (wallets: WalletParams[]) => {
-    return wallets.map((wallet, index) => {
+    return wallets.map(wallet => {
       const isConnected = connectedWallets.find(w => w === wallet.option)
       const isInstalled = isWalletAvailable(wallet.option)
       const isSelected = wallet === selectedWallet
@@ -81,12 +88,11 @@ export const ConnectWallet = ({ isOpen, onOpenChange, chain }: ConnectWalletProp
 
       return (
         <div
-          key={index}
+          key={wallet.key}
           className={cn('mb-1 flex items-center space-x-3 rounded-2xl border border-transparent p-3', {
             'border-border-btn-modal-hover': isSelected,
             'opacity-25': !isHighlighted,
-            'hover:bg-sub-container-modal/50 cursor-pointer': isClickable,
-            'mb-4 md:mb-8': index === wallets.length - 1
+            'hover:bg-sub-container-modal/50 cursor-pointer': isClickable
           })}
           onClick={() => {
             if (!isClickable) return
@@ -120,7 +126,7 @@ export const ConnectWallet = ({ isOpen, onOpenChange, chain }: ConnectWalletProp
       onOpenChange(false)
     }
 
-    if (wallet.type === WalletType.browser) {
+    if (wallet.type === WalletType.browser || wallet.type === WalletType.mobile) {
       return <BrowserWallet key={wallet.key} wallet={wallet} chains={chains} onConnect={onConnect} />
     }
 
@@ -153,7 +159,14 @@ export const ConnectWallet = ({ isOpen, onOpenChange, chain }: ConnectWalletProp
             })}
             classNameViewport="flex-1 h-auto"
           >
-            <div className="mx-4 block gap-2 md:mx-0 md:block md:w-full">{walletList(wallets)}</div>
+            <div className="mx-4 block gap-2 pb-4 md:mx-0 md:block md:w-full md:pb-8">
+              {walletGroups.map((group, index) => (
+                <div key={group.key}>
+                  <div className={cn('text-txt-label-small mb-2 px-3 text-base font-semibold', { 'mt-4': index > 0 })}>{group.label}</div>
+                  {walletList(group.wallets)}
+                </div>
+              ))}
+            </div>
           </ScrollArea>
 
           {selectedWallet && (

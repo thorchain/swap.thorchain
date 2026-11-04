@@ -14,6 +14,7 @@ import { phantomWallet } from '@tcswap/wallets/phantom'
 import { trezorWallet } from '@tcswap/wallets/trezor'
 import { tronlinkWallet } from '@/lib/tronlink'
 import { vultisigWallet } from '@tcswap/wallets/vultisig'
+import { preloadWalletconnect, walletconnectWallet } from '@tcswap/wallets/walletconnect'
 import { AppConfig } from '@/config'
 import { useWalletStore } from '@/store/wallets-store'
 import { BTC_PURPOSE_ADDRESS_TYPE, btcAddressType } from '@/lib/swap-helpers'
@@ -37,7 +38,8 @@ const defaultWallets = {
   ...phantomWallet,
   ...trezorWallet,
   ...tronlinkWallet,
-  ...vultisigWallet
+  ...vultisigWallet,
+  ...walletconnectWallet
 }
 
 function createUSwap(config: Parameters<typeof USwap>[0] = {}) {
@@ -86,7 +88,8 @@ export function getUSwap() {
     config: {
       apiKeys: {
         uSwap: apiKeyOverride || process.env.NEXT_PUBLIC_USWAP_API_KEY,
-        blockchair: 'sto' // fake key to just avoid logs like: No Blockchair API key found
+        blockchair: 'sto', // fake key to just avoid logs like: No Blockchair API key found
+        walletConnectProjectId: process.env.NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID
       },
       rpcUrls: {
         [Chain.Ethereum]: ['https://ethereum-rpc.publicnode.com', 'https://eth.llamarpc.com'],
@@ -153,6 +156,9 @@ export async function connectWallet(option: WalletOption, chains: Chain[], confi
       return connectEach(c => uSwap.connectTronLink(c))
     case WalletOption.EXODUS:
       return uSwap.connectExodus(chains)
+    case WalletOption.WALLETCONNECT:
+      // One session — one QR scan — for every chain; `restoreOnly` reuses a stored one rather than show a QR code.
+      return uSwap.connectWalletconnect(chains, { metadata: walletConnectMetadata, restoreOnly: config?.restoreOnly })
     case WalletOption.KEYSTORE:
       return uSwap.connectKeystore(chains, config?.phrase, config?.derivationPath)
     case WalletOption.LEDGER:
@@ -249,6 +255,22 @@ function btcPathMismatch(chain: Chain, address: string, derivationPath?: number[
   )
 }
 
+export const walletConnectEnabled = () => !!process.env.NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID
+
+// What the wallet shows on its approval screen; the SDK's default names TCSwap and fills in the page's origin as `url`.
+const walletConnectMetadata = {
+  name: AppConfig.appName,
+  description: AppConfig.description,
+  icons: [`${AppConfig.baseUrl}/apple-touch-icon.png`]
+}
+
+// Starts loading WalletConnect and its relay connection while the user picks a wallet, so its window
+// opens as soon as they press connect and the QR code follows quickly.
+export function preloadWalletConnect() {
+  getUSwap()
+  preloadWalletconnect({ metadata: walletConnectMetadata })
+}
+
 const BTC_ADDRESS_TYPE_LABEL = {
   taproot: 'Taproot',
   nativeSegwit: 'Native SegWit',
@@ -275,5 +297,6 @@ export const supportedChains = {
   [WalletOption.TRONLINK]: tronlinkWallet.connectTronLink.supportedChains,
   [WalletOption.TRUSTWALLET_WEB]: evmWallet.connectEVMWallet.supportedChains,
   [WalletOption.VULTISIG]: vultisigWallet.connectVultisig.supportedChains,
+  [WalletOption.WALLETCONNECT]: walletconnectWallet.connectWalletconnect.supportedChains,
   [WalletOption.WALLET_SELECTOR]: [Chain.Near]
 } satisfies Partial<Record<WalletOption, Chain[]>>
