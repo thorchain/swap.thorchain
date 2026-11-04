@@ -5,7 +5,8 @@ import { supportedChains, walletConnectEnabled } from '@/lib/wallets'
 
 export enum WalletType {
   browser,
-  hardware
+  hardware,
+  mobile
 }
 
 export type WalletParams = {
@@ -125,7 +126,7 @@ export const WALLETS: WalletParams[] = [
     ? [
         {
           key: 'walletconnect',
-          type: WalletType.browser,
+          type: WalletType.mobile,
           label: 'WalletConnect',
           option: WalletOption.WALLETCONNECT,
           link: 'https://walletconnect.network',

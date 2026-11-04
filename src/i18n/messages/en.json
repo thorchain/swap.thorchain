@@ -566,6 +566,9 @@
   },
   "wallet": {
     "chains": "Chains",
+    "browser": "Browser",
+    "hardware": "Hardware",
+    "mobile": "Mobile",
     "deselectAll": "Deselect All",
     "selectAll": "Select All",
     "soon": "Soon",
