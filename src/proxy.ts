@@ -4,6 +4,7 @@ import { agentModeJson, agentModeMarkdown } from '@/lib/agent/agent-mode'
 import { discoveryFiles } from '@/lib/agent/discovery-files'
 import { markdownForPage, markdownForSuffixPath } from '@/lib/agent/markdown-pages'
 import { MCP_ENDPOINT_ALIASES } from '@/lib/agent/mcp-tools'
+import { coreMcpServerCardResponse, redirectToCoreMcp } from '@/lib/agent/core-mcp'
 
 function prefersMarkdown(req: NextRequest) {
   const accept = req.headers.get('accept')?.toLowerCase()
@@ -23,13 +24,10 @@ function prefersMarkdown(req: NextRequest) {
   return markdownQ > 0 && markdownQ >= htmlQ
 }
 
-export function proxy(req: NextRequest) {
-  // Every path that serves the manifest also speaks the transport: a client
-  // that discovered a card alias and posts JSON-RPC at it reaches the server
-  // instead of the HTML 404 the static registry would otherwise fall through
-  // to. GET on these paths still returns the manifest, below.
-  if ((req.method === 'POST' || req.method === 'OPTIONS') && MCP_ENDPOINT_ALIASES.has(req.nextUrl.pathname)) {
-    return NextResponse.rewrite(new URL('/mcp', req.url))
+export async function proxy(req: NextRequest) {
+  if (MCP_ENDPOINT_ALIASES.has(req.nextUrl.pathname)) {
+    if (req.method === 'GET' || req.method === 'HEAD') return coreMcpServerCardResponse(req.method)
+    return redirectToCoreMcp()
   }
 
   // Registered discovery files are served ahead of the filesystem routes.
