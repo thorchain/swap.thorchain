@@ -529,7 +529,10 @@
     },
     "thorname": {
       "searchPlaceholder": "Cari {name}",
-      "description": "{protocol} memiliki fitur yang mirip dengan nama .eth, disebut {name}. Sebuah {name} dapat menerima token apa pun yang dapat diperdagangkan di {protocol}. Anda dapat menetapkan alamat mana pun yang Anda inginkan ke {name} Anda. Afiliasi juga dapat menerima pembayaran biaya mereka dalam token apa pun yang didukung oleh {protocol}, dengan menggunakan {name}.",
+      "intro": "{protocol} memiliki fitur yang mirip dengan nama .eth, disebut {name}.",
+      "description": "Sebuah {name} dapat digunakan untuk menerima token apa pun yang dapat diperdagangkan di {protocol}. Anda dapat menetapkan alamat mana pun yang Anda inginkan ke {name} Anda.",
+      "affiliatesThorname": "Mitra afiliasi yang menggunakan kunci API serta penyedia bond dapat menggunakan THORName untuk menerima pembayaran biaya mereka dalam token apa pun yang didukung oleh THORChain.",
+      "affiliatesMayaname": "Mitra afiliasi yang menggunakan kunci API dapat menggunakan MAYAName untuk menerima pembayaran biaya mereka dalam token apa pun yang didukung oleh Maya Protocol.",
       "requirement": "Anda perlu memiliki dompet yang mendukung {protocol} dan memiliki {ticker} untuk membeli {name}.",
       "register": "Daftar",
       "yours": "milik Anda",
@@ -566,6 +569,9 @@
   },
   "wallet": {
     "chains": "Chain",
+    "browser": "Browser",
+    "hardware": "Perangkat Keras",
+    "mobile": "Seluler",
     "deselectAll": "Batalkan semua pilihan",
     "selectAll": "Pilih semua",
     "soon": "Segera",

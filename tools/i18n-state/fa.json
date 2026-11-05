@@ -431,7 +431,6 @@
   "send.pool.pnl": ["PnL", "PnL"],
   "send.pool.noRunepoolPosition": ["No RUNEPool position found for this wallet.", "No RUNEPool position found for this wallet."],
   "send.thorname.searchPlaceholder": ["Search a {name}", "جستجوی یک {name}"],
-  "send.thorname.description": ["{protocol} has a feature similar to .eth names, called {name}. A {name} can receive any token that is tradeable on {protocol}. You can assign any address you want to your {name}. Affiliates can also have their fees paid out in any token that is supported by {protocol}, by using a {name}.", "{protocol} قابلیتی مشابه نام‌های .eth دارد که {name} نامیده می‌شود. یک {name} می‌تواند هر توکنی را که در {protocol} قابل معامله است دریافت کند. می‌توانید هر آدرسی که بخواهید را به {name} خود اختصاص دهید. همکاران (افیلیت‌ها) نیز می‌توانند با استفاده از یک {name}، کارمزد خود را در هر توکنی که {protocol} پشتیبانی می‌کند دریافت کنند."],
   "send.thorname.requirement": ["You need to have a wallet that supports {protocol} and own {ticker} to buy a {name}.", "برای خرید یک {name}، باید کیف پولی داشته باشید که از {protocol} پشتیبانی کند و {ticker} در اختیار داشته باشید."],
   "send.thorname.register": ["Register", "ثبت"],
   "send.thorname.yours": ["is yours", "مال شماست"],
@@ -556,5 +555,12 @@
   "tx.leg.deposit": ["Deposit {ticker}", "واریز {ticker}"],
   "tx.leg.send": ["Send {ticker}", "ارسال {ticker}"],
   "tx.leg.privateRoute": ["Route {ticker} privately", "مسیریابی {ticker} به‌صورت خصوصی"],
-  "tx.leg.swap": ["Swap {from} to {to}", "تبادل {from} به {to}"]
+  "tx.leg.swap": ["Swap {from} to {to}", "تبادل {from} به {to}"],
+  "send.thorname.intro": ["{protocol} has a feature similar to .eth names, called {name}.", "{protocol} قابلیتی مشابه نام‌های .eth دارد که {name} نامیده می‌شود."],
+  "send.thorname.description": ["{name}’s can be used to receive any token that is tradeable on {protocol}. You can assign any address you want to your {name}.", "از یک {name} می‌توان برای دریافت هر توکنی که در {protocol} قابل معامله است استفاده کرد. می‌توانید هر آدرسی که بخواهید را به {name} خود اختصاص دهید."],
+  "send.thorname.affiliatesThorname": ["Affiliate partners using the API key and bond providers can use a THORName to have their fees paid out to them in any token that is supported by THORChain.", "همکاران افیلیتی که از کلید API استفاده می‌کنند و ارائه‌دهندگان باند می‌توانند با استفاده از THORName کارمزد خود را در هر توکنی که THORChain پشتیبانی می‌کند دریافت کنند."],
+  "send.thorname.affiliatesMayaname": ["Affiliate partners using the API key can use a MAYAName to have their fees paid out in any token that is supported by Maya Protocol.", "همکاران افیلیتی که از کلید API استفاده می‌کنند می‌توانند با استفاده از MAYAName کارمزد خود را در هر توکنی که Maya Protocol پشتیبانی می‌کند دریافت کنند."],
+  "wallet.browser": ["Browser", "مرورگر"],
+  "wallet.hardware": ["Hardware", "سخت‌افزار"],
+  "wallet.mobile": ["Mobile", "موبایل"]
 }

@@ -529,7 +529,10 @@
     },
     "thorname": {
       "searchPlaceholder": "搜尋 {name}",
-      "description": "{protocol} 具備類似 .eth 名稱的功能，稱為 {name}。{name} 可接收任何在 {protocol} 上可交易的代幣。您可以將任意地址指定給您的 {name}。推廣夥伴也可以透過 {name}，以 {protocol} 支援的任何代幣領取其費用。",
+      "intro": "{protocol} 具備類似 .eth 名稱的功能，稱為 {name}。",
+      "description": "{name} 可用於接收任何在 {protocol} 上可交易的代幣。您可以將任意地址指定給您的 {name}。",
+      "affiliatesThorname": "使用 API 金鑰的推廣夥伴以及 Bond 提供者可以透過 THORName，以 THORChain 支援的任何代幣領取其費用。",
+      "affiliatesMayaname": "使用 API 金鑰的推廣夥伴可以透過 MAYAName，以 Maya Protocol 支援的任何代幣領取其費用。",
       "requirement": "您需要擁有支援 {protocol} 的錢包，並持有 {ticker} 才能購買 {name}。",
       "register": "註冊",
       "yours": "是您的",
@@ -566,6 +569,9 @@
   },
   "wallet": {
     "chains": "鏈",
+    "browser": "瀏覽器",
+    "hardware": "硬體",
+    "mobile": "行動裝置",
     "deselectAll": "取消全選",
     "selectAll": "全選",
     "soon": "即將推出",

@@ -40,7 +40,11 @@ export function Thorname() {
       <ThornameView key={tab} config={config} />
 
       <div className="text-txt-label-small space-y-3 px-1 text-sm leading-relaxed">
-        <p>{t('thorname.description', { protocol: config.protocol, name: config.label })}</p>
+        <p>{t('thorname.intro', { protocol: config.protocol, name: config.label })}</p>
+        <p>
+          {t('thorname.description', { protocol: config.protocol, name: config.label })}{' '}
+          {t(tab === 'thorname' ? 'thorname.affiliatesThorname' : 'thorname.affiliatesMayaname')}
+        </p>
         <p>{t('thorname.requirement', { protocol: config.protocol, ticker: config.ticker, name: config.label })}</p>
       </div>
     </div>

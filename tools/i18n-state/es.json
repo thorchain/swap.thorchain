@@ -431,7 +431,6 @@
   "send.pool.pnl": ["PnL", "PnL"],
   "send.pool.noRunepoolPosition": ["No RUNEPool position found for this wallet.", "No RUNEPool position found for this wallet."],
   "send.thorname.searchPlaceholder": ["Search a {name}", "Buscar un {name}"],
-  "send.thorname.description": ["{protocol} has a feature similar to .eth names, called {name}. A {name} can receive any token that is tradeable on {protocol}. You can assign any address you want to your {name}. Affiliates can also have their fees paid out in any token that is supported by {protocol}, by using a {name}.", "{protocol} cuenta con una función similar a los nombres .eth, llamada {name}. Un {name} puede recibir cualquier token negociable en {protocol}. Puedes asignar la dirección que quieras a tu {name}. Los afiliados también pueden recibir sus comisiones en cualquier token compatible con {protocol}, usando un {name}."],
   "send.thorname.requirement": ["You need to have a wallet that supports {protocol} and own {ticker} to buy a {name}.", "Necesitas una billetera compatible con {protocol} y tener {ticker} para comprar un {name}."],
   "send.thorname.register": ["Register", "Registrar"],
   "send.thorname.yours": ["is yours", "es tuyo"],
@@ -556,5 +555,12 @@
   "tx.leg.deposit": ["Deposit {ticker}", "Depositar {ticker}"],
   "tx.leg.send": ["Send {ticker}", "Enviar {ticker}"],
   "tx.leg.privateRoute": ["Route {ticker} privately", "Enrutar {ticker} de forma privada"],
-  "tx.leg.swap": ["Swap {from} to {to}", "Intercambiar {from} por {to}"]
+  "tx.leg.swap": ["Swap {from} to {to}", "Intercambiar {from} por {to}"],
+  "send.thorname.intro": ["{protocol} has a feature similar to .eth names, called {name}.", "{protocol} cuenta con una función similar a los nombres .eth, llamada {name}."],
+  "send.thorname.description": ["{name}’s can be used to receive any token that is tradeable on {protocol}. You can assign any address you want to your {name}.", "Un {name} puede usarse para recibir cualquier token negociable en {protocol}. Puedes asignar la dirección que quieras a tu {name}."],
+  "send.thorname.affiliatesThorname": ["Affiliate partners using the API key and bond providers can use a THORName to have their fees paid out to them in any token that is supported by THORChain.", "Los socios afiliados que usan la clave API y los proveedores de bond pueden usar un THORName para recibir sus comisiones en cualquier token compatible con THORChain."],
+  "send.thorname.affiliatesMayaname": ["Affiliate partners using the API key can use a MAYAName to have their fees paid out in any token that is supported by Maya Protocol.", "Los socios afiliados que usan la clave API pueden usar un MAYAName para recibir sus comisiones en cualquier token compatible con Maya Protocol."],
+  "wallet.browser": ["Browser", "Navegador"],
+  "wallet.hardware": ["Hardware", "Hardware"],
+  "wallet.mobile": ["Mobile", "Móvil"]
 }

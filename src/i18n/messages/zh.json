@@ -529,7 +529,10 @@
     },
     "thorname": {
       "searchPlaceholder": "搜索 {name}",
-      "description": "{protocol} 拥有类似 .eth 域名的功能，称为 {name}。{name} 可以接收任何在 {protocol} 上可交易的代币。您可以为自己的 {name} 指定任意地址。推广伙伴也可以通过使用 {name}，以 {protocol} 支持的任意代币收取佣金。",
+      "intro": "{protocol} 拥有类似 .eth 域名的功能，称为 {name}。",
+      "description": "{name} 可用于接收任何在 {protocol} 上可交易的代币。您可以为自己的 {name} 指定任意地址。",
+      "affiliatesThorname": "使用 API 密钥的推广伙伴以及 Bond 提供者可以通过 THORName，以 THORChain 支持的任意代币收取佣金。",
+      "affiliatesMayaname": "使用 API 密钥的推广伙伴可以通过 MAYAName，以 Maya Protocol 支持的任意代币收取佣金。",
       "requirement": "您需要拥有支持 {protocol} 的钱包并持有 {ticker}，才能购买 {name}。",
       "register": "注册",
       "yours": "是您的",
@@ -566,6 +569,9 @@
   },
   "wallet": {
     "chains": "链",
+    "browser": "浏览器",
+    "hardware": "硬件",
+    "mobile": "移动端",
     "deselectAll": "取消全选",
     "selectAll": "全选",
     "soon": "即将推出",

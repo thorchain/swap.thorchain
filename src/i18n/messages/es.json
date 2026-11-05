@@ -529,7 +529,10 @@
     },
     "thorname": {
       "searchPlaceholder": "Buscar un {name}",
-      "description": "{protocol} cuenta con una función similar a los nombres .eth, llamada {name}. Un {name} puede recibir cualquier token negociable en {protocol}. Puedes asignar la dirección que quieras a tu {name}. Los afiliados también pueden recibir sus comisiones en cualquier token compatible con {protocol}, usando un {name}.",
+      "intro": "{protocol} cuenta con una función similar a los nombres .eth, llamada {name}.",
+      "description": "Un {name} puede usarse para recibir cualquier token negociable en {protocol}. Puedes asignar la dirección que quieras a tu {name}.",
+      "affiliatesThorname": "Los socios afiliados que usan la clave API y los proveedores de bond pueden usar un THORName para recibir sus comisiones en cualquier token compatible con THORChain.",
+      "affiliatesMayaname": "Los socios afiliados que usan la clave API pueden usar un MAYAName para recibir sus comisiones en cualquier token compatible con Maya Protocol.",
       "requirement": "Necesitas una billetera compatible con {protocol} y tener {ticker} para comprar un {name}.",
       "register": "Registrar",
       "yours": "es tuyo",
@@ -566,6 +569,9 @@
   },
   "wallet": {
     "chains": "Redes",
+    "browser": "Navegador",
+    "hardware": "Hardware",
+    "mobile": "Móvil",
     "deselectAll": "Deseleccionar todo",
     "selectAll": "Seleccionar todo",
     "soon": "Pronto",

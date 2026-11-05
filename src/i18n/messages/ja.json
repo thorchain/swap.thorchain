@@ -529,7 +529,10 @@
     },
     "thorname": {
       "searchPlaceholder": "{name}を検索",
-      "description": "{protocol}には.ethネームに似た{name}という機能があります。{name}は{protocol}で取引可能なあらゆるトークンを受け取ることができます。{name}には任意のアドレスを割り当てられます。アフィリエイトも{name}を使用することで、{protocol}がサポートする任意のトークンで手数料を受け取ることができます。",
+      "intro": "{protocol}には.ethネームに似た{name}という機能があります。",
+      "description": "{name}は、{protocol}で取引可能なあらゆるトークンの受け取りに使用できます。{name}には任意のアドレスを割り当てられます。",
+      "affiliatesThorname": "APIキーを利用するアフィリエイトパートナーとボンドプロバイダーは、THORNameを使用して、THORChainがサポートする任意のトークンで手数料を受け取ることができます。",
+      "affiliatesMayaname": "APIキーを利用するアフィリエイトパートナーは、MAYANameを使用して、Maya Protocolがサポートする任意のトークンで手数料を受け取ることができます。",
       "requirement": "{name}を購入するには、{protocol}に対応したウォレットと{ticker}の保有が必要です。",
       "register": "登録",
       "yours": "はあなたのものです",
@@ -566,6 +569,9 @@
   },
   "wallet": {
     "chains": "チェーン",
+    "browser": "ブラウザ",
+    "hardware": "ハードウェア",
+    "mobile": "モバイル",
     "deselectAll": "すべて選択解除",
     "selectAll": "すべて選択",
     "soon": "近日公開",

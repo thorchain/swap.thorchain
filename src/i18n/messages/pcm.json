@@ -529,7 +529,10 @@
     },
     "thorname": {
       "searchPlaceholder": "Find a {name}",
-      "description": "{protocol} get one feature wey be like .eth names, dem dey call am {name}. One {name} fit receive any token wey you fit trade for {protocol}. You fit put any address wey you want for your {name}. Affiliates sef fit collect dia fees for any token wey {protocol} support, by using {name}.",
+      "intro": "{protocol} get one feature wey be like .eth names, dem dey call am {name}.",
+      "description": "You fit use {name} receive any token wey you fit trade for {protocol}. You fit put any address wey you want for your {name}.",
+      "affiliatesThorname": "Affiliate partners wey dey use di API key and bond providers fit use THORName collect dia fees for any token wey THORChain support.",
+      "affiliatesMayaname": "Affiliate partners wey dey use di API key fit use MAYAName collect dia fees for any token wey Maya Protocol support.",
       "requirement": "You go need wallet wey support {protocol} and you must get {ticker} before you fit buy {name}.",
       "register": "Register",
       "yours": "na your own",
@@ -566,6 +569,9 @@
   },
   "wallet": {
     "chains": "Chains",
+    "browser": "Browser",
+    "hardware": "Hardware",
+    "mobile": "Mobile",
     "deselectAll": "Deselect All",
     "selectAll": "Select All",
     "soon": "Soon",

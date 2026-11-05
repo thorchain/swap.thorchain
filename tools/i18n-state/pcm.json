@@ -431,7 +431,6 @@
   "send.pool.pnl": ["PnL", "PnL"],
   "send.pool.noRunepoolPosition": ["No RUNEPool position found for this wallet.", "No RUNEPool position found for this wallet."],
   "send.thorname.searchPlaceholder": ["Search a {name}", "Find a {name}"],
-  "send.thorname.description": ["{protocol} has a feature similar to .eth names, called {name}. A {name} can receive any token that is tradeable on {protocol}. You can assign any address you want to your {name}. Affiliates can also have their fees paid out in any token that is supported by {protocol}, by using a {name}.", "{protocol} get one feature wey be like .eth names, dem dey call am {name}. One {name} fit receive any token wey you fit trade for {protocol}. You fit put any address wey you want for your {name}. Affiliates sef fit collect dia fees for any token wey {protocol} support, by using {name}."],
   "send.thorname.requirement": ["You need to have a wallet that supports {protocol} and own {ticker} to buy a {name}.", "You go need wallet wey support {protocol} and you must get {ticker} before you fit buy {name}."],
   "send.thorname.register": ["Register", "Register"],
   "send.thorname.yours": ["is yours", "na your own"],
@@ -556,5 +555,12 @@
   "tx.leg.deposit": ["Deposit {ticker}", "Deposit {ticker}"],
   "tx.leg.send": ["Send {ticker}", "Send {ticker}"],
   "tx.leg.privateRoute": ["Route {ticker} privately", "Carry {ticker} pass private road"],
-  "tx.leg.swap": ["Swap {from} to {to}", "Swap {from} to {to}"]
+  "tx.leg.swap": ["Swap {from} to {to}", "Swap {from} to {to}"],
+  "send.thorname.intro": ["{protocol} has a feature similar to .eth names, called {name}.", "{protocol} get one feature wey be like .eth names, dem dey call am {name}."],
+  "send.thorname.description": ["{name}’s can be used to receive any token that is tradeable on {protocol}. You can assign any address you want to your {name}.", "You fit use {name} receive any token wey you fit trade for {protocol}. You fit put any address wey you want for your {name}."],
+  "send.thorname.affiliatesThorname": ["Affiliate partners using the API key and bond providers can use a THORName to have their fees paid out to them in any token that is supported by THORChain.", "Affiliate partners wey dey use di API key and bond providers fit use THORName collect dia fees for any token wey THORChain support."],
+  "send.thorname.affiliatesMayaname": ["Affiliate partners using the API key can use a MAYAName to have their fees paid out in any token that is supported by Maya Protocol.", "Affiliate partners wey dey use di API key fit use MAYAName collect dia fees for any token wey Maya Protocol support."],
+  "wallet.browser": ["Browser", "Browser"],
+  "wallet.hardware": ["Hardware", "Hardware"],
+  "wallet.mobile": ["Mobile", "Mobile"]
 }

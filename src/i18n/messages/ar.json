@@ -529,7 +529,10 @@
     },
     "thorname": {
       "searchPlaceholder": "ابحث عن {name}",
-      "description": "يوفّر {protocol} ميزة مشابهة لأسماء ‎.eth تُسمى {name}. ويمكن لـ {name} استقبال أي عملة قابلة للتداول على {protocol}. كما يمكنك ربط أي عنوان تريده بـ {name} الخاص بك. ويمكن للشركاء التابعين أيضاً تحصيل رسومهم بأي عملة يدعمها {protocol} عبر استخدام {name}.",
+      "intro": "يوفّر {protocol} ميزة مشابهة لأسماء ‎.eth تُسمى {name}.",
+      "description": "يمكن استخدام {name} لاستقبال أي عملة قابلة للتداول على {protocol}. كما يمكنك ربط أي عنوان تريده بـ {name} الخاص بك.",
+      "affiliatesThorname": "يمكن للشركاء التابعين الذين يستخدمون مفتاح API ولمزوّدي الـ bond استخدام THORName لتحصيل رسومهم بأي عملة يدعمها THORChain.",
+      "affiliatesMayaname": "يمكن للشركاء التابعين الذين يستخدمون مفتاح API استخدام MAYAName لتحصيل رسومهم بأي عملة يدعمها Maya Protocol.",
       "requirement": "تحتاج إلى محفظة تدعم {protocol} وإلى امتلاك {ticker} لشراء {name}.",
       "register": "تسجيل",
       "yours": "ملكك",
@@ -566,6 +569,9 @@
   },
   "wallet": {
     "chains": "الشبكات",
+    "browser": "المتصفح",
+    "hardware": "الأجهزة",
+    "mobile": "الجوّال",
     "deselectAll": "إلغاء تحديد الكل",
     "selectAll": "تحديد الكل",
     "soon": "قريبًا",
