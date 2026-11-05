@@ -42,7 +42,7 @@ import { SwapPrivateDisclaimer } from '@/components/swap/swap-private-disclaimer
 import { AppConfig } from '@/config'
 import { TokenBalance, useWalletBalances } from '@/hooks/use-wallet-balances'
 import { useAccounts } from '@/hooks/use-wallets'
-import { houdiniQuoteRates, preferRate, useRates } from '@/hooks/use-rates'
+import { houdiniQuoteRates, houdiniTxRates, preferRate, useRates } from '@/hooks/use-rates'
 import { readableError } from '@/lib/errors'
 import { formatExpiration, isValidDestinationMemo, supportsHoudiniMemo } from '@/lib/swap-helpers'
 import { canTrackTransfer } from '@/lib/transfer-status'
@@ -241,7 +241,8 @@ export function Send({ isOpen, onOpenChange, initialToken, account }: SendDialog
           addressTo: recipient,
           addressDeposit: route.inboundAddress,
           status: 'pending',
-          providerSwapId: houdiniId
+          providerSwapId: houdiniId,
+          ...houdiniTxRates(route)
         }))
         onOpenChange(false)
       })
