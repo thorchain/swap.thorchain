@@ -381,6 +381,7 @@
         "compoundHint": "{percent}% Ihrer Rewards werden für den Zinseszinseffekt erneut gebondet",
         "payoutAddress": "Auszahlungsadresse",
         "payoutAddressPlaceholder": "RUNE-Adresse oder THORName eingeben",
+        "payoutTooltip": "Wenn du in einem Token deiner Wahl ausgezahlt werden möchtest, etwa Bitcoin oder einem Stablecoin, brauchst du einen THORName. Du kannst einen THORName über <link>diesen Link</link> kaufen. Klicke dann bei deinem THORName auf „Verwalten“ und gib dein bevorzugtes Asset und deine Adresse ein.",
         "noPayoutAddress": "Es ist keine Auszahlungsadresse eingerichtet",
         "effectiveApr": "Effektiver APR",
         "notProvider": "Kein Bond auf dieser Node",

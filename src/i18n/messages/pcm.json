@@ -381,6 +381,7 @@
         "compoundHint": "{percent}% of your rewards go dey rebond make e compound",
         "payoutAddress": "Payout Address",
         "payoutAddressPlaceholder": "Put RUNE address or THORName",
+        "payoutTooltip": "If you wan collect your payout for di token wey you choose, like Bitcoin or stablecoin, you go need use THORName. You fit buy THORName for <link>this link</link>. Then click di manage button for your THORName and enter di asset and address wey you prefer.",
         "noPayoutAddress": "No payout address dey set up",
         "effectiveApr": "Effective APR",
         "notProvider": "No bond dey on this node",

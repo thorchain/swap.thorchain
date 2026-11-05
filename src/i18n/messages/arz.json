@@ -381,6 +381,7 @@
         "compoundHint": "{percent}% من مكافآتك هترجع للبوند عشان تتراكم",
         "payoutAddress": "عنوان الصرف",
         "payoutAddressPlaceholder": "اكتب عنوان RUNE أو THORName",
+        "payoutTooltip": "لو عايز تقبض بالعملة اللي تختارها، زي البيتكوين أو عملة مستقرة، لازم تستخدم THORName. تقدر تشتري THORName من <link>اللينك ده</link>. بعدين دوس على زرار الإدارة في الـ THORName بتاعك ودخّل الأصل والعنوان المفضلين.",
         "noPayoutAddress": "مفيش عنوان صرف متظبط",
         "effectiveApr": "APR الفعلي",
         "notProvider": "مفيش بوند على النود ده",

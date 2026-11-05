@@ -381,6 +381,7 @@
         "compoundHint": "{percent}% ของรางวัลจะถูกนำกลับไป bond เพื่อทบต้น",
         "payoutAddress": "ที่อยู่รับเงิน",
         "payoutAddressPlaceholder": "ใส่ที่อยู่ RUNE หรือ THORName",
+        "payoutTooltip": "หากคุณต้องการรับเงินเป็นโทเคนที่คุณเลือก เช่น Bitcoin หรือ Stablecoin คุณต้องใช้ THORName คุณสามารถซื้อ THORName ได้ที่<link>ลิงก์นี้</link> จากนั้นคลิกปุ่มจัดการบน THORName ของคุณ แล้วกรอกสินทรัพย์และที่อยู่ที่ต้องการ",
         "noPayoutAddress": "ยังไม่ได้ตั้งค่าที่อยู่รับเงิน",
         "effectiveApr": "APR ที่แท้จริง",
         "notProvider": "ไม่มี bond บนโหนดนี้",

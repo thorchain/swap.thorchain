@@ -381,6 +381,7 @@
         "compoundHint": "{percent}% dari imbalan Anda akan di-rebond untuk majemuk",
         "payoutAddress": "Alamat Pembayaran",
         "payoutAddressPlaceholder": "Masukkan alamat RUNE atau THORName",
+        "payoutTooltip": "Jika Anda ingin dibayar dalam token pilihan Anda, seperti Bitcoin atau stablecoin, Anda perlu menggunakan THORName. Anda dapat membeli THORName di <link>tautan ini</link>. Lalu klik tombol kelola pada THORName Anda dan masukkan aset serta alamat pilihan Anda.",
         "noPayoutAddress": "Belum ada alamat pembayaran yang diatur",
         "effectiveApr": "APR Efektif",
         "notProvider": "Tidak ada bond di node ini",

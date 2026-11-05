@@ -381,6 +381,7 @@
         "compoundHint": "{percent}% phần thưởng của bạn sẽ được bond lại để sinh lãi kép",
         "payoutAddress": "Địa chỉ chi trả",
         "payoutAddressPlaceholder": "Nhập địa chỉ RUNE hoặc THORName",
+        "payoutTooltip": "Nếu bạn muốn được chi trả bằng token tùy chọn, chẳng hạn Bitcoin hoặc stablecoin, bạn cần dùng THORName. Bạn có thể mua THORName tại <link>liên kết này</link>. Sau đó nhấp nút quản lý trên THORName của bạn và nhập tài sản cùng địa chỉ ưa thích.",
         "noPayoutAddress": "Chưa thiết lập địa chỉ chi trả",
         "effectiveApr": "APR thực tế",
         "notProvider": "Không có bond trên node này",

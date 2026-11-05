@@ -381,6 +381,7 @@
         "compoundHint": "報酬の{percent}%が再ボンドされ複利運用されます",
         "payoutAddress": "支払いアドレス",
         "payoutAddressPlaceholder": "RUNEアドレスまたはTHORNameを入力",
+        "payoutTooltip": "ビットコインやステーブルコインなど、お好みのトークンで支払いを受け取りたい場合は、THORNameを使用する必要があります。THORNameは<link>こちらのリンク</link>から購入できます。その後、THORNameの管理ボタンをクリックして、希望するアセットとアドレスを入力してください。",
         "noPayoutAddress": "支払いアドレスは設定されていません",
         "effectiveApr": "実効APR",
         "notProvider": "このノードにボンドがありません",

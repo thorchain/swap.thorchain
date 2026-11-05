@@ -381,6 +381,7 @@
         "compoundHint": "您 {percent}% 的奖励将重新质押以实现复利",
         "payoutAddress": "派息地址",
         "payoutAddressPlaceholder": "输入 RUNE 地址或 THORName",
+        "payoutTooltip": "如果你想以自选代币（例如比特币或稳定币）接收派息，就需要使用 THORName。你可以通过<link>此链接</link>购买 THORName。然后点击你的 THORName 的管理按钮，输入偏好的资产和地址。",
         "noPayoutAddress": "尚未设置派息地址",
         "effectiveApr": "实际年化收益率",
         "notProvider": "该节点上没有债券",

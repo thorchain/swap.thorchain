@@ -381,6 +381,7 @@
         "compoundHint": "تہاڈے انعاماں دا {percent}% کمپاؤنڈ کرن لئی مُڑ بانڈ کیتا ویسی",
         "payoutAddress": "ادائیگی ایڈریس",
         "payoutAddressPlaceholder": "RUNE ایڈریس یا THORName لکھو",
+        "payoutTooltip": "جے تُسی اپنی پسند دے ٹوکن وچ ادائیگی لینا چاہندے او، جویں بٹ کوائن یا کوئی سٹیبل کوائن، تے تہانوں THORName ورتنا پوے گا۔ تُسی <link>ایس لنک</link> توں THORName خرید سکدے او۔ فیر اپنے THORName اُتے مینیج بٹن دباؤ تے اپنی پسندیدہ ایسٹ تے ایڈریس درج کرو۔",
         "noPayoutAddress": "کوئی ادائیگی ایڈریس سیٹ نئیں ہویا",
         "effectiveApr": "مؤثر APR",
         "notProvider": "ایس نوڈ تے کوئی بانڈ نئیں",

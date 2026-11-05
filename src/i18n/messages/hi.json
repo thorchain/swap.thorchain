@@ -381,6 +381,7 @@
         "compoundHint": "आपके रिवॉर्ड का {percent}% कंपाउंड करने के लिए दोबारा बॉन्ड किया जाएगा",
         "payoutAddress": "पेआउट पता",
         "payoutAddressPlaceholder": "RUNE पता या THORName दर्ज करें",
+        "payoutTooltip": "अगर आप अपनी पसंद के टोकन में पेआउट पाना चाहते हैं, जैसे Bitcoin या कोई स्टेबलकॉइन, तो आपको THORName इस्तेमाल करना होगा। आप <link>इस लिंक</link> पर THORName खरीद सकते हैं। फिर अपने THORName के मैनेज बटन पर क्लिक करें और अपनी पसंदीदा एसेट और पता दर्ज करें।",
         "noPayoutAddress": "कोई पेआउट पता सेट नहीं है",
         "effectiveApr": "प्रभावी APR",
         "notProvider": "इस नोड पर कोई बॉन्ड नहीं",

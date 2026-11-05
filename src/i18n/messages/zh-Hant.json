@@ -381,6 +381,7 @@
         "compoundHint": "您 {percent}% 的獎勵將重新 bond 以複利累積",
         "payoutAddress": "撥付地址",
         "payoutAddressPlaceholder": "輸入 RUNE 地址或 THORName",
+        "payoutTooltip": "如果你想以自選代幣（例如比特幣或穩定幣）收取撥付，就需要使用 THORName。你可以在<link>此連結</link>購買 THORName。然後點擊你的 THORName 的管理按鈕，輸入偏好的資產和地址。",
         "noPayoutAddress": "尚未設定撥付地址",
         "effectiveApr": "實際年化報酬率",
         "notProvider": "此節點上沒有 bond",

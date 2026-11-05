@@ -25,6 +25,7 @@ import { useResolveAccount } from '@/hooks/use-resolve-account'
 import { useRates } from '@/hooks/use-rates'
 import { useNodeInfo } from '@/hooks/bond/use-node-info'
 import { BondPosition, nodeAprForProvider, useBondPosition, useBondRewardPeriod } from '@/hooks/bond/use-bond-position'
+import { InfoTooltip } from '@/components/tooltip'
 import { useThorName } from '@/hooks/thorname/use-thorname'
 import { useDebouncedValue } from '@/hooks/use-debounced-value'
 import { isNameLike } from '@/lib/name-resolution'
@@ -188,6 +189,12 @@ export function SendMemoBond({ account, initialTab = 'bond' }: BondFormProps) {
   const payoutNameChecking = !!payoutName && (debouncedPayoutName !== payoutName || thorName.isLoading)
   const payoutNameOwned = thorName.thorNames[0]?.owner === walletThorAddress
   const payoutAddressValid = !payoutTrimmed || isThorAddress(payoutTrimmed) || (payoutIsName && payoutNameOwned)
+
+  // A stored THORName target can route the payout into its preferred asset; anything else pays RUNE
+  const storedIsName = !!storedPayoutTarget && !storedPayoutTarget.startsWith('thor1') && isNameLike(storedPayoutTarget)
+  const storedName = useThorName(yieldTab && storedIsName ? [storedPayoutTarget] : [])
+  const storedPreferredAsset = storedName.thorNames[0]?.preferred_asset ?? ''
+  const payoutTicker = storedPreferredAsset ? (storedPreferredAsset.split('.')[1] ?? storedPreferredAsset).split('-')[0] : 'RUNE'
 
   const quickAmountBase = tab === 'bond' ? (runeToken?.amount ?? 0) : walletBond
 
@@ -420,10 +427,15 @@ export function SendMemoBond({ account, initialTab = 'bond' }: BondFormProps) {
               <>
                 {/* With yield on and no stored target, the chain pays the provider's own address */}
                 <BondAddressRow
-                  label={t('bond.yield.payoutAddress')}
+                  label={
+                    <>
+                      {t('bond.yield.payoutAddress')} <PayoutInfoTooltip />
+                    </>
+                  }
                   address={storedPayoutTarget || (storedBps ? walletThorAddress : t('bond.yield.noPayoutAddress'))}
                 >
                   <p className="text-txt-high-contrast text-sm font-bold">{storedBps / 100}%</p>
+                  {storedBps > 0 && <p className="text-txt-label-small text-sm">{payoutTicker}</p>}
                 </BondAddressRow>
 
                 <div className="grid grid-cols-2 gap-1.25">
@@ -465,7 +477,9 @@ export function SendMemoBond({ account, initialTab = 'bond' }: BondFormProps) {
                 </div>
 
                 <div className="bg-swap-bloc rounded-15 border p-7">
-                  <div className="text-txt-label-small mb-3 font-semibold">{t('bond.yield.payoutAddress')}</div>
+                  <div className="text-txt-label-small mb-3 font-semibold">
+                    {t('bond.yield.payoutAddress')} <PayoutInfoTooltip />
+                  </div>
                   <Textarea
                     placeholder={t('bond.yield.payoutAddressPlaceholder')}
                     value={payoutAddress}
@@ -574,7 +588,23 @@ function AddressField({
   )
 }
 
-function BondAddressRow({ label, address, children }: { label: string; address: string; children: ReactNode }) {
+function PayoutInfoTooltip() {
+  const t = useTranslations('send')
+
+  return (
+    <InfoTooltip>
+      {t.rich('bond.yield.payoutTooltip', {
+        link: chunks => (
+          <a href="/thorname" className="underline">
+            {chunks}
+          </a>
+        )
+      })}
+    </InfoTooltip>
+  )
+}
+
+function BondAddressRow({ label, address, children }: { label: ReactNode; address: string; children: ReactNode }) {
   return (
     <div className="bg-swap-bloc rounded-15 flex items-start justify-between gap-4 border p-4">
       <div className="min-w-0">

@@ -381,6 +381,7 @@
         "compoundHint": "{percent} % de vos récompenses seront rebondées pour être capitalisées",
         "payoutAddress": "Adresse de versement",
         "payoutAddressPlaceholder": "Saisissez une adresse RUNE ou un THORName",
+        "payoutTooltip": "Si vous souhaitez être payé dans le token de votre choix, comme Bitcoin ou un stablecoin, vous devez utiliser un THORName. Vous pouvez acheter un THORName sur <link>ce lien</link>. Cliquez ensuite sur le bouton de gestion de votre THORName et saisissez votre actif et votre adresse préférés.",
         "noPayoutAddress": "Aucune adresse de versement n'est configurée",
         "effectiveApr": "APR effectif",
         "notProvider": "Aucun bond sur ce nœud",

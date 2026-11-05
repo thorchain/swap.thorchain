@@ -381,6 +381,7 @@
         "compoundHint": "سيتم إعادة ربط {percent}% من مكافآتك لتحقيق التراكم",
         "payoutAddress": "عنوان الدفع",
         "payoutAddressPlaceholder": "أدخل عنوان RUNE أو THORName",
+        "payoutTooltip": "إذا كنت تريد أن تُدفع لك العوائد بالعملة التي تختارها، مثل البيتكوين أو عملة مستقرة، فعليك استخدام THORName. يمكنك شراء THORName عبر <link>هذا الرابط</link>. ثم اضغط زر الإدارة في THORName الخاص بك وأدخل الأصل والعنوان المفضلين.",
         "noPayoutAddress": "لا يوجد عنوان دفع مُعدّ",
         "effectiveApr": "APR الفعلي",
         "notProvider": "لا يوجد Bond على هذه العقدة",

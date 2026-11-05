@@ -381,6 +381,7 @@
         "compoundHint": "보상의 {percent}%가 복리를 위해 재본딩됩니다",
         "payoutAddress": "지급 주소",
         "payoutAddressPlaceholder": "RUNE 주소 또는 THORName 입력",
+        "payoutTooltip": "비트코인이나 스테이블코인 등 원하는 토큰으로 지급받으려면 THORName을 사용해야 합니다. <link>이 링크</link>에서 THORName을 구매할 수 있습니다. 그런 다음 THORName의 관리 버튼을 클릭하고 선호하는 자산과 주소를 입력하세요.",
         "noPayoutAddress": "설정된 지급 주소가 없습니다",
         "effectiveApr": "실질 APR",
         "notProvider": "이 노드에 본드가 없습니다",

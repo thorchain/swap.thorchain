@@ -381,6 +381,7 @@
         "compoundHint": "{percent}% das suas recompensas serão adicionadas ao bond para capitalizar",
         "payoutAddress": "Endereço de Pagamento",
         "payoutAddressPlaceholder": "Introduza um endereço RUNE ou THORName",
+        "payoutTooltip": "Se quiser receber o pagamento no token da sua escolha, como Bitcoin ou uma stablecoin, precisa de usar um THORName. Pode comprar um THORName <link>neste link</link>. Depois, clique no botão de gestão do seu THORName e introduza o seu ativo e endereço preferidos.",
         "noPayoutAddress": "Não existe nenhum endereço de pagamento configurado",
         "effectiveApr": "APR Efetiva",
         "notProvider": "Sem bond neste nó",

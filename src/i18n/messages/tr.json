@@ -381,6 +381,7 @@
         "compoundHint": "Ödüllerinizin %{percent}'i bileşik getiri için yeniden bond edilecek",
         "payoutAddress": "Ödeme Adresi",
         "payoutAddressPlaceholder": "Bir RUNE adresi veya THORName girin",
+        "payoutTooltip": "Ödemenizi Bitcoin veya bir stablecoin gibi istediğiniz tokenla almak istiyorsanız bir THORName kullanmanız gerekir. <link>Bu bağlantıdan</link> bir THORName satın alabilirsiniz. Ardından THORName'inizin yönet düğmesine tıklayın ve tercih ettiğiniz varlık ile adresi girin.",
         "noPayoutAddress": "Tanımlı bir ödeme adresi yok",
         "effectiveApr": "Efektif APR",
         "notProvider": "Bu düğümde bond yok",
