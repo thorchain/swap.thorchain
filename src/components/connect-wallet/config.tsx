@@ -1,5 +1,6 @@
 import { Chain, getEIP6963Provider, getMetaMaskProvider, okxMobileEnabled, RABBY_RDNS, WalletOption } from '@tcswap/core'
 import { getChainConfig } from '@tcswap/helpers'
+import { getBinanceBitcoinProvider, getBinanceEVMProvider } from '@tcswap/wallets/binance'
 import { getBraveEVMProvider, getBraveSolanaProvider } from '@tcswap/wallets/brave'
 import { supportedChains, walletConnectEnabled } from '@/lib/wallets'
 import { OATH_WALLET } from '@/lib/oath-walletconnect'
@@ -83,6 +84,14 @@ export const WALLETS: WalletParams[] = [
     supportedChains: supportedChains[WalletOption.BRAVE]
   },
   {
+    key: 'binance',
+    type: WalletType.browser,
+    label: 'Binance Wallet',
+    option: WalletOption.BINANCE,
+    link: 'https://www.binance.com/en/web3wallet',
+    supportedChains: supportedChains[WalletOption.BINANCE]
+  },
+  {
     key: 'rabby',
     type: WalletType.browser,
     label: 'Rabby Wallet',
@@ -127,7 +136,7 @@ export const WALLETS: WalletParams[] = [
     ? [
         {
           key: 'walletconnect',
-          type: WalletType.browser,
+          type: WalletType.mobile,
           label: 'WalletConnect',
           option: WalletOption.WALLETCONNECT,
           link: 'https://walletconnect.network',
@@ -184,6 +193,8 @@ export const isWalletAvailable = (option: WalletOption) => {
     case WalletOption.PHANTOM: return window?.phantom
     case WalletOption.KEPLR: return window?.keplr
     case WalletOption.OKX: return window?.okxwallet
+    // Some Binance builds publish only the shared `window.unisat`/`window.ethereum` slots, flagged `isBinance`.
+    case WalletOption.BINANCE: return window?.binancew3w || getBinanceEVMProvider() || getBinanceBitcoinProvider()
     case WalletOption.TRONLINK: return window?.tronLink || window?.tronWeb
     case WalletOption.EXODUS: return window?.exodus || window?.ethereum?.isExodus
     // Rabby's own announcement, since `window.ethereum` is MetaMask's unless Rabby is the default wallet.

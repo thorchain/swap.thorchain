@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect, useState } from 'react'
+import Link from 'next/link'
 import { X } from 'lucide-react'
 import { useLocale, useTranslations } from 'next-intl'
 import { useBanner } from '@/hooks/use-banner'
@@ -8,6 +9,36 @@ import { bannerCopy, bannerIcon } from '@/lib/banner'
 
 // Published from the affiliate admin and polled at runtime — see docs/banner.md.
 const STORAGE_KEY = 'announcement-dismissed'
+
+// The admin can point the banner anywhere: our own routes navigate in place,
+// external sites open in a new tab. Returns the path for an internal href, null otherwise.
+function internalHref(href: string): string | null {
+  if (href.startsWith('/') && !href.startsWith('//')) return href
+  try {
+    const url = new URL(href, window.location.origin)
+    if (url.origin === window.location.origin) return url.pathname + url.search + url.hash
+  } catch {
+    // Not a parseable URL: treat as external and let the browser sort it out.
+  }
+  return null
+}
+
+function BannerLink({ href, className, children }: { href: string; className: string; children: React.ReactNode }) {
+  const internal = internalHref(href)
+  if (internal) {
+    return (
+      <Link href={internal} className={className}>
+        {children}
+      </Link>
+    )
+  }
+
+  return (
+    <a href={href} target="_blank" rel="noopener noreferrer" className={className}>
+      {children}
+    </a>
+  )
+}
 
 export function AnnouncementBanner() {
   const t = useTranslations('announcement')
@@ -56,21 +87,16 @@ export function AnnouncementBanner() {
         {icon && <img src={icon} alt="" width={20} height={20} className="size-5 shrink-0 rounded-full" />}
         <p className="text-center text-sm">
           {banner.href && banner.linkText ? (
-            <a href={banner.href} target="_blank" rel="noopener noreferrer" className="underline-offset-2 hover:underline">
+            <BannerLink href={banner.href} className="underline-offset-2 hover:underline">
               {message}
-            </a>
+            </BannerLink>
           ) : (
             message
           )}
           {banner.href && strings.link && (
-            <a
-              href={banner.href}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-txt-contrast-1-default ms-1 font-medium underline underline-offset-2"
-            >
+            <BannerLink href={banner.href} className="text-txt-contrast-1-default ms-1 font-medium underline underline-offset-2">
               {strings.link}
-            </a>
+            </BannerLink>
           )}
         </p>
         <button

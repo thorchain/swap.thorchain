@@ -1,6 +1,7 @@
 'use client'
 
-import { useEffect, useMemo, useRef, useState } from 'react'
+import { ReactNode, useEffect, useMemo, useRef, useState } from 'react'
+import { useQueryClient } from '@tanstack/react-query'
 import { useSearchParams } from 'next/navigation'
 import { useTranslations } from 'next-intl'
 import { Chain, USwapNumber } from '@tcswap/core'
@@ -23,15 +24,19 @@ import { useSelectedAccount } from '@/hooks/use-wallets'
 import { useResolveAccount } from '@/hooks/use-resolve-account'
 import { useRates } from '@/hooks/use-rates'
 import { useNodeInfo } from '@/hooks/bond/use-node-info'
-import { BondPosition, useBondPosition } from '@/hooks/bond/use-bond-position'
+import { BondPosition, nodeAprForProvider, useBondPosition, useBondRewardPeriod } from '@/hooks/bond/use-bond-position'
+import { InfoTooltip } from '@/components/tooltip'
+import { useThorName } from '@/hooks/thorname/use-thorname'
+import { useDebouncedValue } from '@/hooks/use-debounced-value'
+import { isNameLike } from '@/lib/name-resolution'
 import { deleteCookie, readCookie, writeCookie } from '@/lib/cookies'
 import { getUSwap } from '@/lib/wallets'
 import { WalletAccount } from '@/store/wallets-store'
 import { cn, toCurrencyFixed } from '@/lib/utils'
 
-type BondTab = 'bond' | 'unbond' | 'rebond' | 'track'
+type BondTab = 'bond' | 'unbond' | 'rebond' | 'yield' | 'track'
 
-const BOND_TABS: BondTab[] = ['bond', 'unbond', 'rebond', 'track']
+const BOND_TABS: BondTab[] = ['bond', 'unbond', 'rebond', 'yield', 'track']
 
 const RUNE_IDENTIFIER = 'THOR.RUNE'
 const RATE_IDS = [RUNE_IDENTIFIER]
@@ -55,6 +60,7 @@ interface BondFormProps {
 export function SendMemoBond({ account, initialTab = 'bond' }: BondFormProps) {
   const t = useTranslations('send')
   const uSwap = getUSwap()
+  const queryClient = useQueryClient()
   const { openDialog } = useDialog()
   const { walletData } = useWalletBalances()
 
@@ -78,19 +84,18 @@ export function SendMemoBond({ account, initialTab = 'bond' }: BondFormProps) {
   }
   const [newAddress, setNewAddress] = useState('')
   const [amount, setAmount] = useState('')
+  const [yieldPercent, setYieldPercent] = useState('')
+  const [payoutAddress, setPayoutAddress] = useState('')
   const [submitting, setSubmitting] = useState(false)
 
   // Not from the wallet's RUNE token, so Track works without a wallet
   const { rates } = useRates(RATE_IDS)
   const runeRate = rates[RUNE_IDENTIFIER]
 
-  const numericAmount = parseFloat(amount) || 0
-  const fiatValue = runeRate ? runeRate.mul(numericAmount) : new USwapNumber(0)
-  const fiatPercent = runeToken && runeToken.amount > 0 ? (numericAmount / runeToken.amount) * 100 : 0
-
   const selectedAsset = runeToken ? tokenToAsset(runeToken) : null
   const needsAmount = tab === 'bond' || tab === 'unbond' || tab === 'rebond'
   const needsNewAddress = tab === 'rebond'
+  const yieldTab = tab === 'yield'
 
   const nodeAddressValid = isThorAddress(nodeAddress)
   const newAddressValid = isThorAddress(newAddress)
@@ -99,13 +104,7 @@ export function SendMemoBond({ account, initialTab = 'bond' }: BondFormProps) {
 
   const trackTab = tab === 'track'
   const bondAddressValid = isThorAddress(bondAddress)
-  const {
-    position,
-    nodeOperator,
-    isLoading: positionLoading,
-    isHistoryLoading,
-    error: positionError
-  } = useBondPosition(trackTab && bondAddressValid ? bondAddress : '')
+  const { position, nodeOperator, isLoading: positionLoading, error: positionError } = useBondPosition(trackTab && bondAddressValid ? bondAddress : '')
 
   // On load only: the URL is rewritten below, and reacting to it would undo what the user typed
   useEffect(() => {
@@ -134,14 +133,97 @@ export function SendMemoBond({ account, initialTab = 'bond' }: BondFormProps) {
   const setAddressValue = trackTab ? chooseBondAddress : setNodeAddress
   const addressValid = trackTab ? bondAddressValid : nodeAddressValid
 
+  const walletThorAddress = walletAddress && isThorAddress(walletAddress) ? walletAddress : ''
+  const providers = nodeInfo?.bond_providers?.providers
+  const walletProvider = walletThorAddress ? providers?.find(p => p.bond_address === walletThorAddress) : undefined
+  const walletBond = parseInt(walletProvider?.bond ?? '0') / 1e8
+  // REBOND's destination must be whitelisted as a bond provider on the node
+  const newProvider = providers?.find(p => p.bond_address === newAddress.trim())
+  const newProviderBond = parseInt(newProvider?.bond ?? '0') / 1e8
+
+  const numericAmount = parseFloat(amount) || 0
+  // REBOND with amount 0 moves the whole bond; a literal '0' only, so '0.' mid-typing doesn't arm it
+  const movesWholeBond = tab === 'rebond' && amount.trim() === '0'
+  const effectiveAmount = movesWholeBond ? walletBond : numericAmount
+  const fiatValue = runeRate ? runeRate.mul(effectiveAmount) : new USwapNumber(0)
+  const fiatPercent =
+    tab === 'unbond' || tab === 'rebond'
+      ? walletBond > 0
+        ? (effectiveAmount / walletBond) * 100
+        : 0
+      : runeToken && runeToken.amount > 0
+        ? (numericAmount / runeToken.amount) * 100
+        : 0
+
+  // The spec types bps as an integer, but the sibling int64 fields arrive as strings, so parse defensively
+  const storedBps = parseInt(String(walletProvider?.bps ?? 0)) || 0
+  const storedPayoutTarget = walletProvider?.payout_target ?? ''
+  // The yield inputs are a draft for the entered node, so they start over with it
+  useEffect(() => {
+    setYieldPercent('')
+    setPayoutAddress('')
+  }, [nodeAddress])
+
+  const rewardPeriod = useBondRewardPeriod(yieldTab && !!nodeInfo)
+  const netApr = nodeInfo && rewardPeriod.data ? nodeAprForProvider(nodeInfo, rewardPeriod.data.blocks, walletThorAddress).netApr : 0
+
+  const yieldBps = yieldPercent.trim() === '' ? undefined : Math.round(parseFloat(yieldPercent) * 100)
+  // A positive share that rounds to 0 bps would disable the yield instead
+  const yieldBpsValid = yieldBps !== undefined && yieldBps >= 0 && yieldBps <= 10000 && !(yieldBps === 0 && parseFloat(yieldPercent) > 0)
+  // While nothing is typed, the tiles show the stored setting rather than a 0% draft
+  const payoutFraction = yieldBpsValid ? yieldBps / 10000 : storedBps / 10000
+  const compoundApr = netApr * (1 - payoutFraction)
+  const payoutApr = netApr * payoutFraction
+
+  // A thor1-prefixed target must be a full address: a truncated paste is not a THORName
+  const payoutTrimmed = payoutAddress.trim()
+  const payoutIsName = !!payoutTrimmed && !payoutTrimmed.startsWith('thor1') && !isThorAddress(payoutTrimmed) && isNameLike(payoutTrimmed)
+  const payoutShapeValid = !payoutTrimmed || isThorAddress(payoutTrimmed) || payoutIsName
+  // THORNames are stored lowercase on-chain
+  const payoutTarget = payoutIsName ? payoutTrimmed.toLowerCase() : payoutTrimmed
+  // The chain requires the THORName to exist and be owned by the submitting provider
+  const payoutName = yieldTab && payoutIsName ? payoutTarget : ''
+  const debouncedPayoutName = useDebouncedValue(payoutName, 700)
+  // Ignore a debounced value the input has already moved on from
+  const thorName = useThorName(debouncedPayoutName && debouncedPayoutName === payoutName ? [debouncedPayoutName] : [])
+  const payoutNameChecking = !!payoutName && (debouncedPayoutName !== payoutName || thorName.isLoading)
+  const payoutNameOwned = thorName.thorNames[0]?.owner === walletThorAddress
+  const payoutAddressValid = !payoutTrimmed || isThorAddress(payoutTrimmed) || (payoutIsName && payoutNameOwned)
+
+  // A stored THORName target can route the payout into its preferred asset; anything else pays RUNE
+  const storedIsName = !!storedPayoutTarget && !storedPayoutTarget.startsWith('thor1') && isNameLike(storedPayoutTarget)
+  const storedName = useThorName(yieldTab && storedIsName ? [storedPayoutTarget] : [])
+  const storedPreferredAsset = storedName.thorNames[0]?.preferred_asset ?? ''
+  const payoutTicker = storedPreferredAsset ? (storedPreferredAsset.split('.')[1] ?? storedPreferredAsset).split('-')[0] : 'RUNE'
+
+  const quickAmountBase = tab === 'bond' ? (runeToken?.amount ?? 0) : walletBond
+
   const canSend = useMemo(() => {
     if (!thorAccount || submitting) return false
     if (tab === 'track') return false
     if (!nodeAddressValid) return false
     if (nodeInfoLoading || nodeInfoError || !nodeInfo) return false
-    if (needsNewAddress && !newAddressValid) return false
+    if (tab === 'yield') return walletBond > 0 && yieldBpsValid && payoutAddressValid
+    if (needsNewAddress && (!newAddressValid || !newProvider)) return false
+    if (tab === 'rebond') return walletBond > 0 && (movesWholeBond || (numericAmount > 0 && numericAmount <= walletBond))
+    if (tab === 'unbond') return walletBond > 0 && numericAmount > 0 && numericAmount <= walletBond
     return numericAmount > 0
-  }, [thorAccount, submitting, tab, nodeAddressValid, nodeInfoLoading, nodeInfoError, nodeInfo, newAddressValid, numericAmount, needsNewAddress])
+  }, [
+    thorAccount,
+    submitting,
+    tab,
+    nodeAddressValid,
+    nodeInfoLoading,
+    nodeInfoError,
+    nodeInfo,
+    walletBond,
+    yieldBpsValid,
+    payoutAddressValid,
+    newAddressValid,
+    newProvider,
+    movesWholeBond,
+    numericAmount
+  ])
 
   const handleSend = () => {
     if (!canSend || !thorAccount) return
@@ -161,6 +243,9 @@ export function SendMemoBond({ account, initialTab = 'bond' }: BondFormProps) {
       memo = `UNBOND:${nodeAddress.trim()}:${amountE8}`
     } else if (tab === 'rebond') {
       memo = `REBOND:${nodeAddress.trim()}:${newAddress.trim()}:${amountE8}`
+    } else if (tab === 'yield') {
+      // An omitted target preserves the stored one, which the summary row shows; BPS 0 disables and clears it
+      memo = `BONDYIELD:${nodeAddress.trim()}:${yieldBps}${yieldBps && payoutTarget ? `:${payoutTarget}` : ''}`
     }
 
     setSubmitting(true)
@@ -178,6 +263,11 @@ export function SendMemoBond({ account, initialTab = 'bond' }: BondFormProps) {
         setNodeAddress('')
         setNewAddress('')
         setAmount('')
+        setPayoutAddress('')
+        // The send changed the bond state these queries cache, and re-entering the node
+        // within their staleTime would show (and seed the form from) the pre-send values
+        queryClient.invalidateQueries({ queryKey: ['node-info'] })
+        queryClient.invalidateQueries({ queryKey: ['bond-provider-nodes'] })
       })
       .catch((err: any) => {
         setSubmitting(false)
@@ -198,9 +288,25 @@ export function SendMemoBond({ account, initialTab = 'bond' }: BondFormProps) {
     if (!nodeAddressValid) return t('bond.invalidNodeAddress')
     if (nodeInfoLoading) return t('bond.validatingNode')
     if (nodeInfoError || !nodeInfo) return t('bond.nodeNotFound')
+    if (tab === 'yield') {
+      if (!walletProvider || walletBond <= 0) return t('bond.yield.notProvider')
+      if (!yieldBpsValid) return t('bond.yield.enterPercent')
+      if (!payoutShapeValid) return t('bond.yield.invalidPayoutAddress')
+      if (payoutIsName) {
+        if (payoutNameChecking) return t('bond.yield.checkingName')
+        if (thorName.isError) return t('bond.yield.nameLookupFailed')
+        if (!thorName.thorNames[0]) return t('bond.yield.nameNotFound')
+        if (!payoutNameOwned) return t('bond.yield.nameNotOwned')
+      }
+      return yieldBps === 0 ? t('bond.yield.disable') : t('bond.yield.set')
+    }
+    if ((tab === 'unbond' || tab === 'rebond') && walletBond <= 0) return t('bond.yield.notProvider')
     if (needsNewAddress && !newAddress.trim()) return t('bond.enterNewAddress')
     if (needsNewAddress && !newAddressValid) return t('bond.invalidNewAddress')
+    if (needsNewAddress && !newProvider) return t('bond.newAddressNotWhitelisted')
+    if (tab === 'rebond' && movesWholeBond) return t('bond.rebond')
     if (!numericAmount) return t('enterAmount')
+    if ((tab === 'unbond' || tab === 'rebond') && numericAmount > walletBond) return t('bond.exceedsBond')
     if (tab === 'bond') return t('bond.bond')
     if (tab === 'unbond') return t('bond.unbond')
     return t('bond.rebond')
@@ -215,6 +321,8 @@ export function SendMemoBond({ account, initialTab = 'bond' }: BondFormProps) {
             onClick={() => {
               setTab(key)
               setAmount('')
+              setYieldPercent('')
+              setPayoutAddress('')
               if (key !== 'track') writeBondAddressParam('')
             }}
             className={cn('cursor-pointer transition-colors', tab === key ? 'text-txt-contrast-1-default' : 'text-txt-text-modal')}
@@ -224,28 +332,19 @@ export function SendMemoBond({ account, initialTab = 'bond' }: BondFormProps) {
         ))}
       </div>
       <div className="bg-modal rounded-20 relative space-y-1.25 border p-2.5">
-        <div className="relative">
-          <Textarea
-            placeholder={trackTab ? t('bond.bondAddress') : t('bond.nodeAddress')}
-            value={addressValue}
-            onChange={e => setAddressValue(e.target.value)}
-            className={cn(
-              'bg-swap-bloc border-border-sub-container-modal-low',
-              addressValue.trim() && !addressValid && 'border-destructive focus-visible:ring-destructive'
-            )}
-          />
-          {addressValue ? (
-            <GenericButton size="small" icon={<Icon name="trash" />} className="absolute end-3 top-3" onClick={() => setAddressValue('')} />
-          ) : (
-            <GenericButton
-              size="small"
-              className="absolute end-3 top-3 shrink-0"
-              onClick={() => navigator.clipboard.readText().then(text => setAddressValue(text.trim()))}
-            >
-              {t('paste')}
-            </GenericButton>
-          )}
-        </div>
+        <AddressField
+          placeholder={trackTab ? t('bond.bondAddress') : t('bond.nodeAddress')}
+          value={addressValue}
+          onChange={setAddressValue}
+          invalid={!!addressValue.trim() && !addressValid}
+        />
+
+        {!trackTab && nodeInfo && walletThorAddress && (
+          <BondAddressRow label={tab === 'rebond' ? t('bond.currentBondAddress') : t('bond.bondAddress')} address={walletThorAddress}>
+            <p className="text-txt-high-contrast text-sm font-bold">{rune(walletBond, 2)}</p>
+            {runeRate && <p className="text-txt-label-small text-sm">{usd(walletBond, runeRate)}</p>}
+          </BondAddressRow>
+        )}
 
         {needsNewAddress && (
           <div className="flex justify-center">
@@ -254,28 +353,19 @@ export function SendMemoBond({ account, initialTab = 'bond' }: BondFormProps) {
         )}
 
         {needsNewAddress && (
-          <div className="relative">
-            <Textarea
-              placeholder={t('bond.newAddress')}
-              value={newAddress}
-              onChange={e => setNewAddress(e.target.value)}
-              className={cn(
-                'bg-swap-bloc border-border-sub-container-modal-low',
-                newAddress.trim() && !newAddressValid && 'border-destructive focus-visible:ring-destructive'
-              )}
-            />
-            {newAddress ? (
-              <GenericButton size="small" icon={<Icon name="trash" />} className="absolute end-3 top-3" onClick={() => setNewAddress('')} />
-            ) : (
-              <GenericButton
-                size="small"
-                className="absolute end-3 top-3 shrink-0"
-                onClick={() => navigator.clipboard.readText().then(text => setNewAddress(text.trim()))}
-              >
-                {t('paste')}
-              </GenericButton>
-            )}
-          </div>
+          <AddressField
+            placeholder={t('bond.newAddress')}
+            value={newAddress}
+            onChange={setNewAddress}
+            invalid={!!newAddress.trim() && !newAddressValid}
+          />
+        )}
+
+        {needsNewAddress && nodeInfo && newAddressValid && newProvider && (
+          <BondAddressRow label={t('bond.newBondAddress')} address={newAddress.trim()}>
+            <p className="text-txt-high-contrast text-sm font-bold">{rune(newProviderBond, 2)}</p>
+            {runeRate && <p className="text-txt-label-small text-sm">{usd(newProviderBond, runeRate)}</p>}
+          </BondAddressRow>
         )}
 
         {needsAmount && (
@@ -291,7 +381,11 @@ export function SendMemoBond({ account, initialTab = 'bond' }: BondFormProps) {
                   autoComplete="off"
                 />
                 <div className="text-txt-label-small text-sm">
-                  {toCurrencyFixed(fiatValue.toCurrency('$', { trimTrailingZeros: false }))} ({fiatPercent.toFixed(0)}%)
+                  {tab === 'rebond' && !amount.trim()
+                    ? t('bond.rebondZeroHint')
+                    : runeRate
+                      ? `${toCurrencyFixed(fiatValue.toCurrency('$', { trimTrailingZeros: false }))} (${fiatPercent.toFixed(0)}%)`
+                      : `${fiatPercent.toFixed(0)}%`}
                 </div>
               </div>
 
@@ -302,7 +396,6 @@ export function SendMemoBond({ account, initialTab = 'bond' }: BondFormProps) {
                     <span className="text-txt-high-contrast text-sm font-bold">{selectedAsset.ticker}</span>
                     <span className="text-txt-label-small text-xs">{chainLabel(runeToken.balance.chain)}</span>
                   </div>
-                  <Icon name="arrow-s-down" className="text-txt-label-small size-4" />
                 </div>
               )}
             </div>
@@ -313,10 +406,10 @@ export function SendMemoBond({ account, initialTab = 'bond' }: BondFormProps) {
                   <GenericButton size="small" onClick={() => setAmount('')} disabled={amount === ''}>
                     {t('clear')}
                   </GenericButton>
-                  <GenericButton size="small" onClick={() => setAmount(String(runeToken.amount * 0.5))}>
+                  <GenericButton size="small" onClick={() => setAmount(String(quickAmountBase * 0.5))} disabled={quickAmountBase <= 0}>
                     50%
                   </GenericButton>
-                  <GenericButton size="small" onClick={() => setAmount(String(runeToken.amount))}>
+                  <GenericButton size="small" onClick={() => setAmount(String(quickAmountBase))} disabled={quickAmountBase <= 0}>
                     100%
                   </GenericButton>
                 </div>
@@ -326,6 +419,85 @@ export function SendMemoBond({ account, initialTab = 'bond' }: BondFormProps) {
               </div>
             )}
           </div>
+        )}
+
+        {yieldTab && nodeInfo && walletThorAddress && (
+          <>
+            {walletBond > 0 && (
+              <>
+                {/* With yield on and no stored target, the chain pays the provider's own address */}
+                <BondAddressRow
+                  label={
+                    <>
+                      {t('bond.yield.payoutAddress')} <PayoutInfoTooltip />
+                    </>
+                  }
+                  address={storedPayoutTarget || (storedBps ? walletThorAddress : t('bond.yield.noPayoutAddress'))}
+                >
+                  <p className="text-txt-high-contrast text-sm font-bold">{storedBps / 100}%</p>
+                  {storedBps > 0 && <p className="text-txt-label-small text-sm">{payoutTicker}</p>}
+                </BondAddressRow>
+
+                <div className="grid grid-cols-2 gap-1.25">
+                  <div className="bg-swap-bloc rounded-15 border p-4">
+                    <p className="text-txt-label-small mb-1 text-xs tracking-wide uppercase">{t('bond.yield.effectiveApr')}</p>
+                    <p className="text-txt-high-contrast text-lg font-bold">{percent(compoundApr)}</p>
+                    <p className="text-txt-label-small text-sm">{t('bond.track.perYear', { amount: rune(walletBond * compoundApr) })}</p>
+                    {runeRate && (
+                      <p className="text-txt-label-small text-sm">
+                        {t('bond.track.perYear', { amount: usd(walletBond * compoundApr, runeRate) ?? '' })}
+                      </p>
+                    )}
+                  </div>
+                  <div className="bg-swap-bloc rounded-15 border p-4">
+                    <p className="text-txt-label-small mb-1 text-xs tracking-wide uppercase">{t('bond.track.effectiveYield')}</p>
+                    <p className="text-txt-high-contrast text-lg font-bold">{percent(payoutApr)}</p>
+                    <p className="text-txt-label-small text-sm">{t('bond.track.perYear', { amount: rune(walletBond * payoutApr) })}</p>
+                    {runeRate && (
+                      <p className="text-txt-label-small text-sm">
+                        {t('bond.track.perYear', { amount: usd(walletBond * payoutApr, runeRate) ?? '' })}
+                      </p>
+                    )}
+                  </div>
+                </div>
+
+                <div className="bg-swap-bloc rounded-15 border p-7">
+                  <div className="text-txt-label-small mb-3 font-semibold">{t('bond.yield.payout')}</div>
+                  <DecimalInput
+                    className="text-txt-high-contrast w-full bg-transparent text-2xl font-medium outline-none"
+                    amount={yieldPercent}
+                    onAmountChange={setYieldPercent}
+                    suffix="%"
+                    isAllowed={({ floatValue }) => floatValue === undefined || floatValue <= 100}
+                    autoComplete="off"
+                  />
+                  <div className="text-txt-label-small mt-1 text-sm">
+                    {yieldBps ? t('bond.yield.compoundHint', { percent: (10000 - yieldBps) / 100 }) : t('bond.yield.disableHint')}
+                  </div>
+                </div>
+
+                <div className="bg-swap-bloc rounded-15 border p-7">
+                  <div className="text-txt-label-small mb-3 font-semibold">
+                    {t('bond.yield.payoutAddress')} <PayoutInfoTooltip />
+                  </div>
+                  <Textarea
+                    placeholder={t('bond.yield.payoutAddressPlaceholder')}
+                    value={payoutAddress}
+                    onChange={e => setPayoutAddress(e.target.value)}
+                    spellCheck={false}
+                    autoCorrect="off"
+                    autoCapitalize="none"
+                    className={cn(
+                      'bg-modal border-border-sub-container-modal-low',
+                      // No red border on a failed lookup: that is not the user's mistake
+                      (!payoutShapeValid || (payoutIsName && !payoutNameChecking && !thorName.isError && !payoutNameOwned)) &&
+                        'border-destructive focus-visible:ring-destructive'
+                    )}
+                  />
+                </div>
+              </>
+            )}
+          </>
         )}
 
         {trackTab && bondAddressValid && (
@@ -346,7 +518,7 @@ export function SendMemoBond({ account, initialTab = 'bond' }: BondFormProps) {
             ) : position.nodes.length === 0 ? (
               <p className="text-txt-label-small text-sm">{t('bond.track.noBonds')}</p>
             ) : (
-              <BondSummary position={position} runeRate={runeRate} historyLoading={isHistoryLoading} />
+              <BondSummary position={position} runeRate={runeRate} />
             )}
           </div>
         )}
@@ -377,13 +549,80 @@ export function SendMemoBond({ account, initialTab = 'bond' }: BondFormProps) {
   )
 }
 
+function AddressField({
+  placeholder,
+  value,
+  onChange,
+  invalid
+}: {
+  placeholder: string
+  value: string
+  onChange: (value: string) => void
+  invalid: boolean
+}) {
+  const t = useTranslations('send')
+
+  return (
+    <div className="relative">
+      <Textarea
+        placeholder={placeholder}
+        value={value}
+        onChange={e => onChange(e.target.value)}
+        spellCheck={false}
+        autoCorrect="off"
+        autoCapitalize="none"
+        className={cn('bg-swap-bloc border-border-sub-container-modal-low', invalid && 'border-destructive focus-visible:ring-destructive')}
+      />
+      {value ? (
+        <GenericButton size="small" icon={<Icon name="trash" />} className="absolute end-3 top-3" onClick={() => onChange('')} />
+      ) : (
+        <GenericButton
+          size="small"
+          className="absolute end-3 top-3 shrink-0"
+          onClick={() => navigator.clipboard.readText().then(text => onChange(text.trim()))}
+        >
+          {t('paste')}
+        </GenericButton>
+      )}
+    </div>
+  )
+}
+
+function PayoutInfoTooltip() {
+  const t = useTranslations('send')
+
+  return (
+    <InfoTooltip>
+      {t.rich('bond.yield.payoutTooltip', {
+        link: chunks => (
+          <a href="/thorname" className="underline">
+            {chunks}
+          </a>
+        )
+      })}
+    </InfoTooltip>
+  )
+}
+
+function BondAddressRow({ label, address, children }: { label: ReactNode; address: string; children: ReactNode }) {
+  return (
+    <div className="bg-swap-bloc rounded-15 flex items-start justify-between gap-4 border p-4">
+      <div className="min-w-0">
+        <p className="text-txt-high-contrast font-semibold">{label}</p>
+        <p className="text-txt-label-small text-xs break-all">{address}</p>
+      </div>
+      <div className="shrink-0 text-end">{children}</div>
+    </div>
+  )
+}
+
 const rune = (value: number, digits = 0) => `${value.toLocaleString(undefined, { maximumFractionDigits: digits })} RUNE`
 // Whole dollars: at these sizes the cents are noise.
 const usd = (value: number, runeRate?: USwapNumber) =>
   runeRate ? `$${Math.round(runeRate.mul(value).getValue('number')).toLocaleString('en-US')}` : null
 const percent = (value: number) => `${(value * 100).toFixed(1)}%`
 
-function BondSummary({ position, runeRate, historyLoading }: { position: BondPosition; runeRate?: USwapNumber; historyLoading: boolean }) {
+function BondSummary({ position, runeRate }: { position: BondPosition; runeRate?: USwapNumber }) {
   const t = useTranslations('send')
 
   return (
@@ -406,18 +645,11 @@ function BondSummary({ position, runeRate, historyLoading }: { position: BondPos
           <p className="text-txt-label-small text-sm">{t('bond.track.perYear', { amount: usd(position.yearlyReward, runeRate) ?? '' })}</p>
         )}
       </div>
-      <div className="bg-modal rounded-xl border p-3" title={t('bond.track.totalRewardsHint')}>
-        <p className="text-txt-label-small mb-1 text-sm tracking-wide uppercase">{t('bond.track.totalRewards')}</p>
-        {position.totalRewards !== undefined ? (
-          <>
-            <p className="text-txt-high-contrast text-lg font-bold">{rune(position.totalRewards)}</p>
-            {runeRate && <p className="text-txt-label-small text-sm">{usd(position.totalRewards, runeRate)}</p>}
-          </>
-        ) : historyLoading ? (
-          <LoaderCircle size={20} className="text-txt-label-small mt-1 animate-spin" />
-        ) : (
-          <p className="text-txt-high-contrast text-lg font-bold">—</p>
-        )}
+      <div className="bg-modal rounded-xl border p-3">
+        <p className="text-txt-label-small mb-1 text-sm tracking-wide uppercase">{t('bond.track.effectiveYield')}</p>
+        <p className="text-txt-high-contrast text-lg font-bold">{percent(position.yieldApr)}</p>
+        <p className="text-txt-label-small text-sm">{t('bond.track.perYear', { amount: rune(position.yearlyYield) })}</p>
+        {runeRate && <p className="text-txt-label-small text-sm">{t('bond.track.perYear', { amount: usd(position.yearlyYield, runeRate) ?? '' })}</p>}
       </div>
     </div>
   )
@@ -435,6 +667,7 @@ function BondNodesTable({ position, runeRate }: { position: BondPosition; runeRa
             <th className="px-3 py-2 text-end font-medium">{t('bond.track.bond')}</th>
             <th className="px-3 py-2 text-end font-medium">{t('bond.track.apr')}</th>
             <th className="px-3 py-2 text-end font-medium">{t('bond.track.fee')}</th>
+            <th className="px-3 py-2 text-end font-medium">{t('bond.track.yield')}</th>
             <th className="px-3 py-2 text-end font-medium">{t('bond.track.netApr')}</th>
           </tr>
         </thead>
@@ -460,7 +693,8 @@ function BondNodesTable({ position, runeRate }: { position: BondPosition; runeRa
               </td>
               <td className="px-3 py-2 text-end">{percent(node.apr)}</td>
               <td className="text-txt-label-small px-3 py-2 text-end">{(node.fee * 100).toFixed(0)}%</td>
-              <td className="text-green-contrast px-3 py-2 text-end font-semibold">{percent(node.netApr)}</td>
+              <td className="text-txt-label-small px-3 py-2 text-end">{(node.yieldShare * 100).toFixed(0)}%</td>
+              <td className="px-3 py-2 text-end">{percent(node.netApr)}</td>
             </tr>
           ))}
         </tbody>

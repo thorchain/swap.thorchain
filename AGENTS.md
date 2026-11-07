@@ -32,6 +32,12 @@ Two-component architecture:
   where `connectEVMWallet` with `WalletOption.BRAVE` gets the EVM account only, from whichever extension owns `window.ethereum`. Rabby is
   `WalletOption.RABBY` (4.3.35 onwards) on the SDK's `connectEVMWallet`, which uses the provider Rabby announces over EIP-6963 (rdns `io.rabby`)
   rather than `window.ethereum` — Rabby takes that from MetaMask only when set as the default wallet, and flags it `isMetaMask` too.
+  Binance Wallet is the SDK's `@tcswap/wallets/binance` (`connectBinance`, 4.3.37 onwards): the Binance Web3 Wallet extension injects everything
+  under the `window.binancew3w` namespace — an EIP-1193 EVM provider (`ethereum`, also announced over EIP-6963 as `com.binance.wallet`, the
+  connector's last-resort lookup), a Phantom-shaped Solana one (`solana`), a Unisat-compatible Bitcoin one (`bitcoin`, mirrored as `window.unisat`
+  flagged `isBinance` on builds without the namespaced copy), and its own Tron provider (`tron`), which answers `getAccount()`/`signTransaction()`
+  rather than TronLink's `tronWeb` surface. The Bitcoin provider exists only in the Binance App's in-app dApp browser — the Chrome extension serves
+  EVM, Solana and TRON only, so the app filters BTC out of the wallet's chain list (`supportedChains` in `src/lib/wallets.ts`).
   WalletConnect is the SDK's `@tcswap/wallets/walletconnect` (`connectWalletconnect`), listed only when
   `NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID` is set. One QR scan connects every selected chain the wallet supports; the app warns about the rest.
   A reload restores the stored sessions without a QR code (`restoreOnly`), and a session ended from the phone removes its chains
