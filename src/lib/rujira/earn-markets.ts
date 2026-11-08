@@ -72,12 +72,17 @@ export const toEarnAsset = (asset: EarnApiAsset): BorrowAsset => ({
   usdPrice: scaledApr(asset.price?.current)
 })
 
-const catalogue = (opportunities: EarnOpportunity[]): EarnMarkets => ({
-  opportunities,
-  assets: [...new Map(opportunities.flatMap(row => row.assets).map(asset => [asset.identifier, asset])).values()].sort(
-    (a, b) => a.ticker.localeCompare(b.ticker) || a.identifier.localeCompare(b.identifier)
-  )
-})
+const EXCLUDED_EARN_TICKERS = new Set(['XUSK', 'NAMI', 'AUTO'])
+
+const catalogue = (opportunities: EarnOpportunity[]): EarnMarkets => {
+  const included = opportunities.filter(row => row.assets.every(asset => !EXCLUDED_EARN_TICKERS.has(asset.ticker.toUpperCase())))
+  return {
+    opportunities: included,
+    assets: [...new Map(included.flatMap(row => row.assets).map(asset => [asset.identifier, asset])).values()].sort(
+      (a, b) => a.ticker.localeCompare(b.ticker) || a.identifier.localeCompare(b.identifier)
+    )
+  }
+}
 
 export const tradeEarnMarkets = (pairs: EarnTradePair[], metrics: EarnCclMetric[] = []): EarnMarkets => {
   const byContract = new Map(metrics.filter(row => row.strategy.pair.contractAddress).map(row => [row.strategy.pair.contractAddress!, row.apr]))
@@ -88,9 +93,10 @@ export const tradeEarnMarkets = (pairs: EarnTradePair[], metrics: EarnCclMetric[
       apr: decimalApr(byContract.get(pair.address))
     }))
   )
-  // Every Trade asset remains selectable, even when no CCL strategy exists for
+  // Every included Trade asset remains selectable, even when no CCL strategy exists for
   // one of its pairs. Only actual analytics CCL rows qualify as opportunities.
-  return { assets: markets.assets, opportunities: markets.opportunities.filter((_, index) => byContract.has(pairs[index].address)) }
+  const cclPairIds = new Set(pairs.filter(pair => byContract.has(pair.address)).map(pair => pair.id))
+  return { assets: markets.assets, opportunities: markets.opportunities.filter(row => cclPairIds.has(row.id)) }
 }
 
 export const lendingEarnMarkets = (vaults: EarnVault[]): EarnMarkets =>

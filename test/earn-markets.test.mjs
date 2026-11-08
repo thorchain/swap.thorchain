@@ -69,6 +69,43 @@ test('Trade asset catalogue includes both sides, keeps chain variants, and dedup
   assert.equal(result.opportunities[0].apr, '0.1')
 })
 
+test('Earn excludes xUSK, NAMI and AUTO from asset lists and opportunities in every mode', () => {
+  const btc = asset('BTC', 'BTC')
+  const excluded = [asset('xUSK'), asset('nami'), asset('AUTO')]
+  const pairs = [
+    pair('excluded-base', excluded[0], btc, '9'),
+    pair('without-ccl', btc, asset('ETH'), null),
+    pair('excluded-quote', btc, excluded[1], '8'),
+    pair('included', btc, asset('USDC'), '0.1'),
+    pair('excluded-auto', excluded[2], btc, '7')
+  ]
+  const trade = mapTradeMarkets(
+    pairs,
+    pairs.filter(row => row.id !== 'without-ccl').map(row => ({ strategy: { pair: { contractAddress: row.address } }, apr: row.analyticsApr }))
+  )
+  assert.deepEqual(
+    trade.opportunities.map(row => row.id),
+    ['included']
+  )
+  assert.deepEqual(
+    trade.assets.map(row => row.ticker),
+    ['BTC', 'ETH', 'USDC']
+  )
+
+  const lending = lendingEarnMarkets([...excluded, btc].map(asset => ({ id: asset.metadata.symbol, asset, status: { lendRate: '100000000000' } })))
+  const staking = stakingEarnMarkets([...excluded, btc].map(bondAsset => ({ id: bondAsset.metadata.symbol, bondAsset })))
+  for (const markets of [lending, staking]) {
+    assert.deepEqual(
+      markets.assets.map(row => row.ticker),
+      ['BTC']
+    )
+    assert.deepEqual(
+      markets.opportunities.map(row => row.id),
+      ['BTC']
+    )
+  }
+})
+
 test('rank after matching either side, not after limiting the overall leaders', () => {
   const btc = asset('BTC', 'BTC'),
     eth = asset('ETH'),

@@ -12,6 +12,8 @@ The integration uses both schemas in `data/graphql/`: `rujira-schema.graphql` fo
 `rujira-analytics-schema.graphql` for CCL and 30-day staking APRs. It shares Borrow's server-only API-key configuration. See `borrow.md` for `.env`
 setup. Public access can be rate-limited.
 
+xUSK, NAMI, and AUTO are excluded from Earn asset lists and opportunities in every mode, including pairs containing any of these assets.
+
 - Automated Trading paginates the complete `finV3.pairs` catalogue, offering the union of base and quote assets. A separate paginated analytics query
   reads `analytics.products.amm.strategies` filtered to CCL, with 30-day APR. Full pair contract addresses join the two responses. Only actual CCL
   strategy rows enter the ranking, while all Trade assets remain selectable. Selecting an asset matches either side before taking three. The old
