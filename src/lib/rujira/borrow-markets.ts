@@ -18,6 +18,7 @@ export interface BorrowMarketsData {
     vaults: {
       price: { current: string } | null
       borrower: {
+        available: string
         asset: GraphqlAsset
         vault: {
           interest: { baseRate: string; step1: string; step2: string; targetUtilization: string }
@@ -43,6 +44,7 @@ export interface BorrowAsset extends Asset {
   usdPrice: string | null
   collateralRatio?: string
   borrowRate?: string
+  availableToBorrow?: string
   interest?: BorrowInterest
 }
 
@@ -93,9 +95,11 @@ export const getBorrowMarkets = (data: BorrowMarketsData): BorrowMarkets => {
         const { interest, status } = v.borrower.vault
         // Pools use the secured market's decimals, which can differ from the Layer 1 display asset.
         const units = new Decimal(10).pow(v.borrower.asset.metadata.decimals)
+        const liquidity = Decimal.max(0, new Decimal(status.depositPool.size).sub(status.debtPool.size))
         return {
           ...toAsset(v.borrower.asset, v.price),
           borrowRate: scaled(status.debtRate),
+          availableToBorrow: Decimal.max(0, Decimal.min(liquidity, v.borrower.available)).div(units).toFixed(),
           interest: {
             baseRate: scaled(interest.baseRate),
             step1: scaled(interest.step1),

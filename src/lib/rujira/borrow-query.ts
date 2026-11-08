@@ -12,6 +12,7 @@ export const BORROW_MARKETS_QUERY = `
       vaults {
         price { current }
         borrower {
+          available
           vault {
             interest { baseRate step1 step2 targetUtilization }
             status { debtRate depositPool { size } debtPool { size } }

@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import { useTranslations } from 'next-intl'
+import { Chain } from '@tcswap/core'
 import { ExternalLink, LayoutGrid } from 'lucide-react'
 import { AnimatedButton } from '@/components/animated-button'
 import { GenericButton } from '@/components/generic-button'
@@ -15,7 +16,7 @@ import { useEarnMarkets } from '@/hooks/use-earn-markets'
 import { topEarnOpportunities, type EarnMode } from '@/lib/rujira/earn-markets'
 import type { BorrowAsset } from '@/lib/rujira/borrow-markets'
 import { cn } from '@/lib/utils'
-import { EarnAssetIcon } from './earn-asset-icon'
+import { DefiAssetIcon } from '@/components/defi-asset-icon'
 
 const EARN_URLS: Record<EarnMode, string> = {
   automated: 'https://rujira.network/earn-opportunities',
@@ -24,10 +25,10 @@ const EARN_URLS: Record<EarnMode, string> = {
 }
 
 const POPULAR_EARN_ASSETS = [
-  { ticker: 'BTC', chain: 'BTC' },
-  { ticker: 'ZEC', chain: 'ZEC' },
-  { ticker: 'ETH', chain: 'ETH' },
-  { ticker: 'USDC', chain: 'ETH' }
+  { ticker: 'BTC', chain: Chain.Bitcoin },
+  { ticker: 'ZEC', chain: Chain.Zcash },
+  { ticker: 'ETH', chain: Chain.Ethereum },
+  { ticker: 'USDC', chain: Chain.Ethereum }
 ] as const
 
 const EarnWith = ({ assets, selected, onSelect }: { assets: BorrowAsset[]; selected?: BorrowAsset; onSelect: (asset?: BorrowAsset) => void }) => {
@@ -39,7 +40,7 @@ const EarnWith = ({ assets, selected, onSelect }: { assets: BorrowAsset[]; selec
         <span className="text-txt-label-small font-semibold">{t('earnWith')}</span>
         <DropdownCoinButton aria-label={t('selectAsset')} open={open} onClick={() => setOpen(true)}>
           <span className="flex items-center gap-2">
-            {selected ? <EarnAssetIcon key={selected.identifier} asset={selected} /> : <LayoutGrid className="text-txt-label-small size-8" />}
+            {selected ? <DefiAssetIcon key={selected.identifier} asset={selected} /> : <LayoutGrid className="text-txt-label-small size-8" />}
             <span className="flex w-20 min-w-0 flex-col text-left">
               <span className="truncate text-base leading-tight font-medium">{selected?.ticker ?? t('allAssets')}</span>
               {selected && <span className="text-icon-btn-default truncate text-xs">{chainLabel(selected.chain)}</span>}
@@ -63,7 +64,10 @@ const EarnWith = ({ assets, selected, onSelect }: { assets: BorrowAsset[]; selec
                 disabled={!asset}
                 onClick={() => asset && onSelect(asset)}
               >
-                <EarnAssetIcon asset={asset ?? { ticker }} className="size-4 text-[10px]" />
+                <DefiAssetIcon
+                  asset={asset ?? { ticker, chain }}
+                  className="size-4 text-[10px] [&>img:first-child]:size-4 [&>img:not(:first-child)]:size-2"
+                />
                 {ticker}
               </GenericButton>
             )
@@ -79,7 +83,7 @@ const EarnWith = ({ assets, selected, onSelect }: { assets: BorrowAsset[]; selec
         showFilters
         onSelectAll={() => onSelect(undefined)}
         onSelectAsset={onSelect}
-        renderIcon={asset => <EarnAssetIcon key={asset.identifier} asset={asset} />}
+        renderIcon={asset => <DefiAssetIcon key={asset.identifier} asset={asset} />}
       />
     </>
   )
@@ -129,6 +133,8 @@ const EarnOpportunities = ({ mode }: { mode: EarnMode }) => {
   const selected = mode === 'automated' ? assets.find(asset => asset.identifier === selectedIds[mode]) : undefined
   const ctaUrl = selected ? `${EARN_URLS[mode]}?asset=${encodeURIComponent(selected.ticker)}` : EARN_URLS[mode]
   const opportunities = topEarnOpportunities(data?.opportunities ?? [], selected?.identifier)
+  const rows = mode === 'automated' ? opportunities : [0, 1, 2].map(index => opportunities[index])
+  const noPositions = mode === 'automated' && !!data && !data.metricsUnavailable && opportunities.length === 0
   return (
     <>
       {mode === 'automated' && (
@@ -146,44 +152,48 @@ const EarnOpportunities = ({ mode }: { mode: EarnMode }) => {
               </button>
             </Tooltip>
           </h2>
-          <span className="shrink-0">{t(mode === 'staking' ? 'stakingApr30d' : mode === 'automated' ? 'apr30d' : 'apr')}</span>
+          {(mode !== 'automated' || opportunities.length > 0) && (
+            <span className="shrink-0">{t(mode === 'staking' ? 'stakingApr30d' : mode === 'automated' ? 'apr30d' : 'apr')}</span>
+          )}
         </div>
-        <ol className="divide-y">
-          {[0, 1, 2].map(index => {
-            const row = opportunities[index]
-            return (
-              <li
-                key={row?.id ?? index}
-                className="flex min-h-16 items-center justify-between gap-3 py-3"
-                data-earn-opportunity={row?.id ?? 'unavailable'}
-              >
-                <div className="flex min-w-0 items-center gap-3">
-                  {row && (
-                    <div className="flex shrink-0 -space-x-3">
-                      {row.assets.map((asset, i) => (
-                        <span
-                          key={asset.identifier}
-                          className="bg-modal relative rounded-full ring-2 ring-[var(--color-modal)]"
-                          style={{ zIndex: row.assets.length - i }}
-                        >
-                          <EarnAssetIcon asset={asset} />
-                        </span>
-                      ))}
-                    </div>
-                  )}
-                  <span className="text-txt-high-contrast truncate text-sm font-medium">
-                    {row ? row.assets.map(asset => asset.ticker).join('/') : 'N/A'}
+        {rows.length > 0 && (
+          <ol className="divide-y">
+            {rows.map((row, index) => {
+              return (
+                <li
+                  key={row?.id ?? index}
+                  className="flex min-h-16 items-center justify-between gap-3 py-3"
+                  data-earn-opportunity={row?.id ?? 'unavailable'}
+                >
+                  <div className="flex min-w-0 items-center gap-3">
+                    {row && (
+                      <div className="flex shrink-0 -space-x-3">
+                        {row.assets.map((asset, i) => (
+                          <span
+                            key={asset.identifier}
+                            className="bg-modal relative rounded-full ring-2 ring-[var(--color-modal)]"
+                            style={{ zIndex: row.assets.length - i }}
+                          >
+                            <DefiAssetIcon asset={asset} />
+                          </span>
+                        ))}
+                      </div>
+                    )}
+                    <span className="text-txt-high-contrast truncate text-sm font-medium">
+                      {row ? row.assets.map(asset => asset.ticker).join('/') : 'N/A'}
+                    </span>
+                  </div>
+                  <span className="text-txt-high-contrast shrink-0 text-sm font-medium">
+                    {row?.apr == null
+                      ? 'N/A'
+                      : new Intl.NumberFormat(undefined, { style: 'percent', maximumFractionDigits: 2 }).format(Number(row.apr))}
                   </span>
-                </div>
-                <span className="text-txt-high-contrast shrink-0 text-sm font-medium">
-                  {row?.apr == null
-                    ? 'N/A'
-                    : new Intl.NumberFormat(undefined, { style: 'percent', maximumFractionDigits: 2 }).format(Number(row.apr))}
-                </span>
-              </li>
-            )
-          })}
-        </ol>
+                </li>
+              )
+            })}
+          </ol>
+        )}
+        {noPositions && <p className="text-txt-label-small py-3 text-sm">{t('noPositions')}</p>}
       </section>
       {(isError ? !data : data?.metricsUnavailable) && (
         <p role="status" className="text-txt-label-small px-3 py-2 text-xs">

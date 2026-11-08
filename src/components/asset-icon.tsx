@@ -1,9 +1,23 @@
 import Image from 'next/image'
-import { useState } from 'react'
+import { useState, type ReactNode } from 'react'
 import { Asset } from '@/components/swap/asset'
 import { cn } from '@/lib/utils'
 
-export function AssetIcon({ asset, className }: { asset: Asset | undefined; className?: string }) {
+export function AssetIcon({
+  asset,
+  className,
+  onLogoError,
+  fallback,
+  showChainBadge,
+  showSecuredBadge = true
+}: {
+  asset: Pick<Asset, 'identifier' | 'ticker' | 'chain' | 'logoURI' | 'isSecuredAsset'> | undefined
+  className?: string
+  onLogoError?: () => void
+  fallback?: ReactNode
+  showChainBadge?: boolean
+  showSecuredBadge?: boolean
+}) {
   const [loaded, setLoaded] = useState(false)
   const l1Chain = asset?.isSecuredAsset ? asset.identifier.split('-')[0] : asset?.chain
 
@@ -19,19 +33,26 @@ export function AssetIcon({ asset, className }: { asset: Asset | undefined; clas
               width={32}
               height={32}
               onLoad={() => setLoaded(true)}
-              onError={() => setLoaded(false)}
+              onError={() => {
+                setLoaded(false)
+                onLogoError?.()
+              }}
             />
           )}
-          {l1Chain && !isNativeAsset(l1Chain, asset.ticker) && (
+          {!asset.logoURI && fallback}
+          {l1Chain && (showChainBadge ?? !isNativeAsset(l1Chain, asset.ticker)) && (
             <Image
-              className={cn('outline-swap-global bg-swap-global absolute -right-1 h-4 w-4 rounded-md', asset.isSecuredAsset ? '-top-1' : '-bottom-1')}
+              className={cn(
+                'outline-swap-global bg-swap-global absolute -right-1 h-4 w-4 rounded-md',
+                asset.isSecuredAsset && showSecuredBadge ? '-top-1' : '-bottom-1'
+              )}
               src={`/networks/${l1Chain.toLowerCase()}.svg`}
               alt=""
               width={16}
               height={16}
             />
           )}
-          {asset.isSecuredAsset && (
+          {asset.isSecuredAsset && showSecuredBadge && showChainBadge !== false && (
             <Image
               className="outline-swap-global bg-swap-global absolute -right-1 -bottom-1 h-4 w-4 rounded-md"
               src="/networks/thor.svg"
@@ -48,7 +69,7 @@ export function AssetIcon({ asset, className }: { asset: Asset | undefined; clas
 
 const NATIVE_GAS_PAIRS = new Set(['thor.rune', 'bsc.bnb', 'gaia.atom', 'tron.trx'])
 
-function isNativeAsset(chain: string, ticker: string): boolean {
+export function isNativeAsset(chain: string, ticker: string): boolean {
   const c = chain.toLowerCase()
   const t = ticker.toLowerCase()
   return c === t || NATIVE_GAS_PAIRS.has(`${c}.${t}`)

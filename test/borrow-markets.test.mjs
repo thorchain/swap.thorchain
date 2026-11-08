@@ -30,6 +30,7 @@ const getBorrowMarkets = data =>
       vaults: data.ghostCredit.vaults.map(v => ({
         ...v,
         borrower: {
+          available: '100000000000',
           ...v.borrower,
           vault: v.borrower.vault ?? {
             interest: { baseRate: '0', step1: '50000000000', step2: '950000000000', targetUtilization: '850000000000' },
@@ -82,6 +83,35 @@ test('Borrow comes from lending vaults, not the collateral list; an empty vault 
   )
   assert.equal(result.borrowAssets[0].usdPrice, null)
   assert.equal(result.borrowAssets[0].isSecuredAsset, true)
+  assert.equal(result.borrowAssets[0].availableToBorrow, '0')
+})
+
+test('available borrowing is limited by both vault liquidity and allowance, using market decimals', () => {
+  const source = asset('USDC')
+  source.variants = { layer1: { ...asset('USDC', 'LAYER_1'), asset: 'ETH.USDC-0xabc', metadata: { ...source.metadata, decimals: 6 } } }
+  const available = (allowance, deposits, debt) =>
+    getBorrowMarkets({
+      ghostCredit: {
+        collaterals: [],
+        vaults: [
+          {
+            price,
+            borrower: {
+              asset: source,
+              available: allowance,
+              vault: {
+                interest: { baseRate: '0', step1: '0', step2: '0', targetUtilization: '850000000000' },
+                status: { debtRate: '0', depositPool: { size: deposits }, debtPool: { size: debt } }
+              }
+            }
+          }
+        ]
+      }
+    }).borrowAssets[0].availableToBorrow
+  assert.equal(available('90000000000', '100000000000', '50000000000'), '500')
+  assert.equal(available('123456789', '100000000000', '50000000000'), '1.23456789')
+  assert.equal(available('0', '100000000000', '50000000000'), '0')
+  assert.equal(available('90000000000', '100', '200'), '0')
 })
 
 test('Layer 1 variants retain their own decimals and the original collateral identity', () => {

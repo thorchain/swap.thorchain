@@ -8,6 +8,7 @@ import { AnimatedButton } from '@/components/animated-button'
 import { GenericButton } from '@/components/generic-button'
 import { DropdownCoinButton } from '@/components/dropdown-coin-button'
 import { DecimalInput } from '@/components/decimal/decimal-input'
+import { DecimalText } from '@/components/decimal/decimal-text'
 import { chainLabel } from '@/components/connect-wallet/config'
 import { Skeleton } from '@/components/ui/skeleton'
 import { Slider } from '@/components/ui/slider'
@@ -17,7 +18,7 @@ import { useBalance } from '@/hooks/use-balance'
 import type { BorrowAsset } from '@/lib/rujira/borrow-markets'
 import { borrowAmountForLtv, calculateBorrowPreview } from '@/lib/rujira/borrow-preview'
 import { getBorrowUrl } from '@/lib/rujira/borrow-link'
-import { BorrowAssetIcon } from './borrow-asset-icon'
+import { DefiAssetIcon } from '@/components/defi-asset-icon'
 import { BorrowSelectAsset } from './borrow-select-asset'
 
 // The spectrum is fixed to the full 0–100% track, so a low LTV only reveals
@@ -83,7 +84,7 @@ const BorrowInput = ({
         </div>
         <DropdownCoinButton aria-label={t('selectAsset', { label })} open={open} onClick={() => setOpen(true)} disabled={!assets.length}>
           <span className="flex items-center gap-2">
-            {selected && <BorrowAssetIcon asset={selected} />}
+            {selected && <DefiAssetIcon asset={selected} />}
             <span className="flex w-16 flex-col items-start gap-1 text-left">
               <span className="inline-block w-full truncate text-base leading-none font-medium">
                 {selected?.ticker ?? (loading ? <Skeleton className="h-4 w-12" /> : t('select'))}
@@ -207,6 +208,16 @@ export const Borrow = () => {
             <span>100%</span>
           </div>
         </div>
+        <div className="mt-4 flex items-center justify-between gap-3 text-sm">
+          <span className="text-txt-label-small">{t('availableToBorrow')}</span>
+          <span data-borrow-metric="available" className="text-txt-high-contrast text-right font-medium">
+            {borrow?.availableToBorrow == null ? (
+              '\u2014'
+            ) : (
+              <DecimalText amount={borrow.availableToBorrow} symbol={borrow.ticker} decimalScale={borrow.decimals} valueIsNumericString />
+            )}
+          </span>
+        </div>
       </BorrowInput>
       <dl aria-label={t('details')} className="rounded-15 space-y-3 border p-5 text-sm sm:p-7">
         <div className="flex items-center justify-between gap-3">
@@ -240,7 +251,7 @@ export const Borrow = () => {
             ) : (
               <>
                 {deposit && (
-                  <BorrowAssetIcon asset={deposit} className="size-5 shrink-0 [&>img:first-child]:size-5 [&>img:not(:first-child)]:size-2.5" />
+                  <DefiAssetIcon asset={deposit} className="size-5 shrink-0 [&>img:first-child]:size-5 [&>img:not(:first-child)]:size-2.5" />
                 )}
                 <span data-liquidation-usd>
                   {new Intl.NumberFormat(undefined, {

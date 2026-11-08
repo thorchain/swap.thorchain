@@ -8,6 +8,10 @@ selected assets. Chain suffixes distinguish noncanonical assets, and `toChain` p
 collateral with Ethereum USDC opens `/borrow/BTC/USDC?toChain=ETH`. It never signs or submits a transaction; amounts are local previews and are not
 forwarded. Before asset data loads, the link falls back to `/borrow`.
 
+The row below the LTV slider shows Available to borrow for the selected debt asset: the smaller of the vault's remaining liquidity
+(`depositPool.size - debtPool.size`, floored at zero) and `borrower.available`, converted using the secured market's decimals. This is market
+availability; the entered collateral and protocol LTV limits still determine the user's borrowing capacity.
+
 The form and asset picker live in `src/components/borrow/`. They reuse the existing inputs, dialog/drawer, buttons, wallet balance hook, and trading
 tabs. Borrow selections are separate from swap state and do not request swap quotes.
 

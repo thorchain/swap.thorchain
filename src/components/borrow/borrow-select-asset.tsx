@@ -8,7 +8,7 @@ import { AssetChainFilter } from '@/components/asset-chain-filter'
 import { chainLabel } from '@/components/connect-wallet/config'
 import { useIsMobile } from '@/hooks/use-mobile'
 import { cn } from '@/lib/utils'
-import { BorrowAssetIcon } from './borrow-asset-icon'
+import { DefiAssetIcon } from '@/components/defi-asset-icon'
 import type { BorrowAsset } from '@/lib/rujira/borrow-markets'
 
 export const BorrowSelectAsset = ({
@@ -87,7 +87,7 @@ export const BorrowSelectAsset = ({
                 )}
                 {filtered.length === 0 && (
                   <p className="text-txt-label-small col-span-2 p-4 text-sm" role="status">
-                    {t('noAssets')}
+                    {t(query && assets.length ? 'noSearchMatches' : 'noAssets')}
                   </p>
                 )}
                 {filtered.map(asset => (
@@ -104,7 +104,7 @@ export const BorrowSelectAsset = ({
                     )}
                     aria-pressed={asset.identifier === selected?.identifier}
                   >
-                    {renderIcon ? renderIcon(asset) : <BorrowAssetIcon asset={asset} />}
+                    {renderIcon ? renderIcon(asset) : <DefiAssetIcon asset={asset} />}
                     <span className="min-w-0 flex-1">
                       <span className="text-txt-high-contrast block truncate font-semibold">{asset.ticker}</span>
                       <span className="text-txt-label-small block truncate text-sm">{chainLabel(asset.chain)}</span>

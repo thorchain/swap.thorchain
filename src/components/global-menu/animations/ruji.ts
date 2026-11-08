@@ -1,8 +1,24 @@
 import tcyAnim from './TCY.json'
 
-// Keep TCY's canvas, logo diameter, and hover animation; replace its artwork with RUJI.
+// Keep TCY's canvas, logo diameter, and hover animation; use RUJI artwork and purple waves.
 const logoSize = 768
 const logoScale = (150 / logoSize) * 100
+const waveLayer = structuredClone(tcyAnim.layers[2])
+const waveStart = [140 / 255, 45 / 255, 244 / 255]
+const waveEnd = [213 / 255, 52 / 255, 234 / 255]
+
+for (const group of waveLayer.shapes) {
+  for (const shape of group.it) {
+    if (!('g' in shape) || !shape.g) continue
+    const stops = shape.g.k.k
+    // Recolor only RGB stops, preserving the gradient's opacity stops and animation.
+    for (let index = 0; index < shape.g.p * 4; index += 4) {
+      for (let channel = 0; channel < 3; channel++) {
+        stops[index + channel + 1] = waveStart[channel] + (waveEnd[channel] - waveStart[channel]) * stops[index]
+      }
+    }
+  }
+}
 
 export const rujiAnim = {
   ...tcyAnim,
@@ -27,6 +43,6 @@ export const rujiAnim = {
       }
     },
     { ...tcyAnim.layers[1], shapes: [] },
-    tcyAnim.layers[2]
+    waveLayer
   ]
 }
