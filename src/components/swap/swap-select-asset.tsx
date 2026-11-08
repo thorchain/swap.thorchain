@@ -1,12 +1,12 @@
-import Image from 'next/image'
-import { Fragment, useEffect, useMemo, useRef, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import { useTranslations } from 'next-intl'
 import { useVirtualizer } from '@tanstack/react-virtual'
 import { Chain } from '@tcswap/core'
 import { Search } from 'lucide-react'
 import { Credenza, CredenzaContent, CredenzaHeader, CredenzaTitle } from '@/components/ui/credenza'
 import { Input } from '@/components/ui/input'
-import { ScrollArea, ScrollBar } from '@/components/ui/scroll-area'
+import { ScrollArea } from '@/components/ui/scroll-area'
+import { AssetChainFilter } from '@/components/asset-chain-filter'
 import { AssetIcon } from '@/components/asset-icon'
 import { chainLabel } from '@/components/connect-wallet/config'
 import { Asset } from '@/components/swap/asset'
@@ -224,48 +224,23 @@ export const SwapSelectAsset = ({ isOpen, onOpenChange, selected, onSelectAsset 
         </CredenzaHeader>
 
         <div className="flex min-h-0 flex-1 flex-col md:flex-row">
-          <ScrollArea className="border-b md:mr-8 md:w-2/5 md:border-r md:border-b-0 md:pl-8">
-            <div className="mx-4 mb-4 flex w-max gap-2 md:mx-0 md:mb-8 md:block md:w-full">
-              {chains.map((chain, index) => (
-                <Fragment key={index}>
-                  <div
-                    onClick={() => handleChainSelect(chain)}
-                    className={cn(
-                      'hover:bg-sub-container-modal/50 m-0 flex cursor-pointer items-center gap-3 rounded-lg border border-transparent px-4 py-2 md:mr-10 md:mb-2 md:py-3',
-                      {
-                        'border-border-btn-modal-hover': selectedChain === chain
-                      }
-                    )}
-                  >
-                    <div className="flex h-6 w-6 items-center justify-center rounded-full">
-                      <Image
-                        src={chain === Filter.All ? '/icons/windows.svg' : `/networks/${chain.toLowerCase()}.svg`}
-                        alt=""
-                        width="24"
-                        height="24"
-                      />
-                    </div>
-                    <span className="text-txt-high-contrast text-sm">{chain === Filter.All ? t('selectAsset.allChains') : chainLabel(chain)}</span>
-                  </div>
-
-                  {chain === Filter.All && (
-                    <div
-                      onClick={() => setShowSecuredAssets(prev => !prev)}
-                      className={cn(
-                        'hover:bg-sub-container-modal/50 m-0 flex cursor-pointer items-center justify-center rounded-lg border border-transparent px-4 py-2 md:mr-10 md:mb-2 md:py-3',
-                        {
-                          'border-border-btn-modal-hover': showSecuredAssets
-                        }
-                      )}
-                    >
-                      <span className="text-txt-high-contrast text-sm font-medium">{t('selectAsset.showSecuredAssets')}</span>
-                    </div>
-                  )}
-                </Fragment>
-              ))}
-            </div>
-            {isMobile && <ScrollBar orientation="horizontal" />}
-          </ScrollArea>
+          <AssetChainFilter
+            chains={chains}
+            selectedChain={selectedChain}
+            allChainsValue={Filter.All}
+            onSelect={handleChainSelect}
+            afterAll={
+              <div
+                onClick={() => setShowSecuredAssets(prev => !prev)}
+                className={cn(
+                  'hover:bg-sub-container-modal/50 m-0 flex cursor-pointer items-center justify-center rounded-lg border border-transparent px-4 py-2 md:mr-10 md:mb-2 md:py-3',
+                  { 'border-border-btn-modal-hover': showSecuredAssets }
+                )}
+              >
+                <span className="text-txt-high-contrast text-sm font-medium">{t('selectAsset.showSecuredAssets')}</span>
+              </div>
+            }
+          />
 
           <div className="mt-2 flex min-h-0 flex-1 flex-col md:mt-0">
             <div className="relative mx-4 md:mr-8 md:ml-0">

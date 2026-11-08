@@ -7,12 +7,20 @@ import { cn } from '@/lib/utils'
 function Slider({
   className,
   classNameRange,
+  classNameTrack,
+  styleRange,
+  styleThumb,
   defaultValue,
   value,
   min = 0,
   max = 100,
   ...props
-}: React.ComponentProps<typeof SliderPrimitive.Root> & { classNameRange?: string }) {
+}: React.ComponentProps<typeof SliderPrimitive.Root> & {
+  classNameRange?: string
+  classNameTrack?: string
+  styleRange?: React.CSSProperties
+  styleThumb?: React.CSSProperties
+}) {
   const _values = React.useMemo(
     () => (Array.isArray(value) ? value : Array.isArray(defaultValue) ? defaultValue : [min, max]),
     [value, defaultValue, min, max]
@@ -34,11 +42,13 @@ function Slider({
       <SliderPrimitive.Track
         data-slot="slider-track"
         className={cn(
-          'bg-blade relative grow overflow-hidden rounded-full data-[orientation=horizontal]:h-1.5 data-[orientation=horizontal]:w-full data-[orientation=vertical]:h-full data-[orientation=vertical]:w-1.5'
+          'bg-blade relative grow overflow-hidden rounded-full data-[orientation=horizontal]:h-1.5 data-[orientation=horizontal]:w-full data-[orientation=vertical]:h-full data-[orientation=vertical]:w-1.5',
+          classNameTrack
         )}
       >
         <SliderPrimitive.Range
           data-slot="slider-range"
+          style={styleRange}
           className={cn('absolute data-[orientation=horizontal]:h-full data-[orientation=vertical]:w-full', classNameRange)}
         />
       </SliderPrimitive.Track>
@@ -46,6 +56,10 @@ function Slider({
         <SliderPrimitive.Thumb
           data-slot="slider-thumb"
           key={index}
+          style={styleThumb}
+          aria-label={props['aria-label']}
+          aria-labelledby={props['aria-labelledby']}
+          aria-valuetext={props['aria-valuetext']}
           className="ring-ring/50 block size-6 shrink-0 cursor-pointer rounded-full border bg-white shadow-sm transition-[color,box-shadow] hover:ring-1 focus-visible:ring-1 focus-visible:outline-hidden disabled:pointer-events-none disabled:opacity-50"
         >
           <span className="flex h-full w-full items-center justify-center">
