@@ -116,7 +116,7 @@ export const SwapDialog = ({ provider, isOpen, onOpenChange }: SwapDialogProps) 
     toast.promise(broadcast, {
       loading: t('toast.submittingTransaction'),
       success: () => t('toast.transactionSubmitted'),
-      error: (err: unknown) => readableError(err, t('toast.errorSubmitting'))
+      error: (err: unknown) => readableError(err, t('toast.errorSubmitting'), assetFrom.chain)
     })
   }
 

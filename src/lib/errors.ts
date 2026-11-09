@@ -1,4 +1,6 @@
-export const translateError = (message: string): string => {
+// `sourceChain` names the chain the user is spending from, so a fee error can say which
+// network's fee is short instead of a bare "the network fee".
+export const translateError = (message: string, sourceChain?: string): string => {
   if (
     message.includes('failed to simulate swap') &&
     message.includes('fail to add outbound tx') &&
@@ -16,8 +18,18 @@ export const translateError = (message: string): string => {
     return 'Insufficient funds'
   }
 
-  // The aggregator could not fund the deposit from the wallet's UTXOs (amount + network fee).
-  if (message.includes('toolbox_utxo_insufficient_balance')) return 'Insufficient balance to cover the network fee'
+  // The wallet's UTXOs could not fund the amount plus the source-chain transaction fee. The
+  // toolbox spends unconfirmed coins too, so waiting for confirmations would not change this -
+  // only a smaller amount leaves room for the fee.
+  if (message.includes('toolbox_utxo_insufficient_balance')) {
+    // The SDK embeds what the UTXO source returned. A swap only starts with a balance on
+    // display, so zero UTXOs means the source answered with nothing (rate-limited or
+    // truncated), not that the wallet is empty - don't blame the user's funds for it.
+    if (message.includes('"utxoCount":0')) return 'Could not load wallet UTXOs. Try again shortly'
+    return sourceChain
+      ? `Not enough ${sourceChain} to cover the amount plus the ${sourceChain} network fee. Lower the amount to leave room for the fee`
+      : 'Not enough balance to cover the amount plus the network fee. Lower the amount to leave room for the fee'
+  }
 
   // The UTXO data providers (Blockchair, then Esplora for BTC/LTC) could not be reached.
   if (message.includes('toolbox_utxo_api_error')) return 'Could not load wallet UTXOs. Try again shortly'
@@ -71,8 +83,8 @@ export const translateError = (message: string): string => {
 // translateError produces and far below a serialised payload, so it separates the two cleanly.
 const MAX_READABLE_LENGTH = 160
 
-export const readableError = (error: unknown, fallback: string): string => {
-  const message = translateError((error as { message?: string })?.message || '')
+export const readableError = (error: unknown, fallback: string, sourceChain?: string): string => {
+  const message = translateError((error as { message?: string })?.message || '', sourceChain)
 
   return message.length > 0 && message.length <= MAX_READABLE_LENGTH ? message : fallback
 }
