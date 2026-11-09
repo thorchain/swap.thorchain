@@ -9,7 +9,8 @@ const animatedButtonVariants = cva(
     variants: {
       colorType: {
         default: 'bg-btn-animated-default text-txt-btn-animated-default hover:bg-btn-animated-hover hover:text-txt-btn-animated-hover',
-        accent: 'bg-green-default text-txt-green-default hover:bg-green-hover hover:text-txt-green-hover'
+        accent: 'bg-green-default text-txt-green-default hover:bg-green-hover hover:text-txt-green-hover',
+        rujira: 'bg-[#d534ea] text-white hover:brightness-110 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#d534ea]'
       },
       loading: {
         true: '',

@@ -1,6 +1,7 @@
 {
   "menu": {
     "swap": "Swap",
+    "earn": "Earn",
     "bond": "Bond",
     "memo": "Memo",
     "pool": "Pool",
@@ -15,6 +16,62 @@
     "signingUp": "Signing up…",
     "subscribed": "Thanks for subscribing!",
     "genericError": "Something went wrong"
+  },
+  "earn": {
+    "modeLabel": "DeFi mode",
+    "mode": { "automated": "Automated Trading", "lending": "Lending", "staking": "Staking", "borrow": "Borrow" },
+    "earnWith": "Earn with",
+    "selectAsset": "Select Earn asset",
+    "allAssets": "All assets",
+    "allChains": "All Chains",
+    "popular": "Popular",
+    "clear": "Clear",
+    "apr": "APR",
+    "apr30d": "APR",
+    "stakingApr30d": "APR (30d)",
+    "ranking": { "automated": "Top Automated Trading Positions", "lending": "Top Lending Opportunities", "staking": "Top Staking Opportunities" },
+    "noPositions": "No position opened",
+    "yieldDescription": {
+      "automated": "Your assets power automated market making strategies, including Custom Concentrated Liquidity (CCL) and Dynamic Concentrated Liquidity (DCL). These strategies earn trading fees and aim to buy lower and sell higher, including by capturing price differences between Rujira and THORChain. Returns depend on trading activity and whether your position is within its trading range.",
+      "lending": "Earn interest by lending your assets to borrowers. Your earnings depend on your share of the lending pool. Rates change with borrowing demand and how much of the pool’s funds are being borrowed.",
+      "staking": "Stake your tokens to earn a share of the protocol’s revenue. Rewards depend on which token you stake, the revenue available to distribute, and your share of the total tokens staked."
+    },
+    "cta": {
+      "automated": "See all opportunities on Rujira",
+      "lending": "See all opportunities on Rujira",
+      "staking": "See all opportunities on Rujira"
+    },
+    "unavailable": "Some earning information couldn’t be loaded. Missing values are shown as N/A.",
+    "refreshUnavailable": "Couldn’t update earning information. Showing previously loaded values.",
+    "ratesUnavailable": "Earning rates couldn’t be loaded. You can still browse assets, but missing rates are shown as N/A.",
+    "retry": "Try again"
+  },
+  "borrow": {
+    "deposit": "Deposit Collateral",
+    "borrow": "Borrow",
+    "borrowNow": "Borrow on Rujira",
+    "availableToBorrow": "Available to borrow",
+    "details": "Borrow details",
+    "interestRate": "Interest rate",
+    "interestRateDescription": "Estimated yearly interest rate after you borrow the entered amount. The rate changes with how much of the lending pool’s funds are being borrowed.",
+    "liquidationPrice": "Liquidation price",
+    "collateralRatio": "Collateral ratio",
+    "collateralRatioDescription": "How much of this asset’s value counts as collateral for your loan. At 70%, every $100 deposited counts as $70 toward your collateral value.",
+    "liquidationDescription": "Estimated price of {ticker} at which your collateral could be sold to repay your loan. This assumes the borrowed asset’s dollar price stays the same.",
+    "sameAssetLiquidation": "There is no separate liquidation price because your collateral and borrowed asset are the same token, so their prices move together.",
+    "ltv": "LTV",
+    "ltvDescription": "Loan-to-value (LTV) compares your debt with the collateral value that counts toward your loan. A higher LTV means you’re closer to liquidation. You can borrow up to {limit} LTV; liquidation starts at {liquidation} LTV.",
+    "selectAsset": "Select {label} asset",
+    "select": "Select",
+    "search": "Search assets",
+    "selected": "Selected",
+    "clear": "Clear",
+    "noAssets": "No assets are available right now.",
+    "noSearchMatches": "No assets match your search. Try another name or symbol.",
+    "unavailable": "We couldn’t load the assets available to borrow. Please try again.",
+    "busy": "Borrowing information is temporarily unavailable. Try again in a moment.",
+    "refreshUnavailable": "Couldn’t update borrowing information. Showing values from {time}.",
+    "retry": "Try again"
   },
   "header": {
     "wallet": "Wallet",
@@ -38,7 +95,9 @@
     "tab": {
       "swap": "Swap",
       "limit": "Limit",
-      "private": "Private"
+      "private": "Private",
+      "earn": "DeFi",
+      "label": "Trading mode"
     },
     "input": {
       "sell": "Sell",

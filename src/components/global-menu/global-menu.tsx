@@ -10,7 +10,7 @@ import { VisuallyHidden } from '@radix-ui/react-visually-hidden'
 import { Dialog, DialogPortal } from '@/components/ui/dialog'
 import { HeaderLogoText } from '@/components/header/header-logo-text'
 import { AppConfig, PRIMARY_HOST, SUBDOMAIN_ROUTES } from '@/config'
-import { bondAnim, memoAnim, nodeAnim, poolsAnim, swapAnim, tcyAnim, thornameAnim } from './animations'
+import { bondAnim, memoAnim, nodeAnim, poolsAnim, rujiAnim, swapAnim, tcyAnim, thornameAnim } from './animations'
 
 const SOCIAL_LINKS = [
   {
@@ -213,7 +213,8 @@ export function GlobalMenu({ isOpen, onOpenChange }: SendMemoMenuProps) {
     { label: t('memo'), animationData: memoAnim, href: resolveHref('/memo'), onClick: closeMenu },
     { label: t('pool'), animationData: poolsAnim, href: resolveHref('/pool'), onClick: closeMenu },
     { label: t('thorname'), animationData: thornameAnim, href: resolveHref('/thorname'), onClick: closeMenu },
-    { label: t('affiliate'), animationData: nodeAnim, href: resolveHref('/affiliate'), onClick: closeMenu }
+    { label: t('affiliate'), animationData: nodeAnim, href: resolveHref('/affiliate'), onClick: closeMenu },
+    { label: t('earn'), animationData: rujiAnim, href: 'https://rujira.network/earn-opportunities', onClick: closeMenu }
   ]
 
   return (

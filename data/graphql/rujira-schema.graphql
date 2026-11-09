@@ -1,0 +1,3710 @@
+schema {
+  subscription: RootSubscriptionType
+  query: RootQueryType
+}
+
+type RootQueryType {
+  "Returns all Bow pools available for Rujira Bow"
+  bow: [BowPool!]!
+
+  "Returns the Ghost Credit contract instance"
+  ghostCredit: GhostCredit
+
+  "Returns all Merge pools created for Rujira Merge"
+  merge: [MergePool!]!
+
+  "Returns all trading pairs managed by Rujira Trade"
+  fin: [FinPair!]! @deprecated(reason: "Use fin_v3.pairs instead")
+
+  "Returns all trading pairs managed by Rujira Trade"
+  finV2(after: String, first: Int, before: String, last: Int, query: String, sortBy: FinSortBy!, sortDir: SortDir!): FinPairConnection! @deprecated(reason: "Use fin_v3.pairs instead")
+
+  "Unified FIN access with pairs, analytics, and ranges"
+  finV3: FinV3!
+
+  "Returns all staking data for Rujira Staking"
+  staking: Staking!
+
+  "Returns all venture products data for Rujira Ventures"
+  ventures: Ventures!
+
+  "Provides analytics, performance metrics, and aggregated insights"
+  analytics: Analytics!
+
+  "Returns all available leagues data for Rujira League"
+  league: [League!]!
+
+  "Connection-based access to strategies available in Rujira"
+  strategies(
+    after: String, first: Int, before: String, last: Int, typenames: [String!], query: String, sortBy: StrategySortBy, sortDir: SortDir
+  ): StrategyConnection!
+
+  "Retrieves all index vaults deployed through Rujira Index"
+  index: [IndexVault!]!
+
+  "Retrieves all vesting contracts deployed through Rujira Vesting"
+  vesting(after: String, first: Int, before: String, last: Int, creator: [String!]): VestingConnection!
+
+  "Retrieves CALC singleton contract metadata"
+  calc: Calc!
+
+  "Retrieves Auto protocol data"
+  auto: Auto!
+
+  codes: [Code!]!
+
+  "Fetch a single node using its global Relay-compatible ID."
+  node(id: ID): Node
+
+  "Fetch multiple nodes by their global Relay-compatible IDs. Useful for batch fetching."
+  nodes(
+    "A list of Relay global IDs representing nodes to be fetched."
+    ids: [ID!]!
+  ): [Node!]!
+
+  "Lists all supported Relay node types with their ID structure."
+  supportedNodeTypes: [NodeTypeDescriptor!]!
+
+  "[DEPRECATED] Legacy THORChain-related queries. Use `thorchain_v2` instead."
+  thorchain: Thorchain
+
+  "THORChain-related queries using the latest v2 schema."
+  thorchainV2: ThorchainV2
+
+  "Rujira-specific queries."
+  rujira: Rujira
+
+  "Developer-focused queries related to CosmWasm and smart contract tooling."
+  deployment: Deployment
+
+  "Developer-focused queries related to CosmWasm and smart contract tooling."
+  developer: Developer
+}
+
+"Represents any Relay-compliant node object with a globally unique ID."
+interface Node {
+  "The Relay global identifier of this object."
+  id: ID!
+}
+
+type RootSubscriptionType {
+  """
+  Triggered any time an order is created, increased or decreased.
+  One subscription for all orders for a given contract & owner.
+  """
+  finOrderUpdated(contract: Address @deprecated(reason: "contract is read from the observed event"), owner: Address!): NodeEdge
+
+  """
+  Triggered when a order is filled.
+  One subscription per order.
+  """
+  finOrderFilled(contract: Address!, side: String!, price: String!, owner: Address!): NodeEdge
+
+  "Triggered when a range is created, updated, or filled. Subscribe by owner."
+  finRangeUpdated(owner: Address!): NodeEdge
+
+  "Triggered when a range is closed. Subscribe by owner."
+  finRangeClosed(owner: Address!): NodeEdge
+
+  "Triggered when a pair's book changes. Subscribe by pair address and provide denom and amount."
+  finSimulation(address: Address!, denom: String!, amount: Bigint!): FinSimulation
+
+  """
+  Triggered any time a staking contract allocates rewards via contract executions.
+  Use a `node` subscription to detect changes to liquid account balances
+  affected by Transfer events.
+  """
+  stakingAccountUpdated(owner: Address!): StakingAccount
+
+  """
+  Triggered any time an order is created or updated.
+  One subscription for all orders for a given owner.
+  """
+  calcOrdersUpdated(owner: Address!): NodeEdge
+
+  ghostCreditAccountUpdated(address: Address): NodeEdge
+
+  """
+  Subscribe to liquidations.
+  - With owner arg: subscribe to liquidations for a specific owner (liquidatee)
+  - Without owner arg: subscribe to all liquidations
+  Triggered when an account is liquidated.
+  """
+  ghostCreditLiquidation(owner: Address): NodeEdge
+
+  "Subscribe to balance updates for an address."
+  balances(addresses: [Address!]!): NodeEdge
+
+  """
+  Triggered when a workflow instance is created.
+  Subscribe to all instances for a specific owner address.
+  """
+  autoInstanceCreated(owner: Address!): NodeEdge
+
+  """
+  Triggered when a Thorchain Mimir value is updated.
+  Subscribe to all mimir updates using the wildcard topic.
+  """
+  mimirUpdated: ThorchainMimir
+
+  "Subscribe to updates for a specific node by its global ID."
+  node(id: ID!): Node
+
+  """
+  Subscribe to new edges (i.e., added nodes) in a connection.
+
+  This is useful for real-time streaming of new paginated items (e.g., new trades or transactions).
+  """
+  edge(
+    "The topic prefix to subscribe to (e.g., base64(`FinTrade:{address}\/{resolution}`))."
+    prefix: String!
+  ): NodeEdge
+}
+
+"A Relay-style edge object containing a node and its pagination cursor."
+type NodeEdge {
+  cursor: String
+  node: Node
+}
+
+"""
+Describes a supported Relay node type and its internal ID format.
+
+This object is used to document how to construct global Relay IDs. Each Relay ID
+is a base64-encoded string in the format: `type:format`.
+
+For example, the ID `Layer1Account:eth:0x123...` should be encoded to base64 and passed
+to the `node` or `nodes` queries for resolution.
+
+Use this information to construct valid global IDs when querying the schema.
+"""
+type NodeTypeDescriptor {
+  "The `type` value used in a Relay global ID, e.g. `Layer1Account` in `Layer1Account:chain:address`"
+  type: String!
+
+  "The internal `id` format used before encoding to base64"
+  format: String!
+}
+
+type VestingAccount implements Node {
+  "The ID of an object"
+  id: ID!
+
+  address: Address!
+
+  vestings: [Vesting!]!
+
+  valueUsd: Bigint!
+}
+
+type Vesting implements Node {
+  "The ID of an object"
+  id: ID!
+
+  address: Address!
+
+  contract: ContractInfo
+
+  creator: Address!
+
+  recipient: Address!
+
+  startTime: Timestamp!
+
+  type: VestingType!
+
+  total: Balance!
+
+  claimed: Balance!
+
+  slashed: Balance!
+
+  remaining: Balance!
+
+  distributable: Balance!
+
+  status: String!
+
+  title: String!
+
+  description: String!
+}
+
+type VestingConnection {
+  pageInfo: PageInfo!
+  edges: [VestingEdge]
+}
+
+union VestingType = VestingTypeSaturatingLinear | VestingTypePieceWiseLinear
+
+type VestingTypeSaturatingLinear {
+  maxX: Bigint!
+  maxY: Bigint!
+  minX: Bigint!
+  minY: Bigint!
+}
+
+type VestingTypePieceWiseLinear {
+  steps: [VestingTypePieceWiseLinearStep!]!
+}
+
+type VestingTypePieceWiseLinearStep {
+  seconds: Int!
+  amount: Bigint!
+}
+
+type Ventures {
+  config: VenturesConfig
+  factory: Address
+  sales(after: String, first: Int, before: String, last: Int, owner: Address, status: [VenturesSaleStatus!]): VenturesSaleConnection
+  validateToken(token: VenturesTokenInput!): VenturesValidateTokenResponse
+  validateTokenomics(token: VenturesTokenInput!, tokenomics: VenturesTokenomicsInput!): VenturesValidateTokenResponse
+  validateVenture(venture: VenturesConfigureInput!): VenturesValidateTokenResponse
+}
+
+type VenturesSaleConnection {
+  pageInfo: PageInfo!
+  edges: [VenturesSaleEdge]
+}
+
+type VenturesConfig implements Node {
+  "The ID of an object"
+  id: ID!
+
+  address: Address
+
+  bow: VenuresConfigBow!
+
+  fin: VenuresConfigFin!
+
+  pilot: VenuresConfigPilot!
+
+  streams: VenuresConfigStreams!
+
+  tokenomics: VenuresConfigTokenomics!
+}
+
+type VenuresConfigBow {
+  admin: Address!
+  codeId: Int!
+}
+
+type VenuresConfigFin {
+  admin: Address!
+  codeId: Int!
+  feeAddress: Address!
+  feeMaker: Bigint!
+  feeTaker: Bigint!
+}
+
+type VenuresConfigPilot {
+  admin: Address!
+  codeId: Int!
+  feeAddress: Address!
+  feeMaker: Bigint!
+  feeTaker: Bigint!
+  maxPremium: Int!
+  deposit: Balance
+  bidAssets: [VenturesConfigPilotBidAsset!]!
+}
+
+type VenturesConfigPilotBidAsset {
+  asset: Asset!
+  minRaiseAmount: Bigint!
+}
+
+type VenuresConfigStreams {
+  cw1ContractAddress: Address!
+  payrollFactoryContractAddress: Address!
+}
+
+type VenuresConfigTokenomics {
+  minLiquidity: Bigint!
+}
+
+type VenturesSale implements Node {
+  "The ID of an object"
+  id: ID!
+
+  title: String!
+
+  description: String!
+
+  url: String!
+
+  beneficiary: Address!
+
+  idx: String!
+
+  owner: Address!
+
+  status: VenturesSaleStatus!
+
+  venture: VenturesSaleType!
+}
+
+union VenturesSaleType = VenturesSalePilot
+
+type VenturesSalePilot {
+  sale: PilotSale!
+  token: VenturesToken!
+  tokenomics: VenturesTokenomics!
+  fin: Address
+  bow: Address
+  termsConditionsAccepted: Boolean!
+}
+
+type VenturesToken {
+  admin: Address
+  asset: Asset!
+}
+
+enum VenturesSaleStatus {
+  CONFIGURED
+  SCHEDULED
+  IN_PROGRESS
+  EXECUTED
+  RETRACTED
+  COMPLETED
+}
+
+input VenturesTokenInput {
+  symbol: String
+  name: String
+  display: String
+  description: String
+  denomAdmin: Address
+  pngUrl: String
+  svgUrl: String
+  uri: String
+  uriHash: String
+  denom: String
+}
+
+type VenturesValidateTokenResponse {
+  valid: Boolean
+  message: String
+}
+
+type VenturesTokenomics {
+  categories: [VenturesTokenomicsCategories]
+}
+
+enum VenturesTokenomicsCategoryType {
+  "Sale category type"
+  SALE
+
+  "Liquidity category type"
+  LIQUIDITY
+
+  "Standard category type"
+  STANDARD
+}
+
+input VenturesTokenomicsRecipientInput {
+  address: Address
+  amount: Int!
+}
+
+input VenturesTokenomicsCategoryInput {
+  label: String!
+  type: VenturesTokenomicsCategoryType!
+  recipients: [VenturesTokenomicsRecipientInput!]!
+}
+
+input VenturesTokenomicsInput {
+  categories: [VenturesTokenomicsCategoryInput!]!
+}
+
+input PilotDetailsInput {
+  title: String!
+  description: String!
+  url: String!
+  beneficiary: Address!
+  price: Int!
+  opens: String!
+  closes: String!
+  bidDenom: String!
+  bidThreshold: String!
+  maxPremium: Int!
+  waitingPeriod: Int!
+}
+
+input VenturesConfigurePilotInput {
+  termsConditionsAccepted: Boolean!
+  token: VenturesTokenInput!
+  tokenomics: VenturesTokenomicsInput!
+  pilot: PilotDetailsInput!
+}
+
+input VenturesConfigureInput {
+  pilot: VenturesConfigurePilotInput
+}
+
+union VenturesTokenomicsRecipient = VenturesTokenomicsRecipientSet | VenturesTokenomicsRecipientSend | VenturesTokenomicsRecipientStream
+
+type VenturesTokenomicsRecipientSet {
+  amount: String!
+}
+
+type VenturesTokenomicsRecipientSend {
+  address: Address
+  amount: String!
+}
+
+type VenturesTokenomicsRecipientStream {
+  owner: Address
+  recipient: Address
+  title: String
+  total: Bigint!
+  denom: String
+  startTime: Timestamp
+  schedule: VestingType
+  cliffInSeconds: Bigint!
+  cliffTime: Timestamp!
+  endTime: Timestamp!
+}
+
+type VenturesTokenomicsCategories {
+  label: String!
+  type: VenturesTokenomicsCategoryType
+  recipients: [VenturesTokenomicsRecipient]
+}
+
+type Asset implements Node {
+  "The ID of an object"
+  id: ID!
+
+  asset: AssetString!
+
+  type: AssetType!
+
+  chain: Chain!
+
+  metadata: Metadata!
+
+  price: Price
+
+  "Explicit Layer 1 and Secured variants of a Layer 1 asset"
+  variants: AssetVariants!
+}
+
+type Denom {
+  denom: String!
+}
+
+"Metadata for a token"
+type Metadata {
+  symbol: String!
+  decimals: Int!
+  description: String
+  display: String
+  name: String
+  uri: String
+  uriHash: String
+  pngUrl: String
+  svgUrl: String
+}
+
+"Price data for a token"
+type Price implements Node {
+  "The ID of an object"
+  id: ID!
+
+  "Current price, 12 decimal places"
+  source: PriceSource!
+
+  current: Bigint
+
+  changeDay: Float
+
+  mcap: Bigint
+
+  timestamp: Timestamp!
+}
+
+enum PriceSource {
+  COINGECKO
+  FIN
+  TOR
+  NONE
+  ORACLE
+}
+
+type AssetVariants {
+  "The THORChain layer 1 asset string (eg BTC.BTC, THOR.RUNE, GAIA.ATOM)"
+  layer1: Asset
+
+  "The THORChain secured asset string (eg BTC-BTC, GAIA-ATOM)"
+  secured: Asset
+
+  "The Cosmos SDK x\/bank token denom string (eg btc-btc, rune, uatom)"
+  native: Denom
+}
+
+enum AssetType {
+  LAYER_1
+  SECURED
+  NATIVE
+  SYNTH
+}
+
+type Thorchain {
+  inboundAddresses: [InboundAddress!]!
+  quote(
+    fromAsset: AssetString!
+
+    toAsset: AssetString!
+
+    amount: Bigint!
+
+    streamingInterval: Int
+
+    streamingQuantity: Bigint
+
+    destination: Address
+
+    "Gives you a tolerance from the flat exchange rate of two assets"
+    toleranceBps: Int
+
+    "Applies a tolerance to the expected amount out after liquidity fees, outbound fees, and affiliate fees are deducted"
+    liquidityToleranceBps: Int
+
+    refundAddress: Address
+
+    affiliate: [String]
+
+    affiliateBps: [Int]
+
+    height: String
+  ): Quote
+  pool(asset: AssetString!): Pool
+  pools: [Pool!]!
+  rune: Asset
+  txIn(hash: String!): TxIn
+}
+
+type Quote {
+  assetIn: Layer1Balance!
+  inboundAddress: Address!
+  inboundConfirmationBlocks: Int!
+  inboundConfirmationSeconds: Int!
+  outboundDelayBlocks: Int!
+  outboundDelaySeconds: Int!
+  fees: Fees!
+  router: Address
+  expiry: Timestamp!
+  warning: String!
+  notes: String!
+  dustThreshold: Bigint
+  recommendedMinAmountIn: Bigint!
+  recommendedGasRate: Bigint!
+  gasRateUnits: String!
+  memo: String!
+  expectedAmountOut: Bigint!
+  expectedAssetOut: Layer1Balance!
+  maxStreamingQuantity: Bigint!
+  streamingSwapBlocks: Int!
+  streamingSwapSeconds: Int!
+  totalSwapSeconds: Int!
+}
+
+type Fees {
+  asset: Asset!
+  affiliate: String!
+  outbound: Bigint!
+  liquidity: Bigint!
+  total: Bigint!
+  slippageBps: Int!
+  totalBps: Int!
+}
+
+type Pool implements Node {
+  "The ID of an object"
+  id: ID!
+
+  asset: Asset!
+
+  shortCode: String!
+
+  status: PoolStatus!
+
+  decimals: Int!
+
+  pendingInboundAsset: Bigint!
+
+  pendingInboundRune: Bigint!
+
+  balanceAsset: Bigint!
+
+  balanceRune: Bigint!
+
+  assetTorPrice: Bigint!
+
+  poolUnits: Bigint!
+
+  lpUnits: Bigint!
+
+  synthUnits: Bigint!
+
+  synthSupply: Bigint!
+
+  saversDepth: Bigint!
+
+  saversUnits: Bigint!
+
+  saversFillBps: Int!
+
+  saversCapacityRemaining: Bigint!
+
+  synthMintPaused: Boolean!
+
+  synthSupplyRemaining: Bigint!
+
+  derivedDepthBps: Int!
+}
+
+enum PoolStatus {
+  UNKNOWN
+  AVAILABLE
+  STAGED
+  SUSPENDED
+}
+
+type InboundAddress implements Node {
+  "The ID of an object"
+  id: ID!
+
+  chain: Chain!
+
+  pubKey: String
+
+  address: Address!
+
+  router: Address
+
+  halted: Boolean!
+
+  globalTradingPaused: Boolean!
+
+  chainTradingPaused: Boolean!
+
+  chainLpActionsPaused: Boolean!
+
+  gasRate: Bigint
+
+  gasRateUnits: String
+
+  outboundTxSize: Bigint
+
+  outboundFee: Bigint!
+
+  dustThreshold: Bigint!
+}
+
+type TxIn implements Node {
+  "The ID of an object"
+  id: ID!
+
+  observedTx: ObservedTx
+
+  finalizedHeight: Int
+
+  finalizedEvents: [BlockEvent!]
+}
+
+type ObservedTx {
+  tx: Layer1Tx
+  status: String
+}
+
+type Layer1Tx {
+  id: String
+  chain: Chain
+  fromAddress: Address
+  toAddress: Address
+  coins: [Balance!]!
+  gas: [Balance!]!
+  memo: String
+}
+
+type BlockEvent {
+  type: String!
+  attributes: [BlockEventAttribute!]!
+}
+
+type BlockEventAttribute {
+  key: String!
+  value: String!
+}
+
+type ThorchainV2 {
+  "returns the latest block"
+  block: ThorchainBlock
+
+  inboundAddresses: [ThorchainInboundAddress!]!
+
+  outboundFees: [ThorchainOutboundFee!]!
+
+  mimirs: [ThorchainMimir!]!
+
+  quote(
+    fromAsset: AssetString!
+
+    toAsset: AssetString!
+
+    amount: Bigint!
+
+    streamingInterval: Int
+
+    streamingQuantity: Bigint
+
+    destination: Address
+
+    "Gives you a tolerance from the flat exchange rate of two assets"
+    toleranceBps: Int
+
+    "Applies a tolerance to the expected amount out after liquidity fees, outbound fees, and affiliate fees are deducted"
+    liquidityToleranceBps: Int
+
+    refundAddress: Address
+
+    affiliate: [String]
+
+    affiliateBps: [Int]
+
+    height: String
+  ): ThorchainQuote
+
+  pool(asset: AssetString!): ThorchainPool
+
+  pools: [ThorchainPool!]!
+
+  rune: Asset
+
+  txIn(hash: String!): ThorchainTxIn
+
+  oracleCandles(after: String, first: Int, before: String, last: Int, symbol: String!, resolution: String!): ThorchainOracleCandleConnection!
+}
+
+type ThorchainQuote {
+  assetIn: Layer1Balance!
+  inboundAddress: Address!
+  inboundConfirmationBlocks: Int!
+  inboundConfirmationSeconds: Int!
+  outboundDelayBlocks: Int!
+  outboundDelaySeconds: Int!
+  fees: ThorchainQuoteFees!
+  router: Address
+  expiry: Timestamp!
+  warning: String!
+  notes: String!
+  dustThreshold: Bigint
+  recommendedMinAmountIn: Bigint!
+  recommendedGasRate: Bigint!
+  gasRateUnits: String!
+  memo: String!
+  expectedAmountOut: Bigint!
+  expectedAssetOut: Layer1Balance!
+  maxStreamingQuantity: Bigint!
+  streamingSwapBlocks: Int!
+  streamingSwapSeconds: Int!
+  totalSwapSeconds: Int!
+}
+
+type ThorchainQuoteFees {
+  asset: Asset!
+  affiliate: String!
+  outbound: Bigint!
+  liquidity: Bigint!
+  total: Bigint!
+  slippageBps: Int!
+  totalBps: Int!
+}
+
+type ThorchainPool implements Node {
+  "The ID of an object"
+  id: ID!
+
+  asset: Asset!
+
+  shortCode: String!
+
+  status: ThorchainPoolStatus!
+
+  decimals: Int!
+
+  pendingInboundAsset: Bigint!
+
+  pendingInboundRune: Bigint!
+
+  balanceAsset: Bigint!
+
+  balanceRune: Bigint!
+
+  assetTorPrice: Bigint!
+
+  poolUnits: Bigint!
+
+  lpUnits: Bigint!
+
+  synthUnits: Bigint!
+
+  synthSupply: Bigint!
+
+  saversDepth: Bigint!
+
+  saversUnits: Bigint!
+
+  saversFillBps: Int!
+
+  saversCapacityRemaining: Bigint!
+
+  synthMintPaused: Boolean!
+
+  synthSupplyRemaining: Bigint!
+
+  derivedDepthBps: Int!
+
+  candles(after: String, first: Int, before: String, last: Int, resolution: String!): ThorchainTorCandleConnection!
+}
+
+type ThorchainTorPrice implements Node {
+  "The ID of an object"
+  id: ID!
+
+  candles(after: String, first: Int, before: String, last: Int, resolution: String!): ThorchainTorCandleConnection!
+}
+
+type ThorchainTorCandleConnection {
+  pageInfo: PageInfo!
+  edges: [ThorchainTorCandleEdge]
+}
+
+"Represents a candlestick chart data point for a specific time period, including high, low, open, close, and timestamp."
+type ThorchainTorCandle implements Node {
+  "The ID of an object"
+  id: ID!
+
+  resolution: String!
+
+  high: Bigint!
+
+  low: Bigint!
+
+  open: Bigint!
+
+  close: Bigint!
+
+  bin: Timestamp!
+}
+
+type ThorchainLiquidityProvider implements Node {
+  "The ID of an object"
+  id: ID!
+
+  asset: Asset!
+
+  runeAddress: Address
+
+  assetAddress: Address
+
+  lastAddHeight: Int!
+
+  lastWithdrawHeight: Int
+
+  units: Bigint!
+
+  pendingRune: Bigint!
+
+  pendingAsset: Bigint!
+
+  pendingTxId: String
+
+  runeDepositValue: Bigint!
+
+  assetDepositValue: Bigint!
+
+  runeRedeemValue: Bigint!
+
+  assetRedeemValue: Bigint!
+
+  valueUsd: Bigint!
+}
+
+enum ThorchainPoolStatus {
+  UNKNOWN
+  AVAILABLE
+  STAGED
+  SUSPENDED
+}
+
+type ThorchainInboundAddress implements Node {
+  "The ID of an object"
+  id: ID!
+
+  chain: Chain!
+
+  pubKey: String
+
+  address: Address!
+
+  router: Address
+
+  halted: Boolean!
+
+  globalTradingPaused: Boolean!
+
+  chainTradingPaused: Boolean!
+
+  chainLpActionsPaused: Boolean!
+
+  gasRate: Bigint
+
+  gasRateUnits: String
+
+  outboundTxSize: Bigint
+
+  outboundFee: Bigint!
+
+  dustThreshold: Bigint!
+}
+
+type ThorchainTxIn implements Node {
+  "The ID of an object"
+  id: ID!
+
+  observedTx: ThorchainObservedTx
+
+  finalizedHeight: Int
+
+  finalizedEvents: [ThorchainBlockEvent!]
+}
+
+type ThorchainObservedTx {
+  tx: ThorchainLayer1Tx
+  status: String
+}
+
+type ThorchainLayer1Tx {
+  id: String
+  chain: Chain
+  fromAddress: Address
+  toAddress: Address
+  coins: [Balance!]!
+  gas: [Balance!]!
+  memo: String
+}
+
+type ThorchainBlock implements Node {
+  "The ID of an object"
+  id: ID!
+
+  blockId: ThorchainBlockId!
+
+  header: ThorchainBlockHeader!
+
+  beginBlockEvents: [ThorchainBlockEvent!]!
+
+  endBlockEvents: [ThorchainBlockEvent!]!
+
+  txs: [ThorchainBlockTx!]!
+}
+
+type ThorchainBlockId {
+  hash: String!
+}
+
+type ThorchainBlockHeader {
+  chainId: String!
+  height: Bigint!
+  time: Timestamp!
+}
+
+type ThorchainBlockEvent {
+  type: String!
+  attributes: [ThorchainBlockEventAttribute!]!
+}
+
+type ThorchainBlockEventAttribute {
+  key: String!
+  value: String!
+}
+
+type ThorchainBlockTx {
+  hash: String!
+  txData: String!
+  result: ThorchainTxResult!
+}
+
+type ThorchainTxResult {
+  code: Int!
+  data: String
+  log: String
+  info: String
+  gasWanted: Int!
+  gasUsed: Int!
+  events: [ThorchainBlockEvent!]!
+  codespace: String
+}
+
+type ThorchainOracle implements Node {
+  "The ID of an object"
+  id: ID!
+
+  asset: Asset!
+
+  price: Bigint!
+}
+
+type ThorchainOutboundFee {
+  asset: Asset!
+  outboundFee: Int!
+  feeWithheldRune: Int
+  feeSpentRune: Int
+  surplusRune: Int
+  dynamicMultiplierBasisPoints: Int
+}
+
+type ThorchainMimir implements Node {
+  "The ID of an object"
+  id: ID!
+
+  key: String!
+
+  value: Bigint!
+}
+
+type ThorchainOraclePrice implements Node {
+  "The ID of an object"
+  id: ID!
+
+  current: Bigint!
+
+  candles(after: String, first: Int, before: String, last: Int, symbol: String!, resolution: String!): ThorchainOracleCandleConnection!
+}
+
+type ThorchainOracleCandleConnection {
+  pageInfo: PageInfo!
+  edges: [ThorchainOracleCandleEdge]
+}
+
+"Represents a candlestick chart data point for a specific time period, including high, low, open, close, and timestamp."
+type ThorchainOracleCandle implements Node {
+  "The ID of an object"
+  id: ID!
+
+  resolution: String!
+
+  high: Bigint!
+
+  low: Bigint!
+
+  open: Bigint!
+
+  close: Bigint!
+
+  bin: Timestamp!
+}
+
+union Strategy = BowPoolXyk | ThorchainPool | GhostVault | IndexVault | StakingPool
+
+type StrategyConnection {
+  pageInfo: PageInfo!
+  edges: [StrategyEdge]
+}
+
+union StrategyAccount = BowAccount | ThorchainLiquidityProvider | IndexAccount | StakingAccount | GhostVaultAccount
+
+enum StrategySortBy {
+  NAME
+  TVL
+  APR
+}
+
+type Staking {
+  "Staking Pool for single-sided RUJI staking"
+  single: StakingPool
+
+  "Staking Pool for dual RUJI-RUNE LP staking"
+  dual: StakingPool
+
+  pools: [StakingPool!]!
+
+  "The token balances on revenue converter contracts that feed the staking contracts"
+  pendingBalances: [Balance!]!
+}
+
+"A staking_pool represents the configuration about a rujira-staking contract"
+type StakingPool implements Node {
+  "The ID of an object"
+  id: ID!
+
+  address: Address!
+
+  contract: ContractInfo
+
+  bondAsset: Asset!
+
+  revenueAsset: Asset!
+
+  receiptAsset: Asset!
+
+  status: StakingStatus
+
+  summary: StakingSummary!
+
+  "The token balances on revenue converter contracts that feed this staking pool"
+  pendingBalances: [Balance!]!
+
+  "The analytics bins for this staking pool"
+  analyticsBins(
+    after: String, first: Int, before: String, last: Int, from: Timestamp!, to: Timestamp!, resolution: Resolution!, period: Int!
+  ): AnalyticsStakingBinsConnection
+}
+
+"A staking_status represents current status about the rujira-staking contract"
+type StakingStatus implements Node {
+  "The ID of an object"
+  id: ID!
+
+  "The amount of [bond_denom] bonded in Accounts"
+  accountBond: Bigint!
+
+  "The total amount of [revenue_denom] available for Account staking to claim"
+  accountRevenue: Bigint!
+
+  "The total shares issued for the liquid bonded tokens"
+  liquidBondShares: Bigint!
+
+  "The total size of the Share Pool of liquid bonded tokens"
+  liquidBondSize: Bigint!
+
+  "The amount of [revenue_denom] pending distribution"
+  pendingRevenue: Bigint!
+
+  valueUsd: Bigint!
+}
+
+type StakingAccounts {
+  single: StakingAccount
+  dual: StakingAccount
+}
+
+"A staking_account represents data about account address related to the staking pool"
+type StakingAccount implements Node {
+  "The ID of an object"
+  id: ID!
+
+  pool: StakingPool!
+
+  account: Address!
+
+  "The balance of bonded token that has been deposited by the account"
+  bonded: Balance!
+
+  "The balance of liquid staked token that is held by the account"
+  liquid: Balance!
+
+  "The balance of liquid staked token that is held by the account"
+  liquidShares: Balance!
+
+  "The value of liquid staked token that is held by the account, denominated in the bond token"
+  liquidSize: Balance!
+
+  "The balance of pending revenue earned and still not claimed by this account"
+  pendingRevenue: Balance!
+
+  "The total USD value of liquid tokens, bonded tokens, and pending rewards"
+  valueUsd: Bigint!
+}
+
+"A summary represents apr and revenue earned calculated on a defined resolution"
+type StakingSummary implements Node {
+  "The ID of an object"
+  id: ID!
+
+  "Annualized APR based on 30 day revenue over current value staked"
+  apr: Apr!
+
+  "Annualized APY based on 30 day revenue over current value staked"
+  apy: Apr!
+
+  "The total amount of [revenue_denom] sent to contract in the last 7 days"
+  revenue7: Bigint!
+}
+
+enum SortDir {
+  ASC
+  DESC
+}
+
+"""
+The `Timestamp` scalar type represents a date and time in the UTC
+timezone. The DateTime appears in a JSON response as an ISO8601 formatted
+string, including UTC timezone ("Z"). The parsed date and time string will
+be converted to UTC and any UTC offset other than 0 will be rejected.
+
+Example:
+"2025-06-19T15:30:00Z"
+"""
+scalar Timestamp
+
+"""
+The `Resolution` scalar type represents a time interval. It is a string that
+can be one of the following values:
+
+1. "1" - 1 minute
+2. "3" - 3 minutes
+3. "5" - 5 minutes
+4. "15" - 15 minutes
+5. "30" - 30 minutes
+6. "60" - 1 hour
+7. "120" - 2 hours
+8. "180" - 3 hours
+9. "240" - 4 hours
+10. "1D" - 1 day
+11. "1M" - 1 month
+12. "12M" - 12 months
+"""
+scalar Resolution
+
+"The `JSON` scalar type represents arbitrary JSON objects."
+scalar Json
+
+"""
+The `BigInt` scalar type represents a signed large integer used for representing token amounts or fixed-point decimal values.
+
+- Can be positive or negative.
+- Token amounts (e.g., balances) are integers already scaled to the token's on-chain precision.
+  Example: 10.23 RUJI (8 decimals) → 1023000000
+- Decimal values (e.g., prices) are scaled to 12 decimal places.
+  Example: $1.12 → 1120000000000
+- Always returned as a string to preserve precision.
+"""
+scalar Bigint
+
+"A string representation of a THORChain compatible asset"
+scalar AssetString
+
+"An address associated with a blockchain account\/public key"
+scalar Address
+
+"""
+Entry point for accessing all Rujira product data.
+
+This object groups together all supported products offered by Rujira,
+including Bow, Merge, FIN, Staking, Ventures, Bank, and more.
+"""
+type Rujira {
+  "Returns all Bow pools available for Rujira Bow"
+  bow: [BowPool!]!
+
+  "Returns the Ghost Credit contract instance"
+  ghostCredit: GhostCredit
+
+  "Returns all Merge pools created for Rujira Merge"
+  merge: [MergePool!]!
+
+  "Returns all trading pairs managed by Rujira Trade"
+  fin: [FinPair!]! @deprecated(reason: "Use fin_v3.pairs instead")
+
+  "Returns all trading pairs managed by Rujira Trade"
+  finV2(after: String, first: Int, before: String, last: Int, query: String, sortBy: FinSortBy!, sortDir: SortDir!): FinPairConnection! @deprecated(reason: "Use fin_v3.pairs instead")
+
+  "Unified FIN access with pairs, analytics, and ranges"
+  finV3: FinV3!
+
+  "Returns all staking data for Rujira Staking"
+  staking: Staking!
+
+  "Returns all venture products data for Rujira Ventures"
+  ventures: Ventures!
+
+  "Provides analytics, performance metrics, and aggregated insights"
+  analytics: Analytics!
+
+  "Returns all available leagues data for Rujira League"
+  league: [League!]!
+
+  "Connection-based access to strategies available in Rujira"
+  strategies(
+    after: String, first: Int, before: String, last: Int, typenames: [String!], query: String, sortBy: StrategySortBy, sortDir: SortDir
+  ): StrategyConnection!
+
+  "Retrieves all index vaults deployed through Rujira Index"
+  index: [IndexVault!]!
+
+  "Retrieves all vesting contracts deployed through Rujira Vesting"
+  vesting(after: String, first: Int, before: String, last: Int, creator: [String!]): VestingConnection!
+
+  "Retrieves CALC singleton contract metadata"
+  calc: Calc!
+
+  "Retrieves Auto protocol data"
+  auto: Auto!
+}
+
+type RevenueConverter implements Node {
+  "The ID of an object"
+  id: ID!
+
+  address: Address!
+
+  executor: Address!
+
+  contract: ContractInfo!
+
+  actions: [RevenueConverterAction!]!
+
+  balances: [SimpleBalance!]!
+
+  targetAddresses: [RevenueConverterTargetAddress!]!
+}
+
+type RevenueConverterAction {
+  address: Address!
+  contract: ContractInfo!
+  msg: String!
+  limit: Bigint!
+  denom: String!
+}
+
+type RevenueConverterTargetAddress {
+  address: String!
+  weight: Int!
+}
+
+type PilotSale {
+  address: Address
+  bidAsset: Asset
+  bidThreshold: Bigint
+  closes: Timestamp
+  deposit: Balance
+  feeAmount: Bigint
+  maxPremium: Int
+  saleAmount: Bigint
+  opens: Timestamp
+  price: Bigint
+  waitingPeriod: Int
+  duration: Bigint
+  bidPools: [PilotPool!]
+  history(after: String, first: Int, before: String, last: Int, type: [PilotBidActionType]!): PilotBidActionConnection
+  stats: PilotStats
+  totalBids: Bigint
+}
+
+type PilotStats {
+  completionPercentage: Bigint
+  avgPrice: Bigint
+  totalBidsValue: Bigint
+  raiseAmount: Bigint
+}
+
+type PilotPool {
+  slot: Int
+  premium: Int
+  rate: Bigint
+  epoch: Int
+  total: Bigint
+  eligible: Bigint
+  nonEligible: Bigint
+  eligibleQuote: Bigint
+  nonEligibleQuote: Bigint
+}
+
+type PilotBid implements Node {
+  "The ID of an object"
+  id: ID!
+
+  owner: Address
+
+  sale: Address
+
+  "Original offer amount, as it was at `updated_at` time"
+  offer: String
+
+  premium: Int
+
+  slot: Int
+
+  rate: Bigint
+
+  remaining: Bigint
+
+  filled: Bigint
+
+  updatedAt: Timestamp
+}
+
+type PilotBidConnection {
+  pageInfo: PageInfo!
+  edges: [PilotBidEdge]
+}
+
+type PilotAccount implements Node {
+  "The ID of an object"
+  id: ID!
+
+  account: Address
+
+  sale: Address
+
+  summary: PilotAccountSummary
+
+  bids(after: String, first: Int, before: String, last: Int): PilotBidConnection
+
+  history(after: String, first: Int, before: String, last: Int, type: [PilotBidActionType]!): PilotBidActionConnection
+}
+
+type PilotAccountSummary {
+  avgDiscount: Bigint
+  totalTokens: Bigint
+  value: Bigint
+  avgPrice: Bigint
+  totalBids: Bigint
+}
+
+type PilotBidAction implements Node {
+  "The ID of an object"
+  id: ID!
+
+  contract: Address
+
+  txhash: String
+
+  owner: Address
+
+  premium: Int
+
+  amount: Int
+
+  height: Int
+
+  txIdx: Int
+
+  idx: Int
+
+  type: PilotBidActionType
+
+  timestamp: Timestamp
+}
+
+enum PilotBidActionType {
+  CREATE
+  RETRACT
+  INCREASE
+  WITHDRAW
+}
+
+type PilotBidActionConnection {
+  pageInfo: PageInfo!
+  edges: [PilotBidActionEdge]
+}
+
+union Order = FinOrder | CalcOrder
+
+type OrderConnection {
+  pageInfo: PageInfo!
+  edges: [OrderEdge]
+}
+
+"A merge_pool represents the configuration about a rujira-merge contract"
+type MergePool implements Node {
+  "The ID of an object"
+  id: ID!
+
+  address: Address!
+
+  contract: ContractInfo!
+
+  mergeAsset: Asset!
+
+  mergeSupply: Bigint!
+
+  rujiAsset: Asset!
+
+  rujiAllocation: Bigint!
+
+  decayStartsAt: Timestamp!
+
+  decayEndsAt: Timestamp!
+
+  "Current Rate with 12 Decimals place"
+  currentRate: Bigint!
+
+  "Start Rate with 12 Decimals place"
+  startRate: Bigint!
+
+  status: MergeStatus
+}
+
+"A merge_status represents current status about the rujira-merge contract"
+type MergeStatus {
+  "The total amount of merge token deposited"
+  merged: Bigint!
+
+  "The total amount of shares issued for the merge pool"
+  shares: Bigint!
+
+  "The total amount of ruji token allocated to the merge pool"
+  size: Bigint!
+
+  "Current Rate with 12 Decimals place"
+  currentRate: Bigint!
+
+  "The amount of ruji allocated per share of the pool"
+  shareValue: Bigint!
+
+  "Percentage increase in share_value since the start of the merge"
+  shareValueChange: Bigint!
+
+  "Annualized growth in merging RUJI assuming re-distribution of all un-allocated RUJI"
+  apr: Apr!
+}
+
+"A merge_accounts represents aggregate data about account address related to the merge pools"
+type MergeStats {
+  accounts: [MergeAccount!]
+
+  "The total amount of merge token that all `shares` are worth"
+  totalSize: Balance!
+}
+
+"A merge_account represents data about account address related to the merge pool"
+type MergeAccount implements Node {
+  "The ID of an object"
+  id: ID!
+
+  pool: MergePool!
+
+  "The amount of merge token that has been deposited by the account"
+  merged: Balance!
+
+  "The amount of shares owned by this account"
+  shares: Bigint!
+
+  "The amount of ruji token that `shares` are worth"
+  size: Balance!
+
+  "The current conversion rate for merge token to ruji token, given current pool ownership"
+  rate: Bigint!
+
+  valueUsd: Bigint!
+}
+
+type League {
+  league: String!
+  season: Int!
+  status: LeagueStatus!
+  stats: LeagueStats!
+  leaderboard(
+    after: String, first: Int, before: String, last: Int, search: String, sortBy: LeagueLeaderboardSortBy!, sortDir: SortDir!
+  ): LeagueLeaderboardEntryConnection
+}
+
+type LeagueLeaderboardEntryConnection {
+  pageInfo: PageInfo!
+  edges: [LeagueLeaderboardEntryEdge]
+}
+
+type LeagueLeaderboardEntry {
+  rank: Int!
+
+  address: Address!
+
+  points: Bigint!
+
+  totalTx: Int!
+
+  "Rank from 7 days ago"
+  rankPrevious: Int
+
+  badges: [String!]
+}
+
+type LeagueStats {
+  totalPoints: Bigint!
+  participants: Int!
+}
+
+type LeagueAccount implements Node {
+  "The ID of an object"
+  id: ID!
+
+  league: String!
+
+  season: Int!
+
+  address: Address!
+
+  points: Bigint!
+
+  totalTx: Int!
+
+  badges: [String!]
+
+  rank: Int
+
+  rankPrevious: Int
+
+  transactions(after: String, first: Int, before: String, last: Int): LeagueTxConnection
+}
+
+type LeagueTxConnection {
+  pageInfo: PageInfo!
+  edges: [LeagueTxEdge]
+}
+
+type LeagueTx {
+  height: Int!
+  txHash: String!
+  timestamp: Timestamp!
+  points: Bigint!
+  category: String!
+}
+
+enum LeagueStatus {
+  ACTIVE
+  INACTIVE
+}
+
+enum LeagueLeaderboardSortBy {
+  POINTS
+  TOTAL_TX
+  RANK
+  RANK_PREVIOUS
+}
+
+"A index_vault represents the configuration about a rujira-index contract"
+type IndexVault implements Node {
+  "The ID of an object"
+  id: ID!
+
+  address: Address!
+
+  contract: ContractInfo
+
+  type: String!
+
+  "Index entry adapter address, present only if index is of type fixed"
+  entryAdapter: Address
+
+  "Index affiliate address"
+  affiliate: Address
+
+  "Deposit query for fixed index, through entry adapter, returns the array of data to use in the transaction, empty if not fixed index"
+  depositQuery(depositAmount: Bigint!, slippageBps: Int!): IndexFixedDepositMsg
+
+  config: IndexConfig!
+
+  status: IndexStatus!
+
+  fees: IndexFees!
+
+  shareAsset: Asset!
+
+  navBins(
+    after: String, first: Int, before: String, last: Int, from: Timestamp!, to: Timestamp!, resolution: Resolution!
+  ): IndexNavBinConnection
+}
+
+type IndexNavBinConnection {
+  pageInfo: PageInfo!
+  edges: [IndexNavBinEdge]
+}
+
+"An index_config represents the configuration about a rujira-index contract"
+type IndexConfig {
+  feeCollector: Address!
+  quoteAsset: Asset!
+}
+
+"An index_status represents current status about the rujira-index contract"
+type IndexStatus {
+  "The total amount of shares issued for the index vault"
+  totalShares: Bigint!
+
+  redemptionRate: Bigint!
+
+  "The allocations of the index vault"
+  allocations: [IndexAllocation!]!
+
+  "The total value of the index vault"
+  totalValue: Bigint!
+
+  nav: Bigint!
+
+  navPerShare: Bigint!
+
+  "The change in total value over the last 24 hours"
+  totalValueChange: Bigint
+
+  "The change in NAV over the last 24 hours"
+  navChange: Bigint
+
+  "The change in NAV per share over the last 24 hours"
+  navPerShareChange: Bigint
+
+  "The NAV in quote asset"
+  navQuote: Bigint
+
+  "The APR over the last 30 days, when applicable otherwise N\/A"
+  apr: Apr!
+}
+
+"An index_allocation represents the allocation of the index vault"
+type IndexAllocation {
+  asset: Asset!
+
+  "The target weight of the allocation can either be a % or a fixed amount based on index type"
+  targetWeight: Bigint!
+
+  "The current weight of the fixed allocation calculated as target_weight * price \/ total value"
+  currentWeight: Bigint!
+
+  balance: Bigint!
+
+  value: Bigint!
+
+  price: Bigint!
+}
+
+type IndexFees {
+  lastAccrualTime: Timestamp!
+  highWaterMark: Bigint!
+  rates: IndexFeesRates!
+}
+
+type IndexFeesRates {
+  management: Bigint!
+  performance: Bigint!
+  transaction: Bigint!
+}
+
+type IndexNavBin implements Node {
+  "The ID of an object"
+  id: ID!
+
+  bin: Timestamp!
+
+  contract: Address!
+
+  resolution: Resolution!
+
+  open: Bigint!
+
+  tvl: Bigint!
+}
+
+"An index_account represents data about account address related to the index vault"
+type IndexAccount implements Node {
+  "The ID of an object"
+  id: ID!
+
+  account: Address!
+
+  index: IndexVault!
+
+  "The amount of shares owned by this account"
+  shares: Bigint!
+
+  "The current value of the account"
+  sharesValue: Bigint!
+
+  "The allocations of the shares for this account"
+  allocations: [IndexAllocation!]!
+}
+
+type IndexFixedDepositMsg {
+  index: Address!
+  swaps: [IndexFixedDepositSwap!]!
+}
+
+type IndexFixedDepositSwap {
+  denom: String!
+  amount: Bigint!
+  minReturn: Bigint!
+}
+
+type GhostVault implements Node {
+  "The ID of an object"
+  id: ID!
+
+  address: Address!
+
+  asset: Asset!
+
+  interest: GhostVaultInterest!
+
+  feeAddress: Address!
+
+  fee: Bigint!
+
+  status: GhostVaultStatus!
+}
+
+type GhostVaultInterest {
+  targetUtilization: Bigint!
+  baseRate: Bigint!
+  step1: Bigint!
+  step2: Bigint!
+}
+
+type GhostVaultStatus {
+  lastUpdated: Timestamp!
+  utilizationRatio: Bigint!
+  debtRate: Bigint!
+  lendRate: Bigint!
+  apr: Apr!
+  debtPool: GhostVaultPool!
+  depositPool: GhostVaultPool!
+  valueUsd: Bigint!
+}
+
+type GhostVaultPool {
+  size: Bigint!
+  shares: Bigint!
+  ratio: Bigint!
+}
+
+type GhostVaultAccount implements Node {
+  "The ID of an object"
+  id: ID!
+
+  account: Address!
+
+  vault: GhostVault!
+
+  shares: Balance!
+
+  value: Balance!
+
+  valueUsd: Bigint!
+}
+
+type GhostVaultBorrower {
+  address: Address!
+  asset: Asset!
+  limit: Bigint!
+  current: Bigint!
+  shares: Bigint!
+  available: Bigint!
+  vault: GhostVault!
+}
+
+type GhostVaultDelegate {
+  borrower: GhostVaultBorrower!
+  address: Address!
+  current: Bigint!
+  shares: Bigint!
+}
+
+type GhostCredit implements Node {
+  "The ID of an object"
+  id: ID!
+
+  address: Address!
+
+  accountCode: Code!
+
+  accounts(after: String, first: Int, before: String, last: Int, sortBy: GhostCreditAccountSortBy, sortDir: SortDir): GhostCreditAccountConnection!
+
+  collaterals: [GhostCreditCollateralConfig!]!
+
+  vaults: [GhostCreditVault!]!
+
+  feeLiquidation: Bigint!
+
+  feeLiquidator: Bigint!
+
+  feeAddress: Address!
+
+  liquidationMaxSlip: Bigint!
+
+  liquidationThreshold: Bigint!
+
+  adjustmentThreshold: Bigint!
+}
+
+type GhostCreditVault {
+  borrower: GhostVaultBorrower!
+  price: ThorchainOraclePrice
+}
+
+type GhostCreditCollateralConfig {
+  asset: Asset!
+  price: ThorchainOraclePrice
+  total: Bigint!
+  ratio: Bigint!
+}
+
+type GhostCreditAccount implements Node {
+  "The ID of an object"
+  id: ID!
+
+  owner: Address!
+
+  account: RujiraAccount!
+
+  tag: String!
+
+  collaterals: [GhostCreditCollateral!]!
+
+  debts: [GhostCreditDebt!]!
+
+  ltv: Bigint!
+
+  valueUsd: Bigint!
+
+  collateralValueUsd: Bigint!
+
+  debtValueUsd: Bigint!
+
+  "Total collateral USD value at which LTV equals liquidation_threshold (debt held flat, uniform collateral price scaling). 0 when no collateral or no debt."
+  collateralLiquidationValueUsd: Bigint!
+
+  "Total debt USD value at which LTV equals liquidation_threshold (collateral held flat, uniform debt price scaling). 0 when no collateral or no debt."
+  debtLiquidationValueUsd: Bigint!
+}
+
+type GhostCreditCollateral {
+  collateral: GhostCreditCollateralType!
+  valueFull: Bigint!
+  valueAdjusted: Bigint!
+}
+
+union GhostCreditCollateralType = Balance
+
+type GhostCreditDebt {
+  debt: GhostVaultDelegate!
+  value: Bigint!
+}
+
+type GhostCreditAccounts {
+  owner: Address!
+  next: GhostCreditAccountNext
+  accounts: [GhostCreditAccount!]
+  accountsV2(after: String, first: Int, before: String, last: Int): GhostCreditAccountConnection!
+}
+
+type GhostCreditAccountConnection {
+  pageInfo: PageInfo!
+  edges: [GhostCreditAccountEdge]
+}
+
+type GhostCreditAccountNext implements Node {
+  "The ID of an object"
+  id: ID!
+
+  account: Address!
+
+  "The salt used to predict this address"
+  salt: String!
+}
+
+type GhostCreditLiquidation implements Node {
+  "The ID of an object"
+  id: ID!
+
+  height: Int!
+
+  txIdx: Int!
+
+  idx: Int!
+
+  timestamp: Timestamp!
+
+  txHash: String!
+
+  liquidator: Address!
+
+  liquidatee: Address!
+
+  creditAccount: Address!
+
+  events: [Json!]!
+}
+
+enum GhostCreditAccountSortBy {
+  LTV
+}
+
+"A fin_pair represents informations about a specific rujira-fin contract"
+type FinPair implements Node {
+  "The ID of an object"
+  id: ID!
+
+  address: Address!
+
+  contract: ContractInfo
+
+  assetBase: Asset!
+
+  assetQuote: Asset!
+
+  oracleBase: ThorchainOracle
+
+  oracleQuote: ThorchainOracle
+
+  tick: Bigint!
+
+  feeTaker: Bigint!
+
+  feeMaker: Bigint!
+
+  feeAddress: Address!
+
+  rangeMin: Bigint!
+
+  book: FinBook!
+
+  bookV2: FinBookV2!
+
+  simulation(denom: String!, amount: Bigint!): FinSimulation
+
+  summary: FinSummary
+
+  rangeSummary: FinRangeSummary
+
+  "Time-series analytics bins for this pair"
+  analyticsBins(
+    after: String, first: Int, before: String, last: Int, from: Timestamp!, to: Timestamp!, resolution: Resolution!, period: Int!
+  ): AnalyticsFinBinsConnection
+
+  "Time-series range (CCL) bins for this pair"
+  rangeBins(
+    after: String, first: Int, before: String, last: Int, from: Timestamp!, to: Timestamp!, resolution: Resolution!, period: Int!
+  ): FinRangeBinConnection
+
+  "Waterfall chart data for range (CCL) performance on this pair"
+  rangeWaterfall(from: Timestamp!, to: Timestamp!, resolution: Resolution!): FinRangeWaterfall
+
+  candles(after: String, first: Int, before: String, last: Int, resolution: String!): FinCandleConnection!
+
+  trades(after: String, first: Int, before: String, last: Int): FinTradeConnection!
+}
+
+type FinPairConnection {
+  pageInfo: PageInfo!
+  edges: [FinPairEdge]
+}
+
+type FinTradeConnection {
+  pageInfo: PageInfo!
+  edges: [FinTradeEdge]
+}
+
+type FinCandleConnection {
+  pageInfo: PageInfo!
+  edges: [FinCandleEdge]
+}
+
+type FinOrderConnection {
+  pageInfo: PageInfo!
+  edges: [FinOrderEdge]
+}
+
+type FinRangeConnection {
+  pageInfo: PageInfo!
+  edges: [FinRangeEdge]
+}
+
+type FinAccountActionConnection {
+  pageInfo: PageInfo!
+  edges: [FinAccountActionEdge]
+}
+
+type FinBookEntryConnection {
+  pageInfo: PageInfo!
+  edges: [FinBookEntryEdge]
+}
+
+"Orderbook v2 with Relay connection pagination per side"
+type FinBookV2 implements Node {
+  "The ID of an object"
+  id: ID!
+
+  center: Bigint
+
+  spread: Bigint
+
+  depthBidTwoPct: Bigint!
+
+  depthAskTwoPct: Bigint!
+
+  asks(after: String, first: Int, before: String, last: Int, truncate: Int): FinBookEntryConnection
+
+  bids(after: String, first: Int, before: String, last: Int, truncate: Int): FinBookEntryConnection
+
+  pair: FinPair!
+}
+
+"Orderbook of a specific Fin pair"
+type FinBook implements Node {
+  "The ID of an object"
+  id: ID!
+
+  asks: [FinBookEntry!]!
+
+  center: Bigint
+
+  spread: Bigint
+
+  bids: [FinBookEntry!]!
+
+  "Total bid liquidity within 2% of center price"
+  depthBidTwoPct: Bigint!
+
+  "Total ask liquidity within 2% of center price"
+  depthAskTwoPct: Bigint!
+
+  pair: FinPair!
+}
+
+type FinSimulation implements Node {
+  "The ID of an object"
+  id: ID!
+
+  pair: FinPair!
+
+  denom: String!
+
+  amount: Bigint!
+
+  returned: Bigint!
+
+  fee: Bigint!
+}
+
+"single entry of an orderbook"
+type FinBookEntry {
+  price: Bigint!
+
+  total: Bigint!
+
+  side: String!
+
+  "Value of the entry, calculated as total * price or total \/ price based on side."
+  value: Bigint!
+
+  "A representation of the liquidity available in the THORChain pools"
+  virtualTotal: Bigint!
+
+  virtualValue: Bigint!
+}
+
+"Collections of data of an account across all the fin pairs"
+type FinAccount {
+  orders(after: String, first: Int, before: String, last: Int): FinOrderConnection @deprecated(reason: "Use orders_v2 instead")
+  ordersV2(after: String, first: Int, before: String, last: Int): OrderConnection
+  ranges(after: String, first: Int, before: String, last: Int): FinRangeConnection
+  history(after: String, first: Int, before: String, last: Int): FinAccountActionConnection
+  summary: FinAccountSummary
+}
+
+"Aggregated summaries for a FIN account, mirroring fin_account domains"
+type FinAccountSummary {
+  ranges: FinAccountRangesSummary
+}
+
+"Portfolio-level aggregates for a user's CCL range positions"
+type FinAccountRangesSummary {
+  "Sum of unrealized yield (unclaimed fees) across all open positions"
+  totalClaimableYield: Bigint!
+
+  "Sum of realized + unrealized yield across all positions (including closed)"
+  totalAccruedYield: Bigint!
+
+  "Estimated yield for the given period: sum(liquidity_usd * apr \/ period)"
+  estimatedYield(period: Int!): Bigint!
+}
+
+"Single order of an account on a fin pair"
+type FinOrder implements Node {
+  "The ID of an object"
+  id: ID!
+
+  pair: FinPair!
+
+  owner: Address!
+
+  side: String!
+
+  rate: Bigint!
+
+  updatedAt: Timestamp!
+
+  "The amount of asset offered at updated_at"
+  offer: Bigint!
+
+  "The value of the offer in the ask asset"
+  offerValue: Bigint!
+
+  "The remaining amount of offer asset"
+  remaining: Bigint!
+
+  "The value of the remaining offer in the ask asset"
+  remainingValue: Bigint!
+
+  "The amount of ask asset available for withdrawal"
+  filled: Bigint!
+
+  "The value of ask asset available for withdrawal in the offer asset"
+  filledValue: Bigint!
+
+  filledFee: Bigint!
+
+  type: String!
+
+  deviation: Bigint
+
+  "The value of the order in USD as remaining value + filled value"
+  valueUsd: Bigint!
+}
+
+"Single concentrated liquidity range position on a fin pair"
+type FinRange implements Node {
+  "The ID of an object"
+  id: ID!
+
+  pair: FinPair!
+
+  "Unique identifier for the range"
+  idx: Bigint!
+
+  "Owner address of the range"
+  owner: Address!
+
+  "Upper price bound"
+  high: Bigint!
+
+  "Lower price bound"
+  low: Bigint!
+
+  "Position skew (signed)"
+  skew: Bigint!
+
+  "Spread within range"
+  spread: Bigint!
+
+  "Fee rate"
+  fee: Bigint!
+
+  "Base token amount"
+  base: Bigint!
+
+  "Quote token amount"
+  quote: Bigint!
+
+  "Current price"
+  price: Bigint!
+
+  "Current ask price"
+  ask: Bigint!
+
+  "Current bid price"
+  bid: Bigint!
+
+  "Accumulated base fees"
+  feesBase: Bigint!
+
+  "Accumulated quote fees"
+  feesQuote: Bigint!
+
+  "USD value of principal (base + quote, excluding fees)"
+  principalUsd: Bigint!
+
+  "USD value of accumulated fees"
+  yieldUsd: Bigint!
+
+  "USD value of the range position"
+  valueUsd: Bigint!
+
+  "Whether the pair's current price is within range bounds"
+  inRange: Boolean!
+
+  "Analytics for this range position"
+  analytics: FinRangePositionAnalytics
+}
+
+"Single trade executed by on a fin pair"
+type FinTrade implements Node {
+  "The ID of an object"
+  id: ID!
+
+  height: Bigint!
+
+  txIdx: Bigint!
+
+  idx: Bigint!
+
+  contract: Address!
+
+  pair: FinPair!
+
+  txhash: String!
+
+  quoteAmount: Bigint!
+
+  baseAmount: Bigint!
+
+  price: Bigint!
+
+  type: String!
+
+  protocol: String!
+
+  timestamp: Timestamp!
+}
+
+"Single action executed by an account on a fin pair"
+type FinAccountAction {
+  type: String
+  height: Bigint
+  txIdx: Bigint
+  idx: Bigint
+  contract: Address
+  txhash: String
+  quoteAmount: Bigint
+  baseAmount: Bigint
+  price: Bigint
+  protocol: String
+  timestamp: Timestamp
+  assetBase: Asset
+  assetQuote: Asset
+}
+
+"Summary of the last trading data for a specific pair, including high, low, change, and volume."
+type FinPairSummary implements Node {
+  "The ID of an object"
+  id: ID!
+
+  last: Bigint!
+
+  lastUsd: Bigint!
+
+  high: Bigint!
+
+  low: Bigint!
+
+  change: Bigint!
+
+  volume: Layer1Balance!
+
+  volumeUsd: Bigint!
+}
+
+type FinSummary {
+  last: Bigint!
+
+  lastUsd: Bigint!
+
+  high: Bigint!
+
+  low: Bigint!
+
+  change: Bigint!
+
+  volume: Layer1Balance!
+
+  volumeUsd: Bigint!
+
+  "Share of this pair's 24h volume vs total FIN volume"
+  volumeDayShare: Bigint!
+
+  "24h trading volume in USD"
+  volumeDay: Bigint!
+
+  "30d trading volume in USD"
+  volumeMonth: Bigint!
+
+  "24h base layer volume in USD"
+  volumeBaseLayerDay: Bigint!
+
+  "Current AMM TVL in USD"
+  ammTvl: Bigint!
+
+  "24h liquidity utilization (volume \/ tvl)"
+  liquidityUtilizationDay: Bigint!
+
+  "30d average liquidity utilization"
+  liquidityUtilizationMonthAvg: Bigint!
+
+  "24h trade count"
+  countDay: Bigint!
+
+  "24h revenue in USD"
+  revenueDay: Bigint!
+
+  "30d revenue in USD"
+  revenueMonth: Bigint!
+
+  "30d average revenue per $100 TVL"
+  revenuePerHundredTvlMonthAvg: Bigint!
+
+  "Bid-ask spread in USD"
+  spreadUsd: Bigint!
+
+  "Total bid liquidity within 2% of center price"
+  depthBidTwoPct: Bigint!
+
+  "Total ask liquidity within 2% of center price"
+  depthAskTwoPct: Bigint!
+}
+
+"Represents a candlestick chart data point for a specific time period, including high, low, open, close, volume, and timestamp."
+type FinCandle implements Node {
+  "The ID of an object"
+  id: ID!
+
+  resolution: String!
+
+  high: Bigint!
+
+  low: Bigint!
+
+  open: Bigint!
+
+  close: Bigint!
+
+  volume: Bigint!
+
+  bin: Timestamp!
+}
+
+enum FinSortBy {
+  NAME
+  VOLUME
+  VOLUME_USD
+  CHANGE
+}
+
+"Sort options for FIN range positions"
+enum FinRangeSortBy {
+  "Sort by contract address"
+  CONTRACT
+
+  "Sort by APR"
+  APR
+
+  "Sort by weighted average investment age"
+  INVESTMENT_AGE
+
+  "Sort by total invested amount"
+  TOTAL_INVESTED
+}
+
+"""
+Unified FIN access point combining:
+- Global analytics (overview, volume sources, top pairs)
+- Trading pairs with nested analytics
+- All range positions across contracts
+"""
+type FinV3 {
+  "Global FIN pair analytics across all pairs"
+  overviewBins(
+    after: String, first: Int, before: String, last: Int, from: Timestamp!, to: Timestamp!, resolution: Resolution!, period: Int!
+  ): AnalyticsFinOverviewBinsConnection
+
+  "Volume breakdown by source (user_orders, vs, xyk, ccl)"
+  volumeBySource(from: Timestamp!, to: Timestamp!): [FinVolumeSource!]!
+
+  "Top pairs by volume for the selected period"
+  topPairsByVolume(from: Timestamp!, to: Timestamp!, limit: Int): [FinPairVolume!]!
+
+  "All trading pairs"
+  pairs(after: String, first: Int, before: String, last: Int, query: String, sortBy: FinSortBy!, sortDir: SortDir!): FinPairConnection
+
+  "All range positions across all contracts"
+  ranges(
+    after: String, first: Int, before: String, last: Int, contracts: [Address!], status: FinRangeStatus, sortBy: FinRangeSortBy, sortDir: SortDir
+  ): FinRangeConnection
+}
+
+type FinRangeBinConnection {
+  pageInfo: PageInfo!
+  edges: [FinRangeBinEdge]
+}
+
+enum FinRangeStatus {
+  OPEN
+  CLOSED
+}
+
+type FinRangeBin {
+  contract: Address!
+  bin: Timestamp!
+  resolution: String!
+  openingValue: Point!
+  closingValue: Point!
+  openingBalanceBase: Point!
+  openingBalanceQuote: Point!
+  closingBalanceBase: Point!
+  closingBalanceQuote: Point!
+  depositValue: Point!
+  withdrawalValue: Point!
+  tradeVolumeUsd: Point!
+  tradeCount: Point!
+  yieldUsd: Point!
+  normalizedPoolPrice: Bigint
+  normalizationFactor: Bigint
+  apr: Point!
+  moneyMultiple: Point!
+  utilizationRatio: Point!
+}
+
+type FinRangeSummary implements Node {
+  "The ID of an object"
+  id: ID!
+
+  "Current TVL in USD"
+  tvl: Bigint!
+
+  "24h trade volume in USD"
+  volumeDay: Bigint!
+
+  "30d trade volume in USD"
+  volumeMonth: Bigint!
+
+  "24h liquidity utilization (volume_day \/ tvl)"
+  liquidityUtilizationDay: Bigint!
+
+  "Number of trades in last 24h"
+  tradeCountDay: Bigint!
+
+  "30d average APR"
+  aprMonth: Bigint!
+}
+
+"""
+Performance summary for waterfall chart showing value changes between two dates.
+Components: Opening Value → Deposits → Price P&L → IL → Earnings → Withdrawals → Closing Value
+"""
+type FinRangeWaterfall {
+  "LP value at the beginning of the period"
+  openingValue: Bigint!
+
+  "Total deposits during the period"
+  deposits: Bigint!
+
+  "Price gains or losses"
+  pricePl: Bigint!
+
+  "Approximate price P&L based on asset price changes"
+  pricePlApprox: Bigint!
+
+  "Impermanent loss (negative means loss)"
+  impermanentLoss: Bigint!
+
+  "Total earnings (fees) during the period"
+  earnings: Bigint!
+
+  "Total withdrawals during the period"
+  withdrawals: Bigint!
+
+  "LP value at the end of the period"
+  closingValue: Bigint!
+}
+
+type FinRangePositionAnalytics {
+  id: ID!
+
+  status: FinRangeStatus!
+
+  firstDepositDate: Timestamp
+
+  totalInvested: Bigint!
+
+  totalWithdrawn: Bigint!
+
+  "Claimed fees converted to quote value at claim time"
+  realizedYield: Bigint!
+
+  "Current position value in quote (computed from unrealized_base\/quote)"
+  unrealizedInvestment: Bigint!
+
+  "Unclaimed fees converted to quote value at current prices"
+  unrealizedYield: Bigint!
+
+  weightedAverageEntryDate: Timestamp
+
+  weightedAverageExitDate: Timestamp
+
+  weightedAverageInvestmentAgeDays: Int!
+
+  totalRealizedValue: Bigint!
+
+  totalUnrealizedValue: Bigint!
+
+  moic: Bigint!
+
+  dpi: Bigint!
+
+  apr: Bigint!
+}
+
+type AnalyticsFinBinsConnection {
+  pageInfo: PageInfo!
+  edges: [AnalyticsFinBinsEdge]
+}
+
+type AnalyticsFinOverviewBinsConnection {
+  pageInfo: PageInfo!
+  edges: [AnalyticsFinOverviewBinsEdge]
+}
+
+enum FinVolumeSourceType {
+  USER_ORDERS
+  VS
+  XYK
+  CCL
+}
+
+type AnalyticsFinBins {
+  resolution: Resolution!
+  bin: Timestamp!
+  contract: Address!
+  volumeAppLayer: Point!
+  volumeBaseLayer: Point!
+  volumeVs: Point!
+  volumeNonVs: Point!
+  volumeVsShare: Point!
+  revenueShareTcTheoretical: Point!
+  ammTvl: Point!
+  revenue: Point!
+  revenueBaseLayer: Point!
+  revenueAppLayer: Point!
+  count: Point!
+  liquidityUtilization: Point!
+  revenuePerVolumeUnit: Point!
+  revenuePerHundredUsdTvl: Point!
+  revenueShareTcActual: Point!
+}
+
+type AnalyticsFinOverviewBins {
+  resolution: Resolution!
+  bin: Timestamp!
+  volumeAppLayer: Point!
+  volumeBaseLayer: Point!
+  volumeVs: Point!
+  volumeNonVs: Point!
+  volumeVsShare: Point!
+  revenueShareTcTheoretical: Point!
+  ammTvl: Point!
+  revenue: Point!
+  revenueBaseLayer: Point!
+  revenueAppLayer: Point!
+  count: Point!
+  liquidityUtilization: Point!
+  revenuePerVolumeUnit: Point!
+  revenuePerHundredUsdTvl: Point!
+  revenueShareTcActual: Point!
+}
+
+type FinVolumeSource {
+  source: FinVolumeSourceType!
+  volume: Bigint!
+  percentage: Bigint!
+}
+
+type FinPairVolume {
+  contract: Address!
+  volume: Bigint!
+  percentage: Bigint!
+}
+
+"Access to smart contract development and inspection tools"
+type Developer {
+  codes: [Code!]!
+}
+
+"A compiled WebAssembly (WASM) binary for smart contracts"
+type Code {
+  checksum: String!
+  creator: Address!
+  contracts: [Contract!]!
+}
+
+"An instantiated smart contract with query and state access"
+type Contract implements Node {
+  "The ID of an object"
+  id: ID!
+
+  address: Address
+
+  info: ContractInfo
+
+  config: String
+
+  querySmart(
+    "JSON-encoded query message to send to the contract"
+    query: String
+  ): String
+
+  state: [StateEntry]!
+}
+
+"Metadata and configuration for a deployed smart contract"
+type ContractInfo {
+  codeId: Int!
+  code: Code!
+  creator: Address!
+  admin: Address
+  label: String!
+  created: TxPosition
+  ibcPortId: String
+  extension: String
+}
+
+"Key-value pair in a contract's state storage"
+type StateEntry {
+  key: String
+  keyAscii: String
+  value: String
+}
+
+"Blockchain position of a transaction"
+type TxPosition {
+  blockHeight: Int!
+  txIndex: Int!
+}
+
+"The currently configured deployment for all contracts"
+type Deployment {
+  targets: [DeploymentTarget!]!
+}
+
+"An individual deplyoment target for a contract"
+type DeploymentTarget implements Node {
+  "The ID of an object"
+  id: ID!
+
+  address: Address!
+
+  name: String!
+
+  module: String!
+
+  config: String!
+
+  contract: ContractInfo
+
+  version: String
+}
+
+type CosmosAccount implements Node {
+  "The ID of an object"
+  id: ID!
+
+  chain: Chain!
+
+  address: Address!
+
+  staking: [CosmosStakingAccount!]
+
+  unbonding: [CosmosUnbondingAccount!]
+
+  vesting: CosmosVestingAccount
+}
+
+type CosmosStakingAccount {
+  delegation: [CosmosDelegationEntry!]!
+  balance: Balance!
+}
+
+type CosmosDelegationEntry {
+  delegatorAddress: String!
+  validatorAddress: String!
+  shares: Bigint!
+}
+
+type CosmosUnbondingAccount {
+  delegatorAddress: String!
+  validatorAddress: String!
+  entries: [CosmosUnbondingEntry!]!
+}
+
+type CosmosUnbondingEntry {
+  creationHeight: Bigint!
+  completionTime: Timestamp!
+  initialBalance: Bigint!
+  balance: Balance!
+}
+
+type CosmosVestingAccount {
+  startTime: Timestamp!
+  vestingPeriods: [CosmosVestingPeriod!]!
+}
+
+type CosmosVestingPeriod {
+  endTime: Timestamp!
+  balances: [Balance!]
+}
+
+"""
+Represents supported blockchain networks.
+
+Each value corresponds to a chain identifier used across accounts, transactions, and other protocol-specific data.
+This enum is used to differentiate Layer 1 networks (e.g., Ethereum, Bitcoin, Thorchain, etc.).
+"""
+enum Chain {
+  AVAX
+  BASE
+  BTC
+  BCH
+  BSC
+  DOGE
+  ETH
+  GAIA
+  KUJI
+  LTC
+  NOBLE
+  OSMO
+  SOL
+  THOR
+  TERRA2
+  TERRA
+  TON
+  TRON
+  XRP
+  ZEC
+}
+
+type Calc {
+  metadata: CalcMetadata
+}
+
+type CalcMetadata {
+  manager: Address!
+  scheduler: Address!
+  baseFeeBps: Int!
+}
+
+"A strategy represents the configuration about a rujira-calc contract"
+type CalcOrder implements Node {
+  "The ID of an object"
+  id: ID!
+
+  idx: Int!
+
+  source: Address
+
+  owner: Address!
+
+  address: Address!
+
+  createdAt: Timestamp!
+
+  updatedAt: Timestamp!
+
+  label: String!
+
+  status: CalcOrderStatus!
+
+  balances: [Balance!]
+
+  valueUsd: Bigint!
+
+  contract: ContractInfo!
+
+  config: CalcOrderConfig!
+}
+
+enum CalcOrderStatus {
+  ACTIVE
+  PAUSED
+}
+
+type CalcOrderConfig {
+  manager: Address!
+  owner: Address!
+  nodes: [CalcNode!]
+}
+
+union CalcNode = CalcAction | CalcCondition
+
+type CalcCondition {
+  condition: CalcConditionType!
+  index: Int!
+  onSuccess: Int
+  onFailure: Int
+}
+
+union CalcConditionType = CalcConditionSchedule | CalcConditionTimestampElapsed | CalcConditionBalanceAvailable | CalcConditionCanSwap
+
+type CalcConditionSchedule {
+  cadence: CalcCadenceType!
+  executionRebate: [Balance!]
+  executors: [Address!]
+  jitter: Int
+  executions: Int
+  maxExecutions: Int
+}
+
+type CalcConditionBalanceAvailable {
+  address: Address
+  amount: Balance!
+}
+
+type CalcConditionTimestampElapsed {
+  timestamp: Timestamp!
+}
+
+type CalcConditionCanSwap {
+  swapAmount: Balance
+  minimumReceiveAmount: Balance
+  maximumSlippageBps: Int!
+  adjustment: CalcSwapAmountAdjustmentType!
+  routes: [CalcSwapRouteType!]!
+}
+
+type CalcAction {
+  action: CalcActionType!
+  index: Int!
+  next: Int
+}
+
+union CalcActionType = CalcActionSwap | CalcActionDistribute
+
+type CalcActionDistribute {
+  denoms: [String!]!
+  destinations: [CalcDestination!]!
+}
+
+type CalcActionSwap {
+  swapAmount: Balance!
+  minimumReceiveAmount: Balance!
+  maximumSlippageBps: Int!
+  adjustment: CalcSwapAmountAdjustmentType!
+  routes: [CalcSwapRouteType!]!
+}
+
+union CalcSwapAmountAdjustmentType = CalcSwapAmountAdjustmentFixed | CalcSwapAmountAdjustmentLinearScalar
+
+enum CalcSwapAmountAdjustmentKind {
+  FIXED
+  LINEAR_SCALAR
+}
+
+type CalcSwapAmountAdjustmentFixed {
+  kind: CalcSwapAmountAdjustmentKind!
+}
+
+type CalcSwapAmountAdjustmentLinearScalar {
+  kind: CalcSwapAmountAdjustmentKind!
+  baseReceiveAmount: Balance!
+  minimumSwapAmount: Balance!
+  scalar: Bigint!
+}
+
+union CalcSwapRouteType = CalcSwapRouteFin | CalcSwapRouteThorchain
+
+type CalcSwapRouteFin {
+  pairAddress: Address!
+  pair: FinPair!
+}
+
+type CalcSwapRouteThorchain {
+  streamingInterval: Int
+  maxStreamingQuantity: Int
+  affiliateCode: String
+  affiliateBps: Int
+  latestSwap: CalcThorchainStreamingSwap
+}
+
+type CalcThorchainStreamingSwap {
+  swapAmount: Balance!
+  expectedReceiveAmount: Balance!
+  startingBlock: Int!
+  streamingSwapBlocks: Int!
+  memo: String!
+}
+
+type CalcDestination {
+  shares: Int!
+  recipient: CalcRecipientType!
+  label: String
+}
+
+union CalcRecipientType = CalcRecipientBank | CalcRecipientContract | CalcRecipientDeposit
+
+type CalcRecipientBank {
+  address: Address!
+}
+
+type CalcRecipientContract {
+  address: Address!
+  msg: String!
+}
+
+type CalcRecipientDeposit {
+  memo: String!
+}
+
+union CalcCadenceType = CalcCadenceBlocks | CalcCadenceTime | CalcCadenceCron
+
+type CalcCadenceBlocks {
+  interval: Int!
+  previous: Int
+}
+
+type CalcCadenceTime {
+  duration: Int!
+  previous: Timestamp
+}
+
+type CalcCadenceCron {
+  expr: String!
+  previous: Timestamp
+}
+
+type BowPool implements Node {
+  "The ID of an object"
+  id: ID!
+
+  address: Address!
+
+  contract: ContractInfo
+
+  config: BowConfig!
+
+  state: BowState!
+
+  summary: BowSummary
+
+  quotes: FinBook
+
+  trades(after: String, first: Int, before: String, last: Int): FinTradeConnection
+}
+
+type BowPoolXyk implements Node {
+  "The ID of an object"
+  id: ID!
+
+  address: Address!
+
+  contract: ContractInfo
+
+  config: BowConfigXyk!
+
+  state: BowStateXyk!
+
+  summary: BowSummary
+
+  quotes: FinBook
+
+  trades(after: String, first: Int, before: String, last: Int): FinTradeConnection
+}
+
+union BowConfig = BowConfigXyk
+
+type BowConfigXyk {
+  x: Asset!
+  y: Asset!
+  shareAsset: Asset!
+  step: Bigint!
+  minQuote: Bigint!
+  fee: Bigint!
+}
+
+union BowState = BowStateXyk
+
+type BowStateXyk {
+  x: Bigint!
+  y: Bigint!
+  k: Bigint!
+  shares: Bigint!
+}
+
+type BowSummary {
+  "Percentage spread between the bid and ask price"
+  spread: Bigint!
+
+  "USD value of the bids within 2% of the spread"
+  depthBid: Bigint!
+
+  "USD value of the asks within 2% of the spread"
+  depthAsk: Bigint!
+
+  "USD of the last 24h of trades"
+  volume: Bigint!
+
+  "Volume as a percentage of the total pool USD value"
+  utilization: Bigint!
+}
+
+type BowAccount implements Node {
+  "The ID of an object"
+  id: ID!
+
+  account: Address!
+
+  pool: BowPool!
+
+  shares: Balance!
+
+  value: [Balance!]!
+
+  valueUsd: Bigint!
+}
+
+"The balance of a token or coin on a layer 1 chain"
+type Layer1Balance {
+  asset: Asset!
+  amount: Bigint!
+  utxos: [Utxo!]
+  valueUsd: Bigint!
+}
+
+"Relacement for layer_1_balance"
+type Balance {
+  asset: Asset!
+  amount: Bigint!
+  utxos: [Utxo!]
+  valueUsd: Bigint!
+}
+
+"Balance without UTXOs or TCY entitlement"
+type SimpleBalance {
+  asset: Asset!
+  amount: Bigint!
+  valueUsd: Bigint!
+}
+
+type Utxo {
+  oIndex: Int!
+  oTxHash: String!
+  value: Bigint!
+  scriptHex: String!
+  oTxHex: String!
+  isCoinbase: Boolean
+  address: Address!
+}
+
+type BalanceV2 implements Node {
+  "The ID of an object"
+  id: ID!
+
+  "The Primary representation of the aggregated assets"
+  asset: Asset!
+
+  balance: Bigint!
+
+  valueUsd: Bigint!
+
+  price: Price
+
+  accounts: [BalanceV2Account!]!
+}
+
+type BalanceV2Connection {
+  pageInfo: PageInfo!
+  edges: [BalanceV2Edge]
+}
+
+"The balance of an asset held by a single address on a single chain"
+type BalanceV2Account {
+  asset: Asset!
+  address: Address!
+  chain: Chain!
+  balance: Bigint!
+
+  "The unspent outputs backing this balance. Null on chains without a UTXO model"
+  utxos: [Utxo!]
+
+  valueUsd: Bigint!
+}
+
+type AuthzGrants {
+  granter: String
+  grantee: String
+  grants: [AuthzGrant!]
+}
+
+type AuthzGrant {
+  authorization: AuthzAuthorization!
+  expiration: Timestamp
+}
+
+union AuthzAuthorization = AuthzAny | AuthzGeneric
+
+type AuthzAny {
+  typeUrl: String!
+  value: String!
+}
+
+type AuthzGeneric {
+  msg: String!
+}
+
+type Auto {
+  workflowManager: Address
+  workflow(id: String, name: String): AutoWorkflow
+}
+
+type AutoAccount {
+  address: Address!
+  hasRequiredGrants: Boolean!
+  paymentConfig: AutoPaymentConfig
+  workflows(
+    after: String, first: Int, before: String, last: Int, workflowId: String, launcherId: String, pageNumber: Int, states: [String!]
+  ): AutoWorkflowInstanceConnection!
+}
+
+type AutoPaymentConfig {
+  type: PaymentConfigType!
+  usdAllowance: Bigint
+}
+
+enum PaymentConfigType {
+  WALLET
+  PREPAID
+}
+
+enum WorkflowStatus {
+  APPROVED
+  PENDING
+  REJECTED
+}
+
+type AutoWorkflow {
+  id: String!
+  name: String!
+  description: String
+  creationTimestamp: Timestamp
+  publisher: String
+  status: WorkflowStatus!
+}
+
+enum ExecutionType {
+  RECURRENT
+  ONESHOT
+  SCHEDULED
+}
+
+enum InstanceState {
+  RUNNING
+  FINISHED
+  CANCELED
+  PAUSED
+}
+
+enum ScheduleStatus {
+  PAUSED
+  RUNNING
+  COMPLETED
+  CANCELED
+}
+
+enum LastRunState {
+  RUNNING
+  COMPLETED
+  FAILED
+  CANCELED
+  TERMINATED
+}
+
+type AutoWorkflowInstanceConnection {
+  pageInfo: PageInfo!
+  edges: [AutoWorkflowInstanceEdge]
+}
+
+type AutoWorkflowInstance implements Node {
+  "The ID of an object"
+  id: ID!
+
+  instanceId: String!
+
+  workflowId: String!
+
+  requester: Address!
+
+  executionType: ExecutionType!
+
+  cronExpression: String
+
+  onchainParameters: Json!
+
+  offchainParameters: Json!
+
+  expirationDate: Timestamp
+
+  launcherId: String
+
+  workflow: AutoWorkflow!
+
+  state: InstanceState!
+
+  schedule: AutoWorkflowSchedule
+
+  lastRun: AutoWorkflowRun
+}
+
+type AutoWorkflowSchedule {
+  status: ScheduleStatus!
+  nextExecutionTimes: [Timestamp!]
+  runningWorkflows: Json
+}
+
+type AutoWorkflowRun {
+  state: LastRunState!
+  startTime: Timestamp!
+  endTime: Timestamp!
+}
+
+enum AprStatus {
+  AVAILABLE
+  SOON
+  NOT_APPLICABLE
+}
+
+type Apr {
+  value: Bigint
+  status: AprStatus!
+}
+
+type Analytics {
+  swap: AnalyticsSwap!
+  staking: AnalyticsStaking!
+  thorchainPools: AnalyticsThorchainPools!
+}
+
+type Point {
+  value: Bigint!
+  movingAvg: Bigint!
+}
+
+type AnalyticsThorchainPoolsBinsConnection {
+  pageInfo: PageInfo!
+  edges: [AnalyticsThorchainPoolsBinsEdge]
+}
+
+type AnalyticsThorchainPools {
+  bins(
+    after: String, first: Int, before: String, last: Int, from: Timestamp!, to: Timestamp!, resolution: Resolution!, period: Int!, pool: String!
+  ): AnalyticsThorchainPoolsBinsConnection
+}
+
+type AnalyticsThorchainPoolsBins {
+  resolution: Resolution!
+  bin: Timestamp!
+  pool: String!
+  openingBalanceAsset: Point!
+  openingBalanceRune: Point!
+  openingValue: Point!
+  closingBalanceAsset: Point!
+  closingBalanceRune: Point!
+  closingValue: Point!
+  openingPriceAsset: Point!
+  openingPriceRune: Point!
+  closingPriceAsset: Point!
+  closingPriceRune: Point!
+  openingLpUnits: Point!
+  closingLpUnits: Point!
+  depositsAsset: Point!
+  depositsRune: Point!
+  depositValue: Point!
+  withdrawalsAsset: Point!
+  withdrawalsRune: Point!
+  withdrawalValue: Point!
+  earnings: Point!
+  earningsInRune: Point!
+  earningsPerLpUnits: Point!
+  impermanentLoss: Point!
+  pricePl: Point!
+  pricePlApprox: Point!
+  apr: Point!
+  moneyMultiple: Point!
+}
+
+type AnalyticsStakingBinsConnection {
+  pageInfo: PageInfo!
+  edges: [AnalyticsStakingBinsEdge]
+}
+
+type AnalyticsStaking {
+  bins(
+    after: String, first: Int, before: String, last: Int, from: Timestamp!, to: Timestamp!, contract: Address!, resolution: Resolution!, period: Int!
+  ): AnalyticsStakingBinsConnection
+}
+
+type AnalyticsStakingBins {
+  resolution: Resolution!
+  bin: Timestamp!
+  lpWeight: Bigint!
+  totalRevenue: Point!
+  accountRevenue: Point!
+  liquidRevenue: Point!
+  accountApr: Point!
+  liquidApy: Point!
+  accountRevenuePerShare: Point!
+  totalBalanceStaked: Point!
+  accountBalanceStaked: Point!
+  liquidBalanceStaked: Point!
+  liquidWeight: Bigint!
+  totalValueStaked: Point!
+  accountValueStaked: Point!
+  liquidValueStaked: Point!
+  inflowAccountStaked: Point!
+  inflowLiquidStaked: Point!
+  inflowTotalStaked: Point!
+  outflowAccountStaked: Point!
+  outflowLiquidStaked: Point!
+  outflowTotalStaked: Point!
+  netFlowAccountStaked: Bigint!
+  netFlowLiquidStaked: Bigint!
+  netFlowTotalStaked: Bigint!
+}
+
+type AnalyticsSwapBinsConnection {
+  pageInfo: PageInfo!
+  edges: [AnalyticsSwapBinsEdge]
+}
+
+type AnalyticsSwap {
+  bins(
+    after: String, first: Int, before: String, last: Int, from: Timestamp!, to: Timestamp!, resolution: Resolution!, period: Int!
+  ): AnalyticsSwapBinsConnection
+
+  "Breakdown of swap volumes by assets on which the swap occurred excluding RUNE considered as medium of exchange"
+  swapVolumeByAsset(from: Timestamp!, to: Timestamp!): [AnalyticsSwapSnapshotAsset!]
+
+  "Breakdown of swap volumes by chains on which the swap occurred. THORChain only accounted for native asset volumes eg. RUJI -> RUNE"
+  swapVolumeByChain(from: Timestamp!, to: Timestamp!): [AnalyticsSwapSnapshotChain!]
+}
+
+type AnalyticsSwapBins {
+  resolution: Resolution!
+  bin: Timestamp!
+  uniqueSwapUsers: Point!
+  swaps: Point!
+  volume: Point!
+  volumeShareOverTotal: Bigint!
+  liquidityFeePaidToTc: Point!
+  liquidityFeePaidToTcShareOverTotal: Bigint!
+  revenue: Point!
+}
+
+type AnalyticsSwapSnapshotAsset {
+  asset: Asset!
+  volume: Bigint!
+  weight: Bigint!
+}
+
+type AnalyticsSwapSnapshotChain {
+  sourceChain: Chain!
+  volume: Bigint!
+  weight: Bigint!
+}
+
+"A layer_1_account represents data about this address on the layer 1 specified"
+type Layer1Account implements Node {
+  "The ID of an object"
+  id: ID!
+
+  address: Address!
+
+  chain: Chain!
+
+  balances: [Layer1Balance!]
+
+  "A list of contract addresses for ERC-20, SPL etc token balances"
+  account: Account
+
+  liquidityAccounts: [ThorchainLiquidityProvider!]!
+}
+
+"An account represents data about this address on THORChain and the Rujira app layer, using the mapped address from the root account when required"
+type Account implements Node {
+  "The ID of an object"
+  id: ID!
+
+  "The THORChain address for this account on the app layer"
+  address: Address!
+
+  balances(addresses: [Address!]!): [BalanceV2!]!
+
+  balancesV2(after: String, first: Int, before: String, last: Int, addresses: [Address!]!): BalanceV2Connection!
+
+  auto: AutoAccount
+
+  authzGrants(grantee: Address!): AuthzGrants
+
+  bow: [BowAccount!]!
+
+  fin: FinAccount
+
+  index: [IndexAccount!]!
+
+  merge: MergeStats
+
+  pilot: [PilotAccount!]!
+
+  staking: StakingAccounts!
+
+  stakingV2: [StakingAccount!]!
+
+  strategies: [StrategyAccount!]!
+
+  liquidityAccounts: [ThorchainLiquidityProvider!]!
+
+  vesting: [VestingAccount!]!
+
+  credit: GhostCreditAccounts!
+}
+
+type RujiraAccount {
+  address: Address!
+  admin: Address!
+  label: String!
+}
+
+type PageInfo {
+  "When paginating backwards, are there more items?"
+  hasPreviousPage: Boolean!
+
+  "When paginating forwards, are there more items?"
+  hasNextPage: Boolean!
+
+  "When paginating backwards, the cursor to continue."
+  startCursor: String
+
+  "When paginating forwards, the cursor to continue."
+  endCursor: String
+}
+
+type AnalyticsSwapBinsEdge {
+  node: AnalyticsSwapBins
+  cursor: String
+}
+
+type AnalyticsStakingBinsEdge {
+  node: AnalyticsStakingBins
+  cursor: String
+}
+
+type AnalyticsThorchainPoolsBinsEdge {
+  node: AnalyticsThorchainPoolsBins
+  cursor: String
+}
+
+type AutoWorkflowInstanceEdge {
+  node: AutoWorkflowInstance
+  cursor: String
+}
+
+type BalanceV2Edge {
+  node: BalanceV2
+  cursor: String
+}
+
+type AnalyticsFinOverviewBinsEdge {
+  node: AnalyticsFinOverviewBins
+  cursor: String
+}
+
+type AnalyticsFinBinsEdge {
+  node: AnalyticsFinBins
+  cursor: String
+}
+
+type FinRangeBinEdge {
+  node: FinRangeBin
+  cursor: String
+}
+
+type FinBookEntryEdge {
+  node: FinBookEntry
+  cursor: String
+}
+
+type FinAccountActionEdge {
+  node: FinAccountAction
+  cursor: String
+}
+
+type FinRangeEdge {
+  node: FinRange
+  cursor: String
+}
+
+type FinOrderEdge {
+  node: FinOrder
+  cursor: String
+}
+
+type FinCandleEdge {
+  node: FinCandle
+  cursor: String
+}
+
+type FinTradeEdge {
+  node: FinTrade
+  cursor: String
+}
+
+type FinPairEdge {
+  node: FinPair
+  cursor: String
+}
+
+type GhostCreditAccountEdge {
+  node: GhostCreditAccount
+  cursor: String
+}
+
+type IndexNavBinEdge {
+  node: IndexNavBin
+  cursor: String
+}
+
+type LeagueTxEdge {
+  node: LeagueTx
+  cursor: String
+}
+
+type LeagueLeaderboardEntryEdge {
+  node: LeagueLeaderboardEntry
+  cursor: String
+}
+
+type OrderEdge {
+  node: Order
+  cursor: String
+}
+
+type PilotBidActionEdge {
+  node: PilotBidAction
+  cursor: String
+}
+
+type PilotBidEdge {
+  node: PilotBid
+  cursor: String
+}
+
+type StrategyEdge {
+  node: Strategy
+  cursor: String
+}
+
+type ThorchainOracleCandleEdge {
+  node: ThorchainOracleCandle
+  cursor: String
+}
+
+type ThorchainTorCandleEdge {
+  node: ThorchainTorCandle
+  cursor: String
+}
+
+type VenturesSaleEdge {
+  node: VenturesSale
+  cursor: String
+}
+
+type VestingEdge {
+  node: Vesting
+  cursor: String
+}

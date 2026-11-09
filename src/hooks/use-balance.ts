@@ -16,6 +16,7 @@ import { estimateTransactionFee } from '@tcswap/toolboxes/cosmos'
 import { getProvider } from '@tcswap/toolboxes/evm'
 import { Contract } from 'ethers'
 import { useAssetFrom } from '@/hooks/use-swap'
+import type { Asset } from '@/components/swap/asset'
 import { useWallets } from '@/hooks/use-wallets'
 import { getAssetBalance, getThorBankBalances } from '@/lib/api'
 import { thorBalanceKey } from '@/lib/swap-helpers'
@@ -31,9 +32,10 @@ type UseBalance = {
   error: Error | null
 }
 
-export const useBalance = (): UseBalance => {
+export const useBalance = (assetOverride?: Asset | null): UseBalance => {
   const uSwap = getUSwap()
-  const assetFrom = useAssetFrom()
+  const swapAsset = useAssetFrom()
+  const assetFrom = assetOverride === undefined ? swapAsset : assetOverride
   const { selected } = useWallets()
   const queryClient = useQueryClient()
 
@@ -59,9 +61,13 @@ export const useBalance = (): UseBalance => {
 
       // THORChain coins go by several names for one denom ("THOR.x/ruji" from the node and bank,
       // "THOR.RUJI" in the token list), so compare them by the same key the wallet sidebar uses.
-      const thorKey = assetFrom.chain === Chain.THORChain
-        ? thorBalanceKey({ chain: Chain.THORChain, symbol: assetFrom.identifier.toUpperCase().startsWith('THOR.') ? assetFrom.identifier.slice(5) : assetFrom.identifier })
-        : undefined
+      const thorKey =
+        assetFrom.chain === Chain.THORChain
+          ? thorBalanceKey({
+              chain: Chain.THORChain,
+              symbol: assetFrom.identifier.toUpperCase().startsWith('THOR.') ? assetFrom.identifier.slice(5) : assetFrom.identifier
+            })
+          : undefined
 
       const finder = (b: AssetValue) => {
         if (thorKey) return thorBalanceKey(b) === thorKey

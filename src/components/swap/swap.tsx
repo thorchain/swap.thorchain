@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useMemo } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { useTranslations } from 'next-intl'
 import { AssetValue, USwapNumber } from '@tcswap/core'
 import { type MemolessAsset } from '@tcswap/helpers/api'
@@ -18,10 +18,13 @@ import { SwapPrivateDisclaimer } from '@/components/swap/swap-private-disclaimer
 import { SwapPrivateMode } from '@/components/swap/swap-private-mode'
 import { SwapSettings } from '@/components/swap/swap-settings'
 import { SwapToggleAssets } from '@/components/swap/swap-toggle-assets'
+import { SwapTabsHeader, type SwapMode } from '@/components/swap/swap-tabs'
+import { Earn } from '@/components/earn/earn'
 import { isAssetInMode, useAssets } from '@/hooks/use-assets'
 import { useMemolessAssets } from '@/hooks/use-memoless-assets'
 import { useIsMemolessHalted } from '@/hooks/use-mimir'
 import { useQuote } from '@/hooks/use-quote'
+import { usePrefetchDefiMarkets } from '@/hooks/use-prefetch-defi-markets'
 import { useSwapRates } from '@/hooks/use-rates'
 import { useResolveSource } from '@/hooks/use-resolve-source'
 import { useAssetFrom, useSetAssetFrom, useSetAssetTo, useSwap } from '@/hooks/use-swap'
@@ -29,16 +32,32 @@ import { useTradingHalt } from '@/hooks/use-trading-halt'
 import { urlBuyAsset, useUrlParams } from '@/hooks/use-url-params'
 import { useSelectedAccount } from '@/hooks/use-wallets'
 import { resolvePriceImpact } from '@/lib/swap-helpers'
-import { cn } from '@/lib/utils'
-import { useIsLimitSwap, useIsPrivateSend, useSetIsLimitSwap, useSetIsPrivateSwap } from '@/store/limit-swap-store'
+import { useIsLimitSwap, useIsPrivateSend, useSetIsLimitSwap, useSetIsPrivateSwap, useLimitSwapStore } from '@/store/limit-swap-store'
 import { useSwapStore } from '@/store/swap-store'
-
-type SwapMode = 'swap' | 'limit' | 'private'
 
 const DEFAULT_SELL = 'BTC.BTC'
 const DEFAULT_BUY = 'ETH.ETH'
 
 export const Swap = () => {
+  usePrefetchDefiMarkets()
+  const [showDefi, setShowDefi] = useState(false)
+  const onModeChange = (mode: SwapMode) => {
+    if (mode === 'earn') return setShowDefi(true)
+    const store = useLimitSwapStore.getState()
+    store.setIsPrivateSwap(mode === 'private')
+    store.setIsLimitSwap(mode === 'limit')
+    // SwapForm reapplies the private URL flag when it mounts again.
+    const url = new URL(window.location.href)
+    if (mode === 'private') url.searchParams.set('private', 'true')
+    else url.searchParams.delete('private')
+    window.history.replaceState(window.history.state, '', url.pathname + url.search)
+    setShowDefi(false)
+  }
+  if (showDefi) return <Earn onModeChange={onModeChange} />
+  return <SwapForm onEarn={() => setShowDefi(true)} />
+}
+
+const SwapForm = ({ onEarn }: { onEarn: () => void }) => {
   const t = useTranslations('swap')
   const assetFrom = useAssetFrom()
   const setAssetFrom = useSetAssetFrom()
@@ -68,6 +87,7 @@ export const Swap = () => {
 
   // Each setter clears the other mode, so one call describes the tab.
   const setMode = (next: SwapMode) => {
+    if (next === 'earn') return onEarn()
     if (next === 'private') return setIsPrivateSwap(true)
     if (next === 'limit') return setIsLimitSwap(true)
     setIsLimitSwap(false)
@@ -131,23 +151,12 @@ export const Swap = () => {
   return (
     <div className="flex flex-col items-center justify-center px-4 pt-4 pb-4 md:pb-20">
       <div className="w-full max-w-md">
-        <div className="mb-3 flex items-center justify-between">
-          <div className="flex cursor-pointer items-center gap-4 text-2xl font-medium">
-            <span className={cn(mode === 'swap' ? 'text-txt-contrast-1-default' : 'text-txt-text-modal')} onClick={() => setMode('swap')}>
-              {t('tab.swap')}
-            </span>
-            <span className={cn(mode === 'limit' ? 'text-txt-contrast-1-default' : 'text-txt-text-modal')} onClick={() => setMode('limit')}>
-              {t('tab.limit')}
-            </span>
-            <span className={cn(mode === 'private' ? 'text-txt-contrast-1-default' : 'text-txt-text-modal')} onClick={() => setMode('private')}>
-              {t('tab.private')}
-            </span>
-          </div>
-          <div className="flex items-center gap-4">
+        <SwapTabsHeader mode={mode} onModeChange={setMode}>
+          <div className="flex shrink-0 items-center gap-2 sm:gap-4">
             <SwapAddressFrom />
             <SwapSettings />
           </div>
-        </div>
+        </SwapTabsHeader>
 
         <div className="bg-modal rounded-20 relative space-y-1.25 border p-2.5">
           {isPrivateTab && <SwapPrivateMode />}

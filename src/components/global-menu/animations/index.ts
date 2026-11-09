@@ -2,6 +2,7 @@ export const swapAnim = require('./Swap.json')
 export const memoAnim = require('./Memo.json')
 export const bondAnim = require('./Bond.json')
 export const tcyAnim = require('./TCY.json')
+export { rujiAnim } from './ruji'
 export const poolsAnim = require('./Pools.json')
 export const thornameAnim = require('./THORName.json')
 export const nodeAnim = require('./Node.json')

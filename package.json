@@ -9,6 +9,8 @@
     "lint": "next lint",
     "test:agent-contracts": "node test/agent-contracts.test.mjs",
     "test:i18n": "node test/i18n-protocol.test.mjs",
+    "test:borrow": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON --test test/borrow-markets.test.mjs",
+    "test:earn": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON --test test/earn-markets.test.mjs",
     "i18n:translate": "node tools/i18n-translate.mjs",
     "i18n:check": "node tools/i18n-translate.mjs --check"
   },
@@ -84,6 +86,7 @@
     "eslint": "^9",
     "eslint-config-next": "16.0.0",
     "eslint-config-prettier": "^10.1.8",
+    "graphql": "^16.14.2",
     "node-polyfill-webpack-plugin": "^4.1.0",
     "prettier": "^3.6.2",
     "prettier-plugin-tailwindcss": "^0.7.1",
