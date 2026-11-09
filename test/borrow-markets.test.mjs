@@ -232,6 +232,7 @@ test('server sends authenticated requests, deduplicates callers and caches valid
   await Promise.all([client.fetchBorrowMarkets(), client.fetchBorrowMarkets()])
   await client.fetchBorrowMarkets()
   assert.equal(requests.length, 1)
+  assert.equal(requests[0].url, 'https://api.rujira.network/api/graphql')
   assert.equal(requests[0].options.headers.authorization, 'Bearer fixture-key')
   assert.equal(requests[0].options.cache, 'no-store')
   clock.value = 30_001
@@ -251,7 +252,7 @@ test('rate limits receive exactly one delayed retry and failed results are not c
 
 test('an analytics rate-limit retry keeps the analytics endpoint instead of falling back to Main', async () => {
   const { client, requests } = createTransport([rateLimited(), success()])
-  await client.requestRujira('query Metrics { analytics { __typename } }', undefined, true, 'https://analytics.example/api/v2/graphql')
+  await client.requestAnalytics('query Metrics { analytics { __typename } }')
   assert.equal(requests.length, 2)
-  assert.ok(requests.every(request => request.url === 'https://analytics.example/api/v2/graphql'))
+  assert.ok(requests.every(request => request.url === 'https://analytics.rujira.network/api/v2/graphql'))
 })

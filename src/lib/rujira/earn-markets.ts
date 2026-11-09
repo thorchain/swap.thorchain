@@ -1,15 +1,8 @@
 import Decimal from 'decimal.js'
-import type { Chain } from '@tcswap/core'
+import { analyticsDecimal, toAnalyticsAsset, type AnalyticsToken } from './analytics-markets'
 import type { BorrowAsset } from './borrow-markets'
 
 export type EarnMode = 'automated' | 'lending' | 'staking'
-export interface EarnApiAsset {
-  asset: string
-  type: string
-  chain: string
-  metadata: { symbol: string; decimals: number; name?: string | null; pngUrl?: string | null }
-  price?: { current: string | null } | null
-}
 export interface EarnOpportunity {
   id: string
   assets: BorrowAsset[]
@@ -20,60 +13,30 @@ export interface EarnMarkets {
   opportunities: EarnOpportunity[]
   metricsUnavailable?: boolean
 }
-export interface EarnConnection<T> {
-  pageInfo: { hasNextPage: boolean; endCursor: string | null }
-  edges: ({ node: T | null } | null)[] | null
-}
 export interface EarnTradePair {
-  id: string
-  address: string
-  assetBase: EarnApiAsset
-  assetQuote: EarnApiAsset
+  pair: { id: string; baseToken: AnalyticsToken; quoteToken: AnalyticsToken }
 }
-export interface EarnVault {
+export interface EarnLendingMarket {
   id: string
-  asset: EarnApiAsset
-  status: { lendRate: string; apr: { value: string | null; status: string } } | null
-}
-export interface EarnStakingPool {
-  id: string
-  bondAsset: EarnApiAsset
-}
-
-export interface EarnCclMetric {
-  strategy: { pair: { contractAddress: string | null } }
+  token: AnalyticsToken
   apr: string | null
 }
-interface EarnStakingHistory {
-  history: { isComplete: boolean; apr: string | null }[] | null
+export interface EarnAutomatedMetric {
+  strategy: { pair: { id: string } }
+  apr: string | null
+}
+export interface EarnStakingPool {
+  pool: { id: string; stakedToken: AnalyticsToken } | null
+  current: { apr: string | null } | null
 }
 export interface EarnStakingMetrics {
-  ruji?: EarnStakingHistory | null
-  brune?: EarnStakingHistory | null
-  tcy?: EarnStakingHistory | null
+  ruji?: EarnStakingPool | null
+  brune?: EarnStakingPool | null
+  tcy?: EarnStakingPool | null
 }
 
-const scaledApr = (value?: string | null) =>
-  value != null && new Decimal(value).isFinite() ? new Decimal(value).div('1000000000000').toFixed() : null
-
-const decimalApr = (value?: string | null) => (value != null && new Decimal(value).isFinite() ? new Decimal(value).toFixed() : null)
-
-export const toEarnAsset = (asset: EarnApiAsset): BorrowAsset => ({
-  marketId: asset.asset,
-  identifier: asset.asset,
-  chain: asset.chain as Chain,
-  chainId: asset.chain,
-  ticker: asset.metadata.symbol,
-  decimals: asset.metadata.decimals,
-  name: asset.metadata.name ?? undefined,
-  logoURI: asset.metadata.pngUrl ?? undefined,
-  isSecuredAsset: asset.type === 'SECURED' || undefined,
-  providers: [],
-  usdPrice: scaledApr(asset.price?.current)
-})
-
 const EXCLUDED_EARN_TICKERS = new Set(['XUSK', 'NAMI', 'AUTO'])
-
+const EXCLUDED_TRADE_TICKERS = new Set(['TCY', 'ATOM'])
 const catalogue = (opportunities: EarnOpportunity[]): EarnMarkets => {
   const included = opportunities.filter(row => row.assets.every(asset => !EXCLUDED_EARN_TICKERS.has(asset.ticker.toUpperCase())))
   return {
@@ -84,67 +47,48 @@ const catalogue = (opportunities: EarnOpportunity[]): EarnMarkets => {
   }
 }
 
-export const tradeEarnMarkets = (pairs: EarnTradePair[], metrics: EarnCclMetric[] = []): EarnMarkets => {
-  const byContract = new Map(metrics.filter(row => row.strategy.pair.contractAddress).map(row => [row.strategy.pair.contractAddress!, row.apr]))
+export const tradeEarnMarkets = (pairs: EarnTradePair[], metrics: EarnAutomatedMetric[] = []): EarnMarkets => {
+  const byPair = new Map(metrics.map(row => [row.strategy.pair.id, row.apr]))
   const markets = catalogue(
-    pairs.map(pair => ({
+    pairs.map(({ pair }) => ({
       id: pair.id,
-      assets: [toEarnAsset(pair.assetBase), toEarnAsset(pair.assetQuote)],
-      apr: decimalApr(byContract.get(pair.address))
+      assets: [toAnalyticsAsset(pair.baseToken), toAnalyticsAsset(pair.quoteToken)],
+      apr: analyticsDecimal(byPair.get(pair.id))
     }))
   )
-  // Every included Trade asset remains selectable, even when no CCL strategy exists for
-  // one of its pairs. Only actual analytics CCL rows qualify as opportunities.
-  const cclPairIds = new Set(pairs.filter(pair => byContract.has(pair.address)).map(pair => pair.id))
-  return { assets: markets.assets, opportunities: markets.opportunities.filter(row => cclPairIds.has(row.id)) }
+  // v2 selects the higher CCL/DCL APR per pair. All Trade assets stay selectable.
+  return {
+    assets: markets.assets,
+    opportunities: markets.opportunities.filter(
+      row => byPair.has(row.id) && row.assets.every(asset => !EXCLUDED_TRADE_TICKERS.has(asset.ticker.toUpperCase()))
+    )
+  }
 }
 
-export const lendingEarnMarkets = (vaults: EarnVault[]): EarnMarkets =>
+export const lendingEarnMarkets = (markets: EarnLendingMarket[]): EarnMarkets =>
   catalogue(
-    vaults.map(vault => ({
-      id: vault.id,
-      assets: [toEarnAsset(vault.asset)],
-      apr: scaledApr(vault.status?.lendRate)
+    markets.map(market => ({
+      id: market.id,
+      assets: [toAnalyticsAsset(market.token)],
+      apr: analyticsDecimal(market.apr)
     }))
   )
 
-const stakingApr30d = (metrics?: EarnStakingHistory | null): string | null => {
-  const aprs = (metrics?.history ?? []).flatMap(point => {
-    if (!point.isComplete || point.apr == null) return []
-    try {
-      const apr = new Decimal(point.apr)
-      return apr.isFinite() && !apr.isNegative() ? [apr] : []
-    } catch {
-      return []
-    }
-  })
-  // History covers 30 complete UTC days. Missing days are not zero-return days.
-  return aprs.length
-    ? Decimal.sum(...aprs)
-        .div(aprs.length)
-        .toFixed()
-    : null
-}
-
-export const stakingEarnMarkets = (pools: EarnStakingPool[], metrics: EarnStakingMetrics = {}): EarnMarkets => {
-  const metricKeys = new Map<string, keyof EarnStakingMetrics>([
-    ['THOR.RUJI', 'ruji'],
-    ['X/BRUNE', 'brune'],
-    ['THOR.TCY', 'tcy']
-  ])
-  return catalogue(
-    pools.map(pool => {
-      const key = metricKeys.get(pool.bondAsset.asset.toUpperCase())
-      return {
-        id: pool.id,
-        assets: [toEarnAsset(pool.bondAsset)],
-        apr: stakingApr30d(key ? metrics[key] : null)
-      }
-    })
+export const stakingEarnMarkets = (metrics: EarnStakingMetrics | null): EarnMarkets =>
+  catalogue(
+    Object.values(metrics ?? {}).flatMap(metric =>
+      metric?.pool
+        ? [
+            {
+              id: metric.pool.id,
+              assets: [toAnalyticsAsset(metric.pool.stakedToken)],
+              apr: analyticsDecimal(metric.current?.apr)
+            }
+          ]
+        : []
+    )
   )
-}
 
-// Rank the complete catalogue, then take three. Full identifiers preserve token/network variants.
 export const topEarnOpportunities = (rows: EarnOpportunity[], assetId?: string): EarnOpportunity[] =>
   rows
     .filter(row => !assetId || row.assets.some(asset => asset.identifier === assetId))

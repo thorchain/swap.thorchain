@@ -1,4 +1,5 @@
 import 'server-only'
+import type { AnalyticsPage } from './analytics-markets'
 import { BORROW_MARKETS_QUERY } from './borrow-query'
 import { getBorrowMarkets, type BorrowMarketsData, type BorrowMarkets } from './borrow-markets'
 
@@ -60,4 +61,25 @@ export const requestRujira = async <T>(query: string, variables?: Record<string,
   }
   if (!result.data) throw new RujiraDataError('upstream', 'Rujira API returned no data')
   return result.data
+}
+
+// Earn tabs use v2 explicitly; Borrow keeps the Main endpoint above.
+export const requestAnalytics = <T>(query: string, variables?: Record<string, unknown>): Promise<T> =>
+  requestRujira<T>(query, variables, true, process.env.RUJIRA_ANALYTICS_GRAPHQL_URL || 'https://analytics.rujira.network/api/v2/graphql')
+
+export const paginateAnalytics = async <T>(fetchPage: (after?: string) => Promise<AnalyticsPage<T> | null>): Promise<T[]> => {
+  const nodes: T[] = []
+  let after: string | undefined
+  const seen = new Set<string>()
+  while (true) {
+    const page = await fetchPage(after)
+    // An unavailable namespace is valid data. Do not expose an incomplete catalogue.
+    if (page === null) return []
+    for (const node of page.nodes ?? []) if (node) nodes.push(node)
+    if (!page.pageInfo.hasNextPage) return nodes
+    const cursor = page.pageInfo.endCursor
+    if (!cursor || seen.has(cursor)) throw new Error('Analytics catalogue pagination did not advance')
+    seen.add(cursor)
+    after = cursor
+  }
 }

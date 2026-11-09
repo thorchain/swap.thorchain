@@ -59,6 +59,9 @@ const BorrowInput = ({
   const t = useTranslations('borrow')
   const [open, setOpen] = useState(false)
   const { balance } = useBalance(side === 'deposit' ? (selected ?? null) : null)
+  const clipAmount = selected?.ticker === 'USDC' || selected?.ticker === 'USDT'
+  const decimalIndex = amount.indexOf('.')
+  const displayedAmount = clipAmount && decimalIndex !== -1 ? amount.slice(0, decimalIndex + 3) : amount
   const fiat = selected?.usdPrice == null ? null : new Decimal(amount && amount !== '.' ? amount : 0).mul(selected.usdPrice).toNumber()
   const label = t(side)
   return (
@@ -71,9 +74,14 @@ const BorrowInput = ({
           <DecimalInput
             id={`borrow-${side}-amount`}
             className="text-txt-high-contrast w-full bg-transparent text-2xl font-medium outline-none"
-            amount={amount}
+            amount={displayedAmount}
             onAmountChange={onAmountChange}
-            decimalScale={selected?.decimals ?? 8}
+            onValueChange={(values, { source }) => {
+              // Formatting a calculated amount must not write its clipped display back into form state.
+              if (!clipAmount || source === 'event') onAmountChange(values.value)
+            }}
+            decimalScale={clipAmount ? 2 : (selected?.decimals ?? 8)}
+            valueIsNumericString
             autoComplete="off"
           />
           <div className="text-txt-label-small text-sm font-medium">
@@ -141,6 +149,7 @@ export const Borrow = () => {
   const deposit =
     depositAssets.find(asset => asset.identifier === depositId) ?? depositAssets.find(asset => asset.ticker === 'BTC') ?? depositAssets[0]
   const borrow = borrowAssets.find(asset => asset.identifier === borrowId) ?? borrowAssets.find(asset => asset.ticker === 'USDC') ?? borrowAssets[0]
+  const clipBorrowAvailability = borrow?.ticker === 'USDC' || borrow?.ticker === 'USDT'
   const borrowAmount = enteredBorrowAmount ?? borrowAmountForLtv(deposit, borrow, depositAmount, 50) ?? ''
   const preview = calculateBorrowPreview(deposit, borrow, depositAmount, borrowAmount, data?.liquidationThreshold)
   const formatPercent = (value: number) => new Intl.NumberFormat(undefined, { style: 'percent', maximumFractionDigits: 2 }).format(value)
@@ -214,7 +223,12 @@ export const Borrow = () => {
             {borrow?.availableToBorrow == null ? (
               '\u2014'
             ) : (
-              <DecimalText amount={borrow.availableToBorrow} symbol={borrow.ticker} decimalScale={borrow.decimals} valueIsNumericString />
+              <DecimalText
+                amount={clipBorrowAvailability ? new Decimal(borrow.availableToBorrow).toFixed(2, Decimal.ROUND_DOWN) : borrow.availableToBorrow}
+                symbol={borrow.ticker}
+                decimalScale={clipBorrowAvailability ? 2 : borrow.decimals}
+                valueIsNumericString
+              />
             )}
           </span>
         </div>

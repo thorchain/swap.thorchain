@@ -1,3 +1,7 @@
+# Development contract updated from rujira-analytics-structure.json (2026-11-09).
+# Source status: REVIEW_DRAFT; this includes fields not yet deployed in the live API.
+# Document Decimal maps to the existing DecimalValue scalar. Undocumented compatibility fields are retained.
+
 schema {
   subscription: RootSubscriptionType
   query: RootQueryType
@@ -177,16 +181,24 @@ type ExecutionCoverage {
   "Trades missing either same-block oracle price, before sign filtering. Unit: count. Null if unavailable; canonical decimal string."
   unmeasuredTrades: DecimalValue
 
-  "Volume of measured trades before sign filtering, in the selected currency. Unit: selected_currency. Null if unavailable; canonical decimal string."
+  """
+  Volume of measured trades before sign filtering, in the selected currency.
+  """
   measuredVolume(
-    "RUNE is measured; USD is indicative at the current RUNE\/USD price, including historical values."
-    currency: ThorchainCurrency
+    """
+    RUNE is measured; USD is indicative at the current RUNE/USD price, including historical values.
+    """
+    currency: ThorchainCurrency = RUNE
   ): DecimalValue
 
-  "Volume of unmeasured trades before sign filtering, in the selected currency. Unit: selected_currency. Null if unavailable; canonical decimal string."
+  """
+  Volume of unmeasured trades before sign filtering, in the selected currency.
+  """
   unmeasuredVolume(
-    "RUNE is measured; USD is indicative at the current RUNE\/USD price, including historical values."
-    currency: ThorchainCurrency
+    """
+    RUNE is measured; USD is indicative at the current RUNE/USD price, including historical values.
+    """
+    currency: ThorchainCurrency = RUNE
   ): DecimalValue
 
   "Measured trades \/ total trades before sign filtering; 0.25 means 25%. Null if no trades. Unit: ratio. Null if unavailable; canonical decimal string."
@@ -194,29 +206,43 @@ type ExecutionCoverage {
 }
 
 type StakingCurrent {
-  "UTC measurement time of this snapshot. Unit: timestamp. UTC ISO8601 timestamp."
+  """
+  Yielding-mode annualized return without compounding at the current snapshot. Unit: ratio. Null if unavailable; canonical decimal string.
+  """
+  apr(
+    """
+    Return the equal-weight mean of each completed UTC day's value over this range instead of the current snapshot. Null if any day in the range has no value. Edges must fall on UTC midnight; the open day never counts.
+    """
+    averageOver: TimeRangeInput
+  ): DecimalValue
+  """
+  Auto-compounding-mode annualized yield including compounding at the current snapshot. Unit: ratio. Null if unavailable; canonical decimal string.
+  """
+  apy(
+    """
+    Return the equal-weight mean of each completed UTC day's value over this range instead of the current snapshot. Null if any day in the range has no value. Edges must fall on UTC midnight; the open day never counts.
+    """
+    averageOver: TimeRangeInput
+  ): DecimalValue
+  """
+  UTC measurement time of this snapshot. Unit: timestamp. UTC ISO8601 timestamp.
+  """
   asOf: Timestamp!
-
-  "Latest amount staked in the selected pool, in tokens or USD; combined or by staking mode. Unit: selected_unit. Null if unavailable; canonical decimal string."
-  staked(
-    "Selects the unit variant. Null if that combination is unavailable."
-    unit: StakedValueUnit
-
-    "Selects the mode variant. Null if that combination is unavailable."
-    mode: StakingModeFilter
-  ): DecimalValue
-
-  "Revenue the token's distributor holds for its staking pool at the latest snapshot, not yet paid. Only BRUNE has a value. Applies to RUJI in USDC or USD, and to BRUNE and TCY in RUNE or USD; USD is the default for all three. A currency the selected token does not pay in is inapplicable and reads null. Unit: selected_currency. Null if unavailable; canonical decimal string."
+  """
+  Revenue the token's distributor holds for its staking pool at the latest snapshot, not yet paid. Only BRUNE has a value. Applies to RUJI in USDC or USD, and to BRUNE and TCY in RUNE or USD; USD is the default for all three. A currency the selected token does not pay in is inapplicable and reads null. Unit: selected_currency. Null if unavailable; canonical decimal string.
+  """
   pendingRewards(
-    "Selects the currency variant. Null if that combination is unavailable."
-    currency: StakingRevenueCurrency
+    """Selects the currency variant. Null if that combination is unavailable."""
+    currency: StakingRevenueCurrency = USD
   ): DecimalValue
-
-  "Yielding-mode annualized return without compounding at the current snapshot. Unit: ratio. Null if unavailable; canonical decimal string."
-  apr: DecimalValue
-
-  "Auto-compounding-mode annualized yield including compounding at the current snapshot. Unit: ratio. Null if unavailable; canonical decimal string."
-  apy: DecimalValue
+  """
+  Latest amount staked in the selected pool, in tokens or USD; combined or by staking mode.
+  """
+  staked(
+    unit: StakedValueUnit = STAKED_TOKEN
+    """Select yielding, auto-compounding, or both combined (TOTAL)."""
+    mode: StakingModeFilter = TOTAL
+  ): DecimalValue
 }
 
 type TradePoint {
@@ -226,14 +252,10 @@ type TradePoint {
   "True only for a fully included, ended calendar period; false for unfinished or range-clipped periods. Data may still be corrected."
   isComplete: Boolean!
 
-  "TOTAL: all Rujira Trade volume; NON_VS_VOLUME: without VS; VS_VOLUME: VS portion counted at 50% of notional value to avoid double counting. Unit: usd. Null if unavailable; canonical decimal string."
-  volume(
-    "Selects the source variant. Null if that combination is unavailable."
-    source: TradeVolumeSource
-
-    "Declared: sma, growth. GROWTH with ABSOLUTE returns a change in this field's unit; GROWTH with RELATIVE returns a unitless ratio of that change to the baseline bin, null when the baseline is zero or unknown."
-    transform: MetricTransformInput
-  ): DecimalValue
+  """
+  TOTAL: all Rujira Trade volume; NON_VS_VOLUME: without VS; VS_VOLUME: VS portion counted at 50% of notional value to avoid double counting.
+  """
+  volume(source: TradeVolumeSource = TOTAL, transform: MetricTransformInput): DecimalValue
 
   "THORChain volume for FIN-listed markets, including non-VS activity. Unit: usd. Null if unavailable; canonical decimal string."
   thorchainVolume(
@@ -262,33 +284,22 @@ type TradePoint {
     transform: MetricTransformInput
   ): DecimalValue
 
-  "Trade revenue by recipient and nature. For recipient TOTAL, TRADING_FEES and TOTAL include the VS AMM fee (VS payments to the fee collector). Unit: usd. Null if unavailable; canonical decimal string."
-  revenue(
-    "Selects the recipient variant. Null if that combination is unavailable."
-    recipient: TradeRevenueRecipient
+  """Trade revenue by recipient and nature."""
+  revenue(recipient: TradeRevenueRecipient = TOTAL, nature: TradeRevenueNature = TOTAL, transform: MetricTransformInput): DecimalValue
 
-    "Selects the nature variant. Null if that combination is unavailable."
-    nature: TradeRevenueNature
+  """
+  Trade revenue of the selected nature relative to trading volume during this chart period, in basis points.
+  """
+  revenuePerVolume(nature: TradeRevenueNature = TOTAL, transform: MetricTransformInput): DecimalValue
 
-    "Declared: sma, growth. GROWTH with ABSOLUTE returns a change in this field's unit; GROWTH with RELATIVE returns a unitless ratio of that change to the baseline bin, null when the baseline is zero or unknown."
-    transform: MetricTransformInput
-  ): DecimalValue
-
-  "Trade revenue of the selected nature relative to trading volume during this chart period, in basis points. TRADING_FEES and TOTAL include the VS AMM fee, as in revenue. Unit: bps. Null if unavailable; canonical decimal string."
-  revenuePerVolume(
-    "Selects the nature variant. Null if that combination is unavailable."
-    nature: TradeRevenueNature
-
-    "Declared: sma, growth. GROWTH with ABSOLUTE returns a change in this field's unit; GROWTH with RELATIVE returns a unitless ratio of that change to the baseline bin, null when the baseline is zero or unknown."
-    transform: MetricTransformInput
-  ): DecimalValue
-
-  "Combined AMM TVL from the selected sources for the queried markets at timestamp, in USD. Unit: usd. Null if unavailable; canonical decimal string."
+  """
+  Combined AMM TVL from the selected sources for the queried markets at timestamp, in USD.
+  """
   ammTvl(
-    "Omitted\/null uses default; [] selects none; duplicates count once. BRUNE is bRUNE\/RUNE liquidity on FIN provided by the bRUNE contract, excluding bonded RUNE."
-    sources: [AmmTvlSource!]
-
-    "Declared: sma, growth. GROWTH with ABSOLUTE returns a change in this field's unit; GROWTH with RELATIVE returns a unitless ratio of that change to the baseline bin, null when the baseline is zero or unknown."
+    """
+    Omitted/null uses default; [] selects none; duplicates count once. BRUNE is bRUNE/RUNE liquidity on FIN provided by the bRUNE contract, excluding bonded RUNE.
+    """
+    sources: [AmmTvlSource!] = [CCL, DCL]
     transform: MetricTransformInput
   ): DecimalValue
 
@@ -312,17 +323,21 @@ type TradePoint {
 }
 
 type RujiStakingPeriodSummary {
-  "Rujira revenue paid to THORChain over the selected range, in the selected currency. Unit: selected_currency. Null if unavailable; canonical decimal string."
-  revenueToThorchain(
-    "Selects the currency variant. Null if that combination is unavailable."
-    currency: ThorchainCurrency
-  ): DecimalValue
+  """
+  Rujira revenue paid to THORChain over the selected range, in the selected currency.
+  """
+  revenueToThorchain(currency: ThorchainCurrency = USD): DecimalValue
 
   "Rujira revenue distributed to Rujira protocol-owned liquidity over the selected range, in the selected currency. Applies in USDC or USD; RUNE is inapplicable to Rujira POL revenue and reads null. Unit: selected_currency. Null if unavailable; canonical decimal string."
   revenueToRujiraPol(
     "Selects the currency variant. Null if that combination is unavailable."
     currency: StakingRevenueCurrency
   ): DecimalValue
+
+  """
+  Rujira revenue distributed to Rujira protocol-owned liquidity over the selected range, in the selected currency.
+  """
+  revenueToRujiraPOL(currency: StakingRevenueCurrency = USD): DecimalValue
 }
 
 type RujiStakingPoint {
@@ -332,14 +347,10 @@ type RujiStakingPoint {
   "True only for a fully included, ended calendar period; false for unfinished or range-clipped periods. Data may still be corrected."
   isComplete: Boolean!
 
-  "Rujira revenue paid to THORChain during this chart period, in the selected currency. Unit: selected_currency. Null if unavailable; canonical decimal string."
-  revenueToThorchain(
-    "Selects the currency variant. Null if that combination is unavailable."
-    currency: ThorchainCurrency
-
-    "Declared: sma, growth. GROWTH with ABSOLUTE returns a change in this field's unit; GROWTH with RELATIVE returns a unitless ratio of that change to the baseline bin, null when the baseline is zero or unknown."
-    transform: MetricTransformInput
-  ): DecimalValue
+  """
+  Rujira revenue paid to THORChain during this chart period, in the selected currency.
+  """
+  revenueToThorchain(currency: ThorchainCurrency = USD, transform: MetricTransformInput): DecimalValue
 
   "Rujira revenue distributed to Rujira protocol-owned liquidity over the selected range, in the selected currency. Applies in USDC or USD; RUNE is inapplicable to Rujira POL revenue and reads null. Unit: selected_currency. Null if unavailable; canonical decimal string."
   revenueToRujiraPol(
@@ -355,6 +366,11 @@ type RujiStakingPoint {
     "Declared: sma, growth. GROWTH with ABSOLUTE returns a change in this field's unit; GROWTH with RELATIVE returns a unitless ratio of that change to the baseline bin, null when the baseline is zero or unknown."
     transform: MetricTransformInput
   ): DecimalValue
+
+  """
+  Rujira revenue distributed to Rujira protocol-owned liquidity over the selected range, in the selected currency.
+  """
+  revenueToRujiraPOL(currency: StakingRevenueCurrency = USD, transform: MetricTransformInput): DecimalValue
 }
 
 type AmmCurrent {
@@ -535,42 +551,49 @@ type VsPoint {
     transform: MetricTransformInput
   ): DecimalValue
 
-  "Selected VS asset or debt balance at chart period end, in USD; latest available balance if unfinished. Unit: usd. Null if unavailable; canonical decimal string."
+  """
+  Selected VS asset or debt balance at chart period end, in USD; latest available balance if unfinished.
+  """
   assetValue(
-    "Selects the component variant. Null if that combination is unavailable."
-    component: VsAssetComponent
-
-    "Omitted\/null uses all tokens. Explicit IDs replace it; [] selects none; duplicates count once."
+    """
+    Underlying VS token positions, independent of pair. Omitted/null selects all tokens; [] selects none; duplicates count once.
+    """
     tokenIds: [ID!]
-
-    "Declared: sma, growth. GROWTH with ABSOLUTE returns a change in this field's unit; GROWTH with RELATIVE returns a unitless ratio of that change to the baseline bin, null when the baseline is zero or unknown."
+    component: VsAssetComponent = NET
     transform: MetricTransformInput
   ): DecimalValue
 
-  "Signed gross trading profit\/loss during this chart period, excluding borrowing interest. USD uses trade-time prices; RATIO weights individual trade returns by borrowed USD value. Unit: selected_unit. Null if unavailable; canonical decimal string."
+  """
+  Signed gross trading profit/loss during this chart period, excluding borrowing interest. USD uses trade-time prices; RATIO weights individual trade returns by borrowed USD value.
+  """
   grossTradingPnl(
-    "Selects the unit variant. Null if that combination is unavailable."
-    unit: PnlUnit
-
-    "Omitted\/null uses the inherited strategy pair, or all pairs. Explicit IDs replace it; [] selects none; duplicates count once."
+    """
+    Omitted/null uses the inherited strategy pair, or all pairs. Explicit IDs replace it; [] selects none; duplicates count once.
+    """
     pairIds: [ID!]
-
-    "Declared: sma, growth. GROWTH with ABSOLUTE returns a change in this field's unit; GROWTH with RELATIVE returns a unitless ratio of that change to the baseline bin, null when the baseline is zero or unknown."
+    unit: PnlUnit = USD
     transform: MetricTransformInput
   ): DecimalValue
 
-  "Selected P&L component accumulated since VS inception through this point, attributed to the borrowed\/repayment token. The range selects displayed points only; USD uses event-time prices. Unit: selected_unit. Null if unavailable; canonical decimal string."
+  """
+  Selected P&L component accumulated since VS inception through this point, attributed to the borrowed/repayment token. The range selects displayed points only; USD uses event-time prices.
+  """
   cumulativePnl(
-    "Selects the component variant. Null if that combination is unavailable."
-    component: VsPnlComponent
-
-    "Selects the unit variant. Null if that combination is unavailable."
-    unit: VsPnlAmountUnit
-
-    "Omitted\/null uses all tokens. Explicit IDs replace it; [] selects none; duplicates count once."
+    """
+    Borrowed/repayment token IDs, independent of pair. Omitted/null selects all tokens; [] selects none; duplicates count once.
+    """
     tokenIds: [ID!]
-
-    "Declared: sma, growth. GROWTH with ABSOLUTE returns a change in this field's unit; GROWTH with RELATIVE returns a unitless ratio of that change to the baseline bin, null when the baseline is zero or unknown."
+    """
+    GROSS excludes borrowing interest. INTEREST is paid interest as a negative contribution; NET combines both.
+    """
+    component: VsPnlComponent = NET
+    """
+    USD uses token prices when profits or interest occurred. TOKEN requires exactly one distinct token ID.
+    """
+    unit: VsPnlAmountUnit = USD
+    """
+    Transforms may use cumulative history before the selected range; insufficient lookback returns null.
+    """
     transform: MetricTransformInput
   ): DecimalValue
 }
@@ -589,14 +612,10 @@ type SwapPeriodSummary {
   "Total RUJI Swap volume over the selected range, in USD. Unit: usd. Null if unavailable; canonical decimal string."
   volume: DecimalValue
 
-  "Total Swap revenue for the selected recipient and source over the selected range, in USD. Unit: usd. Null if unavailable; canonical decimal string."
-  revenue(
-    "Selects the recipient variant. Null if that combination is unavailable."
-    recipient: SwapRevenueRecipient
-
-    "Selects the source variant. Null if that combination is unavailable."
-    source: SwapRevenueSource
-  ): DecimalValue
+  """
+  Total Swap revenue for the selected recipient and source over the selected range, in USD.
+  """
+  revenue(recipient: SwapRevenueRecipient = RUJIRA, source: SwapRevenueSource): DecimalValue
 
   "Number of RUJI Swap transactions over the selected range. Unit: count. Null if unavailable; canonical decimal string."
   transactions: DecimalValue
@@ -647,15 +666,13 @@ type StakingPoint {
     transform: MetricTransformInput
   ): DecimalValue
 
-  "Amount staked in the selected pool at period end; latest balance if unfinished. Select tokens or USD, and combined or individual staking modes. Unit: selected_unit. Null if unavailable; canonical decimal string."
+  """
+  Amount staked in the selected pool at period end; latest balance if unfinished. Select tokens or USD, and combined or individual staking modes.
+  """
   staked(
-    "Selects the unit variant. Null if that combination is unavailable."
-    unit: StakedValueUnit
-
-    "Selects the mode variant. Null if that combination is unavailable."
-    mode: StakingModeFilter
-
-    "Declared: sma, growth. GROWTH with ABSOLUTE returns a change in this field's unit; GROWTH with RELATIVE returns a unitless ratio of that change to the baseline bin, null when the baseline is zero or unknown."
+    unit: StakedValueUnit = STAKED_TOKEN
+    """Select yielding, auto-compounding, or both combined (TOTAL)."""
+    mode: StakingModeFilter = TOTAL
     transform: MetricTransformInput
   ): DecimalValue
 
@@ -839,25 +856,30 @@ type VsPeriodSummary {
     pairIds: [ID!]
   ): DecimalValue
 
-  "Selected P&L component over the requested date range only, attributed to the borrowed\/repayment token. Unit: selected_unit. Null if unavailable; canonical decimal string."
+  """
+  Selected P&L component over the requested date range only, attributed to the borrowed/repayment token.
+  """
   pnl(
-    "Selects the component variant. Null if that combination is unavailable."
-    component: VsPnlComponent
-
-    "Selects the unit variant. Null if that combination is unavailable."
-    unit: VsPnlAmountUnit
-
-    "Omitted\/null uses all tokens. Explicit IDs replace it; [] selects none; duplicates count once."
+    """
+    Borrowed/repayment token IDs, independent of pair. Omitted/null selects all tokens; [] selects none; duplicates count once.
+    """
     tokenIds: [ID!]
+    """
+    GROSS excludes borrowing interest. INTEREST is paid interest as a negative contribution; NET combines both.
+    """
+    component: VsPnlComponent = NET
+    """
+    USD uses token prices when profits or interest occurred. TOKEN requires exactly one distinct token ID.
+    """
+    unit: VsPnlAmountUnit = USD
   ): DecimalValue
 }
 
 type TradePeriodSummary {
-  "Trade volume from the selected source over the requested date range, in USD. Unit: usd. Null if unavailable; canonical decimal string."
-  volume(
-    "Selects the source variant. Null if that combination is unavailable."
-    source: TradeVolumeSource
-  ): DecimalValue
+  """
+  Trade volume from the selected source over the requested date range, in USD.
+  """
+  volume(source: TradeVolumeSource = TOTAL): DecimalValue
 
   "Total THORChain volume for the queried FIN-listed markets over the selected range, including non-VS activity, in USD. Unit: usd. Null if unavailable; canonical decimal string."
   thorchainVolume: DecimalValue
@@ -865,14 +887,10 @@ type TradePeriodSummary {
   "Fees paid by the VS to THORChain during this chart period, in USD. Unit: usd. Null if unavailable; canonical decimal string."
   vsFeesToThorchain: DecimalValue
 
-  "Trade revenue for the selected recipient and nature over the requested date range, in USD. For recipient TOTAL, TRADING_FEES and TOTAL include the VS AMM fee (VS payments to the fee collector). Unit: usd. Null if unavailable; canonical decimal string."
-  revenue(
-    "Selects the recipient variant. Null if that combination is unavailable."
-    recipient: TradeRevenueRecipient
-
-    "Selects the nature variant. Null if that combination is unavailable."
-    nature: TradeRevenueNature
-  ): DecimalValue
+  """
+  Trade revenue for the selected recipient and nature over the requested date range, in USD.
+  """
+  revenue(recipient: TradeRevenueRecipient = TOTAL, nature: TradeRevenueNature = TOTAL): DecimalValue
 
   "Number of Trade transactions over the requested date range. Unit: count. Null if unavailable; canonical decimal string."
   transactions: DecimalValue
@@ -891,23 +909,15 @@ type ThorchainOverviewPoint {
   "True only for a fully included, ended calendar period; false for unfinished or range-clipped periods. Data may still be corrected."
   isComplete: Boolean!
 
-  "THORChain gross income from the selected source during this chart period, in USD. Unit: usd. Null if unavailable; canonical decimal string."
-  grossIncome(
-    "Selects the source variant. Null if that combination is unavailable."
-    source: SystemIncomeSource
+  """
+  THORChain total gross income from the selected source during this chart period, in USD. Rujira income include both both the revenue sent to THORChain (Reserve + POL Fund) and the revenue paid by the Virtualization Strategy to THORChain. Base Layer income is the total THORChain income excluding Rujira's contribution.
+  """
+  grossIncome(source: SystemIncomeSource = TOTAL, transform: MetricTransformInput): DecimalValue
 
-    "Declared: sma, growth. GROWTH with ABSOLUTE returns a change in this field's unit; GROWTH with RELATIVE returns a unitless ratio of that change to the baseline bin, null when the baseline is zero or unknown."
-    transform: MetricTransformInput
-  ): DecimalValue
-
-  "Source selects total or a breakdown component: revenue transfers or VS liquidity fees. Unit: usd. Null if unavailable; canonical decimal string."
-  rujiraRevenue(
-    "Selects the source variant. Null if that combination is unavailable."
-    source: RujiraRevenueSource
-
-    "Declared: sma, growth. GROWTH with ABSOLUTE returns a change in this field's unit; GROWTH with RELATIVE returns a unitless ratio of that change to the baseline bin, null when the baseline is zero or unknown."
-    transform: MetricTransformInput
-  ): DecimalValue
+  """
+  Source selects total or a breakdown component: revenue transfers or VS liquidity fees.
+  """
+  rujiraRevenue(source: RujiraRevenueSource = TOTAL, transform: MetricTransformInput): DecimalValue
 
   "Revenue from protocol-owned liquidity during this chart period, in USD. Unit: usd. Null if unavailable; canonical decimal string."
   rujiraRevenueToThorchainPol(
@@ -927,14 +937,10 @@ type ThorchainOverviewPoint {
     transform: MetricTransformInput
   ): DecimalValue
 
-  "THORChain trading volume from the selected source during this chart period, in USD. VS is the notional of its swaps, counted once however many pools each routed through; OTHER is the total minus VS and trade assets. Unit: usd. Null if unavailable; canonical decimal string."
-  volume(
-    "Selects the source variant. Null if that combination is unavailable."
-    source: ThorchainVolumeSource
-
-    "Declared: sma, growth. GROWTH with ABSOLUTE returns a change in this field's unit; GROWTH with RELATIVE returns a unitless ratio of that change to the baseline bin, null when the baseline is zero or unknown."
-    transform: MetricTransformInput
-  ): DecimalValue
+  """
+  THORChain trading volume from the selected source during this chart period, in USD.
+  """
+  volume(source: ThorchainVolumeSource = TOTAL, transform: MetricTransformInput): DecimalValue
 
   "Selected source's share of total THORChain trading volume (all pools) during this chart period; VS uses the notional of its swaps, counted once per swap. Unit: ratio. Null if unavailable; canonical decimal string."
   volumeShare(
@@ -945,23 +951,15 @@ type ThorchainOverviewPoint {
     transform: MetricTransformInput
   ): DecimalValue
 
-  "Number of THORChain swaps from the selected source during this chart period. Unit: count. Null if unavailable; canonical decimal string."
-  swaps(
-    "Selects the source variant. Null if that combination is unavailable."
-    source: ThorchainVolumeSource
+  """
+  Number of THORChain swaps from the selected source during this chart period.
+  """
+  swaps(source: ThorchainVolumeSource = TOTAL, transform: MetricTransformInput): DecimalValue
 
-    "Declared: sma, growth. GROWTH with ABSOLUTE returns a change in this field's unit; GROWTH with RELATIVE returns a unitless ratio of that change to the baseline bin, null when the baseline is zero or unknown."
-    transform: MetricTransformInput
-  ): DecimalValue
-
-  "BASE_LAYER: THORChain pools. APP_LAYER: deposits in AMM strategies, excluding VS and bRUNE. Unit: usd. Null if unavailable; canonical decimal string."
-  tvl(
-    "Selects the layer variant. Null if that combination is unavailable."
-    layer: LiquidityLayer
-
-    "Declared: sma, growth. GROWTH with ABSOLUTE returns a change in this field's unit; GROWTH with RELATIVE returns a unitless ratio of that change to the baseline bin, null when the baseline is zero or unknown."
-    transform: MetricTransformInput
-  ): DecimalValue
+  """
+  BASE_LAYER: THORChain pools. APP_LAYER: deposits in AMM strategies, excluding VS and bRUNE.
+  """
+  tvl(layer: LiquidityLayer = TOTAL, transform: MetricTransformInput): DecimalValue
 
   "App-layer share of combined app\/base-layer TVL at this chart point; excludes VS and bRUNE. Unit: ratio. Null if unavailable; canonical decimal string."
   appLayerTvlShare(
@@ -1004,6 +1002,11 @@ type ThorchainOverviewPoint {
     "Declared: sma, growth. GROWTH with ABSOLUTE returns a change in this field's unit; GROWTH with RELATIVE returns a unitless ratio of that change to the baseline bin, null when the baseline is zero or unknown."
     transform: MetricTransformInput
   ): DecimalValue
+
+  """
+  Revenue during this chart period per $100 of the selected source's TVL at timestamp. Unfinished periods use revenue and TVL through the latest measurement; null if TVL is zero or unavailable.
+  """
+  revenuePer100Tvl(source: RevenuePer100TvlSource!, transform: MetricTransformInput): DecimalValue
 }
 
 type PairBreakdownRow {
@@ -1021,17 +1024,15 @@ type PairBreakdownRow {
 }
 
 type ThorchainOverviewPeriodSummary {
-  "Total THORChain gross income from the selected source over the selected range, in USD. Unit: usd. Null if unavailable; canonical decimal string."
-  grossIncome(
-    "Selects the source variant. Null if that combination is unavailable."
-    source: SystemIncomeSource
-  ): DecimalValue
+  """
+  Total THORChain gross income from the selected source over the selected range, in USD.
+  """
+  grossIncome(source: SystemIncomeSource = TOTAL): DecimalValue
 
-  "Total Rujira contribution to THORChain revenue from the selected source over the selected range, in USD. Unit: usd. Null if unavailable; canonical decimal string."
-  rujiraRevenue(
-    "Selects the source variant. Null if that combination is unavailable."
-    source: RujiraRevenueSource
-  ): DecimalValue
+  """
+  Total Rujira contribution to THORChain revenue from the selected source over the selected range, in USD.
+  """
+  rujiraRevenue(source: RujiraRevenueSource = TOTAL): DecimalValue
 
   "Revenue from protocol-owned liquidity during this chart period, in USD. Unit: usd. Null if unavailable; canonical decimal string."
   rujiraRevenueToThorchainPol: DecimalValue
@@ -1039,17 +1040,15 @@ type ThorchainOverviewPeriodSummary {
   "THORChain gross system income minus allocations to the Dev Fund, System Burn, TCY, Marketing Fund and POL, over the selected range, in USD. Unit: usd. Null if unavailable; canonical decimal string."
   netIncome: DecimalValue
 
-  "Total THORChain volume from the selected source over the selected range, in USD. VS is the notional of its swaps, counted once however many pools each routed through; OTHER is the total minus VS and trade assets. Unit: usd. Null if unavailable; canonical decimal string."
-  volume(
-    "Selects the source variant. Null if that combination is unavailable."
-    source: ThorchainVolumeSource
-  ): DecimalValue
+  """
+  Total THORChain volume from the selected source over the selected range, in USD.
+  """
+  volume(source: ThorchainVolumeSource = TOTAL): DecimalValue
 
-  "Number of THORChain swaps from the selected source over the selected range. Unit: count. Null if unavailable; canonical decimal string."
-  swaps(
-    "Selects the source variant. Null if that combination is unavailable."
-    source: ThorchainVolumeSource
-  ): DecimalValue
+  """
+  Number of THORChain swaps from the selected source over the selected range.
+  """
+  swaps(source: ThorchainVolumeSource = TOTAL): DecimalValue
 }
 
 type StakerCurrent {
@@ -1099,17 +1098,10 @@ type SwapPoint {
     transform: MetricTransformInput
   ): DecimalValue
 
-  "Swap revenue for the selected recipient and source during this chart period, in USD. RUJIRA revenue includes affiliate fees and Liquidy referral fees. THORCHAIN revenue includes liquidity fees paid by Rujira and is reported separately. TOTAL combines RUJIRA's revenue sources. Unit: usd. Null if unavailable; canonical decimal string."
-  revenue(
-    "Selects the recipient variant. Null if that combination is unavailable."
-    recipient: SwapRevenueRecipient
-
-    "Selects the source variant. Null if that combination is unavailable."
-    source: SwapRevenueSource
-
-    "Declared: sma, growth. GROWTH with ABSOLUTE returns a change in this field's unit; GROWTH with RELATIVE returns a unitless ratio of that change to the baseline bin, null when the baseline is zero or unknown."
-    transform: MetricTransformInput
-  ): DecimalValue
+  """
+  Swap revenue for the selected recipient and source during this chart period, in USD. RUJIRA revenue includes affiliate fees and Liquidy referral fees. THORCHAIN revenue includes liquidity fees paid by Rujira and is reported separately. TOTAL combines RUJIRA's revenue sources.
+  """
+  revenue(recipient: SwapRevenueRecipient = RUJIRA, source: SwapRevenueSource, transform: MetricTransformInput): DecimalValue
 
   "Number of RUJI Swap transactions during this chart period. Unit: count. Null if unavailable; canonical decimal string."
   transactions(
@@ -1122,25 +1114,25 @@ type ExecutionSummary {
   "Number of trades in the filtered sample over the selected range. Unit: count. Null if unavailable; canonical decimal string."
   trades: DecimalValue
 
-  "Trading volume of the filtered sample over the selected range, in the selected currency. RUNE is measured; USD is indicative at the current RUNE\/USD price, including historical values. Unit: selected_currency. Null if unavailable; canonical decimal string."
+  """
+  Trading volume of the filtered sample over the selected range, in the selected currency.
+  """
   volume(
-    "Selects the currency variant. Null if that combination is unavailable."
-    currency: ThorchainCurrency
+    """
+    RUNE is measured; USD is indicative at the current RUNE/USD price, including historical values.
+    """
+    currency: ThorchainCurrency = RUNE
   ): DecimalValue
 
-  "Selected deviation statistic across the filtered trades over the selected range, with the chosen weighting and representation. Unit: ratio. Null if unavailable; canonical decimal string."
+  """
+  Selected deviation statistic across the filtered trades over the selected range, with the chosen weighting and representation. Uses per-swap capped deviations; SIGNED preserves better (+) and worse (-) execution.
+  """
   deviation(
-    "Selects the statistic variant; required, as this metric has no default. Null if that combination is unavailable."
     statistic: DeviationStatistic!
-
-    "Selects the weighting variant. Null if that combination is unavailable."
-    weighting: Weighting
-
-    "Selects the representation variant. Null if that combination is unavailable."
-    representation: DeviationRepresentation
-
-    "0..1; required only for statistic=PERCENTILE. Required when statistic is PERCENTILE, and rejected otherwise."
+    """0..1; required only for statistic=PERCENTILE."""
     percentile: DecimalValue
+    weighting: Weighting = VOLUME_WEIGHTED
+    representation: DeviationRepresentation = ABSOLUTE
   ): DecimalValue
 
   "Measurement coverage for the same period and pair\/size scope, before sign filtering; null if unavailable."
@@ -1154,28 +1146,26 @@ type ExecutionPoint {
   "True only for a fully included, ended calendar period; false for unfinished or range-clipped periods. Data may still be corrected."
   isComplete: Boolean!
 
-  "PERCENTILE requires percentile. Aliases select mean\/median\/p01\/p10\/p90\/p99. Unit: ratio. Null if unavailable; canonical decimal string."
+  """
+  PERCENTILE requires percentile. Aliases select mean/median/p01/p10/p90/p99. Uses per-swap capped deviations; SIGNED preserves better (+) and worse (-) execution.
+  """
   deviation(
-    "Selects the statistic variant; required, as this metric has no default. Null if that combination is unavailable."
     statistic: DeviationStatistic!
-
-    "Selects the weighting variant. Null if that combination is unavailable."
-    weighting: Weighting
-
-    "Selects the representation variant. Null if that combination is unavailable."
-    representation: DeviationRepresentation
-
-    "0..1; required only for statistic=PERCENTILE. Required when statistic is PERCENTILE, and rejected otherwise."
+    """0..1; required only for statistic=PERCENTILE."""
     percentile: DecimalValue
-
-    "Declared: sma, growth. GROWTH with ABSOLUTE returns a change in this field's unit; GROWTH with RELATIVE returns a unitless ratio of that change to the baseline bin, null when the baseline is zero or unknown."
+    weighting: Weighting = VOLUME_WEIGHTED
+    representation: DeviationRepresentation = ABSOLUTE
     transform: MetricTransformInput
   ): DecimalValue
 
-  "Trading volume of the filtered sample during this chart period, in the selected currency. RUNE is measured; USD is indicative at the current RUNE\/USD price, including historical values. Unit: selected_currency. Null if unavailable; canonical decimal string."
+  """
+  Trading volume of the filtered sample during this chart period, in the selected currency.
+  """
   volume(
-    "Selects the currency variant. Null if that combination is unavailable."
-    currency: ThorchainCurrency
+    """
+    RUNE is measured; USD is indicative at the current RUNE/USD price, including historical values.
+    """
+    currency: ThorchainCurrency = RUNE
   ): DecimalValue
 
   "Number of trades in the filtered sample during this chart period. Unit: count. Null if unavailable; canonical decimal string."
@@ -1223,12 +1213,39 @@ type Analytics {
     token: StakingToken!
   ): StakingAnalytics
 
-  "Swap\/Trade\/AMM users; omitted products selects all three. Staking is separate."
-  users(
-    "Select Swap, Trade and\/or AMM user statistics; combined counts deduplicate addresses."
-    products: [UserProduct!]
+  """
+  Swap/Trade/AMM/Money Market users; omitted products selects all four. Staking is separate.
 
-    "Filter the AMM portion of user statistics by deposit-accepting strategy type IDs; no pair filter."
+  products: omitted/null = all four; [] = none; duplicates ignored.
+
+  Count each address once across selected products/roles.
+
+  Activity: Swap/Trade use; AMM positive deposits at any time in the interval; Money Market lending/credit interactions or direct borrow/repay. Holding alone is not Money Market activity.
+
+  newUsers = first use in the selected product set.
+
+  strategies filters AMM only; omitted = all eligible strategies.
+
+  Product-wide users: no pair or Money Market token filter. strategies filters the AMM portion only.
+
+  Role branches intersect the product filter; excluded branches return null.
+
+  VS has no AMM depositor population; its Money Market activity and balances count like other participants.
+
+  total = historical participants; currentHolders uses each role's balance threshold. Money Market holder retention is under lenders/borrowers.
+
+  Exclude staking activity; stakers still count for their product activity.
+
+  Money Market credit accounts map to owners; direct borrowers use their address. Include protocol actors and deduplicate across roles/markets.
+  """
+  users(
+    """
+    Select product-wide user statistics; combined counts deduplicate addresses across products and roles.
+    """
+    products: [UserProduct!] = [SWAP, TRADE, AMM, MONEY_MARKET]
+    """
+    Filter the AMM portion of user statistics by deposit-accepting strategy type IDs; no pair filter.
+    """
     strategies: UserStrategyFilterInput
   ): UserAnalytics
 
@@ -1285,13 +1302,8 @@ type ThorchainAnalytics {
 }
 
 type StakingAnalytics {
-  "Staking metrics for the selected token at each chart point."
-  history(
-    range: TimeRangeInput!
-
-    "Accepts DAY, WEEK, MONTH, YEAR; defaults to DAY."
-    resolution: Resolution
-  ): [StakingPoint!]
+  """Staking metrics for the selected token at each chart point."""
+  history(range: TimeRangeInput!, resolution: Resolution = DAY): [StakingPoint!]
 
   "Rujira staking totals for the selected token and range."
   summary(range: TimeRangeInput!): StakingPeriodSummary
@@ -1319,13 +1331,8 @@ type UserAnalytics {
   "Latest user totals and selectable daily activity for the selected products."
   current: UserCurrent
 
-  "User statistics for the selected products at each chart point."
-  history(
-    range: TimeRangeInput!
-
-    "Accepts DAY, WEEK, MONTH, YEAR; defaults to DAY."
-    resolution: Resolution
-  ): [UserPoint!]
+  """User statistics for the selected products at each chart point."""
+  history(range: TimeRangeInput!, resolution: Resolution = DAY): [UserPoint!]
 
   "Selected period; inherits user filters."
   summary(range: TimeRangeInput!): UserSummary
@@ -1338,23 +1345,38 @@ type UserAnalytics {
 
   "Trader tiers and volume distribution for selected Swap\/Trade products; each address counts once and its volume is combined."
   traders: TraderAnalytics
+
+  """
+  Product-wide lenders across all markets; null unless MONEY_MARKET is selected.
+  """
+  lenders: MoneyMarketUserAnalytics
+
+  """
+  Product-wide borrowers, including VS and direct borrowers; null unless MONEY_MARKET is selected.
+  """
+  borrowers: MoneyMarketUserAnalytics
 }
 
 type ProductAnalytics {
-  "RUJI Swap volume, revenue and activity analytics."
-  swap: SwapAnalytics
-
-  "Trade = FIN."
-  trade: TradeAnalytics
-
-  "Activity and gross trading P&L use pairIds; balances and cumulative P&L use tokenIds. Combined by default. No deposits, depositors or LP performance."
-  vs: VsAnalytics
-
-  "AMM liquidity, deposit flows and strategy comparisons."
+  """AMM liquidity, deposit flows and strategy comparisons."""
   amm(
-    "Filter by strategy type IDs and pair IDs. Missing\/null filter or typeIds uses default.typeIds; an explicit list replaces it."
-    strategies: StrategyFilterInput
+    """
+    Filter by strategy type IDs and pair IDs. Missing/null filter or typeIds uses default.typeIds; an explicit list replaces it.
+    """
+    strategies: StrategyFilterInput = {typeIds: ["CCL", "DCL"]}
   ): AmmAnalytics
+  """
+  Money Market lending and borrowing. tokenIds selects markets by underlying token: omitted/null selects all, [] none; duplicates count once.
+  """
+  moneyMarket(tokenIds: [ID!]): MoneyMarketAnalytics
+  """RUJI Swap volume, revenue and activity analytics."""
+  swap: SwapAnalytics
+  """Trade = FIN."""
+  trade: TradeAnalytics
+  """
+  Activity and gross trading P&L use pairIds; balances and cumulative P&L use tokenIds. Combined by default. No deposits, depositors or LP performance.
+  """
+  vs: VsAnalytics
 }
 
 interface Node {
@@ -1379,13 +1401,10 @@ type RootSubscriptionType {
 }
 
 type SwapAnalytics {
-  "Swap activity and revenue for each chart period in the requested date range."
-  history(
-    range: TimeRangeInput!
-
-    "Accepts DAY, WEEK, MONTH, YEAR; defaults to DAY."
-    resolution: Resolution
-  ): [SwapPoint!]
+  """
+  Swap activity and revenue for each chart period in the requested date range.
+  """
+  history(range: TimeRangeInput!, resolution: Resolution = DAY): [SwapPoint!]
 
   "Swap totals over the selected range."
   summary(range: TimeRangeInput!): SwapPeriodSummary
@@ -1398,36 +1417,39 @@ type SwapAnalytics {
 }
 
 type TradeAnalytics {
-  "Paginated list of Trade pairs with volume, TVL, revenue, liquidity metrics and detailed analytics for each pair."
+  """
+  Paginated list of Trade pairs with volume, TVL, revenue, liquidity metrics and detailed analytics for each pair.
+  """
   pairs(
+    first: Int = 25
     after: String
-
-    "Rows per page."
-    first: Int
-
-    "Filter the pair list using search text and token IDs."
+    """Filter the pair list using search text and token IDs."""
     filter: PairFilterInput
-
-    "Default: pair label ascending; stable ID breaks ties."
-    orderBy: PairOrderInput
+    """Default: pair label ascending; stable ID breaks ties."""
+    orderBy: PairOrderInput = {field: PAIR, direction: ASC}
   ): PairSummaryConnection
 
   "Look up one Trade pair by ID, returning its details, metrics and pair-specific analytics; same row type as the pairs table. Pending: whole-window per-pair summary projection."
   pair(id: ID!): PairSummaryRow
 
-  "Trade activity, revenue and closing AMM balances for each chart period in the requested date range."
-  history(
-    range: TimeRangeInput!
-
-    "Accepts DAY, WEEK, MONTH, YEAR; defaults to DAY."
-    resolution: Resolution
-  ): [TradePoint!]
+  """
+  Trade activity, revenue and closing AMM balances for each chart period in the requested date range.
+  """
+  history(range: TimeRangeInput!, resolution: Resolution = DAY): [TradePoint!]
 
   "Trade metrics over the requested date range."
   summary(range: TimeRangeInput!): TradePeriodSummary
 
-  "USD volume\/share breakdown by pair, ranked highest first; ties by pair ID. Append Other when omitted pairs have volume. Shares use all matching pairs before limit. Pair scope returns at most one pair. _valueUnit: USD."
-  volumeByPair(range: TimeRangeInput!, limit: Int): [PairBreakdownRow!]
+  """
+  USD volume/share breakdown by pair, ranked highest first; ties by pair ID. Append Other when omitted pairs have volume. Shares use all matching pairs before limit. Pair scope returns at most one pair.
+  """
+  volumeByPair(
+    range: TimeRangeInput!
+    """
+    Positive number of top pairs; omitted/null uses 10. Other is an additional row.
+    """
+    limit: Int = 10
+  ): [PairBreakdownRow!]
 
   "USD volume and share breakdown by execution source. Each AMM strategy type contributes 50% of its notional volume. VS contributes 50% of the notional of its own swaps. MANUAL_ORDERS (market, limit and tracking orders) is total Trade volume minus the AMM and VS contributions; under a pair, the pair's volume minus its AMM contributions. _valueUnit: USD."
   volumeBySource(range: TimeRangeInput!): [TradeSourceBreakdownRow!]
@@ -1437,22 +1459,35 @@ type TradeAnalytics {
 }
 
 type VsAnalytics {
-  "VS activity and gross trading P&L by pair; balances and cumulative P&L since inception by token."
-  history(
-    range: TimeRangeInput!
-
-    "Accepts DAY, WEEK, MONTH, YEAR; defaults to DAY."
-    resolution: Resolution
-  ): [VsPoint!]
+  """
+  VS activity and gross trading P&L by pair; balances and cumulative P&L since inception by token.
+  """
+  history(range: TimeRangeInput!, resolution: Resolution = DAY): [VsPoint!]
 
   "VS totals over the selected range: activity and gross trading P&L by pair; P&L components by token."
   summary(range: TimeRangeInput!): VsPeriodSummary
 
-  "USD volume\/share breakdown across all VS pairs, including from a strategy row. Ranked by volume, highest first; ties by pair ID. Append Other when omitted pairs have volume. Shares use the all-pair total for the selected range. _valueUnit: USD."
-  volumeByPair(range: TimeRangeInput!, limit: Int): [PairBreakdownRow!]
+  """
+  USD volume/share breakdown across all VS pairs, including from a strategy row. Ranked by volume, highest first; ties by pair ID. Append Other when omitted pairs have volume. Shares use the all-pair total for the selected range.
+  """
+  volumeByPair(
+    range: TimeRangeInput!
+    """
+    Positive number of top pairs; omitted/null uses 10. Other is an additional row.
+    """
+    limit: Int = 10
+  ): [PairBreakdownRow!]
 
-  "Trade-count\/share breakdown across all VS pairs, including from a strategy row. Ranked by trade count, highest first; ties by pair ID. Append Other when omitted pairs have trade count. Shares use the all-pair total for the selected range. _valueUnit: COUNT."
-  tradesByPair(range: TimeRangeInput!, limit: Int): [PairBreakdownRow!]
+  """
+  Trade-count/share breakdown across all VS pairs, including from a strategy row. Ranked by trade count, highest first; ties by pair ID. Append Other when omitted pairs have trade count. Shares use the all-pair total for the selected range.
+  """
+  tradesByPair(
+    range: TimeRangeInput!
+    """
+    Positive number of top pairs; omitted/null uses 10. Other is an additional row.
+    """
+    limit: Int = 10
+  ): [PairBreakdownRow!]
 
   "Current gross assets\/debt breakdown by token, in USD. Always covers all VS tokens, including from a strategy row. _valueUnit: USD."
   assetValueByToken(component: VsBalanceComponent!): [TokenBreakdownRow!]
@@ -1465,35 +1500,61 @@ type VsAnalytics {
 }
 
 type AmmAnalytics {
-  "Paginated strategy comparison table, with one row per pair and strategy type. Uses its own filter; defaults to CCL, DCL, BRUNE and VS. Pending: AMM strategy projection."
+  """
+  Strategy comparison table: normally one row per pair/type; onePerPair returns the highest-APR CCL/DCL type for each pair. Uses its own filter.
+
+  Apply pair/type filters before choosing winners. onePerPair: true defaults to CCL+DCL, or accepts either type alone; reject other types and non-APR/DESC sorting.
+
+  Compare whole pair/type APRs over orderBy.range (default 30d), not individual-position APRs. Known 0% counts; omit a pair if neither selected type has an available APR.
+
+  Choose one type per pair; equal APRs use strategy type ID. Rank winners by APR descending, then pair ID; paginate after selection.
+
+  Headline: select one pair and first: 1. Return its winning APR and strategy type; reuse the same type filter/range as the global ranking and displayed row apr.
+  """
   strategies(
+    first: Int = 25
+    """
+    Cursor for the same strategy selection, winner mode, APR range and sorting.
+    """
     after: String
-
-    "Rows per page."
-    first: Int
-
-    "Filter by strategy type IDs and pair IDs. Missing\/null filter or typeIds uses default.typeIds; an explicit list replaces it."
+    """
+    True selects the higher aggregate APR for each pair among selected CCL/DCL types, then ranks pair winners globally. Omitted/null = false.
+    """
+    onePerPair: Boolean = false
+    """
+    Missing/null filter or typeIds uses the onePerPair mode default; an explicit list replaces it. Winner mode accepts CCL and DCL only.
+    """
     filter: StrategyFilterInput
-
-    "Restrict strategy-table rows to this pair ID."
+    """
+    Restrict rows to this pair ID; intersects filter.pairIds. With onePerPair, returns this pair's winning type.
+    """
     pair: ID
-
-    "Default: pair label ascending; stable ID breaks ties."
+    """
+    Ordinary default: PAIR/ASC. Winner mode: APR/DESC only; range selects its APR period, default 30d.
+    """
     orderBy: StrategyOrderInput
   ): StrategySummaryTable
 
-  "Open, positive-USD-value positions matching amm(strategies) pair\/type filters; CCL\/DCL only. If no positions match the filters, the table contains no rows. Apply local filters, optionally select one winner per pair, then rank and paginate. Default sort: individual all-time APR descending; unavailable APRs last. Ties: pair ID, then position ID. Pending: AMM position projection."
+  """
+  CCL/DCL positions matching parent pair/type filters and status (default OPEN). Apply filters, optionally select one position per pair, then rank/paginate; no matches returns no rows.
+  """
   positions(
+    """Positive page size; use 5 for the top five. Omitted/null uses 10."""
+    first: Int = 10
+    """Cursor for the same status, owner/pair/type filters and ranking mode."""
     after: String
-
-    "Positive page size; use 5 for the top five. Omitted\/null uses 10."
-    first: Int
-
-    "Filter positions by owner address, current USD size (min\/max), and CCL range status. DCL is unaffected by range filtering."
+    """
+    Omitted/null = OPEN. OPEN: positive remaining principal/yield. CLOSED: fully exited, zero remaining value. ALL: both. Combines with owner and other filters.
+    """
+    status: PositionStatusFilter = OPEN
+    """
+    Filter by owner address, total remaining USD value (min/max), and CCL range status. Closed CCL requires ALL; DCL is unaffected by range filtering.
+    """
     filter: PositionFilterInput
-
-    "True selects the highest-APR matching position per pair before ranking winners; omitted\/null is false."
-    onePerPair: Boolean
+    """
+    True selects the highest-APR matching position per pair before ranking winners; omitted/null is false.
+    """
+    onePerPair: Boolean = false
   ): AmmPositionTable
 
   "Returns one strategy selected by pair and type (e.g. BTC\/USDC CCL), with its details, metric history and applicable deposit or VS analytics. Pending: AMM strategy projection."
@@ -1514,13 +1575,10 @@ type AmmAnalytics {
     id: ID!
   ): AmmPosition
 
-  "AMM flows during each chart period and closing TVL; latest available balance if unfinished."
-  history(
-    range: TimeRangeInput!
-
-    "Accepts DAY, WEEK, MONTH, YEAR; defaults to DAY."
-    resolution: Resolution
-  ): [AmmPoint!]
+  """
+  AMM flows during each chart period and closing TVL; latest available balance if unfinished.
+  """
+  history(range: TimeRangeInput!, resolution: Resolution = DAY): [AmmPoint!]
 
   "Latest available AMM balances and their snapshot timestamp."
   current: AmmCurrent
@@ -1533,13 +1591,10 @@ type AmmAnalytics {
 }
 
 type DepositorAnalytics {
-  "Depositor counts and retention for the selected deposit strategies at each chart point."
-  history(
-    range: TimeRangeInput!
-
-    "Accepts DAY, WEEK, MONTH, YEAR; defaults to DAY."
-    resolution: Resolution
-  ): [DepositorPoint!]
+  """
+  Depositor counts and retention for the selected deposit strategies at each chart point.
+  """
+  history(range: TimeRangeInput!, resolution: Resolution = DAY): [DepositorPoint!]
 
   "Latest depositor counts for the selected deposit strategies."
   current: DepositorCurrent
@@ -1550,37 +1605,37 @@ type DepositorAnalytics {
   "Depositor breakdown by rank tier, based on current USD TVL across eligible strategies. _amountUnit: USD."
   tiers: [TierRow!]
 
-  "Depositor-count breakdown by current USD TVL bucket."
-  sizeDistribution(buckets: AmountBucketPreset): [AmountBucketRow!]
+  """Depositor-count breakdown by current USD TVL bucket."""
+  sizeDistribution(buckets: AmountBucketPreset = DEPOSITOR_TVL): [AmountBucketRow!]
 }
 
 type TraderAnalytics {
-  "Trader breakdown by rank tier, based on USD volume over its own selected period; defaults to all time. _amountUnit: USD."
-  tiers(range: TimeRangeInput): [TierRow!]
+  """
+  Trader breakdown by rank tier, based on USD volume over its own selected period; defaults to all time.
+  """
+  tiers(range: TimeRangeInput = {allTime: true}): [TierRow!]
 
-  "Trader-count breakdown by cumulative USD-volume bucket; defaults to all time."
-  sizeDistribution(range: TimeRangeInput, buckets: AmountBucketPreset): [AmountBucketRow!]
+  """
+  Trader-count breakdown by cumulative USD-volume bucket; defaults to all time.
+  """
+  sizeDistribution(range: TimeRangeInput = {allTime: true}, buckets: AmountBucketPreset = TRADER_VOLUME): [AmountBucketRow!]
 }
 
 type StakerAnalytics {
-  "Top 100 by total stake across modes, for the inherited token."
+  """Top 100 by total stake across modes, for the inherited token."""
   richList(
+    """Rows per page."""
+    first: Int = 25
+    """Cursor for the next page."""
     after: String
-
-    "Rows per page."
-    first: Int
-
-    "Maximum ranking size before pagination."
-    limit: Int
+    """Maximum ranking size before pagination."""
+    limit: Int = 100
   ): StakerConnection
 
-  "Holder counts for the selected staking token at each chart point; addresses deduplicated across modes."
-  history(
-    range: TimeRangeInput!
-
-    "Accepts DAY, WEEK, MONTH, YEAR; defaults to DAY."
-    resolution: Resolution
-  ): [StakerPoint!]
+  """
+  Holder counts for the selected staking token at each chart point; addresses deduplicated across modes.
+  """
+  history(range: TimeRangeInput!, resolution: Resolution = DAY): [StakerPoint!]
 
   "Latest holder counts for the selected staking token; addresses deduplicated across modes."
   current: StakerCurrent
@@ -1590,13 +1645,8 @@ type StakerAnalytics {
 }
 
 type RujiStakingExtension {
-  "RUJI-specific revenue and pending rewards at each chart point."
-  history(
-    range: TimeRangeInput!
-
-    "Accepts DAY, WEEK, MONTH, YEAR; defaults to DAY."
-    resolution: Resolution
-  ): [RujiStakingPoint!]
+  """RUJI-specific revenue and pending rewards at each chart point."""
+  history(range: TimeRangeInput!, resolution: Resolution = DAY): [RujiStakingPoint!]
 
   "RUJI totals over the selected range."
   summary(range: TimeRangeInput!): RujiStakingPeriodSummary
@@ -1606,23 +1656,30 @@ type RujiStakingExtension {
 }
 
 type BruneStakingExtension {
-  "Paginated THORChain node table for bRUNE, with bonded amounts, fees and whitelist status."
-  nodes(
-    after: String
+  """
+  Paginated THORChain node table for bRUNE, with bonded amounts, fees and whitelist status.
+  """
+  nodes(first: Int = 25, after: String): BondNodeConnection
 
-    "Rows per page."
-    first: Int
-  ): BondNodeConnection
+  """
+  Total RUNE rewards held in the bRUNE contract awaiting distribution or compounding, before protocol fees; no mode breakdown.
+  """
+  history(range: TimeRangeInput!, resolution: Resolution = DAY): [BruneStakingPoint!]
+
+  """
+  Current RUNE rewards held in the bRUNE contract awaiting distribution or compounding, before protocol fees; includes a breakdown by staking mode.
+  """
+  pendingRewards(
+    """
+    Currency for total and mode amounts. USD is indicative at the current RUNE/USD price at asOf.
+    """
+    currency: StakingRevenueCurrency = RUNE
+  ): BrunePendingRewards
 }
 
 type ThorchainOverviewAnalytics {
-  "All THORChain markets, including those absent from FIN."
-  history(
-    range: TimeRangeInput!
-
-    "Accepts DAY, WEEK, MONTH, YEAR; defaults to DAY."
-    resolution: Resolution
-  ): [ThorchainOverviewPoint!]
+  """All THORChain markets, including those absent from FIN."""
+  history(range: TimeRangeInput!, resolution: Resolution = DAY): [ThorchainOverviewPoint!]
 
   "Totals across all THORChain markets over the selected range."
   summary(range: TimeRangeInput!): ThorchainOverviewPeriodSummary
@@ -1654,23 +1711,20 @@ type ExecutionSampleAnalytics {
     buckets: DecimalBucketInput
   ): [DeviationBucket!]
 
-  "Breakdown by trade size in RUNE. Each bucket returns mean absolute deviation, trade count and trading volume, using the parent sample's filters. Returned boundaries and volume support indicative USD display; bucket membership always uses RUNE. Pending: execution distribution executor."
+  """
+  Breakdown by RUNE trade size using sample filters. Means use measured swaps' capped absolute deviations; with sign ALL, counts and volumes include unmeasured swaps. USD display does not change membership.
+  """
   byTradeSize(
     range: TimeRangeInput!
-
-    "Trade-size boundaries in RUNE only; output currency does not change these boundaries or bucket membership."
+    """
+    Trade-size boundaries in RUNE only; output currency does not change these boundaries or bucket membership.
+    """
     buckets: DecimalBucketInput
-
-    weighting: Weighting
+    weighting: Weighting = VOLUME_WEIGHTED
   ): [TradeSizeDeviationBucket!]
 
-  "Daily, weekly, monthly or yearly sample points."
-  history(
-    range: TimeRangeInput!
-
-    "Accepts DAY, WEEK, MONTH, YEAR; defaults to DAY."
-    resolution: Resolution
-  ): [ExecutionPoint!]
+  """Daily or weekly sample points."""
+  history(range: TimeRangeInput!, resolution: Resolution = DAY): [ExecutionPoint!]
 
   "Period sample totals and deviations."
   summary(range: TimeRangeInput!): ExecutionSummary
@@ -1691,8 +1745,10 @@ input ExecutionFilterInput {
   "Include trades within the minimum and\/or maximum RUNE size; inputs are RUNE-only and apply to every sample view. Bounds must be powers of ten in RUNE; min is inclusive and max is exclusive."
   tradeSizeRune: DecimalRangeInput
 
-  "Select positive or negative deviations; omitted\/null selects all signs (ALL)."
-  deviationSign: DeviationSign
+  """
+  ALL includes all trades; POSITIVE selects better execution, NEGATIVE worse execution. Zero belongs only to ALL. Coverage ignores this filter. Omitted/null uses ALL.
+  """
+  deviationSign: DeviationSign = ALL
 }
 
 "Column the execution-quality pair table is ordered by."
@@ -1727,23 +1783,25 @@ type ExecutionPairSummaryRow {
   "null = aggregate row."
   pair: Pair
 
-  "Selected deviation statistic for this row's filtered trades over the selected range; aggregate rows combine pairs. Unit: ratio. Pending: execution deviation projection."
+  """
+  Selected deviation statistic for this row's filtered trades over the selected range; aggregate rows combine pairs. Uses per-swap capped deviations; SIGNED preserves better (+) and worse (-) execution.
+  """
   deviation(
-    "Selects the statistic; required, as this metric has no default."
     statistic: DeviationStatistic!
-
-    "0..1; required only for statistic=PERCENTILE."
+    """0..1; required only for statistic=PERCENTILE."""
     percentile: DecimalValue
-
-    weighting: Weighting
-
-    representation: DeviationRepresentation
+    weighting: Weighting = VOLUME_WEIGHTED
+    representation: DeviationRepresentation = ABSOLUTE
   ): DecimalValue
 
-  "Trading volume for this row's filtered trades over the selected range, in the selected currency; aggregate rows combine pairs. RUNE is measured; USD is indicative at the current RUNE\/USD price, including historical values. Unit: selected currency. Pending: execution sample filtering."
+  """
+  Trading volume for this row's filtered trades over the selected range, in the selected currency; aggregate rows combine pairs.
+  """
   volume(
-    "RUNE is measured; USD is indicative at the current RUNE\/USD price, including historical values."
-    currency: ThorchainCurrency
+    """
+    RUNE is measured; USD is indicative at the current RUNE/USD price, including historical values.
+    """
+    currency: ThorchainCurrency = RUNE
   ): DecimalValue
 
   "Number of filtered trades for this row over the selected range; aggregate rows combine pairs. Unit: count. Pending: execution sample filtering."
@@ -1769,15 +1827,12 @@ type ExecutionPairBreakdown {
   "Combined selected sample."
   aggregate: ExecutionPairSummaryRow
 
-  "Paginated table of execution-quality statistics by pair. Pending: execution deviation projection and execution sample filtering."
+  """Paginated table of execution-quality statistics by pair."""
   rows(
+    first: Int = 25
     after: String
-
-    "Rows per page."
-    first: Int
-
-    "Default: pair label ascending; stable ID breaks ties."
-    orderBy: ExecutionPairOrderInput
+    """Default: pair label ascending; stable ID breaks ties."""
+    orderBy: ExecutionPairOrderInput = {field: PAIR, direction: ASC}
   ): ExecutionPairTable
 }
 
@@ -1792,25 +1847,37 @@ type DeviationBucket {
   "Number of filtered trades in this deviation bucket over the selected range. Unit: count. Pending: execution distribution executor."
   trades: DecimalValue
 
-  "Trading volume of filtered trades in this deviation bucket over the selected range, in the selected currency. RUNE is measured; USD is indicative at the current RUNE\/USD price, including historical values. Unit: selected currency. Pending: execution distribution executor."
+  """
+  Trading volume of filtered trades in this deviation bucket over the selected range, in the selected currency.
+  """
   volume(
-    "RUNE is measured; USD is indicative at the current RUNE\/USD price, including historical values."
-    currency: ThorchainCurrency
+    """
+    RUNE is measured; USD is indicative at the current RUNE/USD price, including historical values.
+    """
+    currency: ThorchainCurrency = RUNE
   ): DecimalValue
 }
 
 "One RUNE trade-size bucket of the filtered sample."
 type TradeSizeDeviationBucket {
-  "Inclusive lower RUNE trade-size boundary, displayed in the selected currency; USD conversion does not change bucket membership. RUNE is measured; USD is indicative at the current RUNE\/USD price, including historical values. Unit: selected currency. Pending: execution distribution executor."
+  """
+  Inclusive lower RUNE trade-size boundary, displayed in the selected currency; USD conversion does not change bucket membership.
+  """
   lower(
-    "RUNE is measured; USD is indicative at the current RUNE\/USD price, including historical values."
-    currency: ThorchainCurrency
+    """
+    RUNE is measured; USD is indicative at the current RUNE/USD price, including historical values.
+    """
+    currency: ThorchainCurrency = RUNE
   ): DecimalValue
 
-  "Exclusive upper RUNE trade-size boundary, displayed in the selected currency; USD conversion does not change bucket membership. RUNE is measured; USD is indicative at the current RUNE\/USD price, including historical values. Unit: selected currency. Pending: execution distribution executor."
+  """
+  Exclusive upper RUNE trade-size boundary, displayed in the selected currency; USD conversion does not change bucket membership.
+  """
   upper(
-    "RUNE is measured; USD is indicative at the current RUNE\/USD price, including historical values."
-    currency: ThorchainCurrency
+    """
+    RUNE is measured; USD is indicative at the current RUNE/USD price, including historical values.
+    """
+    currency: ThorchainCurrency = RUNE
   ): DecimalValue
 
   "Mean absolute deviation for this trade-size bucket, using the selected weighting. Unit: ratio. Pending: execution deviation projection."
@@ -1819,10 +1886,14 @@ type TradeSizeDeviationBucket {
   "Number of filtered trades in this size bucket over the selected range. Unit: count. Pending: execution distribution executor."
   trades: DecimalValue
 
-  "Trading volume of filtered trades in this RUNE-size bucket over the selected range, in the selected currency. RUNE is measured; USD is indicative at the current RUNE\/USD price, including historical values. Unit: selected currency. Pending: execution distribution executor."
+  """
+  Trading volume of filtered trades in this RUNE-size bucket over the selected range, in the selected currency.
+  """
   volume(
-    "RUNE is measured; USD is indicative at the current RUNE\/USD price, including historical values."
-    currency: ThorchainCurrency
+    """
+    RUNE is measured; USD is indicative at the current RUNE/USD price, including historical values.
+    """
+    currency: ThorchainCurrency = RUNE
   ): DecimalValue
 }
 
@@ -1843,13 +1914,10 @@ type Strategy {
   "Whether users can deposit directly into this strategy."
   acceptsUserDeposits: Boolean!
 
-  "Strategy activity and closing TVL for each chart period in the requested date range. Pending: AMM strategy projection."
-  history(
-    range: TimeRangeInput!
-
-    "Period each point covers; defaults to DAY."
-    resolution: Resolution
-  ): [StrategyComparisonPoint!]
+  """
+  Strategy activity and closing TVL for each chart period in the requested date range.
+  """
+  history(range: TimeRangeInput!, resolution: Resolution = DAY): [StrategyComparisonPoint!]
 
   "Available only when acceptsUserDeposits is true; otherwise null."
   depositAnalytics: DepositStrategyAnalytics
@@ -1893,18 +1961,19 @@ type StrategyComparisonPoint {
 
 "Deposit-strategy history, performance and liquidity for one strategy."
 type DepositStrategyAnalytics {
-  "Deposit-strategy activity, performance and closing TVL for each chart period in the requested date range. Pending: AMM strategy projection."
-  history(
-    range: TimeRangeInput!
+  """
+  Deposit-strategy activity, performance and closing TVL for each chart period in the requested date range.
+  """
+  history(range: TimeRangeInput!, resolution: Resolution = DAY): [DepositStrategyPoint!]
 
-    "Period each point covers; defaults to DAY."
-    resolution: Resolution
-  ): [DepositStrategyPoint!]
-
-  "Whole pair + strategy performance, including waterfall and top-down APR; unaffected by position filters. Defaults to 30d. Pending: AMM strategy projection."
+  """
+  Whole pair + strategy performance, including waterfall and top-down APR; unaffected by position filters. Defaults to 30d.
+  """
   performance(
-    "Omitted\/null selects the last 30 days; allTime selects this strategy's full history."
-    range: TimeRangeInput
+    """
+    Omitted/null selects the last 30 days; allTime selects this strategy's full history.
+    """
+    range: TimeRangeInput = {trailing: {value: 30, unit: DAY}}
   ): StrategyPerformance
 
   "Bottom-up all-time APR and USD coverage for this pair\/type after filtering. CCL\/DCL only; other types return null. No eligible positions: null APR and zero coverage values. Pending: AMM position projection."
@@ -1913,8 +1982,8 @@ type DepositStrategyAnalytics {
     filter: PositionFilterInput
   ): PositionWeightedAprSummary
 
-  "Current price buckets; width is a ratio. Returns bounds and side. Pending: AMM liquidity distribution projection."
-  liquidityDistribution(bucketWidth: DecimalValue): LiquidityDistribution
+  """Current price buckets; width is a ratio. Returns bounds and side."""
+  liquidityDistribution(bucketWidth: DecimalValue = "0.05"): LiquidityDistribution
 }
 
 "One chart period of this deposit strategy. Pending: AMM strategy projection."
@@ -1949,13 +2018,8 @@ type DepositStrategyPoint {
     transform: MetricTransformInput
   ): DecimalValue
 
-  "Annualized return using the requested lookback for each chart point. Unit: ratio. Pending: AMM strategy projection."
-  apr(
-    lookback: DurationInput
-
-    "Declared: SMA, GROWTH."
-    transform: MetricTransformInput
-  ): DecimalValue
+  """Annualized return using the requested lookback for each chart point."""
+  apr(lookback: DurationInput = {value: 30, unit: DAY}, transform: MetricTransformInput): DecimalValue
 }
 
 "Deposit strategies; default page period 30d, custom dates allowed."
@@ -2044,10 +2108,14 @@ type StrategySummaryRow {
   "Number of trades executed through this strategy over the requested window. Unit: count. Pending: AMM strategy projection."
   trades(window: DurationInput!): DecimalValue
 
-  "Top-down blended APR for the whole pair and strategy type over the selected range; unaffected by position filters. Null for VS. Unit: ratio. Pending: AMM strategy projection."
+  """
+  Top-down blended APR for the whole pair and strategy type over the selected range; unaffected by position filters. Null for VS.
+  """
   apr(
-    "Omitted\/null selects the last 30 days; allTime selects this strategy's full history."
-    range: TimeRangeInput
+    """
+    Omitted/null selects the last 30 days; allTime selects this strategy's full history.
+    """
+    range: TimeRangeInput = {trailing: {value: 30, unit: DAY}}
   ): DecimalValue
 
   "Bottom-up all-time APR and USD coverage for this pair\/type after filtering. CCL\/DCL only; other types return null. No eligible positions: null APR and zero coverage values. Pending: AMM position projection."
@@ -2094,22 +2162,34 @@ type AmmPosition {
   "Current price bounds: configured for CCL, dynamically adjusted for DCL. Pending: AMM position projection."
   range: AmmPositionRange
 
-  "Total principal deposited over this position's lifetime, in the selected currency. Pending: AMM position projection."
+  """
+  Total principal deposited over this position's lifetime, in the selected currency.
+  """
   totalInvested(
-    "QUOTE_TOKEN uses the pair's quote token. USD converts quote value at the current quote-to-USD exchange rate."
-    currency: PositionValueCurrency
+    """
+    QUOTE_TOKEN uses the pair's quote token. USD converts quote value at the current quote-to-USD exchange rate.
+    """
+    currency: PositionValueCurrency = QUOTE_TOKEN
   ): DecimalValue
 
-  "Principal withdrawn over this position's lifetime, excluding claimed yield. Pending: AMM position projection."
+  """
+  Lifetime principal withdrawn, as a positive amount; excludes realized compounded profit and claimable-profit payouts.
+  """
   withdrawn(
-    "QUOTE_TOKEN uses the pair's quote token. USD converts quote value at the current quote-to-USD exchange rate."
-    currency: PositionValueCurrency
+    """
+    QUOTE_TOKEN uses the pair's quote token. USD converts quote value at the current quote-to-USD exchange rate.
+    """
+    currency: PositionValueCurrency = QUOTE_TOKEN
   ): DecimalValue
 
-  "Trading yield claimed over this position's lifetime. Pending: AMM position projection."
+  """
+  Lifetime realized yield after protocol fees: claimable-profit payouts plus compounded profit realized through inventory withdrawals.
+  """
   claimedYield(
-    "QUOTE_TOKEN uses the pair's quote token. USD converts quote value at the current quote-to-USD exchange rate."
-    currency: PositionValueCurrency
+    """
+    QUOTE_TOKEN uses the pair's quote token. USD converts quote value at the current quote-to-USD exchange rate.
+    """
+    currency: PositionValueCurrency = QUOTE_TOKEN
   ): DecimalValue
 
   "Current value of remaining principal, excluding unclaimed yield. Pending: AMM position projection."
@@ -2118,10 +2198,14 @@ type AmmPosition {
     currency: PositionValueCurrency
   ): DecimalValue
 
-  "Trading yield currently available to claim, separate from remaining principal. Pending: AMM position projection."
+  """
+  Current claimable profit plus remaining net compounded profit, after protocol fees. The compounded portion is not separately claimable.
+  """
   unclaimedYield(
-    "QUOTE_TOKEN uses the pair's quote token. USD converts quote value at the current quote-to-USD exchange rate."
-    currency: PositionValueCurrency
+    """
+    QUOTE_TOKEN uses the pair's quote token. USD converts quote value at the current quote-to-USD exchange rate.
+    """
+    currency: PositionValueCurrency = QUOTE_TOKEN
   ): DecimalValue
 
   "Current principal value, excluding unclaimed yield, converted at the current quote-to-USD rate; matches currentValue(currency: USD). Unit: usd. Pending: AMM position projection."
@@ -2139,14 +2223,68 @@ type AmmPosition {
   "Current CCL range status; null for DCL because its range is dynamic. Pending: AMM position projection."
   inRange: Boolean
 
-  "Nine ordered lifetime steps from inception to the current snapshot, in the selected currency; no date-range selector. Pending: AMM position projection."
+  """
+  Nine ordered lifetime steps from inception to the current snapshot, in the selected currency; no date-range selector.
+  """
   waterfall(
-    "QUOTE_TOKEN uses the pair's quote token. USD converts quote value at the current quote-to-USD exchange rate."
-    currency: PositionValueCurrency
+    """
+    QUOTE_TOKEN uses the pair's quote token. USD converts quote value at the current quote-to-USD exchange rate.
+    """
+    currency: PositionValueCurrency = QUOTE_TOKEN
   ): [PositionWaterfallStep!]
 
   "UTC measurement time of this position snapshot; matches the containing positions table when returned in a list."
   asOf: Timestamp!
+
+  """
+  OPEN has positive remaining principal/yield; CLOSED is fully exited with zero remaining value and retained lifetime metrics.
+  """
+  status: PositionStatus!
+
+  """
+  Current principal value, including inventory price gains/losses; excludes claimable profit and remaining net compounded profit.
+  """
+  principalValue(
+    """
+    QUOTE_TOKEN uses the pair's quote token. USD converts quote value at the current quote-to-USD exchange rate.
+    """
+    currency: PositionValueCurrency = QUOTE_TOKEN
+  ): DecimalValue
+
+  """
+  Current principal value, excluding unclaimed yield, converted at the current quote-to-USD rate; matches principalValue(currency: USD).
+  """
+  principalValueUsd: DecimalValue
+
+  """
+  Lifetime executed trades involving this position, buys and sells; count each execution once, merging internal slices. A transaction can contain several trades.
+  """
+  trades: DecimalValue
+
+  """
+  Lifetime trades divided by weightedAverageAgeDays, without rounding or a one-day floor; null if inputs are unavailable or age is nonpositive.
+  """
+  averageTradesPerDay: DecimalValue
+
+  """
+  Lifetime executed quote-token notional before fees, buys plus sells; count this position's participation once, with no 50% adjustment.
+  """
+  volume(
+    """
+    QUOTE_TOKEN uses the pair's quote token. USD converts quote value at the current quote-to-USD exchange rate.
+    """
+    currency: PositionValueCurrency = QUOTE_TOKEN
+  ): DecimalValue
+
+  """
+  Lifetime volume divided by weightedAverageAgeDays, in the selected currency per day, without rounding or a one-day floor; null if inputs are unavailable or age is nonpositive.
+  """
+  averageVolumePerDay(
+    """
+    QUOTE_TOKEN uses the pair's quote token. USD converts quote value at the current quote-to-USD exchange rate.
+    """
+    currency: PositionValueCurrency = QUOTE_TOKEN
+  ): DecimalValue
 }
 
 "Current price bounds: configured for CCL, dynamically adjusted for DCL."
@@ -2171,6 +2309,11 @@ type PositionWaterfallStep {
 
   "Balance for TOTAL steps or signed change for CHANGE steps, using waterfall(currency). Inventory changes and trading profits can be negative."
   value: DecimalValue
+
+  """
+  Two rows for supported components, including zeros; [] for other components, null if unavailable. Same currency/sign as parent; values sum to its value.
+  """
+  breakdown: [PositionWaterfallBreakdownRow!]
 }
 
 type AmmPositionEdge {
@@ -2192,19 +2335,24 @@ type AmmPositionTable {
 
 "Inherits pair; no users."
 type TradeMarketAnalytics {
-  "Trade activity, revenue and closing AMM balances for each chart period in the requested date range."
-  history(
-    range: TimeRangeInput!
-
-    "Accepts DAY, WEEK, MONTH, YEAR; defaults to DAY."
-    resolution: Resolution
-  ): [TradePoint!]
+  """
+  Trade activity, revenue and closing AMM balances for each chart period in the requested date range.
+  """
+  history(range: TimeRangeInput!, resolution: Resolution = DAY): [TradePoint!]
 
   "Trade metrics over the requested date range."
   summary(range: TimeRangeInput!): TradePeriodSummary
 
-  "USD volume\/share breakdown by pair, ranked highest first; ties by pair ID. Append Other when omitted pairs have volume. Shares use all matching pairs before limit. Pair scope returns at most one pair. _valueUnit: USD."
-  volumeByPair(range: TimeRangeInput!, limit: Int): [PairBreakdownRow!]
+  """
+  USD volume/share breakdown by pair, ranked highest first; ties by pair ID. Append Other when omitted pairs have volume. Shares use all matching pairs before limit. Pair scope returns at most one pair.
+  """
+  volumeByPair(
+    range: TimeRangeInput!
+    """
+    Positive number of top pairs; omitted/null uses 10. Other is an additional row.
+    """
+    limit: Int = 10
+  ): [PairBreakdownRow!]
 
   "USD volume and share breakdown by execution source. Each AMM strategy type contributes 50% of its notional volume. VS contributes 50% of the notional of its own swaps. MANUAL_ORDERS (market, limit and tracking orders) is total Trade volume minus the AMM and VS contributions; under a pair, the pair's volume minus its AMM contributions. _valueUnit: USD."
   volumeBySource(range: TimeRangeInput!): [TradeSourceBreakdownRow!]
@@ -2224,10 +2372,14 @@ type PairSummaryRow {
   "Trading volume for this pair over the requested window, in USD. Use aliases to request multiple windows together. Unit: usd. Pending: whole-window per-pair summary projection."
   volume(window: DurationInput!): DecimalValue
 
-  "Current TVL of selected AMM sources for this pair, in USD; defaults to CCL\/DCL. BRUNE and VS are optional. Unit: usd. Pending: whole-window per-pair summary projection."
+  """
+  Current TVL of selected AMM sources for this pair, in USD; defaults to CCL/DCL. BRUNE and VS are optional.
+  """
   ammTvl(
-    "Omitted\/null uses default; [] selects none; duplicates count once. BRUNE is bRUNE\/RUNE liquidity on FIN provided by the bRUNE contract, excluding bonded RUNE."
-    sources: [AmmTvlSource!]
+    """
+    Omitted/null uses default; [] selects none; duplicates count once. BRUNE is bRUNE/RUNE liquidity on FIN provided by the bRUNE contract, excluding bonded RUNE.
+    """
+    sources: [AmmTvlSource!] = [CCL, DCL]
   ): DecimalValue
 
   "Liquidity utilization for this pair over the requested window. Unit: ratio. Pending: whole-window per-pair summary projection."
@@ -2239,8 +2391,8 @@ type PairSummaryRow {
   "Protocol revenue per $100 of this pair's AMM TVL over the requested window. Unit: usd_per_100_usd_tvl. Pending: whole-window per-pair summary projection."
   protocolRevenuePer100Tvl(window: DurationInput!): DecimalValue
 
-  "ASK +2%, BID -2%; distance is positive. Unit: usd. Pending: whole-window per-pair summary projection."
-  depth(side: BookSide!, distance: DecimalValue): DecimalValue
+  """ASK +2%, BID -2%; distance is positive."""
+  depth(side: BookSide!, distance: DecimalValue = "0.02"): DecimalValue
 
   "Current relative gap between the best bid and ask prices for this pair. Unit: ratio. Pending: whole-window per-pair summary projection."
   spread: DecimalValue
@@ -2270,8 +2422,10 @@ type UserCurrent {
     transform: MetricTransformInput
   ): DecimalValue
 
-  "TODAY: latest measurement time, isComplete false. LAST_COMPLETE: previous UTC day at 23:59:59.999, isComplete true. Transforms use daily points. Pending: per-address activity projection."
-  activity(day: ActivityDay): UserDailyActivity
+  """
+  TODAY: latest measurement time, isComplete false. LAST_COMPLETE: previous UTC day at 23:59:59.999, isComplete true. Transforms use daily points.
+  """
+  activity(day: ActivityDay = TODAY): UserDailyActivity
 }
 
 type UserDailyActivity {
@@ -2318,6 +2472,13 @@ type AccountCurrent {
     "Omitted\/null includes all supported categories; [] selects none; duplicates count once. Future categories can join this aggregate."
     categories: [AccountPositionCategory!]
   ): AccountWeightedApr!
+
+  """
+  Current debt-USD-weighted borrowing cost, separate from positive-yield weightedApr.
+
+  Use current outstanding debt including accrued interest across all markets. Map credit accounts to owners; direct borrowers use their address. Include VS/protocol actors; no $1 threshold. Weight current market borrowing APRs by debt USD value; include known 0%, exclude unavailable rates and report their debt value.
+  """
+  weightedBorrowingApr: AccountWeightedBorrowingApr!
 }
 
 type AccountWeightedApr {
@@ -2370,6 +2531,11 @@ type StakingPool implements Node {
 
   "Token distributed as staking rewards."
   rewardToken: Token!
+
+  """
+  Auto-compounding receipt/share token for this pool. Its decimals apply to StakingAccount.liquidShares; redemption amounts use stakedToken.decimals.
+  """
+  receiptToken: Token!
 }
 
 type StakingSummary implements Node {
@@ -2407,6 +2573,39 @@ type StakingAccount implements Node {
   pendingRevenue: Bigint
 
   pool: StakingPool
+
+  """
+  UTC measurement time of this personal balance snapshot; associated token prices state their own observation times.
+  """
+  asOf: Timestamp!
+
+  """THORChain block height of the balance snapshot, when available."""
+  blockHeight: Int
+
+  """
+  USD stake value for the selected mode, excluding separately unclaimed yielding rewards. Auto-compounding uses underlying redemption value, not receipt-share count.
+  """
+  stakedValueUsd(
+    """
+    TOTAL combines both modes; YIELDING selects direct stake; AUTO_COMPOUNDING selects the underlying value represented by receipt shares. Omitted/null = TOTAL.
+    """
+    mode: StakingModeFilter = TOTAL
+  ): DecimalValue
+
+  """
+  USD value of this wallet's pendingRevenue, using the reward token's price. These are yielding rewards; already compounded rewards are included in liquidSize.
+  """
+  unclaimedRewardsValueUsd: DecimalValue
+
+  """
+  Total personal USD value for the selected mode: yielding stake plus unclaimed yielding rewards, auto-compounding redemption value, or both combined. Defaults to TOTAL.
+  """
+  valueUsd(
+    """
+    TOTAL combines both modes. YIELDING includes direct stake plus personal unclaimed yielding rewards. AUTO_COMPOUNDING uses underlying redemption value. Omitted/null = TOTAL.
+    """
+    mode: StakingModeFilter = TOTAL
+  ): DecimalValue
 }
 
 "Staker rank, account and staked amount for the selected token."
@@ -2417,10 +2616,14 @@ type StakerRow {
   "Staker account and its address."
   account: Account!
 
-  "This account's current stake in the selected token, combined or by staking mode. Unit: staked_token. Null if unavailable; canonical decimal string."
+  """
+  This account's current stake in the selected token, combined or by staking mode.
+  """
   staked(
-    "Select this account's yielding stake, auto-compounding stake, or both combined (TOTAL)."
-    mode: StakingModeFilter
+    """
+    Select this account's yielding stake, auto-compounding stake, or both combined (TOTAL).
+    """
+    mode: StakingModeFilter = TOTAL
   ): DecimalValue
 }
 
@@ -3062,45 +3265,10 @@ input TimeRangeInput {
   allTime: Boolean
 }
 
-"Period each point covers. Each field or subscription lists the values it accepts."
 enum Resolution {
-  "One minute."
-  MINUTE
-
-  "Three minutes."
-  THREE_MINUTES
-
-  "Five minutes."
-  FIVE_MINUTES
-
-  "Fifteen minutes."
-  FIFTEEN_MINUTES
-
-  "Thirty minutes."
-  THIRTY_MINUTES
-
-  "One hour."
-  HOUR
-
-  "Two hours."
-  TWO_HOURS
-
-  "Three hours."
-  THREE_HOURS
-
-  "Four hours."
-  FOUR_HOURS
-
-  "One UTC calendar day."
   DAY
-
-  "One UTC week, starting Monday."
   WEEK
-
-  "One UTC calendar month."
   MONTH
-
-  "One UTC calendar year."
   YEAR
 }
 
@@ -3134,11 +3302,10 @@ enum GrowthKind {
   RELATIVE
 }
 
-"Series transform. SMA and GROWTH execute; a declared-but-unexecuted transform such as COHORT_WEIGHTED_MA is rejected as unsupported input rather than silently folded as SMA."
 enum TransformKind {
   SMA
-  GROWTH
   COHORT_WEIGHTED_MA
+  GROWTH
 }
 
 enum SortDirection {
@@ -3236,13 +3403,23 @@ type Token {
 
   "URL of the token icon."
   iconUrl: String
+
+  """
+  Latest available USD display price and its observation time/source. Null when unavailable; never substitute zero. Ghost Credit oraclePrice is separate.
+  """
+  price: TokenPrice
+
+  """
+  Known representations of this token. Null when metadata is unavailable; an individual variant is null when it does not exist or is unavailable. Do not infer identifiers from the ticker.
+  """
+  variants: TokenVariants
 }
 
-"Select Swap, Trade and\/or AMM user statistics."
 enum UserProduct {
   SWAP
   TRADE
   AMM
+  MONEY_MARKET
 }
 
 "TODAY: latest measurement time. LAST_COMPLETE: previous UTC day."
@@ -3257,10 +3434,10 @@ enum AmountBucketPreset {
   DEPOSITOR_TVL
 }
 
-"Position category included in an account's weighted APR."
 enum AccountPositionCategory {
   AMM
   STAKING
+  LENDING
 }
 
 "Deposit-accepting AMM strategy type; staking is separate."
@@ -3489,4 +3666,646 @@ type FinOrderEdge {
 type FinTradeEdge {
   node: FinTrade
   cursor: String
+}
+
+"""
+Lending/borrowing financial metrics for the selected markets; users are product-wide under analytics.users. Monetary values are USD, except borrowCap(unit: TOKEN). No selected markets: amounts are zero, APRs null, breakdowns and market rows empty.
+"""
+type MoneyMarketAnalytics {
+  """
+  Latest selected-token balances, current rates and queryable historical rate averages.
+  """
+  current: MoneyMarketCurrent
+  """
+  Selected-token balances and rates at period close; interest/revenue during each period.
+  """
+  history(
+    range: TimeRangeInput!
+    """Period each point covers: DAY, WEEK, MONTH or YEAR; defaults to DAY."""
+    resolution: Resolution = DAY
+  ): [MoneyMarketPoint!]
+  """
+  Market rows matching tokenIds and optional Ghost Credit approval filter; apply filters before sorting/pagination. No matches returns no rows. Financial totals retain their separate token scope.
+  """
+  markets(
+    """Positive page size; use 5 for the top five lending markets."""
+    first: Int = 25
+    """
+    Cursor for the same token selection, ghostCreditSupported filter and sorting.
+    """
+    after: String
+    """
+    Omitted/null selects all markets. True selects vaults where Ghost Credit is registered as an approved borrower; false selects known non-approved vaults, including VS-only markets. Approval remains true with zero limit/debt/available amount. Unknown approval is excluded from either explicit filter.
+    """
+    ghostCreditSupported: Boolean
+    """
+    Default token symbol ascending; LENDING_APR/DESC ranks current rates unless averageOver is supplied.
+    """
+    orderBy: MoneyMarketOrderInput = {field: TOKEN, direction: ASC}
+  ): MoneyMarketTable
+  """
+  Distributed-revenue USD/share breakdown by underlying token over the selected range; descending by value; inherits token selection.
+  """
+  revenueByToken(
+    """
+    Omitted/null selects the last 30 days; custom dates and allTime are supported.
+    """
+    range: TimeRangeInput = {trailing: {value: 30, unit: DAY}}
+    recipient: MoneyMarketRevenueRecipient = TOTAL
+  ): [TokenBreakdownRow!]
+  """
+  Interest accrued and revenue distributed over the selected range; raw totals, independent of smoothing.
+  """
+  summary(range: TimeRangeInput!): MoneyMarketSummary
+  """
+  Current USD balance/share breakdown by underlying token, descending by value; inherits token selection. Unit: usd.
+  """
+  tvlByToken(side: MoneyMarketSide!): [TokenBreakdownRow!]
+
+  """
+  Shared current settings for Ghost Credit borrowing. Its collateral rules apply across Ghost Credit debt markets and are independent of tokenIds and the market-list filter.
+  """
+  ghostCredit: MoneyMarketGhostCredit
+}
+
+"""Latest Money Market snapshot for the selected markets."""
+type MoneyMarketCurrent {
+  """
+  Current selected-side APR weighted by that side's USD balances; averageOver averages these historical daily rates. Null when no eligible rate is available.
+  """
+  apr(
+    side: MoneyMarketSide!
+    """
+    Omitted/null = current rate; otherwise a historical daily rate average. Supports 1d, 7d, 30d and allTime; see rateAverages.
+    """
+    averageOver: TimeRangeInput
+  ): DecimalValue
+  """UTC measurement time of this snapshot."""
+  asOf: Timestamp!
+  """Selected-side USD balance at asOf. Unit: usd."""
+  tvl(side: MoneyMarketSide!): DecimalValue
+}
+
+enum MoneyMarketSide {
+  """
+  Lender balances include lent funds and accrued lender interest; APR is after protocol fees.
+  """
+  LENDING
+  """
+  Outstanding debt includes accrued interest and all approved borrowers: Ghost Credit, the VS and others. APR is a positive interest cost.
+  """
+  BORROWING
+}
+
+"""One chart period of the selected Money Market markets."""
+type MoneyMarketPoint {
+  """
+  Selected-side annualized rate at period close, weighted by that side's USD balances; SMA smooths these point values. Unit: ratio.
+  """
+  apr(
+    side: MoneyMarketSide!
+    """Declared: SMA, GROWTH."""
+    transform: MetricTransformInput
+  ): DecimalValue
+  """
+  Interest accrued during this period, by allocation; TOTAL includes lender and protocol shares. Unit: usd.
+  """
+  interest(
+    allocation: MoneyMarketInterestAllocation = TOTAL
+    """Declared: SMA, GROWTH."""
+    transform: MetricTransformInput
+  ): DecimalValue
+  """
+  True only for a fully included, ended calendar period; false for unfinished or range-clipped periods. Data may still be corrected.
+  """
+  isComplete: Boolean!
+  """
+  Receipt-distribution revenue during this period; TOTAL = RUJIRA + THORCHAIN. Unit: usd.
+  """
+  revenue(
+    recipient: MoneyMarketRevenueRecipient = TOTAL
+    """Declared: SMA, GROWTH."""
+    transform: MetricTransformInput
+  ): DecimalValue
+  """
+  UTC period close (last millisecond) for complete points; last included measurement time for unfinished or range-clipped points.
+  """
+  timestamp: Timestamp!
+  """
+  Selected-side USD balance at period close; latest included balance if unfinished. Unit: usd.
+  """
+  tvl(
+    side: MoneyMarketSide!
+    """Declared: SMA, GROWTH."""
+    transform: MetricTransformInput
+  ): DecimalValue
+}
+
+"""
+Accrued interest allocation: TOTAL = LENDERS + PROTOCOL. Current split: lenders 90%, protocol 10%; follow the applicable fee configuration.
+"""
+enum MoneyMarketInterestAllocation {
+  TOTAL
+  LENDERS
+  PROTOCOL
+}
+
+"""
+Protocol receipt distributions: TOTAL = RUJIRA + THORCHAIN. Recognition is at receipt distribution, not interest accrual or converter cash payout.
+"""
+enum MoneyMarketRevenueRecipient {
+  TOTAL
+  RUJIRA
+  THORCHAIN
+}
+
+"""
+Balances/cap sort in current USD. APR sorts use current rates or averageOver; range applies only to REVENUE. Missing values last; market ID breaks ties.
+"""
+input MoneyMarketOrderInput {
+  """
+  LENDING_APR/BORROWING_APR sorting only. Omitted/null = current rates; a range uses the same daily average as apr(averageOver).
+  """
+  averageOver: TimeRangeInput
+  direction: SortDirection!
+  field: MoneyMarketSortField!
+  """
+  REVENUE sorting only; omitted/null uses 30d. Omit for other sort fields.
+  """
+  range: TimeRangeInput
+}
+
+enum MoneyMarketSortField {
+  TOKEN
+  LENDING_TVL
+  BORROWING_TVL
+  UTILIZATION
+  BORROW_CAP
+  LENDING_APR
+  BORROWING_APR
+  REVENUE
+}
+
+"""One page of Money Market rows."""
+type MoneyMarketTable {
+  """Shared UTC snapshot time for current market-row values."""
+  asOf: Timestamp!
+  """Market rows on this page."""
+  nodes: [MoneyMarket!]!
+  """Cursor for the next page and whether more rows are available."""
+  pageInfo: PageInfo!
+}
+
+"""
+One lending market (Ghost vault) per underlying token; stable market ID.
+"""
+type MoneyMarket {
+  """
+  Current net lender-return or positive borrowing-cost APR; averageOver selects the existing historical daily average. Preserve known 0%. A market with zero debt can still have a configured nonzero borrowing rate.
+  """
+  apr(
+    side: MoneyMarketSide!
+    """
+    Omitted/null = current rate; otherwise a historical daily rate average. Supports 1d, 7d, 30d and allTime; see rateAverages.
+    """
+    averageOver: TimeRangeInput
+  ): DecimalValue
+  """
+  Credit-account controller's configured debt limit for this market; other direct borrowers have separate limits. TOKEN uses the underlying token; USD its current price. Null when the credit-account controller is not an approved borrower.
+  """
+  borrowCap(unit: MoneyMarketValueUnit = USD): DecimalValue
+  """Stable lending-market identifier."""
+  id: ID!
+  """Receipt-distribution revenue for this market over the selected range."""
+  revenue(
+    """
+    Omitted/null selects the last 30 days; custom dates and allTime are supported.
+    """
+    range: TimeRangeInput = {trailing: {value: 30, unit: DAY}}
+    recipient: MoneyMarketRevenueRecipient = TOTAL
+  ): DecimalValue
+  """Underlying supplied/borrowed token; its ID filters the analytics page."""
+  token: Token!
+  """
+  Current market supply or outstanding debt, including accrued interest. BORROWING combines Ghost Credit, the VS and every other approved borrower; it is not Ghost Credit-only debt.
+  """
+  tvl(
+    """
+    LENDING selects total supplied funds; BORROWING selects all outstanding debt.
+    """
+    side: MoneyMarketSide!
+    """
+    USD uses the underlying token's current USD display price; TOKEN is an unscaled amount of that token, using its bank-token decimals.
+    """
+    unit: MoneyMarketValueUnit = USD
+  ): DecimalValue
+  """
+  Current borrowed share of supplied value; includes all approved borrowers. Unit: ratio.
+  """
+  utilization: DecimalValue
+
+  """
+  Whether Ghost Credit is registered as an approved borrower in this lending vault. True even when its limit or available amount is zero; VS-only approval is false. Null when approval cannot be determined.
+  """
+  ghostCreditSupported: Boolean
+
+  """
+  Current debt and available borrowing through Ghost Credit in this vault, across all Ghost Credit users. Excludes VS/other-borrower debt. Null when Ghost Credit is not approved or its state is unavailable; inspect ghostCreditSupported to distinguish known non-approval.
+  """
+  ghostCredit: MoneyMarketGhostCreditState
+
+  """
+  Current utilization-based borrowing-rate parameters for this vault, shared by Ghost Credit, the VS and other approved borrowers. These are decimal ratios, not Main API scaled integers.
+  """
+  interestCurve: MoneyMarketInterestCurve
+
+  """
+  Current protocol fraction of accrued borrowing interest. Lender APR = borrowing APR * utilization * (1 - protocolFeeRate); do not deduct this fee again from the returned lending APR.
+  """
+  protocolFeeRate: DecimalValue
+}
+
+enum MoneyMarketValueUnit {
+  USD
+  TOKEN
+}
+
+"""Money Market interest and revenue over the selected range."""
+type MoneyMarketSummary {
+  """Interest accrued over the selected range, by allocation. Unit: usd."""
+  interest(allocation: MoneyMarketInterestAllocation = TOTAL): DecimalValue
+  """
+  Receipt-distribution revenue over the selected range; TOTAL = RUJIRA + THORCHAIN. Unit: usd.
+  """
+  revenue(recipient: MoneyMarketRevenueRecipient = TOTAL): DecimalValue
+}
+
+enum PositionWaterfallBreakdownKind {
+  REALIZED
+  UNREALIZED
+  PRINCIPAL
+  PROFIT
+}
+
+enum RevenuePer100TvlSource {
+  THORCHAIN_BASE_LAYER
+  RUJIRA_FIN
+}
+
+enum PositionStatus {
+  OPEN
+  CLOSED
+}
+
+enum PositionStatusFilter {
+  OPEN
+  CLOSED
+  ALL
+}
+
+"""
+Current debt-USD-weighted borrowing cost, separate from positive-yield weightedApr.
+
+Use current outstanding debt including accrued interest across all markets. Map credit accounts to owners; direct borrowers use their address. Include VS/protocol actors; no $1 threshold. Weight current market borrowing APRs by debt USD value; include known 0%, exclude unavailable rates and report their debt value.
+"""
+type AccountWeightedBorrowingApr {
+  """
+  Positive annualized borrowing cost; null if no positive debt has an available rate. Never netted against weightedApr.
+  """
+  apr: DecimalValue
+  """Current debt value with an available borrowing APR; zero if none."""
+  includedDebtUsd: DecimalValue!
+  """
+  Current debt value excluded because its borrowing APR is unavailable; zero if none.
+  """
+  excludedDebtUsd: DecimalValue!
+}
+
+"""
+Total RUNE rewards held in the bRUNE contract awaiting distribution or compounding, before protocol fees; no mode breakdown.
+"""
+type BruneStakingPoint {
+  """
+  UTC period close (last millisecond) for complete points; last included measurement time for unfinished or range-clipped points.
+  """
+  timestamp: Timestamp!
+  """
+  True only for a fully included, ended calendar period; false for unfinished or range-clipped periods. Data may still be corrected.
+  """
+  isComplete: Boolean!
+  """
+  Total pending RUNE rewards at timestamp, before protocol fees, in the selected currency.
+  """
+  pendingRewards(
+    """
+    USD uses the RUNE/USD price at this point's timestamp, before applying any transform.
+    """
+    currency: StakingRevenueCurrency = RUNE
+    transform: MetricTransformInput
+  ): DecimalValue
+}
+
+"""
+Current RUNE rewards held in the bRUNE contract awaiting distribution or compounding, before protocol fees; includes a breakdown by staking mode.
+"""
+type BrunePendingRewards {
+  """UTC measurement time shared by the pending total and mode breakdown."""
+  asOf: Timestamp!
+  """Total pending rewards before protocol fees, in the selected currency."""
+  amount: DecimalValue
+  """
+  Breakdown into yielding and auto-compounding allocations before protocol fees; one row per mode. Amounts sum to the total; a measured zero total gives zero amounts and null shares.
+  """
+  byMode: [BrunePendingRewardModeRow!]
+}
+
+"""
+Breakdown into yielding and auto-compounding allocations before protocol fees; one row per mode. Amounts sum to the total; a measured zero total gives zero amounts and null shares.
+"""
+type BrunePendingRewardModeRow {
+  """Staking mode receiving this pending-reward allocation."""
+  mode: StakingMode!
+  """
+  Pending rewards allocated to this mode before protocol fees, in the parent's selected currency.
+  """
+  amount: DecimalValue
+  """
+  This mode's share of total pending rewards before protocol fees; null when the total is zero or unavailable.
+  """
+  share: DecimalValue
+}
+
+type PositionWaterfallBreakdownRow {
+  """
+  REALIZED/UNREALIZED split the step's profit; PRINCIPAL/PROFIT split payouts or remaining value.
+  """
+  kind: PositionWaterfallBreakdownKind!
+  """
+  Amount in the parent step's currency and sign; known zeros remain zero.
+  """
+  value: DecimalValue!
+}
+
+type TokenPrice {
+  """
+  USD price per whole token in the representation being valued; null if unavailable.
+  """
+  current: DecimalValue
+  """
+  UTC observation time for this price, which may differ from a balance snapshot time.
+  """
+  asOf: Timestamp!
+  """
+  Price-provider or oracle identifier, when known; Ghost Credit oraclePrice identifies the on-chain oracle used for borrowing risk.
+  """
+  source: String
+}
+
+type TokenVariants {
+  """
+  Layer 1 representation, e.g. BTC.BTC or ETH.USDC-0x...; null if none exists or metadata is unavailable.
+  """
+  layer1: TokenRepresentation
+  """
+  THORChain secured representation, e.g. BTC-BTC or ETH-USDC-0x...; null if none exists or metadata is unavailable.
+  """
+  secured: TokenRepresentation
+  """
+  Native bank representation on THORChain, e.g. btc-btc or x/brune; null if none exists or metadata is unavailable.
+  """
+  native: TokenNativeRepresentation
+}
+
+type TokenRepresentation {
+  """
+  Exact identifier of this representation, as returned by the protocol; preserve its canonical form.
+  """
+  identifier: String!
+  """
+  Decimals for amounts in this representation. Layer 1 decimals can differ from secured/native bank-token decimals.
+  """
+  decimals: Int!
+}
+
+type TokenNativeRepresentation {
+  """
+  Exact THORChain bank denom for this representation, e.g. btc-btc or x/brune.
+  """
+  denom: String!
+  """
+  Decimals for atomic amounts of this bank denom; use these for atomic balance conversion.
+  """
+  decimals: Int!
+}
+
+type MoneyMarketGhostCredit {
+  """
+  Current Ghost Credit contract and shared collateral/risk settings. No historical parameter series or personal account maximum is exposed here.
+  """
+  current: MoneyMarketGhostCreditCurrent
+}
+
+"""
+Shared Ghost Credit settings. Ignore moneyMarket tokenIds: borrowing a selected debt token still uses every eligible collateral in the Ghost Credit account.
+
+Adjusted collateral USD = sum(collateral token amount * Ghost Credit oracle USD price * collateralRatio). Adjusted LTV = total debt oracle USD / adjusted collateral USD; this is not debt divided by unadjusted collateral value.
+
+After borrowing or collateral changes, adjusted LTV must be strictly below adjustmentThreshold. Liquidation is permitted when adjusted LTV is at least liquidationThreshold. A zero collateralRatio contributes no borrowing power.
+
+Example only: $100 collateral with collateralRatio 0.7 has $70 adjusted value. adjustmentThreshold 0.9 requires debt below $63; liquidationThreshold 1 reaches its threshold at $70 debt. Read current parameters instead of hardcoding these example values.
+"""
+type MoneyMarketGhostCreditCurrent {
+  """
+  Ghost Credit contract address registered as a borrower in its supported lending vaults. This is distinct from the VS borrower address.
+  """
+  contractAddress: Address!
+  """UTC measurement time of this Ghost Credit configuration snapshot."""
+  asOf: Timestamp!
+  """THORChain block height of the configuration snapshot, when available."""
+  blockHeight: Int
+  """
+  Maximum adjusted LTV after a Ghost Credit borrowing/collateral change; the resulting ratio must be strictly lower. Not a raw collateral LTV percentage.
+  """
+  adjustmentThreshold: DecimalValue
+  """
+  Adjusted LTV at or above which a Ghost Credit account can be liquidated. Compare debt with risk-adjusted collateral, not unadjusted collateral.
+  """
+  liquidationThreshold: DecimalValue
+  """
+  Complete configured Ghost Credit collateral list, independent of the selected debt token. Include configured zero-weight tokens; [] means a known empty list, null means unavailable.
+  """
+  collaterals: [MoneyMarketCollateral!]
+}
+
+type MoneyMarketCollateral {
+  """
+  Token configured as collateral in Ghost Credit; reuse its chain, variants and bank denom.
+  """
+  token: Token!
+  """
+  Ghost Credit collateral valuation weight: 0.7 counts 70% of oracle value toward adjusted collateral. Zero grants no borrowing power; null means unavailable.
+  """
+  collateralRatio: DecimalValue
+  """
+  USD per whole collateral token from the on-chain oracle used by Ghost Credit, with its observation time/source. Use for risk calculations; Token.price is a separate display price.
+  """
+  oraclePrice: TokenPrice
+}
+
+"""
+Compute capacity in this market's native bank-token units at one balance snapshot. Ghost Credit headroom = max(borrowCap(TOKEN) - currentDebt(TOKEN), 0).
+
+Vault liquidity = max(total supplied tokens - total outstanding debt tokens, 0); total debt includes Ghost Credit, the VS and other approved borrowers. available(TOKEN) = min(Ghost Credit headroom, vault liquidity). Use authoritative contract amounts/rounding.
+
+Interest can push Ghost Credit debt above its configured cap; available is then zero. available is shared by all Ghost Credit users, not a wallet's collateral-based borrowing maximum. USD is a display conversion of the TOKEN result.
+"""
+type MoneyMarketGhostCreditState {
+  """
+  UTC measurement time for Ghost Credit debt, limit and vault-liquidity inputs; matches the containing market snapshot.
+  """
+  asOf: Timestamp!
+  """THORChain block height of these balance inputs, when available."""
+  blockHeight: Int
+  """
+  Outstanding debt borrowed through Ghost Credit in this market, including accrued interest, across all its users. Excludes the VS and other direct borrowers.
+  """
+  currentDebt(
+    """
+    USD uses the underlying token's current USD display price; TOKEN is an unscaled amount of that token, using its bank-token decimals.
+    """
+    unit: MoneyMarketValueUnit = USD
+  ): DecimalValue
+  """
+  Additional borrowing currently available through Ghost Credit, limited by its own unused cap and the vault's liquid funds. Not an individual wallet's borrowing allowance.
+  """
+  available(
+    """
+    USD uses the underlying token's current USD display price; TOKEN is an unscaled amount of that token, using its bank-token decimals.
+    """
+    unit: MoneyMarketValueUnit = USD
+  ): DecimalValue
+  """
+  USD per whole debt token from the on-chain oracle used by Ghost Credit for risk valuation, with observation time/source. Distinct from Token.price and capacity display-USD conversion.
+  """
+  oraclePrice: TokenPrice
+}
+
+"""
+For utilization u in [0,1] and target t in (0,1), borrowing APR = baseRate + step1 * min(u,t) / t + step2 * max(u-t,0) / (1-t). At u=0 use baseRate; at target use baseRate+step1; at full utilization use baseRate+step1+step2. Steps are additional rates, not endpoint APRs. Hypothetical rates use market-wide supply/debt in the same token units; lending APR also applies utilization and protocolFeeRate.
+"""
+type MoneyMarketInterestCurve {
+  """Borrowing APR at zero utilization; decimal ratio, e.g. 0.005 = 0.5%."""
+  baseRate: DecimalValue
+  """
+  Additional borrowing APR accumulated between zero and target utilization, added to baseRate.
+  """
+  step1: DecimalValue
+  """
+  Additional borrowing APR accumulated between target and full utilization, added to baseRate and step1.
+  """
+  step2: DecimalValue
+  """Utilization at the curve kink; strictly between zero and one."""
+  targetUtilization: DecimalValue
+}
+
+"""
+Lender or borrower statistics, selected by the containing branch; product-wide across all markets, with no token filter.
+
+Map credit accounts to owners; use the borrower contract address when no owner mapping exists. Include VS/protocol actors and deduplicate addresses across markets.
+
+Lender activity: supply/withdrawal, including receipt redemption. Borrower activity: credit-account interactions and direct borrow/repay. Successful transactions only; holding alone is not activity.
+
+Count each transaction hash once per role, even with multiple interactions. One owner may appear in both roles; combined users deduplicate the address.
+
+Holder counts, tiers and size distributions require the role's combined owner balance strictly above $1. No balance threshold applies to active/new users or transactions.
+
+newUsers means first-ever interaction in this role; prior activity in the other role or another product is ignored.
+"""
+type MoneyMarketUserAnalytics {
+  """
+  Role holder counts at period close; activity and transactions during each period.
+  """
+  history(range: TimeRangeInput!, resolution: Resolution = DAY): [MoneyMarketUserPoint!]
+  """Current role-holder count and selectable daily activity."""
+  current: MoneyMarketUserCurrent
+  """Role statistics over the selected range, across all markets."""
+  summary(range: TimeRangeInput!): MoneyMarketUserSummary
+  """
+  Current owner-balance breakdown by rank tier, across all markets; only owners above $1.
+  """
+  tiers: [TierRow!]
+  """
+  Current owner-count breakdown by USD balance, across all markets; only owners above $1. Default buckets: $0–10 through $10m+.
+  """
+  sizeDistribution(
+    """Uses the existing owner-balance USD bucket presets."""
+    buckets: AmountBucketPreset = DEPOSITOR_TVL
+  ): [AmountBucketRow!]
+}
+
+type MoneyMarketUserPoint {
+  """
+  UTC period close (last millisecond) for complete points; last included measurement time for unfinished or range-clipped points.
+  """
+  timestamp: Timestamp!
+  """
+  True only for a fully included, ended calendar period; false for unfinished or range-clipped periods. Data may still be corrected.
+  """
+  isComplete: Boolean!
+  """
+  Unique owners with combined role balances above $1 at period close, across all markets.
+  """
+  currentHolders(transform: MetricTransformInput): DecimalValue
+  """
+  Unique owners with role activity during this period; DAY gives DAU. Holding alone is not activity.
+  """
+  active(transform: MetricTransformInput): DecimalValue
+  """
+  Owners whose first-ever interaction in this role occurred during this period.
+  """
+  newUsers(transform: MetricTransformInput): DecimalValue
+  """
+  Successful transaction hashes with role activity during this period; each hash counts once per role.
+  """
+  transactions(transform: MetricTransformInput): DecimalValue
+  """
+  Share of the earlier 30-day holder cohort also holding above $1 in the recent 30-day window; no new transaction required.
+  """
+  retention(transform: MetricTransformInput): DecimalValue
+}
+
+type MoneyMarketUserCurrent {
+  """UTC measurement time of this snapshot."""
+  asOf: Timestamp!
+  """
+  Unique owners with combined role balances above $1 now, across all markets.
+  """
+  currentHolders(transform: MetricTransformInput): DecimalValue
+  """
+  DAY snapshot: TODAY uses latest measurement/isComplete false; LAST_COMPLETE uses the previous UTC day/isComplete true. Transforms use daily points.
+  """
+  activity(day: ActivityDay = TODAY): MoneyMarketUserPoint
+}
+
+type MoneyMarketUserSummary {
+  """
+  Role holders above $1 at the range-end cutoff; growth uses that endpoint.
+  """
+  currentHolders(transform: MetricTransformInput): DecimalValue
+  """
+  Unique owners with role activity anywhere in the selected range; not summed daily counts.
+  """
+  active: DecimalValue
+  """
+  Owners whose first-ever interaction in this role occurred during the selected range.
+  """
+  newUsers: DecimalValue
+  """
+  Distinct successful transaction hashes with role activity over the selected range.
+  """
+  transactions: DecimalValue
+  """
+  Holder retention across consecutive 30-day windows ending at the range-end cutoff; both require balances above $1.
+  """
+  retention(transform: MetricTransformInput): DecimalValue
 }

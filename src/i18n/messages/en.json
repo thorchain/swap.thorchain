@@ -27,9 +27,9 @@
     "popular": "Popular",
     "clear": "Clear",
     "apr": "APR",
-    "apr30d": "APR",
+    "apr30d": "Average APR",
     "stakingApr30d": "APR (30d)",
-    "ranking": { "automated": "Top Automated Trading Positions", "lending": "Top Lending Opportunities", "staking": "Top Staking Opportunities" },
+    "ranking": { "automated": "Top Pairs", "lending": "Top Lending Opportunities", "staking": "Top Staking Opportunities" },
     "noPositions": "No position opened",
     "yieldDescription": {
       "automated": "Your assets power automated market making strategies, including Custom Concentrated Liquidity (CCL) and Dynamic Concentrated Liquidity (DCL). These strategies earn trading fees and aim to buy lower and sell higher, including by capturing price differences between Rujira and THORChain. Returns depend on trading activity and whether your position is within its trading range.",

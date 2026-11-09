@@ -30,8 +30,8 @@ borrowing and liquidation limits; the 100% slider endpoint does not imply that t
 
 ## Data
 
-- `data/graphql/rujira-schema.graphql`: copied from `onthego/packages/main/data/schema.graphql`, the main application schema. The supplied
-  `analytics-schema.graphql` describes analytics and does not contain `ghostCredit`, collateral ratios, or lending vaults.
+- `data/graphql/rujira-schema.graphql`: copied from `onthego/packages/main/data/schema.graphql`, the main application schema. Borrow keeps the Main
+  API's `ghostCredit` integration; the separate `rujira-analytics-schema.graphql` contract is used by Automated Trading, Lending and Staking.
 - `src/lib/rujira/borrow-query.ts`: the read-only GraphQL operation.
 - `src/lib/rujira/client.ts`: server-side request, optional API key and timeout.
 - `src/lib/rujira/borrow-markets.ts`: typed response and selector mapping.

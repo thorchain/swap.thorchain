@@ -4,122 +4,117 @@ import { test } from 'node:test'
 import { runInNewContext } from 'node:vm'
 import { QueryClient } from '@tanstack/react-query'
 import ts from 'typescript'
-import { buildSchema, parse, validate } from 'graphql'
-import {
-  EARN_TRADE_QUERY,
-  EARN_LENDING_QUERY,
-  EARN_STAKING_QUERY,
-  EARN_CCL_METRICS_QUERY,
-  EARN_STAKING_METRICS_QUERY
-} from '../src/lib/rujira/earn-query.ts'
-import {
-  tradeEarnMarkets as mapTradeMarkets,
-  lendingEarnMarkets,
-  stakingEarnMarkets,
-  topEarnOpportunities,
-  toEarnAsset
-} from '../src/lib/rujira/earn-markets.ts'
+import { buildSchema, parse, validate, visit, valueFromASTUntyped } from 'graphql'
+import { loadRujiraModule } from './rujira-module.mjs'
 
-const asset = (symbol, chain = 'ETH', identifier = `${chain}-${symbol}`) => ({
-  asset: identifier,
-  chain,
-  type: 'SECURED',
-  metadata: { symbol, decimals: 8 }
-})
-const pair = (id, base, quote, apr) => ({
-  id,
-  address: id,
-  assetBase: base,
-  assetQuote: quote,
-  analyticsApr: apr
-})
+const { EARN_TRADE_QUERY, EARN_LENDING_QUERY, EARN_STAKING_QUERY, EARN_AUTOMATED_METRICS_QUERY } = loadRujiraModule('earn-query')
+const { tradeEarnMarkets, lendingEarnMarkets, stakingEarnMarkets, topEarnOpportunities } = loadRujiraModule('earn-markets')
+const { toAnalyticsAsset } = loadRujiraModule('analytics-markets')
+const { paginateAnalytics } = loadRujiraModule('client')
+const token = (symbol, chain = 'ETH', id = `${chain}-${symbol}`) => ({ id, symbol, chain: { id: chain }, decimals: 8 })
+const pair = (id, baseToken, quoteToken) => ({ pair: { id, baseToken, quoteToken } })
+const metric = (id, apr) => ({ strategy: { pair: { id } }, apr })
+const pool = (id, stakedToken, apr) => ({ pool: { id, stakedToken }, current: { apr } })
+const page = (nodes, hasNextPage = false, endCursor = null) => ({ nodes, pageInfo: { hasNextPage, endCursor } })
+const products = data => ({ analytics: { products: data } })
 
-const tradeEarnMarkets = pairs =>
-  mapTradeMarkets(
-    pairs,
-    pairs.map(pair => ({ strategy: { pair: { contractAddress: pair.address } }, apr: pair.analyticsApr }))
-  )
-
-const stakingHistory = (...aprs) => ({ history: aprs.map(apr => ({ isComplete: true, apr })) })
-
-test('Earn operations validate against the schema and are read-only', () => {
-  const schema = buildSchema(readFileSync(new URL('../data/graphql/rujira-schema.graphql', import.meta.url), 'utf8'))
-  for (const query of [EARN_TRADE_QUERY, EARN_LENDING_QUERY, EARN_STAKING_QUERY]) {
+test('all Earn operations validate against Analytics v2 and are read-only', () => {
+  const schema = buildSchema(readFileSync(new URL('../data/graphql/rujira-analytics-schema.graphql', import.meta.url), 'utf8'))
+  for (const query of [EARN_TRADE_QUERY, EARN_LENDING_QUERY, EARN_STAKING_QUERY, EARN_AUTOMATED_METRICS_QUERY]) {
     const document = parse(query)
     assert.deepEqual(validate(schema, document), [])
     assert.ok(document.definitions.filter(d => d.kind === 'OperationDefinition').every(d => d.operation === 'query'))
   }
-  const analyticsSchema = buildSchema(readFileSync(new URL('../data/graphql/rujira-analytics-schema.graphql', import.meta.url), 'utf8'))
-  for (const query of [EARN_CCL_METRICS_QUERY, EARN_STAKING_METRICS_QUERY]) assert.deepEqual(validate(analyticsSchema, parse(query)), [])
 })
 
-test('Trade asset catalogue includes both sides, keeps chain variants, and deduplicates by full identifier', () => {
-  const btc = asset('BTC', 'BTC'),
-    ethUsdt = asset('USDT'),
-    tronUsdt = asset('USDT', 'TRON')
-  const result = tradeEarnMarkets([pair('one', btc, ethUsdt, '0.1'), pair('two', tronUsdt, btc, '0.2')])
-  assert.equal(result.assets.length, 3)
+test('automated asks v2 for the higher CCL/DCL APR per pair over the same 30-day range', () => {
+  let selection
+  let aprArgs
+  visit(parse(EARN_AUTOMATED_METRICS_QUERY), {
+    Field(node) {
+      const args = Object.fromEntries((node.arguments ?? []).map(arg => [arg.name.value, valueFromASTUntyped(arg.value)]))
+      if (node.name.value === 'strategies') selection = args
+      if (node.name.value === 'apr') aprArgs = args
+    }
+  })
+  assert.deepEqual(selection.filter.typeIds, ['CCL', 'DCL'])
+  assert.equal(selection.onePerPair, true)
+  assert.equal(selection.orderBy.field, 'APR')
+  assert.equal(selection.orderBy.direction, 'DESC')
+  assert.equal(aprArgs.range.trailing.value, 30)
+  assert.equal(aprArgs.range.trailing.unit, 'DAY')
+  assert.deepEqual(selection.orderBy.range, aprArgs.range)
+})
+
+test('Trade includes both sides and all catalogue assets while ranking returned CCL/DCL winners by stable pair identity', () => {
+  const btc = token('BTC', 'BTC'),
+    usdt = token('USDT'),
+    tronUsdt = token('USDT.TRON', 'TRON')
+  const rows = tradeEarnMarkets([pair('ccl', btc, usdt), pair('no-ccl', btc, tronUsdt)], [metric('ccl', '0.100000000000000000001')])
+  assert.equal(rows.assets.length, 3)
   assert.deepEqual(
-    result.assets
+    rows.assets
       .filter(a => a.ticker === 'USDT')
       .map(a => a.chain)
       .sort(),
     ['ETH', 'TRON']
   )
-  assert.equal(result.opportunities[0].apr, '0.1')
+  assert.deepEqual(
+    rows.opportunities.map(row => row.id),
+    ['ccl']
+  )
+  assert.equal(rows.opportunities[0].apr, '0.100000000000000000001')
 })
 
-test('Earn excludes xUSK, NAMI and AUTO from asset lists and opportunities in every mode', () => {
-  const btc = asset('BTC', 'BTC')
-  const excluded = [asset('xUSK'), asset('nami'), asset('AUTO')]
-  const pairs = [
-    pair('excluded-base', excluded[0], btc, '9'),
-    pair('without-ccl', btc, asset('ETH'), null),
-    pair('excluded-quote', btc, excluded[1], '8'),
-    pair('included', btc, asset('USDC'), '0.1'),
-    pair('excluded-auto', excluded[2], btc, '7')
+test('Earn excludes xUSK, NAMI and AUTO from every catalogue', () => {
+  const excluded = [token('xUSK'), token('nami'), token('AUTO')],
+    btc = token('BTC', 'BTC')
+  const tokens = [...excluded, btc]
+  const pairs = tokens.map(t => pair(t.id, t, btc))
+  const results = [
+    tradeEarnMarkets(
+      pairs,
+      pairs.map(p => metric(p.pair.id, '0.1'))
+    ),
+    lendingEarnMarkets(tokens.map(token => ({ id: token.id, token, apr: '0.1' }))),
+    stakingEarnMarkets(Object.fromEntries(tokens.map(t => [t.id, pool(t.id, t, '0.1')])))
   ]
-  const trade = mapTradeMarkets(
-    pairs,
-    pairs.filter(row => row.id !== 'without-ccl').map(row => ({ strategy: { pair: { contractAddress: row.address } }, apr: row.analyticsApr }))
-  )
-  assert.deepEqual(
-    trade.opportunities.map(row => row.id),
-    ['included']
-  )
-  assert.deepEqual(
-    trade.assets.map(row => row.ticker),
-    ['BTC', 'ETH', 'USDC']
-  )
-
-  const lending = lendingEarnMarkets([...excluded, btc].map(asset => ({ id: asset.metadata.symbol, asset, status: { lendRate: '100000000000' } })))
-  const staking = stakingEarnMarkets([...excluded, btc].map(bondAsset => ({ id: bondAsset.metadata.symbol, bondAsset })))
-  for (const markets of [lending, staking]) {
+  for (const result of results) {
     assert.deepEqual(
-      markets.assets.map(row => row.ticker),
+      result.assets.map(a => a.ticker),
       ['BTC']
     )
-    assert.deepEqual(
-      markets.opportunities.map(row => row.id),
-      ['BTC']
-    )
+    assert.equal(result.opportunities.length, 1)
   }
 })
 
-test('rank after matching either side, not after limiting the overall leaders', () => {
-  const btc = asset('BTC', 'BTC'),
-    eth = asset('ETH'),
-    usdc = asset('USDC')
-  const rows = tradeEarnMarkets([
-    ...[9, 8, 7, 6].map(n => pair(`global${n}`, eth, usdc, `${n}`)),
-    pair('btc-low', btc, usdc, '0.1'),
-    pair('btc-high', eth, btc, '0.3'),
-    pair('btc-mid', btc, eth, '0.2'),
-    pair('btc-missing', eth, btc, null)
-  ]).opportunities
+test('ranking filters the entire catalogue before taking three and preserves APR precision, zero and null', () => {
+  const btc = token('BTC', 'BTC'),
+    eth = token('ETH'),
+    usdc = token('USDC')
+  const excluded = [
+    pair('tcy-base', token('TCY', 'THOR'), btc),
+    pair('tcy-quote', btc, token('tcy', 'THOR')),
+    pair('atom-base', token('ATOM', 'GAIA'), btc),
+    pair('atom-quote', btc, token('atom', 'GAIA'))
+  ]
+  const pairs = [
+    ...[9, 8, 7, 6].map(n => pair(`global${n}`, eth, usdc)),
+    ...['low', 'high', 'zero', 'missing'].map(id => pair(id, btc, usdc)),
+    ...excluded
+  ]
+  const metrics = [
+    ...excluded.map(p => metric(p.pair.id, '100')),
+    ...[9, 8, 7, 6].map(n => metric(`global${n}`, String(n))),
+    metric('low', '0.12345678901200000000001'),
+    metric('high', '0.12345678901200000000002'),
+    metric('zero', '0'),
+    metric('missing', null)
+  ]
+  const rows = tradeEarnMarkets(pairs, metrics).opportunities
   assert.deepEqual(
     topEarnOpportunities(rows, 'BTC-BTC').map(r => r.id),
-    ['btc-high', 'btc-mid', 'btc-low']
+    ['high', 'low', 'zero']
   )
   assert.deepEqual(
     topEarnOpportunities(rows).map(r => r.id),
@@ -127,100 +122,125 @@ test('rank after matching either side, not after limiting the overall leaders', 
   )
 })
 
-test('missing APR sorts below zero and APR precision is preserved for ranking', () => {
-  const result = tradeEarnMarkets([
-    pair('missing', asset('ETH'), asset('BTC'), null),
-    pair('zero', asset('ETH'), asset('BTC'), '0'),
-    pair('smaller', asset('ETH'), asset('BTC'), '0.12345678901200000000001'),
-    pair('larger', asset('ETH'), asset('BTC'), '0.12345678901200000000002')
+test('v2 token mapping preserves exact identities, Layer 1 decimals and unscaled prices', () => {
+  const t = {
+    ...token('USDT.ETH', 'ETH', 'ETH-USDT-0XABC'),
+    name: 'Tether USD',
+    iconUrl: 'https://example.com/usdt.png',
+    price: { current: '1.00000000000001' },
+    variants: { layer1: { identifier: 'ETH.USDT-0XABC', decimals: 6 }, secured: { identifier: 'ETH-USDT-0XABC', decimals: 8 } }
+  }
+  const asset = toAnalyticsAsset(t)
+  assert.equal(asset.identifier, t.id)
+  assert.equal(asset.ticker, 'USDT')
+  assert.equal(asset.usdPrice, '1.00000000000001')
+  assert.equal(asset.name, t.name)
+  assert.equal(asset.logoURI, t.iconUrl)
+  assert.equal(asset.isSecuredAsset, true)
+  assert.equal(toAnalyticsAsset(t, true).decimals, 6)
+  assert.equal(toAnalyticsAsset(t, true).marketId, t.id)
+  assert.equal(toAnalyticsAsset({ ...t, price: { current: '0' } }).usdPrice, '0')
+  assert.equal(toAnalyticsAsset({ ...t, price: null }).usdPrice, null)
+})
+
+test('lending preserves decimal supply APR, zero, null and distinct network variants', () => {
+  const rows = lendingEarnMarkets([
+    { id: 'eth-usdt', token: token('USDT.ETH'), apr: '0.04000000000000000000001' },
+    { id: 'tron-usdt', token: token('USDT.TRON', 'TRON'), apr: '0' },
+    { id: 'sol', token: token('SOL', 'SOL'), apr: null }
   ])
+  assert.equal(rows.assets.length, 3)
   assert.deepEqual(
-    topEarnOpportunities(result.opportunities).map(r => r.id),
-    ['larger', 'smaller', 'zero']
+    rows.opportunities.map(r => r.apr),
+    ['0.04000000000000000000001', '0', null]
   )
 })
 
-test('lending uses supply APR rather than the borrow rate and does not invent extra vaults', () => {
-  const markets = lendingEarnMarkets([
-    { id: 'btc-vault', asset: asset('BTC', 'BTC'), status: { lendRate: '40000000000' } },
-    { id: 'eth-vault', asset: asset('ETH'), status: { lendRate: '60000000000' } }
-  ])
-  assert.equal(topEarnOpportunities(markets.opportunities, 'BTC-BTC').length, 1)
-  assert.equal(markets.opportunities[0].apr, '0.04')
-})
-
-test('staking ranks available APR and retains missing APR as null for N/A', () => {
-  const markets = stakingEarnMarkets(
-    [
-      { id: 'soon', bondAsset: asset('RUJI', 'THOR', 'THOR.RUJI') },
-      { id: 'zero', bondAsset: asset('TCY', 'THOR', 'THOR.TCY') },
-      { id: 'high', bondAsset: asset('bRUNE', 'THOR', 'x/brune') }
-    ],
-    { ruji: stakingHistory(null), tcy: stakingHistory('0'), brune: stakingHistory('0.09') }
-  )
+test('staking gets pool identities and 30-day APR from v2, including zero and null', () => {
+  const rows = stakingEarnMarkets({
+    ruji: pool('ruji', token('RUJI', 'THOR'), null),
+    tcy: pool('tcy', token('TCY', 'THOR'), '0'),
+    brune: pool('brune', token('bRUNE', 'THOR', 'x/brune'), '0.09')
+  })
   assert.deepEqual(
-    topEarnOpportunities(markets.opportunities).map(r => r.id),
-    ['high', 'zero', 'soon']
+    topEarnOpportunities(rows.opportunities).map(r => r.id),
+    ['brune', 'tcy', 'ruji']
   )
-  assert.equal(markets.opportunities[0].apr, null)
+  assert.equal(rows.opportunities[0].apr, null)
+  assert.deepEqual(stakingEarnMarkets(null), { assets: [], opportunities: [] })
+  assert.deepEqual(stakingEarnMarkets({ ruji: null, tcy: { pool: null, current: null } }), { assets: [], opportunities: [] })
 })
 
-test('CCL joins analytics by contract, preserves decimal ratios and never falls back to the old main APR', () => {
-  const pairs = [
-    { ...pair('opaque-main-id', asset('BTC', 'BTC'), asset('USDC'), null), address: 'thor1pair', rangeSummary: { aprMonth: '999000000000000' } }
+const createEarnClient = responses => {
+  const requests = []
+  const { fetchEarnMarkets } = loadRujiraModule('earn-client', {
+    './client': {
+      paginateAnalytics,
+      requestAnalytics: async (query, variables) => {
+        requests.push({ query, variables })
+        const queue = typeof responses === 'function' ? responses(query) : responses
+        assert.ok(queue.length, 'an upstream response was expected')
+        return queue.shift()
+      }
+    }
+  })
+  return { client: { fetchEarnMarkets }, requests }
+}
+
+test('automated loads all v2 Trade and CCL/DCL winner pages without a Main catalogue', async () => {
+  const btc = token('BTC', 'BTC'),
+    usdc = token('USDC')
+  const trade = [
+    products({ trade: { pairs: page([pair('no-ccl', token('ETH'), usdc)], true, 'next-trade') } }),
+    products({ trade: { pairs: page([pair('btc', btc, usdc)]) } })
   ]
-  assert.equal(mapTradeMarkets(pairs).opportunities.length, 0)
-  assert.equal(mapTradeMarkets(pairs).assets.length, 2)
-  const result = mapTradeMarkets(pairs, [{ strategy: { pair: { contractAddress: 'thor1pair' } }, apr: '0.6222934051620437526054038308003781' }])
-  assert.equal(result.opportunities[0].apr, '0.6222934051620437526054038308003781')
-})
-
-test('asset prices come from the schema and retain the 12-decimal Main API scale', () => {
-  assert.equal(toEarnAsset({ ...asset('BTC', 'BTC'), price: { current: '75597797700000000' } }).usdPrice, '75597.7977')
-  assert.equal(toEarnAsset({ ...asset('USDC'), price: { current: '0' } }).usdPrice, '0')
-  assert.equal(toEarnAsset(asset('UNKNOWN')).usdPrice, null)
-})
-
-test('staking uses daily analytics over current and legacy summaries, without matching arbitrary ticker copies', () => {
-  const rows = stakingEarnMarkets(
-    [
-      { id: 'ruji', bondAsset: asset('RUJI', 'THOR', 'THOR.RUJI'), summary: { apr: { value: '0', status: 'AVAILABLE' } } },
-      { id: 'other', bondAsset: asset('RUJI', 'ETH', 'ETH.RUJI') }
-    ],
-    { ruji: { ...stakingHistory('0.03', '0.05'), current: { apr: '0.99', asOf: '' } } }
-  )
-  assert.equal(rows.opportunities[0].apr, '0.04')
-  assert.equal(rows.opportunities[1].apr, null)
-})
-
-test('staking averages 30 daily APRs and ranks their means rather than their latest values', () => {
-  const rows = stakingEarnMarkets(
-    [
-      { id: 'ruji', bondAsset: asset('RUJI', 'THOR', 'THOR.RUJI') },
-      { id: 'tcy', bondAsset: asset('TCY', 'THOR', 'THOR.TCY') }
-    ],
-    { ruji: stakingHistory(...Array(29).fill('0.06'), '0'), tcy: stakingHistory(...Array(29).fill('0.03'), '0.09') }
-  )
-  assert.equal(rows.opportunities[0].apr, '0.058')
-  assert.equal(rows.opportunities[1].apr, '0.032')
+  const ccl = [
+    products({ amm: { strategies: page([metric('unknown', '1')], true, 'next-ccl') } }),
+    products({ amm: { strategies: page([metric('btc', null)]) } })
+  ]
+  const { client, requests } = createEarnClient(query => (query === EARN_TRADE_QUERY ? trade : ccl))
+  const rows = await client.fetchEarnMarkets('automated')
   assert.deepEqual(
-    topEarnOpportunities(rows.opportunities).map(row => row.id),
-    ['ruji', 'tcy']
+    rows.opportunities.map(r => r.id),
+    ['btc']
   )
+  assert.equal(rows.opportunities[0].apr, null)
+  assert.equal(rows.assets.length, 3)
+  assert.equal(requests.length, 4)
+  assert.equal(await client.fetchEarnMarkets('automated'), rows)
 })
 
-test('staking includes zero days but excludes missing, invalid, negative and unfinished APR points', () => {
-  const metrics = stakingHistory('0', '0.06', null, 'invalid', 'NaN', 'Infinity', '-0.5')
-  metrics.history.push({ isComplete: false, apr: '0.99' })
-  const rows = stakingEarnMarkets([{ id: 'ruji', bondAsset: asset('RUJI', 'THOR', 'THOR.RUJI') }], { ruji: metrics })
-  assert.equal(rows.opportunities[0].apr, '0.03')
+test('lending loads every v2 page and caches null and zero as successful data', async () => {
+  const { client, requests } = createEarnClient([
+    products({ moneyMarket: { markets: page([{ id: 'zero', token: token('BTC', 'BTC'), apr: '0' }], true, 'next') } }),
+    products({ moneyMarket: { markets: page([{ id: 'missing', token: token('SOL', 'SOL'), apr: null }]) } })
+  ])
+  const rows = await client.fetchEarnMarkets('lending')
+  assert.equal(rows.opportunities.length, 2)
+  assert.equal(rows.metricsUnavailable, undefined)
+  assert.equal(await client.fetchEarnMarkets('lending'), rows)
+  assert.equal(requests.length, 2)
+  assert.ok(requests.every(r => r.query === EARN_LENDING_QUERY))
+  assert.equal(requests[1].variables.after, 'next')
 })
 
-test('staking keeps unavailable history as null and never falls back to the current snapshot', () => {
-  const pool = { id: 'ruji', bondAsset: asset('RUJI', 'THOR', 'THOR.RUJI') }
-  for (const history of [null, [], [{ isComplete: true, apr: null }], [{ isComplete: false, apr: '0.5' }]]) {
-    const rows = stakingEarnMarkets([pool], { ruji: { history, current: { apr: '0.9', asOf: '' } } })
-    assert.equal(rows.opportunities[0].apr, null)
+test('staking uses one v2 request and caches null averages without a missing-rates error', async () => {
+  const { client, requests } = createEarnClient([{ analytics: { ruji: pool('ruji', token('RUJI', 'THOR'), null), brune: null, tcy: null } }])
+  const rows = await client.fetchEarnMarkets('staking')
+  assert.equal(rows.opportunities[0].apr, null)
+  assert.equal(rows.metricsUnavailable, undefined)
+  assert.equal(await client.fetchEarnMarkets('staking'), rows)
+  assert.equal(requests.length, 1)
+  assert.equal(requests[0].query, EARN_STAKING_QUERY)
+})
+
+test('null v2 namespaces are successful empty catalogues in every mode', async () => {
+  for (const mode of ['automated', 'lending', 'staking']) {
+    const { client } = createEarnClient([{ analytics: null }, { analytics: null }])
+    const rows = await client.fetchEarnMarkets(mode)
+    assert.deepEqual(rows.assets, [])
+    assert.deepEqual(rows.opportunities, [])
+    assert.notEqual(rows.metricsUnavailable, true)
   }
 })
 
@@ -253,6 +273,22 @@ const createEarnQuery = (mode, responses) => {
 }
 
 for (const mode of ['automated', 'lending', 'staking']) {
+  test(`${mode} accepts null and zero APRs on refresh without a query error`, async () => {
+    const original = { assets: [], opportunities: [{ id: 'original', assets: [], apr: '0.1' }] }
+    const updated = {
+      assets: [],
+      opportunities: [
+        { id: 'missing', assets: [], apr: null },
+        { id: 'zero', assets: [], apr: '0' }
+      ]
+    }
+    const query = createEarnQuery(mode, [Response.json(original), Response.json(updated)])
+    await query.fetch()
+    assert.deepEqual(await query.fetch(), updated)
+    assert.equal(query.client.getQueryState(query.options.queryKey).status, 'success')
+    query.client.clear()
+  })
+
   test(`${mode} shares an in-flight prefetch and its fresh cache with the tab`, async () => {
     const markets = { assets: [], opportunities: [{ id: 'prefetched', assets: [], apr: '0.1' }] }
     let resolveResponse

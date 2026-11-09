@@ -1,58 +1,45 @@
-export const EARN_ASSET_FRAGMENT = `
-  fragment EarnAsset on Asset {
-    asset type chain
-    metadata { symbol decimals name pngUrl }
-    price { current }
+const ANALYTICS_TOKEN_FRAGMENT = `
+  fragment AnalyticsTokenFields on Token {
+    id symbol decimals name iconUrl chain { id }
   }
 `
 
 export const EARN_TRADE_QUERY = `
   query EarnTradeMarkets($after: String) {
-    finV3 {
-      pairs(first: 20, after: $after, sortBy: NAME, sortDir: ASC) {
+    analytics { products { trade {
+      pairs(first: 50, after: $after, orderBy: { field: PAIR, direction: ASC }) {
         pageInfo { hasNextPage endCursor }
-        edges { node {
-          id address
-          assetBase { ...EarnAsset }
-          assetQuote { ...EarnAsset }
+        nodes { pair {
+          id
+          baseToken { ...AnalyticsTokenFields }
+          quoteToken { ...AnalyticsTokenFields }
         } }
       }
-    }
+    } } }
   }
-  ${EARN_ASSET_FRAGMENT}
+  ${ANALYTICS_TOKEN_FRAGMENT}
 `
 
 export const EARN_LENDING_QUERY = `
   query EarnLendingMarkets($after: String) {
-    strategies(first: 50, after: $after, typenames: ["GhostVault"]) {
-      pageInfo { hasNextPage endCursor }
-      edges { node { ... on GhostVault {
-        id address asset { ...EarnAsset }
-        status { lendRate apr { value status } }
-      } } }
-    }
+    analytics { products { moneyMarket {
+      markets(first: 50, after: $after, orderBy: { field: LENDING_APR, direction: DESC }) {
+        pageInfo { hasNextPage endCursor }
+        nodes { id token { ...AnalyticsTokenFields } apr(side: LENDING) }
+      }
+    } } }
   }
-  ${EARN_ASSET_FRAGMENT}
+  ${ANALYTICS_TOKEN_FRAGMENT}
 `
 
-export const EARN_STAKING_QUERY = `
-  query EarnStakingMarkets {
-    staking { pools {
-      id address bondAsset { ...EarnAsset }
-    } }
-  }
-  ${EARN_ASSET_FRAGMENT}
-`
-
-// Analytics DecimalValue scalars are already decimal ratios, unlike Main API Bigint scalars.
-export const EARN_CCL_METRICS_QUERY = `
-  query EarnCclMetrics($after: String) {
+export const EARN_AUTOMATED_METRICS_QUERY = `
+  query EarnAutomatedMetrics($after: String) {
     analytics { products { amm {
-      strategies(first: 50, after: $after, filter: { typeIds: ["CCL"] },
+      strategies(first: 50, after: $after, onePerPair: true, filter: { typeIds: ["CCL", "DCL"] },
         orderBy: { field: APR, direction: DESC, range: { trailing: { value: 30, unit: DAY } } }) {
         pageInfo { hasNextPage endCursor }
         nodes {
-          strategy { pair { contractAddress } }
+          strategy { pair { id } }
           apr(range: { trailing: { value: 30, unit: DAY } })
         }
       }
@@ -60,18 +47,17 @@ export const EARN_CCL_METRICS_QUERY = `
   }
 `
 
-export const EARN_STAKING_METRICS_QUERY = `
-  query EarnStakingMetrics {
+export const EARN_STAKING_QUERY = `
+  query EarnStakingMarkets {
     analytics {
-      ruji: staking(token: RUJI) { ...EarnStakingApr }
-      brune: staking(token: BRUNE) { ...EarnStakingApr }
-      tcy: staking(token: TCY) { ...EarnStakingApr }
+      ruji: staking(token: RUJI) { ...EarnStakingPool }
+      brune: staking(token: BRUNE) { ...EarnStakingPool }
+      tcy: staking(token: TCY) { ...EarnStakingPool }
     }
   }
-  fragment EarnStakingApr on StakingAnalytics {
-    history(range: { trailing: { value: 30, unit: DAY } }, resolution: DAY) {
-      isComplete
-      apr
-    }
+  fragment EarnStakingPool on StakingAnalytics {
+    pool { id stakedToken { ...AnalyticsTokenFields } }
+    current { apr(averageOver: { trailing: { value: 30, unit: DAY } }) }
   }
+  ${ANALYTICS_TOKEN_FRAGMENT}
 `
