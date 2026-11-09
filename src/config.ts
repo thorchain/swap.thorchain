@@ -3,9 +3,9 @@ import { ProviderName } from '@tcswap/helpers'
 export const AppConfig = {
   id: 'thorchain',
   appName: 'THORChain Swap',
-  title: 'THORChain Swap | Cross-Chain BTC, ETH & Crypto Swaps',
+  title: 'THORChain | Decentralized Cross Chain Crypto Exchange',
   description:
-    'Swap Bitcoin to Ethereum and other cryptocurrencies instantly with THORChain. Native BTC swaps with no bridges, wrapping, or centralized exchanges.',
+    'Swap BTC, ETH, XMR, ZEC & other cryptocurrencies without opening an account. Use any self custody wallet. No KYC. No centralized exchanges. No bridges.',
   baseUrl: 'https://swap.thorchain.org',
   providers: [ProviderName.THORCHAIN, ProviderName.MAYACHAIN],
   // The PRIVATE tab quotes this provider alone; its assets are listed only there.
