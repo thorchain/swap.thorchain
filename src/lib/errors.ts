@@ -22,6 +22,18 @@ export const translateError = (message: string): string => {
   // The UTXO data providers (Blockchair, then Esplora for BTC/LTC) could not be reached.
   if (message.includes('toolbox_utxo_api_error')) return 'Could not load wallet UTXOs. Try again shortly'
 
+  // The EVM RPC could not answer getFeeData (hardware wallets estimate fees against the public RPCs).
+  if (message.includes('toolbox_evm_gas_estimation_error') || message.includes('toolbox_evm_no_fee_data')) {
+    return 'Could not fetch current network fees. Try again shortly'
+  }
+
+  // eth_estimateGas failed or reverted; the SDK wraps any deposit error mentioning "gas" in
+  // core_transaction_deposit_gas_error, so a revert reason, when present, says more than generic copy.
+  if (message.includes('toolbox_evm_error_estimating_gas_limit') || message.includes('core_transaction_deposit_gas_error')) {
+    const reverted = message.match(/execution reverted: "([^"]+)"/)
+    return reverted ? reverted[0] : 'Could not estimate the transaction fee. Try again shortly'
+  }
+
   if (message.includes('swap Source and Target cannot be the same')) return 'Source and Target cannot be the same'
 
   if (message.includes('user rejected action')) return 'Transaction Cancelled'
