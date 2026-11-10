@@ -227,6 +227,7 @@ export const chainLabel = (c: Chain | string): string => {
     case 'TAO':
       return 'Bittensor'
     default:
-      return getChainConfig(c as Chain).name
+      // getChainConfig returns {} for chains the SDK doesn't know, so the raw id is the fallback.
+      return getChainConfig(c as Chain).name ?? c
   }
 }

@@ -459,12 +459,8 @@
   "send.thorname.transfer": ["Transfer", "نقل"],
   "send.thorname.cost": ["Cost", "التكلفة"],
   "send.thorname.expires": ["Expires", "بينتهي"],
-  "send.thorname.preferredAsset": ["Preferred asset", "الأصل المفضّل"],
-  "send.thorname.preferredAssetInfo": ["Affiliate fees earned by {name} are automatically swapped to the preferred asset and sent to its alias address on that chain.", "رسوم الإحالة اللي بيكسبها {name} بتتحوّل تلقائيًا للأصل المفضّل وبتتبعت لعنوان الاسم البديل على الشبكة دي."],
   "send.thorname.selectAsset": ["Select asset", "اختار الأصل"],
-  "send.thorname.aliasAddress": ["Alias Address ({chain})", "العنوان المستعار ({chain})"],
   "send.thorname.enterAliasAddress": ["Enter a valid address", "اكتب عنوان صحيح"],
-  "send.thorname.preferredAssetOptional": ["Select Preferred Asset", "اختار الأصل المفضّل"],
   "send.thorname.assetDefault": ["{ticker} (default)", "{ticker} (افتراضي)"],
   "send.thorname.saveAddress": ["Save address", "احفظ العنوان"],
   "send.thorname.manage": ["Manage", "إدارة"],
@@ -563,5 +559,11 @@
   "tx.leg.deposit": ["Deposit {ticker}", "إيداع {ticker}"],
   "tx.leg.send": ["Send {ticker}", "إرسال {ticker}"],
   "tx.leg.privateRoute": ["Route {ticker} privately", "وجّه {ticker} بشكل خاص"],
-  "tx.leg.swap": ["Swap {from} to {to}", "تبديل {from} إلى {to}"]
+  "tx.leg.swap": ["Swap {from} to {to}", "تبديل {from} إلى {to}"],
+  "send.thorname.preferredAsset": ["Preferred Asset", "الأصل المفضّل"],
+  "send.thorname.preferredAssetInfo": ["Fees earned by {name} are automatically swapped to the preferred asset token and sent to the preferred asset address on that chain.", "الرسوم اللي بيكسبها {name} بتتحوّل تلقائيًا لتوكن الأصل المفضّل وبتتبعت لعنوان الأصل المفضّل على الشبكة دي."],
+  "send.thorname.chainAddress": ["{chain} Address", "عنوان {chain}"],
+  "send.thorname.chainAddressPlaceholder": ["{chain} address", "عنوان {chain}"],
+  "send.thorname.manageTitle": ["Manage Preferred Asset", "إدارة الأصل المفضّل"],
+  "send.thorname.preferredAssetAddress": ["Preferred Asset Address", "عنوان الأصل المفضّل"]
 }

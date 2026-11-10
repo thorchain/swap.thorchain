@@ -459,12 +459,8 @@
   "send.thorname.transfer": ["Transfer", "Передать"],
   "send.thorname.cost": ["Cost", "Стоимость"],
   "send.thorname.expires": ["Expires", "Истекает"],
-  "send.thorname.preferredAsset": ["Preferred asset", "Предпочтительный актив"],
-  "send.thorname.preferredAssetInfo": ["Affiliate fees earned by {name} are automatically swapped to the preferred asset and sent to its alias address on that chain.", "Партнёрские комиссии, заработанные {name}, автоматически обмениваются на предпочтительный актив и отправляются на его алиас-адрес в соответствующей сети."],
   "send.thorname.selectAsset": ["Select asset", "Выберите актив"],
-  "send.thorname.aliasAddress": ["Alias Address ({chain})", "Адрес алиаса ({chain})"],
   "send.thorname.enterAliasAddress": ["Enter a valid address", "Введите корректный адрес"],
-  "send.thorname.preferredAssetOptional": ["Select Preferred Asset", "Выберите предпочитаемый актив"],
   "send.thorname.assetDefault": ["{ticker} (default)", "{ticker} (по умолчанию)"],
   "send.thorname.saveAddress": ["Save address", "Сохранить адрес"],
   "send.thorname.manage": ["Manage", "Управление"],
@@ -563,5 +559,11 @@
   "tx.leg.deposit": ["Deposit {ticker}", "Внести {ticker}"],
   "tx.leg.send": ["Send {ticker}", "Отправить {ticker}"],
   "tx.leg.privateRoute": ["Route {ticker} privately", "Приватный маршрут для {ticker}"],
-  "tx.leg.swap": ["Swap {from} to {to}", "Обменять {from} на {to}"]
+  "tx.leg.swap": ["Swap {from} to {to}", "Обменять {from} на {to}"],
+  "send.thorname.preferredAsset": ["Preferred Asset", "Предпочтительный актив"],
+  "send.thorname.preferredAssetInfo": ["Fees earned by {name} are automatically swapped to the preferred asset token and sent to the preferred asset address on that chain.", "Комиссии, заработанные {name}, автоматически обмениваются на токен предпочтительного актива и отправляются на адрес предпочтительного актива в соответствующей сети."],
+  "send.thorname.chainAddress": ["{chain} Address", "Адрес {chain}"],
+  "send.thorname.chainAddressPlaceholder": ["{chain} address", "Адрес {chain}"],
+  "send.thorname.manageTitle": ["Manage Preferred Asset", "Управление предпочтительным активом"],
+  "send.thorname.preferredAssetAddress": ["Preferred Asset Address", "Адрес предпочтительного актива"]
 }

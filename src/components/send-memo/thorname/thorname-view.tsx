@@ -6,6 +6,7 @@ import { CheckCircle2, Info, LoaderCircle, Search, X } from 'lucide-react'
 import { Input } from '@/components/ui/input'
 import { useDialog } from '@/components/global-dialog'
 import { ConnectWallet } from '@/components/connect-wallet/connect-wallet'
+import { chainLabel } from '@/components/connect-wallet/config'
 import { GenericButton } from '@/components/generic-button'
 import { NameRecord, ThornameConfig, aliasesOf, formatPreferredAsset, preferredAssetOf } from '@/components/send-memo/thorname/thorname-config'
 import {
@@ -145,7 +146,10 @@ function NameCard({ config, name, status, record, expiryDate, onRegister, onRene
   // A name with no aliases yet still gets a row, using the owner address.
   const aliases = aliasesOf(record)
   const rows = aliases.length > 0 ? aliases : record?.owner ? [{ chain: config.aliasChain, address: record.owner }] : []
+  // A record holding the native asset explicitly and one holding nothing pay out the same, so both read as the bare ticker.
   const preferredAsset = preferredAssetOf(record)
+  const nativeAsset = `${config.aliasChain}.${config.ticker}`
+  const payoutLabel = preferredAsset && preferredAsset !== nativeAsset ? formatPreferredAsset(preferredAsset) : config.ticker
 
   return (
     <div className="bg-swap-bloc rounded-15 space-y-3 border p-4">
@@ -175,9 +179,10 @@ function NameCard({ config, name, status, record, expiryDate, onRegister, onRene
         <div className="space-y-2">
           {expiryDate && <Row label={t('thorname.expires')} value={expiryDate.toLocaleDateString()} />}
           {rows.map(a => (
-            <Row key={a.chain} label={t('thorname.aliasAddress', { chain: a.chain })} value={truncate(a.address)} />
+            <Row key={a.chain} label={t('thorname.chainAddress', { chain: chainLabel(a.chain) })} value={truncate(a.address)} />
           ))}
-          {preferredAsset && <Row label={t('thorname.preferredAsset')} value={formatPreferredAsset(preferredAsset)} />}
+          {/* Fees pay out in the native asset when no preferred asset is set, so the row always shows. */}
+          {record && <Row label={t('thorname.preferredAsset')} value={payoutLabel} />}
         </div>
       )}
 
