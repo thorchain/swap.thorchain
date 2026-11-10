@@ -75,7 +75,8 @@
   },
   "resolutions": {
     "libsodium-wrappers-sumo": "0.7.15",
-    "libsodium-sumo": "0.7.15"
+    "libsodium-sumo": "0.7.15",
+    "valtio/use-sync-external-store": "^1.7.0"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
