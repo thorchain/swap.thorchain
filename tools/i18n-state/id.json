@@ -459,7 +459,13 @@
   "send.thorname.transfer": ["Transfer", "Transfer"],
   "send.thorname.cost": ["Cost", "Biaya"],
   "send.thorname.expires": ["Expires", "Kedaluwarsa"],
+  "send.thorname.preferredAsset": ["Preferred Asset", "Aset Pilihan"],
+  "send.thorname.preferredAssetInfo": ["Fees earned by {name} are automatically swapped to the preferred asset token and sent to the preferred asset address on that chain.", "Biaya yang diperoleh {name} otomatis ditukar ke token aset pilihan dan dikirim ke alamat aset pilihan di chain tersebut."],
   "send.thorname.selectAsset": ["Select asset", "Pilih aset"],
+  "send.thorname.chainAddress": ["{chain} Address", "Alamat {chain}"],
+  "send.thorname.chainAddressPlaceholder": ["{chain} address", "Alamat {chain}"],
+  "send.thorname.manageTitle": ["Manage Preferred Asset", "Kelola Aset Pilihan"],
+  "send.thorname.preferredAssetAddress": ["Preferred Asset Address", "Alamat Aset Pilihan"],
   "send.thorname.enterAliasAddress": ["Enter a valid address", "Masukkan alamat yang valid"],
   "send.thorname.assetDefault": ["{ticker} (default)", "{ticker} (default)"],
   "send.thorname.saveAddress": ["Save address", "Simpan alamat"],
@@ -559,11 +565,5 @@
   "tx.leg.deposit": ["Deposit {ticker}", "Deposit {ticker}"],
   "tx.leg.send": ["Send {ticker}", "Kirim {ticker}"],
   "tx.leg.privateRoute": ["Route {ticker} privately", "Rutekan {ticker} secara privat"],
-  "tx.leg.swap": ["Swap {from} to {to}", "Tukar {from} ke {to}"],
-  "send.thorname.preferredAsset": ["Preferred Asset", "Aset Pilihan"],
-  "send.thorname.preferredAssetInfo": ["Fees earned by {name} are automatically swapped to the preferred asset token and sent to the preferred asset address on that chain.", "Biaya yang diperoleh {name} otomatis ditukar ke token aset pilihan dan dikirim ke alamat aset pilihan di chain tersebut."],
-  "send.thorname.chainAddress": ["{chain} Address", "Alamat {chain}"],
-  "send.thorname.chainAddressPlaceholder": ["{chain} address", "Alamat {chain}"],
-  "send.thorname.manageTitle": ["Manage Preferred Asset", "Kelola Aset Pilihan"],
-  "send.thorname.preferredAssetAddress": ["Preferred Asset Address", "Alamat Aset Pilihan"]
+  "tx.leg.swap": ["Swap {from} to {to}", "Tukar {from} ke {to}"]
 }

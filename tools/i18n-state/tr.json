@@ -459,7 +459,13 @@
   "send.thorname.transfer": ["Transfer", "Aktar"],
   "send.thorname.cost": ["Cost", "Maliyet"],
   "send.thorname.expires": ["Expires", "Sona eriyor"],
+  "send.thorname.preferredAsset": ["Preferred Asset", "Tercih Edilen Varlık"],
+  "send.thorname.preferredAssetInfo": ["Fees earned by {name} are automatically swapped to the preferred asset token and sent to the preferred asset address on that chain.", "{name} tarafından kazanılan ücretler otomatik olarak tercih edilen varlık tokenına takas edilir ve o zincirdeki tercih edilen varlık adresine gönderilir."],
   "send.thorname.selectAsset": ["Select asset", "Varlık seç"],
+  "send.thorname.chainAddress": ["{chain} Address", "{chain} Adresi"],
+  "send.thorname.chainAddressPlaceholder": ["{chain} address", "{chain} adresi"],
+  "send.thorname.manageTitle": ["Manage Preferred Asset", "Tercih Edilen Varlığı Yönet"],
+  "send.thorname.preferredAssetAddress": ["Preferred Asset Address", "Tercih Edilen Varlık Adresi"],
   "send.thorname.enterAliasAddress": ["Enter a valid address", "Geçerli bir adres girin"],
   "send.thorname.assetDefault": ["{ticker} (default)", "{ticker} (varsayılan)"],
   "send.thorname.saveAddress": ["Save address", "Adresi kaydet"],
@@ -559,11 +565,5 @@
   "tx.leg.deposit": ["Deposit {ticker}", "{ticker} Yatır"],
   "tx.leg.send": ["Send {ticker}", "{ticker} Gönder"],
   "tx.leg.privateRoute": ["Route {ticker} privately", "{ticker} gizli olarak yönlendir"],
-  "tx.leg.swap": ["Swap {from} to {to}", "{from} → {to} Takas"],
-  "send.thorname.preferredAsset": ["Preferred Asset", "Tercih Edilen Varlık"],
-  "send.thorname.preferredAssetInfo": ["Fees earned by {name} are automatically swapped to the preferred asset token and sent to the preferred asset address on that chain.", "{name} tarafından kazanılan ücretler otomatik olarak tercih edilen varlık tokenına takas edilir ve o zincirdeki tercih edilen varlık adresine gönderilir."],
-  "send.thorname.chainAddress": ["{chain} Address", "{chain} Adresi"],
-  "send.thorname.chainAddressPlaceholder": ["{chain} address", "{chain} adresi"],
-  "send.thorname.manageTitle": ["Manage Preferred Asset", "Tercih Edilen Varlığı Yönet"],
-  "send.thorname.preferredAssetAddress": ["Preferred Asset Address", "Tercih Edilen Varlık Adresi"]
+  "tx.leg.swap": ["Swap {from} to {to}", "{from} → {to} Takas"]
 }

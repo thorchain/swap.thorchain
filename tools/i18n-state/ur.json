@@ -459,7 +459,13 @@
   "send.thorname.transfer": ["Transfer", "منتقل کریں"],
   "send.thorname.cost": ["Cost", "لاگت"],
   "send.thorname.expires": ["Expires", "ختم ہوتا ہے"],
+  "send.thorname.preferredAsset": ["Preferred Asset", "ترجیحی اثاثہ"],
+  "send.thorname.preferredAssetInfo": ["Fees earned by {name} are automatically swapped to the preferred asset token and sent to the preferred asset address on that chain.", "{name} کی کمائی گئی فیس خودکار طور پر ترجیحی اثاثے کے ٹوکن میں تبدیل ہو کر اُس چین پر ترجیحی اثاثے کے پتے پر بھیج دی جاتی ہے۔"],
   "send.thorname.selectAsset": ["Select asset", "اثاثہ منتخب کریں"],
+  "send.thorname.chainAddress": ["{chain} Address", "{chain} پتہ"],
+  "send.thorname.chainAddressPlaceholder": ["{chain} address", "{chain} پتہ"],
+  "send.thorname.manageTitle": ["Manage Preferred Asset", "ترجیحی اثاثہ منظم کریں"],
+  "send.thorname.preferredAssetAddress": ["Preferred Asset Address", "ترجیحی اثاثے کا پتہ"],
   "send.thorname.enterAliasAddress": ["Enter a valid address", "درست پتہ درج کریں"],
   "send.thorname.assetDefault": ["{ticker} (default)", "{ticker} (ڈیفالٹ)"],
   "send.thorname.saveAddress": ["Save address", "پتہ محفوظ کریں"],
@@ -559,11 +565,5 @@
   "tx.leg.deposit": ["Deposit {ticker}", "{ticker} ڈپازٹ کریں"],
   "tx.leg.send": ["Send {ticker}", "{ticker} بھیجیں"],
   "tx.leg.privateRoute": ["Route {ticker} privately", "{ticker} کو نجی طور پر روٹ کریں"],
-  "tx.leg.swap": ["Swap {from} to {to}", "{from} کا {to} میں تبادلہ کریں"],
-  "send.thorname.preferredAsset": ["Preferred Asset", "ترجیحی اثاثہ"],
-  "send.thorname.preferredAssetInfo": ["Fees earned by {name} are automatically swapped to the preferred asset token and sent to the preferred asset address on that chain.", "{name} کی کمائی گئی فیس خودکار طور پر ترجیحی اثاثے کے ٹوکن میں تبدیل ہو کر اُس چین پر ترجیحی اثاثے کے پتے پر بھیج دی جاتی ہے۔"],
-  "send.thorname.chainAddress": ["{chain} Address", "{chain} پتہ"],
-  "send.thorname.chainAddressPlaceholder": ["{chain} address", "{chain} پتہ"],
-  "send.thorname.manageTitle": ["Manage Preferred Asset", "ترجیحی اثاثہ منظم کریں"],
-  "send.thorname.preferredAssetAddress": ["Preferred Asset Address", "ترجیحی اثاثے کا پتہ"]
+  "tx.leg.swap": ["Swap {from} to {to}", "{from} کا {to} میں تبادلہ کریں"]
 }

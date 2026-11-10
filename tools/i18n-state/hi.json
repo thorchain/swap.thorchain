@@ -459,7 +459,13 @@
   "send.thorname.transfer": ["Transfer", "स्थानांतरण"],
   "send.thorname.cost": ["Cost", "लागत"],
   "send.thorname.expires": ["Expires", "समाप्ति"],
+  "send.thorname.preferredAsset": ["Preferred Asset", "पसंदीदा एसेट"],
+  "send.thorname.preferredAssetInfo": ["Fees earned by {name} are automatically swapped to the preferred asset token and sent to the preferred asset address on that chain.", "{name} द्वारा अर्जित शुल्क अपने आप पसंदीदा एसेट टोकन में बदलकर उस चेन पर पसंदीदा एसेट पते पर भेज दिए जाते हैं।"],
   "send.thorname.selectAsset": ["Select asset", "एसेट चुनें"],
+  "send.thorname.chainAddress": ["{chain} Address", "{chain} पता"],
+  "send.thorname.chainAddressPlaceholder": ["{chain} address", "{chain} पता"],
+  "send.thorname.manageTitle": ["Manage Preferred Asset", "पसंदीदा एसेट प्रबंधित करें"],
+  "send.thorname.preferredAssetAddress": ["Preferred Asset Address", "पसंदीदा एसेट पता"],
   "send.thorname.enterAliasAddress": ["Enter a valid address", "मान्य पता दर्ज करें"],
   "send.thorname.assetDefault": ["{ticker} (default)", "{ticker} (डिफ़ॉल्ट)"],
   "send.thorname.saveAddress": ["Save address", "पता सहेजें"],
@@ -559,11 +565,5 @@
   "tx.leg.deposit": ["Deposit {ticker}", "{ticker} जमा करें"],
   "tx.leg.send": ["Send {ticker}", "{ticker} भेजें"],
   "tx.leg.privateRoute": ["Route {ticker} privately", "{ticker} को निजी तौर पर रूट करें"],
-  "tx.leg.swap": ["Swap {from} to {to}", "{from} को {to} में स्वैप करें"],
-  "send.thorname.preferredAsset": ["Preferred Asset", "पसंदीदा एसेट"],
-  "send.thorname.preferredAssetInfo": ["Fees earned by {name} are automatically swapped to the preferred asset token and sent to the preferred asset address on that chain.", "{name} द्वारा अर्जित शुल्क अपने आप पसंदीदा एसेट टोकन में बदलकर उस चेन पर पसंदीदा एसेट पते पर भेज दिए जाते हैं।"],
-  "send.thorname.chainAddress": ["{chain} Address", "{chain} पता"],
-  "send.thorname.chainAddressPlaceholder": ["{chain} address", "{chain} पता"],
-  "send.thorname.manageTitle": ["Manage Preferred Asset", "पसंदीदा एसेट प्रबंधित करें"],
-  "send.thorname.preferredAssetAddress": ["Preferred Asset Address", "पसंदीदा एसेट पता"]
+  "tx.leg.swap": ["Swap {from} to {to}", "{from} को {to} में स्वैप करें"]
 }
