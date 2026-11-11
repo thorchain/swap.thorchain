@@ -254,7 +254,7 @@ export function Send({ isOpen, onOpenChange, initialToken, account }: SendDialog
     toast.promise(broadcast, {
       loading: t('toast.submitting'),
       success: () => t('toast.submitted'),
-      error: (err: unknown) => readableError(err, t('toast.submitError'))
+      error: (err: unknown) => readableError(err, t('toast.submitError'), chain)
     })
   }
 
@@ -302,7 +302,7 @@ export function Send({ isOpen, onOpenChange, initialToken, account }: SendDialog
     toast.promise(broadcast, {
       loading: t('toast.submitting'),
       success: () => t('toast.submitted'),
-      error: (err: unknown) => readableError(err, t('toast.submitError'))
+      error: (err: unknown) => readableError(err, t('toast.submitError'), selectedToken.balance.chain)
     })
   }
 

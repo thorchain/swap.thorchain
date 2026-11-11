@@ -9,6 +9,7 @@ import { Credenza, CredenzaContent, CredenzaHeader, CredenzaTitle } from '@/comp
 import { Input } from '@/components/ui/input'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 import { AddressInput } from '@/components/address-input'
+import { chainLabel } from '@/components/connect-wallet/config'
 import { AnimatedButton } from '@/components/animated-button'
 import { DecimalInput } from '@/components/decimal/decimal-input'
 import { GenericButton } from '@/components/generic-button'
@@ -263,18 +264,18 @@ export function ThornameRegisterDialog({ config, name: initialName, account, isO
           </div>
 
           <div className="flex flex-col gap-1.5">
-            <label className="text-txt-label-small text-sm">{t('thorname.preferredAssetOptional')}</label>
+            <label className="text-txt-label-small text-sm">{t('thorname.preferredAsset')}</label>
             <PreferredAssetSelect assets={assets} value={preferredAsset} onChange={selectAsset} disabled={assetsLoading} defaultAsset={nativeAsset} />
           </div>
 
           {needsPayoutAlias && (
             <div className="flex flex-col gap-1.5">
-              <label className="text-txt-label-small text-sm">{t('thorname.aliasAddress', { chain: payoutChain })}</label>
+              <label className="text-txt-label-small text-sm">{t('thorname.preferredAssetAddress')}</label>
               <AddressInput
                 value={payoutAlias}
                 onChange={setPayoutAlias}
                 options={accounts.filter(a => a.network === payoutChain)}
-                placeholder={t('thorname.recipientPlaceholder')}
+                placeholder={t('thorname.chainAddressPlaceholder', { chain: chainLabel(payoutChain) })}
                 invalid={!!trimmedAlias && !isValidAlias}
               />
             </div>
@@ -440,24 +441,24 @@ export function ThornameAddressesDialog({ config, name, account, record, isOpen,
     <Credenza open={isOpen} onOpenChange={onOpenChange}>
       <CredenzaContent className="h-auto rounded-2xl md:max-w-md">
         <CredenzaHeader>
-          <CredenzaTitle>{t('thorname.aliasAddress', { chain })}</CredenzaTitle>
+          <CredenzaTitle>{t('thorname.manageTitle')}</CredenzaTitle>
         </CredenzaHeader>
 
         <div className="flex flex-col gap-5 p-4 pt-2 md:p-8 md:pt-0">
           <p className="text-txt-label-small text-sm">{t('thorname.preferredAssetInfo', { name })}</p>
 
           <div className="flex flex-col gap-1.5">
-            <label className="text-txt-label-small text-sm">{t('thorname.preferredAssetOptional')}</label>
+            <label className="text-txt-label-small text-sm">{t('thorname.preferredAsset')}</label>
             <PreferredAssetSelect assets={assets} value={asset} onChange={selectAsset} disabled={assetsLoading} defaultAsset={nativeAsset} />
           </div>
 
           <div className="flex flex-col gap-1.5">
-            <label className="text-txt-label-small text-sm">{t('thorname.aliasAddress', { chain })}</label>
+            <label className="text-txt-label-small text-sm">{t('thorname.preferredAssetAddress')}</label>
             <AddressInput
               value={address}
               onChange={setAddress}
               options={accounts.filter(a => a.network === chain)}
-              placeholder={t('thorname.recipientPlaceholder')}
+              placeholder={t('thorname.chainAddressPlaceholder', { chain: chainLabel(chain) })}
               invalid={!!trimmed && !isValid}
             />
           </div>

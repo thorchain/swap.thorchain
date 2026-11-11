@@ -95,7 +95,7 @@ export function getUSwap() {
         walletConnectProjectId: process.env.NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID
       },
       rpcUrls: {
-        [Chain.Ethereum]: ['https://ethereum-rpc.publicnode.com', 'https://eth.llamarpc.com'],
+        [Chain.Ethereum]: ['https://ethereum-rpc.publicnode.com', 'https://eth.drpc.org', 'https://rpc.flashbots.net'],
         [Chain.Solana]: [solanaProxyUrl()]
       },
       integrations: {
