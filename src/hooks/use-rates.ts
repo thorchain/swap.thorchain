@@ -231,3 +231,11 @@ export const houdiniQuoteRates = (quote: QuoteResponseRoute): { rateFrom?: USwap
 
   return { rateFrom, rateTo }
 }
+
+// The quote's per-unit USD rates in storable form, recorded on the transaction when the order is
+// placed so the history dialog can price a private route without the pools (see `preferRate`).
+// Empty for a route without Houdini USD values, so it can be spread unconditionally.
+export const houdiniTxRates = (quote: QuoteResponseRoute): { usdRateFrom?: string; usdRateTo?: string } => {
+  const { rateFrom, rateTo } = houdiniQuoteRates(quote)
+  return { usdRateFrom: rateFrom?.toSignificant(), usdRateTo: rateTo?.toSignificant() }
+}

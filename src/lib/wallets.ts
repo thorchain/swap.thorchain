@@ -3,6 +3,7 @@ import { EVMPlugin } from '@tcswap/plugins/evm'
 import { HoudiniPlugin } from '@tcswap/plugins/houdini'
 import { SolanaPlugin } from '@tcswap/plugins/solana'
 import { MayachainPlugin, ThorchainPlugin } from '@tcswap/plugins/thorchain'
+import { binanceWallet } from '@tcswap/wallets/binance'
 import { braveWallet, getBraveEVMProvider, getBraveSolanaProvider, watchBraveAccounts } from '@tcswap/wallets/brave'
 import { evmWallet } from '@tcswap/wallets/evm-extensions'
 import { exodusWallet } from '@tcswap/wallets/exodus'
@@ -28,6 +29,7 @@ const defaultPlugins = {
 }
 
 const defaultWallets = {
+  ...binanceWallet,
   ...braveWallet,
   ...evmWallet,
   ...exodusWallet,
@@ -92,7 +94,7 @@ export function getUSwap() {
         walletConnectProjectId: process.env.NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID
       },
       rpcUrls: {
-        [Chain.Ethereum]: ['https://ethereum-rpc.publicnode.com', 'https://eth.llamarpc.com'],
+        [Chain.Ethereum]: ['https://ethereum-rpc.publicnode.com', 'https://eth.drpc.org', 'https://rpc.flashbots.net'],
         [Chain.Solana]: [solanaProxyUrl()]
       },
       integrations: {
@@ -145,6 +147,8 @@ export async function connectWallet(option: WalletOption, chains: Chain[], confi
       } finally {
         braveConnects--
       }
+    case WalletOption.BINANCE:
+      return connectEach(c => uSwap.connectBinance(c))
     case WalletOption.KEPLR:
       return connectEach(c => uSwap.connectKeplr(c))
     case WalletOption.OKX:
@@ -279,6 +283,9 @@ const BTC_ADDRESS_TYPE_LABEL = {
 } as const
 
 export const supportedChains = {
+  // The Binance Chrome extension exposes no Bitcoin provider to dApps (EVM, Solana and TRON only);
+  // the SDK connector keeps BTC for the Binance App's in-app dApp browser, where it does exist.
+  [WalletOption.BINANCE]: binanceWallet.connectBinance.supportedChains.filter(c => c !== Chain.Bitcoin),
   [WalletOption.BRAVE]: braveWallet.connectBrave.supportedChains,
   [WalletOption.COINBASE_WEB]: evmWallet.connectEVMWallet.supportedChains,
   [WalletOption.EIP6963]: evmWallet.connectEVMWallet.supportedChains,

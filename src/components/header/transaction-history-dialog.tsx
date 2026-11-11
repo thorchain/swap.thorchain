@@ -19,10 +19,10 @@ import { InstantSwapChannelDialog } from '@/components/swap/instant-swap-channel
 import { DepositChannel } from '@/components/swap/instant-swap-dialog'
 import { SwapLimitCancel } from '@/components/swap/swap-limit-cancel'
 import { GenericButton } from '@/components/generic-button'
-import { useRates } from '@/hooks/use-rates'
+import { preferRate, useRates } from '@/hooks/use-rates'
 import { useSyncTransactions } from '@/hooks/use-sync-transactions'
 import { useAccounts, useSelectAccount } from '@/hooks/use-wallets'
-import { formatExpiration } from '@/lib/swap-helpers'
+import { formatExpiration, isHoudiniProvider } from '@/lib/swap-helpers'
 import { cn, toCurrencyFixed, truncate } from '@/lib/utils'
 import { hasDepositArrived, isTxPending, Transaction, useTransactions } from '@/store/transaction-store'
 
@@ -112,10 +112,15 @@ export const TransactionHistoryDialog = ({ isOpen, onOpenChange }: HistoryDialog
               const status = tx.status
 
               const amountFrom = new USwapNumber(tx.amountFrom)
-              const rateFrom = rates[tx.assetFrom.identifier]
+
+              // A private route is priced by the rates its order was placed at: its assets can sit
+              // in thin or halted pools whose USD price drifts off the market.
+              const isPrivate = isHoudiniProvider(tx.provider)
+              const storedRate = (rate?: string) => (rate ? new USwapNumber(rate) : undefined)
+              const rateFrom = preferRate(isPrivate, rates[tx.assetFrom.identifier], storedRate(tx.usdRateFrom))
               const fiatFrom = rateFrom && rateFrom.mul(amountFrom)
 
-              const rateTo = rates[tx.assetTo.identifier]
+              const rateTo = preferRate(isPrivate, rates[tx.assetTo.identifier], storedRate(tx.usdRateTo))
 
               const isExpanded = expandTx === tx.uid
 

@@ -55,7 +55,7 @@ export const SwapFeeDialog = ({ outbound, liquidity, platform, isOpen, onOpenCha
           <div className="flex flex-col space-y-4 text-xs font-semibold">
             {feeSection(t('feeDialog.liquidityFee'), t('feeDialog.liquidityFeeInfo'), liquidity)}
             {feeSection(t('feeDialog.outboundFee'), t('feeDialog.outboundFeeInfo'), outbound)}
-            {feeSection(t('feeDialog.platformFee'), t('feeDialog.platformFeeInfo', { app: AppConfig.title }), platform)}
+            {feeSection(t('feeDialog.platformFee'), t('feeDialog.platformFeeInfo', { app: AppConfig.appName }), platform)}
           </div>
         </div>
       </CredenzaContent>

@@ -11,7 +11,7 @@ import { SwapConfirm } from '@/components/swap/swap-confirm'
 import { SwapError } from '@/components/swap/swap-error'
 import { SwapRecipient } from '@/components/swap/swap-recipient'
 import { GenericButton } from '@/components/generic-button'
-import { useSwapRates } from '@/hooks/use-rates'
+import { houdiniTxRates, useSwapRates } from '@/hooks/use-rates'
 import { useAssetFrom, useAssetTo, useSwap } from '@/hooks/use-swap'
 import { isHoudiniProvider, resolvePriceImpact } from '@/lib/swap-helpers'
 import { generateId } from '@/lib/utils'
@@ -93,7 +93,8 @@ export const InstantSwapDialog = ({ provider, isOpen, onOpenChange }: InstantSwa
         isLimitSwap && limitSwapBuyAmount && !sentAmount.eq(0)
           ? USwapNumber.fromBigInt(BigInt(limitSwapBuyAmount), 8).div(sentAmount).toSignificant()
           : undefined,
-      providerSwapId: quote.meta?.houdini?.houdiniId
+      providerSwapId: quote.meta?.houdini?.houdiniId,
+      ...houdiniTxRates(quote)
     })
   }
 

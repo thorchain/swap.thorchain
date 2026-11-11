@@ -24,26 +24,32 @@ Two-component architecture:
 ## Key areas
 
 - `src/components/swap/` — swap flow UI; `src/lib/wallets.ts` — wallet/TCSwap SDK config (env vars in `.env.example`).
-- `src/lib/tronlink.ts` — a connector the SDK does not ship, registered in `wallets.ts` like any `@tcswap/wallets/*` one. Exodus is not one of these:
-  it lives in the SDK as `@tcswap/wallets/exodus` (the browser extension), added in `../TCSwap`. Mind the version — through 4.3.26 that subpath was an
-  alias for Exodus's unrelated Passkeys wallet, which has always had its own `@tcswap/wallets/passkeys` export and still does; only 4.3.27 onwards
-  carries the extension connector, so `package.json` must ask for at least that. Brave Wallet is in the SDK too, as `@tcswap/wallets/brave`
-  (`connectBrave`, 4.3.34 onwards): it reaches both of Brave's accounts, EVM and Solana, through Brave's own providers, where `connectEVMWallet` with
-  `WalletOption.BRAVE` gets the EVM account only, from whichever extension owns `window.ethereum`. Rabby is `WalletOption.RABBY` (4.3.35 onwards) on
-  the SDK's `connectEVMWallet`, which uses the provider Rabby announces over EIP-6963 (rdns `io.rabby`) rather than `window.ethereum` — Rabby takes
-  that from MetaMask only when set as the default wallet, and flags it `isMetaMask` too. WalletConnect is the SDK's `@tcswap/wallets/walletconnect`
-  (`connectWalletconnect`), listed only when `NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID` is set. One QR scan connects every selected chain the wallet
-  supports; the app warns about the rest. A reload restores the stored sessions without a QR code (`restoreOnly`), and a session ended from the phone
-  removes its chains (`onWalletconnectDisconnect`, then `disconnectWallet(WALLETCONNECT, chains)`). The connect dialog calls `preloadWalletconnect`
-  when it opens, so the QR modal opens at once, and `isWalletconnectDismissed` tells a closed QR modal from a real error. Needs `@tcswap/wallets`
-  4.3.36 or later.
-- Disconnect a wallet with core's `disconnectWallet` (`@tcswap/core` 4.1.36 or later), not `disconnectChain` per chain. A chain holds only the last
-  wallet connected on it, so `disconnectChain` may hit another wallet; `disconnectWallet` ends only this wallet's sessions and hands each chain back
-  to another connected wallet.
-- `isPrivateSwap` in `src/store/limit-swap-store.ts` — the PRIVATE tab: the swap is routed through Houdini Swap (`AppConfig.privateProvider`,
-  `providers: ["HOUDINI"]` on the aggregator, `@tcswap/plugins/houdini` in the SDK) instead of the native protocols. Each tab has its own asset list
-  (`useModeAssets` in `src/hooks/use-assets.ts`), and a private route is priced floating and tracked by its Houdini order id
-  (`Transaction.providerSwapId`). See `docs/private-swaps.md` before touching any `HOUDINI` branch.
+- `src/lib/tronlink.ts` — a connector the SDK does not ship, registered in `wallets.ts` like any `@tcswap/wallets/*` one. Exodus is not one of
+  these: it lives in the SDK as `@tcswap/wallets/exodus` (the browser extension), added in `../TCSwap`. Mind the version — through 4.3.26 that
+  subpath was an alias for Exodus's unrelated Passkeys wallet, which has always had its own `@tcswap/wallets/passkeys` export and still does; only
+  4.3.27 onwards carries the extension connector, so `package.json` must ask for at least that. Brave Wallet is in the SDK too, as
+  `@tcswap/wallets/brave` (`connectBrave`, 4.3.34 onwards): it reaches both of Brave's accounts, EVM and Solana, through Brave's own providers,
+  where `connectEVMWallet` with `WalletOption.BRAVE` gets the EVM account only, from whichever extension owns `window.ethereum`. Rabby is
+  `WalletOption.RABBY` (4.3.35 onwards) on the SDK's `connectEVMWallet`, which uses the provider Rabby announces over EIP-6963 (rdns `io.rabby`)
+  rather than `window.ethereum` — Rabby takes that from MetaMask only when set as the default wallet, and flags it `isMetaMask` too.
+  Binance Wallet is the SDK's `@tcswap/wallets/binance` (`connectBinance`, 4.3.37 onwards): the Binance Web3 Wallet extension injects everything
+  under the `window.binancew3w` namespace — an EIP-1193 EVM provider (`ethereum`, also announced over EIP-6963 as `com.binance.wallet`, the
+  connector's last-resort lookup), a Phantom-shaped Solana one (`solana`), a Unisat-compatible Bitcoin one (`bitcoin`, mirrored as `window.unisat`
+  flagged `isBinance` on builds without the namespaced copy), and its own Tron provider (`tron`), which answers `getAccount()`/`signTransaction()`
+  rather than TronLink's `tronWeb` surface. The Bitcoin provider exists only in the Binance App's in-app dApp browser — the Chrome extension serves
+  EVM, Solana and TRON only, so the app filters BTC out of the wallet's chain list (`supportedChains` in `src/lib/wallets.ts`).
+  WalletConnect is the SDK's `@tcswap/wallets/walletconnect` (`connectWalletconnect`), listed only when
+  `NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID` is set. One QR scan connects every selected chain the wallet supports; the app warns about the rest.
+  A reload restores the stored sessions without a QR code (`restoreOnly`), and a session ended from the phone removes its chains
+  (`onWalletconnectDisconnect`, then `disconnectWallet(WALLETCONNECT, chains)`). The connect dialog calls `preloadWalletconnect` when it opens, so
+  the QR modal opens at once, and `isWalletconnectDismissed` tells a closed QR modal from a real error. Needs `@tcswap/wallets` 4.3.36 or later.
+- Disconnect a wallet with core's `disconnectWallet` (`@tcswap/core` 4.1.36 or later), not `disconnectChain` per chain. A chain holds only
+  the last wallet connected on it, so `disconnectChain` may hit another wallet; `disconnectWallet` ends only this wallet's sessions and
+  hands each chain back to another connected wallet.
+- `isPrivateSwap` in `src/store/limit-swap-store.ts` — the PRIVATE tab: the swap is routed through Houdini Swap
+  (`AppConfig.privateProvider`, `providers: ["HOUDINI"]` on the aggregator, `@tcswap/plugins/houdini` in the SDK) instead of the native protocols. Each
+  tab has its own asset list (`useModeAssets` in `src/hooks/use-assets.ts`), and a private route is priced floating and tracked by its Houdini order
+  id (`Transaction.providerSwapId`). See `docs/private-swaps.md` before touching any `HOUDINI` branch.
 - `public/widget.js` + `src/app/widget/` — the embeddable swap iframe. The loader mirrors the host page's dark/light mode into the iframe: it reads
   the effective background painted behind the widget (so a `.dark` class, `data-theme`, or a CSS-variable swap all work without configuration), boots
   the iframe with `?theme=`, and pushes later changes over `postMessage` — `src/app/widget/theme.ts` holds that contract plus the pre-paint script

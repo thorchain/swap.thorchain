@@ -30,6 +30,11 @@ interface BaseTransaction {
   limitPrice?: string
   // The provider's own id for the swap, when it tracks by one instead of by hash (Houdini order id).
   providerSwapId?: string
+  // Per-unit USD rates from the provider's own quote (Houdini), captured when the order was placed.
+  // A private route's assets can sit in thin or halted pools whose USD price drifts off the market,
+  // so the history dialog prefers these over the pool rates for a private swap.
+  usdRateFrom?: string
+  usdRateTo?: string
 }
 
 export interface SwapTransaction extends BaseTransaction {

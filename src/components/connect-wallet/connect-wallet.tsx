@@ -162,7 +162,7 @@ export const ConnectWallet = ({ isOpen, onOpenChange, chain }: ConnectWalletProp
             <div className="mx-4 block gap-2 pb-4 md:mx-0 md:block md:w-full md:pb-8">
               {walletGroups.map((group, index) => (
                 <div key={group.key}>
-                  <div className={cn('text-txt-label-small mb-2 px-3 text-base font-semibold', { 'mt-4': index > 0 })}>{group.label}</div>
+                  <div className={cn('text-txt-label-small mb-3 text-base font-semibold', { 'mt-4': index > 0 })}>{group.label}</div>
                   {walletList(group.wallets)}
                 </div>
               ))}
