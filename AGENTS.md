@@ -64,41 +64,47 @@ Two-component architecture:
   markdown source per topic feeds both the HTML page (`src/app/developers/[topic]/page.tsx`, rendered by `src/components/markdown-article.tsx`) and
   the `.md` twin, so they cannot drift. Topic metadata lives in `developer-topics.ts` — split out so `developer-portal.ts` can link the pages without
   an import cycle.
-- The MCP server is anonymous and must stay that way: publish no `/.well-known/oauth-*` metadata and no registration endpoint, and never *link* one
+- The MCP server is anonymous and must stay that way: publish no `/.well-known/oauth-*` metadata and no registration endpoint, and never _link_ one
   from a discovery document either — a linked path reads as published metadata. MCP connectors read protected-resource metadata as "OAuth required"
   and then fail a sign-in flow against a site with no accounts — see the note in `docs/agent-readiness/orank.md`,
   `testNoAuthorizationSurfaceBlocksConnectors`, and the link guard in `testDiscoveryDocsAreTruthful` (`test/agent-contracts.test.mjs`), which also
   asserts that every own-origin URL a discovery document links resolves.
-- `sdk/python`, `sdk/go` — dependency-free clients over this site's keyless public surfaces (the MCP tools and the support endpoints). The TypeScript
-  SDK is the already-published [`@tcswap/sdk`](https://www.npmjs.com/package/@tcswap/sdk) from the TCSwap monorepo — do not add a second npm client
-  for the same APIs. `src/lib/agent/sdks.ts` is the single list the developer docs, llms.txt, and AGENTS.md render from; PyPI publication is still a
-  manual step (see `docs/agent-readiness/orank.md`).
+- `sdk/python`, `sdk/go` — dependency-free clients over canonical core MCP protocol data and this site's support endpoints. The TypeScript SDK is the
+  already-published [`@tcswap/sdk`](https://www.npmjs.com/package/@tcswap/sdk) from the TCSwap monorepo — do not add a second npm client for the same
+  APIs. `src/lib/agent/sdks.ts` is the single list the developer docs, llms.txt, and AGENTS.md render from; PyPI publication is still a manual step
+  (see `docs/agent-readiness/orank.md`).
 - `src/lib/agent/skills.ts` — published agent skills (one per capability area, YAML frontmatter); routes and the skills index are generated from
   `AGENT_SKILLS`.
 - `src/lib/agent/markdown-pages.ts` — markdown twins: `.md` appended to any content page URL, plus `Accept: text/markdown` negotiation, resolved in
   `src/proxy.ts`.
 - `src/lib/agent/pricing.ts` — content for `/pricing.md`; `src/lib/agent/agent-mode.ts` — the `/?mode=agent` view (JSON or markdown by `Accept`),
-  derived from `MCP_TOOLS` and `developerEndpoints` so it stays in sync.
-- `src/lib/agent/mcp-tools.ts` — tool definitions and the server card (edge-safe, no `node:crypto`); `src/lib/agent/mcp-server.ts` +
-  `src/lib/agent/mcp-ui.ts` — public MCP server at `/mcp` (stateless streamable HTTP, read-only THORNode tools, MCP Apps quote view).
-  `public/robots.txt` carries AI Content-Signal lines whose ordering matters.
+  derived from selected `CORE_MCP_TOOLS` and `developerEndpoints`; it links the live core inventory for the complete tool surface.
+- `src/lib/agent/core-mcp.ts` — canonical MCP metadata: registry name `org.thorchain/thorchain-mcp`, endpoint `https://mcp.thorchain.org/mcp`, source
+  `https://gitlab.com/thorchain/thorchain-mcp`. Its selected tool descriptors are documentation examples, not the full inventory; the live core card
+  and `tools/list` own schemas/capabilities/version. Direct calls require `Accept: application/json, text/event-stream` and SSE parsing; core
+  `quote_swap` takes integer base units.
+- `src/lib/agent/mcp-tools.ts` + `src/lib/agent/mcp-server.ts` — live core server-card mirror and compatibility routing. `/mcp` and `/.well-known/mcp`
+  redirect with HTTP 308 to the canonical core endpoint. Card aliases serve the live core card for GET/HEAD with THORChain SVG branding; POST/OPTIONS
+  redirect to the core endpoint. Do not restore local quote tools, local MCP quotas, or the retired quote UI resource. The redirect preserves the
+  method/body, not the former tool contract. Core `list_pools` accepts `limit`/`offset`, and `get_network_summary` has a different response from the
+  former THORNode network tool. Python/Go helpers have separate core MCP and site support API bases. `public/robots.txt` carries AI Content-Signal
+  lines whose ordering matters.
 - `src/app/api/` — support endpoints (`/api/v1/*` canonical, unversioned aliases kept); JSON errors via `src/lib/api-error.ts`, idempotency via
   `src/lib/agent/idempotency.ts`.
-- `src/lib/rate-limit.ts` — per-client limiter shared by `/mcp` and the support endpoints. Key on `cf-connecting-ip` (or the *last* forwarded hop),
-  never the first `x-forwarded-for` entry: the edge appends to whatever the caller sent, so the leftmost value is forgeable.
+- `src/lib/rate-limit.ts` — per-client limiter for the support endpoints; core MCP limits belong to the upstream deployment. Key on `cf-connecting-ip`
+  (or the _last_ forwarded hop), never the first `x-forwarded-for` entry: the edge appends to whatever the caller sent, so the leftmost value is
+  forgeable.
 - `src/components/chatwoot-widget.tsx` — the live-chat widget (a Chatwoot **Website-channel** inbox), rendered only when
-  `NEXT_PUBLIC_CHATWOOT_WEBSITE_TOKEN` is set. There is no bug-report form or `/api/report-bug` endpoint any more — support is live chat
-  and email.
-- `server.json` (repo root) + `src/app/.well-known/mcp-registry-auth/route.ts` — the official MCP Registry record and its domain-ownership proof
-  (served from `MCP_REGISTRY_AUTH`). Keep `server.json`'s `version` in step with `MCP_SERVER_INFO.version`; publishing steps are in
-  `docs/agent-readiness/mcp-registry.md`.
+  `NEXT_PUBLIC_CHATWOOT_WEBSITE_TOKEN` is set. There is no bug-report form or `/api/report-bug` endpoint any more — support is live chat and email.
+- `server.json` — reference copy of the published canonical core MCP Registry record, not a second registry publication from this UI repo. Publishing
+  and namespace ownership belong to `gitlab.com/thorchain/thorchain-mcp`; see `docs/agent-readiness/mcp-registry.md`.
 - `docs/agent-readiness/` — notes on agent-readiness scanners and decisions; read before changing discovery surfaces.
 - `src/lib/banner.ts` + `src/app/api/banner/route.ts` + `src/hooks/use-banner.ts` — the announcement banner. It is content owned by the affiliate
   admin (`swap.thorchain-admin`, admin-only `/banner`, published at its `/api/banner`), not by this repo: this app proxies that endpoint through its
   own origin (30s cache, `BANNER_API_URL`) and each tab polls every 10 min once the browser is idle, so a banner goes up without a deploy and never
-  competes with the swap's own requests. An icon uploaded there is proxied the same way at `/api/banner/icon`, so the banner is always same-origin. Nothing is bundled — an unreachable
-  admin means the last-seen banner, or none. Its copy is translated by the admin on save and is deliberately not in `src/i18n/messages`. See
-  `docs/banner.md`.
+  competes with the swap's own requests. An icon uploaded there is proxied the same way at `/api/banner/icon`, so the banner is always same-origin.
+  Nothing is bundled — an unreachable admin means the last-seen banner, or none. Its copy is translated by the admin on save and is deliberately not
+  in `src/i18n/messages`. See `docs/banner.md`.
 
 ## Conventions
 
@@ -107,4 +113,4 @@ Two-component architecture:
 - Only edit `src/i18n/messages/en.json` by hand; every other locale is generated by `tools/i18n-translate.mjs`. Translations edited by native speakers
   are detected automatically and never overwritten — see `docs/localization.md` before touching the translator, the state files, or the workflow.
 - `libsodium-wrappers-sumo` is pinned via `overrides` in package.json; do not bump it without checking Turbopack compatibility.
-- Amounts across THORChain APIs are strings in 1e8 base units.
+- Amounts use 1e8 base units. THORChain response amounts are generally strings; canonical core MCP quote inputs are integers.

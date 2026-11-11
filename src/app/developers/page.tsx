@@ -1,13 +1,15 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import { AppConfig } from '@/config'
+import { CORE_MCP } from '@/lib/agent/core-mcp'
 import {
   developerDiscoveryLinks,
   developerEndpoints,
   developerMcpTools,
   developerTopicLinks,
   errorExample,
-  mcpQuoteExample
+  mcpQuoteExample,
+  mcpResponseExample
 } from '@/lib/agent/developer-portal'
 import { SDK_PACKAGES } from '@/lib/agent/sdks'
 
@@ -137,7 +139,7 @@ export default function DevelopersPage() {
           </ul>
           <p>
             The UI also reads protocol metadata (pools, network parameters, THORNames, balances, inbound addresses) directly from public THORNode and
-            Midgard APIs. The keyless path for agents is the MCP server below, which serves quote, pool, and network data from THORNode.
+            Midgard APIs. The keyless path for agents is the MCP server below, which serves THORChain data from THORNode and Midgard.
           </p>
         </Section>
 
@@ -145,23 +147,38 @@ export default function DevelopersPage() {
           <p>No API key or registration is required. Fetch a BTC → ETH swap quote through the public MCP server:</p>
           <Code>{mcpQuoteExample}</Code>
           <p>
-            Amounts are strings in 1e8 base units (<code>100000000</code> = 1 BTC). Pass a <code>destination</code> address to receive a usable
-            transaction memo. Quotes, memos, and inbound addresses expire; always re-fetch before use.
+            Core MCP input amounts are integers in 1e8 base units (<code>100000000</code> = 1 BTC). Parse the SSE JSON-RPC event and read{' '}
+            <code>result.structuredContent.data</code> for the quote. Use <code>prepare_swap</code> with a confirmed destination for executable
+            deposit instructions. Quotes, memos, and inbound addresses expire; always re-fetch before use.
           </p>
         </Section>
 
         <Section id="mcp" title="MCP Server">
           <p>
-            A public, unauthenticated, rate-limited MCP server (streamable HTTP, stateless, JSON responses) is available at{' '}
-            <code>{AppConfig.baseUrl}/mcp</code>. Its server card is published at{' '}
-            <a className="underline" href="/.well-known/mcp/server-card.json">
-              /.well-known/mcp/server-card.json
+            Use the canonical {CORE_MCP.title} server at <code>{CORE_MCP.endpoint}</code>, published as{' '}
+            <a className="underline" href={CORE_MCP.registryUrl}>
+              {CORE_MCP.registryName}
             </a>
-            . Aliases: <code>/.well-known/mcp.json</code>, <code>/mcp.json</code>, and a plain <code>GET /mcp</code>. The full reference lives at{' '}
+            . No authentication is required. It speaks Streamable HTTP; send JSON-RPC over POST with{' '}
+            <code>Accept: application/json, text/event-stream</code> and parse SSE <code>data:</code> events.
+          </p>
+          <p>
+            The{' '}
+            <a className="underline" href={CORE_MCP.serverCard}>
+              live core server card
+            </a>{' '}
+            owns the current tool inventory, version, protocol revisions, and capabilities. This site's{' '}
+            <a className="underline" href="/.well-known/mcp/server-card.json">
+              server-card mirror
+            </a>{' '}
+            serves that live card with THORChain branding. The full integration reference lives at{' '}
             <Link className="underline" href="/developers/mcp">
               /developers/mcp
             </Link>
             .
+          </p>
+          <p>
+            Selected read-only tools; call <code>tools/list</code> for the complete live inventory and current schemas:
           </p>
           <ul className="list-disc space-y-1 pl-5">
             {developerMcpTools.map(tool => (
@@ -171,9 +188,12 @@ export default function DevelopersPage() {
             ))}
           </ul>
           <p>
-            The server supports MCP Apps (<code>io.modelcontextprotocol/ui</code>): <code>get_swap_quote</code> declares{' '}
-            <code>_meta.ui.resourceUri</code> pointing at the <code>ui://thorchain-swap/swap-quote</code> resource, which MCP Apps-capable hosts
-            render as an interactive quote view.
+            Illustrative SSE response; read <code>structuredContent.data</code> for the payload and <code>_metadata</code> for its source:
+          </p>
+          <Code>{mcpResponseExample}</Code>
+          <p>
+            This site's legacy <code>/mcp</code> URL permanently redirects to the canonical endpoint. It does not translate former tool names or
+            parameters. Configure new clients with the canonical URL directly; core protocol behavior and rate limits belong to the core deployment.
           </p>
           <p>The server never holds keys, signs, or submits transactions.</p>
         </Section>
@@ -222,10 +242,10 @@ export default function DevelopersPage() {
             ))}
           </ul>
           <p>
-            <strong>Idempotency:</strong> the POST endpoint accepts an <code>Idempotency-Key</code> header (any unique string, max 255 chars). A
-            retry with the same key within one hour replays the original JSON response — marked with an <code>Idempotency-Replayed: true</code>{' '}
-            response header — instead of re-executing the operation. <code>429</code> and <code>5xx</code> outcomes are not stored, so retrying after
-            them can succeed.
+            <strong>Idempotency:</strong> the POST endpoint accepts an <code>Idempotency-Key</code> header (any unique string, max 255 chars). A retry
+            with the same key within one hour replays the original JSON response — marked with an <code>Idempotency-Replayed: true</code> response
+            header — instead of re-executing the operation. <code>429</code> and <code>5xx</code> outcomes are not stored, so retrying after them can
+            succeed.
           </p>
           <p>
             <strong>Versioning and deprecation:</strong> the API is versioned in the URL path — <code>/api/v1/</code> is the canonical prefix, and
@@ -243,7 +263,7 @@ export default function DevelopersPage() {
           <p>
             This site runs no authorization server and issues no tokens — there is no <code>/.well-known/oauth-protected-resource</code> and no{' '}
             <code>/.well-known/oauth-authorization-server</code> to discover, so an MCP client that probes for authorization metadata finds none and
-            connects directly. If a connector UI asks for an OAuth client ID or an API key for <code>{AppConfig.baseUrl}/mcp</code>, leave it blank.
+            connects directly. If a connector UI asks for an OAuth client ID or an API key for <code>{CORE_MCP.endpoint}</code>, leave it blank.
           </p>
           <p>
             The aggregator quote API (<code>https://api.thorchain.org/v1</code>) is a different system: it takes an <code>x-api-key</code>, issued
@@ -279,7 +299,9 @@ export default function DevelopersPage() {
         </Section>
 
         <Section id="sandbox" title="Sandbox">
-          <p>Test integrations against THORChain stagenet before touching mainnet funds:</p>
+          <p>
+            The hosted core MCP endpoint uses mainnet. Test stagenet integrations with dedicated stagenet APIs or a separately configured core server:
+          </p>
           <ul className="list-disc space-y-1 pl-5">
             <li>
               Stagenet THORNode API:{' '}

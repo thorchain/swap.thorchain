@@ -12,6 +12,7 @@ node_modules
 
 # testing
 /coverage
+sdk/python/**/__pycache__/
 
 # next.js
 /.next/
