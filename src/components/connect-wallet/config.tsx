@@ -3,7 +3,7 @@ import { getChainConfig } from '@tcswap/helpers'
 import { getBinanceBitcoinProvider, getBinanceEVMProvider } from '@tcswap/wallets/binance'
 import { getBraveEVMProvider, getBraveSolanaProvider } from '@tcswap/wallets/brave'
 import { supportedChains, walletConnectEnabled } from '@/lib/wallets'
-import { OATH_WALLET } from '@/lib/oath-walletconnect'
+import { oathWalletconnectTarget } from '@tcswap/wallets/walletconnect'
 
 export enum WalletType {
   browser,
@@ -145,9 +145,9 @@ export const WALLETS: WalletParams[] = [
         {
           key: 'oath',
           type: WalletType.mobile,
-          label: OATH_WALLET.name,
+          label: oathWalletconnectTarget.name,
           option: WalletOption.WALLETCONNECT,
-          link: OATH_WALLET.app.ios,
+          link: oathWalletconnectTarget.app.ios,
           // Intersection of Oath's WC signing support and this SDK's connector.
           supportedChains: [Chain.Arbitrum, Chain.Avalanche, Chain.Base, Chain.BinanceSmartChain, Chain.Ethereum, Chain.THORChain].filter(chain =>
             (supportedChains[WalletOption.WALLETCONNECT] as Chain[]).includes(chain)

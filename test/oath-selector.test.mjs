@@ -56,7 +56,7 @@ function harness({ enabled = true, hydrated = true, connected = [], chain } = {}
     '@tcswap/wallets/binance': { getBinanceBitcoinProvider: () => undefined, getBinanceEVMProvider: () => undefined },
     '@tcswap/wallets/brave': { getBraveEVMProvider: () => undefined, getBraveSolanaProvider: () => undefined },
     '@/lib/wallets': { supportedChains: new Proxy({}, { get: () => sdkChains }), walletConnectEnabled: () => enabled },
-    '@/lib/oath-walletconnect': { OATH_WALLET: { name: 'Oath Wallet', app: { ios: 'https://apps.apple.com/app/id6780187283' } } }
+    '@tcswap/wallets/walletconnect': { oathWalletconnectTarget: { name: 'Oath Wallet', app: { ios: 'https://apps.apple.com/app/id6780187283' } } }
   })
   const slots = []
   let cursor = 0
@@ -182,19 +182,11 @@ test('generic mobile WalletConnect still renders its existing connection screen'
   assert.equal(h.events.length, 0)
 })
 
-test('existing sessions require explicit replacement before starting Oath', async () => {
+test('an existing session is preserved while the new targeted pairing starts', async () => {
   const h = harness({ connected: [WalletOption.WALLETCONNECT], chain: Chain.THORChain })
   row(h.render(), 'Oath Wallet').props.onClick()
-  assert.equal(h.events.length, 0)
-  const button = nodes(h.render()).find(node => node.type === 'GenericButton')
-  assert.equal(button.props.children, 'oathReplaceSession')
-  button.props.onClick()
   await settle()
-  assert.deepEqual(
-    h.events.map(event => event[0]),
-    ['disconnect', 'open', 'connect']
-  )
-  assert.deepEqual(h.events[2][2], [Chain.THORChain])
+  assert.deepEqual(h.events, [['open', false], ['connect', WalletOption.WALLETCONNECT, [Chain.THORChain], 'oath']])
 })
 
 test('Oath cannot connect until stored sessions have hydrated; keyboard activation works afterward', async () => {

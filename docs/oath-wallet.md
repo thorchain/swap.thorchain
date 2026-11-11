@@ -1,71 +1,12 @@
-# Oath Wallet via WalletConnect
+# Oath Wallet
 
-Oath is a native iOS wallet. Its main Connect Wallet entry uses the existing `@tcswap/wallets/walletconnect` connector, not an injected browser
-provider.
+Select **Oath Wallet** in the Mobile group to pair through WalletConnect. Open Oath on iOS or scan the QR with Oath on another device. The app asks for the selected network or the supported intersection of Arbitrum, Avalanche C-Chain, Base, BNB Smart Chain, Ethereum and THORChain. Accounts use the existing WalletConnect provider for signing, restoration and disconnection.
 
-## User flow
+The selector requires the TCSwap wallets release that exports `oathWalletconnectTarget` and accepts `targetWallet`. Update the dependency and lockfile once that release is published. The SDK owns the pairing URI, modal, queue and session lifecycle.
 
-- Oath Wallet appears directly in the **Mobile** group, after generic WalletConnect, whenever the existing `NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID` is configured.
-- On desktop, selecting Oath immediately shows its branded WalletConnect QR and scanning instructions. There is no intervening generic wallet chooser.
-- On iOS, the same entry presents the WalletConnect mobile handoff to `oathwallet://wc?uri=...`, with the modal's retry and App Store fallback.
-- An existing visible WalletConnect connection requires the user to choose **Disconnect and connect Oath** first. An orphan SDK session is ended
-  before a fresh pairing, rather than silently attributing another wallet to Oath.
-- Accounts remain `WalletOption.WALLETCONNECT`, preserving the existing signing, restore, disconnect, and account-management paths. The account
-  sidebar continues to identify the transport as WalletConnect; peer names are not authentication.
+## Review
 
-The requested chains are the intersection of Oath's WalletConnect signing support and this SDK connector: Arbitrum, Avalanche, Base, BNB Smart Chain,
-Ethereum, and THORChain. Wallet-held assets do not imply WalletConnect signing support. In particular, this entry does not advertise Bitcoin or Solana
-through this connector. An active chain filter restricts the request to that supported chain.
-
-## Integration details
-
-`src/lib/oath-walletconnect.ts` temporarily selects the Oath route through the public exports of `@walletconnect/modal-core` 2.7.0. The SDK still
-creates the SignClient, owns the real pairing URI, and handles approval, rejection, cancellation, and session cleanup. No second client, synthetic QR,
-or URI persistence is added. All WalletConnect calls are serialized so another connection cannot inherit the Oath presentation. Subscriptions,
-branding, and routing are reset on completion or failure. Recheck this contract when upgrading the SDK/modal packages.
-
-The `oath-ios` identifier is local UI metadata, not a WalletGuide directory ID or an assertion of directory approval. The SVG preserves Oath's white
-mark and blue background, with the same 25% corner radius as the existing WalletConnect SVG.
-
-- Website: https://oathwallet.org
-- iOS download: https://apps.apple.com/app/id6780187283
-- Native link: `oathwallet://`
-- Universal link: `https://oathwallet.org`
-
-## Review and validation
-
-Run `npm run test:oath-wallet`, `npx tsc --noEmit -p tsconfig.json`, `npm run test:i18n`, and `npm run build`.
-
-With a configured project ID, open Wallet → Connect Wallet:
-
-1. Confirm Oath appears directly in Mobile, after WalletConnect, with its logo and “iPhone · WalletConnect”. Browser and hardware wallets keep their own groups.
-2. Select Oath. Confirm an Oath-branded QR appears without selecting WalletConnect.
-3. Close it, then use the generic WalletConnect entry. Confirm its regular chooser returns with no Oath branding.
-4. Filter by THORChain and repeat. Unsupported chains must disable Oath.
-5. With an existing WalletConnect session, confirm replacement is explicit and still respects the selected network.
-6. On an iPhone with Oath installed, confirm the mobile link opens Oath, approve the connection, and verify the approved accounts. Test signing
-   separately with a disposable wallet; connection alone does not prove a completed swap.
-
-### November 7 upstream compatibility check
-
-Merged upstream `e9d351f` while preserving its browser/hardware/mobile grouping, Binance connector and SDK versions. The generic WalletConnect
-entry remains first in Mobile; Oath follows it and uses the same wallet-row layout and icon size. Replacing an existing session preserves the selected
-network. The generic mobile WalletConnect entry still renders its original connection screen.
-
-All 13 connection/selector unit tests, the TypeScript check, localization protocol tests and production build passed on Node 22.23.4.
-The seven selector tests execute the production component/config with mocked hook and SDK boundaries. An isolated negative control that restored the
-three incorrect sorting, network-selection and generic-mobile branches failed the corresponding three tests. The installed SDK and Oath share one
-deduplicated modal-core 2.7.0 instance.
-
-The unchanged upstream lockfile also fails `npm ci` because optional platform packages are missing. Local validation regenerated lock metadata with
-`npm install --package-lock-only --ignore-scripts --no-audit --no-fund`, then installed with `npm install --ignore-scripts --no-audit --no-fund`.
-Existing locked versions were unchanged; the broad generated lockfile rewrite was not committed. No browser/device pairing or live swap was rerun
-for this conflict-resolution update.
-
-### Earlier integration validation
-
-The original local browser check confirmed the main entry, a real relay-generated QR, the generic chooser after Oath, and chain filtering (Bitcoin disables Oath;
-THORChain enables it). Oath's current source handles the
-native WC URI and Cosmos signing methods. Targeted Oath host tests passed (three tests; one optional isolated-THORNode test skipped). The wallet team
-also supplied screenshots of an iPhone connection to the production generic WC entry. A fresh physical-iPhone pairing from this new entry and an
-end-to-end swap were not run as part of this PR. Merge/deployment remains with the THORChain maintainers.
+- Run `npm run test:oath-wallet`, `npm run test:i18n`, `npx tsc --noEmit -p tsconfig.json` and `npm run build`.
+- With a WalletConnect project ID configured, select Oath directly. Close the QR and open generic WalletConnect. Check that its regular selector returns and prior sessions survive cancellation.
+- With an iPhone, start a fresh pairing from the **Oath Wallet** entry. Verify the app receives the proposal, approve it and check the selected account on the website.
+- Before listing, verify a supported swap through that session on the iPhone. Record the app version, input/output networks, and confirmed result. Do not include pairing URIs or private wallet details.

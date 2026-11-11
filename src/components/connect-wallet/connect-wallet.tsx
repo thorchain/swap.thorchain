@@ -3,7 +3,6 @@ import { useEffect, useMemo, useRef, useState } from 'react'
 import { Chain, WalletOption } from '@tcswap/core'
 import { useTranslations } from 'next-intl'
 import { toast } from 'sonner'
-import { GenericButton } from '@/components/generic-button'
 import { Credenza, CredenzaContent, CredenzaHeader, CredenzaTitle } from '@/components/ui/credenza'
 import { ScrollArea } from '@/components/ui/scroll-area'
 import { BrowserWallet } from '@/components/connect-wallet/browser-wallet'
@@ -27,14 +26,13 @@ export const ConnectWallet = ({ isOpen, onOpenChange, chain }: ConnectWalletProp
   const t = useTranslations('wallet')
   const [selectedWallet, setSelectedWallet] = useState<WalletParams | undefined>(undefined)
   const [selectedChain, setSelectedChain] = useState<Chain | undefined>(chain)
-  const { connectedWallets, connect, disconnect } = useWallets()
+  const { connectedWallets, connect } = useWallets()
   const isHydrated = useHasHydrated()
   const connectingOath = useRef(false)
 
-  const connectOath = async (wallet: WalletParams, replace = false) => {
+  const connectOath = async (wallet: WalletParams) => {
     if (connectingOath.current || !isHydrated) return
     connectingOath.current = true
-    if (replace) disconnect(WalletOption.WALLETCONNECT)
     // Close the selector so it cannot block the SDK's QR modal or iOS handoff.
     onOpenChange(false)
     const requested = selectedChain ? [selectedChain] : wallet.supportedChains
@@ -82,12 +80,12 @@ export const ConnectWallet = ({ isOpen, onOpenChange, chain }: ConnectWalletProp
   }, [t])
 
   const onSelectWallet = (wallet: WalletParams) => {
-    if (wallet.key === 'oath' && !connectedWallets.includes(WalletOption.WALLETCONNECT)) {
+    if (wallet.key === 'oath') {
       void connectOath(wallet)
       return
     }
     setSelectedWallet(prev => (prev === wallet ? undefined : wallet))
-    if (wallet.key !== 'oath') setSelectedChain(undefined)
+    setSelectedChain(undefined)
   }
 
   const onSelectChain = (chain: Chain) => {
@@ -159,17 +157,6 @@ export const ConnectWallet = ({ isOpen, onOpenChange, chain }: ConnectWalletProp
   const renderSelectedWallet = (wallet: WalletParams) => {
     const onConnect = () => {
       onOpenChange(false)
-    }
-
-    if (wallet.key === 'oath') {
-      return (
-        <div className="space-y-4 px-4 pb-4 md:px-8 md:pb-8">
-          <p className="text-txt-label-small text-sm">{t('oathExistingSession')}</p>
-          <GenericButton colorType="3" size="large" onClick={() => void connectOath(wallet, true)}>
-            {t('oathReplaceSession')}
-          </GenericButton>
-        </div>
-      )
     }
 
     if (wallet.type === WalletType.browser || wallet.type === WalletType.mobile) {

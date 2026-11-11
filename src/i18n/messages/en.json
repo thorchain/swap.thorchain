@@ -644,8 +644,6 @@
     "send": "Send",
     "sendToken": "Send {ticker}",
     "oathMobile": "iPhone · WalletConnect",
-    "oathExistingSession": "A WalletConnect session is already connected. Disconnect it before connecting Oath so the existing wallet is not reused.",
-    "oathReplaceSession": "Disconnect and connect Oath",
     "oathConnectionFailed": "Could not connect Oath. Please try again."
   },
   "common": {
