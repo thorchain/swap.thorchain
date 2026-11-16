@@ -40,7 +40,7 @@ const uswap = createUSwap()`
     source: `${REPO}/tree/main/sdk/python`,
     homepage: AppConfig.baseUrl,
     install: `pip install "git+${REPO}#subdirectory=sdk/python"`,
-    status: `Source published in this repository, covering the keyless public surfaces of this site — no API key, token, or sign-in. Install directly from git — \`pip install "git+${REPO}#subdirectory=sdk/python"\` — until the PyPI release is cut.`,
+    status: `Source published in this repository. Read-only quote, pool, and network-summary helpers call the canonical THORChain MCP server at https://mcp.thorchain.org/mcp; support requests use this site's REST API. No API key, token, or sign-in. Supports JSON and SSE responses. Install directly from git — \`pip install "git+${REPO}#subdirectory=sdk/python"\` — until the PyPI release is cut.`,
     exampleLanguage: 'python',
     example: `from thorchain_swap import ThorchainSwapClient
 
@@ -62,7 +62,7 @@ print(quote["expected_amount_out"])`
     homepage: AppConfig.baseUrl,
     install: 'go get github.com/thorchain/swap.thorchain/sdk/go',
     status:
-      'Source published in this repository, covering the keyless public surfaces of this site, and importable as a Go module directly from the repository path.',
+      "Source published in this repository and importable directly as a Go module. Read-only quote, pool, and network-summary helpers call the canonical THORChain MCP server at https://mcp.thorchain.org/mcp; support requests use this site's REST API. Supports JSON and SSE responses.",
     exampleLanguage: 'go',
     example: `package main
 

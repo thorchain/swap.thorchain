@@ -32,7 +32,7 @@ export const DEVELOPER_TOPICS: DeveloperTopic[] = [
     title: 'THORChain Swap MCP Server | Model Context Protocol Tools for AI Agents',
     navTitle: 'MCP server',
     description:
-      'The THORChain Swap MCP server: streamable HTTP endpoint, server card, tool parameter schemas for get_swap_quote, list_pools and get_network_status, MCP Apps support, and rate limits.',
+      'Connect THORChain Swap integrations to the canonical THORChain MCP server: registry identity, Streamable HTTP and SSE, quote_swap, list_pools, get_network_summary, and live schemas.',
     keywords: ['THORChain MCP server', 'THORChain Swap MCP', 'Model Context Protocol crypto', 'THORChain AI agent tools']
   },
   {
@@ -48,7 +48,7 @@ export const DEVELOPER_TOPICS: DeveloperTopic[] = [
     title: 'THORChain Swap SDKs | TypeScript, Python and Go Clients',
     navTitle: 'SDKs',
     description:
-      'Official THORChain Swap client libraries for TypeScript, Python, and Go, generated from the published OpenAPI and MCP descriptions.',
+      'THORChain Swap client libraries for TypeScript, Python, and Go: swap-building SDKs, core MCP protocol data, and public REST support endpoints.',
     keywords: ['THORChain SDK', 'THORChain Swap SDK', 'THORChain TypeScript client', 'THORChain Python client']
   },
   {

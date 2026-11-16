@@ -4,6 +4,7 @@ import { SUBDOMAIN_ROUTES } from '@/config'
 
 const withNextIntl = createNextIntlPlugin('./src/i18n/request.ts')
 const discoveryLinks = [
+  '</.well-known/ard.json>; rel="ard"; type="application/json"',
   '</.well-known/mcp/server-card.json>; rel="mcp-server-card"; type="application/json"',
   '</.well-known/api-catalog>; rel="api-catalog"; type="application/linkset+json"',
   '</openapi.json>; rel="service-desc"; type="application/vnd.oai.openapi+json"',

@@ -6,6 +6,17 @@ swap.thorchain.org (July 2026): 46/100 grade D → 63/100 grade C → 68/100 gra
 Score page: https://ora.ai/score/swap.thorchain.org Rescan: `POST https://ora.ai/api/scan` with `{"url": "swap.thorchain.org"}` Cached score:
 `GET https://ora.ai/api/score/swap.thorchain.org`
 
+## Current MCP architecture (November 4, 2026)
+
+The canonical MCP integration is now `org.thorchain/thorchain-mcp` at `https://mcp.thorchain.org/mcp`, owned by
+<https://gitlab.com/thorchain/thorchain-mcp>. The local card mirrors live core metadata and adds THORChain branding. Legacy transport URLs redirect
+with HTTP 308; clients should configure the canonical endpoint directly, send both JSON/SSE Accept media types, and parse SSE responses.
+
+The historical MCP entries below describe the former local implementation and are **superseded**: its three-tool schemas, JSON-only transport, local
+quotas/cache, quote UI resource, local version assertions, and registry publication workflow are not the current core contract. Selected current tools
+are `quote_swap`, `list_pools`, and `get_network_summary`; the complete inventory and capabilities come from the live core card and `tools/list`. See
+[canonical registry notes](mcp-registry.md) and `src/lib/agent/core-mcp.ts`.
+
 ## Gaps addressed in the codebase
 
 - **Developer portal / developer resource discoverability** — `/developers` (HTML, `src/app/developers/page.tsx`) and `/developers.md` (markdown
@@ -35,8 +46,8 @@ Score page: https://ora.ai/score/swap.thorchain.org Rescan: `POST https://ora.ai
   the remaining manual step** (see below).
 - **Truthful access metadata** — the OpenAPI description (`src/lib/agent/openapi.ts`) declares anonymous access for the public, rate-limited support
   APIs; `auth.md`, the developer portal, and `/developers/auth` document the same model: no credential is issued or accepted, and the aggregator
-  `x-api-key` is a separate system reached through the affiliate program. There is no OAuth on this site — see "Gaps deliberately not addressed"
-  below for why the client-credentials tier was reverted. The invariant behind the contract tests is unchanged: nothing is advertised unless it is
+  `x-api-key` is a separate system reached through the affiliate program. There is no OAuth on this site — see "Gaps deliberately not addressed" below
+  for why the client-credentials tier was reverted. The invariant behind the contract tests is unchanged: nothing is advertised unless it is
   implemented, so the suite asserts that every URL a discovery document links resolves, and that no document links an authorization surface.
 - **JSON error responses** — shared helper `src/lib/api-error.ts`; every non-2xx response from `/api/*` is JSON with `error` (message), `code`
   (machine-readable), `hint` (resolution), and `documentation`. Unsupported methods return JSON 405 with an `Allow` header; unknown `/api/*` paths hit
@@ -54,29 +65,28 @@ Score page: https://ora.ai/score/swap.thorchain.org Rescan: `POST https://ora.ai
 
 - **Manifest paths speak the transport (August 24, 2026)** — the 88/100 scan reported "MCP manifest found at `/.well-known/mcp/manifest.json` but
   protocol handshake failed" while every other MCP check passed against `/mcp`. The check handshakes against the manifest URL it discovered, and the
-  card aliases were served from the discovery-file registry, which answers `GET`/`HEAD` only — a POST fell through to the HTML 404 page. `src/proxy.ts`
-  now rewrites `POST`/`OPTIONS` on every alias in `MCP_ENDPOINT_ALIASES` (`src/lib/agent/mcp-tools.ts`) to `/mcp`, so a client that finds any of them
-  and posts JSON-RPC reaches the server; `GET` still returns the card. Pinned by `testMcpManifestIsReachableFromEveryStandardPath`. Note the two
-  registry checks (`mcp-registry-listed`, `mcp-registry-metadata`) read **Smithery and mcp.so**, not `registry.modelcontextprotocol.io` — the official
-  listing does not satisfy them directly, though mcp.so mirrors the official registry.
+  card aliases were served from the discovery-file registry, which answers `GET`/`HEAD` only — a POST fell through to the HTML 404 page.
+  `src/proxy.ts` now rewrites `POST`/`OPTIONS` on every alias in `MCP_ENDPOINT_ALIASES` (`src/lib/agent/mcp-tools.ts`) to `/mcp`, so a client that
+  finds any of them and posts JSON-RPC reaches the server; `GET` still returns the card. Pinned by `testMcpManifestIsReachableFromEveryStandardPath`.
+  Note the two registry checks (`mcp-registry-listed`, `mcp-registry-metadata`) read **Smithery and mcp.so**, not `registry.modelcontextprotocol.io` —
+  the official listing does not satisfy them directly, though mcp.so mirrors the official registry.
 - **WebMCP entry point (August 24, 2026)** — `src/components/webmcp-tools.tsx` registered on `navigator.modelContext`; the entry point has moved to
   `document.modelContext` and Chrome 150+ deprecates the alias. It now prefers `document.modelContext` and falls back to the navigator alias.
 - **MCP correctness pass (August 24, 2026)** — from the audit of the agent-readiness branch: `list_pools`'s `asset` filter was a substring match, so a
   bare chain filter (`ETH`) also returned `BASE.ETH` and `BSC.ETH-0X21…`; it now matches the chain segment, and a `CHAIN.SYMBOL` filter matches by
   prefix. A wrong-typed `fields` on `get_network_status` silently returned the whole object instead of `-32602`. JSON-RPC batches were rejected
-  outright even though the server offers to negotiate 2025-03-26 and 2024-11-05, where a batch is valid; arrays are now answered with arrays.
-  `/pools` and `/network` are served from a 6-second in-process cache (quotes never are). The contract suite covers each of these, plus a local
-  assertion that `server.json`'s version matches `MCP_SERVER_INFO.version`, and `HOST_HEADER` now works — Node's fetch drops a `Host` header, so the
-  suite could not be pointed at a local server before, which is what made it a post-deploy check only. Separately, `src/lib/rate-limit.ts` keyed on
-  the *first* `x-forwarded-for` hop — Cloudflare appends the real client IP to whatever the caller sent, so that entry is forgeable and rotating it
-  gave an unlimited number of buckets (confirmed against production). It now keys on `cf-connecting-ip`, falling back to the last forwarded hop.
+  outright even though the server offers to negotiate 2025-03-26 and 2024-11-05, where a batch is valid; arrays are now answered with arrays. `/pools`
+  and `/network` are served from a 6-second in-process cache (quotes never are). The contract suite covers each of these, plus a local assertion that
+  `server.json`'s version matches `MCP_SERVER_INFO.version`, and `HOST_HEADER` now works — Node's fetch drops a `Host` header, so the suite could not
+  be pointed at a local server before, which is what made it a post-deploy check only. Separately, `src/lib/rate-limit.ts` keyed on the _first_
+  `x-forwarded-for` hop — Cloudflare appends the real client IP to whatever the caller sent, so that entry is forgeable and rotating it gave an
+  unlimited number of buckets (confirmed against production). It now keys on `cf-connecting-ip`, falling back to the last forwarded hop.
 - **Agent platform configs** — repo-root `AGENTS.md` with instructions for AI coding agents (the repo is public at
   github.com/thorchain/swap.thorchain); linked from llms.txt, the developer portal, the site AGENTS.md, and the homepage's server-rendered section so
   probes can find it without guessing.
 - **Idempotency-Key support** — `src/lib/agent/idempotency.ts` (in-memory, single-instance deploy, 1-hour retention) wraps the POST endpoint
   (`/api/v1/newsletter`; `/api/v1/report-bug` was removed in October 2026); repeated keys replay the original response with
-  `Idempotency-Replayed: true`. Declared as a header parameter on the operation in the OpenAPI
-  description and documented in the developer portal.
+  `Idempotency-Replayed: true`. Declared as a header parameter on the operation in the OpenAPI description and documented in the developer portal.
 - **REST versioning / deprecation policy** — `/api/v1/` is the canonical path prefix (`src/app/api/v1/*` re-export the handlers); unversioned `/api/*`
   paths remain stable aliases. Policy documented in the OpenAPI info description and the developer portal: breaking changes ship as a new `/api/vN`
   with ≥6 months overlap, retirement signaled via `Deprecation`/`Sunset` headers.
@@ -119,9 +129,9 @@ Score page: https://ora.ai/score/swap.thorchain.org Rescan: `POST https://ora.ai
   declares `homepage: https://github.com/thorchain/TCSwap`; naming the product domain in its npm metadata would help the same check, but that is a
   change for the TCSwap repo, not this one.
 
-- **MCP Registry listing** — the server works but is not listed at `registry.modelcontextprotocol.io`, which is what most clients search.
-  `server.json` and the `/.well-known/mcp-registry-auth` route are in the repo; publishing needs an Ed25519 key, the `MCP_REGISTRY_AUTH` env var
-  deployed, and one `mcp-publisher publish` run. Full steps: `docs/agent-readiness/mcp-registry.md`.
+- **MCP Registry listing (superseded)** — the former local server was published as `org.thorchain.swap/thorchain-swap` version `0.4.1`. Current
+  discovery uses the canonical core entry `org.thorchain/thorchain-mcp`. Registry publication is owned by the core repository; this UI keeps a
+  reference record only. See `docs/agent-readiness/mcp-registry.md`.
 
 ## Gaps deliberately not addressed
 
@@ -185,4 +195,4 @@ Score page: https://ora.ai/score/swap.thorchain.org Rescan: `POST https://ora.ai
   2. Draft a neutral, well-cited Wikipedia article (avoid self-promotion; disclose any conflict of interest per Wikipedia policy).
   3. Create a Wikidata item for THORChain with property **P856 (official website) = https://swap.thorchain.org** and link it to the article.
 - **ChatGPT app listed** — off-repo submission to the GPT Store / ChatGPT app directory, needs an OpenAI account and a published app listing. The MCP
-  server at `/mcp` is the integration surface a listing would point at; nothing further is needed in this repo.
+  server at `https://mcp.thorchain.org/mcp` is the integration surface a listing would point at; nothing further is needed in this repo.

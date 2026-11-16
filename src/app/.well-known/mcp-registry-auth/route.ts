@@ -1,7 +1,6 @@
-// Domain ownership proof for the official MCP Registry (HTTP authentication).
-// `mcp-publisher login http --domain swap.thorchain.org` signs a challenge with
-// a private key whose public half is published here, which is what lets the
-// registry accept the org.thorchain.swap/* namespace for this server.
+// Legacy domain proof retained for existing deployments. The canonical core
+// MCP identity and registry publication are owned by the core repository;
+// this swap deployment must not publish a competing listing.
 //
 // The value is a single line: `v=MCPv1; k=ed25519; p=<base64 public key>`.
 // It is a public key, so it is safe to serve; it lives in an environment

@@ -1,4 +1,5 @@
 import { AppConfig } from '@/config'
+import { CORE_MCP } from '@/lib/agent/core-mcp'
 import { developerDocBySlug } from '@/lib/agent/developer-docs'
 import { developersMarkdown } from '@/lib/agent/developer-portal'
 import { homeMarkdown } from '@/lib/agent/discovery-files'
@@ -28,6 +29,8 @@ function parsePair(slug: string) {
 function swapPairMarkdown(slug: string, pair: { sell: string; buy: string }) {
   const sell = pair.sell.toUpperCase()
   const buy = pair.buy.toUpperCase()
+  const fromAsset = sell.includes('.') ? sell : `<CHAIN>.${sell}`
+  const toAsset = buy.includes('.') ? buy : `<CHAIN>.${buy}`
 
   return `# Swap ${sell} to ${buy} — THORChain Swap
 
@@ -40,25 +43,25 @@ This page is an interface to a native cross-chain swap: no bridge, no wrapped to
 Rates, fees, and slippage are live and cannot be stated here. Fetch a quote from the public MCP server (no API key):
 
 \`\`\`bash
-curl -s ${AppConfig.baseUrl}/mcp \\
+curl -N -sS ${CORE_MCP.endpoint} \\
   -H 'Content-Type: application/json' \\
-  -H 'Accept: application/json' \\
+  -H 'Accept: application/json, text/event-stream' \\
   -d '{
     "jsonrpc": "2.0",
     "id": 1,
     "method": "tools/call",
     "params": {
-      "name": "get_swap_quote",
+      "name": "quote_swap",
       "arguments": {
-        "from_asset": "<CHAIN>.${sell}",
-        "to_asset": "<CHAIN>.${buy}",
-        "amount": "100000000"
+        "from_asset": "${fromAsset}",
+        "to_asset": "${toAsset}",
+        "amount": 100000000
       }
     }
   }'
 \`\`\`
 
-Assets use \`CHAIN.SYMBOL\` notation (\`BTC.BTC\`, \`ETH.ETH\`), and amounts are strings in 1e8 base units. Call \`list_pools\` to confirm both assets have an \`Available\` pool before quoting — not every symbol pair is tradable.
+Assets use \`CHAIN.SYMBOL\` notation (\`BTC.BTC\`, \`ETH.ETH\`), and core MCP amount inputs are integers in 1e8 base units. Parse the SSE \`data:\` event as JSON-RPC and read \`result.structuredContent.data\`. Call \`list_pools\` (page with \`limit\` and \`offset\`) to confirm both assets have an \`available\` pool before quoting — not every symbol pair is tradable.
 
 ## Costs
 

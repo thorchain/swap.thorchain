@@ -1,4 +1,5 @@
 import { AppConfig } from '@/config'
+import { CORE_MCP, CORE_MCP_TOOLS } from '@/lib/agent/core-mcp'
 import { DEVELOPER_TOPICS } from '@/lib/agent/developer-topics'
 import { SDK_PACKAGES } from '@/lib/agent/sdks'
 
@@ -29,20 +30,7 @@ export const developerTopicLinks = DEVELOPER_TOPICS.map(topic => ({
   description: topic.description
 }))
 
-export const developerMcpTools = [
-  {
-    name: 'get_swap_quote',
-    summary: 'Fetch a THORChain swap quote for an asset pair (amounts in 1e8 base units).'
-  },
-  {
-    name: 'list_pools',
-    summary: 'List liquidity pools with status, depths, and USD asset price.'
-  },
-  {
-    name: 'get_network_status',
-    summary: 'Current THORChain network parameters.'
-  }
-]
+export const developerMcpTools = CORE_MCP_TOOLS.map(tool => ({ name: tool.name, summary: tool.description }))
 
 // Every path here is rendered as a link, so every path here must resolve. No
 // `/.well-known/oauth-*` entry belongs in this list: the MCP server is
@@ -51,13 +39,14 @@ export const developerMcpTools = [
 // docs/agent-readiness/orank.md).
 export const developerDiscoveryLinks = [
   { path: '/llms.txt', summary: 'index of agent resources' },
-  { path: '/.well-known/mcp.json', summary: 'MCP manifest alias (also /mcp.json and GET /mcp)' },
+  { path: '/.well-known/mcp.json', summary: 'live core MCP server-card mirror (also /mcp.json)' },
+  { path: CORE_MCP.registryUrl, summary: `official registry entry: ${CORE_MCP.registryName}` },
   { path: '/llms-full.md', summary: 'complete single-file agent reference (also at /llms-full.txt)' },
   { path: '/AGENTS.md', summary: 'guidance for AI agents using this site' },
   { path: '/developers.md', summary: 'this developer portal as markdown' },
   { path: '/.well-known/openapi.json', summary: 'OpenAPI 3.1 description of the public REST API' },
   { path: '/.well-known/api-catalog', summary: 'RFC 9727 API catalog (linkset)' },
-  { path: '/.well-known/mcp/server-card.json', summary: 'MCP server card' },
+  { path: '/.well-known/mcp/server-card.json', summary: 'live core MCP server-card mirror with THORChain branding' },
   { path: '/.well-known/agent-card.json', summary: 'A2A agent card' },
   { path: '/.well-known/agent-skills/index.json', summary: 'published agent skills (navigation, quotes, pools, memoless swaps)' },
   { path: '/index.md', summary: 'homepage as markdown; append .md to any content page URL' },
@@ -69,22 +58,28 @@ export const developerDiscoveryLinks = [
   { path: '/robots.txt', summary: 'crawl policy with AI Content-Signal' }
 ]
 
-export const mcpQuoteExample = `curl -s ${AppConfig.baseUrl}/mcp \\
+export const mcpQuoteExample = `curl -N -sS ${CORE_MCP.endpoint} \\
   -H 'Content-Type: application/json' \\
-  -H 'Accept: application/json' \\
+  -H 'Accept: application/json, text/event-stream' \\
+  -H 'MCP-Protocol-Version: 2025-06-18' \\
   -d '{
     "jsonrpc": "2.0",
     "id": 1,
     "method": "tools/call",
     "params": {
-      "name": "get_swap_quote",
+      "name": "quote_swap",
       "arguments": {
         "from_asset": "BTC.BTC",
         "to_asset": "ETH.ETH",
-        "amount": "100000000"
+        "amount": 100000000
       }
     }
   }'`
+
+// Illustrative SSE envelope; quote values are examples, never transaction instructions.
+export const mcpResponseExample = `event: message
+data: {"jsonrpc":"2.0","id":1,"result":{"structuredContent":{"data":{"expected_amount_out":"123456"},"_metadata":{"source_used":"thornode","canonical":true}},"content":[{"type":"text","text":"{\\"data\\":{\\"expected_amount_out\\":\\"123456\\"},\\"_metadata\\":{\\"source_used\\":\\"thornode\\",\\"canonical\\":true}}"}]}}
+`
 
 export const errorExample = `{
   "error": "Invalid email",
@@ -115,7 +110,7 @@ THORChain Swap consists of two components:
   - \`https://api.thorchain.org/v1\` — swap quotes and routes across THORChain and Maya Protocol providers. Requires an \`x-api-key\` header; keys are free through the affiliate program at ${AppConfig.affiliateLink} (register, verify your email, key issued on approval).
   - \`https://api.thorchain.org/memoless/api/v1\` — memoless (instant) swaps. No API key required.
 
-The UI also reads protocol metadata (pools, network parameters, THORNames, balances, inbound addresses) directly from public THORNode and Midgard APIs. The keyless path for agents is the MCP server below, which serves quote, pool, and network data from THORNode.
+The UI also reads protocol metadata (pools, network parameters, THORNames, balances, inbound addresses) directly from public THORNode and Midgard APIs. The keyless path for agents is the MCP server below, which serves THORChain data from THORNode and Midgard.
 
 ## Quickstart
 
@@ -125,21 +120,29 @@ No API key or registration is required. Fetch a BTC → ETH swap quote through t
 ${mcpQuoteExample}
 \`\`\`
 
-Amounts are strings in 1e8 base units (\`100000000\` = 1 BTC). Pass a \`destination\` address to receive a usable transaction memo. Quotes, memos, and inbound addresses expire; always re-fetch before use.
+The core MCP input \`amount\` is an integer in 1e8 base units (\`100000000\` = 1 BTC). The response is an SSE event containing JSON-RPC; read \`result.structuredContent.data\` for the quote and \`_metadata\` for its source. For executable deposit instructions use \`prepare_swap\` with a confirmed \`destination\`. Quotes, memos, and inbound addresses expire; always re-fetch before use.
 
 ## MCP Server
 
-A public, unauthenticated, rate-limited MCP server (streamable HTTP, stateless, JSON responses):
+Use the canonical ${CORE_MCP.title} server, registered as [\`${CORE_MCP.registryName}\`](${CORE_MCP.registryUrl}):
 
-- Endpoint: ${AppConfig.baseUrl}/mcp — JSON-RPC over POST; a plain GET returns the server card
-- Server card: ${AppConfig.baseUrl}/.well-known/mcp/server-card.json (aliases: ${AppConfig.baseUrl}/.well-known/mcp.json, ${AppConfig.baseUrl}/mcp.json)
-- Full reference: ${AppConfig.baseUrl}/developers/mcp
+- Endpoint: ${CORE_MCP.endpoint} — JSON-RPC over HTTP POST, no authentication
+- Live server card: ${CORE_MCP.serverCard}
+- This site's live card mirror: ${AppConfig.baseUrl}/.well-known/mcp/server-card.json (includes THORChain branding)
+- Core source: ${CORE_MCP.repository}
+- Full integration reference: ${AppConfig.baseUrl}/developers/mcp
 
-Read-only tools:
+Selected read-only tools (a subset; call \`tools/list\` for the complete live inventory):
 
 ${developerMcpTools.map(tool => `- \`${tool.name}\` — ${tool.summary}`).join('\n')}
 
-The server supports MCP Apps (io.modelcontextprotocol/ui): \`get_swap_quote\` declares \`_meta.ui.resourceUri\` pointing at the \`ui://thorchain-swap/swap-quote\` resource (\`text/html;profile=mcp-app\`), which MCP Apps-capable hosts render as an interactive quote view. The view is self-contained (no external scripts) and receives data via \`ui/notifications/tool-result\`.
+Send \`Accept: application/json, text/event-stream\` and parse SSE \`data:\` events as JSON-RPC. A response has this shape (illustrative values):
+
+\`\`\`text
+${mcpResponseExample}
+\`\`\`
+
+The core server owns its tool schemas, protocol versions, capabilities, and rate limits; use its live card and \`tools/list\` as the authority. This site's legacy \`/mcp\` URL permanently redirects to the core endpoint. It does not translate the former tool contract. Configure new clients with the canonical URL directly.
 
 The server never holds keys, signs, or submits transactions.
 
@@ -167,7 +170,7 @@ The API is versioned in the URL path: \`/api/v1/\` is the canonical prefix, and 
 
 Browsing, quoting, the public MCP server, and the support APIs are anonymous; there are no accounts, and users sign transactions in their own wallets (or use memoless swaps with no wallet connection).
 
-This site runs no authorization server and issues no tokens: there is no \`/.well-known/oauth-protected-resource\` and no \`/.well-known/oauth-authorization-server\` to discover, so an MCP client that probes for authorization metadata finds none and connects directly. If a connector UI asks for an OAuth client ID or API key for \`${AppConfig.baseUrl}/mcp\`, leave it blank.
+This site runs no authorization server and issues no tokens: there is no \`/.well-known/oauth-protected-resource\` and no \`/.well-known/oauth-authorization-server\` to discover, so an MCP client that probes for authorization metadata finds none and connects directly. If a connector UI asks for an OAuth client ID or API key for \`${CORE_MCP.endpoint}\`, leave it blank.
 
 The aggregator quote API (\`https://api.thorchain.org/v1\`) is a different system: it takes an \`x-api-key\`, issued free through the affiliate program at ${AppConfig.affiliateLink} after a short review. That same account sets affiliate/service fee splits, generates the embeddable widget, and reports earnings.
 
@@ -185,7 +188,7 @@ Rate limits return \`429\` with a \`Retry-After\` header (seconds). Unknown \`/a
 
 ## Sandbox
 
-Test integrations against THORChain stagenet before touching mainnet funds:
+The hosted canonical core MCP endpoint uses mainnet. Test stagenet integrations with these dedicated APIs or a separately configured core server:
 
 - Stagenet THORNode API: https://stagenet-thornode.ninerealms.com
 - Stagenet Midgard API: https://stagenet-midgard.ninerealms.com
@@ -201,7 +204,7 @@ This site is an interface to the THORChain protocol. Protocol-level development 
 
 ## Discovery Resources
 
-${developerDiscoveryLinks.map(link => `- [${link.path}](${AppConfig.baseUrl}${link.path}) — ${link.summary}`).join('\n')}
+${developerDiscoveryLinks.map(link => `- [${link.path}](${link.path.startsWith('https://') ? link.path : AppConfig.baseUrl + link.path}) — ${link.summary}`).join('\n')}
 
 ## Support
 

@@ -1,7 +1,7 @@
 import { AppConfig } from '@/config'
 import { developerEndpoints } from '@/lib/agent/developer-portal'
 import { DEVELOPER_TOPICS } from '@/lib/agent/developer-topics'
-import { MCP_SERVER_INFO, MCP_TOOLS } from '@/lib/agent/mcp-tools'
+import { CORE_MCP, CORE_MCP_TOOLS } from '@/lib/agent/core-mcp'
 import { pricingPlans } from '@/lib/agent/pricing'
 
 // The ?mode=agent view of the homepage: capabilities, endpoints, auth, and
@@ -11,20 +11,20 @@ import { pricingPlans } from '@/lib/agent/pricing'
 const capabilities = [
   {
     id: 'swap-quote',
-    summary: 'Fetch a live cross-chain swap quote (expected output, itemised fees, slippage, memo, inbound address).',
-    access: `MCP tool get_swap_quote at ${AppConfig.baseUrl}/mcp`,
+    summary: 'Fetch indicative swap output, fees, slippage, and timing; use core prepare_swap for executable deposit instructions.',
+    access: `MCP tool quote_swap at ${CORE_MCP.endpoint}; amount is an integer in 1e8 base units`,
     authentication: 'none'
   },
   {
     id: 'list-pools',
-    summary: 'List THORChain liquidity pools with status, depths, and USD asset price.',
-    access: `MCP tool list_pools at ${AppConfig.baseUrl}/mcp`,
+    summary: 'List THORChain liquidity pools through Midgard with limit/offset pagination.',
+    access: `MCP tool list_pools at ${CORE_MCP.endpoint}`,
     authentication: 'none'
   },
   {
     id: 'network-status',
-    summary: 'Read current THORChain network parameters, outbound fees, and halt state.',
-    access: `MCP tool get_network_status at ${AppConfig.baseUrl}/mcp`,
+    summary: 'Read node counts, APY, reserve, pooled RUNE, churn height, and vault migration state.',
+    access: `MCP tool get_network_summary at ${CORE_MCP.endpoint}`,
     authentication: 'none'
   },
   {
@@ -75,13 +75,14 @@ const agentModeValue = {
   },
   endpoints: {
     mcp: {
-      url: `${AppConfig.baseUrl}/mcp`,
+      url: CORE_MCP.endpoint,
       transport: 'streamable-http',
-      protocolVersion: '2025-06-18',
-      serverInfo: MCP_SERVER_INFO,
+      serverInfo: { name: CORE_MCP.name, title: CORE_MCP.title },
+      registry: { name: CORE_MCP.registryName, url: CORE_MCP.registryUrl },
       serverCard: `${AppConfig.baseUrl}/.well-known/mcp/server-card.json`,
       authentication: 'none',
-      tools: MCP_TOOLS.map(({ name, description }) => ({ name, description }))
+      toolsScope: 'Selected examples; tools/list at the canonical endpoint is authoritative.',
+      tools: CORE_MCP_TOOLS.map(({ name, description, inputSchema }) => ({ name, description, inputSchema }))
     },
     rest: developerEndpoints.map(({ method, path, authentication, summary }) => ({
       method,
@@ -103,9 +104,9 @@ const agentModeValue = {
   },
   conventions: {
     asset_notation: 'CHAIN.SYMBOL, e.g. BTC.BTC, ETH.USDC-0XA0B86991C6218B36C1D19D4A2E9EB0CE3606EB48',
-    amounts: 'strings in 1e8 base units (1 BTC = 100000000)',
-    errors: 'JSON with error, code, hint, and documentation fields',
-    rate_limits: '429 with a Retry-After header'
+    amounts: 'Core MCP quote_swap takes an integer in 1e8 base units (1 BTC = 100000000); REST protocol amounts are strings.',
+    errors: 'Support REST APIs return JSON error, code, hint, and documentation fields. Core MCP uses JSON-RPC envelopes over JSON/SSE.',
+    rate_limits: 'Support REST APIs return 429 with Retry-After. MCP limits belong to the canonical core deployment.'
   },
   safety: [
     'Never request, store, or infer private keys or seed phrases.',
@@ -154,9 +155,13 @@ Details: ${AppConfig.baseUrl}/auth.md and ${AppConfig.baseUrl}/developers/auth
 
 ## Endpoints
 
-MCP server (streamable HTTP, stateless, no key) — ${AppConfig.baseUrl}/mcp
+MCP server (streamable HTTP, no key) — ${CORE_MCP.endpoint}
 
-${MCP_TOOLS.map(tool => `- \`${tool.name}\` — ${tool.description}`).join('\n')}
+Canonical Registry: ${CORE_MCP.registryName} (${CORE_MCP.registryUrl}). Send Accept: application/json, text/event-stream and support SSE responses. The legacy ${AppConfig.baseUrl}/mcp URL redirects with HTTP 308; it does not translate old tool names or arguments. The core endpoint currently has no browser CORS support; connect from an MCP host or a server-side client.
+
+Selected tools (retrieve the full list with tools/list):
+
+${CORE_MCP_TOOLS.map(tool => `- \`${tool.name}\` — ${tool.description}`).join('\n')}
 
 REST:
 

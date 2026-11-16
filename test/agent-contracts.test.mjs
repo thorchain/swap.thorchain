@@ -9,6 +9,17 @@ const BASE_URL = (process.env.BASE_URL || 'https://swap.thorchain.org').replace(
 const CANONICAL_ORIGIN = (process.env.CANONICAL_ORIGIN || 'https://swap.thorchain.org').replace(/\/$/, '')
 const timeoutMs = Number(process.env.HTTP_TIMEOUT_MS || 20_000)
 const hostHeader = process.env.HOST_HEADER
+const CORE_ENDPOINT = 'https://mcp.thorchain.org/mcp'
+const CORE_CARD = 'https://mcp.thorchain.org/.well-known/mcp/server-card.json'
+const CORE_REGISTRY = 'org.thorchain/thorchain-mcp'
+const CARD_PATHS = [
+  '/.well-known/mcp/server-card.json',
+  '/.well-known/mcp-server-card.json',
+  '/.well-known/mcp-server-card',
+  '/.well-known/mcp.json',
+  '/.well-known/mcp/manifest.json',
+  '/mcp.json'
+]
 let rpcId = 0
 
 /**
@@ -42,9 +53,11 @@ async function request(path, init = {}) {
   const { headers: initHeaders, ...requestInit } = init
   const headers = { 'User-Agent': 'swap-thorchain-agent-contract-test/1.0', ...(initHeaders || {}) }
 
-  if (hostHeader) return requestWithHost(`${BASE_URL}${path}`, { ...requestInit, headers: { ...headers, Host: hostHeader } })
+  const url = path.startsWith('https://') || path.startsWith('http://') ? path : `${BASE_URL}${path}`
+  if (hostHeader && new URL(url).origin === new URL(BASE_URL).origin)
+    return requestWithHost(url, { ...requestInit, headers: { ...headers, Host: hostHeader } })
 
-  const response = await fetch(`${BASE_URL}${path}`, {
+  const response = await fetch(url, {
     redirect: 'manual',
     signal: AbortSignal.timeout(timeoutMs),
     ...requestInit,
@@ -61,11 +74,40 @@ async function json(path, init = {}) {
 }
 
 async function mcp(method, params = {}) {
-  return json('/mcp', {
+  const id = ++rpcId
+  const result = await followMcpRedirect('/mcp', {
     method: 'POST',
-    headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
-    body: JSON.stringify({ jsonrpc: '2.0', id: ++rpcId, method, params })
+    headers: { 'Content-Type': 'application/json', Accept: 'application/json, text/event-stream', 'MCP-Protocol-Version': '2025-06-18' },
+    body: JSON.stringify({ jsonrpc: '2.0', id, method, params })
   })
+  assert.equal(result.response.status, 200, `MCP ${method}: HTTP ${result.response.status}: ${result.body.slice(0, 200)}`)
+  const value = parseRpcResponse(result.body, id)
+  return { ...result, value }
+}
+
+async function followMcpRedirect(path, init) {
+  const redirected = await request(path, init)
+  assert.equal(redirected.response.status, 308, `${path} must preserve the HTTP method with 308`)
+  assert.equal(redirected.response.headers.get('location'), CORE_ENDPOINT)
+  // Deliberately reuse the method/body/Accept while dropping the local Host
+  // override. Do not forward credentials or localhost Host to the core host.
+  return request(CORE_ENDPOINT, init)
+}
+
+function parseRpcResponse(body, id) {
+  const text = body.trim()
+  if (text.startsWith('{') || text.startsWith('[')) return JSON.parse(text)
+  const messages = text.split(/\r?\n\r?\n/).flatMap(event => {
+    const data = event
+      .split(/\r?\n/)
+      .filter(line => line.startsWith('data:'))
+      .map(line => line.slice(5).trimStart())
+      .join('\n')
+    return data ? [JSON.parse(data)] : []
+  })
+  const message = messages.find(message => message.id === id)
+  assert.ok(message, `SSE must carry the JSON-RPC response for id=${id}`)
+  return message
 }
 
 // The MCP server needs no credential, so no document may point a client at an
@@ -111,6 +153,8 @@ async function testHomepageMetadataAndStructure() {
   assert.ok(application.sameAs?.includes('https://github.com/thorchain/swap.thorchain'))
   assert.deepEqual(application.subjectOf, { '@id': `${CANONICAL_ORIGIN}/developers#webpage` })
   assert.ok(body.includes('rel="ai-catalog"'), 'homepage should advertise the ARD catalog in HTML discovery')
+  assert.ok(body.includes('rel="ard"') && body.includes('/.well-known/ard.json'), 'homepage should advertise the canonical ARD catalog')
+  assert.match(response.headers.get('link') || '', /<\/\.well-known\/ard\.json>; rel="ard"/)
   assert.ok(
     body.includes('rel="mcp-server-card" type="application/mcp-server-card+json"'),
     'homepage should advertise the canonical MCP card with its protocol media type'
@@ -216,16 +260,16 @@ async function testNoAuthorizationSurfaceBlocksConnectors() {
   const anonymous = await mcp('tools/list')
   assert.ok(anonymous.value.result?.tools?.length > 0, 'anonymous tools/list must work')
 
-  const withStrayToken = await request('/mcp', {
+  const withStrayToken = await followMcpRedirect('/mcp', {
     method: 'POST',
-    headers: { 'Content-Type': 'application/json', Authorization: 'Bearer leftover-token' },
+    headers: { 'Content-Type': 'application/json', Accept: 'application/json, text/event-stream', Authorization: 'Bearer leftover-token' },
     body: JSON.stringify({ jsonrpc: '2.0', id: ++rpcId, method: 'tools/list' })
   })
   assert.equal(withStrayToken.response.status, 200, 'a stray Authorization header must not trigger an auth challenge')
   assert.equal(withStrayToken.response.headers.get('www-authenticate'), null, 'the server must never send an auth challenge')
 
   const card = (await json('/.well-known/mcp/server-card.json')).value
-  assert.equal(card.authentication?.type, 'none')
+  assert.equal(card.authentication?.required, false)
   assert.equal(card.authentication?.optional, undefined, 'the server card must not advertise an optional auth flow')
 
   // The docs must tell a human what to do when a connector asks for a client ID.
@@ -301,6 +345,8 @@ async function testArdCatalogEnumeratesTruthfulResources() {
   const { response, value: catalog } = await json('/.well-known/ai-catalog.json')
   assert.match(response.headers.get('content-type') || '', /^application\/json/i)
   assert.equal(catalog.specVersion, '1.0')
+  const canonical = await json('/.well-known/ard.json')
+  assert.deepEqual(canonical.value, catalog, 'canonical ARD and legacy AI Catalog must describe the same resources')
   assert.equal(catalog.host?.displayName, 'THORChain Swap')
   assert.ok(Array.isArray(catalog.entries) && catalog.entries.length >= 5, 'ARD catalog should enumerate the primary agent resources')
 
@@ -376,10 +422,33 @@ async function testOpenApiIsAnonymousAndTruthful() {
       for (const response of Object.values(operation.responses || {})) {
         assert.equal(typeof response?.description, 'string', `${method.toUpperCase()} ${path} responses need descriptions`)
       }
+      for (const [status, response] of Object.entries(operation.responses || {})) {
+        if (status.startsWith('2')) {
+          assert.ok(response.content?.['application/json']?.schema, `${method.toUpperCase()} ${path} success responses need JSON schemas`)
+        }
+      }
     }
   }
   assert.ok(operations.length >= 2, 'OpenAPI should expose its public operations')
   assertNoOAuthEndpointAdvertised(body, 'OpenAPI')
+  const status = (await json('/.well-known/status')).value
+  const statusSchema = openapi.components.schemas.DiscoveryStatus
+  for (const key of statusSchema.required) assert.ok(key in status, `live discovery status must include ${key}`)
+  assert.equal(status.status, statusSchema.properties.status.const)
+  assert.equal(status.service, statusSchema.properties.service.const)
+  assert.equal(status.url, CANONICAL_ORIGIN)
+}
+
+async function testDeveloperSectionIndex() {
+  const root = await request('/llms.txt')
+  assert.ok(root.body.includes(`${CANONICAL_ORIGIN}/developers/llms.txt`), 'root index must link the focused developer index')
+  const index = await request('/developers/llms.txt')
+  assert.equal(index.response.status, 200)
+  assert.match(index.response.headers.get('content-type') || '', /^text\/markdown/)
+  for (const slug of ['quickstart', 'api', 'mcp', 'auth', 'sdks', 'webhooks']) {
+    assert.ok(index.body.includes(`/developers/${slug}.md`), `developer index must link ${slug}`)
+    assert.equal((await request(`/developers/${slug}.md`)).response.status, 200)
+  }
 }
 
 async function testApiCatalogConformsToRfc9727() {
@@ -425,171 +494,167 @@ async function testApiCatalogConformsToRfc9727() {
 }
 
 async function testMcpServerCardAliasesAndAgreement() {
-  const paths = ['/.well-known/mcp/server-card.json', '/.well-known/mcp-server-card.json', '/.well-known/mcp-server-card']
-  const cards = []
-  for (const path of paths) {
-    const card = await json(path)
-    const expectedType = path === '/.well-known/mcp/server-card.json' ? /^application\/mcp-server-card\+json/i : /^application\/json/i
-    assert.match(card.response.headers.get('content-type') || '', expectedType)
-    cards.push(card.value)
-  }
-  for (const [index, card] of cards.entries()) {
-    assert.equal(typeof card.name, 'string', `${paths[index]} needs top-level name`)
-    assert.equal(typeof card.description, 'string', `${paths[index]} needs top-level description`)
-    assert.equal(typeof card.version, 'string', `${paths[index]} needs top-level version`)
-    // Every way the card states its endpoint must state the same one.
-    assert.equal(card.serverUrl, `${CANONICAL_ORIGIN}/mcp`)
-    assert.equal(card.endpoint, `${CANONICAL_ORIGIN}/mcp`)
-    assert.equal(card.transport?.endpoint, `${CANONICAL_ORIGIN}/mcp`)
-    assert.equal(card.remotes?.[0]?.url, `${CANONICAL_ORIGIN}/mcp`)
-    assert.equal(card.remotes?.[0]?.type, 'streamable-http')
-    assert.equal(card.authentication?.type, 'none')
-  }
-  for (const card of cards.slice(1)) assert.deepEqual(card, cards[0], 'all MCP server-card aliases must be identical')
-
+  const upstream = (await json(CORE_CARD)).value
   const tools = (await mcp('tools/list')).value.result?.tools
-  const resources = (await mcp('resources/list')).value.result?.resources
-  assert.deepEqual(cards[0].tools.map(tool => tool.name).sort(), tools.map(tool => tool.name).sort(), 'server-card tools must agree with tools/list')
-  assert.deepEqual(
-    cards[0].resources.map(resource => resource.uri).sort(),
-    resources.map(resource => resource.uri).sort(),
-    'server-card resources must agree with resources/list'
-  )
-
-  const resource = (await mcp('resources/read', { uri: resources[0].uri })).value
-  assert.ok(Array.isArray(resource.result?.contents) && resource.result.contents.length > 0, 'advertised MCP resource must be readable')
+  assert.ok(Array.isArray(tools) && tools.length > 3, 'the core tool surface must replace the retired three-tool server')
+  for (const path of CARD_PATHS) {
+    const { response, value: card } = await json(path)
+    assert.match(response.headers.get('content-type') || '', /^application\/mcp-server-card\+json/i)
+    assert.equal(card.name, 'thorchain-mcp')
+    assert.equal(card.title, 'THORChain MCP')
+    assert.equal(card.serverUrl, CORE_ENDPOINT)
+    assert.equal(card.transport?.endpoint, CORE_ENDPOINT)
+    assert.equal(card.transport?.type, 'streamable-http')
+    assert.equal(card.registry?.name, CORE_REGISTRY)
+    assert.deepEqual(card.tools, upstream.tools, 'local mirror must preserve the full core schemas and annotations')
+    assert.deepEqual(card.capabilities, upstream.capabilities)
+    assert.deepEqual(card.serverInfo, upstream.serverInfo)
+    assert.equal(card.version, upstream.version)
+    assert.equal(card.protocolVersion, upstream.protocolVersion)
+    assert.deepEqual(card.resources, upstream.resources, 'never advertise the retired swap quote App')
+    assert.equal(card.authentication?.required, false)
+    assert.deepEqual(card.tools.map(tool => tool.name).sort(), tools.map(tool => tool.name).sort(), 'live core card and tools/list must agree')
+    assert.equal(card.icons?.[0]?.src, card.icon)
+    const icon = await request(card.icon.startsWith(CANONICAL_ORIGIN) ? card.icon.slice(CANONICAL_ORIGIN.length) : card.icon)
+    assert.equal(icon.response.status, 200, 'the preserved SVG branding must be reachable')
+    assert.match(icon.response.headers.get('content-type') || '', /^image\//)
+    const head = await request(path, { method: 'HEAD' })
+    assert.equal(head.response.status, 200)
+    assert.equal(head.body, '')
+  }
+  const agents = (await json('/agents.json')).value
+  const mode = (await json('/?mode=agent', { headers: { Accept: 'application/json' } })).value
+  for (const advertised of [agents.mcp, mode.endpoints.mcp]) {
+    assert.equal(advertised.transport?.endpoint || advertised.url, CORE_ENDPOINT)
+    assert.equal(advertised.registry.name, CORE_REGISTRY)
+    for (const tool of advertised.tools) {
+      const core = tools.find(core => core.name === tool.name)
+      assert.ok(core, `unknown advertised tool ${tool.name}`)
+      assert.deepEqual(Object.keys(tool.inputSchema.properties || {}).sort(), Object.keys(core.inputSchema.properties || {}).sort())
+      assert.deepEqual(tool.inputSchema.required || [], core.inputSchema.required || [])
+      assert.equal(tool.inputSchema.additionalProperties, core.inputSchema.additionalProperties)
+      for (const [name, property] of Object.entries(tool.inputSchema.properties || {})) {
+        assert.equal(property.type, core.inputSchema.properties[name].type, `${tool.name}.${name} must match core`)
+      }
+    }
+  }
 }
 
 async function testMcpManifestIsReachableFromEveryStandardPath() {
-  const canonical = (await json('/.well-known/mcp/server-card.json')).value
-  for (const path of ['/.well-known/mcp.json', '/.well-known/mcp/manifest.json', '/mcp.json']) {
-    const alias = await json(path)
-    assert.match(alias.response.headers.get('content-type') || '', /^application\/json/i, `${path} should serve JSON`)
-    assert.deepEqual(alias.value, canonical, `${path} must serve the same manifest`)
-  }
-
-  // A client that only knows the endpoint URL can still read the manifest.
-  const direct = await request('/mcp')
-  assert.equal(direct.response.status, 200, 'GET /mcp should return the server card')
-  assert.match(direct.response.headers.get('content-type') || '', /^application\/mcp-server-card\+json/i)
-  assert.equal(JSON.parse(direct.body).serverUrl, `${CANONICAL_ORIGIN}/mcp`)
-  assert.match(direct.response.headers.get('link') || '', /rel="?mcp-server-card"?/i)
-
-  // Every path that serves the manifest also speaks the transport: a client
-  // that found a card alias and posts JSON-RPC at it must reach the server, not
-  // the HTML 404 page.
-  for (const path of [
-    '/.well-known/mcp',
-    '/.well-known/mcp/manifest.json',
-    '/.well-known/mcp.json',
-    '/.well-known/mcp/server-card.json',
-    '/.well-known/mcp-server-card',
-    '/.well-known/mcp-server-card.json',
-    '/mcp.json'
-  ]) {
-    const handshake = await request(path, {
+  for (const path of ['/mcp', '/.well-known/mcp', ...CARD_PATHS]) {
+    const id = ++rpcId
+    const handshake = await followMcpRedirect(path, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
-      body: JSON.stringify({ jsonrpc: '2.0', id: ++rpcId, method: 'initialize', params: { protocolVersion: '2025-06-18' } })
+      headers: { 'Content-Type': 'application/json', Accept: 'application/json, text/event-stream' },
+      body: JSON.stringify({
+        jsonrpc: '2.0',
+        id,
+        method: 'initialize',
+        params: {
+          protocolVersion: '2025-06-18',
+          capabilities: {},
+          clientInfo: { name: 'swap-redirect-contract', version: '1.0' }
+        }
+      })
     })
-    assert.equal(handshake.response.status, 200, `POST ${path} should complete an MCP handshake, got HTTP ${handshake.response.status}`)
-    assert.equal(JSON.parse(handshake.body).result?.serverInfo?.name, 'thorchain-swap', `POST ${path} must answer as the MCP server`)
+    assert.equal(handshake.response.status, 200, `POST ${path} should reach the canonical core server`)
+    assert.equal(parseRpcResponse(handshake.body, id).result?.serverInfo?.name, 'thorchain-mcp')
+    const options = await request(path, { method: 'OPTIONS' })
+    assert.equal(options.response.status, 308, `OPTIONS ${path} must reach the same service`)
+    assert.equal(options.response.headers.get('location'), CORE_ENDPOINT)
   }
-
-  // The transport contract is unchanged: there is no SSE stream to open.
-  const stream = await request('/mcp', { headers: { Accept: 'text/event-stream' } })
-  assert.equal(stream.response.status, 405, 'GET /mcp with an SSE Accept should still be 405')
-  assert.equal(stream.response.headers.get('allow'), 'POST')
+  for (const path of ['/mcp', '/.well-known/mcp']) {
+    const get = await request(path)
+    assert.equal(get.response.status, 308)
+    assert.equal(get.response.headers.get('location'), CORE_ENDPOINT)
+  }
+  const get = await request(CORE_ENDPOINT, { headers: { Accept: 'text/event-stream' } })
+  assert.equal(get.response.status, 405, 'the canonical transport does not serve a card on GET')
 }
 
 async function testMcpToolsAreExplicitlySafeAndCallable() {
   const tools = (await mcp('tools/list')).value.result?.tools
-  assert.ok(Array.isArray(tools) && tools.length === 3, 'Expected exactly three MCP tools')
-  for (const tool of tools) {
-    assert.ok(tool.inputSchema && tool.inputSchema.type === 'object', `${tool.name} needs an object input schema`)
-    assert.ok(Array.isArray(tool.inputSchema.required), `${tool.name} needs an explicit required array`)
-    const properties = Object.entries(tool.inputSchema.properties || {})
-    assert.ok(properties.length > 0, `${tool.name} needs typed parameter properties`)
-    for (const [parameter, schema] of properties) {
-      assert.equal(typeof schema.type, 'string', `${tool.name}.${parameter} needs a declared type`)
-      assert.equal(typeof schema.description, 'string', `${tool.name}.${parameter} needs a description`)
-    }
-    for (const required of tool.inputSchema.required) {
-      assert.ok(tool.inputSchema.properties?.[required], `${tool.name} requires ${required}, which is not declared`)
-    }
+  const byName = new Map(tools.map(tool => [tool.name, tool]))
+  assert.ok(!byName.has('get_swap_quote') && !byName.has('get_network_status'), 'do not relabel legacy tools as the core contract')
+  const quote = byName.get('quote_swap')
+  assert.deepEqual(quote.inputSchema.required, ['from_asset', 'to_asset', 'amount'])
+  assert.equal(quote.inputSchema.properties.amount.type, 'integer')
+  assert.equal(quote.inputSchema.properties.streaming_interval, undefined)
+  assert.deepEqual(Object.keys(byName.get('list_pools').inputSchema.properties).sort(), ['limit', 'offset'])
+  assert.ok(byName.has('get_network_summary'))
+  const pools = (await mcp('tools/call', { name: 'list_pools', arguments: { limit: 3, offset: 0 } })).value
+  assert.equal(pools.error, undefined)
+  assert.ok(!pools.result.isError, JSON.stringify(pools.result))
+  const data = pools.result.structuredContent?.data
+  assert.ok(Array.isArray(data) && data.length <= 3, 'core pool pagination must match the documented parameters')
+  const network = (await mcp('tools/call', { name: 'get_network_summary', arguments: {} })).value
+  assert.equal(network.error, undefined)
+  assert.ok(!network.result.isError, JSON.stringify(network.result))
+  assert.equal(typeof network.result.structuredContent?.data, 'object')
+  for (const name of ['quote_swap', 'list_pools', 'get_network_summary']) {
+    assert.equal(byName.get(name).annotations?.readOnlyHint, true)
   }
-
-  // The optional filters are real: a filtered listing must narrow the result.
-  const filtered = (await mcp('tools/call', { name: 'list_pools', arguments: { status: 'Available', limit: 3 } })).value
-  assert.equal(filtered.error, undefined, `list_pools filters should dispatch: ${JSON.stringify(filtered.error)}`)
-  const pools = JSON.parse(filtered.result.content[0].text)
-  assert.ok(pools.length <= 3, 'list_pools limit must be honoured')
-  for (const pool of pools) assert.equal(pool.status, 'Available', 'list_pools status filter must be honoured')
-
-  // A bare chain filter means that chain, not every asset whose symbol contains
-  // those letters — an agent asking for Ethereum pools must not get BASE.ETH.
-  const byChain = (await mcp('tools/call', { name: 'list_pools', arguments: { asset: 'ETH' } })).value
-  const chainPools = JSON.parse(byChain.result.content[0].text)
-  assert.ok(chainPools.length > 0, 'list_pools should find pools on the Ethereum chain')
-  for (const pool of chainPools) assert.ok(pool.asset.startsWith('ETH.'), `list_pools asset=ETH returned ${pool.asset}`)
-
-  const projected = (await mcp('tools/call', { name: 'get_network_status', arguments: { fields: ['bond_reward_rune'] } })).value
-  assert.deepEqual(Object.keys(JSON.parse(projected.result.content[0].text)), ['bond_reward_rune'], 'get_network_status fields must project')
-
-  // A wrong-typed parameter is an error, never a silently different result.
-  const wrongType = (await mcp('tools/call', { name: 'get_network_status', arguments: { fields: 'bond_reward_rune' } })).value
-  assert.equal(wrongType.error?.code, -32602, 'a non-array fields value must be rejected, not ignored')
-
-  for (const tool of tools) {
-    assert.deepEqual(
-      tool.annotations,
-      { readOnlyHint: true, destructiveHint: false, idempotentHint: true, openWorldHint: true },
-      `${tool.name} needs explicit read-only behavioral annotations`
-    )
+  // Every JSON example in the actual guide must use a real core tool and the
+  // correct input types; tool-list/schema tests alone missed the old examples.
+  for (const path of ['/developers/quickstart.md', '/developers/mcp.md', '/developers.md', '/llms-full.md', '/AGENTS.md']) {
+    const { body } = await request(path)
+    assert.ok(body.includes(CORE_ENDPOINT), `${path} must use the canonical endpoint`)
+    assert.equal(body.includes('"name": "get_swap_quote"'), false, `${path} must not teach the retired tool`)
+    assert.equal(body.includes('ui://thorchain-swap/swap-quote'), false, `${path} must not advertise an unsupported MCP App`)
+    assert.equal(body.includes('org.thorchain.swap/thorchain-swap'), false, `${path} must not promote the retired Registry entry`)
   }
-
-  const live = (await mcp('tools/call', { name: 'get_network_status', arguments: {} })).value
-  assert.equal(live.error, undefined, `read-only get_network_status should dispatch successfully: ${JSON.stringify(live.error)}`)
-  assert.equal(live.result?.isError, undefined, 'get_network_status upstream request should succeed')
-  assert.ok(Array.isArray(live.result?.content) && live.result.content[0]?.type === 'text')
-
-  const invalidParams = (await mcp('tools/call', { arguments: {} })).value
-  assert.equal(invalidParams.error?.code, -32602)
-  const invalidMethod = (await mcp('not/a/method')).value
-  assert.equal(invalidMethod.error?.code, -32601)
 }
 
 // The server offers to negotiate 2025-03-26 and 2024-11-05, revisions where a
 // JSON-RPC batch is a valid request, so a batch must work rather than fail the
 // whole call.
-async function testJsonRpcBatchesAreAnswered() {
-  const { response, body } = await request('/mcp', {
+async function testMcpClientCompatibility() {
+  // Fetch follows 308 automatically; this covers a real client rather than
+  // only inspecting a Location header. Core SSE decoding is mandatory.
+  const id = ++rpcId
+  const response = await fetch(`${BASE_URL}/mcp`, {
     method: 'POST',
-    headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
-    body: JSON.stringify([
-      { jsonrpc: '2.0', id: ++rpcId, method: 'ping' },
-      { jsonrpc: '2.0', method: 'notifications/initialized', params: {} },
-      { jsonrpc: '2.0', id: ++rpcId, method: 'tools/list' }
-    ])
+    signal: AbortSignal.timeout(timeoutMs),
+    headers: { 'Content-Type': 'application/json', Accept: 'application/json, text/event-stream' },
+    body: JSON.stringify({
+      jsonrpc: '2.0',
+      id,
+      method: 'initialize',
+      params: {
+        protocolVersion: '2025-06-18',
+        capabilities: {},
+        clientInfo: { name: 'fetch-redirect-client', version: '1.0' }
+      }
+    })
   })
-  assert.equal(response.status, 200, `a JSON-RPC batch should be answered; body=${body.slice(0, 200)}`)
-  const responses = JSON.parse(body)
-  assert.ok(Array.isArray(responses), 'a batch must be answered with an array')
-  assert.equal(responses.length, 2, 'notifications carry no response, requests do')
-  assert.ok(responses.some(entry => entry.result?.tools?.length > 0), 'the batched tools/list must be answered')
+  assert.equal(response.status, 200)
+  assert.equal(response.url, CORE_ENDPOINT)
+  assert.match(response.headers.get('content-type') || '', /^text\/event-stream|^application\/json/)
+  assert.equal(parseRpcResponse(await response.text(), id).result?.serverInfo?.name, 'thorchain-mcp')
+  const doc = await request('/developers/mcp.md')
+  assert.ok(doc.body.includes('text/event-stream'), 'the guide must teach the Accept/SSE requirement')
+  assert.match(doc.body, /CORS/i, 'the guide must disclose the upstream browser limitation')
+  // We do not retain the old server\'s JSON-only or batch guarantees: protocol
+  // support belongs to core and is discovered with initialize.
 }
 
 // The registry record is published by hand, so a tool-surface bump that forgets
 // server.json would list a version the server no longer runs.
-function testRegistryRecordMatchesServerVersion() {
+async function testRegistryRecordMatchesCanonicalServer() {
   const root = fileURLToPath(new URL('../', import.meta.url))
   const record = JSON.parse(readFileSync(`${root}server.json`, 'utf8'))
-  const source = readFileSync(`${root}src/lib/agent/mcp-tools.ts`, 'utf8')
-  const declared = source.match(/version: '([^']+)'/)?.[1]
-
-  assert.ok(declared, 'MCP_SERVER_INFO must declare a version')
-  assert.equal(record.version, declared, 'server.json version must match MCP_SERVER_INFO.version')
-  assert.equal(record.remotes?.[0]?.url, `${CANONICAL_ORIGIN}/mcp`, 'server.json must point at the live endpoint')
+  const published = (await json('https://registry.modelcontextprotocol.io/v0.1/servers/org.thorchain%2Fthorchain-mcp/versions/latest')).value.server
+  assert.equal(record.name, CORE_REGISTRY)
+  assert.equal(record.name, published.name)
+  // The local reference is a published version, not a pin on the deployment.
+  // A subsequent core release must not break an otherwise valid UI build.
+  const reference = (
+    await json(`https://registry.modelcontextprotocol.io/v0.1/servers/org.thorchain%2Fthorchain-mcp/versions/${encodeURIComponent(record.version)}`)
+  ).value.server
+  assert.equal(record.version, reference.version)
+  assert.equal(record.name, reference.name)
+  assert.deepEqual(record.remotes, published.remotes)
+  assert.equal(record.repository.url, 'https://gitlab.com/thorchain/thorchain-mcp')
 }
 
 async function testDiscoveryDocsAreTruthful() {
@@ -622,7 +687,7 @@ async function testMcpInitializeAndDiscoveryContentTypes() {
     clientInfo: { name: 'contract-test', version: '1.0' }
   })
   assert.equal(init.value.result?.protocolVersion, '2025-06-18')
-  assert.match(init.value.result?.instructions || '', /never holds keys, signs, or submits transactions/i)
+  assert.equal(init.value.result?.serverInfo?.name, 'thorchain-mcp')
 
   const expected = new Map([
     ['/llms.txt', /^text\/markdown/],
@@ -638,7 +703,7 @@ async function testMcpInitializeAndDiscoveryContentTypes() {
     ['/.well-known/mcp/server-card.json', /^application\/mcp-server-card\+json/],
     ['/.well-known/ai-catalog.json', /^application\/json/],
     ['/.well-known/agent-skills/index.json', /^application\/json/],
-    ['/.well-known/mcp.json', /^application\/json/],
+    ['/.well-known/mcp.json', /^application\/mcp-server-card\+json/],
     ['/developers/quickstart.md', /^text\/markdown/],
     ['/developers/mcp.md', /^text\/markdown/]
   ])
@@ -659,12 +724,13 @@ const tests = [
   testSdkPackagesArePublishedAndPointHome,
   testArdCatalogEnumeratesTruthfulResources,
   testOpenApiIsAnonymousAndTruthful,
+  testDeveloperSectionIndex,
   testApiCatalogConformsToRfc9727,
   testMcpServerCardAliasesAndAgreement,
   testMcpManifestIsReachableFromEveryStandardPath,
   testMcpToolsAreExplicitlySafeAndCallable,
-  testJsonRpcBatchesAreAnswered,
-  testRegistryRecordMatchesServerVersion,
+  testMcpClientCompatibility,
+  testRegistryRecordMatchesCanonicalServer,
   testDiscoveryDocsAreTruthful,
   testMcpInitializeAndDiscoveryContentTypes
 ]
