@@ -6,6 +6,7 @@ import { binanceWallet } from '@tcswap/wallets/binance'
 import { braveWallet, getBraveEVMProvider, getBraveSolanaProvider, watchBraveAccounts } from '@tcswap/wallets/brave'
 import { evmWallet } from '@tcswap/wallets/evm-extensions'
 import { exodusWallet } from '@tcswap/wallets/exodus'
+import { freighterWallet } from '@tcswap/wallets/freighter'
 import { keplrWallet } from '@tcswap/wallets/keplr'
 import { keystoreWallet } from '@tcswap/wallets/keystore'
 import { ledgerWallet } from '@tcswap/wallets/ledger'
@@ -31,6 +32,7 @@ const defaultWallets = {
   ...braveWallet,
   ...evmWallet,
   ...exodusWallet,
+  ...freighterWallet,
   ...keplrWallet,
   ...keystoreWallet,
   ...ledgerWallet,
@@ -157,6 +159,9 @@ export async function connectWallet(option: WalletOption, chains: Chain[], confi
       return connectEach(c => uSwap.connectTronLink(c))
     case WalletOption.EXODUS:
       return uSwap.connectExodus(chains)
+    case WalletOption.FREIGHTER:
+      // `silent` restores a session on page load without opening the extension's popup.
+      return uSwap.connectFreighter(chains, { silent: config?.silent })
     case WalletOption.WALLETCONNECT:
       // One session — one QR scan — for every chain; `restoreOnly` reuses a stored one rather than show a QR code.
       return uSwap.connectWalletconnect(chains, { metadata: walletConnectMetadata, restoreOnly: config?.restoreOnly })
@@ -287,6 +292,7 @@ export const supportedChains = {
   [WalletOption.COINBASE_WEB]: evmWallet.connectEVMWallet.supportedChains,
   [WalletOption.EIP6963]: evmWallet.connectEVMWallet.supportedChains,
   [WalletOption.EXODUS]: exodusWallet.connectExodus.supportedChains,
+  [WalletOption.FREIGHTER]: freighterWallet.connectFreighter.supportedChains,
   [WalletOption.KEPLR]: keplrWallet.connectKeplr.supportedChains,
   [WalletOption.KEYSTORE]: keystoreWallet.connectKeystore.supportedChains,
   [WalletOption.LEAP]: keplrWallet.connectKeplr.supportedChains,

@@ -126,7 +126,6 @@ const tronMessage = (message?: string) => {
 
 // Whether a route's transaction can be signed by a wallet connected here, judged before a preview
 // exists: a signed_transaction is built for its sell chain, and only these kinds have a signer.
-// Stellar is left out until a Stellar wallet can be connected here (the signing itself is in place
-// above). A token sold on Tron needs an allowance first, and the approve flow before the swap is EVM-only.
+// A token sold on Tron needs an allowance first, and the approve flow before the swap is EVM-only.
 export const canSignOn = (chain: Chain, isEvm: boolean, needsApproval: boolean): boolean =>
-  isEvm || chain === Chain.Solana || (chain === Chain.Tron && !needsApproval)
+  isEvm || chain === Chain.Solana || chain === Chain.Stellar || (chain === Chain.Tron && !needsApproval)

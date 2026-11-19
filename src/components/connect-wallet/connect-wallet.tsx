@@ -11,6 +11,7 @@ import { Ledger } from '@/components/connect-wallet/ledger'
 import { Trezor } from '@/components/connect-wallet/trezor'
 import { WalletIcon } from '@/components/wallet-icon'
 import { Icon } from '@/components/icons'
+import { useFreighterInstalled } from '@/hooks/use-freighter'
 import { useWallets } from '@/hooks/use-wallets'
 import { cn } from '@/lib/utils'
 import { preloadWalletConnect, walletConnectEnabled } from '@/lib/wallets'
@@ -39,14 +40,18 @@ export const ConnectWallet = ({ isOpen, onOpenChange, chain }: ConnectWalletProp
     []
   )
 
+  const freighterInstalled = useFreighterInstalled()
+  // Freighter is detected asynchronously; every other wallet by a global it injects.
+  const isInstalled = (option: WalletOption) => (option === WalletOption.FREIGHTER ? !!freighterInstalled : isWalletAvailable(option))
+
   const walletGroups = useMemo(() => {
     const sortByLabel = (a: WalletParams, b: WalletParams) => a.label.localeCompare(b.label)
 
     // Installed wallets first, the ones still to install after, each half alphabetical.
     const sortGroup = (type: WalletType) => {
       const group = WALLETS.filter(w => w.type === type)
-      const installed = group.filter(w => isWalletAvailable(w.option)).sort(sortByLabel)
-      const others = group.filter(w => !isWalletAvailable(w.option)).sort(sortByLabel)
+      const installed = group.filter(w => isInstalled(w.option)).sort(sortByLabel)
+      const others = group.filter(w => !isInstalled(w.option)).sort(sortByLabel)
       return [...installed, ...others]
     }
 
@@ -59,7 +64,9 @@ export const ConnectWallet = ({ isOpen, onOpenChange, chain }: ConnectWalletProp
       { key: 'hardware', label: t('hardware'), wallets: sortGroup(WalletType.hardware) },
       { key: 'mobile', label: t('mobile'), wallets: mobile }
     ].filter(group => group.wallets.length > 0)
-  }, [t])
+    // `isInstalled` changes only with Freighter's answer.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [t, freighterInstalled])
 
   const onSelectWallet = (wallet: WalletParams) => {
     setSelectedWallet(prev => (prev === wallet ? undefined : wallet))
@@ -80,11 +87,11 @@ export const ConnectWallet = ({ isOpen, onOpenChange, chain }: ConnectWalletProp
   const walletList = (wallets: WalletParams[]) => {
     return wallets.map(wallet => {
       const isConnected = connectedWallets.find(w => w === wallet.option)
-      const isInstalled = isWalletAvailable(wallet.option)
+      const isWalletInstalled = isInstalled(wallet.option)
       const isSelected = wallet === selectedWallet
       const isHighlighted = isWalletHighlighted(wallet.option)
       const isClickable =
-        isInstalled && isHighlighted && (!isConnected || wallet.option === WalletOption.LEDGER || wallet.option === WalletOption.TREZOR)
+        isWalletInstalled && isHighlighted && (!isConnected || wallet.option === WalletOption.LEDGER || wallet.option === WalletOption.TREZOR)
 
       return (
         <div
@@ -103,7 +110,7 @@ export const ConnectWallet = ({ isOpen, onOpenChange, chain }: ConnectWalletProp
           <div className="flex-1">
             <div className="text-txt-high-contrast font-medium">{wallet.label}</div>
             <div className="text-xs">
-              {isInstalled ? (
+              {isWalletInstalled ? (
                 isConnected ? (
                   <span className="text-green-contrast">{t('connected')}</span>
                 ) : (

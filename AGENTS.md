@@ -81,10 +81,11 @@ Two-component architecture:
     it into the memo.
 - `src/lib/execute-route.ts` — pays a committed route from a connected wallet, by `execution.method`: `thorchain_deposit` through the SDK's
   protocol plugin, `transfer` as a plain transfer to the order's deposit address, `signed_transaction` by signing the server's transaction (EVM
-  and Solana through the SDK's `evm`/`solana` plugins, Tron by sign + broadcast). Stellar signing is in place but no Stellar wallet is offered
-  yet (Freighter is in the SDK, not wired in), and a TRC-20 sell that needs an allowance is not supported; `pickRoute` in
-  `src/hooks/use-quote.ts` leaves such routes out, and with no wallet connected picks a deposit-address route when one exists, falling back
-  to a wallet route so the form shows a price and asks for the wallet.
+  and Solana through the SDK's `evm`/`solana` plugins, Tron by sign + broadcast, Stellar by the toolbox's `signAndBroadcastTransaction`). A
+  TRC-20 sell that needs an allowance is not supported; `pickRoute` in `src/hooks/use-quote.ts` leaves such routes out, and with no wallet
+  connected picks a deposit-address route when one exists, falling back to a wallet route so the form shows a price and asks for the wallet.
+- Freighter (`@tcswap/wallets/freighter`, `connectFreighter`) is the Stellar wallet. It injects no global, so the connect dialog detects it
+  asynchronously (`useFreighterInstalled`); a reload restores it with `silent: true`, which never opens the extension's popup.
 - Memoless (External Wallet Mode) is the aggregator's `THORCHAIN_MEMOLESS` provider, nothing else: native coins only, at least 0.002 of the
   asset, the exact amount and deposit address come from `commit`. Limit orders, and cancelling or modifying one, need a connected wallet — their
   memo is the app's own, which the memoless rail has no room for.

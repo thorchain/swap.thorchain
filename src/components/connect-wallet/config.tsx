@@ -35,6 +35,7 @@ export const ALL_CHAINS = [
   Chain.Ripple,
   Chain.Robinhood,
   Chain.Solana,
+  Chain.Stellar,
   Chain.THORChain,
   Chain.Tron,
   Chain.Zcash
@@ -106,6 +107,14 @@ export const WALLETS: WalletParams[] = [
     option: WalletOption.EXODUS,
     link: 'https://www.exodus.com/browser-extension',
     supportedChains: supportedChains[WalletOption.EXODUS]
+  },
+  {
+    key: 'freighter',
+    type: WalletType.browser,
+    label: 'Freighter',
+    option: WalletOption.FREIGHTER,
+    link: 'https://www.freighter.app',
+    supportedChains: supportedChains[WalletOption.FREIGHTER]
   },
   {
     key: 'keplr',
@@ -192,6 +201,8 @@ export const isWalletAvailable = (option: WalletOption) => {
     case WalletOption.TREZOR:
     case WalletOption.KEYSTORE: return true
     case WalletOption.WALLETCONNECT: return walletConnectEnabled()
+    // Freighter injects no global: it answers a message, so it is detected asynchronously (useFreighterInstalled).
+    case WalletOption.FREIGHTER: return false
 
     case WalletOption.BRAVE:
       return getBraveSolanaProvider() || getBraveEVMProvider()

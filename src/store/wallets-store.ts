@@ -113,7 +113,9 @@ export const useWalletStore = create<WalletState>()(
 
           const accounts: WalletAccount[] = []
           // WalletConnect reuses its stored session; with none left it stays disconnected rather than show a QR code.
-          const config = w.provider === WalletOption.WALLETCONNECT ? { restoreOnly: true } : undefined
+          // Freighter likewise restores silently: no popup on page load, and a revoked or locked wallet stays disconnected.
+          const config =
+            w.provider === WalletOption.WALLETCONNECT ? { restoreOnly: true } : w.provider === WalletOption.FREIGHTER ? { silent: true } : undefined
           if (defaultChains.length > 0) accounts.push(...(await getAccounts(w.provider, defaultChains, config)))
           for (const chain of pathChains) {
             accounts.push(...(await getAccounts(w.provider, [chain], { derivationPath: w.paths?.[chain] })))
