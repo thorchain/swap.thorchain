@@ -81,8 +81,8 @@ export const resolvePriceImpact = (quote?: QuoteResponseRoute, rateFrom?: USwapN
 const PROVIDER_LABELS: Record<string, string> = {
   NEAR: 'Near',
   ONEINCH: '1inch',
-  HOUDINI: 'Houdini Swap',
-  HOUDINI_PRIVATE: 'Houdini Swap',
+  HOUDINI: 'Houdini',
+  HOUDINI_PRIVATE: 'Houdini',
   LIFI: 'LI.FI',
   CIRCLE: 'Circle CCTP',
   JUPITER: 'Jupiter',
