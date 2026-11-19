@@ -5,7 +5,7 @@ import { useTranslations } from 'next-intl'
 import { useQuery } from '@tanstack/react-query'
 import { AssetValue, Chain, FeeOption, getChainConfig, USwapNumber } from '@tcswap/core'
 import { ProviderName } from '@tcswap/helpers'
-import { type InboundAddressesItem, USwapApi } from '@tcswap/helpers/api'
+import { type InboundAddressesItem } from '@tcswap/helpers/api'
 import { AlertTriangle, LoaderCircle } from 'lucide-react'
 import { toast } from 'sonner'
 import { Credenza, CredenzaContent, CredenzaHeader, CredenzaTitle } from '@/components/ui/credenza'
@@ -17,15 +17,14 @@ import { DecimalInput } from '@/components/decimal/decimal-input'
 import { DecimalText } from '@/components/decimal/decimal-text'
 import { useDialog } from '@/components/global-dialog'
 import { Asset } from '@/components/swap/asset'
-import { InstantSwapChannelDialog } from '@/components/swap/instant-swap-channel-dialog'
 import { SwapError } from '@/components/swap/swap-error'
 import { SwapLimitExpiry } from '@/components/swap/swap-limit-expiry'
 import { GenericButton } from '@/components/generic-button'
 import { buttonVariants } from '@/components/theme-button'
-import { useMemolessAssets } from '@/hooks/use-memoless-assets'
-import { useIsLimitSwapPaused, useIsMemolessHalted, useLimitSwapMaxAge } from '@/hooks/use-mimir'
+import { useIsLimitSwapPaused, useLimitSwapMaxAge } from '@/hooks/use-mimir'
 import { useSelectedAccount } from '@/hooks/use-wallets'
 import { getInboundAddresses, getLimitSwaps, getTxStatus } from '@/lib/api'
+import { QuoteChangedError } from '@/lib/aggregator'
 import { placeLimitOrder } from '@/lib/place-limit-order'
 import { readableError } from '@/lib/errors'
 import { generateId } from '@/lib/utils'
@@ -68,7 +67,6 @@ interface SwapLimitCancelProps {
     provider?: ProviderName
     limitPrice?: string
     limitSwapMemo?: string
-    isMemoless?: boolean
   }
 }
 
@@ -77,8 +75,6 @@ export const SwapLimitCancel = ({ isOpen, onOpenChange, mode, transaction }: Swa
   const uSwap = getUSwap()
   const selectedAccount = useSelectedAccount()
   const { openDialog } = useDialog()
-  const { assets: memolessAssets } = useMemolessAssets()
-  const isMemolessHalted = useIsMemolessHalted()
   const maxExpiryBlocks = useLimitSwapMaxAge()
   const isLimitSwapPaused = useIsLimitSwapPaused()
 
@@ -109,7 +105,7 @@ export const SwapLimitCancel = ({ isOpen, onOpenChange, mode, transaction }: Swa
   const [awaitingRefund, setAwaitingRefund] = useState(false)
   const [placing, setPlacing] = useState(false)
 
-  const { assetFrom, assetTo, amountFrom, amountTo, addressFrom, addressTo, hash, provider, limitPrice, limitSwapMemo, isMemoless } = transaction
+  const { assetFrom, assetTo, amountFrom, amountTo, addressFrom, addressTo, hash, provider, limitPrice, limitSwapMemo } = transaction
 
   // THORChain-native orders (RUNE, TCY, RUJI, secured assets) are placed with MsgDeposit and have
   // no inbound address to send to - they must be cancelled the same way.
@@ -189,11 +185,7 @@ export const SwapLimitCancel = ({ isOpen, onOpenChange, mode, transaction }: Swa
 
   const inboundAddress = inboundAddresses.find(addr => addr.chain === assetFrom.chain)
 
-  const memolessAsset = memolessAssets?.find(a => a.asset === assetFrom.identifier)
   const walletMatchesChain = !!selectedAccount && selectedAccount.network === assetFrom.chain
-  // HALTMEMOLESS closes the deposit-channel route, so a memoless order can only be cancelled or
-  // modified from a connected wallet on its own chain until the network lifts the halt.
-  const useMemolessPath = !!isMemoless && !!memolessAsset && !walletMatchesChain && !isMemolessHalted
 
   const addressMatch = !addressFrom || !selectedAccount || selectedAccount.address.toLowerCase() === addressFrom.toLowerCase()
 
@@ -335,6 +327,7 @@ export const SwapLimitCancel = ({ isOpen, onOpenChange, mode, transaction }: Swa
       .then(({ hash: newHash, route }) => {
         setTransaction({
           uid: generateId(),
+          uuid: route.uuid,
           provider: routeProvider,
           chainId: getChainConfig(from.chain).chainId,
           hash: newHash,
@@ -356,7 +349,13 @@ export const SwapLimitCancel = ({ isOpen, onOpenChange, mode, transaction }: Swa
         onOpenChange(false)
       })
       .catch((err: unknown) => {
-        setError(new Error(readableError(err, t('limitCancel.error.replaceFailed'))))
+        setError(
+          new Error(
+            err instanceof QuoteChangedError
+              ? t(err.reason === 'rate_changed' ? 'toast.priceChangedRetry' : 'toast.quoteExpiredRetry')
+              : readableError(err, t('limitCancel.error.replaceFailed'))
+          )
+        )
       })
       .finally(() => setPlacing(false))
   }, [awaitingRefund, placing, replacement, selectedAccount, markReplacementConsumed, setReplacementOrder, setTransaction, onOpenChange, t])
@@ -364,8 +363,7 @@ export const SwapLimitCancel = ({ isOpen, onOpenChange, mode, transaction }: Swa
   const targetReady = cancelsOnWire || !!newTargetBaseAmount
   const inboundReady = isThorNative || (!!inboundAddress && !inboundAddress.halted && !inboundAddress.chain_trading_paused)
   const walletReady = !!selectedAccount && walletMatchesChain && addressMatch && inboundReady
-  const memolessReady = useMemolessPath && !!memolessAsset
-  const canSubmit = !!limitSwapMemo && targetReady && !stillConfirming && (walletReady || memolessReady)
+  const canSubmit = !!limitSwapMemo && targetReady && !stillConfirming && walletReady
 
   const onSubmit = async () => {
     if (!canSubmit || !limitSwapMemo) return
@@ -389,50 +387,6 @@ export const SwapLimitCancel = ({ isOpen, onOpenChange, mode, transaction }: Swa
         : newTarget === '0'
           ? createCancelLimitSwapMemo(limitSwapMemo, amountFrom, assetFrom, assetTo)
           : createModifyLimitSwapMemo(limitSwapMemo, amountFrom, assetFrom, assetTo, newTarget)
-
-      if (useMemolessPath && memolessAsset) {
-        // Memoless minimum: 10^-(decimals - 5) in source units.
-        const requestedAmount = new USwapNumber(10 ** -(memolessAsset.decimals - 5)).toSignificant()
-
-        const reg = await USwapApi.registerMemoless(
-          { asset: assetFrom.identifier, memo, requested_in_asset_amount: requestedAmount },
-          { retry: { maxRetries: 0 } }
-        )
-
-        if (!reg.suggested_in_asset_amount) throw new Error(t('error.calculateSuggestedAmount'))
-
-        const preflight = await USwapApi.preflightMemoless({
-          asset: assetFrom.identifier,
-          reference: reg.reference,
-          amount: reg.suggested_in_asset_amount
-        })
-
-        if (!preflight.data.qr_code_data_url || !preflight.data.inbound_address) {
-          throw new Error(t('error.preflightMemoless'))
-        }
-
-        const expiration = preflight.data.seconds_remaining ? new Date().getTime() / 1000 + preflight.data.seconds_remaining : undefined
-
-        if (!isReplacing) onOpenChange(false)
-        openDialog(InstantSwapChannelDialog, {
-          assetFrom,
-          assetTo,
-          channel: {
-            qrCodeData: preflight.data.qr_code_data_url,
-            address: preflight.data.inbound_address,
-            value: reg.suggested_in_asset_amount,
-            expiration
-          }
-        })
-        toast.success(
-          cancelsOnWire
-            ? t('limitCancel.toast.sendToCancel', { amount: reg.suggested_in_asset_amount, ticker: assetFrom.ticker })
-            : t('limitCancel.toast.sendToModify', { amount: reg.suggested_in_asset_amount, ticker: assetFrom.ticker })
-        )
-        seedReplacementOrder()
-        setAwaitingRefund(true)
-        return
-      }
 
       if (!selectedAccount) return
 
@@ -494,23 +448,15 @@ export const SwapLimitCancel = ({ isOpen, onOpenChange, mode, transaction }: Swa
       warnings.push(t('limitCancel.warning.expiryNeedsReplace', { chain: chainLabel(assetFrom.chain) }))
     }
 
-    if (useMemolessPath) {
-      warnings.push(t('limitCancel.warning.memolessDeposit', { mode, chain: chainLabel(assetFrom.chain) }))
-    } else if (isMemoless && memolessAsset && isMemolessHalted && !walletMatchesChain) {
-      warnings.push(t('limitCancel.warning.memolessHalted', { mode, chain: chainLabel(assetFrom.chain) }))
-    } else if (!selectedAccount) {
-      if (isMemoless && memolessAsset) {
-        warnings.push(t('limitCancel.warning.connectOrMemoless', { mode, chain: chainLabel(assetFrom.chain) }))
-      } else {
-        warnings.push(t('limitCancel.warning.connect', { mode, chain: chainLabel(assetFrom.chain) }))
-      }
+    if (!selectedAccount) {
+      warnings.push(t('limitCancel.warning.connect', { mode, chain: chainLabel(assetFrom.chain) }))
     } else if (selectedAccount.network !== assetFrom.chain) {
       warnings.push(t('limitCancel.warning.switch', { mode, chain: chainLabel(assetFrom.chain) }))
     } else if (addressFrom && selectedAccount.address.toLowerCase() !== addressFrom.toLowerCase()) {
       warnings.push(t('limitCancel.warning.addressMismatch'))
     }
 
-    if (!useMemolessPath && !isThorNative && (inboundAddress?.halted || inboundAddress?.chain_trading_paused)) {
+    if (!isThorNative && (inboundAddress?.halted || inboundAddress?.chain_trading_paused)) {
       warnings.push(t('limitCancel.warning.tradingPaused', { chain: chainLabel(assetFrom.chain) }))
     }
 
@@ -685,9 +631,9 @@ export const SwapLimitCancel = ({ isOpen, onOpenChange, mode, transaction }: Swa
             size="large"
             className="w-full"
             onClick={onSubmit}
-            disabled={awaitingRefund || !canSubmit || submitting || (loading && !useMemolessPath)}
+            disabled={awaitingRefund || !canSubmit || submitting || loading}
           >
-            {(awaitingRefund || submitting || (loading && !useMemolessPath)) && <LoaderCircle size={20} className="animate-spin" />}
+            {(awaitingRefund || submitting || loading) && <LoaderCircle size={20} className="animate-spin" />}
             <span>{buttonLabel}</span>
           </GenericButton>
         </div>

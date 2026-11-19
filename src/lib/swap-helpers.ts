@@ -78,13 +78,25 @@ export const resolvePriceImpact = (quote?: QuoteResponseRoute, rateFrom?: USwapN
   return toPriceRatio && toPriceRatio.lte(hundredPercent) ? hundredPercent.sub(toPriceRatio) : undefined
 }
 
+const PROVIDER_LABELS: Record<string, string> = {
+  NEAR: 'Near',
+  ONEINCH: '1inch',
+  HOUDINI: 'Houdini Swap',
+  HOUDINI_PRIVATE: 'Houdini Swap',
+  LIFI: 'LI.FI',
+  CIRCLE: 'Circle CCTP',
+  JUPITER: 'Jupiter',
+  UNISWAP: 'Uniswap',
+  PANCAKESWAP_API: 'PancakeSwap',
+  BARTER: 'Barter',
+  STELLAR_DEX: 'Stellar DEX',
+  AXELAR_ITS: 'Axelar'
+}
+
 export const providerLabel = (provider: ProviderName): string => {
   if (provider === 'THORCHAIN' || provider === 'THORCHAIN_STREAMING') return 'THORChain'
   if (provider === 'MAYACHAIN' || provider === 'MAYACHAIN_STREAMING') return 'Maya Protocol'
-  if (provider === 'NEAR') return 'Near'
-  if (provider === 'ONEINCH') return '1inch'
-  if (provider === 'HOUDINI') return 'Houdini Swap'
-  return 'Unknown'
+  return PROVIDER_LABELS[provider] ?? 'Unknown'
 }
 
 export const formatExpiration = (seconds: number) => {
@@ -147,11 +159,23 @@ export function normalizeThorBankDenom(denom: string): string | null {
   return `${Chain.THORChain}.${lower.toUpperCase()}`
 }
 
+// What a memoless THORChain swap can sell (the aggregator's THORCHAIN_MEMOLESS): a chain's own coin
+// that THORChain lists, paid as a plain transfer - never RUNE, a token, or a secured or trade asset.
+export const isMemolessCoin = (asset?: Asset): boolean =>
+  !!asset &&
+  !asset.address &&
+  asset.chain !== Chain.THORChain &&
+  !asset.isSecuredAsset &&
+  !asset.isTradeAsset &&
+  (asset.providers ?? []).includes(ProviderName.THORCHAIN)
+
 export const isMayaProvider = (provider?: string) => provider === 'MAYACHAIN' || provider === 'MAYACHAIN_STREAMING'
 
-// A private swap routed through Houdini: a plain transfer to a deposit address, priced floating
-// and settled off-chain, so slippage protection and price impact do not apply.
-export const isHoudiniProvider = (provider?: string) => provider === 'HOUDINI'
+// A swap routed through Houdini: a plain transfer to a deposit address, priced floating and settled
+// off-chain, so slippage protection and price impact do not apply. The aggregator's only Houdini
+// provider is HOUDINI_PRIVATE; HOUDINI is the name the same private routes had on /v1, kept for the
+// swaps stored back then.
+export const isHoudiniProvider = (provider?: string) => provider === ProviderName.HOUDINI || provider === ProviderName.HOUDINI_PRIVATE
 
 export const isPrivateSend = (isPrivateSwap: boolean, from?: { identifier: string }, to?: { identifier: string }) =>
   isPrivateSwap && !!from && from.identifier === to?.identifier
@@ -234,9 +258,10 @@ export const isAssetHalted = (asset: Asset, mimir: Mimir, mayaMimir: Mimir): boo
     [ProviderName.MAYACHAIN]: isChainHalted(mayaMimir, chain)
   }
 
-  // `providers` can be absent on an asset restored from an older persisted store. Only the
-  // native protocols raise halt flags; a listing elsewhere (Houdini) neither halts nor un-halts.
-  const providers = (asset.providers ?? []).filter(provider => provider in haltedOn)
+  // `providers` can be absent on an asset restored from an older persisted store. Only the native
+  // protocols raise halt flags, so an asset another public provider lists too is still swappable
+  // through it. The private rail is a different tab: its listing neither halts nor un-halts.
+  const providers = (asset.providers ?? []).filter(provider => provider !== ProviderName.HOUDINI_PRIVATE)
 
   return providers.length > 0 && providers.every(provider => haltedOn[provider])
 }

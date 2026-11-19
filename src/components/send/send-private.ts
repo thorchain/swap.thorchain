@@ -2,14 +2,13 @@ import { useMemo } from 'react'
 import { useQuery } from '@tanstack/react-query'
 import { Chain } from '@tcswap/core'
 import { USwapError } from '@tcswap/helpers'
-import { AppConfig } from '@/config'
+import { getPreview, getRate, PRIVATE_PROVIDER, resolveSlippage } from '@/lib/aggregator'
 import { assetIdentifierStr } from '@/components/send/send-helpers'
 import { Asset } from '@/components/swap/asset'
 import { useAssets } from '@/hooks/use-assets'
 import { useDebouncedValue } from '@/hooks/use-debounced-value'
 import { isQuoteFor } from '@/hooks/use-quote'
 import { TokenBalance } from '@/hooks/use-wallet-balances'
-import { getQuotes } from '@/lib/api'
 import { resolveQuoteError } from '@/lib/errors'
 
 // The Send dialog's Private Send tab is the swap form's private send (see docs/private-swaps.md): a
@@ -21,32 +20,40 @@ export const usePrivateSendAssetLookup = () => {
   return useMemo(() => {
     const byId = new Map<string, Asset>()
     for (const asset of assets ?? []) {
-      if (asset.providers.includes(AppConfig.privateProvider) && asset.chain !== Chain.Ripple) byId.set(asset.identifier.toLowerCase(), asset)
+      if (asset.providers.includes(PRIVATE_PROVIDER) && asset.chain !== Chain.Ripple) byId.set(asset.identifier.toLowerCase(), asset)
     }
     return (token: TokenBalance) => byId.get(assetIdentifierStr(token.balance).toLowerCase())
   }, [assets])
 }
 
-export const privateSendQuote = (asset: Asset, amount: string, sourceAddress: string, destinationAddress?: string, destinationMemo?: string) =>
-  getQuotes({
-    sellAsset: asset.identifier,
-    buyAsset: asset.identifier,
-    sellAmount: amount,
-    // Without a destination this is the indicative price, as on the swap form; with one it places
-    // the Houdini order, refunded to the sending wallet so the aggregator can pick routes that need one.
-    ...(destinationAddress && { sourceAddress, refundAddress: sourceAddress, destinationAddress }),
-    // The memo / tag an exchange deposit address on a memo chain needs; Houdini passes it on with the payout.
-    ...(destinationAddress && destinationMemo && { destinationMemo }),
-    dry: !destinationAddress,
-    slippage: 99,
-    providers: [AppConfig.privateProvider]
-  })
-    .then(routes => routes[0])
-    .catch(error => {
-      throw error instanceof USwapError ? resolveQuoteError(error) : error
-    })
+export const privateSendQuote = (asset: Asset, amount: string, sourceAddress: string, destinationAddress?: string, destinationMemo?: string) => {
+  const pair = { sellAsset: asset.identifier, buyAsset: asset.identifier, sellAmount: amount, slippage: resolveSlippage(undefined) }
 
-// The indicative quote shown while the amount is typed; the order itself is placed on Send.
+  // Without a destination this is the indicative price, as on the swap form: a comparison on the
+  // private rail. With one it is the preview of the Houdini order itself, named by its provider,
+  // refunded to the sending wallet (so the aggregator can pick routes that need one) and paid by a
+  // transfer to its deposit address. The memo / tag is the one an exchange deposit address on a memo
+  // chain needs; Houdini passes it on with the payout.
+  const quote = destinationAddress
+    ? getPreview(
+        {
+          ...pair,
+          provider: PRIVATE_PROVIDER,
+          sourceAddress,
+          refundAddress: sourceAddress,
+          destinationAddress,
+          ...(destinationMemo && { destinationMemo })
+        },
+        'transfer'
+      )
+    : getRate({ ...pair, privacy: ['basic'] }).then(routes => routes[0])
+
+  return quote.catch(error => {
+    throw error instanceof USwapError ? resolveQuoteError(error) : error
+  })
+}
+
+// The indicative quote shown while the amount is typed; the order itself is previewed and committed on Send.
 export const usePrivateSendQuote = (asset: Asset | undefined, amount: string, sourceAddress: string, enabled: boolean) => {
   const debouncedAmount = useDebouncedValue(amount, 500)
   const settled = debouncedAmount === amount && parseFloat(amount) > 0

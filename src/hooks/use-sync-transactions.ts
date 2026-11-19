@@ -2,9 +2,10 @@ import { useQueries } from '@tanstack/react-query'
 import { getChainConfig } from '@tcswap/core'
 import { ProviderName } from '@tcswap/helpers'
 import { AxiosError } from 'axios'
-import { getTrack } from '@/lib/api'
+import { getLegacySwapStatus, getTrack } from '@/lib/api'
+import { isHoudiniProvider, isMayaProvider } from '@/lib/swap-helpers'
 import { getTransferStatus, transferDropWindow } from '@/lib/transfer-status'
-import { SendTransaction, TxStatus, usePendingTransactions, useSetTransactionDetails, useSetTransactionStatus } from '@/store/transaction-store'
+import { isDepositChannel, SendTransaction, TxStatus, usePendingTransactions, useSetTransactionDetails, useSetTransactionStatus } from '@/store/transaction-store'
 
 // A send still unseen past its drop window becomes 'unknown' - but only after this many inconclusive
 // lookups, at most one per poll interval, so a single erroring or lagging node can't freeze a
@@ -66,38 +67,38 @@ export const useSyncTransactions = () => {
         // is nothing to track. Not for a Houdini order - Houdini watches the deposit itself and
         // reports EXPIRED (or a late deposit's CONFIRMING) as the order's own status, so the local
         // clock must not stop the polling that would deliver it.
-        const isUnpaidChannel = !!tx.qrCodeData && !tx.hash && tx.status === 'not_started'
+        const isUnpaidChannel = isDepositChannel(tx) && !tx.hash && tx.status === 'not_started'
         const isLapsed = !tx.expiration || tx.expiration < new Date().getTime() / 1000
-        const providerTracksExpiry = tx.provider === ProviderName.HOUDINI
+        const providerTracksExpiry = isHoudiniProvider(tx.provider)
 
         if (isUnpaidChannel && isLapsed && !providerTracksExpiry) {
           setTransactionStatus(tx.uid, 'expired')
           return null
         }
 
-        return getTrack({
-          provider: tx.provider,
-          hash: tx.hash,
-          chainId: getChainConfig(tx.assetFrom.chain).chainId,
-          fromAsset: tx.assetFrom.identifier,
-          fromAddress: tx.addressFrom,
-          fromAmount: tx.amountFrom,
-          toAsset: tx.assetTo.identifier,
-          toAddress: tx.addressTo,
-          toAmount: tx.amountTo,
-          depositAddress: tx.addressDeposit,
-          providerSwapId: tx.providerSwapId
-        })
+        if (!tx.uuid) {
+          // Placed before the aggregator tracked by uuid. Only a THORChain or Maya swap that was
+          // broadcast can still be followed, on the protocol itself, by its inbound hash.
+          const isNative = tx.provider === ProviderName.THORCHAIN || tx.provider === ProviderName.THORCHAIN_STREAMING || isMayaProvider(tx.provider)
+          if (typeof tx.hash !== 'string' || !tx.hash || !isNative) {
+            setTransactionStatus(tx.uid, isUnpaidChannel && isLapsed ? 'expired' : 'unknown')
+            return null
+          }
+
+          return getLegacySwapStatus(isMayaProvider(tx.provider), tx.hash).then(status => {
+            setTransactionStatus(tx.uid, status)
+            return status
+          })
+        }
+
+        return getTrack(tx.uuid, tx.hash)
           .then(data => {
-            setTransactionDetails(tx.uid, data)
+            // Until something is observable the answer is the bare record, with no legs or amounts.
+            if (data.fromAsset) setTransactionDetails(tx.uid, data)
+            else setTransactionStatus(tx.uid, data.status)
             return data
           })
           .catch(error => {
-            if (error instanceof AxiosError && error.response?.data?.error === 'txLogsParsingError') {
-              setTransactionStatus(tx.uid, 'unknown')
-              return null
-            }
-
             // The provider no longer knows the swap (Houdini forgets an order after 48h) and it
             // never saw a deposit before the window closed: a lapsed order, not one to keep polling
             // forever. A 404 is the aggregator's "not found" only - its other failures are 5xx.

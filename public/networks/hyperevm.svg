@@ -1,0 +1,12 @@
+<svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <g clip-path="url(#clip0_hyperevm)">
+        <rect width="32" height="32" fill="#072723"/>
+        <path d="M26.5 15.8C26.5 20.2 24.6 23 22 23C19.2 23 18.2 19.6 16 19.6C13.8 19.6 12.8 23 10 23C7.4 23 5.5 20.2 5.5 15.8C5.5 11.6 7.2 9 9.6 9C12.6 9 13.6 12.6 16 12.6C18.4 12.6 19.4 9 22.4 9C24.8 9 26.5 11.6 26.5 15.8Z"
+              fill="#97FCE4"/>
+    </g>
+    <defs>
+        <clipPath id="clip0_hyperevm">
+            <rect width="32" height="32" rx="6" fill="white"/>
+        </clipPath>
+    </defs>
+</svg>

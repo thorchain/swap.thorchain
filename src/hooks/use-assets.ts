@@ -1,81 +1,69 @@
 import { useMemo } from 'react'
-import { useQuery } from '@tanstack/react-query'
+import { useQuery, useQueryClient } from '@tanstack/react-query'
 import { Chain, getChainConfig, isSecuredAssetIdentifier, ProviderName } from '@tcswap/helpers'
-import { USwapApi } from '@tcswap/helpers/api'
 import { Asset } from '@/components/swap/asset'
-import { AppConfig } from '@/config'
+import { getAllTokens, getProviders, PRIVATE_PROVIDER } from '@/lib/aggregator'
+import { fetchRobinhoodTokens } from '@/lib/robinhood/asset-list'
 import { useIsPrivateSwap } from '@/store/private-swap-store'
 
-// Chains a private (Houdini) swap may start or end on. Houdini lists more, but an asset is only
-// offered where this app can validate the address it pays out to and show the chain - so every
-// entry has a validator in the SDK and an icon under public/networks.
-export const PRIVATE_SWAP_CHAINS: Chain[] = [
-  Chain.Arbitrum,
-  Chain.Avalanche,
-  Chain.Base,
-  Chain.BinanceSmartChain,
-  Chain.Bitcoin,
-  Chain.BitcoinCash,
-  Chain.Cardano,
-  Chain.Cosmos,
-  Chain.Dash,
-  Chain.Dogecoin,
-  Chain.Ethereum,
-  Chain.Litecoin,
-  Chain.Near,
-  Chain.Optimism,
-  Chain.Polygon,
-  Chain.Ripple,
-  Chain.Solana,
-  Chain.Sui,
-  Chain.THORChain,
-  Chain.Ton,
-  Chain.Tron,
-  Chain.Zcash
-]
-
-// The providers whose listing makes an asset selectable in the current tab: the native protocols
-// on SWAP/LIMIT, Houdini alone on PRIVATE. An asset both list appears in both.
+// Whose listing makes an asset selectable in the current tab: the private provider alone on PRIVATE,
+// any other provider the aggregator names on SWAP/LIMIT. An asset both list appears in both.
 export const isAssetInMode = (asset: Asset, isPrivateSwap: boolean): boolean => {
   const providers = asset.providers ?? []
-  return isPrivateSwap ? providers.includes(AppConfig.privateProvider) : providers.some(p => AppConfig.providers.includes(p))
+  return isPrivateSwap ? providers.includes(PRIVATE_PROVIDER) : providers.some(p => p !== PRIVATE_PROVIDER)
 }
 
 export const useAssets = (): { assets?: Asset[]; isLoading: boolean } => {
+  const queryClient = useQueryClient()
+
   const { data, isLoading } = useQuery({
     queryKey: ['assets'],
     queryFn: async () => {
-      const providers: ProviderName[] = [...AppConfig.providers, AppConfig.privateProvider]
-      // The private provider's list is a separate product: if it is down or not yet synced the
-      // SWAP tab must not go with it.
-      const lists = await Promise.all(
-        providers.map(provider =>
-          USwapApi.getTokenList(provider).catch(error => {
-            if (provider !== AppConfig.privateProvider) throw error
-            console.warn(`Token list for ${provider} unavailable`, error)
-            return { tokens: [] }
-          })
-        )
-      )
-      const entries = lists.flatMap((l, i) =>
-        l.tokens.map(token => ({
-          token,
-          provider: providers[i]
+      // One list for every tab: each token names the providers that list it. The provider list is
+      // fetched with it, into the cache `useProviders` reads, so no quote can be asked for before it
+      // is in: the form has no assets to quote until this resolves. Robinhood Chain is quoted by the
+      // aggregator but absent from its catalog, so its tokens come from their own list.
+      const [catalogTokens, providerList, robinhoodTokens] = await Promise.all([
+        getAllTokens(),
+        queryClient.fetchQuery({ queryKey: ['providers'], queryFn: getProviders, staleTime: Infinity }),
+        fetchRobinhoodTokens().catch(() => [])
+      ])
+
+      // A token the catalog does not carry names no providers. The ones that serve its chain do quote
+      // it: an aggregator takes any token on the chains it supports.
+      // Not the private rail: it lists its own assets, and those come tagged in the catalog.
+      const providersOfChain = (chainId: string) =>
+        providerList.filter(p => p.privacy !== 'basic' && p.supportedChainIds?.includes(chainId)).map(p => p.provider as ProviderName)
+
+      const tokens = [
+        ...catalogTokens,
+        ...robinhoodTokens.map(token => ({
+          ...token,
+          address: token.address ?? null,
+          coingeckoId: token.coingeckoId ?? null,
+          logoURI: token.logoURI ?? null,
+          name: token.name ?? null,
+          shortCode: null,
+          providers: providersOfChain(token.chainId)
         }))
-      )
+      ]
 
       const assets = new Map<string, Asset>()
 
-      for (const { token, provider } of entries) {
-        if (!token.chain || !getChainConfig(token.chain).chain) {
+      for (const token of tokens) {
+        const chain = token.chain as Chain
+        const providers = token.providers
+
+        if (!providers.length) {
           continue
         }
 
-        if (token.chain === Chain.Radix || token.chain === Chain.Kujira) {
+        // A chain the SDK does not know cannot be shown, validated or paid from.
+        if (!chain || !getChainConfig(chain).chain) {
           continue
         }
 
-        if (provider === AppConfig.privateProvider && !PRIVATE_SWAP_CHAINS.includes(token.chain)) {
+        if (chain === Chain.Radix || chain === Chain.Kujira) {
           continue
         }
 
@@ -88,22 +76,20 @@ export const useAssets = (): { assets?: Asset[]; isLoading: boolean } => {
         const identifier = token.chain === Chain.Tron && token.address ? `${token.chain}.${token.ticker}-${token.address}` : token.identifier
 
         const key = `${token.chain}-${token.identifier}`.toLowerCase()
-        const providers = assets.get(key)?.providers ?? []
-        if (!providers.includes(provider)) providers.push(provider)
 
         const asset: Asset = {
-          address: token.address,
-          chain: token.chain,
+          address: token.address ?? undefined,
+          chain,
           chainId: token.chainId,
-          coingeckoId: token.coingeckoId,
+          coingeckoId: token.coingeckoId ?? undefined,
           decimals: token.decimals,
           identifier,
           isSecuredAsset: isSecured || undefined,
           isTradeAsset: isTrade || undefined,
-          logoURI: token.logoURI,
-          name: token.name,
+          logoURI: token.logoURI ?? undefined,
+          name: token.name ?? undefined,
           providers,
-          shortCode: token.shortCode,
+          shortCode: token.shortCode ?? undefined,
           ticker: token.ticker
         }
 

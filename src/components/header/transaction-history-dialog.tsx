@@ -19,12 +19,13 @@ import { InstantSwapChannelDialog } from '@/components/swap/instant-swap-channel
 import { DepositChannel } from '@/components/swap/instant-swap-dialog'
 import { SwapLimitCancel } from '@/components/swap/swap-limit-cancel'
 import { GenericButton } from '@/components/generic-button'
+import { useProviders } from '@/hooks/use-providers'
 import { preferRate, useRates } from '@/hooks/use-rates'
 import { useSyncTransactions } from '@/hooks/use-sync-transactions'
 import { useAccounts, useSelectAccount } from '@/hooks/use-wallets'
-import { formatExpiration, isHoudiniProvider } from '@/lib/swap-helpers'
+import { formatExpiration, isHoudiniProvider, providerLabel } from '@/lib/swap-helpers'
 import { cn, toCurrencyFixed, truncate } from '@/lib/utils'
-import { hasDepositArrived, isTxPending, Transaction, useTransactions } from '@/store/transaction-store'
+import { hasDepositArrived, isDepositChannel, isTxPending, Transaction, useTransactions } from '@/store/transaction-store'
 
 interface HistoryDialogProps {
   isOpen: boolean
@@ -38,6 +39,7 @@ export const TransactionHistoryDialog = ({ isOpen, onOpenChange }: HistoryDialog
   const [expandTx, setExpandTx] = useState<string | null>(null)
   const { openDialog } = useDialog()
   const t = useTranslations('tx')
+  const { getProvider } = useProviders()
 
   const identifiers = useMemo(() => transactions.flatMap(t => [t.assetFrom.identifier, t.assetTo.identifier]), [transactions])
 
@@ -65,16 +67,14 @@ export const TransactionHistoryDialog = ({ isOpen, onOpenChange }: HistoryDialog
     accounts.find(a => a.network === tx.assetFrom.chain && (!tx.addressFrom || a.address.toLowerCase() === tx.addressFrom.toLowerCase()))
 
   const onLimitModify = (mode: 'cancel' | 'modify', tx: Transaction) => {
-    const isMemoless = !!tx.qrCodeData
     const account = orderAccount(tx)
 
-    if (!isMemoless && !account) {
+    if (!account) {
       return toast.error(t('onlyCreatorModify'))
     }
 
-    // The cancel dialog signs with the selected account. A memoless order is cancelled through a
-    // deposit channel instead, so its selection is left alone.
-    if (!isMemoless && account) selectAccount(account)
+    // The cancel dialog signs with the selected account.
+    selectAccount(account)
 
     openDialog(SwapLimitCancel, {
       mode,
@@ -88,8 +88,7 @@ export const TransactionHistoryDialog = ({ isOpen, onOpenChange }: HistoryDialog
         hash: tx.hash,
         provider: tx.provider,
         limitPrice: tx.limitPrice,
-        limitSwapMemo: tx.limitSwapMemo,
-        isMemoless
+        limitSwapMemo: tx.limitSwapMemo
       }
     })
   }
@@ -144,7 +143,7 @@ export const TransactionHistoryDialog = ({ isOpen, onOpenChange }: HistoryDialog
               const limitPricePerUnit = tx.limitPrice ? new USwapNumber(tx.limitPrice) : null
               const limitFiatPerUnit = limitPricePerUnit && rateTo ? rateTo.mul(limitPricePerUnit) : null
               const showQrCode = () => {
-                if (!tx.qrCodeData || !tx.addressDeposit) return
+                if (!isDepositChannel(tx) || !tx.addressDeposit) return
 
                 const channel: DepositChannel = {
                   qrCodeData: tx.qrCodeData,
@@ -162,8 +161,8 @@ export const TransactionHistoryDialog = ({ isOpen, onOpenChange }: HistoryDialog
               // Once the deposit is in, the deposit details (and their countdown) have served their purpose.
               // Nor past the window's deadline, before the provider has reported on it: the screen would only say it closed.
               const windowLapsed = !!tx.expiration && tx.expiration * 1000 <= now.getTime()
-              const showRQ = tx.qrCodeData && !hasDepositArrived(tx) && status !== 'expired' && !windowLapsed
-              const showLimitSwapActions = !!tx.limitSwapMemo && isTxPending(status) && (!!orderAccount(tx) || !!tx.qrCodeData)
+              const showRQ = isDepositChannel(tx) && !hasDepositArrived(tx) && status !== 'expired' && !windowLapsed
+              const showLimitSwapActions = !!tx.limitSwapMemo && isTxPending(status) && (!!orderAccount(tx) || isDepositChannel(tx))
 
               const explorerLinks = getExplorerLinks(tx)
 
@@ -199,6 +198,8 @@ export const TransactionHistoryDialog = ({ isOpen, onOpenChange }: HistoryDialog
                               <Icon name="loading" className="text-txt-label-small size-6 animate-spin" />
                               <Icon name="arrow-m-right" className="text-txt-label-small absolute size-3" />
                             </span>
+                          ) : status === 'action_required' ? (
+                            <CircleAlert className="text-jacob" size={24} />
                           ) : status === 'completed' ? (
                             <Icon name="check" className="text-green-contrast size-6" />
                           ) : status === 'failed' ? (
@@ -326,6 +327,15 @@ export const TransactionHistoryDialog = ({ isOpen, onOpenChange }: HistoryDialog
                       </div>
                     )}
 
+                    {status === 'action_required' && tx.provider && (
+                      <ActionRequired
+                        provider={providerLabel(tx.provider)}
+                        reason={details?.meta?.pauseReason}
+                        contacts={getProvider(tx.provider)?.contacts}
+                        t={t}
+                      />
+                    )}
+
                     {isExpanded && details && (
                       <div className="space-y-4 border-t py-4 text-xs font-semibold">
                         {details.legs.map((legTx: any, i: number) => {
@@ -426,10 +436,60 @@ function getExplorerLinks(tx: Transaction): ExplorerLink[] {
   add(sourceUrl)
   if (tx.provider === ProviderName.THORCHAIN && tx.hash) add(`https://thorchain.net/tx/${tx.hash}`)
   // A Houdini order's only explorer is its public order page - it also carries the support chat.
-  if (tx.provider === ProviderName.HOUDINI && tx.providerSwapId) add(`https://app.houdiniswap.com/order-details?houdiniId=${tx.providerSwapId}`)
+  if (isHoudiniProvider(tx.provider) && tx.providerSwapId) add(`https://app.houdiniswap.com/order-details?houdiniId=${tx.providerSwapId}`)
   add(destUrl)
 
   return links
+}
+
+const PAUSE_REASONS = ['aml', 'kyc_required', 'frozen', 'overdue_with_funds', 'provider_error', 'manual_review']
+
+// A contact as the aggregator lists it: an email address, a handle or a link.
+const contactHref = (kind: string, value: string) => {
+  if (value.startsWith('http://') || value.startsWith('https://')) return value
+  if (kind === 'telegram') return `https://t.me/${value.startsWith('@') ? value.slice(1) : value}`
+  if (kind === 'email') return `mailto:${value}`
+  // A kind this app does not know: only something shaped like an email address is linked.
+  return value.includes('@') && !value.startsWith('@') ? `mailto:${value}` : undefined
+}
+
+// The provider holds the funds and will not finish the swap on its own: say why, and how to reach
+// it - the user settles this with the provider directly, and the status follows once they have.
+function ActionRequired({
+  provider,
+  reason,
+  contacts,
+  t
+}: {
+  provider: string
+  reason?: string
+  contacts?: Record<string, string> | null
+  t: ReturnType<typeof useTranslations>
+}) {
+  const entries = Object.entries(contacts ?? {}).filter(([, value]) => !!value)
+
+  return (
+    <div className="border-jacob/40 mt-3 space-y-2 rounded-xl border p-3 text-xs font-semibold">
+      <div className="text-jacob">{t(`pauseReason.${reason && PAUSE_REASONS.includes(reason) ? reason : 'other'}`)}</div>
+      <div className="text-txt-label-small">{t('actionRequired', { provider })}</div>
+      {entries.length > 0 && (
+        <div className="flex flex-wrap gap-x-4 gap-y-1">
+          {entries.map(([kind, value]) => {
+            const href = contactHref(kind, value)
+            return href ? (
+              <a key={kind} href={href} target="_blank" rel="noopener noreferrer" className="text-txt-high-contrast underline">
+                {value}
+              </a>
+            ) : (
+              <span key={kind} className="text-txt-high-contrast">
+                {value}
+              </span>
+            )
+          })}
+        </div>
+      )}
+    </div>
+  )
 }
 
 function renderLeg(tx: any, legTx: any, index: number, t: ReturnType<typeof useTranslations>) {
@@ -459,6 +519,8 @@ function renderLeg(tx: any, legTx: any, index: number, t: ReturnType<typeof useT
       <div className="flex items-center gap-2">
         {legTx.status === 'completed' ? (
           <CircleCheck className="text-green-contrast" size={16} />
+        ) : legTx.status === 'action_required' || legTx.meta?.pauseReason ? (
+          <CircleAlert className="text-jacob" size={16} />
         ) : legTx.status === 'not_started' ? (
           <ClockFading size={16} />
         ) : (

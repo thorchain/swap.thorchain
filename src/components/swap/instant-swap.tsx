@@ -99,7 +99,8 @@ const DepositDetails = ({ assetFrom, assetTo, channel, isTracked, now }: SwapMem
   const isLTC = !isHoudini && (assetFrom.ticker === 'LTC' || assetTo.ticker === 'LTC')
   // A Houdini deposit tag (XRP's destination tag, a TON comment) is how the venue tells this deposit from every
   // other one paid to the same address: without it the funds cannot be credited. The user confirms before seeing it.
-  const needsMemoAck = isHoudini && !!channel.memo
+  // The same holds for any provider's deposit memo (NEAR on a shared-address chain).
+  const needsMemoAck = !!channel.memo
   // For a wallet with no tag field (OKX Wallet's XRP send): the same deposit, tag included in the address.
   const xAddress = isHoudini && channel.memo && assetFrom.chain === Chain.Ripple ? toXrpXAddress(channel.address, channel.memo) : undefined
   const isBlurred = (!isHoudini && !warningChecked) || (isLTC && !warningCheckedLTC) || (needsMemoAck && !memoAcknowledged)
@@ -169,15 +170,17 @@ const DepositDetails = ({ assetFrom, assetTo, channel, isTracked, now }: SwapMem
           </div>
         )}
 
-        <div className="size-50 overflow-hidden rounded-4xl bg-white p-3">
-          <Image
-            src={channel.qrCodeData}
-            alt={t('instant.qrCodeAlt')}
-            className={cn('h-full w-full', { 'blur-sm': isBlurred })}
-            width={200}
-            height={200}
-          />
-        </div>
+        {channel.qrCodeData && (
+          <div className="size-50 overflow-hidden rounded-4xl bg-white p-3">
+            <Image
+              src={channel.qrCodeData}
+              alt={t('instant.qrCodeAlt')}
+              className={cn('h-full w-full', { 'blur-sm': isBlurred })}
+              width={200}
+              height={200}
+            />
+          </div>
+        )}
 
         {channel.expiration && (
           <div className="text-jacob text-xs font-semibold">

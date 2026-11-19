@@ -3,7 +3,6 @@
 import { useEffect, useMemo } from 'react'
 import { useTranslations } from 'next-intl'
 import { AssetValue, USwapNumber } from '@tcswap/core'
-import { type MemolessAsset } from '@tcswap/helpers/api'
 import { chainLabel } from '@/components/connect-wallet/config'
 import { Asset } from '@/components/swap/asset'
 import { SwapAddressFrom } from '@/components/swap/swap-address-from'
@@ -19,7 +18,6 @@ import { SwapPrivateMode } from '@/components/swap/swap-private-mode'
 import { SwapSettings } from '@/components/swap/swap-settings'
 import { SwapToggleAssets } from '@/components/swap/swap-toggle-assets'
 import { isAssetInMode, useAssets } from '@/hooks/use-assets'
-import { useMemolessAssets } from '@/hooks/use-memoless-assets'
 import { useIsMemolessHalted } from '@/hooks/use-mimir'
 import { useQuote } from '@/hooks/use-quote'
 import { useSwapRates } from '@/hooks/use-rates'
@@ -28,7 +26,8 @@ import { useAssetFrom, useSetAssetFrom, useSetAssetTo, useSwap } from '@/hooks/u
 import { useTradingHalt } from '@/hooks/use-trading-halt'
 import { urlBuyAsset, useUrlParams } from '@/hooks/use-url-params'
 import { useSelectedAccount } from '@/hooks/use-wallets'
-import { resolvePriceImpact } from '@/lib/swap-helpers'
+import { executionTypeOf, isMemolessRoute, MEMOLESS_MIN_AMOUNT } from '@/lib/aggregator'
+import { isMemolessCoin, resolvePriceImpact } from '@/lib/swap-helpers'
 import { cn } from '@/lib/utils'
 import { useIsLimitSwap, useIsPrivateSend, useSetIsLimitSwap, useSetIsPrivateSwap } from '@/store/limit-swap-store'
 import { useSwapStore } from '@/store/swap-store'
@@ -52,7 +51,6 @@ export const Swap = () => {
   const { assets } = useAssets()
   const { valueFrom } = useSwap()
   const { quote } = useQuote()
-  const { assets: memolessAssets } = useMemolessAssets()
   const isMemolessHalted = useIsMemolessHalted()
   const { rateFrom, rateTo } = useSwapRates()
   const { isHalted, chains: haltedChains } = useTradingHalt()
@@ -105,24 +103,30 @@ export const Swap = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isPrivateTab, isPrivateSend, assets, pairKey])
 
-  const memolessAsset: MemolessAsset | undefined = useMemo(() => {
-    if (!memolessAssets || !assetFrom || !quote || !(quote.providers[0] === 'THORCHAIN' || quote.providers[0] === 'THORCHAIN_STREAMING')) return
+  const isThorchainQuote = quote?.providers[0] === 'THORCHAIN' || quote?.providers[0] === 'THORCHAIN_STREAMING'
 
-    return memolessAssets.find(a => a.asset === assetFrom.identifier)
-  }, [assetFrom, memolessAssets, quote])
+  const memolessMinAmount = new USwapNumber(MEMOLESS_MIN_AMOUNT)
+  const belowMemolessMin = valueFrom.lt(memolessMinAmount)
+  // Without a wallet a native swap is paid through a memoless deposit. Under its minimum the aggregator
+  // returns no memoless route, only THORChain's, which needs a wallet. A limit order always needs one:
+  // its price lives in a memo of our own, which a memoless swap has no room for.
+  const memolessApplies = !isLimitSwap && isMemolessCoin(assetFrom) && isThorchainQuote && (isMemolessRoute(quote) || belowMemolessMin)
 
   const memolessError: Error | undefined = useMemo(() => {
-    if (selectedAccount || !memolessAsset || !assetFrom) return
+    if (selectedAccount || !memolessApplies || !assetFrom) return
     // Without a wallet the deposit channel is the only route, so a HALTMEMOLESS spells out why the
     // button now asks for a wallet instead of quoting an instant swap.
     if (isMemolessHalted) return new Error(t('error.memolessHalted', { chain: chainLabel(assetFrom.chain) }))
-    const minAmount = new USwapNumber(10 ** -(memolessAsset.decimals - 5))
-    if (valueFrom.lt(minAmount)) return new Error(t('error.minAmountNoWallet', { amount: minAmount.toSignificant(), ticker: assetFrom.ticker }))
-  }, [memolessAsset, selectedAccount, valueFrom, isMemolessHalted, t])
+    if (belowMemolessMin) {
+      return new Error(t('error.minAmountNoWallet', { amount: memolessMinAmount.toSignificant(), ticker: assetFrom.ticker }))
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [memolessApplies, selectedAccount, belowMemolessMin, isMemolessHalted, assetFrom, t])
 
-  // A private swap is paid into a deposit address Houdini hands out, so it needs no wallet on
-  // any chain; a native swap without a wallet needs a memoless channel for the sell asset.
-  const instantSwapSupported = isPrivateTab || (!!memolessAsset && !isMemolessHalted)
+  // A route paid by a transfer to a deposit address needs no wallet on any chain: a private swap, a
+  // NEAR or Houdini order, or THORChain's memoless rail (unless the network has halted it).
+  const depositRoute = !isLimitSwap && executionTypeOf(quote) === 'transfer' && !isMemolessRoute(quote)
+  const instantSwapSupported = isPrivateTab || depositRoute || (memolessApplies && !isMemolessHalted)
 
   const priceImpact = useMemo(() => {
     return resolvePriceImpact(quote, rateFrom, rateTo)

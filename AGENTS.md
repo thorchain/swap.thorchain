@@ -5,15 +5,16 @@ site, generated from `src/lib/agent/discovery.ts` — this file is about the cod
 
 ## What this is
 
-Next.js (App Router, TypeScript, Tailwind) web UI for native cross-chain swaps, powered by THORChain and Maya Protocol. Users sign in their own
-wallets, or use memoless ("instant") swaps with no wallet connection.
+Next.js (App Router, TypeScript, Tailwind) web UI for native cross-chain swaps, powered by THORChain and Maya Protocol, with the swap aggregator's
+other providers behind them. Users sign in their own wallets, or pay a deposit address with no wallet connection (THORChain's memoless rail, NEAR,
+Houdini).
 
 Two-component architecture:
 
 - **UI** — this repo.
-- **Backend API** — the swap aggregator: `https://api.thorchain.org/v1` (quotes/routing, `x-api-key` gated) and
-  `https://api.thorchain.org/memoless/api/v1` (memoless swaps, no key). Protocol metadata (pools, mimir, THORNames, balances) comes from
-  THORNode/Midgard gateways — see `src/lib/api.ts` and `src/lib/thorchain-api.ts`.
+- **Backend API** — the swap aggregator's `/v3` API (`NEXT_PUBLIC_USWAP_API_URL`, `x-api-key` gated; source and contract in `../tcswap-server`,
+  `API_V3.md`). It is the only swap backend: `/v1` is gone, and the app no longer calls the public memoless API. Protocol metadata (pools, mimir,
+  THORNames, balances) comes from THORNode/Midgard gateways — see `src/lib/api.ts` and `src/lib/thorchain-api.ts`.
 
 ## Commands
 
@@ -46,10 +47,55 @@ Two-component architecture:
 - Disconnect a wallet with core's `disconnectWallet` (`@tcswap/core` 4.1.36 or later), not `disconnectChain` per chain. A chain holds only
   the last wallet connected on it, so `disconnectChain` may hit another wallet; `disconnectWallet` ends only this wallet's sessions and
   hands each chain back to another connected wallet.
-- `isPrivateSwap` in `src/store/limit-swap-store.ts` — the PRIVATE tab: the swap is routed through Houdini Swap
-  (`AppConfig.privateProvider`, `providers: ["HOUDINI"]` on the aggregator, `@tcswap/plugins/houdini` in the SDK) instead of the native protocols. Each
-  tab has its own asset list (`useModeAssets` in `src/hooks/use-assets.ts`), and a private route is priced floating and tracked by its Houdini order
-  id (`Transaction.providerSwapId`). See `docs/private-swaps.md` before touching any `HOUDINI` branch.
+- `src/lib/aggregator.ts` — the `/v3` client, and the only place that knows the wire contract; a route and its `execution` block are
+  the SDK's types, and so are the request bodies (`QuoteResponseRoute`, `SwapExecution`, `RateRequest`, `PreviewRequest` in
+  `@tcswap/helpers/api`); `src/types.ts` holds only what the SDK does not model (`/providers` and `/tokens/all`). A swap is three calls:
+  `rate` (compare routes, read-only), `preview` (the one provider the user picked, with addresses: deposit details and a `previewToken`),
+  `commit` (Swap pressed: creates the order and the tracking `uuid`). Callers use `getRate` and `getPreview` directly.
+  - **No `providers` list is ever sent.** The server picks the providers (for this client's key, THORChain first). A comparison only says which
+    rails it wants through `privacy`: `none` on SWAP/LIMIT, `basic` on PRIVATE. A preview names its single `provider`, which the contract requires.
+    Do not reintroduce a provider list in app config.
+  - Slippage goes through `resolveSlippage`: 1% when a request names none, and the "No protection" setting (99%) only on a comparison or a
+    THORChain/Maya preview. Every other provider enforces the number on-chain as it is, so it is previewed at 1% instead. The confirm screen's
+    minimum payout is the route's own `minBuyAmount`, never a figure computed from the setting.
+  - How a provider is paid comes from `GET /providers`, not from a table in the app. `useAssets` fetches the list together with the token
+    catalog, into the query cache `useProviders` reads, so it is in before the form has assets to quote. `useQuote` reads it from that cache
+    to stamp each compared route with its provider's `executionType` (`withExecutionType`); a preview is told its provider's type by the
+    caller (`getPreview`'s second argument). The same list carries each provider's support `contacts` and `supportedChainIds`.
+  - Robinhood Chain (`src/lib/robinhood/`) is quoted by the aggregator but absent from its catalog: `useAssets` appends CoinGecko's token list
+    for it and attaches the providers that serve chain id 4663. Its gas asset goes to the aggregator as the EIP-7528 sentinel address
+    (`toAggregatorIdentifier`), its balances come from the chain's own RPC, and its tokens are priced by DexScreener. The chain itself
+    (`Chain.Robinhood`) comes from the SDK: core 4.1.39, helpers 4.5.30 and toolboxes 4.3.35 onwards.
+  - A route with ZEC on either side carries `addressRules`; the recipient step validates Zcash addresses against them (`src/lib/zcash.ts`,
+    `useValidAddress`) instead of the SDK validator alone.
+  - A commit refused as stale (`QuoteChangedError`: the token lapsed or the price moved) is answered by previewing the same swap again and showing
+    it for a second confirmation - `SwapRecipient` hands its dialogs the `refresh` to do that with.
+  - Provider ids are the server's, typed as the SDK's older `ProviderName`. The one exception is `THORCHAIN_MEMOLESS`, which reads as `THORCHAIN`
+    downstream and is told apart by `isMemolessRoute`.
+  - A v3 route says how to pay in one `execution` block. It is folded into the flat fields the SDK plugins and the components read (`memo`,
+    `inboundAddress`, `targetAddress`, `expiration`) by the SDK's `flattenSwapRoute`, in `toRoute` and once more at commit for a deposit order.
+    The SDK's `swap()` does not fold: a limit order rewrites the flat `memo` after the preview, and folding again would undo it.
+  - A THORChain/Maya preview is sent without `sourceAddress`: with one the server also builds the transaction and fails when it cannot (an empty
+    UTXO read), and the SDK builds the deposit from the memo anyway. The sender still reaches the server as `refundAddress`, which is what
+    lets it screen the paying wallet - keep sending it for both protocols. The exception is a ZEC sell on Maya, where the server would write
+    it into the memo.
+- `src/lib/execute-route.ts` — pays a committed route from a connected wallet, by `execution.method`: `thorchain_deposit` through the SDK's
+  protocol plugin, `transfer` as a plain transfer to the order's deposit address, `signed_transaction` by signing the server's transaction (EVM
+  and Solana through the SDK's `evm`/`solana` plugins, Tron by sign + broadcast). Stellar signing is in place but no Stellar wallet is offered
+  yet (Freighter is in the SDK, not wired in), and a TRC-20 sell that needs an allowance is not supported; `pickRoute` in
+  `src/hooks/use-quote.ts` leaves such routes out, and with no wallet connected picks a deposit-address route when one exists, falling back
+  to a wallet route so the form shows a price and asks for the wallet.
+- Memoless (External Wallet Mode) is the aggregator's `THORCHAIN_MEMOLESS` provider, nothing else: native coins only, at least 0.002 of the
+  asset, the exact amount and deposit address come from `commit`. Limit orders, and cancelling or modifying one, need a connected wallet — their
+  memo is the app's own, which the memoless rail has no room for.
+- Assets come from `/v3/tokens/all` (`useAssets`, which loads the provider list and the Robinhood token list alongside it); each token names
+  the providers that list it. Swaps are tracked by the commit's
+  `uuid` (`Transaction.uuid`, `useSyncTransactions`); `action_required` is a status of its own that keeps polling, shown in the history with the
+  pause reason and the provider's contacts. A swap stored before `uuid` tracking has none and is followed on THORNode/Mayanode by its hash.
+- `isPrivateSwap` in `src/store/limit-swap-store.ts` — the PRIVATE tab: the swap is routed through Houdini's private rail (`PRIVATE_PROVIDER` in
+  `src/lib/aggregator.ts`, i.e. `HOUDINI_PRIVATE`, asked for as `privacy: ["basic"]`) instead of the public providers. Each tab has its own asset
+  list (`useModeAssets` in `src/hooks/use-assets.ts`), and a Houdini route is priced floating and linked to its order page by the Houdini order id
+  (`Transaction.providerSwapId`). See `docs/private-swaps.md` before touching any Houdini branch (`isHoudiniProvider`).
 - `public/widget.js` + `src/app/widget/` — the embeddable swap iframe. The loader mirrors the host page's dark/light mode into the iframe: it reads
   the effective background painted behind the widget (so a `.dark` class, `data-theme`, or a CSS-variable swap all work without configuration), boots
   the iframe with `?theme=`, and pushes later changes over `postMessage` — `src/app/widget/theme.ts` holds that contract plus the pre-paint script
@@ -114,3 +160,13 @@ Two-component architecture:
   are detected automatically and never overwritten — see `docs/localization.md` before touching the translator, the state files, or the workflow.
 - `libsodium-wrappers-sumo` is pinned via `overrides` in package.json; do not bump it without checking Turbopack compatibility.
 - Amounts use 1e8 base units. THORChain response amounts are generally strings; canonical core MCP quote inputs are integers.
+
+<!-- BEGIN:nextjs-agent-rules -->
+
+## This is NOT the Next.js you know
+
+This version has breaking changes — APIs, conventions, and file structure may all differ from your training data. Read the relevant guide in `node_modules/next/dist/docs/` (resolved from this file's directory; in monorepos the `next` package may not be visible from the repo root) before writing any code. Heed deprecation notices.
+
+This block is written and re-added by `next dev` — verify at `node_modules/next/dist/server/lib/generate-agent-files.js`. Removing it from a diff only re-creates the uncommitted change; committing it with your work keeps the tree clean.
+
+<!-- END:nextjs-agent-rules -->

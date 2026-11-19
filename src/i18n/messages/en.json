@@ -77,7 +77,11 @@
       "success": "Success",
       "errorSubmitting": "Error Submitting Transaction",
       "submittingTransaction": "Submitting Transaction",
-      "transactionSubmitted": "Transaction submitted"
+      "transactionSubmitted": "Transaction submitted",
+      "priceChanged": "The price changed. Review the updated swap and confirm again",
+      "quoteExpired": "The quote expired. Review the updated swap and confirm again",
+      "priceChangedRetry": "The price changed before the order was placed. Try again",
+      "quoteExpiredRetry": "The quote expired before the order was placed. Try again"
     },
     "confirm": {
       "titleLimit": "Confirm Limit Order",
@@ -157,10 +161,7 @@
       }
     },
     "error": {
-      "memoMissing": "Memo is missing",
-      "calculateSuggestedAmount": "Failed to calculate suggested amount",
       "preflightRequest": "Failed to preflight request",
-      "preflightMemoless": "Failed to preflight External Wallet Mode request",
       "minAmountNoWallet": "Minimum swap amount without a connected wallet is {amount} {ticker}",
       "unknown": "Unknown Error",
       "memolessHalted": "Swapping in External Wallet Mode is paused right now. Connect a {chain} wallet to swap."
@@ -225,17 +226,12 @@
         "walletNotConnected": "Wallet not connected"
       },
       "toast": {
-        "sendToCancel": "Send {amount} {ticker} from the original wallet to cancel",
-        "sendToModify": "Send {amount} {ticker} from the original wallet to modify",
         "cancelSubmitted": "Cancel transaction submitted",
         "modifySubmitted": "Modify transaction submitted",
         "replaceSubmitted": "Order cancelled - keep this window open, the replacement is placed once your deposit is back",
         "replacePlaced": "Replacement limit order placed"
       },
       "warning": {
-        "memolessDeposit": "To {mode} this order, send the deposit from the original {chain} wallet that placed it",
-        "connectOrMemoless": "Connect a {chain} wallet or use External Wallet Mode to {mode} this order",
-        "memolessHalted": "External Wallet Mode is paused right now - connect the original {chain} wallet to {mode} this order",
         "connect": "Connect a {chain} wallet to {mode} this order",
         "switch": "Switch to a {chain} wallet to {mode} this order",
         "addressMismatch": "Connected wallet does not match the address that placed this order",
@@ -252,6 +248,9 @@
       "addressPlaceholder": "{chain} address or THORName",
       "paste": "Paste",
       "invalidAddress": "Invalid {chain} address",
+      "invalidZcashUnified": "This route takes a unified (u1…) or transparent (t1…) Zcash address",
+      "invalidZcashUnifiedOnly": "This route takes a unified (u1…) Zcash address",
+      "invalidZcashTransparent": "This route takes a transparent (t1…) Zcash address",
       "taprootNotSupported": "Maya Protocol does not support Taproot addresses",
       "delegatedNotSupported": "This address uses EIP-7702 delegation and cannot receive the outbound. Revoke the delegation, or use a standard self-custody address",
       "contractNotSupported": "This is a smart contract address and cannot receive the outbound. Use a self-custody wallet address",
@@ -662,10 +661,21 @@
     "destinationAddress": "Destination Address",
     "remaining": "{time} remaining",
     "sentTo": "To {address}",
+    "actionRequired": "Your funds reached {provider}, but the swap will not complete on its own. Contact {provider} to release or refund them; the status here updates once they do.",
+    "pauseReason": {
+      "aml": "The provider's compliance check is holding this deposit",
+      "kyc_required": "The provider asks for identity verification before paying out",
+      "frozen": "The provider froze this order pending review",
+      "overdue_with_funds": "The deposit arrived after the order's window closed",
+      "provider_error": "The provider hit an error after receiving the deposit",
+      "manual_review": "The provider is reviewing this swap manually",
+      "other": "The provider is holding this swap"
+    },
     "status": {
       "not_started": "Deposit Pending",
       "pending": "Pending",
       "swapping": "Swapping",
+      "action_required": "Action Required",
       "open": "Open",
       "completed": "Completed",
       "failed": "Failed",

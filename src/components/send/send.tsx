@@ -39,10 +39,10 @@ import { privateSendQuote, usePrivateSendAssetLookup, usePrivateSendQuote } from
 import { SendSelectToken } from '@/components/send/send-select-token'
 import { SwapError } from '@/components/swap/swap-error'
 import { SwapPrivateDisclaimer } from '@/components/swap/swap-private-disclaimer'
-import { AppConfig } from '@/config'
 import { TokenBalance, useWalletBalances } from '@/hooks/use-wallet-balances'
 import { useAccounts } from '@/hooks/use-wallets'
 import { houdiniQuoteRates, houdiniTxRates, preferRate, useRates } from '@/hooks/use-rates'
+import { commitRoute, PRIVATE_PROVIDER, QuoteChangedError, reportSigned } from '@/lib/aggregator'
 import { readableError } from '@/lib/errors'
 import { formatExpiration, isValidDestinationMemo, supportsHoudiniMemo } from '@/lib/swap-helpers'
 import { canTrackTransfer } from '@/lib/transfer-status'
@@ -200,8 +200,9 @@ export function Send({ isOpen, onOpenChange, initialToken, account }: SendDialog
     }
   }
 
-  // Placing the order is the non-dry quote; the deposit is then the Houdini plugin's transfer, but
-  // signed by this dialog's account - `uSwap.swap` would pick whichever wallet connected the chain last.
+  // The order is placed by committing its preview; the deposit is then a plain transfer to the
+  // order's deposit address, signed by this dialog's account - `uSwap.transfer` would pick whichever wallet
+  // connected the chain last.
   const handlePrivateSend = () => {
     const chain = selectedToken.balance.chain
     const wallet = uSwap.getWallet(selectedAccount.provider, chain)
@@ -212,7 +213,9 @@ export function Send({ isOpen, onOpenChange, initialToken, account }: SendDialog
     setSubmitting(true)
 
     const broadcast = privateSendQuote(privateAsset, amount, selectedAccount.address, recipient, memo)
-      .then(async route => {
+      .then(async preview => {
+        // The preview prices the order; committing it creates it and hands out the deposit address.
+        const route = preview && (await commitRoute(preview))
         const houdiniId = route?.meta?.houdini?.houdiniId
         if (!route?.inboundAddress || !houdiniId) throw new Error(t('error.privateOrderFailed'))
         // The order restates the deposit with the venue's rounding, which can land above the balance.
@@ -224,10 +227,12 @@ export function Send({ isOpen, onOpenChange, initialToken, account }: SendDialog
           feeOptionKey: FeeOption.Fast,
           ...(route.memo && { memo: route.memo })
         })
+        reportSigned(route.uuid, hash)
 
         recordTransaction(() => ({
           uid: generateId(),
-          provider: AppConfig.privateProvider,
+          uuid: route.uuid,
+          provider: PRIVATE_PROVIDER,
           chainId: getChainConfig(chain).chainId,
           hash,
           timestamp: new Date(),
@@ -254,7 +259,10 @@ export function Send({ isOpen, onOpenChange, initialToken, account }: SendDialog
     toast.promise(broadcast, {
       loading: t('toast.submitting'),
       success: () => t('toast.submitted'),
-      error: (err: unknown) => readableError(err, t('toast.submitError'), chain)
+      error: (err: unknown) =>
+        err instanceof QuoteChangedError
+          ? tSwap(err.reason === 'rate_changed' ? 'toast.priceChangedRetry' : 'toast.quoteExpiredRetry')
+          : readableError(err, t('toast.submitError'), chain)
     })
   }
 

@@ -1,6 +1,5 @@
 // KOL referral links: `https://swap.thorchain.org/?ref=<code>`. The code is kept
-// client-side for an attribution window and attached to quote requests so the
-// server can credit swaps to the link that brought the user in.
+// client-side for an attribution window.
 
 const STORAGE_KEY = 'tc:referral'
 const ATTRIBUTION_WINDOW_MS = 30 * 24 * 60 * 60 * 1000
@@ -65,16 +64,12 @@ export function getReferralCode(): string | null {
   return stored.code
 }
 
-/** Header to merge into a quote request; empty when there is nothing to attribute. */
-export function referralHeaders(): Record<string, string> {
-  const code = getReferralCode()
-  return code ? { 'x-referral-code': code } : {}
-}
-
 /**
- * Reads `?ref=` off the current URL, stores it, and reports the click-through.
- * A later link overwrites an earlier one — last touch wins, and re-arriving on
- * the same link restarts the 30-day window.
+ * Reads `?ref=` off the current URL and stores it. A later link overwrites an earlier one — last
+ * touch wins, and re-arriving on the same link restarts the 30-day window.
+ *
+ * The aggregator's /v3 API has no referral endpoint and takes no per-request referral code (partners
+ * are attributed by their own API key), so the code is only kept here, not reported.
  */
 export async function captureReferral(): Promise<void> {
   if (typeof window === 'undefined') return
@@ -83,16 +78,4 @@ export async function captureReferral(): Promise<void> {
   if (!code) return
 
   write(code)
-
-  const base = process.env.NEXT_PUBLIC_USWAP_API_URL
-  if (!base) return
-
-  try {
-    await fetch(`${base.replace(/\/$/, '')}/referral/${encodeURIComponent(code)}/visit`, {
-      method: 'POST',
-      keepalive: true
-    })
-  } catch {
-    // A missed visit ping only undercounts clicks; the code stays attributed.
-  }
 }

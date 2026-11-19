@@ -96,7 +96,7 @@ export const isTradingHaltedError = (message: string): boolean => message.includ
 // THORChain reaches the aggregator wrapped in a JSON envelope, e.g.
 // {"code":2,"message":"amount less than dust threshold","details":[]}, so unwrap it before the
 // message is matched on or shown - the envelope is noise to both.
-const unwrapProviderError = (message: string): string => {
+export const unwrapProviderError = (message: string): string => {
   if (!message.startsWith('{')) return message
 
   try {
@@ -119,14 +119,17 @@ const isAssetMissingError = (message: string): boolean => message.includes('not 
 //     THORChain declined for an entirely different - and fixable - reason.
 const errorRank = (message: string): number => (isAssetMissingError(message) ? 2 : isTradingHaltedError(message) ? 1 : 0)
 
+// Picks the one message, out of a failed quote's error per provider, that explains the failure.
+export const bestProviderError = (providerErrors: { message?: string; error?: string }[]): string => {
+  const messages = providerErrors.map(e => unwrapProviderError(e.message || e.error || ''))
+  return messages.reduce((best, message) => (errorRank(message) < errorRank(best) ? message : best))
+}
+
 export const resolveQuoteError = (error: unknown): Error => {
   const cause = (error as any)?.cause
   const providerErrors: { message?: string; error?: string }[] | undefined = cause?.errorData?.providerErrors
 
-  if (providerErrors?.length) {
-    const messages = providerErrors.map(e => unwrapProviderError(e.message || e.error || ''))
-    return new Error(messages.reduce((best, message) => (errorRank(message) < errorRank(best) ? message : best)))
-  }
+  if (providerErrors?.length) return new Error(bestProviderError(providerErrors))
 
   if (cause?.errorData?.error) return new Error(cause.errorData.error)
 

@@ -5,10 +5,24 @@ import { useShallow } from 'zustand/react/shallow'
 import { Asset } from '@/components/swap/asset'
 
 // 'broadcast': a send history cannot confirm on its chain - known to be submitted, nothing more.
-export type TxStatus = 'not_started' | 'pending' | 'swapping' | 'completed' | 'failed' | 'expired' | 'refunded' | 'unknown' | 'broadcast'
+// 'action_required': the provider holds the funds and will not finish the swap on its own.
+export type TxStatus =
+  | 'not_started'
+  | 'pending'
+  | 'swapping'
+  | 'action_required'
+  | 'completed'
+  | 'failed'
+  | 'expired'
+  | 'refunded'
+  | 'unknown'
+  | 'broadcast'
 
 interface BaseTransaction {
   uid: string
+  // The aggregator's handle for the swap (from commit). Absent on a send, and on a swap placed
+  // before the aggregator tracked by it.
+  uuid?: string
   chainId: string
   hash?: string
   timestamp: Date
@@ -22,6 +36,8 @@ interface BaseTransaction {
   addressDeposit?: string
   status: TxStatus
   details?: any
+  // Paid to a deposit address by hand, with no wallet here. Entries stored before this flag are told by their QR code.
+  depositChannel?: boolean
   qrCodeData?: string
   // A memo/tag the deposit must carry (a provider's deposit tag), shown with the QR code.
   depositMemo?: string
@@ -85,8 +101,8 @@ export const transactionStore = create<TransactionStore>()(
               const tx = {
                 ...item,
                 status: data.status,
-                hash: data.hash,
-                addressFrom: data.fromAddress,
+                hash: data.hash || item.hash,
+                addressFrom: data.fromAddress || item.addressFrom,
                 details: data
               }
 
@@ -135,10 +151,13 @@ export const useTransactions = () => transactionStore(sortedTransactions)
 export const useHasTransactions = () => transactionStore(state => state.transactions.length > 0)
 export const useTransaction = (uid?: string) => transactionStore(state => (uid ? state.transactions.find(tx => tx.uid === uid) : undefined))
 
-export const isTxPending = (status: string) => status === 'not_started' || status === 'swapping' || status === 'pending'
+// 'action_required' is not over: the provider may still resolve it, so it keeps being polled.
+export const isTxPending = (status: string) =>
+  status === 'not_started' || status === 'swapping' || status === 'pending' || status === 'action_required'
 export const isTxTerminal = (status: string) => status === 'completed' || status === 'failed' || status === 'expired' || status === 'refunded'
 // The tracker has seen the deposit into a channel: it has a hash, or the swap moved past waiting.
-const DEPOSIT_SEEN_STATUSES: TxStatus[] = ['pending', 'swapping', 'completed', 'failed', 'refunded']
+const DEPOSIT_SEEN_STATUSES: TxStatus[] = ['pending', 'swapping', 'action_required', 'completed', 'failed', 'refunded']
+export const isDepositChannel = (tx: Transaction) => !!tx.depositChannel || !!tx.qrCodeData
 export const hasDepositArrived = (tx: Transaction) => !!tx.hash || DEPOSIT_SEEN_STATUSES.includes(tx.status)
 
 // Sends never get tracker details, so they are only polled while pending.

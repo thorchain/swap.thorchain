@@ -1,21 +1,21 @@
 import { useState } from 'react'
 import { useTranslations } from 'next-intl'
 import { getChainConfig, USwapNumber } from '@tcswap/core'
-import { ProviderName, USwapError } from '@tcswap/helpers'
-import { QuoteResponseRoute, USwapApi } from '@tcswap/helpers/api'
+import { ProviderName } from '@tcswap/helpers'
+import { QuoteResponseRoute } from '@tcswap/helpers/api'
 import { LoaderCircle } from 'lucide-react'
 import { Credenza, CredenzaContent } from '@/components/ui/credenza'
 import { InstantSwap } from '@/components/swap/instant-swap'
 import { SwapAddressWarning } from '@/components/swap/swap-address-warning'
 import { SwapConfirm } from '@/components/swap/swap-confirm'
 import { SwapError } from '@/components/swap/swap-error'
-import { SwapRecipient } from '@/components/swap/swap-recipient'
+import { RecipientQuote, SwapRecipient } from '@/components/swap/swap-recipient'
 import { GenericButton } from '@/components/generic-button'
 import { houdiniTxRates, useSwapRates } from '@/hooks/use-rates'
-import { useAssetFrom, useAssetTo, useSwap } from '@/hooks/use-swap'
+import { commitRoute, QuoteChangedError } from '@/lib/aggregator'
+import { useAssetFrom, useAssetTo } from '@/hooks/use-swap'
 import { isHoudiniProvider, resolvePriceImpact } from '@/lib/swap-helpers'
 import { generateId } from '@/lib/utils'
-import { useIsLimitSwap, useLimitSwapBuyAmount } from '@/store/limit-swap-store'
 import { useSetTransaction } from '@/store/transaction-store'
 
 interface InstantSwapDialogProps {
@@ -25,7 +25,8 @@ interface InstantSwapDialogProps {
 }
 
 export interface DepositChannel {
-  qrCodeData: string
+  // The server's QR code for the deposit, when it could draw one (API_V3.md, section 6: `qr` can be absent).
+  qrCodeData?: string
   address: string
   value: string
   expiration?: number
@@ -40,25 +41,23 @@ export const InstantSwapDialog = ({ provider, isOpen, onOpenChange }: InstantSwa
   const t = useTranslations('swap')
   const assetFrom = useAssetFrom()
   const assetTo = useAssetTo()
-  const { valueFrom } = useSwap()
   const setTransaction = useSetTransaction()
-  const isLimitSwap = useIsLimitSwap()
-  const limitSwapBuyAmount = useLimitSwapBuyAmount()
   const { rateFrom, rateTo } = useSwapRates()
 
-  const [quote, setQuote] = useState<(QuoteResponseRoute & { qrCodeDataURL?: string }) | undefined>(undefined)
+  const [quote, setQuote] = useState<QuoteResponseRoute | undefined>(undefined)
+  const [refreshQuote, setRefreshQuote] = useState<(() => Promise<RecipientQuote>) | undefined>(undefined)
   const [channel, setChannel] = useState<DepositChannel | undefined>(undefined)
   const [creatingChannel, setCreatingChannel] = useState(false)
   const [error, setError] = useState<Error | undefined>()
   const [highPriceImpactAccepted, setHighPriceImpactAccepted] = useState(false)
 
   const priceImpact = resolvePriceImpact(quote, rateFrom, rateTo)
-  const requiresHighPriceImpactAcceptance = !isLimitSwap && !!priceImpact && priceImpact.gt(2)
+  const requiresHighPriceImpactAcceptance = !!priceImpact && priceImpact.gt(2)
   const confirmBlocked = requiresHighPriceImpactAcceptance && !highPriceImpactAccepted
 
   if (!assetFrom || !assetTo) return null
 
-  const createChannel = (quote: QuoteResponseRoute, qrCodeData: string, address: string, value: string, expiration?: number, memo?: string) => {
+  const createChannel = (quote: QuoteResponseRoute & { uuid?: string }, qrCodeData: string | undefined, address: string, value: string, expiration?: number, memo?: string) => {
     const uid = generateId()
     setChannel({
       qrCodeData,
@@ -70,10 +69,9 @@ export const InstantSwapDialog = ({ provider, isOpen, onOpenChange }: InstantSwa
       txUid: uid
     })
 
-    const sentAmount = new USwapNumber(value)
-
     setTransaction({
       uid,
+      uuid: quote.uuid,
       provider,
       chainId: getChainConfig(assetFrom.chain).chainId,
       timestamp: new Date(),
@@ -85,14 +83,10 @@ export const InstantSwapDialog = ({ provider, isOpen, onOpenChange }: InstantSwa
       addressTo: quote.destinationAddress || '',
       addressDeposit: address,
       status: 'not_started',
+      depositChannel: true,
       qrCodeData,
       depositMemo: memo,
       expiration,
-      limitSwapMemo: isLimitSwap ? quote.memo : undefined,
-      limitPrice:
-        isLimitSwap && limitSwapBuyAmount && !sentAmount.eq(0)
-          ? USwapNumber.fromBigInt(BigInt(limitSwapBuyAmount), 8).div(sentAmount).toSignificant()
-          : undefined,
       providerSwapId: quote.meta?.houdini?.houdiniId,
       ...houdiniTxRates(quote)
     })
@@ -101,86 +95,41 @@ export const InstantSwapDialog = ({ provider, isOpen, onOpenChange }: InstantSwa
   const onConfirm = () => {
     if (!quote || !assetFrom) return
 
-    // A deposit-address provider created the order on the non-dry quote: the deposit address,
-    // exact amount and QR code are already on the route, so there is no channel to register.
-    if (provider === 'NEAR' || provider === 'HOUDINI') {
-      if (!quote.inboundAddress || !quote.qrCodeDataURL) {
-        setError(new Error(t('error.preflightRequest')))
-        return
-      }
-
-      createChannel(
-        quote,
-        quote.qrCodeDataURL,
-        quote.inboundAddress,
-        quote.sellAmount,
-        quote.expiration ? Number(quote.expiration) : undefined,
-        provider === 'HOUDINI' ? quote.memo : undefined
-      )
-
-      return
-    }
-
-    if (!quote.memo) {
-      setError(new Error(t('error.memoMissing')))
-      return
-    }
-
+    // A deposit paid without a wallet goes to an address the order hands out: committing the preview
+    // creates it, with the exact amount to send and its QR code.
     setCreatingChannel(true)
     setError(undefined)
 
-    USwapApi.registerMemoless(
-      {
-        asset: assetFrom.identifier,
-        memo: quote.memo,
-        requested_in_asset_amount: valueFrom.toSignificant()
-      },
-      {
-        retry: {
-          maxRetries: 0
-        }
-      }
-    )
-      .then(data => {
-        const suggestedInAssetAmount = data.suggested_in_asset_amount
-        if (!suggestedInAssetAmount) {
-          throw new Error(t('error.calculateSuggestedAmount'))
-        }
-
-        return USwapApi.preflightMemoless({
-          asset: assetFrom.identifier,
-          reference: data.reference,
-          amount: suggestedInAssetAmount
-        }).then(preflight => ({
-          ...preflight,
-          suggested_in_asset_amount: suggestedInAssetAmount
-        }))
-      })
-      .then(preflight => {
-        if (!preflight.data.qr_code_data_url || !preflight.data.inbound_address) {
-          console.log('Failed to preflight request', { preflight })
-          throw new Error(t('error.preflightRequest'))
-        }
+    commitRoute(quote)
+      .then(order => {
+        // The order exists from here on. Only the address is indispensable: a deposit can be made
+        // without the QR code, and an order thrown away for lacking one could never be found again.
+        if (!order.inboundAddress) throw new Error(t('error.preflightRequest'))
 
         createChannel(
-          quote,
-          preflight.data.qr_code_data_url,
-          preflight.data.inbound_address,
-          preflight.suggested_in_asset_amount,
-          preflight.data.seconds_remaining ? new Date().getTime() / 1000 + preflight.data.seconds_remaining : undefined
+          order,
+          order.qrCodeDataURL,
+          order.inboundAddress,
+          order.sellAmount,
+          order.expiration ? Number(order.expiration) : undefined,
+          // The memo or tag the deposit must carry to be matched to the order, whoever the provider is.
+          order.execution?.method === 'transfer' ? order.execution.attachment?.value : undefined
         )
       })
       .catch(err => {
-        if (err instanceof USwapError) {
-          const error = err.cause as any
-          setError(new Error(error?.errorData?.error?.message || err.message))
-        } else {
-          setError(err)
-        }
+        if (!(err instanceof QuoteChangedError)) return setError(err)
+
+        // The preview on screen can no longer be committed (for a memoless deposit, whenever the
+        // protocol's price is lower by now): say so, and show a new one for the same addresses to
+        // confirm again. If it cannot be previewed, back to the step that fetches one.
+        setError(new Error(t(err.reason === 'rate_changed' ? 'toast.priceChanged' : 'toast.quoteExpired')))
+        return refreshQuote
+          ? refreshQuote()
+              .then(setQuote)
+              .catch(() => setQuote(undefined))
+          : setQuote(undefined)
       })
-      .finally(() => {
-        setCreatingChannel(false)
-      })
+      .finally(() => setCreatingChannel(false))
   }
 
   return (
@@ -219,7 +168,13 @@ export const InstantSwapDialog = ({ provider, isOpen, onOpenChange }: InstantSwa
             </div>
           </>
         ) : (
-          <SwapRecipient provider={provider} onFetchQuote={quote => setQuote(quote)} />
+          <SwapRecipient
+            provider={provider}
+            onFetchQuote={(quote, refresh) => {
+              setQuote(quote)
+              setRefreshQuote(() => refresh)
+            }}
+          />
         )}
       </CredenzaContent>
     </Credenza>

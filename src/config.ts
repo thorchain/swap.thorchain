@@ -1,5 +1,3 @@
-import { ProviderName } from '@tcswap/helpers'
-
 export const AppConfig = {
   id: 'thorchain',
   appName: 'THORChain Swap',
@@ -7,9 +5,6 @@ export const AppConfig = {
   description:
     'Swap BTC, ETH, XMR, ZEC & other cryptocurrencies without opening an account. Use any self custody wallet. No KYC. No centralized exchanges. No bridges.',
   baseUrl: 'https://swap.thorchain.org',
-  providers: [ProviderName.THORCHAIN, ProviderName.MAYACHAIN],
-  // The PRIVATE tab quotes this provider alone; its assets are listed only there.
-  privateProvider: ProviderName.HOUDINI,
   favicon: '/favicon.ico',
   logo: '/logo.svg',
   logoLink: 'https://www.thorchain.org',

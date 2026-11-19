@@ -1,8 +1,8 @@
 import axios from 'axios'
 import { AssetValue, Chain, getChainConfig } from '@tcswap/core'
-import { BalanceResponse, QuoteRequest, USwapApi } from '@tcswap/helpers/api'
+import { BalanceResponse, USwapApi } from '@tcswap/helpers/api'
+import { getSwapStatus } from '@/lib/aggregator'
 import { normalizeThorBankDenom } from '@/lib/swap-helpers'
-import { referralHeaders } from '@/lib/referral'
 
 const uSwap = axios.create({
   baseURL: process.env.NEXT_PUBLIC_USWAP_API_URL,
@@ -15,7 +15,7 @@ const DEXSCREENER_MIN_LIQUIDITY_USD = 10_000
 
 export const getDexScreenerTokens = async (
   tokenAddresses: string[],
-  chainId: 'solana' | 'ethereum' | 'near' = 'solana'
+  chainId: 'solana' | 'ethereum' | 'near' | 'robinhood' = 'solana'
 ): Promise<Record<string, { price?: number; logo?: string }>> => {
   if (tokenAddresses.length === 0) return {}
   const addresses = tokenAddresses.join(',')
@@ -157,27 +157,21 @@ export const getAssetBalance = async (chain: Chain, address: string, identifier:
     })
 }
 
-export const getQuotes = async (
-  json: QuoteRequest & { streamingInterval?: number; streamingQuantity?: number; destinationMemo?: string },
-  abortController?: AbortController
-) => {
-  return USwapApi.getSwapQuote(json as QuoteRequest, {
-    abortController,
-    retry: { maxRetries: 0 },
-    // Merged with the SDK's own x-api-key header, not substituted for it.
-    headers: referralHeaders()
-  }).then(res => res.routes.map(route => ({ ...route, sellAsset: requestCase(route.sellAsset, json.sellAsset), buyAsset: requestCase(route.buyAsset, json.buyAsset) })))
-}
+export const getTrack = getSwapStatus
 
-// The aggregator upper-cases the asset identifiers it echoes back, which breaks case-sensitive base58 contracts: the
-// SDK builds the transfer from `route.sellAsset`, and TronWeb rejects `TR7NHQJEKQXGTCI8Q8ZY4PL8OTSZGJLJ6T` as an
-// invalid contract (toolbox_tron_transaction_creation_failed). Hand back the identifier as we asked for it.
-function requestCase(returned: string, requested: string) {
-  return returned && requested && returned.toUpperCase() === requested.toUpperCase() ? requested : returned
-}
+// A swap placed before the aggregator tracked by `uuid` has no record there. THORChain and Maya
+// still know it by its inbound hash, which is enough for the status.
+export const getLegacySwapStatus = async (isMaya: boolean, hash: string): Promise<'pending' | 'swapping' | 'completed' | 'refunded'> => {
+  const id = thorTxId(hash)
+  const { data } = isMaya ? await mayanode.get(`/mayachain/tx/status/${id}`) : await thornode.get(`/thorchain/tx/status/${id}`)
+  const stages = data?.stages
 
-export const getTrack = async (data: Record<string, any>) => {
-  return uSwap.post('/track', data).then(res => res.data)
+  if (!stages?.inbound_observed?.completed) return 'pending'
+
+  const inProgress = stages.swap_status?.pending || stages.swap_finalised?.completed === false || stages.outbound_signed?.completed === false
+  if (inProgress) return 'swapping'
+
+  return (data.planned_out_txs ?? []).some((tx: { refund?: boolean }) => tx.refund) ? 'refunded' : 'completed'
 }
 
 export const getMimir = async (): Promise<Record<string, number>> => {

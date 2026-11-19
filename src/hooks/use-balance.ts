@@ -18,6 +18,8 @@ import { Contract } from 'ethers'
 import { useAssetFrom } from '@/hooks/use-swap'
 import { useWallets } from '@/hooks/use-wallets'
 import { getAssetBalance, getThorBankBalances } from '@/lib/api'
+import { isRobinhoodChain } from '@/lib/robinhood/asset-list'
+import { getRobinhoodBalance } from '@/lib/robinhood/balance'
 import { thorBalanceKey } from '@/lib/swap-helpers'
 import { getUSwap } from '@/lib/wallets'
 
@@ -72,8 +74,17 @@ export const useBalance = (): UseBalance => {
         return id.toLowerCase() === assetFrom.identifier.toLowerCase()
       }
 
-      if (assetFrom.chain === Chain.Near) {
+      // The aggregator's /balance has no Robinhood Chain, so its balances come from the chain's own RPC.
+      if (isRobinhoodChain(assetFrom.chain)) {
+        value = await getRobinhoodBalance(selected.address, assetFrom)
+      } else if (assetFrom.chain === Chain.Near) {
         const balances = await getAssetBalance(assetFrom.chain, wallet.address, assetFrom.identifier)
+        const balance = balances.find(finder)
+
+        if (balance) value = balance
+      } else if (assetFrom.chain === Chain.Stellar && 'getSpendableBalance' in wallet) {
+        // Stellar locks part of a balance (the account reserve, open offers): what can be sent is the spendable part.
+        const balances: AssetValue[] = await (wallet as any).getSpendableBalance(wallet.address)
         const balance = balances.find(finder)
 
         if (balance) value = balance

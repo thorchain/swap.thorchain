@@ -3,7 +3,7 @@ import { useTranslations } from 'next-intl'
 import { Chain } from '@tcswap/core'
 import { WalletIcon } from '@/components/wallet-icon'
 import { ProviderName, USwapError } from '@tcswap/helpers'
-import { QuoteResponseRoute } from '@tcswap/helpers/api'
+import { QuoteResponseRoute, ZcashAddressRule } from '@tcswap/helpers/api'
 import { LoaderCircle } from 'lucide-react'
 import { CredenzaHeader, CredenzaTitle } from '@/components/ui/credenza'
 import { ScrollArea } from '@/components/ui/scroll-area'
@@ -22,7 +22,9 @@ import { useResolvedName } from '@/hooks/use-resolved-name'
 import { AddressCheck, useValidAddress } from '@/hooks/use-valid-address'
 import { useAssetFrom, useAssetTo, useCustomInterval, useCustomQuantity, useSlippage, useSwap } from '@/hooks/use-swap'
 import { useAccounts, useSelectedAccount } from '@/hooks/use-wallets'
-import { getQuotes } from '@/lib/api'
+import { useProviders } from '@/hooks/use-providers'
+import { useQuote } from '@/hooks/use-quote'
+import { getPreview, resolveSlippage, toWireProvider } from '@/lib/aggregator'
 import { resolveQuoteError } from '@/lib/errors'
 import { prepareQuoteForLimitSwap } from '@/lib/memo-helpers'
 import {
@@ -34,6 +36,7 @@ import {
   supportsHoudiniMemo
 } from '@/lib/swap-helpers'
 import { cn, truncate } from '@/lib/utils'
+import { zcashRuleAllows } from '@/lib/zcash'
 import { useIsLimitSwapPaused, useLimitSwapMaxAge } from '@/hooks/use-mimir'
 import { useIsLimitSwap, useLimitSwapBuyAmount, useLimitSwapExpiry } from '@/store/limit-swap-store'
 import { useReplacementOrder } from '@/store/replacement-order-store'
@@ -41,8 +44,11 @@ import { WalletAccount } from '@/store/wallets-store'
 
 interface SwapRecipientProps {
   provider: ProviderName
-  onFetchQuote: (quote: QuoteResponseRoute & { destinationMemo?: string }) => void
+  // `refresh` previews the same swap again (same addresses), for when a commit refuses the preview as stale.
+  onFetchQuote: (quote: RecipientQuote, refresh: () => Promise<RecipientQuote>) => void
 }
+
+export type RecipientQuote = QuoteResponseRoute & { destinationMemo?: string }
 
 export const SwapRecipient = ({ provider, onFetchQuote }: SwapRecipientProps) => {
   const t = useTranslations('swap')
@@ -76,6 +82,15 @@ export const SwapRecipient = ({ provider, onFetchQuote }: SwapRecipientProps) =>
   // Read-only on mobile until touched: focus gets moved into the field (e.g. by ticking the warning) and raises the keyboard.
   const [editingField, setEditingField] = useState<'refund' | 'destination'>()
 
+  // A route with ZEC on either side says which Zcash addresses it takes. The form's quote empties
+  // while it refetches, so the last rules seen for this provider are kept.
+  const { pricingQuote } = useQuote()
+  const { getProvider } = useProviders()
+  const quotedRules = pricingQuote?.providers[0] === provider ? pricingQuote.addressRules : undefined
+  const rulesRef = useRef(quotedRules)
+  if (quotedRules) rulesRef.current = quotedRules
+  const addressRules = quotedRules ?? rulesRef.current
+
   if (!assetFrom || !assetTo) return null
 
   // Houdini pays out from its partner exchanges' wallets, not THORChain's Router, so an EIP-7702 delegated
@@ -93,8 +108,10 @@ export const SwapRecipient = ({ provider, onFetchQuote }: SwapRecipientProps) =>
   const memo = hasMemo ? destinationMemo.trim() : ''
   const isMemoInvalid = hasMemo && !isValidDestinationMemo(assetTo.chain, memo)
 
-  const destinationCheck = useValidAddress(destinationAddress, assetTo.chain)
-  const refundCheck = useValidAddress(refundAddress, assetFrom.chain)
+  const destinationZecRule = assetTo.chain === Chain.Zcash ? addressRules?.destination : undefined
+  const refundZecRule = assetFrom.chain === Chain.Zcash ? addressRules?.refund : undefined
+  const destinationCheck = useValidAddress(destinationAddress, assetTo.chain, destinationZecRule)
+  const refundCheck = useValidAddress(refundAddress, assetFrom.chain, refundZecRule)
 
   // A THORName / MAYAName typed instead of an address is replaced by the
   // address it registered for the chain. Only input that has been validated and
@@ -119,36 +136,50 @@ export const SwapRecipient = ({ provider, onFetchQuote }: SwapRecipientProps) =>
     if (refundName.address) setRefundAddress(refundName.address)
   }, [refundName.address])
 
+  const requestQuote = (): Promise<RecipientQuote> => {
+    const isThorchain = provider === 'THORCHAIN' || provider === 'THORCHAIN_STREAMING'
+    const supportsStreaming = isThorchain || isMayachain
+    // Without a wallet there is nothing to attach a memo with: THORChain is paid through a memoless
+    // deposit instead. A limit order always has a wallet.
+    const wireProvider = toWireProvider(provider, isThorchain && !selectedAccount && !isLimitSwap)
+
+    return getPreview(
+      {
+        buyAsset: assetTo.identifier,
+        sellAsset: assetFrom.identifier,
+        sellAmount: valueFrom.toSignificant(),
+        sourceAddress: selectedAccount?.address,
+        destinationAddress: destinationAddress,
+        // THORChain and Maya refund to the sender whatever is sent here, and their previews go out without
+        // `sourceAddress` (see getPreview), so this is the only field that tells the server who is paying:
+        // it screens the address and nothing else. The one exception is a ZEC sell on Maya, where the
+        // server writes a refund address into the memo - left to the protocol's default, as before.
+        refundAddress: refundRequired ? refundAddress : isMayachain && assetFrom.chain === Chain.Zcash ? undefined : selectedAccount?.address,
+        // A limit order carries its price in the memo, so the quote's own slippage bound is not used.
+        slippage: isLimitSwap ? 0 : resolveSlippage(slippage ?? 'none', wireProvider),
+        provider: wireProvider,
+        ...(memo && { destinationMemo: memo }),
+        ...(supportsStreaming && !isLimitSwap && { streamingInterval: customInterval, streamingQuantity: customQuantity })
+      },
+      getProvider(wireProvider)?.executionType
+    ).then(preview => {
+      let quote: RecipientQuote = preview
+
+      // For THORChain limit orders, modify the memo to use limit order format
+      if (isLimitSwap && isThorchain) {
+        quote = prepareQuoteForLimitSwap(quote, limitSwapBuyAmount, Math.min(limitSwapExpiry, limitSwapMaxAge))
+      }
+
+      // Carried on the quote so the confirm screen can show it; the route itself does not echo it.
+      return memo ? { ...quote, destinationMemo: memo } : quote
+    })
+  }
+
   const fetchQuote = () => {
     setQuoting(true)
 
-    const isThorchain = provider === 'THORCHAIN' || provider === 'THORCHAIN_STREAMING'
-    const supportsStreaming = isThorchain || isMayachain
-
-    getQuotes({
-      buyAsset: assetTo.identifier,
-      sellAsset: assetFrom.identifier,
-      sellAmount: valueFrom.toSignificant(),
-      sourceAddress: selectedAccount?.address,
-      destinationAddress: destinationAddress,
-      refundAddress: refundRequired ? refundAddress : provider === 'MAYACHAIN' ? undefined : selectedAccount?.address,
-      dry: !(depositOrder || selectedAccount),
-      slippage: isLimitSwap ? 0 : (slippage ?? 99),
-      providers: [provider],
-      ...(memo && { destinationMemo: memo }),
-      ...(supportsStreaming && !isLimitSwap && { streamingInterval: customInterval, streamingQuantity: customQuantity })
-    })
-      .then(quotes => {
-        let quote = quotes[0]
-
-        // For THORChain limit orders, modify the memo to use limit order format
-        if (isLimitSwap && isThorchain) {
-          quote = prepareQuoteForLimitSwap(quote, limitSwapBuyAmount, Math.min(limitSwapExpiry, limitSwapMaxAge))
-        }
-
-        // Carried on the quote so the confirm screen can show it; the route itself does not echo it.
-        onFetchQuote(memo ? { ...quote, destinationMemo: memo } : quote)
-      })
+    requestQuote()
+      .then(quote => onFetchQuote(quote, requestQuote))
       .catch(error => {
         const resolved = error instanceof USwapError ? resolveQuoteError(error) : error
         if (isHoudini && depositOrder && resolved?.message?.includes('refund address')) setRefundAsked(true)
@@ -191,6 +222,17 @@ export const SwapRecipient = ({ provider, onFetchQuote }: SwapRecipientProps) =>
     // Nothing is wrong with a field that is still being checked or resolved.
     const isInvalid = check.isInvalid && !resolving
     const busy = check.isChecking || resolving
+    // Under a Zcash rule, say which kinds of address the route takes - unless the kind is one it does
+    // take ('checksum': a transparent address that failed its base58 check), where plain "invalid" is the truth.
+    const zecRule: ZcashAddressRule | undefined = field === 'destination' ? destinationZecRule : refundZecRule
+    const invalidText =
+      zecRule && zcashRuleAllows(zecRule, address.trim()) !== 'checksum'
+        ? zecRule.unified
+          ? zecRule.transparent
+            ? t('recipient.invalidZcashUnified')
+            : t('recipient.invalidZcashUnifiedOnly')
+          : t('recipient.invalidZcashTransparent')
+        : t('recipient.invalidAddress', { chain: chainLabel(asset.chain) })
 
     return (
       <>
@@ -264,7 +306,7 @@ export const SwapRecipient = ({ provider, onFetchQuote }: SwapRecipientProps) =>
           )}
         </div>
 
-        {isInvalid && <div className="text-lucian text-xs font-semibold">{t('recipient.invalidAddress', { chain: chainLabel(asset.chain) })}</div>}
+        {isInvalid && <div className="text-lucian text-xs font-semibold">{invalidText}</div>}
       </>
     )
   }

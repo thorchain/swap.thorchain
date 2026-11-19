@@ -5,6 +5,7 @@ import { ProviderName } from '@tcswap/helpers'
 import { QuoteResponseRoute } from '@tcswap/helpers/api'
 import { useQuote } from '@/hooks/use-quote'
 import { useAssetFrom, useAssetTo } from '@/hooks/use-swap'
+import { ROBINHOOD_NATIVE_IDENTIFIER } from '@/lib/robinhood/asset-list'
 import { getDexScreenerTokens, getMayaMidgardCacaoPrice, getMayaMidgardPools, getMidgardPools, getMidgardRunePrice } from '@/lib/api'
 import { isHoudiniProvider } from '@/lib/swap-helpers'
 
@@ -97,6 +98,18 @@ export const useRates = (identifiers: string[], provider?: ProviderName): { rate
     return addresses
   }, [identifiers])
 
+  // Robinhood Chain has no pool and no catalog entry: DexScreener is its tokens' only price source.
+  const robinhoodAddresses = useMemo(() => {
+    const addresses: string[] = []
+    for (const id of identifiers) {
+      if (id.toUpperCase().startsWith('ROBINHOOD.') && id.includes('-')) {
+        const addr = id.split('-').pop()
+        if (addr) addresses.push(addr.toLowerCase())
+      }
+    }
+    return addresses
+  }, [identifiers])
+
   // NEAR has no THORChain/Maya pool. Its tokens are `NEAR.<TICKER>-<contract>`, and a contract can itself contain
   // '-' (`abg-966.meme-cooking.near`), so it is everything after the first '-'. The native coin trades as wNEAR.
   const nearContracts = useMemo(() => {
@@ -141,6 +154,16 @@ export const useRates = (identifiers: string[], provider?: ProviderName): { rate
     retry: false
   })
 
+  const { data: dexScreenerRobinhoodData, isLoading: dexScreenerRobinhoodLoading } = useQuery({
+    queryKey: ['dexscreener-tokens-robinhood', robinhoodAddresses.slice().sort().join(',')],
+    queryFn: () => getDexScreenerTokens(robinhoodAddresses, 'robinhood'),
+    enabled: robinhoodAddresses.length > 0,
+    staleTime: 3 * 60_000,
+    refetchOnMount: false,
+    refetchOnWindowFocus: false,
+    retry: false
+  })
+
   const rates: AssetRateMap = {}
   const logos: AssetLogoMap = {}
   if (midgardData) {
@@ -150,7 +173,9 @@ export const useRates = (identifiers: string[], provider?: ProviderName): { rate
     const secondary = preferMaya ? midgardData.thor : midgardData.maya
     for (const id of identifiers) {
       const key = id.toLowerCase()
-      const price = primary[key] ?? secondary[key]
+      // Robinhood Chain settles in ETH: its gas asset is priced as ETH itself.
+      const priceKey = key === ROBINHOOD_NATIVE_IDENTIFIER.toLowerCase() ? 'eth.eth' : key
+      const price = primary[priceKey] ?? secondary[priceKey]
       if (price) rates[id] = price
     }
   }
@@ -178,6 +203,17 @@ export const useRates = (identifiers: string[], provider?: ProviderName): { rate
     }
   }
 
+  if (dexScreenerRobinhoodData) {
+    for (const id of identifiers) {
+      if (id.toUpperCase().startsWith('ROBINHOOD.') && id.includes('-')) {
+        const addr = id.split('-').pop()!.toLowerCase()
+        const info = dexScreenerRobinhoodData[addr]
+        if (info?.price && !rates[id]) rates[id] = new USwapNumber(info.price)
+        if (info?.logo) logos[id] = info.logo
+      }
+    }
+  }
+
   if (dexScreenerNearData) {
     nearContracts.forEach((contract, id) => {
       const info = dexScreenerNearData[contract]
@@ -189,11 +225,12 @@ export const useRates = (identifiers: string[], provider?: ProviderName): { rate
   const dexScreenerPending = solanaMints.length > 0 && dexScreenerLoading
   const dexScreenerEthPending = ethAddresses.length > 0 && dexScreenerEthLoading
   const dexScreenerNearPending = nearAddresses.length > 0 && dexScreenerNearLoading
+  const dexScreenerRobinhoodPending = robinhoodAddresses.length > 0 && dexScreenerRobinhoodLoading
 
   return {
     rates,
     logos,
-    isLoading: midgardLoading || dexScreenerPending || dexScreenerEthPending || dexScreenerNearPending || identifiers.length === 0
+    isLoading: midgardLoading || dexScreenerPending || dexScreenerEthPending || dexScreenerNearPending || dexScreenerRobinhoodPending || identifiers.length === 0
   }
 }
 

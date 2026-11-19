@@ -1,6 +1,5 @@
 import { Chain, getEIP6963Wallets, getMetaMaskProvider, USwap, WalletOption } from '@tcswap/core'
 import { EVMPlugin } from '@tcswap/plugins/evm'
-import { HoudiniPlugin } from '@tcswap/plugins/houdini'
 import { SolanaPlugin } from '@tcswap/plugins/solana'
 import { MayachainPlugin, ThorchainPlugin } from '@tcswap/plugins/thorchain'
 import { binanceWallet } from '@tcswap/wallets/binance'
@@ -22,7 +21,6 @@ import { BTC_PURPOSE_ADDRESS_TYPE, btcAddressType } from '@/lib/swap-helpers'
 
 const defaultPlugins = {
   ...EVMPlugin,
-  ...HoudiniPlugin,
   ...MayachainPlugin,
   ...ThorchainPlugin,
   ...SolanaPlugin
@@ -102,8 +100,7 @@ export function getUSwap() {
       },
       envs: {
         apiUrl: process.env.NEXT_PUBLIC_USWAP_API_URL,
-        blockchairApiUrl: blockchairProxyUrl(),
-        memolessApiUrl: process.env.NEXT_PUBLIC_MEMOLESS_API
+        blockchairApiUrl: blockchairProxyUrl()
       }
     }
   })

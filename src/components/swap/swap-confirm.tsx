@@ -16,6 +16,7 @@ import { SwapProvider } from '@/components/swap/swap-provider'
 import { InfoTooltip } from '@/components/tooltip'
 import { houdiniQuoteRates, useRates, useSwapRates } from '@/hooks/use-rates'
 import { useAssetFrom, useAssetTo, useSlippage } from '@/hooks/use-swap'
+import { NO_PROTECTION_SLIPPAGE, resolveSlippage } from '@/lib/aggregator'
 import { formatExpiration, isHoudiniProvider, isPrivateSend, resolveFees } from '@/lib/swap-helpers'
 import { cn, toCurrencyFixed, truncate } from '@/lib/utils'
 import { useIsLimitSwap, useLimitSwapBuyAmount } from '@/store/limit-swap-store'
@@ -46,19 +47,22 @@ export const SwapConfirm = ({ quote, priceImpact }: SwapConfirmProps) => {
   const sellAmount = new USwapNumber(quote.sellAmount)
   const expectedBuyAmount = new USwapNumber(quote.expectedBuyAmount)
 
-  // Displayed Minimum Payout is derived from the residual.
-  const slippageTolerance = useMemo(() => {
-    if (slippage === undefined) return undefined
-    const protection = new USwapNumber(slippage)
-    if (!priceImpact) return protection
-    const residual = protection.sub(priceImpact)
-    return residual.gt(0) ? residual : new USwapNumber(0)
-  }, [slippage, priceImpact])
+  // The protection this route was previewed with: the setting, except that "No protection" exists on
+  // THORChain and Maya only (resolveSlippage).
+  const protection = resolveSlippage(slippage ?? 'none', quote.providers[0])
+  const isProtected = protection !== NO_PROTECTION_SLIPPAGE
 
-  const minimumPayout = useMemo(() => {
-    if (!slippageTolerance) return undefined
-    return expectedBuyAmount.mul(new USwapNumber(100).sub(slippageTolerance)).div(100)
-  }, [expectedBuyAmount, slippageTolerance])
+  const slippageTolerance = useMemo(() => {
+    if (!isProtected) return undefined
+    if (!priceImpact) return new USwapNumber(protection)
+    const residual = new USwapNumber(protection).sub(priceImpact)
+    return residual.gt(0) ? residual : new USwapNumber(0)
+  }, [protection, isProtected, priceImpact])
+
+  // The floor is the route's own: what the provider enforces (an on-chain minimum, the memo's limit).
+  // A route without one (Circle) guarantees nothing, whatever the setting says.
+  const floor = quote.minBuyAmount
+  const minimumPayout = useMemo(() => (isProtected && floor ? new USwapNumber(floor) : undefined), [isProtected, floor])
 
   const feeRates = { ...rates }
   for (const { asset } of quote.fees) {
@@ -254,7 +258,7 @@ export const SwapConfirm = ({ quote, priceImpact }: SwapConfirmProps) => {
               <div className="text-txt-label-small flex justify-between text-sm">
                 <div className="flex items-center gap-1">
                   <span>{t('confirm.minimumPayout')}</span>
-                  <InfoTooltip>{t('confirm.minimumPayoutTooltip', { protection: slippage ? `${slippage}%` : '' })}</InfoTooltip>
+                  <InfoTooltip>{t('confirm.minimumPayoutTooltip', { protection: isProtected ? `${protection}%` : '' })}</InfoTooltip>
                 </div>
                 {minimumPayout ? (
                   <span className="text-txt-high-contrast font-semibold">
@@ -282,7 +286,7 @@ export const SwapConfirm = ({ quote, priceImpact }: SwapConfirmProps) => {
                 <div className="flex items-center gap-1">
                   {t('confirm.slippageTolerance')}
                   <InfoTooltip>
-                    {t('confirm.slippageToleranceTooltip1', { protection: slippage ? `${slippage}%` : '' })}
+                    {t('confirm.slippageToleranceTooltip1', { protection: isProtected ? `${protection}%` : '' })}
                     <br /> <br />
                     {t('confirm.slippageToleranceTooltip2')}
                   </InfoTooltip>

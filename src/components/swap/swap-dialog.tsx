@@ -1,22 +1,24 @@
 import { useEffect, useState } from 'react'
 import { useTranslations } from 'next-intl'
-import { Chain, FeeOption, getChainConfig, USwapNumber } from '@tcswap/core'
+import { Chain, getChainConfig, USwapNumber } from '@tcswap/core'
 import { ProviderName } from '@tcswap/helpers'
 import { QuoteResponseRoute } from '@tcswap/helpers/api'
 import { LoaderCircle } from 'lucide-react'
 import { toast } from 'sonner'
 import { Credenza, CredenzaContent } from '@/components/ui/credenza'
 import { SwapConfirm } from '@/components/swap/swap-confirm'
-import { SwapRecipient } from '@/components/swap/swap-recipient'
+import { RecipientQuote, SwapRecipient } from '@/components/swap/swap-recipient'
 import { SwapAddressWarning } from '@/components/swap/swap-address-warning'
 import { GenericButton } from '@/components/generic-button'
 import { useBalance } from '@/hooks/use-balance'
 import { houdiniTxRates, useSwapRates } from '@/hooks/use-rates'
 import { useAssetFrom, useAssetTo, useSwap } from '@/hooks/use-swap'
+import { useSelectedAccount } from '@/hooks/use-wallets'
+import { commitRoute, QuoteChangedError, reportSigned } from '@/lib/aggregator'
 import { readableError } from '@/lib/errors'
+import { executeRoute } from '@/lib/execute-route'
 import { isHoudiniProvider, resolvePriceImpact } from '@/lib/swap-helpers'
 import { generateId } from '@/lib/utils'
-import { getUSwap } from '@/lib/wallets'
 import { useIsLimitSwap, useLimitSwapBuyAmount } from '@/store/limit-swap-store'
 import { useReplacementOrderStore, useSetReplacementOrder } from '@/store/replacement-order-store'
 import { useSetTransaction } from '@/store/transaction-store'
@@ -29,7 +31,7 @@ interface SwapDialogProps {
 
 export const SwapDialog = ({ provider, isOpen, onOpenChange }: SwapDialogProps) => {
   const t = useTranslations('swap')
-  const uSwap = getUSwap()
+  const selectedAccount = useSelectedAccount()
   const assetFrom = useAssetFrom()
   const assetTo = useAssetTo()
   const { valueFrom, setAmountFrom } = useSwap()
@@ -49,6 +51,7 @@ export const SwapDialog = ({ provider, isOpen, onOpenChange }: SwapDialogProps) 
   }, [setReplacementOrder])
 
   const [quote, setQuote] = useState<QuoteResponseRoute | undefined>(undefined)
+  const [refreshQuote, setRefreshQuote] = useState<(() => Promise<RecipientQuote>) | undefined>(undefined)
   const [highPriceImpactAccepted, setHighPriceImpactAccepted] = useState(false)
 
   const priceImpact = resolvePriceImpact(quote, rateFrom, rateTo)
@@ -56,7 +59,7 @@ export const SwapDialog = ({ provider, isOpen, onOpenChange }: SwapDialogProps) 
   const confirmBlocked = requiresHighPriceImpactAcceptance && !highPriceImpactAccepted
 
   const onConfirm = () => {
-    if (!quote || !assetFrom || !assetTo) return
+    if (!quote || !assetFrom || !assetTo || !selectedAccount) return
 
     setSubmitting(true)
 
@@ -68,14 +71,16 @@ export const SwapDialog = ({ provider, isOpen, onOpenChange }: SwapDialogProps) 
     // are plain TRC20 transfers with no on-chain expiry, so dropping the field is safe.
     const route = assetFrom.chain === Chain.Tron && quote.expiration ? ({ ...quote, expiration: undefined } as QuoteResponseRoute) : quote
 
-    const broadcast = uSwap
-      .swap({
-        route: route as any,
-        feeOptionKey: FeeOption.Fast
-      })
-      .then((hash: string) => {
+    // Swap pressed: the order is created now, and for a deposit-address provider this is where the
+    // deposit address and the exact amount come from.
+    const broadcast = commitRoute(route)
+      .then(async committed => ({ committed, hash: await executeRoute(committed, selectedAccount) }))
+      .then(({ committed, hash }) => {
+        reportSigned(committed.uuid, hash)
+
         setTransaction({
           uid: generateId(),
+          uuid: committed.uuid,
           provider: provider,
           chainId: getChainConfig(assetFrom.chain).chainId,
           hash: hash,
@@ -83,21 +88,21 @@ export const SwapDialog = ({ provider, isOpen, onOpenChange }: SwapDialogProps) 
           estimatedTime: quote.estimatedTime?.total,
           assetFrom: assetFrom,
           assetTo: assetTo,
-          // A Houdini order restates the deposit with the venue's own rounding, and the plugin
-          // sends exactly `route.sellAmount`; the history shows what was actually sent.
-          amountFrom: isHoudiniProvider(provider) ? quote.sellAmount : valueFrom.toSignificant(),
+          // A Houdini order restates the deposit with the venue's own rounding, and exactly that is
+          // transferred; the history shows what was actually sent.
+          amountFrom: isHoudiniProvider(provider) ? committed.sellAmount : valueFrom.toSignificant(),
           amountTo: new USwapNumber(quote.expectedBuyAmount).toSignificant(),
           addressFrom: quote.sourceAddress,
           addressTo: quote.destinationAddress || '',
-          addressDeposit: quote.inboundAddress,
+          addressDeposit: committed.inboundAddress,
           status: 'pending',
           limitSwapMemo: isLimitSwap ? quote.memo : undefined,
           limitPrice:
             isLimitSwap && limitSwapBuyAmount && !valueFrom.eq(0)
               ? USwapNumber.fromBigInt(BigInt(limitSwapBuyAmount), 8).div(valueFrom).toSignificant()
               : undefined,
-          providerSwapId: quote.meta?.houdini?.houdiniId,
-          ...houdiniTxRates(quote)
+          providerSwapId: committed.meta?.houdini?.houdiniId,
+          ...houdiniTxRates(committed)
         })
 
         setAmountFrom('')
@@ -109,14 +114,28 @@ export const SwapDialog = ({ provider, isOpen, onOpenChange }: SwapDialogProps) 
       })
       .catch((err: any) => {
         console.log(err)
-        setSubmitting(false)
+        // The preview on screen can no longer be committed: show a new one for the same addresses and
+        // let the user confirm again. Confirm stays disabled until it arrives, so the dead token is
+        // not committed twice; if it cannot be previewed, back to the step that fetches one.
+        if (err instanceof QuoteChangedError && refreshQuote) {
+          refreshQuote()
+            .then(setQuote)
+            .catch(() => setQuote(undefined))
+            .finally(() => setSubmitting(false))
+        } else {
+          if (err instanceof QuoteChangedError) setQuote(undefined)
+          setSubmitting(false)
+        }
         throw err
       })
 
     toast.promise(broadcast, {
       loading: t('toast.submittingTransaction'),
       success: () => t('toast.transactionSubmitted'),
-      error: (err: unknown) => readableError(err, t('toast.errorSubmitting'), assetFrom.chain)
+      error: (err: unknown) =>
+        err instanceof QuoteChangedError
+          ? t(err.reason === 'rate_changed' ? 'toast.priceChanged' : 'toast.quoteExpired')
+          : readableError(err, t('toast.errorSubmitting'), assetFrom.chain)
     })
   }
 
@@ -141,7 +160,13 @@ export const SwapDialog = ({ provider, isOpen, onOpenChange }: SwapDialogProps) 
             </div>
           </>
         ) : (
-          <SwapRecipient provider={provider} onFetchQuote={quote => setQuote(quote)} />
+          <SwapRecipient
+            provider={provider}
+            onFetchQuote={(quote, refresh) => {
+              setQuote(quote)
+              setRefreshQuote(() => refresh)
+            }}
+          />
         )}
       </CredenzaContent>
     </Credenza>

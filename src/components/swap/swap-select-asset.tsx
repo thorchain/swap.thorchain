@@ -12,10 +12,9 @@ import { chainLabel } from '@/components/connect-wallet/config'
 import { Asset } from '@/components/swap/asset'
 import { useModeAssets } from '@/hooks/use-assets'
 import { useIsWidget } from '@/hooks/use-is-widget'
-import { useMemolessAssets } from '@/hooks/use-memoless-assets'
 import { useMimir } from '@/hooks/use-mimir'
 import { useIsMobile } from '@/hooks/use-mobile'
-import { isAssetHalted } from '@/lib/swap-helpers'
+import { isAssetHalted, isMemolessCoin } from '@/lib/swap-helpers'
 import { cn } from '@/lib/utils'
 import { useIsPrivateSwap } from '@/store/private-swap-store'
 
@@ -65,10 +64,7 @@ export const SwapSelectAsset = ({ isOpen, onOpenChange, selected, onSelectAsset 
 
   const { assets } = useModeAssets()
   const { mimir, mayaMimir } = useMimir()
-  const { assets: memolessAssets } = useMemolessAssets()
   const isPrivateSwap = useIsPrivateSwap()
-
-  const memolessIdentifiers = useMemo(() => memolessAssets && new Set(memolessAssets.map(a => a.asset)), [memolessAssets])
 
   // A Mimir halt stops the native protocols; a private swap never touches them.
   const isHalted = (asset: Asset) => !isPrivateSwap && isAssetHalted(asset, mimir, mayaMimir)
@@ -81,7 +77,8 @@ export const SwapSelectAsset = ({ isOpen, onOpenChange, selected, onSelectAsset 
 
     for (const asset of assets) {
       if (asset.isSecuredAsset && !showSecuredAssets) continue
-      if (isWidget && !memolessIdentifiers?.has(asset.identifier)) continue
+      // The widget has no wallet, so it lists only what a memoless deposit can pay for.
+      if (isWidget && !isMemolessCoin(asset)) continue
 
       allAssets.push(asset)
 
@@ -96,7 +93,7 @@ export const SwapSelectAsset = ({ isOpen, onOpenChange, selected, onSelectAsset 
     chainMap.set(Filter.All, allAssets)
 
     return chainMap
-  }, [assets, showSecuredAssets, isWidget, memolessIdentifiers])
+  }, [assets, showSecuredAssets, isWidget])
 
   const chains = useMemo(() => {
     return Array.from(chainMap.keys()).sort((a, b) => {
