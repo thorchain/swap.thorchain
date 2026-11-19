@@ -13,7 +13,8 @@ export const isAssetInMode = (asset: Asset, isPrivateSwap: boolean): boolean => 
   return isPrivateSwap ? providers.includes(PRIVATE_PROVIDER) : providers.some(p => p !== PRIVATE_PROVIDER)
 }
 
-export const useAssets = (): { assets?: Asset[]; isLoading: boolean } => {
+// `geckoMap`: an asset's identifier (lower-cased) to its CoinGecko id, for pricing (useRates).
+export const useAssets = (): { assets?: Asset[]; geckoMap?: Record<string, string>; isLoading: boolean } => {
   const queryClient = useQueryClient()
 
   const { data, isLoading } = useQuery({
@@ -49,6 +50,8 @@ export const useAssets = (): { assets?: Asset[]; isLoading: boolean } => {
       ]
 
       const assets = new Map<string, Asset>()
+      // A plain object: query data keeps its reference across refetches only for plain objects and arrays.
+      const geckoMap: Record<string, string> = {}
 
       for (const token of tokens) {
         const chain = token.chain as Chain
@@ -94,16 +97,18 @@ export const useAssets = (): { assets?: Asset[]; isLoading: boolean } => {
         }
 
         assets.set(key, asset)
+        if (token.coingeckoId) geckoMap[identifier.toLowerCase()] = token.coingeckoId
       }
 
-      return Array.from(assets.values())
+      return { assets: Array.from(assets.values()), geckoMap }
     },
     refetchOnMount: false,
     refetchOnWindowFocus: false
   })
 
   return {
-    assets: data,
+    assets: data?.assets,
+    geckoMap: data?.geckoMap,
     isLoading
   }
 }

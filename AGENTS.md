@@ -88,6 +88,9 @@ Two-component architecture:
 - Memoless (External Wallet Mode) is the aggregator's `THORCHAIN_MEMOLESS` provider, nothing else: native coins only, at least 0.002 of the
   asset, the exact amount and deposit address come from `commit`. Limit orders, and cancelling or modifying one, need a connected wallet — their
   memo is the app's own, which the memoless rail has no room for.
+- USD prices (`useRates`): a THORChain or Maya route is priced by that protocol's pools; another provider's route by the market first, through the
+  asset's CoinGecko id (`getBlocksDecodedPrices`, the ids come with the catalog as `useAssets().geckoMap`), then the pools; with no route the
+  pools come first and the market price fills the assets no pool has. DexScreener fills what is still missing.
 - Assets come from `/v3/tokens/all` (`useAssets`, which loads the provider list and the Robinhood token list alongside it); each token names
   the providers that list it. Swaps are tracked by the commit's
   `uuid` (`Transaction.uuid`, `useSyncTransactions`); `action_required` is a status of its own that keeps polling, shown in the history with the

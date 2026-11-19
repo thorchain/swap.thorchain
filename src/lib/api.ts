@@ -52,6 +52,23 @@ export const getDexScreenerTokens = async (
   }
 }
 
+// USD prices by CoinGecko id: one keyless, batched call. An id it does not know is simply absent from
+// the answer. A failed call throws, so the caller's query retries it instead of keeping "no prices".
+export const getBlocksDecodedPrices = async (ids: string[]): Promise<Record<string, number>> => {
+  if (ids.length === 0) return {}
+
+  const res = await axios.get('https://api.blocksdecoded.com/v1/coins', {
+    params: { uids: ids.join(','), fields: 'uid,price' }
+  })
+  const result: Record<string, number> = {}
+  for (const coin of (res.data as { uid?: string; price?: string }[]) || []) {
+    if (!coin?.uid) continue
+    const price = parseFloat(coin.price ?? '')
+    if (Number.isFinite(price) && price > 0) result[coin.uid] = price
+  }
+  return result
+}
+
 export interface AlchemyTokenBalance {
   contractAddress: string
   tokenBalance: string

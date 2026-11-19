@@ -1,13 +1,23 @@
-import { useMemo } from 'react'
-import { useQuery } from '@tanstack/react-query'
+import { useMemo, useRef } from 'react'
+import { keepPreviousData, useQuery, useQueryClient } from '@tanstack/react-query'
 import { USwapNumber } from '@tcswap/core'
 import { ProviderName } from '@tcswap/helpers'
 import { QuoteResponseRoute } from '@tcswap/helpers/api'
+import { useAssets } from '@/hooks/use-assets'
 import { useQuote } from '@/hooks/use-quote'
 import { useAssetFrom, useAssetTo } from '@/hooks/use-swap'
 import { ROBINHOOD_NATIVE_IDENTIFIER } from '@/lib/robinhood/asset-list'
-import { getDexScreenerTokens, getMayaMidgardCacaoPrice, getMayaMidgardPools, getMidgardPools, getMidgardRunePrice } from '@/lib/api'
+import {
+  getBlocksDecodedPrices,
+  getDexScreenerTokens,
+  getMayaMidgardCacaoPrice,
+  getMayaMidgardPools,
+  getMidgardPools,
+  getMidgardRunePrice
+} from '@/lib/api'
 import { isHoudiniProvider } from '@/lib/swap-helpers'
+import { useIsLimitSwap } from '@/store/limit-swap-store'
+import { useIsPrivateSwap } from '@/store/private-swap-store'
 
 export type AssetRateMap = Record<string, USwapNumber>
 export type AssetLogoMap = Record<string, string>
@@ -15,24 +25,50 @@ export type AssetLogoMap = Record<string, string>
 const RUNE_IDENTIFIER = 'THOR.RUNE'
 const CACAO_IDENTIFIER = 'MAYA.CACAO'
 const WRAPPED_NEAR = 'wrap.near'
+const POOL_PRICES_KEY = ['thorchain-pool-prices']
+
+// Robinhood Chain settles in ETH: in the pools its gas asset is priced as ETH itself.
+const poolKey = (key: string) => (key === ROBINHOOD_NATIVE_IDENTIFIER.toLowerCase() ? 'eth.eth' : key)
+
+// How long a price is used before it is fetched again.
+const PRICE_TTL = 3 * 60_000
 
 const isMayaProvider = (provider?: ProviderName) => provider === ProviderName.MAYACHAIN || provider === ProviderName.MAYACHAIN_STREAMING
+const isThorProvider = (provider?: ProviderName) => provider === ProviderName.THORCHAIN || provider === ProviderName.THORCHAIN_STREAMING
 
+// Where a price comes from depends on the route:
+//   - a THORChain or Maya route: that protocol's own pools, the price the swap executes against;
+//   - another provider's route: the market first, through the asset's CoinGecko id, then the pools;
+//   - no route (balances, staking, bonding, the history): the pools first, as these screens always
+//     were, with the market price filling in the assets no pool has (XLM, SUI, TON, ADA, ...).
+// DexScreener fills whatever is still missing.
 export const useRates = (identifiers: string[], provider?: ProviderName): { rates: AssetRateMap; logos: AssetLogoMap; isLoading: boolean } => {
+  const { geckoMap } = useAssets()
+  const isNativeRoute = isThorProvider(provider) || isMayaProvider(provider)
+  const marketFirst = !!provider && !isNativeRoute
+
+  const queryClient = useQueryClient()
+
   const { data: midgardData, isLoading: midgardLoading } = useQuery({
-    queryKey: ['thorchain-pool-prices'],
+    queryKey: POOL_PRICES_KEY,
     queryFn: async () => {
+      // Maya's Midgard being down must not cost THORChain's prices, so its two reads fail softly.
       const [pools, runePrice, mayaPools, cacaoPrice] = await Promise.all([
         getMidgardPools(),
         getMidgardRunePrice(),
-        getMayaMidgardPools().catch(() => []),
+        getMayaMidgardPools().catch(() => undefined),
         getMayaMidgardCacaoPrice().catch(() => NaN)
       ])
 
       const thor: AssetRateMap = {}
-      const maya: AssetRateMap = {}
+      // A refresh that could not reach Maya keeps the prices the last one got, rather than replace
+      // them with nothing until the next try.
+      const previous = queryClient.getQueryData<{ thor: AssetRateMap; maya: AssetRateMap }>(POOL_PRICES_KEY)?.maya
+      const maya: AssetRateMap = mayaPools ? {} : { ...previous }
+      const cacaoKey = CACAO_IDENTIFIER.toLowerCase()
+      if (mayaPools && previous?.[cacaoKey]) maya[cacaoKey] = previous[cacaoKey]
 
-      for (const pool of mayaPools) {
+      for (const pool of mayaPools ?? []) {
         const price = parseFloat(pool.assetPriceUSD)
         if (pool.asset && !isNaN(price) && price > 0) {
           maya[pool.asset.toLowerCase()] = new USwapNumber(price)
@@ -67,7 +103,10 @@ export const useRates = (identifiers: string[], provider?: ProviderName): { rate
 
       return { thor, maya }
     },
-    staleTime: 3 * 60_000,
+    staleTime: PRICE_TTL,
+    // Kept as fresh as the market prices they are compared with: a pool price from page load set
+    // against a market price fetched now would read as price impact.
+    refetchInterval: PRICE_TTL,
     refetchOnMount: false,
     refetchOnWindowFocus: false,
     // One failed fetch would otherwise blank all pricing for the session
@@ -164,8 +203,50 @@ export const useRates = (identifiers: string[], provider?: ProviderName): { rate
     retry: false
   })
 
+  // The assets to ask the market about. None on a native route. With no route the pools come first,
+  // so only what they do not price is asked for - once they have answered (or failed to).
+  const geckoTargets = useMemo(() => {
+    const targets: { id: string; geckoId: string }[] = []
+    if (!geckoMap || isNativeRoute || (!marketFirst && midgardLoading)) return targets
+
+    for (const id of identifiers) {
+      const key = id.toLowerCase()
+      if (!marketFirst && (midgardData?.thor[poolKey(key)] ?? midgardData?.maya[poolKey(key)])) continue
+
+      const geckoId = geckoMap[key]
+      if (geckoId) targets.push({ id, geckoId })
+    }
+    return targets
+  }, [identifiers, geckoMap, isNativeRoute, marketFirst, midgardData, midgardLoading])
+
+  const geckoIds = useMemo(() => Array.from(new Set(geckoTargets.map(t => t.geckoId))), [geckoTargets])
+
+  const { data: geckoData, isLoading: geckoLoading } = useQuery({
+    queryKey: ['blocksdecoded-prices', geckoIds.slice().sort().join(',')],
+    queryFn: () => getBlocksDecodedPrices(geckoIds),
+    enabled: geckoIds.length > 0,
+    // The answer is keyed by CoinGecko id, so the last one still prices every id it shares with a new
+    // set: kept on screen while a changed set (another wallet, a new balance) is being asked for.
+    placeholderData: keepPreviousData,
+    staleTime: PRICE_TTL,
+    refetchInterval: PRICE_TTL,
+    refetchOnMount: false,
+    refetchOnWindowFocus: false,
+    // A failed lookup keeps no data, so the pools and DexScreener stand in until a later try succeeds.
+    retry: 2
+  })
+
   const rates: AssetRateMap = {}
   const logos: AssetLogoMap = {}
+
+  const market: AssetRateMap = {}
+  for (const { id, geckoId } of geckoTargets) {
+    const price = geckoData?.[geckoId]
+    if (price) market[id] = new USwapNumber(price)
+  }
+
+  if (marketFirst) Object.assign(rates, market)
+
   if (midgardData) {
     // Price from the route's own network first
     const preferMaya = isMayaProvider(provider)
@@ -173,11 +254,14 @@ export const useRates = (identifiers: string[], provider?: ProviderName): { rate
     const secondary = preferMaya ? midgardData.thor : midgardData.maya
     for (const id of identifiers) {
       const key = id.toLowerCase()
-      // Robinhood Chain settles in ETH: its gas asset is priced as ETH itself.
-      const priceKey = key === ROBINHOOD_NATIVE_IDENTIFIER.toLowerCase() ? 'eth.eth' : key
+      const priceKey = poolKey(key)
       const price = primary[priceKey] ?? secondary[priceKey]
-      if (price) rates[id] = price
+      if (price && !rates[id]) rates[id] = price
     }
+  }
+
+  for (const id of Object.keys(market)) {
+    if (!rates[id]) rates[id] = market[id]
   }
 
   // Supplement with DexScreener prices and logos for Solana tokens
@@ -230,7 +314,14 @@ export const useRates = (identifiers: string[], provider?: ProviderName): { rate
   return {
     rates,
     logos,
-    isLoading: midgardLoading || dexScreenerPending || dexScreenerEthPending || dexScreenerNearPending || dexScreenerRobinhoodPending || identifiers.length === 0
+    isLoading:
+      midgardLoading ||
+      dexScreenerPending ||
+      dexScreenerEthPending ||
+      dexScreenerNearPending ||
+      dexScreenerRobinhoodPending ||
+      (geckoIds.length > 0 && geckoLoading) ||
+      identifiers.length === 0
   }
 }
 
@@ -239,9 +330,24 @@ export const useSwapRates = () => {
   const assetTo = useAssetTo()
   const identifiers = [assetFrom?.identifier, assetTo?.identifier].filter(Boolean).sort() as string[]
   const { pricingQuote: quote } = useQuote()
-  const { rates } = useRates(identifiers, quote?.providers[0])
+  const isPrivateSwap = useIsPrivateSwap()
+  const isLimitSwap = useIsLimitSwap()
+
+  // The price source follows the route's provider (see useRates). The provider resolved for the
+  // current pair is kept while a new quote loads, so the source stays put instead of switching each
+  // time a quote comes and goes. Until the first quote of a pair names one, the prices are the
+  // no-route ones (pools first): a value on screen at once, as the form always had.
+  // A pair here is what a quote is asked for: the direction and the tab too. The same two assets the
+  // other way round, or on another tab, are served by other providers, and must not inherit this one's.
+  const pairKey = [isPrivateSwap ? 'private' : isLimitSwap ? 'limit' : 'swap', assetFrom?.identifier, assetTo?.identifier].join(',')
+  const providerRef = useRef<{ pairKey: string; provider?: ProviderName }>({ pairKey })
+  if (providerRef.current.pairKey !== pairKey) providerRef.current = { pairKey }
+  if (quote?.providers[0]) providerRef.current.provider = quote.providers[0]
+  const provider = providerRef.current.provider
+
+  const { rates } = useRates(identifiers, provider)
   const houdiniRates = useMemo(() => (quote ? houdiniQuoteRates(quote) : {}), [quote])
-  const isPrivate = isHoudiniProvider(quote?.providers[0])
+  const isPrivate = isHoudiniProvider(provider)
 
   return {
     rateFrom: assetFrom && preferRate(isPrivate, rates[assetFrom.identifier], houdiniRates.rateFrom),
