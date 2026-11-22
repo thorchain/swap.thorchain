@@ -7,6 +7,7 @@ import { useQuote } from '@/hooks/use-quote'
 import { useAssetFrom, useAssetTo } from '@/hooks/use-swap'
 import { getDexScreenerTokens, getMayaMidgardCacaoPrice, getMayaMidgardPools, getMidgardPools, getMidgardRunePrice } from '@/lib/api'
 import { isHoudiniProvider } from '@/lib/swap-helpers'
+import { getThorPools } from '@/lib/thorchain-api'
 
 export type AssetRateMap = Record<string, USwapNumber>
 export type AssetLogoMap = Record<string, string>
@@ -17,13 +18,34 @@ const WRAPPED_NEAR = 'wrap.near'
 
 const isMayaProvider = (provider?: ProviderName) => provider === ProviderName.MAYACHAIN || provider === ProviderName.MAYACHAIN_STREAMING
 
+const TOR_UNIT = 1e8
+
+// THORChain USD prices come from THORNode, in TOR - the chain's own USD unit of account, the median of its
+// stablecoin pools. Midgard's `assetPriceUSD` is rebuilt from the pool depths it tracks event by event, and
+// those drift from the real balances: ETH.USDT and BSC.USDT read $0.83 and $0.57 while the chain swapped them
+// at $1 (issue #220). Midgard is only the fallback for a THORNode outage.
+const getThorPrices = async (): Promise<[{ asset: string; price: number }[], number]> => {
+  try {
+    const pools = await getThorPools()
+    // RUNE is priced off the deepest pool: a pool's TOR price is RUNE's TOR price times its RUNE/asset ratio.
+    const deepest = pools.reduce((a, b) => (parseFloat(b.balance_rune) > parseFloat(a.balance_rune) ? b : a))
+    const runePrice = ((parseFloat(deepest.asset_tor_price) / TOR_UNIT) * parseFloat(deepest.balance_asset)) / parseFloat(deepest.balance_rune)
+    // With no stablecoin pool to anchor TOR the node answers 200 with every price at zero
+    if (!(runePrice > 0)) throw new Error('THORNode has no TOR prices')
+    return [pools.map(pool => ({ asset: pool.asset, price: parseFloat(pool.asset_tor_price) / TOR_UNIT })), runePrice]
+  } catch (error) {
+    console.warn('THORNode prices unavailable, falling back to Midgard', error)
+    const [pools, runePrice] = await Promise.all([getMidgardPools(), getMidgardRunePrice()])
+    return [pools.map(pool => ({ asset: pool.asset, price: parseFloat(pool.assetPriceUSD) })), runePrice]
+  }
+}
+
 export const useRates = (identifiers: string[], provider?: ProviderName): { rates: AssetRateMap; logos: AssetLogoMap; isLoading: boolean } => {
-  const { data: midgardData, isLoading: midgardLoading } = useQuery({
+  const { data: poolData, isLoading: poolLoading } = useQuery({
     queryKey: ['thorchain-pool-prices'],
     queryFn: async () => {
-      const [pools, runePrice, mayaPools, cacaoPrice] = await Promise.all([
-        getMidgardPools(),
-        getMidgardRunePrice(),
+      const [[pools, runePrice], mayaPools, cacaoPrice] = await Promise.all([
+        getThorPrices(),
         getMayaMidgardPools().catch(() => []),
         getMayaMidgardCacaoPrice().catch(() => NaN)
       ])
@@ -39,7 +61,7 @@ export const useRates = (identifiers: string[], provider?: ProviderName): { rate
       }
 
       for (const pool of pools) {
-        const price = parseFloat(pool.assetPriceUSD)
+        const price = pool.price
         if (pool.asset && !isNaN(price) && price > 0) {
           thor[pool.asset.toLowerCase()] = new USwapNumber(price)
 
@@ -67,13 +89,15 @@ export const useRates = (identifiers: string[], provider?: ProviderName): { rate
       return { thor, maya }
     },
     staleTime: 3 * 60_000,
+    // Keeps a long-open tab priced at the market, and replaces Midgard fallback prices once THORNode is back
+    refetchInterval: 3 * 60_000,
     refetchOnMount: false,
     refetchOnWindowFocus: false,
     // One failed fetch would otherwise blank all pricing for the session
     retry: 2
   })
 
-  // Collect Solana mint addresses for tokens not covered by Midgard pools
+  // Collect Solana mint addresses for tokens not covered by THORChain/Maya pools
   const solanaMints = useMemo(() => {
     const mints: string[] = []
     for (const id of identifiers) {
@@ -143,11 +167,11 @@ export const useRates = (identifiers: string[], provider?: ProviderName): { rate
 
   const rates: AssetRateMap = {}
   const logos: AssetLogoMap = {}
-  if (midgardData) {
+  if (poolData) {
     // Price from the route's own network first
     const preferMaya = isMayaProvider(provider)
-    const primary = preferMaya ? midgardData.maya : midgardData.thor
-    const secondary = preferMaya ? midgardData.thor : midgardData.maya
+    const primary = preferMaya ? poolData.maya : poolData.thor
+    const secondary = preferMaya ? poolData.thor : poolData.maya
     for (const id of identifiers) {
       const key = id.toLowerCase()
       const price = primary[key] ?? secondary[key]
@@ -193,7 +217,7 @@ export const useRates = (identifiers: string[], provider?: ProviderName): { rate
   return {
     rates,
     logos,
-    isLoading: midgardLoading || dexScreenerPending || dexScreenerEthPending || dexScreenerNearPending || identifiers.length === 0
+    isLoading: poolLoading || dexScreenerPending || dexScreenerEthPending || dexScreenerNearPending || identifiers.length === 0
   }
 }
 

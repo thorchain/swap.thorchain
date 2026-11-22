@@ -81,7 +81,8 @@ export interface ThorPool {
 }
 
 export const getThorPools = async (): Promise<ThorPool[]> => {
-  return thornode.get('/thorchain/pools').then(res => res.data)
+  // Bounded, so a stalled node fails over instead of leaving its callers waiting
+  return thornode.get('/thorchain/pools', { timeout: 10_000 }).then(res => res.data)
 }
 
 // A single LP position from Midgard's member view. All numeric fields are
