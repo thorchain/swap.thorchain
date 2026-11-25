@@ -1,4 +1,4 @@
-import { Chain, getEIP6963Wallets, getMetaMaskProvider, USwap, WalletOption } from '@tcswap/core'
+import { Chain, ChainToChainId, getEIP6963Wallets, getMetaMaskProvider, USwap, WalletOption } from '@tcswap/core'
 import { EVMPlugin } from '@tcswap/plugins/evm'
 import { HoudiniPlugin } from '@tcswap/plugins/houdini'
 import { SolanaPlugin } from '@tcswap/plugins/solana'
@@ -155,7 +155,10 @@ export async function connectWallet(option: WalletOption, chains: Chain[], confi
     case WalletOption.OKX_MOBILE:
       return connectEach(c => uSwap.connectOkx(c))
     case WalletOption.VULTISIG:
-      return connectEach(c => uSwap.connectVultisig(c))
+      return connectEach(async c => {
+        await requestVultisigCosmosAccess(c)
+        return uSwap.connectVultisig(c)
+      })
     case WalletOption.TRONLINK:
       return connectEach(c => uSwap.connectTronLink(c))
     case WalletOption.EXODUS:
@@ -172,6 +175,31 @@ export async function connectWallet(option: WalletOption, chains: Chain[], confi
     default: {
       throw new Error(`Unsupported wallet option: ${option}`)
     }
+  }
+}
+
+// Until @tcswap/wallets ships the fix: its Vultisig connector reads the Cosmos address from `get_accounts`,
+// which answers with an empty list while the site has no access, and never asks for it. So ask here first.
+async function requestVultisigCosmosAccess(chains: Chain[]) {
+  const chain = chains.find(c => c === Chain.Cosmos || c === Chain.Kujira)
+  const cosmos = (window as any).vultisig?.cosmos
+  if (!chain || !cosmos) return
+
+  await cosmos.request({ method: 'wallet_switch_chain', params: [{ chainId: ChainToChainId[chain] }] })
+  const accounts = await cosmos.request({ method: 'get_accounts' })
+  if (!Array.isArray(accounts) || accounts.length === 0) await cosmos.request({ method: 'request_accounts' })
+}
+
+// The connector's own `transfer` reads the sender the same way and hands the extension that list as
+// `from`. This is the request it makes, with the address as a string.
+function vultisigCosmosTransfer(chain: Chain, from: string) {
+  return async ({ assetValue, recipient, memo }: { assetValue: { getBaseValue: (type: 'number') => number }; recipient: string; memo?: string }) => {
+    const cosmos = (window as any).vultisig?.cosmos
+    if (!cosmos) throw new Error('Vultisig not found. Install or enable the Vultisig extension.')
+
+    await cosmos.request({ method: 'wallet_switch_chain', params: [{ chainId: ChainToChainId[chain] }] })
+    const value = assetValue.getBaseValue('number').toString()
+    return cosmos.request({ method: 'send_transaction', params: [{ data: memo || '', from, to: recipient, value }] }) as Promise<string>
   }
 }
 
@@ -228,9 +256,16 @@ export async function getAccounts(
       // last connect wins. When one chain of a multi-chain connect fails, that files the wallet
       // already on it under this provider: MetaMask's Ethereum address in an Exodus row, which then
       // reads an empty balance and cannot sign, since every path here resolves the wallet by provider.
-      const raw = uSwap.getWallet(option, chain)?.address
+      const wallet = uSwap.getWallet(option, chain)
+      const raw = wallet?.address
       const address = Array.isArray(raw) ? raw[0] : raw
       if (!address) return null
+      // Vultisig's Cosmos address arrives as a one-entry list. Everything else reads the address off the
+      // wallet itself (`wallet.getBalance(wallet.address)`), where a list throws, so store the string back.
+      if (Array.isArray(raw)) {
+        wallet.address = address
+        if (option === WalletOption.VULTISIG) (wallet as { transfer?: unknown }).transfer = vultisigCosmosTransfer(chain, address)
+      }
       const mismatch = btcPathMismatch(chain, address, config?.derivationPath)
       if (mismatch) {
         uSwap.disconnectChain(chain)
