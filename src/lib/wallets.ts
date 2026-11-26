@@ -90,7 +90,7 @@ export function getUSwap() {
     config: {
       apiKeys: {
         uSwap: apiKeyOverride || process.env.NEXT_PUBLIC_USWAP_API_KEY,
-        blockchair: 'sto', // fake key to just avoid logs like: No Blockchair API key found
+        // blockchair: 'sto', // fake key to just avoid logs like: No Blockchair API key found
         walletConnectProjectId: process.env.NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID
       },
       rpcUrls: {
@@ -102,7 +102,7 @@ export function getUSwap() {
       },
       envs: {
         apiUrl: process.env.NEXT_PUBLIC_USWAP_API_URL,
-        blockchairApiUrl: blockchairProxyUrl()
+        // blockchairApiUrl: blockchairProxyUrl()
       }
     }
   })
