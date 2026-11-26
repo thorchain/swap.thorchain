@@ -54,7 +54,7 @@ export const useSyncTransactions = () => {
   const queries = pendingTransactions.map(tx => {
     return {
       queryKey: ['transaction', tx.uid],
-      // Sends hit public nodes and Blockchair's shared key, so they poll slower.
+      // Sends hit public nodes and keyless explorers, so they poll slower.
       refetchInterval: tx.kind === 'send' ? SEND_POLL_MS : 5_000,
       // syncSend counts failed lookups itself.
       ...(tx.kind === 'send' && { retry: false }),

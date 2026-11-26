@@ -41,8 +41,23 @@ async function evmStatus(chain: EVMChain, hash: string): Promise<TransferStatus>
   return result.status === '0x1' ? 'completed' : 'failed'
 }
 
-// Keyless, straight from the browser, as the UTXO toolbox does while our proxy is off (see `blockchairProxyUrl`).
-async function utxoStatus(slug: string, hash: string): Promise<TransferStatus> {
+// Esplora hosts for the chains that have one: the same ones the SDK's UTXO toolbox falls back to.
+const ESPLORA_URLS: Partial<Record<Chain, string>> = {
+  [Chain.Bitcoin]: 'https://mempool.space/api',
+  [Chain.Litecoin]: 'https://litecoinspace.org/api'
+}
+
+async function esploraStatus(base: string, hash: string): Promise<TransferStatus> {
+  const res = await fetch(`${base}/tx/${encodeURIComponent(hash)}/status`)
+  if (!res.ok) throw new Error(`Esplora answered ${res.status}`)
+  // An unknown hash answers `{ confirmed: false }` too, the same as one still in the mempool.
+  const { confirmed } = await res.json()
+  return confirmed ? 'completed' : 'pending'
+}
+
+// The UTXO chains without an Esplora host. Keyless, straight from the browser, as the UTXO toolbox
+// does while our proxy is off (see `blockchairProxyUrl`).
+async function blockchairStatus(slug: string, hash: string): Promise<TransferStatus> {
   const res = await fetch(`https://api.blockchair.com/${slug}/dashboards/transaction/${encodeURIComponent(hash)}`)
   if (!res.ok) throw new Error(`Blockchair answered ${res.status}`)
   const { data } = await res.json()
@@ -100,8 +115,10 @@ async function rippleStatus(hash: string): Promise<TransferStatus> {
 
 const statusLookup = (chain: Chain): ((hash: string) => Promise<TransferStatus>) | undefined => {
   if (EVMChains.includes(chain as EVMChain)) return hash => evmStatus(chain as EVMChain, hash)
+  const esploraUrl = ESPLORA_URLS[chain]
+  if (esploraUrl) return hash => esploraStatus(esploraUrl, hash)
   const blockchairSlug = BLOCKCHAIR_CHAINS[chain as UTXOChain]
-  if (blockchairSlug) return hash => utxoStatus(blockchairSlug, hash)
+  if (blockchairSlug) return hash => blockchairStatus(blockchairSlug, hash)
   if (TENDERMINT_CHAINS.includes(chain)) return hash => tendermintStatus(chain, hash)
   if (chain === Chain.Tron) return tronStatus
   if (chain === Chain.Solana) return solanaStatus
