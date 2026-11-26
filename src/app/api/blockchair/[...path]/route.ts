@@ -10,6 +10,10 @@ import { isSameOrigin } from '@/lib/same-origin'
 // sends no key of its own; this route appends it.
 const UPSTREAM = 'https://api.blockchair.com'
 
+// Off for now: the key is out of quota and the client calls Blockchair keyless instead
+// (see `blockchairProxyUrl` in src/lib/wallets.ts). Nothing reaches the upstream while this is set.
+const DISABLED = true
+
 // A stalled upstream would otherwise hold the handler open indefinitely.
 const UPSTREAM_TIMEOUT_MS = 15_000
 
@@ -50,6 +54,15 @@ function badPath() {
 }
 
 async function forward(req: NextRequest, path: string[], endpoints: string[], body?: string) {
+  if (DISABLED) {
+    return apiError(
+      503,
+      'proxy_disabled',
+      'disabled',
+      'Switched off'
+    )
+  }
+
   if (!isSameOrigin(req)) {
     return apiError(
       403,

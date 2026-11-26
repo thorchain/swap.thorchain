@@ -60,9 +60,10 @@ export function setUSwapApiKey(apiKey: string) {
   apiKeyOverride = apiKey
 }
 
-// The Blockchair API key stays on the server, so the UTXO toolbox talks to our
-// own proxy (src/app/api/blockchair) instead of api.blockchair.com. The SDK's
-// request client builds a `new URL(...)`, so this has to be absolute.
+// Off for now: the paid Blockchair key ran out of quota, so the UTXO toolbox calls api.blockchair.com
+// keyless from the browser (the SDK's default) and the proxy answers 503. To turn it back on, restore
+// `blockchairApiUrl` and the placeholder key below and clear `DISABLED` in src/app/api/blockchair.
+// The SDK's request client builds a `new URL(...)`, so this has to be absolute.
 export function blockchairProxyUrl() {
   const origin = typeof window === 'undefined' ? AppConfig.baseUrl : window.location.origin
   return `${origin}/api/blockchair`
@@ -90,7 +91,7 @@ export function getUSwap() {
     config: {
       apiKeys: {
         uSwap: apiKeyOverride || process.env.NEXT_PUBLIC_USWAP_API_KEY,
-        blockchair: 'sto', // fake key to just avoid logs like: No Blockchair API key found
+        // blockchair: 'sto', // fake key to just avoid logs like: No Blockchair API key found
         walletConnectProjectId: process.env.NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID
       },
       rpcUrls: {
@@ -102,7 +103,7 @@ export function getUSwap() {
       },
       envs: {
         apiUrl: process.env.NEXT_PUBLIC_USWAP_API_URL,
-        blockchairApiUrl: blockchairProxyUrl(),
+        // blockchairApiUrl: blockchairProxyUrl(),
         memolessApiUrl: process.env.NEXT_PUBLIC_MEMOLESS_API
       }
     }

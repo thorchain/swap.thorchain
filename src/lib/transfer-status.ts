@@ -1,7 +1,7 @@
 import { Chain, EVMChain, EVMChains, UTXOChain, UTXOChains } from '@tcswap/core'
 import { getRPCUrl } from '@tcswap/helpers'
 import { BLOCKCHAIR_CHAINS } from '@/lib/blockchair'
-import { blockchairProxyUrl, getUSwap } from '@/lib/wallets'
+import { getUSwap } from '@/lib/wallets'
 
 // The aggregator's /track only follows swaps, so a plain wallet send is confirmed against its chain.
 // 'pending' covers both "in the mempool" and "not seen yet".
@@ -41,8 +41,9 @@ async function evmStatus(chain: EVMChain, hash: string): Promise<TransferStatus>
   return result.status === '0x1' ? 'completed' : 'failed'
 }
 
+// Keyless, straight from the browser, as the UTXO toolbox does while our proxy is off (see `blockchairProxyUrl`).
 async function utxoStatus(slug: string, hash: string): Promise<TransferStatus> {
-  const res = await fetch(`${blockchairProxyUrl()}/${slug}/dashboards/transaction/${encodeURIComponent(hash)}`)
+  const res = await fetch(`https://api.blockchair.com/${slug}/dashboards/transaction/${encodeURIComponent(hash)}`)
   if (!res.ok) throw new Error(`Blockchair answered ${res.status}`)
   const { data } = await res.json()
   // Unknown hashes come back as an empty `data`; a mempool transaction has block_id -1.
