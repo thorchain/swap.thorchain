@@ -300,8 +300,8 @@
       "modeSend": "보내기",
       "modeSwapHint": "다른 자산으로, 비공개 전환",
       "modeSendHint": "다른 지갑으로, 비공개 전송",
-      "disclaimer": "Private Swap은 <link>Houdini Swap</link>으로 제공됩니다",
-      "disclaimerSend": "Private Send는 <link>Houdini Swap</link>으로 제공됩니다",
+      "disclaimer": "Private Swap은 <link>Houdini</link>으로 제공됩니다",
+      "disclaimerSend": "Private Send는 <link>Houdini</link>으로 제공됩니다",
       "acknowledge": "<link>서비스 이용약관</link>에 동의합니다"
     }
   },

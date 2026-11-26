@@ -300,8 +300,8 @@
       "modeSend": "送金",
       "modeSwapHint": "別のアセットへ、プライベートに",
       "modeSendHint": "別のウォレットへ、プライベートに",
-      "disclaimer": "Private Swap は <link>Houdini Swap</link> により提供されています",
-      "disclaimerSend": "Private Send は <link>Houdini Swap</link> により提供されています",
+      "disclaimer": "Private Swap は <link>Houdini</link> により提供されています",
+      "disclaimerSend": "Private Send は <link>Houdini</link> により提供されています",
       "acknowledge": "<link>利用規約</link>に同意します"
     }
   },

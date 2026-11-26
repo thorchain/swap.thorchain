@@ -300,8 +300,8 @@
       "modeSend": "Enviar",
       "modeSwapHint": "A otro activo, de forma privada",
       "modeSendHint": "A otra cartera, de forma privada",
-      "disclaimer": "Private Swap funciona con <link>Houdini Swap</link>",
-      "disclaimerSend": "Private Send funciona con <link>Houdini Swap</link>",
+      "disclaimer": "Private Swap funciona con <link>Houdini</link>",
+      "disclaimerSend": "Private Send funciona con <link>Houdini</link>",
       "acknowledge": "Acepto los <link>Términos del Servicio</link>"
     }
   },

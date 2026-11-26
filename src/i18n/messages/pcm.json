@@ -300,8 +300,8 @@
       "modeSend": "Send",
       "modeSwapHint": "Go anoda asset, for hide-hide",
       "modeSendHint": "Go anoda wallet, for hide-hide",
-      "disclaimer": "Private Swap dey run on <link>Houdini Swap</link>",
-      "disclaimerSend": "Private Send dey run on <link>Houdini Swap</link>",
+      "disclaimer": "Private Swap dey run on <link>Houdini</link>",
+      "disclaimerSend": "Private Send dey run on <link>Houdini</link>",
       "acknowledge": "I gree with di <link>Terms of Service</link>"
     }
   },

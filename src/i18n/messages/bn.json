@@ -300,8 +300,8 @@
       "modeSend": "পাঠান",
       "modeSwapHint": "অন্য অ্যাসেটে, গোপনীয়ভাবে",
       "modeSendHint": "অন্য ওয়ালেটে, গোপনীয়ভাবে",
-      "disclaimer": "Private Swap পরিচালিত হয় <link>Houdini Swap</link> দ্বারা",
-      "disclaimerSend": "Private Send পরিচালিত হয় <link>Houdini Swap</link> দ্বারা",
+      "disclaimer": "Private Swap পরিচালিত হয় <link>Houdini</link> দ্বারা",
+      "disclaimerSend": "Private Send পরিচালিত হয় <link>Houdini</link> দ্বারা",
       "acknowledge": "আমি <link>পরিষেবার শর্তাবলী</link> মেনে নিচ্ছি"
     }
   },

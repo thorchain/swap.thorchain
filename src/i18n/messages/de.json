@@ -300,8 +300,8 @@
       "modeSend": "Senden",
       "modeSwapHint": "In ein anderes Asset, privat",
       "modeSendHint": "An eine andere Wallet, privat",
-      "disclaimer": "Private Swap wird unterstützt von <link>Houdini Swap</link>",
-      "disclaimerSend": "Private Send wird unterstützt von <link>Houdini Swap</link>",
+      "disclaimer": "Private Swap wird unterstützt von <link>Houdini</link>",
+      "disclaimerSend": "Private Send wird unterstützt von <link>Houdini</link>",
       "acknowledge": "Ich akzeptiere die <link>Nutzungsbedingungen</link>"
     }
   },

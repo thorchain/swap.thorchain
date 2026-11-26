@@ -300,8 +300,8 @@
       "modeSend": "ارسال",
       "modeSwapHint": "به دارایی دیگر، به‌صورت خصوصی",
       "modeSendHint": "به کیف پول دیگر، به‌صورت خصوصی",
-      "disclaimer": "Private Swap با قدرت <link>Houdini Swap</link> ارائه می‌شود",
-      "disclaimerSend": "Private Send با قدرت <link>Houdini Swap</link> ارائه می‌شود",
+      "disclaimer": "Private Swap با قدرت <link>Houdini</link> ارائه می‌شود",
+      "disclaimerSend": "Private Send با قدرت <link>Houdini</link> ارائه می‌شود",
       "acknowledge": "<link>شرایط استفاده از خدمات</link> را می‌پذیرم"
     }
   },

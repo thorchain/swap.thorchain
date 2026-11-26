@@ -83,7 +83,7 @@ export const providerLabel = (provider: ProviderName): string => {
   if (provider === 'MAYACHAIN' || provider === 'MAYACHAIN_STREAMING') return 'Maya Protocol'
   if (provider === 'NEAR') return 'Near'
   if (provider === 'ONEINCH') return '1inch'
-  if (provider === 'HOUDINI') return 'Houdini Swap'
+  if (provider === 'HOUDINI') return 'Houdini'
   return 'Unknown'
 }
 

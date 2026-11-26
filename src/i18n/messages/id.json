@@ -300,8 +300,8 @@
       "modeSend": "Kirim",
       "modeSwapHint": "Ke aset lain, secara privat",
       "modeSendHint": "Ke dompet lain, secara privat",
-      "disclaimer": "Private Swap didukung oleh <link>Houdini Swap</link>",
-      "disclaimerSend": "Private Send didukung oleh <link>Houdini Swap</link>",
+      "disclaimer": "Private Swap didukung oleh <link>Houdini</link>",
+      "disclaimerSend": "Private Send didukung oleh <link>Houdini</link>",
       "acknowledge": "Saya menyetujui <link>Ketentuan Layanan</link>"
     }
   },

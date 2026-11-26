@@ -300,8 +300,8 @@
       "modeSend": "ส่ง",
       "modeSwapHint": "เป็นสินทรัพย์อื่นแบบส่วนตัว",
       "modeSendHint": "ไปยังกระเป๋าอื่นแบบส่วนตัว",
-      "disclaimer": "Private Swap ขับเคลื่อนโดย <link>Houdini Swap</link>",
-      "disclaimerSend": "Private Send ขับเคลื่อนโดย <link>Houdini Swap</link>",
+      "disclaimer": "Private Swap ขับเคลื่อนโดย <link>Houdini</link>",
+      "disclaimerSend": "Private Send ขับเคลื่อนโดย <link>Houdini</link>",
       "acknowledge": "ฉันยอมรับ<link>ข้อกำหนดในการให้บริการ</link>"
     }
   },

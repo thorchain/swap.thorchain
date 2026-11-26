@@ -300,8 +300,8 @@
       "modeSend": "إرسال",
       "modeSwapHint": "إلى أصل آخر، بخصوصية",
       "modeSendHint": "إلى محفظة أخرى، بخصوصية",
-      "disclaimer": "التبديل الخاص مدعوم بواسطة <link>Houdini Swap</link>",
-      "disclaimerSend": "الإرسال الخاص مدعوم بواسطة <link>Houdini Swap</link>",
+      "disclaimer": "التبديل الخاص مدعوم بواسطة <link>Houdini</link>",
+      "disclaimerSend": "الإرسال الخاص مدعوم بواسطة <link>Houdini</link>",
       "acknowledge": "أوافق على <link>شروط الخدمة</link>"
     }
   },

@@ -300,8 +300,8 @@
       "modeSend": "Отправка",
       "modeSwapHint": "В другой актив, приватно",
       "modeSendHint": "На другой кошелёк, приватно",
-      "disclaimer": "Private Swap работает на базе <link>Houdini Swap</link>",
-      "disclaimerSend": "Private Send работает на базе <link>Houdini Swap</link>",
+      "disclaimer": "Private Swap работает на базе <link>Houdini</link>",
+      "disclaimerSend": "Private Send работает на базе <link>Houdini</link>",
       "acknowledge": "Я принимаю <link>Условия использования</link>"
     }
   },

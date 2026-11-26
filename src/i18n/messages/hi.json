@@ -300,8 +300,8 @@
       "modeSend": "भेजें",
       "modeSwapHint": "किसी अन्य एसेट में, निजी तौर पर",
       "modeSendHint": "किसी अन्य वॉलेट में, निजी तौर पर",
-      "disclaimer": "Private Swap <link>Houdini Swap</link> द्वारा संचालित है",
-      "disclaimerSend": "Private Send <link>Houdini Swap</link> द्वारा संचालित है",
+      "disclaimer": "Private Swap <link>Houdini</link> द्वारा संचालित है",
+      "disclaimerSend": "Private Send <link>Houdini</link> द्वारा संचालित है",
       "acknowledge": "मैं <link>सेवा की शर्तें</link> स्वीकार करता हूँ"
     }
   },

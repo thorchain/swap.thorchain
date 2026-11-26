@@ -300,8 +300,8 @@
       "modeSend": "Gönder",
       "modeSwapHint": "Gizli olarak başka bir varlığa",
       "modeSendHint": "Gizli olarak başka bir cüzdana",
-      "disclaimer": "Private Swap, <link>Houdini Swap</link> tarafından desteklenmektedir",
-      "disclaimerSend": "Private Send, <link>Houdini Swap</link> tarafından desteklenmektedir",
+      "disclaimer": "Private Swap, <link>Houdini</link> tarafından desteklenmektedir",
+      "disclaimerSend": "Private Send, <link>Houdini</link> tarafından desteklenmektedir",
       "acknowledge": "<link>Hizmet Şartları</link>'nı kabul ediyorum"
     }
   },

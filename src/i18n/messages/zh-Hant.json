@@ -300,8 +300,8 @@
       "modeSend": "發送",
       "modeSwapHint": "私密兌換成其他資產",
       "modeSendHint": "私密轉入其他錢包",
-      "disclaimer": "Private Swap 由 <link>Houdini Swap</link> 提供技術支援",
-      "disclaimerSend": "Private Send 由 <link>Houdini Swap</link> 提供技術支援",
+      "disclaimer": "Private Swap 由 <link>Houdini</link> 提供技術支援",
+      "disclaimerSend": "Private Send 由 <link>Houdini</link> 提供技術支援",
       "acknowledge": "我接受<link>服務條款</link>"
     }
   },

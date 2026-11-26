@@ -300,8 +300,8 @@
       "modeSend": "Gửi",
       "modeSwapHint": "Sang tài sản khác, riêng tư",
       "modeSendHint": "Đến ví khác, riêng tư",
-      "disclaimer": "Private Swap được cung cấp bởi <link>Houdini Swap</link>",
-      "disclaimerSend": "Private Send được cung cấp bởi <link>Houdini Swap</link>",
+      "disclaimer": "Private Swap được cung cấp bởi <link>Houdini</link>",
+      "disclaimerSend": "Private Send được cung cấp bởi <link>Houdini</link>",
       "acknowledge": "Tôi đồng ý với <link>Điều khoản Dịch vụ</link>"
     }
   },

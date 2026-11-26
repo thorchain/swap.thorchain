@@ -300,8 +300,8 @@
       "modeSend": "Envoyer",
       "modeSwapHint": "Vers un autre actif, en privé",
       "modeSendHint": "Vers un autre portefeuille, en privé",
-      "disclaimer": "Private Swap est propulsé par <link>Houdini Swap</link>",
-      "disclaimerSend": "Private Send est propulsé par <link>Houdini Swap</link>",
+      "disclaimer": "Private Swap est propulsé par <link>Houdini</link>",
+      "disclaimerSend": "Private Send est propulsé par <link>Houdini</link>",
       "acknowledge": "J'accepte les <link>Conditions d'utilisation</link>"
     }
   },

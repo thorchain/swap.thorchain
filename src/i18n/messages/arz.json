@@ -300,8 +300,8 @@
       "modeSend": "إرسال",
       "modeSwapHint": "لأصل تاني، بسرية",
       "modeSendHint": "لمحفظة تانية، بسرية",
-      "disclaimer": "التبديل الخاص شغال بـ <link>Houdini Swap</link>",
-      "disclaimerSend": "الإرسال الخاص شغال بـ <link>Houdini Swap</link>",
+      "disclaimer": "التبديل الخاص شغال بـ <link>Houdini</link>",
+      "disclaimerSend": "الإرسال الخاص شغال بـ <link>Houdini</link>",
       "acknowledge": "أنا موافق على <link>شروط الخدمة</link>"
     }
   },

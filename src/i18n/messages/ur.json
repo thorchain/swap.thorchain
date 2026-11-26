@@ -300,8 +300,8 @@
       "modeSend": "بھیجیں",
       "modeSwapHint": "کسی دوسرے اثاثے میں، نجی طور پر",
       "modeSendHint": "کسی دوسرے والٹ میں، نجی طور پر",
-      "disclaimer": "Private Swap <link>Houdini Swap</link> سے تقویت یافتہ ہے",
-      "disclaimerSend": "Private Send <link>Houdini Swap</link> سے تقویت یافتہ ہے",
+      "disclaimer": "Private Swap <link>Houdini</link> سے تقویت یافتہ ہے",
+      "disclaimerSend": "Private Send <link>Houdini</link> سے تقویت یافتہ ہے",
       "acknowledge": "میں <link>شرائطِ سروس</link> قبول کرتا ہوں"
     }
   },
